@@ -1,10 +1,7 @@
-* text=auto
-#convert to native on checkout and normalise on checkin
-*.dm text
-
 # dmm map merger hook
 # needs additional setup, see tools/mapmerge/install.txt
 *.dmm merge=merge-dmm binary
+
 # dmi icon merger hook
 # needs additional setup, see tools/dmitool/merging.txt
 *.dmi merge=merge-dmi binary
