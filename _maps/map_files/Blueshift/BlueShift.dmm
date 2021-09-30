@@ -5515,7 +5515,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "aSo" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/floor/plating,
 /area/engineering/atmos)
@@ -5820,8 +5820,8 @@
 	},
 /area/maintenance/department/medical)
 "aUD" = (
-/obj/structure/window/plasma/reinforced,
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
 /obj/structure/shuttle/engine/heater,
@@ -8899,7 +8899,7 @@
 /turf/open/floor/wood,
 /area/command/meeting_room/council)
 "bsS" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/engine_smes)
 "btc" = (
@@ -9545,7 +9545,7 @@
 	},
 /area/commons/fitness/recreation)
 "bxy" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/router,
 /turf/open/floor/plating,
 /area/maintenance/fore/upper)
@@ -10157,7 +10157,7 @@
 /turf/open/floor/iron,
 /area/science/xenobiology)
 "bBM" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/router,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
@@ -14005,7 +14005,7 @@
 /turf/open/floor/iron/dark,
 /area/maintenance/solars/starboard/fore)
 "cfF" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/router,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
@@ -14286,7 +14286,7 @@
 /area/commons/dorms)
 "chq" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
@@ -15417,7 +15417,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cpP" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /obj/structure/shuttle/engine/router,
@@ -15537,7 +15537,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft/upper)
 "cqy" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "cqG" = (
@@ -20952,7 +20952,7 @@
 	},
 /area/maintenance/fore/upper)
 "ddH" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/maintenance/fore/upper)
 "ddL" = (
@@ -22097,7 +22097,7 @@
 /obj/structure/flora/grass/jungle,
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/brflowers,
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /turf/open/floor/grass,
 /area/commons/cryopods)
 "dlH" = (
@@ -22309,7 +22309,7 @@
 	},
 /area/command/heads_quarters/ce)
 "dnf" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
 "dnh" = (
@@ -22891,7 +22891,7 @@
 "drK" = (
 /obj/structure/flora/grass/jungle,
 /obj/structure/flora/junglebush/c,
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /turf/open/floor/grass,
 /area/commons/cryopods)
 "drM" = (
@@ -25448,7 +25448,7 @@
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "dKj" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "dKq" = (
@@ -26801,7 +26801,7 @@
 /turf/open/floor/wood,
 /area/service/chapel/office)
 "dUV" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater,
 /obj/effect/turf_decal/stripes{
 	dir = 9
@@ -28724,7 +28724,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 4
 	},
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -30931,7 +30931,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "eyx" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/main)
 "eyy" = (
@@ -31722,7 +31722,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "eGc" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater,
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -34201,7 +34201,7 @@
 /turf/open/floor/plating,
 /area/medical/break_room)
 "eYi" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater{
 	dir = 4
 	},
@@ -34223,7 +34223,7 @@
 /turf/open/openspace,
 /area/hallway/primary/upper)
 "eYo" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater{
@@ -35265,7 +35265,7 @@
 /turf/open/floor/iron/stairs/left,
 /area/hallway/primary/central)
 "fgO" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /obj/structure/shuttle/engine/heater,
@@ -36715,7 +36715,7 @@
 /turf/open/floor/iron,
 /area/commons/dorms)
 "fsD" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating/airless,
 /area/science/misc_lab)
 "fsH" = (
@@ -37235,7 +37235,7 @@
 /turf/open/floor/carpet/red,
 /area/commons/dorms)
 "fwa" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /obj/machinery/power/rad_collector/anchored,
@@ -37274,7 +37274,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "fwk" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -37619,7 +37619,7 @@
 /turf/open/floor/iron/dark/side,
 /area/hallway/secondary/construction/engineering)
 "fyY" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "fzc" = (
@@ -38060,7 +38060,7 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "fCt" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater,
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -38951,7 +38951,7 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "fJs" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "fJv" = (
@@ -40971,7 +40971,7 @@
 	},
 /area/hallway/primary/port)
 "fYU" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/router,
 /turf/open/floor/plating,
 /area/maintenance/aft/upper)
@@ -41211,7 +41211,7 @@
 /area/service/kitchen/diner)
 "gbi" = (
 /obj/structure/lattice,
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /turf/open/openspace/airless,
@@ -42206,7 +42206,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "gjp" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/router,
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -42380,7 +42380,7 @@
 /turf/open/floor/iron/grimy,
 /area/command/meeting_room/council)
 "gkT" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter)
 "gkU" = (
@@ -45359,7 +45359,7 @@
 /turf/open/floor/iron/white,
 /area/science/explab)
 "gHd" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
@@ -46275,7 +46275,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "gOq" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
 /obj/structure/shuttle/engine/router,
@@ -51426,7 +51426,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "hCN" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/router,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -53685,7 +53685,7 @@
 /turf/open/floor/iron,
 /area/maintenance/port)
 "hSu" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "hSw" = (
@@ -54845,7 +54845,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ibt" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "ibu" = (
@@ -57317,7 +57317,7 @@
 /turf/open/floor/plating,
 /area/commons/dorms)
 "iwC" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 1
 	},
@@ -58315,7 +58315,7 @@
 /turf/open/floor/iron,
 /area/science/misc_lab/range)
 "iDY" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
 "iDZ" = (
@@ -60418,7 +60418,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/upper)
 "iUJ" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -60454,7 +60454,7 @@
 	},
 /area/medical/psychology)
 "iVf" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/science/mixing)
 "iVg" = (
@@ -61633,7 +61633,7 @@
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva/upper)
 "jda" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater,
 /turf/open/floor/plating,
 /area/maintenance/aft/upper)
@@ -67785,7 +67785,7 @@
 /area/security/brig)
 "jZb" = (
 /obj/structure/shuttle/engine/router,
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -68360,7 +68360,7 @@
 /turf/open/floor/carpet/blue,
 /area/command/heads_quarters/captain)
 "kdu" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater{
 	dir = 4
 	},
@@ -68533,7 +68533,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "keR" = (
@@ -68937,7 +68937,7 @@
 /turf/open/floor/iron,
 /area/science/research)
 "khP" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /obj/item/screwdriver,
@@ -69232,7 +69232,7 @@
 /area/maintenance/port/aft)
 "kku" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
@@ -70028,7 +70028,7 @@
 /turf/open/floor/iron,
 /area/construction/mining/aux_base)
 "kqH" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
 /obj/structure/shuttle/engine/heater,
@@ -70171,7 +70171,7 @@
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "krR" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
 /obj/machinery/power/rad_collector/anchored,
@@ -73857,7 +73857,7 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/storage/eva/upper)
 "kUd" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/router,
@@ -75617,7 +75617,7 @@
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "lif" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
@@ -76827,7 +76827,7 @@
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
 "lsn" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
 /obj/structure/shuttle/engine/heater{
@@ -77030,7 +77030,7 @@
 /turf/open/floor/iron/dark,
 /area/commons/fitness/recreation)
 "lto" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater{
 	dir = 4
 	},
@@ -77483,7 +77483,7 @@
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
 "lwQ" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
@@ -77644,7 +77644,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "lyp" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/science/mixing)
@@ -79622,7 +79622,7 @@
 /turf/open/floor/plating,
 /area/maintenance/central/secondary)
 "lMg" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
 	},
@@ -88694,7 +88694,7 @@
 /turf/open/floor/iron,
 /area/engineering/atmos/upper)
 "nfj" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
@@ -90622,7 +90622,7 @@
 /turf/open/floor/iron/dark,
 /area/engineering/transit_tube)
 "ntK" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/layer_manifold/dark{
 	dir = 8
 	},
@@ -92515,7 +92515,7 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/lobby)
 "nHz" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
@@ -95111,7 +95111,7 @@
 /turf/open/floor/iron/dark,
 /area/service/library/private)
 "oeu" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -97637,7 +97637,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/command/heads_quarters/captain)
 "oyL" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "oyN" = (
@@ -98279,7 +98279,7 @@
 /turf/open/floor/wood,
 /area/security/detectives_office)
 "oDH" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater{
@@ -98593,7 +98593,7 @@
 /turf/open/floor/iron,
 /area/maintenance/department/medical/central)
 "oFW" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /obj/machinery/power/rad_collector/anchored,
@@ -101059,7 +101059,7 @@
 /turf/open/floor/plating,
 /area/security/prison/safe)
 "paH" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/simple/brown/visible,
 /turf/open/floor/plating,
 /area/engineering/supermatter/room)
@@ -101716,7 +101716,7 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "pfB" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
 /obj/structure/shuttle/engine/router,
@@ -103378,8 +103378,8 @@
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "prY" = (
-/obj/structure/window/plasma/reinforced,
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
 /obj/structure/shuttle/engine/heater{
@@ -107650,7 +107650,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -108696,7 +108696,7 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/port/fore)
 "qjW" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
@@ -110863,7 +110863,7 @@
 	},
 /area/hallway/secondary/entry)
 "qBd" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /obj/structure/shuttle/engine/heater,
@@ -112956,7 +112956,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "qRJ" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/atmos/project)
 "qRS" = (
@@ -114000,7 +114000,7 @@
 /turf/open/floor/carpet/lone,
 /area/service/library/lounge)
 "rax" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /obj/structure/shuttle/engine/heater{
@@ -114172,7 +114172,7 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "rbQ" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
 /obj/structure/shuttle/engine/heater{
@@ -114943,7 +114943,7 @@
 /area/maintenance/fore/upper)
 "rhl" = (
 /obj/structure/shuttle/engine/router,
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -118997,7 +118997,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical/central)
 "rMM" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
 /obj/machinery/power/rad_collector/anchored,
@@ -120077,7 +120077,7 @@
 /turf/open/floor/iron,
 /area/medical/virology)
 "rUJ" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater{
@@ -121639,7 +121639,7 @@
 /turf/open/floor/wood,
 /area/medical/psychology)
 "sfM" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/science/mixing/chamber)
 "sfO" = (
@@ -127816,7 +127816,7 @@
 /area/command/meeting_room/council)
 "tbB" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
@@ -131272,7 +131272,7 @@
 /turf/open/floor/iron,
 /area/medical/storage)
 "tBh" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater{
 	dir = 4
 	},
@@ -131987,7 +131987,7 @@
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/ausbushes/sunnybush,
 /obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/window/shuttle,
+/obj/structure/window/reinforced/shuttle,
 /turf/open/floor/grass,
 /area/commons/cryopods)
 "tHa" = (
@@ -134433,7 +134433,7 @@
 /turf/closed/wall,
 /area/science/xenobiology)
 "uaz" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/science/research)
 "uaH" = (
@@ -135578,7 +135578,7 @@
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "ujd" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater,
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -135742,8 +135742,8 @@
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "uki" = (
-/obj/structure/window/plasma/reinforced,
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma,
+/obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /obj/structure/shuttle/engine/heater,
@@ -136049,7 +136049,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes{
@@ -137492,7 +137492,7 @@
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
 "uvc" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /obj/structure/shuttle/engine/heater{
@@ -139806,7 +139806,7 @@
 /turf/closed/wall,
 /area/security/checkpoint/customs)
 "uOe" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /turf/open/floor/engine,
 /area/science/explab)
 "uOk" = (
@@ -146225,7 +146225,7 @@
 /turf/open/floor/iron/dark,
 /area/science/cytology)
 "vLt" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater{
 	dir = 4
 	},
@@ -149244,7 +149244,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "wle" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /obj/structure/shuttle/engine/heater{
@@ -149960,7 +149960,7 @@
 /turf/open/floor/plating,
 /area/engineering/lobby)
 "wro" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
@@ -153104,10 +153104,10 @@
 /turf/closed/wall,
 /area/commons/storage/tools)
 "wPn" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 1
 	},
 /turf/open/floor/engine,
@@ -154579,7 +154579,7 @@
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
 "xap" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater{
 	dir = 4
 	},
@@ -155051,7 +155051,7 @@
 /area/hallway/secondary/command)
 "xeN" = (
 /obj/structure/lattice,
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
 /turf/open/openspace/airless,
@@ -157513,7 +157513,7 @@
 /turf/open/floor/circuit,
 /area/command/gateway)
 "xxS" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /obj/structure/shuttle/engine/router,
@@ -158844,7 +158844,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/upper)
 "xHQ" = (
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
 /obj/structure/shuttle/engine/heater,
@@ -159071,7 +159071,7 @@
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "xJE" = (
-/obj/structure/window/plasma/reinforced,
+/obj/structure/window/reinforced/plasma,
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
@@ -160210,7 +160210,7 @@
 /area/security/prison/visit)
 "xSm" = (
 /obj/structure/shuttle/engine/router,
-/obj/structure/window/plasma/reinforced{
+/obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -161955,7 +161955,7 @@
 /turf/open/floor/engine,
 /area/maintenance/radshelter)
 "yga" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/engineering/lobby)
 "ygd" = (
