@@ -7870,7 +7870,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = ''ArrivalsKitchen'';
+	id = "ArrivalsKitchen";
 	name = "snack bar shutters"
 	},
 /turf/open/floor/iron/dark,
@@ -7926,7 +7926,7 @@
 "blx" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
-	id = ''BotanyTest'';
+	id = "BotanyTest";
 	name = "Test Blast Shutters"
 	},
 /turf/open/floor/plating,
@@ -8546,7 +8546,6 @@
 	icon_state = "rightsecure";
 	layer = 4.1;
 	name = "Secondary AI Core Access";
-	obj_integrity = 300;
 	req_access_txt = "16"
 	},
 /obj/structure/cable,
@@ -9781,7 +9780,7 @@
 "bza" = (
 /obj/structure/safe,
 /obj/item/storage/secure/briefcase{
-	contents = newlist(/obj/item/clothing/suit/armor/vest,/obj/item/gun/ballistic/automatic/pistol,/obj/item/suppressor,/obj/item/melee/classic_baton/telescopic,/obj/item/clothing/mask/balaclava,/obj/item/bodybag,/obj/item/soap/nanotrasen)
+	contents = newlist(/obj/item/clothing/suit/armor/vest,/obj/item/gun/ballistic/automatic/pistol,/obj/item/suppressor,/obj/item/melee/baton/telescopic,/obj/item/clothing/mask/balaclava,/obj/item/bodybag,/obj/item/soap/nanotrasen)
 	},
 /obj/item/storage/backpack/duffelbag/syndie/hitman,
 /obj/item/card/id/advanced/silver/reaper,
@@ -10846,7 +10845,7 @@
 	name = "Brig Blast door"
 	},
 /obj/machinery/door/poddoor/shutters/window{
-	id = ''BrigBigEntrance'';
+	id = "BrigBigEntrance";
 	name = "Brig shutters"
 	},
 /turf/open/floor/iron/dark,
@@ -11321,8 +11320,8 @@
 /area/hallway/secondary/service)
 "bLN" = (
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''Xeno9'';
-	name = ''Xenobio Penns Containment''
+	id = "Xeno9";
+	name = "Xenobio Pens Containment"
 	},
 /obj/effect/turf_decal/stripes,
 /obj/effect/turf_decal/stripes{
@@ -11333,7 +11332,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "Xeno9";
-	name = "Xenobio Penns Containment"
+	name = "Xenobio Pens Containment"
 	},
 /turf/open/floor/iron,
 /area/science/xenobiology)
@@ -12023,7 +12022,7 @@
 "bQM" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''Clothingstore'';
+	id = "Clothingstore";
 	name = "Clothing store shutters"
 	},
 /turf/open/floor/plating,
@@ -14957,7 +14956,7 @@
 	req_access_txt = "55"
 	},
 /obj/machinery/door/poddoor/shutters/window/preopen{
-	id = ''XenoOffice'';
+	id = "XenoOffice";
 	name = "Xenobiology Controll Room Shutters"
 	},
 /obj/machinery/door/firedoor,
@@ -20875,7 +20874,7 @@
 	pixel_x = -8
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = ''SnacksKitchen'';
+	id = "SnacksKitchen";
 	name = "snack bar shutters"
 	},
 /turf/open/floor/iron/dark,
@@ -29617,7 +29616,7 @@
 	req_access_txt = "63"
 	},
 /obj/machinery/button/door{
-	id = ''BrigBigEntrance'';
+	id = "BrigBigEntrance";
 	name = "Brig Acces Shutters controll";
 	pixel_y = -4
 	},
@@ -31241,7 +31240,7 @@
 	dir = 4
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''Clothingstore'';
+	id = "Clothingstore";
 	name = "Clothing store shutters"
 	},
 /turf/open/floor/wood/parquet,
@@ -31889,7 +31888,7 @@
 /area/space/nearstation)
 "eHE" = (
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''CytologyShutters'';
+	id = "CytologyShutters";
 	name = "Cytology shutters"
 	},
 /obj/effect/turf_decal/stripes,
@@ -32606,7 +32605,7 @@
 	req_access_txt = "55"
 	},
 /obj/machinery/door/poddoor/shutters/window/preopen{
-	id = ''XenoOffice'';
+	id = "XenoOffice";
 	name = "Xenobiology Controll Room Shutters"
 	},
 /obj/machinery/door/firedoor,
@@ -33419,7 +33418,7 @@
 /area/hallway/primary/starboard)
 "eRP" = (
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''CytologyShutters'';
+	id = "CytologyShutters";
 	name = "Cytology shutters"
 	},
 /obj/effect/turf_decal/stripes,
@@ -33427,7 +33426,7 @@
 	dir = 1
 	},
 /obj/machinery/button/door{
-	id = ''CytologyShutters'';
+	id = "CytologyShutters";
 	name = "Cytology Shutters";
 	pixel_x = 30
 	},
@@ -37295,7 +37294,7 @@
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/door/poddoor/shutters{
-	id = ''SnacksKitchen'';
+	id = "SnacksKitchen";
 	name = "snack bar shutters"
 	},
 /turf/open/floor/iron/dark,
@@ -38761,11 +38760,11 @@
 	dir = 1
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''Xenobio Containment'';
+	id = "Xenobio Containment";
 	name = "Xenobiology Containment Shutters"
 	},
 /obj/machinery/button/door{
-	id = ''Xenobio Containment'';
+	id = "Xenobio Containment";
 	name = "Xenobiology Containment Shutters";
 	pixel_x = -32;
 	req_access_txt = "47"
@@ -43369,7 +43368,7 @@
 /area/cargo/qm)
 "gsV" = (
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''CytologyShutters'';
+	id = "CytologyShutters";
 	name = "Cytology shutters"
 	},
 /obj/effect/turf_decal/stripes,
@@ -44374,7 +44373,7 @@
 "gAe" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
-	id = ''BarBlastDoor'';
+	id = "BarBlastDoor";
 	name = "bar blast door"
 	},
 /turf/open/floor/plating,
@@ -45883,8 +45882,8 @@
 /area/security/checkpoint/engineering)
 "gLC" = (
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''Xeno10'';
-	name = ''Xenobio Penns Containment''
+	id = "Xeno10";
+	name = "Xenobio Penns Containment"
 	},
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -48950,7 +48949,7 @@
 "hjs" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''Barshutters'';
+	id = "Barshutters";
 	name = "bar shutters"
 	},
 /obj/machinery/door/firedoor,
@@ -49083,7 +49082,7 @@
 /area/science/cytology)
 "hke" = (
 /obj/machinery/door/poddoor/shutters/window{
-	id = ''BrigBigEntrance'';
+	id = "BrigBigEntrance";
 	name = "Brig shutters"
 	},
 /obj/effect/turf_decal/trimline/darkblue/filled/warning,
@@ -51047,7 +51046,7 @@
 	dir = 1
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''Xenobio Containment'';
+	id = "Xenobio Containment";
 	name = "Xenobiology Containment Shutters"
 	},
 /turf/open/floor/iron,
@@ -51172,7 +51171,7 @@
 	name = "Secure Tool storage blast doors";
 	pixel_x = -24;
 	pixel_y = -6;
-	req_access_txt = ''11"
+	req_access_txt = "11"
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -51588,7 +51587,7 @@
 	req_access_txt = "35"
 	},
 /obj/machinery/door/poddoor/preopen{
-	id = ''BotanyTest'';
+	id = "BotanyTest";
 	name = "Test Blast Shutters"
 	},
 /turf/open/floor/iron/dark,
@@ -52904,7 +52903,7 @@
 "hNq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
-	id = ''BarBlastDoor'';
+	id = "BarBlastDoor";
 	name = "bar blast door"
 	},
 /turf/open/floor/plating,
@@ -55430,7 +55429,7 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/machinery/button/door{
-	id = ''ChapelGardain'';
+	id = "ChapelGardain";
 	name = "Gardain Shutters";
 	pixel_x = 30;
 	pixel_y = 30
@@ -56211,7 +56210,7 @@
 /area/space/nearstation)
 "ink" = (
 /obj/machinery/door/airlock{
-	name = "''THE RING''"
+	name = "THE RING"
 	},
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
@@ -57430,7 +57429,7 @@
 "ixs" = (
 /obj/structure/plasticflaps/opaque,
 /obj/machinery/door/poddoor/preopen{
-	id = ''XenoOffice'';
+	id = "XenoOffice";
 	name = "Xenobiology Lockdown Blast Doors"
 	},
 /obj/machinery/navbeacon{
@@ -59007,7 +59006,7 @@
 /area/maintenance/starboard/fore)
 "iHY" = (
 /obj/machinery/button/door{
-	id = ''BotanyTest'';
+	id = "BotanyTest";
 	name = "Test chamber shutters";
 	pixel_x = 32;
 	pixel_y = 32
@@ -59029,7 +59028,7 @@
 "iIp" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''Barshutters'';
+	id = "Barshutters";
 	name = "bar shutters"
 	},
 /obj/machinery/door/firedoor,
@@ -62777,8 +62776,8 @@
 /area/science/cytology)
 "jmM" = (
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''Xeno10'';
-	name = ''Xenobio Penns Containment''
+	id = "Xeno10";
+	name = "Xenobio Penns Containment"
 	},
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -64194,7 +64193,7 @@
 	dir = 1
 	},
 /obj/machinery/button/door{
-	id = ''XenoOffice'';
+	id = "XenoOffice";
 	name = "Xenobiology Controll Room Lockdown";
 	pixel_x = -30;
 	pixel_y = -6
@@ -64489,7 +64488,7 @@
 /area/maintenance/fore/upper)
 "jAw" = (
 /obj/machinery/door/airlock/freezer{
-	req_access = ''28''
+	req_access = "28"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
@@ -77134,8 +77133,8 @@
 "ltS" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''Xeno10'';
-	name = ''Xenobio Penns Containment''
+	id = "Xeno10";
+	name = "Xenobio Penns Containment"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -84534,7 +84533,7 @@
 "mxr" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
-	id = ''BarBlastDoor'';
+	id = "BarBlastDoor";
 	name = "bar blast door"
 	},
 /obj/structure/disposalpipe/segment{
@@ -87482,7 +87481,7 @@
 "mVo" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''Barshutters'';
+	id = "Barshutters";
 	name = "bar shutters"
 	},
 /obj/machinery/door/firedoor,
@@ -93452,7 +93451,6 @@
 	dir = 8;
 	icon_state = "leftsecure";
 	name = "Primary AI Core Access";
-	obj_integrity = 300;
 	req_access_txt = "16"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -98977,7 +98975,7 @@
 "oJb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
-	id = ''Xeno11'';
+	id = "Xeno11";
 	name = "Containment Breach Blast Door"
 	},
 /obj/structure/cable,
@@ -102493,7 +102491,7 @@
 "plo" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''Barshutters'';
+	id = "Barshutters";
 	name = "bar shutters"
 	},
 /obj/machinery/door/firedoor,
@@ -104009,7 +104007,6 @@
 	icon_state = "leftsecure";
 	layer = 4.1;
 	name = "Tertiary AI Core Access";
-	obj_integrity = 300;
 	req_access_txt = "16"
 	},
 /turf/open/floor/iron/dark,
@@ -104953,7 +104950,7 @@
 	req_access_txt = "55"
 	},
 /obj/machinery/door/poddoor/shutters/window/preopen{
-	id = ''XenoOffice'';
+	id = "XenoOffice";
 	name = "Xenobiology Controll Room Shutters"
 	},
 /obj/machinery/door/firedoor,
@@ -106845,7 +106842,7 @@
 "pSb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	id = ''ChapelGardain'';
+	id = "ChapelGardain";
 	name = "Chapel Gardain Shutters"
 	},
 /turf/open/floor/plating,
@@ -114709,7 +114706,7 @@
 	req_access_txt = "19"
 	},
 /obj/machinery/door/poddoor/preopen{
-	id = ''Secure Tool'';
+	id = "Secure Tool";
 	name = "Secure Tool storage blast door"
 	},
 /obj/machinery/door/firedoor,
@@ -115131,7 +115128,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = ''SnacksKitchen'';
+	id = "SnacksKitchen";
 	name = "snack bar shutters"
 	},
 /turf/open/floor/iron/dark,
@@ -115490,7 +115487,7 @@
 /area/medical/exam_room)
 "rkO" = (
 /obj/machinery/button/door{
-	id = ''ArrivalsKitchen'';
+	id = "ArrivalsKitchen";
 	name = "Shutters controll";
 	pixel_x = -25
 	},
@@ -120413,7 +120410,7 @@
 "rWC" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
-	id = ''Secure Tool'';
+	id = "Secure Tool";
 	name = "Secure Tool storage blast door"
 	},
 /obj/structure/cable,
@@ -123271,7 +123268,7 @@
 "ssH" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''Barshutters'';
+	id = "Barshutters";
 	name = "bar shutters"
 	},
 /obj/machinery/door/firedoor,
@@ -128219,14 +128216,14 @@
 /obj/effect/turf_decal/tile/bar,
 /obj/item/kirbyplants/random,
 /obj/machinery/button/door{
-	id = ''BarBlastDoor'';
-	name = ''Bar Blast Doors'';
+	id = "BarBlastDoor";
+	name = "Bar Blast Doors";
 	pixel_x = 8;
 	pixel_y = -24;
 	req_access_txt = "25"
 	},
 /obj/machinery/button/door{
-	id = ''Barshutters'';
+	id = "Barshutters";
 	name = "Bar Shutters";
 	pixel_x = -7;
 	pixel_y = -24;
@@ -129601,7 +129598,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
-	id = ''ArrivalsKitchen'';
+	id = "ArrivalsKitchen";
 	name = "snack bar shutters"
 	},
 /turf/open/floor/iron/dark,
@@ -133530,7 +133527,7 @@
 /area/service/bar/atrium)
 "tTb" = (
 /obj/machinery/button/door{
-	id = ''SnacksKitchen'';
+	id = "SnacksKitchen";
 	name = "Shutters controll";
 	pixel_x = -25
 	},
@@ -141106,7 +141103,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor/shutters/window{
-	id = ''BrigBigEntrance'';
+	id = "BrigBigEntrance";
 	name = "Brig shutters"
 	},
 /turf/open/floor/iron/dark,
@@ -142024,7 +142021,6 @@
 	dir = 4;
 	icon_state = "rightsecure";
 	name = "Primary AI Core Access";
-	obj_integrity = 300;
 	req_access_txt = "16"
 	},
 /obj/machinery/camera{
@@ -142943,8 +142939,7 @@
 /obj/machinery/door/window{
 	dir = 8;
 	name = "Secure tech cabinet";
-	req_access_txt = "19;23";
-	req_one_access_txt = ''0''
+	req_access_txt = "19;23"
 	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
@@ -145062,7 +145057,7 @@
 "vCn" = (
 /obj/structure/table/wood/fancy/blue,
 /obj/item/reagent_containers/food/drinks/trophy/bronze_cup{
-	name = "#3rd prize for captain ''measure up'' contest";
+	name = "3rd place prize for captain ''measure up'' contest";
 	pixel_y = 8
 	},
 /turf/open/floor/carpet,
@@ -148764,7 +148759,7 @@
 	dir = 1
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = ''Xenobio Containment'';
+	id = "Xenobio Containment";
 	name = "Xenobiology Containment Shutters"
 	},
 /obj/structure/cable,
@@ -149341,7 +149336,7 @@
 "wlK" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
-	id = ''XenoOffice'';
+	id = "XenoOffice";
 	name = "Xenobiology Window Blast Doors"
 	},
 /obj/structure/cable,
@@ -150647,11 +150642,7 @@
 	name = "Core Modules";
 	req_access_txt = "20"
 	},
-/obj/effect/spawner/random/aimodule/harmless{
-	fan_out_items = 1;
-	lootcount = 3;
-	lootdoubles = 0
-	},
+/obj/effect/spawner/random/aimodule/harmless,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "wwo" = (
@@ -159739,7 +159730,7 @@
 	req_access_txt = "55"
 	},
 /obj/machinery/door/poddoor/preopen{
-	id = ''XenoOffice'';
+	id = "XenoOffice";
 	name = "Xenobiology Lockdown Blast Doors"
 	},
 /obj/structure/cable,
