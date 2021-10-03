@@ -6970,6 +6970,7 @@
 	},
 /obj/machinery/power/apc/highcap/fifteen_k{
 	areastring = /area/engineering/atmos/project;
+	dir = 1;
 	pixel_y = 23
 	},
 /obj/structure/cable,
@@ -9244,8 +9245,9 @@
 	pixel_x = -8;
 	pixel_y = 8
 	},
-/obj/item/seeds/nettle,
 /obj/structure/disposalpipe/segment,
+/obj/item/seeds/amanita,
+/obj/item/seeds/nettle,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "bvz" = (
@@ -23797,11 +23799,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/machinery/camera{
-	c_tag = "Engineering - Left Controll Deck";
-	dir = 4;
-	name = "engineering camera"
-	},
 /turf/open/floor/iron/dark/side{
 	dir = 10
 	},
@@ -34713,10 +34710,10 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "fcs" = (
-/obj/machinery/rnd/server,
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible{
 	dir = 6
 	},
+/obj/machinery/rnd/server/master,
 /turf/open/floor/circuit/telecomms,
 /area/science/server)
 "fcv" = (
@@ -52041,11 +52038,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/machinery/camera{
-	c_tag = "Engineering - Right Controll Deck";
-	dir = 8;
-	name = "engineering camera"
-	},
 /turf/open/floor/iron/dark/side{
 	dir = 6
 	},
@@ -59008,17 +59000,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
-"iHM" = (
-/obj/structure/closet/crate/engineering,
-/obj/machinery/particle_accelerator/control_box,
-/obj/structure/particle_accelerator/particle_emitter/center,
-/obj/structure/particle_accelerator/particle_emitter/left,
-/obj/structure/particle_accelerator/particle_emitter/right,
-/obj/structure/particle_accelerator/power_box,
-/obj/structure/particle_accelerator/fuel_chamber,
-/obj/structure/particle_accelerator/end_cap,
-/turf/open/floor/plating,
-/area/engineering/lobby)
 "iHU" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -88690,6 +88671,11 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Engineering - Right Controll Deck";
+	dir = 8;
+	name = "engineering camera"
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -93252,11 +93238,11 @@
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "nNI" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/yellow,
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/yellow,
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -105093,14 +105079,15 @@
 /area/medical/pharmacy)
 "pDG" = (
 /obj/structure/table,
-/obj/item/seeds/amanita,
-/obj/item/seeds/cannabis{
-	pixel_x = -5
-	},
+/obj/structure/disposalpipe/segment,
+/obj/item/seeds/liberty,
 /obj/item/seeds/poppy/opiumpoppy{
 	pixel_x = 5
 	},
-/obj/structure/disposalpipe/segment,
+/obj/item/seeds/cannabis{
+	pixel_x = -5
+	},
+/obj/item/seeds/ambrosia,
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
 "pDK" = (
@@ -108984,7 +108971,14 @@
 "qlG" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/yellow,
-/obj/machinery/the_singularitygen,
+/obj/structure/closet/crate/engineering,
+/obj/machinery/particle_accelerator/control_box,
+/obj/structure/particle_accelerator/end_cap,
+/obj/structure/particle_accelerator/fuel_chamber,
+/obj/structure/particle_accelerator/power_box,
+/obj/structure/particle_accelerator/particle_emitter/center,
+/obj/structure/particle_accelerator/particle_emitter/left,
+/obj/structure/particle_accelerator/particle_emitter/right,
 /obj/item/paper/fluff{
 	info = "If you are stupid enough to build a singularity please don't get it higher then level 2, our last engineering team got eaten by the damn thing when it reached level 3, or y'know just stick with a tesla instead like the area is designed for.";
 	name = "Note to Engineering part 2"
@@ -111289,7 +111283,6 @@
 "qDx" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/rack/gunrack,
-/obj/item/gun/ballistic/shotgun/doublebarrel,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/maintenance/starboard/fore)
@@ -130849,7 +130842,6 @@
 /area/maintenance/port/aft)
 "tyn" = (
 /obj/structure/table,
-/obj/item/food/grown/kudzupod,
 /obj/item/clothing/gloves/botanic_leather,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -131749,6 +131741,11 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/camera{
+	c_tag = "Engineering - Left Controll Deck";
+	dir = 4;
+	name = "engineering camera"
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 9
 	},
@@ -160260,7 +160257,6 @@
 /area/engineering/break_room)
 "xRU" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/the_singularitygen/tesla,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "xRX" = (
@@ -260236,7 +260232,7 @@ djq
 nEs
 oSE
 oSE
-iHM
+oSE
 oSE
 svY
 gLf
