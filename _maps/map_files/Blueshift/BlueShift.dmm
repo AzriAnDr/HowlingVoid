@@ -119642,7 +119642,6 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "rRc" = (
-/obj/machinery/aug_manipulator,
 /obj/effect/turf_decal/bot,
 /obj/machinery/requests_console/directional/north{
 	department = "Robotics";
