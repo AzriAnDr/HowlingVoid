@@ -10927,6 +10927,17 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/research)
+"bGM" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold/general/visible{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/power/tesla_coil/anchored,
+/turf/open/floor/engine,
+/area/engineering/supermatter)
 "bHg" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -37368,11 +37379,11 @@
 /obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
-/obj/machinery/power/rad_collector/anchored,
 /obj/machinery/atmospherics/pipe/smart/manifold/general/visible{
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/power/grounding_rod/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "fwb" = (
@@ -70449,11 +70460,11 @@
 /obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
-/obj/machinery/power/rad_collector/anchored,
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible{
 	dir = 9
 	},
 /obj/structure/cable,
+/obj/machinery/power/tesla_coil/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "kso" = (
@@ -99020,11 +99031,11 @@
 /obj/structure/window/reinforced/plasma{
 	dir = 4
 	},
-/obj/machinery/power/rad_collector/anchored,
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible{
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/machinery/power/tesla_coil/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "oFX" = (
@@ -119514,11 +119525,11 @@
 /obj/structure/window/reinforced/plasma{
 	dir = 8
 	},
-/obj/machinery/power/rad_collector/anchored,
 /obj/machinery/atmospherics/pipe/smart/manifold/general/visible{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/power/grounding_rod/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "rMR" = (
@@ -141312,6 +141323,17 @@
 "uUT" = (
 /obj/structure/sign/warning/radiation,
 /turf/closed/wall/r_wall,
+/area/engineering/supermatter)
+"uUU" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold/general/visible{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/power/tesla_coil/anchored,
+/turf/open/floor/engine,
 /area/engineering/supermatter)
 "uVc" = (
 /obj/effect/turf_decal/bot,
@@ -260397,7 +260419,7 @@ hKy
 uUT
 srD
 lVX
-fwa
+bGM
 fwa
 oFW
 srD
@@ -261425,7 +261447,7 @@ gWr
 uUT
 srD
 qBO
-rMM
+uUU
 rMM
 krR
 srD
