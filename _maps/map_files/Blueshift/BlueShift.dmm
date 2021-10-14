@@ -44219,7 +44219,6 @@
 /obj/effect/turf_decal/stripes/white/line,
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/camera{
-	CanAtmosPass = "science camera";
 	c_tag = "Genetics Lab North";
 	name = "science camera";
 	network = list("ss13","rd")
