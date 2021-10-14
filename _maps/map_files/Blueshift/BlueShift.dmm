@@ -74612,9 +74612,6 @@
 /obj/effect/turf_decal/tile/bar,
 /obj/machinery/vending/boozeomat,
 /obj/machinery/light/directional/north,
-/obj/structure/sign/plaques/deempisi{
-	pixel_y = 26
-	},
 /turf/open/floor/iron,
 /area/service/bar)
 "kXU" = (
