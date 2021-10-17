@@ -6235,7 +6235,7 @@
 /area/science/genetics)
 "aXk" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/tesla_coil,
+/obj/machinery/power/energy_accumulator/tesla_coil,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -10935,7 +10935,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/power/tesla_coil/anchored,
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "bHg" = (
@@ -15566,7 +15566,7 @@
 /area/security/courtroom)
 "cqm" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/grounding_rod,
+/obj/machinery/power/energy_accumulator/grounding_rod,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
@@ -29433,7 +29433,7 @@
 /area/science/explab)
 "emZ" = (
 /obj/effect/turf_decal/stripes/end,
-/obj/machinery/power/tesla_coil,
+/obj/machinery/power/energy_accumulator/tesla_coil,
 /obj/structure/railing,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
@@ -37383,7 +37383,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/power/grounding_rod/anchored,
+/obj/machinery/power/energy_accumulator/grounding_rod/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "fwb" = (
@@ -70463,7 +70463,7 @@
 	dir = 9
 	},
 /obj/structure/cable,
-/obj/machinery/power/tesla_coil/anchored,
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "kso" = (
@@ -71393,7 +71393,7 @@
 /area/maintenance/aft/upper)
 "kzr" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/grounding_rod,
+/obj/machinery/power/energy_accumulator/grounding_rod,
 /turf/open/floor/iron,
 /area/engineering/main)
 "kzs" = (
@@ -94882,7 +94882,7 @@
 /area/medical/chemistry)
 "nYH" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/grounding_rod,
+/obj/machinery/power/energy_accumulator/grounding_rod,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
@@ -99031,7 +99031,7 @@
 	dir = 5
 	},
 /obj/structure/cable,
-/obj/machinery/power/tesla_coil/anchored,
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "oFX" = (
@@ -106828,7 +106828,7 @@
 /area/maintenance/fore)
 "pNW" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/tesla_coil,
+/obj/machinery/power/energy_accumulator/tesla_coil,
 /turf/open/floor/iron,
 /area/engineering/main)
 "pNY" = (
@@ -119525,7 +119525,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/power/grounding_rod/anchored,
+/obj/machinery/power/energy_accumulator/grounding_rod/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "rMR" = (
@@ -131357,7 +131357,7 @@
 /area/maintenance/port/aft)
 "tyr" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/grounding_rod,
+/obj/machinery/power/energy_accumulator/grounding_rod,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
@@ -134710,7 +134710,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/machinery/power/tesla_coil,
+/obj/machinery/power/energy_accumulator/tesla_coil,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -141328,7 +141328,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/power/tesla_coil/anchored,
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
 "uVc" = (
@@ -144915,7 +144915,7 @@
 /area/command/heads_quarters/rd)
 "vwe" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/tesla_coil,
+/obj/machinery/power/energy_accumulator/tesla_coil,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
