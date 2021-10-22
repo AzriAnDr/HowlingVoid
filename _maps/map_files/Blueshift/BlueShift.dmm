@@ -1297,7 +1297,7 @@
 	pixel_x = -7;
 	pixel_y = 8
 	},
-/obj/item/kitchen/knife/plastic{
+/obj/item/knife/plastic{
 	pixel_x = 7
 	},
 /turf/open/floor/iron/cafeteria,
@@ -4973,7 +4973,7 @@
 /obj/effect/turf_decal/bot,
 /obj/item/storage/box/donkpockets,
 /obj/item/stack/package_wrap,
-/obj/item/kitchen/knife,
+/obj/item/knife,
 /turf/open/floor/iron/white/side{
 	dir = 1
 	},
@@ -9332,7 +9332,7 @@
 /area/maintenance/starboard/fore)
 "bvz" = (
 /obj/structure/bed/maint,
-/obj/item/kitchen/knife/shiv,
+/obj/item/knife/shiv,
 /obj/machinery/light/small/broken/directional/west,
 /turf/open/floor/plating,
 /area/maintenance/fore/upper)
@@ -29795,7 +29795,7 @@
 	pixel_x = -6;
 	pixel_y = 10
 	},
-/obj/item/kitchen/knife{
+/obj/item/knife{
 	pixel_x = 6;
 	pixel_y = 7
 	},
@@ -35475,7 +35475,7 @@
 /obj/structure/table,
 /obj/item/clothing/suit/apron/chef,
 /obj/item/storage/bag/tray,
-/obj/item/kitchen/knife/plastic,
+/obj/item/knife/plastic,
 /obj/item/kitchen/rollingpin,
 /turf/open/floor/iron/dark,
 /area/security/prison/mess)
@@ -44730,7 +44730,7 @@
 /area/maintenance/starboard/fore)
 "gBt" = (
 /obj/structure/table,
-/obj/item/kitchen/knife/combat/survival,
+/obj/item/knife/combat/survival,
 /turf/open/floor/plating,
 /area/maintenance/fore/upper)
 "gBv" = (
@@ -52637,11 +52637,11 @@
 /obj/item/storage/box/papersack{
 	icon_state = "paperbag_NanotrasenStandard_closed"
 	},
-/obj/item/kitchen/knife/butcher,
+/obj/item/knife/butcher,
 /obj/item/storage/box/papersack{
 	icon_state = "paperbag_NanotrasenStandard_closed"
 	},
-/obj/item/kitchen/knife{
+/obj/item/knife{
 	pixel_x = -13
 	},
 /obj/machinery/pollution_scrubber{
@@ -53412,7 +53412,7 @@
 "hPn" = (
 /obj/structure/table/wood/poker,
 /obj/item/organ/eyes,
-/obj/item/kitchen/knife/shiv,
+/obj/item/knife/shiv,
 /obj/item/stack/spacecash/c200,
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/light/small/directional/south,
@@ -59681,7 +59681,7 @@
 	},
 /area/space/nearstation)
 "iLg" = (
-/obj/item/kitchen/knife/shiv,
+/obj/item/knife/shiv,
 /turf/open/floor/iron/dark,
 /area/maintenance/fore)
 "iLk" = (
@@ -74060,7 +74060,7 @@
 /area/maintenance/aft)
 "kST" = (
 /obj/structure/table,
-/obj/item/kitchen/knife/butcher,
+/obj/item/knife/butcher,
 /turf/open/floor/iron/cafeteria,
 /area/maintenance/port)
 "kTd" = (
@@ -81926,7 +81926,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/item/kitchen/knife/butcher,
+/obj/item/knife/butcher,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/landmark/xeno_spawn,
 /turf/open/floor/iron/freezer,
@@ -94318,7 +94318,7 @@
 /area/science/cytology)
 "nSS" = (
 /obj/structure/table,
-/obj/item/kitchen/knife/combat/survival,
+/obj/item/knife/combat/survival,
 /obj/item/melee/baton{
 	pixel_x = -9;
 	pixel_y = 6
@@ -102377,7 +102377,7 @@
 /area/engineering/lobby)
 "pgL" = (
 /obj/structure/table,
-/obj/item/kitchen/knife{
+/obj/item/knife{
 	pixel_x = 6
 	},
 /obj/item/reagent_containers/food/condiment/enzyme{
@@ -107999,7 +107999,7 @@
 /obj/structure/table{
 	name = "Blacksmith"
 	},
-/obj/item/kitchen/knife/combat,
+/obj/item/knife/combat,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/price_tagger,
 /turf/open/floor/iron/dark,
@@ -111610,7 +111610,7 @@
 /turf/open/floor/iron,
 /area/engineering/engine_smes)
 "qCb" = (
-/obj/item/kitchen/knife/shiv,
+/obj/item/knife/shiv,
 /turf/open/floor/plating,
 /area/maintenance/fore/upper)
 "qCe" = (
@@ -113737,7 +113737,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/kitchen/knife{
+/obj/item/knife{
 	pixel_x = -4
 	},
 /obj/machinery/camera{
@@ -124927,11 +124927,11 @@
 /area/maintenance/port)
 "sAO" = (
 /obj/structure/table,
-/obj/item/kitchen/knife/shiv{
+/obj/item/knife/shiv{
 	pixel_x = -5;
 	pixel_y = 4
 	},
-/obj/item/kitchen/knife/shiv,
+/obj/item/knife/shiv,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "sAX" = (
@@ -132549,7 +132549,7 @@
 /area/commons/dorms)
 "tFR" = (
 /obj/structure/table,
-/obj/item/kitchen/knife,
+/obj/item/knife,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
@@ -140580,7 +140580,7 @@
 	dir = 10
 	},
 /obj/structure/table/wood/fancy/royalblack,
-/obj/item/kitchen/knife/ritual,
+/obj/item/knife/ritual,
 /turf/open/floor/cult,
 /area/maintenance/port)
 "uOA" = (
@@ -141136,7 +141136,7 @@
 /area/cargo/miningoffice)
 "uSR" = (
 /obj/structure/table,
-/obj/item/kitchen/knife{
+/obj/item/knife{
 	pixel_x = 5
 	},
 /turf/open/floor/iron/dark,
@@ -144440,7 +144440,7 @@
 /area/maintenance/port)
 "vrF" = (
 /obj/structure/table,
-/obj/item/kitchen/knife,
+/obj/item/knife,
 /obj/item/circular_saw/field_medic,
 /turf/open/floor/iron/white,
 /area/medical/abandoned)
