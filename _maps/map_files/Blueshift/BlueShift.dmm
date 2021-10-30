@@ -2946,7 +2946,7 @@
 /area/maintenance/port)
 "axq" = (
 /obj/structure/decorative/shelf,
-/obj/item/hair_dye{
+/obj/item/dyespray{
 	pixel_x = -6;
 	pixel_y = 11
 	},
