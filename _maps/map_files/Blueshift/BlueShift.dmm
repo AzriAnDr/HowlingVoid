@@ -15264,10 +15264,6 @@
 	pixel_x = 2;
 	pixel_y = 11
 	},
-/obj/item/card/data{
-	pixel_x = -4;
-	pixel_y = 4
-	},
 /obj/item/reagent_containers/cocaine{
 	pixel_y = 2
 	},
