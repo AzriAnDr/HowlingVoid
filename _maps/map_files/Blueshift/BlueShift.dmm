@@ -3793,7 +3793,7 @@
 "aDr" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet,
-/obj/item/champagne_cork,
+/obj/item/trash/champagne_cork,
 /turf/open/floor/plating,
 /area/maintenance/fore/upper)
 "aDx" = (
