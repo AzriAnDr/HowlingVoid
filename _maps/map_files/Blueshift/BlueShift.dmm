@@ -142086,9 +142086,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes,
-/obj/machinery/recycler{
-	safety_mode = 1
-	},
+/obj/machinery/recycler,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "uWL" = (
