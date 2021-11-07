@@ -11153,7 +11153,7 @@
 /turf/open/floor/eighties/red,
 /area/commons/fitness/recreation)
 "bHO" = (
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/maintenance/fore/upper)
 "bHP" = (
 /obj/structure/mirror{
@@ -33775,7 +33775,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/cargo/storage)
 "eSc" = (
 /obj/effect/turf_decal/bot,
@@ -52536,7 +52536,7 @@
 /area/medical/medbay/central)
 "hIm" = (
 /obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 8
 	},
 /turf/open/openspace/airless/planetary,
@@ -80347,7 +80347,7 @@
 /area/security/detectives_office/private_investigators_office)
 "lMD" = (
 /obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 4
 	},
 /turf/open/space/basic,
@@ -80929,7 +80929,7 @@
 /obj/effect/turf_decal/stripes/box,
 /obj/effect/turf_decal/stripes/red/box,
 /obj/vehicle/ridden/secway,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/ai_monitored/security/armory)
 "lQE" = (
 /obj/effect/turf_decal/bot,
@@ -124414,7 +124414,7 @@
 "suK" = (
 /obj/effect/turf_decal/stripes/box,
 /obj/effect/turf_decal/stripes/red/box,
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -142055,7 +142055,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
 	},
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/science/research/abandoned)
 "uWE" = (
 /obj/machinery/door/window/brigdoor{
@@ -148993,7 +148993,7 @@
 	network = list("ss13","rd")
 	},
 /obj/machinery/light/directional/south,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/science/robotics/mechbay)
 "vZa" = (
 /obj/structure/table/wood,
@@ -153083,7 +153083,7 @@
 /area/maintenance/solars/starboard/aft)
 "wFk" = (
 /obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste{
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 8
 	},
 /turf/open/space/basic,
@@ -163075,7 +163075,7 @@
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/light/directional/north,
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/science/robotics/mechbay)
 "yeo" = (
 /obj/effect/turf_decal/siding/wood/corner,
