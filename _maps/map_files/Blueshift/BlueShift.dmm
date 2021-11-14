@@ -121446,10 +121446,6 @@
 /turf/open/floor/iron,
 /area/commons/fitness)
 "sac" = (
-/obj/machinery/computer/cryopod{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -140348,9 +140344,6 @@
 /turf/open/floor/wood,
 /area/service/abandoned_gambling_den/secondary)
 "uMj" = (
-/obj/machinery/computer/cryopod{
-	pixel_y = 24
-	},
 /obj/structure/cable,
 /turf/open/floor/iron/white/textured,
 /area/commons/cryopods)
