@@ -10232,7 +10232,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured,
-/area/commons/cryopods)
+/area/commons/locker)
 "bAz" = (
 /obj/structure/trash_pile,
 /obj/machinery/light/directional/west,
@@ -13604,7 +13604,7 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/window,
 /turf/open/floor/grass,
-/area/commons/cryopods)
+/area/commons/locker)
 "cau" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -13873,7 +13873,7 @@
 /obj/structure/table,
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
-/area/commons/cryopods)
+/area/commons/locker)
 "ccp" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -14768,7 +14768,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white/textured,
-/area/commons/cryopods)
+/area/commons/locker)
 "cjW" = (
 /obj/structure/shuttle/engine/router,
 /obj/effect/turf_decal/stripes,
@@ -15652,14 +15652,13 @@
 /area/commons/fitness/recreation)
 "cpS" = (
 /obj/machinery/door/airlock/glass{
-	name = "Cryopods"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/commons/cryopods)
+/area/commons/locker)
 "cpY" = (
 /obj/structure/cable,
 /obj/machinery/camera{
@@ -22305,7 +22304,7 @@
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/window/reinforced/shuttle,
 /turf/open/floor/grass,
-/area/commons/cryopods)
+/area/commons/locker)
 "dlH" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
@@ -23086,7 +23085,7 @@
 /obj/structure/flora/junglebush/c,
 /obj/structure/window/reinforced/shuttle,
 /turf/open/floor/grass,
-/area/commons/cryopods)
+/area/commons/locker)
 "drM" = (
 /obj/effect/turf_decal/trimline/purple/filled/warning,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -24250,16 +24249,13 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "dAb" = (
-/obj/machinery/cryopod{
-	dir = 4
-	},
 /obj/effect/turf_decal/delivery/white{
 	color = "#00ff00";
 	name = "green"
 	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/textured_large,
-/area/commons/cryopods)
+/area/commons/locker)
 "dAc" = (
 /turf/open/floor/wood,
 /area/service/bar/atrium)
@@ -26270,12 +26266,6 @@
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating/airless,
 /area/maintenance/fore/upper)
-"dPm" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
-/turf/open/floor/iron/white,
-/area/security/prison)
 "dPo" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -40095,7 +40085,7 @@
 /obj/structure/flora/ausbushes/sunnybush,
 /obj/structure/window,
 /turf/open/floor/grass,
-/area/commons/cryopods)
+/area/commons/locker)
 "fQu" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
@@ -41102,7 +41092,7 @@
 "fXP" = (
 /obj/structure/cable,
 /turf/open/floor/iron/white/textured_large,
-/area/commons/cryopods)
+/area/commons/locker)
 "fXS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -42658,16 +42648,13 @@
 /turf/open/floor/carpet,
 /area/maintenance/fore/upper)
 "glo" = (
-/obj/machinery/cryopod{
-	dir = 8
-	},
 /obj/effect/turf_decal/delivery/white{
 	color = "#00ff00";
 	name = "green"
 	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark/textured_large,
-/area/commons/cryopods)
+/area/commons/locker)
 "glp" = (
 /obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron,
@@ -46458,7 +46445,7 @@
 /turf/open/floor/iron/stairs{
 	dir = 8
 	},
-/area/commons/cryopods)
+/area/commons/locker)
 "gNV" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes{
@@ -62153,7 +62140,7 @@
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/window,
 /turf/open/floor/grass,
-/area/commons/cryopods)
+/area/commons/locker)
 "jeq" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate/bin,
@@ -63963,7 +63950,7 @@
 /area/service/hydroponics/garden)
 "jui" = (
 /turf/open/floor/iron/white/textured,
-/area/commons/cryopods)
+/area/commons/locker)
 "jul" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -76381,7 +76368,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/white/textured,
-/area/commons/cryopods)
+/area/commons/locker)
 "lln" = (
 /obj/structure/cable,
 /obj/machinery/camera/directional/south{
@@ -87372,7 +87359,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
-/area/commons/cryopods)
+/area/commons/locker)
 "mPU" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/machinery/airalarm/directional/east,
@@ -92211,9 +92198,6 @@
 	},
 /turf/open/floor/carpet,
 /area/commons/dorms)
-"nBB" = (
-/turf/closed/wall,
-/area/commons/cryopods)
 "nBC" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /turf/open/floor/circuit/telecomms/mainframe,
@@ -96265,7 +96249,7 @@
 "oiQ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /turf/open/floor/iron/white/textured_large,
-/area/commons/cryopods)
+/area/commons/locker)
 "oiU" = (
 /obj/machinery/ai_slipper{
 	uses = 10
@@ -99152,16 +99136,6 @@
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass,
 /area/medical/psychology)
-"oFM" = (
-/obj/machinery/cryopod{
-	dir = 4
-	},
-/obj/effect/turf_decal/delivery/white{
-	color = "#00ff00";
-	name = "green"
-	},
-/turf/open/floor/iron/dark/textured_large,
-/area/commons/cryopods)
 "oFN" = (
 /obj/effect/spawner/random/trash/cigbutt,
 /obj/structure/disposalpipe/segment,
@@ -110675,9 +110649,6 @@
 	color = "#00ff00";
 	name = "green"
 	},
-/obj/machinery/cryopod{
-	dir = 4
-	},
 /turf/open/floor/iron/dark,
 /area/security/prison)
 "quh" = (
@@ -117655,7 +117626,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/commons/cryopods)
+/area/commons/locker)
 "rxE" = (
 /obj/structure/chair/comfy/brown{
 	buildstackamount = 0;
@@ -117822,7 +117793,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white/textured,
-/area/commons/cryopods)
+/area/commons/locker)
 "ryS" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -128583,10 +128554,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/stone,
 /area/maintenance/starboard/fore)
-"tcQ" = (
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/commons/cryopods)
 "tcV" = (
 /obj/effect/turf_decal/delivery,
 /obj/item/kirbyplants{
@@ -132681,7 +132648,7 @@
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/window/reinforced/shuttle,
 /turf/open/floor/grass,
-/area/commons/cryopods)
+/area/commons/locker)
 "tHa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -139332,7 +139299,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured,
-/area/commons/cryopods)
+/area/commons/locker)
 "uDI" = (
 /obj/structure/trash_pile,
 /turf/open/floor/plating,
@@ -140346,7 +140313,7 @@
 "uMj" = (
 /obj/structure/cable,
 /turf/open/floor/iron/white/textured,
-/area/commons/cryopods)
+/area/commons/locker)
 "uMo" = (
 /obj/machinery/door/window/brigdoor{
 	name = "Justice Chamber";
@@ -146966,15 +146933,12 @@
 	},
 /area/engineering/atmos)
 "vKW" = (
-/obj/machinery/cryopod{
-	dir = 8
-	},
 /obj/effect/turf_decal/delivery/white{
 	color = "#00ff00";
 	name = "green"
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/commons/cryopods)
+/area/commons/locker)
 "vKZ" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -148014,7 +147978,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/commons/cryopods)
+/area/commons/locker)
 "vTJ" = (
 /obj/structure/rack,
 /obj/item/vending_refill/security_peacekeeper,
@@ -150453,9 +150417,6 @@
 /obj/effect/turf_decal/delivery/white{
 	color = "#00ff00";
 	name = "green"
-	},
-/obj/machinery/cryopod{
-	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/security/prison)
@@ -199547,8 +199508,8 @@ juB
 leU
 giL
 oUQ
-dPm
-dPm
+sac
+sac
 sac
 frw
 dif
@@ -315467,13 +315428,13 @@ ddG
 eYz
 pXk
 haW
-nBB
+amr
 kkh
-nBB
-nBB
-nBB
-nBB
-nBB
+amr
+amr
+amr
+amr
+amr
 qTM
 ntB
 mCZ
@@ -315724,13 +315685,13 @@ pfB
 eYz
 pBy
 cBC
-nBB
+amr
 mPP
-oFM
+vKW
 dAb
-oFM
+vKW
 bAy
-nBB
+amr
 fbf
 bTh
 kJK
@@ -315980,14 +315941,14 @@ nin
 nin
 uBK
 dba
-nBB
-nBB
+amr
+amr
 uMj
 fXP
 fXP
 fXP
 cjT
-nBB
+amr
 fQF
 npS
 wLx
@@ -316237,14 +316198,14 @@ qQU
 qQU
 uBK
 haW
-nBB
+amr
 fQs
 jui
 vKW
 vKW
 vKW
 ryR
-nBB
+amr
 dub
 vpH
 gcc
@@ -316494,14 +316455,14 @@ fRh
 fRh
 inH
 haW
-nBB
+amr
 jej
 jui
 tGZ
 drK
 dlF
 gNU
-nBB
+amr
 kUX
 kUX
 kUX
@@ -316751,14 +316712,14 @@ qQU
 vcE
 jMx
 haW
-nBB
+amr
 cao
 jui
-oFM
-oFM
-oFM
+vKW
+vKW
+vKW
 vTI
-tcQ
+kUX
 hxM
 fDE
 fsA
@@ -317008,8 +316969,8 @@ uyj
 cSK
 dcH
 aWt
-nBB
-nBB
+amr
+amr
 llk
 oiQ
 oiQ
@@ -317266,13 +317227,13 @@ sMZ
 jvy
 xAe
 env
-nBB
+amr
 uDG
 vKW
 glo
 vKW
 cce
-tcQ
+kUX
 czd
 pqA
 kcZ
