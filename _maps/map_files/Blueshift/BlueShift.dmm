@@ -15651,8 +15651,7 @@
 /turf/open/floor/wood/parquet,
 /area/commons/fitness/recreation)
 "cpS" = (
-/obj/machinery/door/airlock/glass{
-	},
+/obj/machinery/door/airlock/glass,
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -24254,6 +24253,9 @@
 	name = "green"
 	},
 /obj/machinery/light/directional/west,
+/obj/machinery/cryopod{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/commons/locker)
 "dAc" = (
@@ -42653,6 +42655,9 @@
 	name = "green"
 	},
 /obj/machinery/light/directional/east,
+/obj/machinery/cryopod{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/commons/locker)
 "glp" = (
@@ -73868,6 +73873,16 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/upper)
+"kQS" = (
+/obj/effect/turf_decal/delivery/white{
+	color = "#00ff00";
+	name = "green"
+	},
+/obj/machinery/cryopod{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/commons/locker)
 "kQV" = (
 /obj/structure/table,
 /obj/item/stack/spacecash/c100,
@@ -140312,6 +140327,9 @@
 /area/service/abandoned_gambling_den/secondary)
 "uMj" = (
 /obj/structure/cable,
+/obj/machinery/computer/cryopod{
+	pixel_y = 29
+	},
 /turf/open/floor/iron/white/textured,
 /area/commons/locker)
 "uMo" = (
@@ -146936,6 +146954,9 @@
 /obj/effect/turf_decal/delivery/white{
 	color = "#00ff00";
 	name = "green"
+	},
+/obj/machinery/cryopod{
+	dir = 4
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/commons/locker)
@@ -316201,9 +316222,9 @@ haW
 amr
 fQs
 jui
-vKW
-vKW
-vKW
+kQS
+kQS
+kQS
 ryR
 amr
 dub
@@ -317229,9 +317250,9 @@ xAe
 env
 amr
 uDG
-vKW
+kQS
 glo
-vKW
+kQS
 cce
 kUX
 czd
