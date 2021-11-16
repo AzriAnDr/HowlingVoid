@@ -46495,8 +46495,7 @@
 /area/commons/dorms)
 "gOk" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	dir = 8;
-	filter_type = "n2"
+	dir = 8
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes{
@@ -65659,8 +65658,7 @@
 /area/service/abandoned_gambling_den)
 "jGU" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	dir = 8;
-	filter_type = "n2"
+	dir = 8
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes{
@@ -86819,6 +86817,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/exam_room)
+"mLk" = (
+/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/engine,
+/area/engineering/supermatter/room)
 "mLm" = (
 /obj/structure/railing/corner,
 /turf/open/floor/wood,
@@ -134580,7 +134585,7 @@
 "tWl" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 8;
-	filter_type = "n2"
+	filter_type = list(/datum/gas/nitrogen)
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/engine,
@@ -261868,7 +261873,7 @@ qHE
 idE
 srD
 bRP
-tWl
+mLk
 iny
 jAX
 qgW
