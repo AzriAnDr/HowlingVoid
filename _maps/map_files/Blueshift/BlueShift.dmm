@@ -363,7 +363,7 @@
 	dir = 5
 	},
 /turf/open/floor/iron/cafeteria,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "acX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -1349,7 +1349,7 @@
 "akm" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "akn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
@@ -1397,7 +1397,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "akC" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1915,7 +1915,7 @@
 	},
 /obj/structure/dresser,
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "apo" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4,
@@ -2499,7 +2499,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "aue" = (
 /obj/machinery/disposal/bin,
 /obj/machinery/camera{
@@ -5333,7 +5333,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "aPf" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -8222,7 +8222,7 @@
 	dir = 5
 	},
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "bme" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
@@ -10094,7 +10094,7 @@
 	pixel_y = 8
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "bzF" = (
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/bot,
@@ -10884,7 +10884,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "bFC" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -14224,7 +14224,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "cfC" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/bot,
@@ -14287,7 +14287,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "cgl" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
@@ -15516,7 +15516,7 @@
 	pixel_y = 10
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "coy" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8
@@ -16169,7 +16169,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "ctD" = (
 /turf/closed/wall,
 /area/medical/surgery)
@@ -16383,7 +16383,7 @@
 	dir = 9
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "cuP" = (
 /obj/machinery/door/airlock/external{
 	name = "Atmospherics Internal Airlock";
@@ -18235,7 +18235,7 @@
 "cHW" = (
 /obj/machinery/griddle,
 /turf/open/floor/iron/cafeteria,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "cHX" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
@@ -27501,7 +27501,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "dYb" = (
 /obj/structure/chair/sofa/bench/right{
 	dir = 1
@@ -28056,7 +28056,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/iron/cafeteria,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "ebg" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -28191,7 +28191,7 @@
 /obj/machinery/photocopier,
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/wood,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "ebJ" = (
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron,
@@ -29055,7 +29055,7 @@
 "eiy" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "eiC" = (
 /obj/structure/railing{
 	dir = 4
@@ -29879,7 +29879,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "epi" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/ordnance_mixing_input{
 	dir = 4
@@ -31805,7 +31805,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "eEH" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -36018,7 +36018,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "fld" = (
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron,
@@ -36102,7 +36102,7 @@
 /obj/effect/landmark/start/nanotrasen_representative,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "fly" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes{
@@ -37145,7 +37145,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "ftK" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/station_engineer,
@@ -38974,7 +38974,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "fHr" = (
 /obj/effect/turf_decal/bot/left,
 /turf/open/floor/iron,
@@ -42592,7 +42592,7 @@
 	name = "Restroom"
 	},
 /turf/open/floor/iron/freezer,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "gkH" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/emcloset,
@@ -47276,7 +47276,7 @@
 /area/service/abandoned_gambling_den)
 "gUj" = (
 /turf/open/floor/plating,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "gUm" = (
 /obj/structure/ladder,
 /obj/effect/turf_decal/stripes/box,
@@ -51970,14 +51970,14 @@
 /obj/item/food/meat/slab/chicken,
 /obj/item/food/meat/slab/chicken,
 /turf/open/floor/iron/cafeteria,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "hEG" = (
 /obj/structure/closet/secure_closet/nanotrasen_representative/station,
 /obj/item/clothing/accessory/medal/silver/bureaucracy,
 /obj/item/clothing/accessory/medal/gold/nanotrasen_representative,
 /obj/item/clothing/accessory/medal/gold/ordom,
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "hEQ" = (
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/bot,
@@ -54075,7 +54075,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/curtain/bounty,
 /turf/open/floor/plating,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "hTp" = (
 /obj/structure/rack,
 /obj/item/storage/firstaid/regular,
@@ -55629,7 +55629,7 @@
 /obj/item/bedsheet/centcom/double,
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "ifb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -59651,7 +59651,7 @@
 	name = "Broom Closet"
 	},
 /turf/open/floor/iron,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "iKy" = (
 /obj/structure/table/wood,
 /obj/structure/window/reinforced,
@@ -64165,7 +64165,7 @@
 	dir = 10
 	},
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "jvM" = (
 /obj/machinery/door/airlock/security{
 	name = "Security Transferring Center";
@@ -64751,7 +64751,7 @@
 "jzW" = (
 /obj/structure/chair/office,
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "jAb" = (
 /obj/structure/table/wood,
 /obj/item/nullrod/rosary,
@@ -65611,7 +65611,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "jGu" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot,
@@ -67409,7 +67409,7 @@
 	dir = 4
 	},
 /turf/closed/wall/r_wall,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "jST" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -67965,7 +67965,7 @@
 	pixel_x = -5
 	},
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "jXk" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/bot,
@@ -68120,7 +68120,7 @@
 	pixel_y = 10
 	},
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "jYy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
@@ -68892,7 +68892,7 @@
 "keE" = (
 /obj/item/storage/secure/safe/directional/east,
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "keK" = (
 /obj/structure/chair{
 	dir = 1
@@ -70890,7 +70890,7 @@
 	pixel_y = -6
 	},
 /turf/open/floor/iron/freezer,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "kuk" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/neutral{
@@ -72966,7 +72966,7 @@
 	pixel_y = 0
 	},
 /turf/closed/wall/r_wall,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "kJI" = (
 /obj/structure/table/reinforced,
 /obj/item/wrench,
@@ -73690,7 +73690,7 @@
 	pixel_y = 6
 	},
 /turf/open/floor/iron/dark,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "kPa" = (
 /obj/structure/railing/corner{
 	dir = 8
@@ -73803,7 +73803,7 @@
 /area/commons/fitness/recreation)
 "kPY" = (
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "kPZ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -75443,7 +75443,7 @@
 	name = "curtain"
 	},
 /turf/open/floor/grass,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "lds" = (
 /obj/item/clothing/under/costume/gladiator,
 /obj/item/clothing/head/helmet/gladiator,
@@ -76316,7 +76316,7 @@
 	name = "curtain"
 	},
 /turf/open/floor/plating,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "ljU" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/delivery,
@@ -76918,7 +76918,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "lpd" = (
 /obj/machinery/disposal/bin,
 /obj/machinery/light/directional/west,
@@ -76926,7 +76926,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "lpe" = (
 /obj/structure/girder,
 /obj/structure/grille/broken,
@@ -81655,7 +81655,7 @@
 	pixel_y = 1
 	},
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "lYX" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood,
@@ -82582,7 +82582,7 @@
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "mfY" = (
 /obj/machinery/roulette,
 /obj/effect/decal/cleanable/dirt,
@@ -83406,7 +83406,7 @@
 /obj/item/pushbroom,
 /obj/item/storage/bag/trash,
 /turf/open/floor/iron,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "mng" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/table/reinforced,
@@ -83434,7 +83434,7 @@
 /area/service/abandoned_gambling_den)
 "mno" = (
 /turf/closed/wall,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "mnp" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -84967,7 +84967,7 @@
 	pixel_x = -5
 	},
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "mxa" = (
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 8
@@ -86490,7 +86490,7 @@
 "mIq" = (
 /obj/machinery/oven,
 /turf/open/floor/iron/cafeteria,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "mIv" = (
 /obj/effect/turf_decal/stripes{
 	dir = 8
@@ -90174,7 +90174,7 @@
 	dir = 6
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "nlT" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plating,
@@ -91640,7 +91640,7 @@
 /area/space/nearstation)
 "nxj" = (
 /turf/closed/wall/r_wall,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "nxk" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
@@ -92181,7 +92181,7 @@
 	pixel_y = 0
 	},
 /turf/closed/wall/r_wall,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "nBe" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Bunker Safehouse";
@@ -92387,7 +92387,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "nCr" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -93688,7 +93688,7 @@
 	name = "curtain"
 	},
 /turf/open/floor/grass,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "nMZ" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	color = "#DE3A3A";
@@ -97110,7 +97110,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "oqa" = (
 /obj/structure/table/reinforced,
 /obj/item/electronics/apc{
@@ -101826,7 +101826,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "pbO" = (
 /obj/machinery/door/airlock{
 	name = "Hydroponics Test Lab";
@@ -101907,7 +101907,7 @@
 	},
 /obj/machinery/holopad/secure,
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "pcp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -103618,7 +103618,7 @@
 	},
 /obj/effect/landmark/start/nanotrasen_representative,
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "ppn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4,
@@ -104936,7 +104936,7 @@
 	dir = 9
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "pyD" = (
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron,
@@ -106321,7 +106321,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "pIY" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -107189,7 +107189,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "pPU" = (
 /obj/structure/railing{
 	dir = 8
@@ -107562,7 +107562,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "pTr" = (
 /obj/structure/frame/machine,
 /obj/machinery/light/small/directional/south,
@@ -107768,7 +107768,7 @@
 	dir = 5
 	},
 /turf/open/floor/wood,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "pVn" = (
 /turf/open/floor/light,
 /area/commons/fitness/recreation)
@@ -113463,7 +113463,7 @@
 /obj/machinery/light/directional/west,
 /obj/machinery/bounty_board/directional/west,
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "qQG" = (
 /turf/open/openspace/airless/planetary,
 /area/space)
@@ -115718,7 +115718,7 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/wood,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "rif" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/siding/wood,
@@ -116323,7 +116323,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "rmt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -117709,7 +117709,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "rxI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/curtain/cloth/fancy/mechanical{
@@ -123184,7 +123184,7 @@
 /obj/item/clothing/suit/toggle/armor/vest/centcom_formal/ntrep,
 /obj/item/clothing/suit/toggle/armor/vest/centcom_formal,
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "sma" = (
 /obj/structure/closet/secure_closet/chemical{
 	anchored = 1
@@ -126735,7 +126735,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "sOU" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
@@ -127017,7 +127017,7 @@
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "sRb" = (
 /obj/structure/sink{
 	pixel_y = 22
@@ -127032,7 +127032,7 @@
 /obj/structure/drain,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/freezer,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "sRe" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -129705,7 +129705,7 @@
 /obj/machinery/newscaster/directional/west,
 /obj/effect/landmark/start/nanotrasen_representative,
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "tlz" = (
 /obj/machinery/power/solar_control{
 	id = "foreport";
@@ -130942,7 +130942,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "tuA" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/effect/turf_decal/bot,
@@ -132371,7 +132371,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "tDO" = (
 /turf/open/floor/carpet,
 /area/security/detectives_office)
@@ -132491,7 +132491,7 @@
 	},
 /obj/effect/landmark/start/nanotrasen_representative,
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "tET" = (
 /obj/effect/turf_decal/stripes/end{
 	dir = 8
@@ -135806,7 +135806,7 @@
 	req_access_txt = "101"
 	},
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "ufI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -137606,7 +137606,7 @@
 	pixel_x = -3
 	},
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "uqN" = (
 /obj/structure/toilet{
 	dir = 8
@@ -138419,7 +138419,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "uwE" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/maintenance,
@@ -142218,7 +142218,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "vbl" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
@@ -143509,7 +143509,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "vkI" = (
 /obj/effect/spawner/random/maintenance,
 /obj/effect/decal/cleanable/dirt,
@@ -144734,7 +144734,7 @@
 "vto" = (
 /obj/machinery/vending/boozeomat,
 /turf/closed/wall/r_wall,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "vtt" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
@@ -146371,7 +146371,7 @@
 /turf/open/floor/iron/stairs/old{
 	dir = 8
 	},
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "vGq" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -146932,7 +146932,7 @@
 "vKc" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "vKh" = (
 /obj/structure/window/reinforced/tinted{
 	dir = 8
@@ -147280,7 +147280,7 @@
 	pixel_y = 8
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "vMU" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 9
@@ -148020,7 +148020,7 @@
 	name = "curtain"
 	},
 /turf/open/floor/grass,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "vTC" = (
 /obj/effect/turf_decal/stripes,
 /obj/machinery/power/shieldwallgen,
@@ -149514,7 +149514,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "wgn" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
@@ -149559,7 +149559,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "wgI" = (
 /obj/machinery/atmospherics/pipe/smart/simple/pink/visible{
 	dir = 9
@@ -154031,7 +154031,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "wOQ" = (
 /turf/open/floor/iron,
 /area/science/research/abandoned)
@@ -156239,7 +156239,7 @@
 /obj/machinery/light/directional/east,
 /obj/effect/landmark/start/nanotrasen_representative,
 /turf/open/floor/carpet/green,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "xgy" = (
 /obj/structure/railing/corner{
 	dir = 8
@@ -157301,7 +157301,7 @@
 /turf/open/floor/iron/stairs/old{
 	dir = 8
 	},
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "xnm" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt,
@@ -161655,7 +161655,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood/parquet,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "xVc" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -163146,7 +163146,7 @@
 	},
 /obj/structure/awaymissions/wildwest/masterclock,
 /turf/open/floor/wood,
-/area/command/heads_quarters/captain/private/NTREP)
+/area/command/heads_quarters/captain/private/nt_rep)
 "yhQ" = (
 /turf/closed/wall,
 /area/service/hydroponics/garden)
