@@ -27831,7 +27831,6 @@
 /area/hallway/secondary/entry)
 "eac" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/reagent_dispensers/keg/aphro,
 /turf/open/floor/plating,
 /area/maintenance/fore/upper)
 "ead" = (
@@ -100211,7 +100210,6 @@
 	},
 /area/maintenance/fore/upper)
 "oOo" = (
-/obj/structure/reagent_dispensers/keg/aphro,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
