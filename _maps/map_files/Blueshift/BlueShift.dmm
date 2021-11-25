@@ -45970,7 +45970,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
-/obj/item/clothing/gloves/fingerless/blutigen_wraps,
 /obj/item/clothing/gloves/fingerless{
 	pixel_y = 5
 	},
@@ -59635,7 +59634,6 @@
 /obj/item/clothing/under/rank/engineering/chief_engineer/imperial,
 /obj/item/clothing/head/imperial/ce,
 /obj/item/clothing/head/hardhat/weldhat/white,
-/obj/item/clothing/gloves/kilano,
 /obj/item/clothing/suit/hooded/wintercoat/engineering/ce,
 /obj/item/clothing/neck/cloak/ce,
 /obj/item/clothing/neck/mantle/cemantle,
@@ -120517,10 +120515,6 @@
 /obj/item/clothing/shoes/jungleboots{
 	pixel_x = 5;
 	pixel_y = 8
-	},
-/obj/item/clothing/shoes/winterboots/kilano{
-	pixel_x = -6;
-	pixel_y = -2
 	},
 /obj/item/clothing/shoes/winterboots{
 	pixel_y = -2
