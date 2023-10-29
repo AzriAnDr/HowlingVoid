@@ -1491,9 +1491,8 @@
 /area/station/commons/storage/art)
 "anD" = (
 /obj/structure/table,
-/obj/machinery/microwave{
-	pixel_x = -1;
-	pixel_y = 5
+/obj/machinery/microwave/engineering/cell_included{
+	pixel_y = 8
 	},
 /turf/open/floor/wood,
 /area/station/commons/dorms/room5)
@@ -10273,9 +10272,8 @@
 "bLW" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/table,
-/obj/machinery/microwave{
-	pixel_x = -1;
-	pixel_y = 6
+/obj/machinery/microwave/engineering/cell_included{
+	pixel_y = 8
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/cargo/storage)
@@ -19652,7 +19650,9 @@
 /area/station/hallway/primary/upper)
 "djE" = (
 /obj/structure/table/reinforced,
-/obj/machinery/microwave,
+/obj/machinery/microwave/engineering/cell_included{
+	pixel_y = 6
+	},
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
@@ -30139,10 +30139,8 @@
 /area/station/cargo/office)
 "eWC" = (
 /obj/structure/table/reinforced,
-/obj/machinery/microwave{
-	desc = "Cooks and boils stuff, somehow.";
-	pixel_x = -3;
-	pixel_y = 5
+/obj/machinery/microwave/engineering/cell_included{
+	pixel_y = 8
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/dark/side{
@@ -30709,9 +30707,8 @@
 /area/station/maintenance/department/medical/central)
 "faZ" = (
 /obj/structure/table,
-/obj/machinery/microwave{
-	pixel_x = -1;
-	pixel_y = 5
+/obj/machinery/microwave/engineering/cell_included{
+	pixel_y = 8
 	},
 /obj/machinery/button/door/directional/west{
 	id = "Dorm7";
@@ -39058,9 +39055,8 @@
 /area/station/security/courtroom)
 "gxj" = (
 /obj/structure/table,
-/obj/machinery/microwave{
-	pixel_x = -1;
-	pixel_y = 5
+/obj/machinery/microwave/engineering/cell_included{
+	pixel_y = 8
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/wood,
@@ -55776,9 +55772,8 @@
 /area/station/hallway/primary/central)
 "jpQ" = (
 /obj/structure/table,
-/obj/machinery/microwave{
-	pixel_x = -1;
-	pixel_y = 5
+/obj/machinery/microwave/engineering/cell_included{
+	pixel_y = 8
 	},
 /turf/open/floor/wood,
 /area/station/commons/dorms/room1)
@@ -59532,8 +59527,8 @@
 /area/station/engineering/main)
 "jUS" = (
 /obj/structure/table,
-/obj/machinery/microwave{
-	pixel_y = 4
+/obj/machinery/microwave/engineering/cell_included{
+	pixel_y = 8
 	},
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/button/door/directional/north{
@@ -98236,10 +98231,8 @@
 /area/station/medical/chemistry)
 "qrc" = (
 /obj/structure/table/reinforced,
-/obj/machinery/microwave{
-	desc = "Cooks and boils stuff, somehow.";
-	pixel_x = -3;
-	pixel_y = 5
+/obj/machinery/microwave/engineering/cell_included{
+	pixel_y = 8
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
@@ -105673,9 +105666,8 @@
 /area/station/maintenance/starboard/fore)
 "rCo" = (
 /obj/structure/table,
-/obj/machinery/microwave{
-	pixel_x = -1;
-	pixel_y = 5
+/obj/machinery/microwave/engineering/cell_included{
+	pixel_y = 8
 	},
 /obj/machinery/button/curtain{
 	id = "dormscurtain4";
@@ -115709,7 +115701,9 @@
 /area/station/security/checkpoint/escape)
 "tiE" = (
 /obj/structure/table,
-/obj/machinery/microwave,
+/obj/machinery/microwave/engineering/cell_included{
+	pixel_y = 8
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/upper)
 "tiF" = (
@@ -138840,9 +138834,8 @@
 /area/station/maintenance/department/medical)
 "wZg" = (
 /obj/structure/table,
-/obj/machinery/microwave{
-	pixel_x = -1;
-	pixel_y = 5
+/obj/machinery/microwave/engineering/cell_included{
+	pixel_y = 8
 	},
 /obj/machinery/button/curtain{
 	id = "dormscurtain8";
@@ -143361,9 +143354,8 @@
 /area/station/science/ordnance/burnchamber)
 "xNB" = (
 /obj/structure/table,
-/obj/machinery/microwave{
-	pixel_x = -1;
-	pixel_y = 5
+/obj/machinery/microwave/engineering/cell_included{
+	pixel_y = 8
 	},
 /obj/machinery/button/door/directional/west{
 	id = "Dorm3";
