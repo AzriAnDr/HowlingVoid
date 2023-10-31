@@ -128168,12 +128168,12 @@
 /area/station/commons/dorms)
 "vof" = (
 /obj/docking_port/stationary{
-	dheight = 43;
 	dir = 4;
 	height = 19;
 	name = "Deprecated Port Dock";
 	shuttle_id = "whiteship_home";
-	width = 55
+	width = 55;
+	dwidth = 43
 	},
 /turf/open/space/basic,
 /area/space)
