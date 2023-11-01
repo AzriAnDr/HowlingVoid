@@ -42125,8 +42125,7 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "gZu" = (
-/obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("ordnancegas1"="Burn Chamber","ordnancegas2"="Freezer Chamber");
+/obj/machinery/computer/atmos_control/ordnancemix{
 	dir = 8
 	},
 /turf/open/floor/engine{
@@ -68063,8 +68062,8 @@
 /turf/open/floor/iron/dark,
 /area/station/science/power_station)
 "lpR" = (
-/obj/machinery/doppler_array,
 /obj/effect/turf_decal/bot_red,
+/obj/machinery/doppler_array,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "lpV" = (
@@ -97609,9 +97608,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/upper)
 "qmn" = (
-/obj/machinery/air_sensor{
-	chamber_id = "ordnancegas1"
-	},
+/obj/machinery/air_sensor/ordnance_burn_chamber,
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
 "qmr" = (
@@ -133018,9 +133015,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer4{
 	dir = 4
 	},
-/obj/machinery/air_sensor{
-	chamber_id = "ordnancegas2"
-	},
+/obj/machinery/air_sensor/ordnance_freezer_chamber,
 /turf/open/floor/engine,
 /area/station/science/ordnance/freezerchamber)
 "wcJ" = (
