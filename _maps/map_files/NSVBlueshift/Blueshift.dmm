@@ -43461,6 +43461,10 @@
 /obj/machinery/duct,
 /turf/open/floor/wood,
 /area/station/commons/dorms/vacantroom)
+"hlw" = (
+/obj/machinery/air_sensor/engine_chamber,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "hlC" = (
 /obj/effect/turf_decal/box,
 /obj/machinery/holopad,
@@ -60794,10 +60798,14 @@
 /obj/structure/table,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/mixingchamber_access,
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks,
+/obj/effect/mapping_helpers/airalarm/link{
+	chamber_id = "ordnanceburn"
+	},
 /turf/open/floor/engine{
 	icon_state = "floor"
 	},
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "kfv" = (
 /obj/effect/decal/cleanable/dirt{
 	icon_state = "dirt-flat-1"
@@ -69900,6 +69908,10 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "Gas to Chamber"
 	},
+/obj/effect/mapping_helpers/airalarm/link{
+	chamber_id = "engine"
+	},
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "lGz" = (
@@ -121659,10 +121671,14 @@
 	},
 /obj/machinery/airalarm/directional/south,
 /obj/effect/mapping_helpers/airalarm/mixingchamber_access,
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks,
+/obj/effect/mapping_helpers/airalarm/link{
+	chamber_id = "ordnancefreezer"
+	},
 /turf/open/floor/engine{
 	icon_state = "darkfull"
 	},
-/area/station/science/ordnance/freezerchamber)
+/area/station/science/ordnance)
 "uja" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -177741,7 +177757,7 @@ jbe
 nxi
 tBq
 kQu
-qax
+hlw
 mdF
 qax
 pTu
