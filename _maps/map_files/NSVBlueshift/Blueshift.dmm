@@ -7548,10 +7548,6 @@
 	},
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/assistance,
-/obj/machinery/requests_console/directional/west{
-	department = "Toxins Lab";
-	name = "Toxins Requests Console"
-	},
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/turf_decal/bot,
@@ -20850,7 +20846,7 @@
 /obj/structure/railing,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "publicElevator";
-	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
+	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/primary/central)
@@ -91796,7 +91792,6 @@
 "pnj" = (
 /obj/machinery/hydroponics/constructable,
 /obj/structure/flora/bush/sparsegrass,
-/obj/machinery/hydroponics/constructable,
 /turf/open/floor/grass,
 /area/station/security/prison/garden)
 "pnk" = (
@@ -135000,7 +134995,6 @@
 /obj/effect/turf_decal/box/white{
 	color = "#52B4E9"
 	},
-/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
