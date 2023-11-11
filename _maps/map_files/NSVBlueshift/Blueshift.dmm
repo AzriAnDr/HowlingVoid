@@ -20846,7 +20846,7 @@
 /obj/structure/railing,
 /obj/machinery/elevator_control_panel/directional/south{
 	linked_elevator_id = "publicElevator";
-	preset_destination_names = list("2"="Lower  Deck","3"="Upper  Deck")
+	preset_destination_names = list("2"="Lower Deck","3"="Upper Deck")
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/primary/central)
@@ -30642,7 +30642,6 @@
 "fax" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "faz" = (
@@ -33226,7 +33225,6 @@
 "fwI" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating,
 /area/station/cargo/drone_bay)
 "fwM" = (
@@ -34771,7 +34769,6 @@
 /turf/open/floor/wood/large,
 /area/station/service/theater/abandoned)
 "fLn" = (
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/engine,
@@ -41710,8 +41707,6 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -42115,11 +42110,6 @@
 "gZm" = (
 /turf/open/floor/wood,
 /area/station/service/library)
-"gZp" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "gZu" = (
 /obj/machinery/computer/atmos_control/ordnancemix{
 	dir = 8
@@ -54289,7 +54279,6 @@
 "jcw" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
@@ -58899,8 +58888,6 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -64076,7 +64063,6 @@
 /area/station/cargo/miningoffice)
 "kFe" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "kFn" = (
@@ -68048,18 +68034,6 @@
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva)
-"lpP" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 2
-	},
-/obj/structure/disposaloutlet{
-	dir = 1
-	},
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "lpQ" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -75168,7 +75142,7 @@
 /area/station/science/xenobiology)
 "mBe" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "mBt" = (
@@ -83107,7 +83081,6 @@
 	},
 /area/station/hallway/secondary/entry)
 "nSZ" = (
-/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -112168,12 +112141,6 @@
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating,
 /area/station/security/courtroom)
-"sFT" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "sFU" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
@@ -132887,7 +132854,6 @@
 "wbW" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
@@ -144298,7 +144264,6 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -144327,7 +144292,6 @@
 /area/station/medical/pharmacy)
 "xXm" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
@@ -242246,7 +242210,7 @@ lcM
 bOU
 mya
 pWp
-sFT
+mBe
 tyf
 tyf
 fDT
@@ -242753,8 +242717,8 @@ rPB
 ttS
 beQ
 dfM
-gZp
-gZp
+dNw
+dNw
 gUs
 rJh
 dfF
@@ -243017,7 +242981,7 @@ iai
 lAF
 tvg
 ono
-sFT
+mBe
 tyf
 tyf
 fDT
@@ -243781,8 +243745,8 @@ rPB
 ajP
 xep
 dfM
-mBe
-mBe
+tyf
+tyf
 jQj
 lRC
 bgt
@@ -244554,7 +244518,7 @@ tzR
 gDN
 tyf
 tyf
-lpP
+jQj
 plv
 eUV
 kzI
