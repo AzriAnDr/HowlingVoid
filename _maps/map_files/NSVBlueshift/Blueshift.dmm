@@ -73033,11 +73033,15 @@
 	c_tag = "Engineering - Secure tech storage";
 	name = "engineering camera"
 	},
-/obj/item/circuitboard/machine/circuit_imprinter/department,
-/obj/item/circuitboard/machine/protolathe/department,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes{
 	dir = 8
+	},
+/obj/item/ai_module/core/full/custom{
+	pixel_y = -4
+	},
+/obj/item/ai_module/reset{
+	pixel_y = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
