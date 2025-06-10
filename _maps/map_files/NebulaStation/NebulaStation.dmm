@@ -9203,6 +9203,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine/hull/reinforced,
 /area/space/nearstation)
+"bwG" = (
+/obj/machinery/computer/scan_consolenew,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/textured,
+/area/station/science/genetics)
 "bwJ" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /obj/effect/turf_decal/stripes/line{
@@ -19756,11 +19761,6 @@
 /obj/machinery/digital_clock/directional/south,
 /turf/open/floor/carpet,
 /area/station/medical/psychology)
-"cWV" = (
-/obj/machinery/computer/scan_consolenew,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron/dark/textured,
-/area/station/science/genetics)
 "cXn" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/purple/visible{
@@ -27703,6 +27703,16 @@
 	},
 /turf/open/floor/iron/dark/airless,
 /area/station/science/ordnance/freezerchamber)
+"eee" = (
+/obj/machinery/door/poddoor/massdriver_chapel,
+/obj/machinery/atmos_shield_gen/active{
+	dir = 8
+	},
+/obj/machinery/atmos_shield_gen/active{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/service/chapel/office)
 "eeg" = (
 /obj/effect/turf_decal/trimline/dark/corner{
 	dir = 4
@@ -39422,6 +39432,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/prison/workout)
+"fRs" = (
+/obj/machinery/computer/scan_consolenew{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/science/genetics)
 "fRu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -39740,6 +39757,13 @@
 /obj/structure/flora/rock/style_random,
 /turf/open/floor/grass,
 /area/station/cargo/lobby)
+"fTI" = (
+/obj/machinery/computer/scan_consolenew{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/textured,
+/area/station/science/genetics)
 "fTL" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/railing/corner,
@@ -77460,13 +77484,6 @@
 	dir = 4
 	},
 /area/station/commons/toilet/restrooms)
-"luw" = (
-/obj/machinery/computer/scan_consolenew{
-	dir = 1
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron/dark/textured,
-/area/station/science/genetics)
 "luy" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 4
@@ -77896,11 +77913,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port)
-"lzm" = (
-/obj/machinery/door/poddoor/massdriver_ordnance,
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/station/science/ordnance/testlab)
 "lzn" = (
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 1
@@ -105052,11 +105064,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room/upper)
-"pyZ" = (
-/obj/machinery/door/poddoor/massdriver_chapel,
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/station/service/chapel/office)
 "pzd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -105361,22 +105368,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
-"pAK" = (
-/obj/effect/turf_decal/siding/wood/end,
-/obj/structure/closet/secure_closet/detective,
-/obj/item/clothing/head/fedora/det_hat{
-	icon_state = "curator"
-	},
-/obj/item/clothing/suit/toggle/jacket/det_trench{
-	icon_state = "curator"
-	},
-/obj/item/clothing/under/rank/security/detective,
-/obj/machinery/requests_console/directional/south{
-	department = "Detective's Office";
-	name = "Detective's Requests Console"
-	},
-/turf/open/floor/wood/large,
-/area/station/security/detectives_office)
 "pAP" = (
 /obj/structure/railing,
 /obj/structure/hedge,
@@ -124379,11 +124370,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/small,
 /area/station/engineering/lobby)
-"svQ" = (
-/obj/structure/fans/tiny,
-/obj/machinery/door/poddoor/massdriver_trash,
-/turf/open/floor/plating,
-/area/station/maintenance/disposal)
 "svU" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
 	dir = 1
@@ -125373,6 +125359,14 @@
 /obj/structure/flora/bush/sunny/style_random,
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
+"sEp" = (
+/obj/machinery/door/poddoor/massdriver_ordnance,
+/obj/machinery/atmos_shield_gen/active{
+	dir = 1
+	},
+/obj/machinery/atmos_shield_gen/active,
+/turf/open/floor/plating,
+/area/station/science/ordnance/testlab)
 "sEr" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/structure/railing,
@@ -126184,6 +126178,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/port)
+"sKQ" = (
+/obj/machinery/door/poddoor/massdriver_trash,
+/obj/machinery/atmos_shield_gen/active{
+	dir = 4
+	},
+/obj/machinery/atmos_shield_gen/active{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/disposal)
 "sKS" = (
 /obj/structure/flora/grass/green/style_3,
 /obj/structure/flora/bush/flowers_br/style_random,
@@ -130468,6 +130472,22 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
+"trZ" = (
+/obj/effect/turf_decal/siding/wood/end,
+/obj/structure/closet/secure_closet/detective,
+/obj/item/clothing/head/fedora/det_hat{
+	icon_state = "curator"
+	},
+/obj/item/clothing/suit/toggle/jacket/det_trench{
+	icon_state = "curator"
+	},
+/obj/item/clothing/under/rank/security/detective,
+/obj/machinery/requests_console/directional/south{
+	department = "Detective's Office";
+	name = "Detective's Requests Console"
+	},
+/turf/open/floor/wood/large,
+/area/station/security/detectives_office)
 "tse" = (
 /obj/structure/flora/grass/both/style_2,
 /obj/structure/flora/bush/lavendergrass,
@@ -143424,13 +143444,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/engineering/atmos)
-"vme" = (
-/obj/machinery/computer/scan_consolenew{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron/dark/textured_large,
-/area/station/science/genetics)
 "vmi" = (
 /obj/effect/decal/cleanable/plasma,
 /obj/effect/mapping_helpers/broken_floor,
@@ -207146,7 +207159,7 @@ gym
 gym
 gym
 dfy
-lzm
+sEp
 dfy
 jBy
 jBy
@@ -236993,7 +237006,7 @@ txW
 txW
 txW
 txW
-pyZ
+eee
 nln
 ghb
 yhl
@@ -253230,7 +253243,7 @@ rFH
 bFu
 mHY
 kRB
-svQ
+sKQ
 txW
 txW
 txW
@@ -262921,7 +262934,7 @@ ybp
 kxu
 uQV
 ybp
-vme
+fRs
 boB
 red
 gnx
@@ -263438,9 +263451,9 @@ ybp
 afT
 hYG
 nUa
-luw
+fTI
 sTf
-cWV
+bwG
 vyo
 jkO
 uEU
@@ -272499,7 +272512,7 @@ gNB
 tfl
 ind
 uWy
-pAK
+trZ
 fsP
 tSB
 fbE
