@@ -11,6 +11,7 @@
 		TRAIT_WATER_HATER,
 		TRAIT_FELINE,
 		TRAIT_SENSITIVE_HEARING,
+		TRAIT_NIGHT_VISION,
 	)
 	mutanttongue = /obj/item/organ/tongue/cat/tajaran
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID

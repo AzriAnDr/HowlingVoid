@@ -1,11 +1,14 @@
 /datum/species/vulpkanin
-	name = "Vulpkanin"
+	name = "Вульпканин"
 	id = SPECIES_VULP
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_LITERATE,
 		TRAIT_MUTANT_COLORS,
+		TRAIT_SENSITIVE_HEARING,
+		TRAIT_NIGHT_VISION,
+		TRAIT_CANINE,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	mutant_bodyparts = list()
