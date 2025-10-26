@@ -160,7 +160,7 @@
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = FA_ICON_HEADPHONES_SIMPLE,
 			SPECIES_PERK_NAME = "Чуткий слух",
-			SPECIES_PERK_DESC = "Таяры лучше слышат. Вы можете слышать даже самые тихие звуки, но из-за этого уши стали более чувствительные!",
+			SPECIES_PERK_DESC = "Вульпы лучше слышат. Вы можете слышать даже самые тихие звуки, но из-за этого уши стали более чувствительные!",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
