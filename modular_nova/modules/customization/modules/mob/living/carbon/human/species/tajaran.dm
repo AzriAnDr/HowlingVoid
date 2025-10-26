@@ -261,7 +261,35 @@
 	icon_state = "cybertongue"
 	inhand_icon_state = "nothing"
 	flags_1 = NONE
-	item_flags = ABSTRACT | DROPDEL
+
+/obj/item/hand_item/tajaran_scent_focus/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/datum/action/cooldown/tajaran_scent_scan/ability = locate(/datum/action/cooldown/tajaran_scent_scan) in user.actions
+	if(ability)
+		if(get_dist(get_turf(interacting_with), get_turf(user)) > 1)
+			to_chat(user, span_warning("Слишком далеко, чтобы уловить запах."))
+			ability.StartCooldown(3 SECONDS)
+		else
+			user.visible_message(
+			span_notice("[user] принюхивается к [interacting_with], вдыхая запахи."),
+			span_notice("Ты принюхиваешься к [interacting_with]...")
+			)
+
+			if(!do_after(user, 2.5 SECONDS, user, max_interact_count = 1))
+				to_chat(user, span_warning("Ты теряешь след."))
+				ability.StartCooldown(2 SECONDS)
+			else
+				ability.perform_scan(user, interacting_with)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
+
+//Прок в случае потери нюхала каким либо образом
+/obj/item/hand_item/tajaran_scent_focus/Destroy(force)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/user = loc
+		var/datum/action/cooldown/tajaran_scent_scan/ability = locate(/datum/action/cooldown/tajaran_scent_scan) in user.actions
+		if(ability)
+			ability.StartCooldown(2 SECONDS)
+	return ..()
 
 // ============================================================================
 // Tajaran scent tracking system — full version
@@ -274,14 +302,6 @@
 #define DETSCAN_CATEGORY_REAGENTS  "reagents"
 */
 
-// --- доп. переменные для таяры ---
-/mob/living/carbon/human
-	var/list/scent_targets = list()
-	var/datum/weakref/tajaran_scent_target
-	var/mob/living/carbon/human/scent_target = null
-
-
-
 // ============================================================================
 // === SCENT SCAN ABILITY ===
 // ============================================================================
@@ -293,31 +313,16 @@
 	button_icon_state = "cybertongue"
 	cooldown_time = 6 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS
-	click_to_activate = TRUE
 
 /datum/action/cooldown/tajaran_scent_scan/Activate(atom/target)
 	var/mob/living/carbon/human/H = owner
 	if(!H)
 		return FALSE
-	if(!target)
-		target = get_turf(H)
+	//Если игрок уже что-то держит
+	if(!isnull(H.get_active_held_item()))
+		return FALSE
 
-	if(get_dist(get_turf(target), get_turf(H)) > 1)
-		to_chat(H, span_warning("Слишком далеко, чтобы уловить запах."))
-		StartCooldown(3 SECONDS)
-		return TRUE
-
-	H.visible_message(
-		span_notice("[H] принюхивается к [target], вдыхая запахи."),
-		span_notice("Ты принюхиваешься к [target]...")
-	)
-
-	if(!do_after(H, 2.5 SECONDS, H, max_interact_count = 1))
-		to_chat(H, span_warning("Ты теряешь след."))
-		StartCooldown(2 SECONDS)
-		return TRUE
-
-	perform_scan(H, target)
+	H.put_in_active_hand(new /obj/item/hand_item/tajaran_scent_focus)
 	return TRUE
 
 // --- ОСНОВА СКАНА  ---
@@ -335,36 +340,30 @@
 		if(LAZYLEN(formatted))
 			messages += formatted
 
+		var/datum/action/cooldown/tajaran_scent_tracking/ability = locate(/datum/action/cooldown/tajaran_scent_tracking) in H.actions
+
 		var/list/prints = log_entry[DETSCAN_CATEGORY_FINGERS]
-		if(LAZYLEN(prints))
+		if(LAZYLEN(prints) && ability)
+			//Отдельное добавление списков нужно чтобы у игрока не пропадали новые запахи из-за старого таймера
 			for(var/p in prints)
 				if(istext(p) && !(p in fingerprints_found))
 					fingerprints_found += p
+			if(LAZYLEN(fingerprints_found))
+				//Добавление в конец списка
+				LAZYADD(ability.scent_targets, fingerprints_found)
+				addtimer(CALLBACK(ability, TYPE_PROC_REF(/datum/action/cooldown/tajaran_scent_tracking, clear_tajaran_scent_target), LAZYLEN(fingerprints_found) + 1), 30 SECONDS)
 
 	if(!LAZYLEN(messages))
 		to_chat(H, span_notice("Ты не чуешь ничего особенного."))
-		StartCooldown()
-		return
-
-	H.balloon_alert(H, "запах уловлен")
-	to_chat(H, span_notice("<b>Ты улавливаешь запахи вокруг:</b>"))
-	for(var/line in messages)
-		to_chat(H, span_info(line))
-
-	// ищем подходящую цель
-	var/mob/living/carbon/human/target_to_track = find_best_target(H, fingerprints_found)
-	if(target_to_track)
-		H.scent_target = target_to_track
-		H.balloon_alert(H, "запах запомнен")
-		to_chat(H, span_notice("Ты запоминаешь запах [target_to_track.real_name]."))
-		// Автоочистка через 30 секунд НЕ РАБОТАЕТ ПОКА ЧТО МОГЕКО ФИКСИ
-		addtimer(CALLBACK(H, /mob/living/carbon/human/proc/clear_tajaran_scent_target), 30 SECONDS)
 	else
-		to_chat(H, span_warning("Ты не можешь определить источник запаха."))
-
+		H.balloon_alert(H, "запах уловлен")
+		to_chat(H, span_notice("<b>Ты улавливаешь запахи вокруг:</b>"))
+		for(var/line in messages)
+			to_chat(H, span_info(line))
 
 	StartCooldown()
-	return
+	return TRUE
+
 // --- СБОР ДАННЫХ ---
 /datum/action/cooldown/tajaran_scent_scan/proc/gather_forensic_data(atom/A)
     if(!A)
@@ -440,30 +439,7 @@
 
     return lines
 
-// --- ПОИСК ЖИВОЙ ЦЕЛИ ---
-/datum/action/cooldown/tajaran_scent_scan/proc/find_best_target(mob/living/carbon/human/H, list/prints)
-    if(!H || !LAZYLEN(prints))
-        return null
 
-    var/turf/tH = get_turf(H)
-
-    for(var/mob/living/carbon/human/M as anything in GLOB.human_list)
-        if(M == H || QDELETED(M) || M.stat == DEAD || !M.dna?.unique_identity)
-            continue
-        var/turf/tM = get_turf(M)
-        if(!tM || !tH || tM.z != tH.z)
-            continue
-        if(md5(M.dna.unique_identity) in prints)
-            return M
-    return null
-
-
-// --- ПЕРЕМЕННАЯ ДЛЯ ЗАПОМНЕННОГО ЗАПАХА ---
-
-/mob/living/carbon/human/proc/clear_tajaran_scent_target()
-	if(tajaran_scent_target)
-		tajaran_scent_target = null
-		balloon_alert(src, "следы выветрились")
 
 // === СПОСОБНОСТЬ ДЛЯ ОТСЛЕЖИВАНИЯ ===
 /datum/action/cooldown/tajaran_scent_tracking
@@ -474,28 +450,90 @@
 	button_icon_state = "nose"
 	cooldown_time = 2 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS
+	var/list/scent_targets = list()
+	var/mob/living/carbon/human/scent_target = null
+
+/datum/action/cooldown/tajaran_scent_tracking/PreActivate(atom/target)
+	var/mob/living/carbon/human/H = owner
+	if(!LAZYLEN(scent_targets))
+		return FALSE
+	//Общий список информации, который увидит игрок
+	var/list/built_radial_list = list()
+	//Список для ссылки на оригинальные цели, чтобы достать их из списка сверху
+	var/list/name2subtype = list()
+	if(!(scent_target in scent_targets))
+		scent_target = null
+	//Заготовка списка. Здесь можно обработать иконки и инфо штук
+	for(var/fingerprints in scent_targets)
+		var/mob/living/carbon/human/human_target = find_best_target(H, fingerprints)
+		if(!human_target)
+			continue
+		var/datum/radial_menu_choice/option = new
+		option.image = image(icon = 'icons/mob/actions/actions_items.dmi', icon_state = "bci_question")
+		//Лишнее? Может будет проще для игрока заранее узнать как далеко цель
+		option.info = get_tajaran_scent_balloon(H, human_target)
+		name2subtype[initial(human_target.name)] = human_target
+		built_radial_list += list(initial(human_target.name) = option)
+
+	scent_target = name2subtype[show_radial_menu(H, H, built_radial_list, radius = 42)]
+	if(!scent_target)
+		return FALSE
+	return ..()
 
 // === Вызываем стрелку при активации нюха ===
 /datum/action/cooldown/tajaran_scent_tracking/Activate(atom/target)
-    var/mob/living/carbon/human/H = owner
-    if(!H || !H.scent_target)
-        H.balloon_alert(H, "ничего не чувствую")
-        return TRUE
+	var/mob/living/carbon/human/H = owner
+	if(!H)
+		return FALSE
+	// ищем подходящую цель
+	if(scent_target)
+		to_chat(H, span_notice("Ты запоминаешь запах [scent_target.real_name]."))
+	else
+		to_chat(H, span_warning("Ты не можешь определить источник запаха."))
+		return FALSE
 
-    var/mob/living/carbon/human/T = H.scent_target
-    if(QDELETED(T))
-        H.scent_target = null
-        H.balloon_alert(H, "след пропал")
-        return TRUE
+	var/mob/living/carbon/human/T = scent_target
+	if(QDELETED(T))
+		scent_target = null
+		H.balloon_alert(H, "след пропал")
+		return TRUE
 
-    var/msg = get_tajaran_scent_balloon(H, T)
-    H.balloon_alert(H, msg)
-    show_tajaran_scent_arrow(H, T)
-    StartCooldown()
-    return TRUE
+	var/msg = get_tajaran_scent_balloon(H, T)
+	H.balloon_alert(H, msg)
+	show_tajaran_scent_arrow(H, T)
+	StartCooldown()
+	return TRUE
+
+// --- ПОИСК ЖИВОЙ ЦЕЛИ ---
+/datum/action/cooldown/tajaran_scent_tracking/proc/find_best_target(mob/living/carbon/human/H, fingerprint)
+    if(!H || !fingerprint)
+        return null
+
+    var/turf/tH = get_turf(H)
+
+    for(var/mob/living/carbon/human/M as anything in GLOB.human_list)
+        if(M == H || QDELETED(M) || M.stat == DEAD || !M.dna?.unique_identity)
+            continue
+        var/turf/tM = get_turf(M)
+        if(!tM || !tH || tM.z != tH.z)
+            continue
+        if(md5(M.dna.unique_identity) == fingerprint)
+            return M
+    return null
+
+/datum/action/cooldown/tajaran_scent_tracking/proc/clear_tajaran_scent_target(cut_up_to)
+	if(!cut_up_to)
+		return FALSE
+	var/mob/living/carbon/human/H = owner
+
+	scent_targets.Cut(1, cut_up_to)
+	//Если нынешняя цель находится в удаляемом списке
+	if(!(scent_target in scent_targets))
+		scent_target = null
+	H.balloon_alert(H, "следы выветрились")
 
 // --- ПОДСКАЗКА НАПРАВЛЕНИЯ ---
-/proc/get_tajaran_scent_balloon(mob/living/you, mob/living/them)
+/datum/action/cooldown/tajaran_scent_tracking/proc/get_tajaran_scent_balloon(mob/living/you, mob/living/them)
 	var/turf/yt = get_turf(you)
 	var/turf/tt = get_turf(them)
 	if(!yt || !tt)
@@ -514,7 +552,7 @@
 // Цвет меняется в зависимости от дистанции.
 
 /// Спавнит стрелку на экране игрока, указывающую на цель
-/proc/show_tajaran_scent_arrow(mob/living/carbon/human/owner, mob/living/carbon/human/target)
+/datum/action/cooldown/tajaran_scent_tracking/proc/show_tajaran_scent_arrow(mob/living/carbon/human/owner, mob/living/carbon/human/target)
     if(!owner || !target) return
     var/turf/our_turf = get_turf(owner)
     var/turf/their_turf = get_turf(target)
@@ -563,6 +601,9 @@
         hud.infodisplay -= src
         hud.show_hud(hud.hud_version)
     qdel(src)
+
+
+
 
 
 
