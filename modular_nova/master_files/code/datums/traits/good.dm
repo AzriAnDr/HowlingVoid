@@ -1,7 +1,7 @@
 // NOVA GOOD TRAITS
 
 /datum/quirk/hard_soles
-	name = "Закаленные ступни"
+	name = "Hardened Soless(Закалённые Стопы)"
 	desc = "Вы привыкли ходить босиком, и у вас не возникнет никаких негативных последствий от этого."
 	value = 2
 	mob_trait = TRAIT_HARD_SOLES
@@ -11,7 +11,7 @@
 	icon = FA_ICON_PERSON_RUNNING
 
 /datum/quirk/linguist
-	name = "Лингвист"
+	name = "Linguist(Лингвист)"
 	desc = "Вы изучаете несколько языков и получаете дополнительный языковой балл."
 	value = 0
 	mob_trait = TRAIT_LINGUIST
@@ -21,7 +21,7 @@
 	icon = FA_ICON_BOOK_ATLAS
 
 /datum/quirk/sharpclaws
-	name = "Острые Коготи"
+	name = "Sharp Claws(Острые Коготи)"
 	desc = "Будь то врожденная биология охотника или ваше упрямое нежелание стричь ногти перед занятиями по джиу-джитсу, ваши атаки без оружия более резкие и заставят людей истекать кровью."
 	value = 2
 	mob_trait = TRAIT_SHARP_CLAWS
@@ -71,7 +71,7 @@
 
 // AdditionalEmotes *turf quirks
 /datum/quirk/water_aspect
-	name = "Аквоид (Эмоуты)"
+	name = "Water Aspect(Аквоид)"
 	desc = "Ваш дом - глубина. Космос оказался очень похожим. (*turf, чтобы кастануть)"
 	value = 0
 	mob_trait = TRAIT_WATER_ASPECT
@@ -81,7 +81,7 @@
 	icon = FA_ICON_WATER
 
 /datum/quirk/webbing_aspect
-	name = "Ткаческий талант (Эмоуты)"
+	name = "Webbing Aspect(Ткаческий талант)"
 	desc = "(Врождённая способность насекомых) У вас есть возможности ткать благодаря паутине (*turf, чтобы кастануть)"
 	value = 0
 	mob_trait = TRAIT_WEBBING_ASPECT
@@ -91,7 +91,7 @@
 	icon = FA_ICON_STICKY_NOTE
 
 /datum/quirk/floral_aspect
-	name = "Черты растения (Эмоуты)"
+	name = "Floral Aspect(Черты растения)"
 	desc = "(Врождённый Подперсон) Исследования Кудзу не бесполезны, технология быстрого фотосинтеза уже здесь! (*turf,)"
 	value = 0
 	mob_trait = TRAIT_FLORAL_ASPECT
@@ -101,7 +101,7 @@
 	icon = FA_ICON_PLANT_WILT
 
 /datum/quirk/ash_aspect
-	name = "Житель пустошей (Эмоуты)"
+	name = "Ash Aspect(Житель пустошей)"
 	desc = "(Врожденная способность ящеров) Вам подвластна сила с которой вы можете дышать огнём, оставляя за собой лишь пепел. Жаль что такая способность годится только в театральных постановках... (*turf чтобы кастануть)"
 	value = 0
 	mob_trait = TRAIT_ASH_ASPECT
@@ -111,7 +111,7 @@
 	icon = FA_ICON_FIRE
 
 /datum/quirk/sparkle_aspect
-	name = "ЛА-А-АМПОЧКА (Эмоуты)"
+	name = "Sparkle Aspect(ЛА-А-АМПОЧКАКА!)"
 	desc = "(Врожденный дар мотылька) Сверкают, как пыльные крылышки мотылька, или как дешевая зажигалка. (*turf чтобы  кастануть)"
 	value = 0
 	mob_trait = TRAIT_SPARKLE_ASPECT
@@ -121,7 +121,7 @@
 	icon = FA_ICON_HAND_SPARKLES
 
 /datum/quirk/no_appendix
-	name = "Переживший аппендицит"
+	name = "Appendix Survivor(Переживший аппендицит)"
 	desc = "В прошлом у вас был аппендицит, и теперь у вас его нет."
 	icon = FA_ICON_NOTES_MEDICAL
 	value = 2
@@ -160,7 +160,7 @@
 	old_appendix = null
 
 /datum/quirk/sensitive_hearing // Teshari hearing but as a quirk
-	name = "Чувствительный слух"
+	name = "Sensitive Hearing(Чувствительный слух)"
 	desc = "Вы можете слышать даже самые тихие звуки, но из-за этого повышается риск повреждения слуха."
 	icon = FA_ICON_HEADPHONES_SIMPLE
 	value = 6

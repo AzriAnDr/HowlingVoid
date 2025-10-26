@@ -1,7 +1,7 @@
 // NOVA NEGATIVE TRAITS
 
 /datum/quirk/alexithymia
-	name = "Алекситимия"
+	name = "Alexithymia(Алекситимия)"
 	desc = "Вы не можете точно оценить свои чувства."
 	value = -4
 	mob_trait = TRAIT_MOOD_NOEXAMINE
@@ -9,7 +9,7 @@
 	icon = FA_ICON_QUESTION_CIRCLE
 
 /datum/quirk/fragile
-	name = "Хрупкость"
+	name = "Fragility(Хрупкость)"
 	desc = "Вы чувствуете себя невероятно уязвимым. Ожоги и синяки причиняют вам больше боли, чем обычному человеку!"
 	value = -6
 	medical_record_text = "Тело пациента адаптировалось к низкой гравитации. К сожалению, условия низкой гравитации не способствуют развитию крепких костей."
@@ -63,7 +63,7 @@
 	user.physiology.burn_mod /= burn_mod
 
 /datum/quirk/monophobia
-	name = "Монофобия"
+	name = "Monophobia(Монофобия)"
 	desc = "Если вы не находитесь в обществе других людей, вы будете испытывать все больший стресс, что может спровоцировать панические реакции — от тошноты до сердечных приступов."
 	value = -6
 	gain_text = span_danger("Вы чувствуете себя очень одиноко...")
@@ -82,7 +82,7 @@
 	user?.cure_trauma_type(/datum/brain_trauma/severe/monophobia, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/no_guns
-	name = "Нет оружию!"
+	name = "No guns!(Нет оружию!)"
 	desc = "По какой-то причине вы не можете использовать оружие. Причины могут быть разными, но решать вам."
 	gain_text = span_notice("У вас такое чувство, что вы больше не сможете пользоваться оружием...")
 	lose_text = span_notice("Вы вдруг чувствуете, что снова можете пользоваться оружием!")
