@@ -11,41 +11,41 @@ GLOBAL_VAR_INIT(DNR_trait_overlay, generate_DNR_trait_overlay())
 
 // NOVA NEUTRAL TRAITS
 /datum/quirk/excitable
-	name = "Excitable!"
-	desc = "Head patting makes your tail wag! You're very excitable! WAG WAG."
-	gain_text = span_notice("You crave for some headpats!")
-	lose_text = span_notice("You no longer care for headpats all that much.")
-	medical_record_text = "Patient seems to get excited easily."
+	name = "Возбудимый!"
+	desc = "Если погладить по голове, хвост завиляет! Ты очень возбудимый!"
+	gain_text = span_notice("Вам не терпится погладить кого-нибудь по голове!")
+	lose_text = span_notice("Тебя больше не волнуют похлопывания по голове.")
+	medical_record_text = "Пациент, по-видимому, легко возбуждается."
 	value = 0
 	mob_trait = TRAIT_EXCITABLE
 	icon = FA_ICON_LAUGH_BEAM
 
 /datum/quirk/affectionaversion
-	name = "Affection Aversion"
-	desc = "You refuse to be licked or nosed by quadruped cyborgs."
-	gain_text = span_notice("You've been added to the Do Not Lick and No Nosing registries.")
-	lose_text = span_notice("You've been removed from the Do Not Lick and No Nosing registries.")
-	medical_record_text = "Patient is in the Do Not Lick and No Nosing registries."
+	name = "Отвращение"
+	desc = "Вы отказываетесь быть облизываемым или обнюхиваемым четвероногим киборгом."
+	gain_text = span_notice("Вас добавили в реестры «Не облизывайте» и «Не нюхайте».")
+	lose_text = span_notice("Вас исключили из реестров «Не облизывайте» и «Не нюхайте».")
+	medical_record_text = "Пациент внесен в реестры «Не облизывать» и «Не нюхать»."
 	value = 0
 	mob_trait = TRAIT_AFFECTION_AVERSION
 	icon = FA_ICON_CIRCLE_EXCLAMATION
 
 /datum/quirk/personalspace
-	name = "Personal Space"
-	desc = "You'd rather people keep their hands off your rear end."
-	gain_text = span_notice("You'd like it if people kept their hands off your butt.")
-	lose_text = span_notice("You're less concerned about people touching your butt.")
-	medical_record_text = "Patient demonstrates negative reactions to their posterior being touched."
+	name = "Личное пространство"
+	desc = "Вы бы предпочли, чтобы люди держали руки подальше от вашей задницы."
+	gain_text = span_notice("Тебе бы хотелось, чтобы люди не лезли к твоей заднице.")
+	lose_text = span_notice("Вас меньше волнуют прикосновения к вашей заднице.")
+	medical_record_text = "Пациент отрицательно реагирует на прикосновения к ягодицам."
 	value = 0
 	mob_trait = TRAIT_PERSONALSPACE
 	icon = FA_ICON_HAND_PAPER
 
 /datum/quirk/dnr
-	name = "Do Not Revive"
-	desc = "For whatever reason, you cannot be revived in any way."
-	gain_text = span_notice("Your spirit gets too scarred to accept revival.")
-	lose_text = span_notice("You can feel your soul healing again.")
-	medical_record_text = "Patient is a DNR, and cannot be revived in any way."
+	name = "Не возрождать"
+	desc = "По какой-то причине вас невозможно оживить никаким способом."
+	gain_text = span_notice("Ваш дух слишком напуган, чтобы принять возрождение.")
+	lose_text = span_notice("Вы снова почувствуете, как ваша душа исцеляется.")
+	medical_record_text = "Пациенту отказано в реанимации, и его невозможно реанимировать никаким способом."
 	value = 0
 	mob_trait = TRAIT_DNR
 	icon = FA_ICON_SKULL_CROSSBONES
@@ -79,18 +79,18 @@ GLOBAL_VAR_INIT(DNR_trait_overlay, generate_DNR_trait_overlay())
 	. = ..()
 
 	if(stat != DEAD && HAS_TRAIT(src, TRAIT_DNR) && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)))
-		. += "\n[span_boldwarning("This individual is unable to be revived, and may be permanently dead if allowed to die!")]"
+		. += "\n[span_boldwarning("Эту личность невозможно оживить, и если ей позволить умереть, она может умереть навсегда!")]"
 
 /datum/atom_hud/data/human/dnr
 	hud_icons = list(DNR_HUD)
 
 // uncontrollable laughter
 /datum/quirk/item_quirk/joker
-	name = "Pseudobulbar Affect"
-	desc = "At random intervals, you suffer uncontrollable bursts of laughter."
+	name = "Псевдобульбарный аффект"
+	desc = "Время от времени вы испытываете неконтролируемые приступы смеха. Хоакин Феникс?"
 	value = 0
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
-	medical_record_text = "Patient suffers with sudden and uncontrollable bursts of laughter."
+	medical_record_text = "Пациент страдает от внезапных и неконтролируемых приступов смеха."
 	var/pcooldown = 0
 	var/pcooldown_time = 60 SECONDS
 	icon = FA_ICON_GRIN_TEARS
@@ -111,22 +111,22 @@ GLOBAL_VAR_INIT(DNR_trait_overlay, generate_DNR_trait_overlay())
 				addtimer(CALLBACK(user, /mob/proc/emote, "laugh"), 10 SECONDS)
 
 /obj/item/paper/joker
-	name = "disability card"
+	name = "карта инвалидности"
 	icon = 'modular_nova/master_files/icons/obj/card.dmi'
 	icon_state = "joker"
-	desc = "Smile, though your heart is aching."
+	desc = "Улыбнись, даже если твое сердце болит."
 	default_raw_text = "<i>\
 			<div style='border-style:solid;text-align:center;border-width:5px;margin: 20px;margin-bottom:0px'>\
 			<div style='margin-top:20px;margin-bottom:20px;font-size:150%;'>\
-			Forgive my laughter:<br>\
-			I have a condition.\
+			Прости мой смех:<br>\
+			У меня есть заболевание.\
 			</div>\
 			</div>\
 			</i>\
 			<br>\
 			<center>\
 			<b>\
-			MORE ON BACK\
+			БОЛЬШЕ НА ОБОРОТЕ\
 			</b>\
 			</center>"
 	/// Whether or not the card is currently flipped.
@@ -136,11 +136,11 @@ GLOBAL_VAR_INIT(DNR_trait_overlay, generate_DNR_trait_overlay())
 			<div style='border-style:solid;text-align:center;border-width:5px;margin: 20px;margin-bottom:0px'>\
 			<div style='margin-top:20px;margin-bottom:20px;font-size:100%;'>\
 			<b>\
-			It's a medical condition causing sudden,<br>\
-			frequent and uncontrollable laughter that<br>\
-			doesn't match how you feel.<br>\
-			It can happen in people with a brain injury<br>\
-			or certain neurological conditions.<br>\
+			Это заболевание, вызывающее внезапную,<br>\
+			частый и неконтролируемый смех, который<br>\
+			не соответствует тому, что вы чувствуете.<br>\
+			Это может произойти у людей с травмой головного мозга<br>\
+			или определенные неврологические состояния.<br>\
 			</b>\
 			</div>\
 			</div>\
@@ -148,7 +148,7 @@ GLOBAL_VAR_INIT(DNR_trait_overlay, generate_DNR_trait_overlay())
 			<br>\
 			<center>\
 			<b>\
-			KINDLY RETURN THIS CARD\
+			Пожалуйста, верните эту карту.\
 			</b>\
 			</center>"
 	/// Flipside version of raw_text_inputs.
@@ -221,11 +221,11 @@ GLOBAL_VAR_INIT(DNR_trait_overlay, generate_DNR_trait_overlay())
 	return CLICK_ACTION_SUCCESS
 
 /datum/quirk/feline_aspect
-	name = "Feline Traits"
-	desc = "You happen to act like a feline, for whatever reason. This will replace most other tongue-based speech quirks."
-	gain_text = span_notice("Nya could go for some catnip right about now...")
-	lose_text = span_notice("You feel less attracted to lasers.")
-	medical_record_text = "Patient seems to possess behavior much like a feline."
+	name = "Кошачьи черты"
+	desc = "Ты, по какой-то причине, ведёшь себя как кошка. Это заменит большинство других речевых особенностей, связанных с языком."
+	gain_text = span_notice("Ня! Сейчас бы попробовать кошачью мяту...")
+	lose_text = span_notice("Вы чувствуете меньшее влечение к лазерам.")
+	medical_record_text = "Похоже, поведение пациента во многом напоминает поведение кошки."
 	mob_trait = TRAIT_FELINE
 	icon = FA_ICON_CAT
 
@@ -248,14 +248,14 @@ GLOBAL_VAR_INIT(DNR_trait_overlay, generate_DNR_trait_overlay())
 	new_tongue.Insert(human_holder, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /datum/quirk/canine_aspect
-	name = "Canidae Traits"
-	desc = "Bark. You seem to act like a canine for whatever reason. This will replace most other tongue-based speech quirks."
-	gain_text = span_notice("B-.. Bacon strips...")
-	lose_text = span_notice("You feel less abandonment issues.")
+	name = "Собачьи черты"
+	desc = "Гав! Кажется, ты почему-то ведёшь себя как собака. Это заменит большинство других речевых особенностей, связанных с языком."
+	gain_text = span_notice("Б-.. бекон...")
+	lose_text = span_notice("Вы меньше чувствуете себя брошенным.")
 	mob_trait = TRAIT_CANINE
 	icon = FA_ICON_DOG
 	value = 0
-	medical_record_text = "Patient was seen digging through the trash can. Keep an eye on them."
+	medical_record_text = "Пациента видели роющимся в мусорном баке. Следите за ним."
 
 /datum/quirk/canine_aspect/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -272,14 +272,14 @@ GLOBAL_VAR_INIT(DNR_trait_overlay, generate_DNR_trait_overlay())
 	new_tongue.Insert(human_holder, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /datum/quirk/avian_aspect
-	name = "Avian Traits"
-	desc = "You're a birdbrain, or you've got a bird's brain. This will replace most other tongue-based speech quirks."
-	gain_text = span_notice("BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
-	lose_text = span_notice("You feel less inclined to sit on eggs.")
+	name = "Птичьи черты"
+	desc = "Вы — птичий мозг, или у вас птичий мозг. Это заменит большинство других особенностей речи, связанных с языком."
+	gain_text = span_notice("БВАК... БВА-АК.. ОСТАВЬ ГАРНИТУРУ БВАК...")
+	lose_text = span_notice("У вас меньше желания сидеть на яйцах.")
 	mob_trait = TRAIT_AVIAN
 	icon = FA_ICON_KIWI_BIRD
 	value = 0
-	medical_record_text = "Patient exhibits avian-adjacent mannerisms."
+	medical_record_text = "Пациент проявляет манеры, свойственные птицам."
 
 /datum/quirk/avian_aspect/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -308,11 +308,11 @@ GLOBAL_LIST_INIT(possible_snout_sensitivities, list(
 ))
 
 /datum/quirk/sensitivesnout
-	name = "Sensitive Snout"
-	desc = "Your face has always been sensitive, and it really hurts when someone pokes it!"
-	gain_text = span_notice("Your face is awfully sensitive.")
-	lose_text = span_notice("Your face feels numb.")
-	medical_record_text = "Patient's nose seems to have a cluster of nerves in the tip, would advise against direct contact."
+	name = "Чувствительная морда"
+	desc = "Твое лицо всегда было чувствительным, и тебе очень больно, когда его кто-то тыкает!"
+	gain_text = span_notice("У тебя ужасно чувствительное лицо.")
+	lose_text = span_notice("Лицо онемело.")
+	medical_record_text = "У пациента, по-видимому, имеется скопление нервов на кончике носа, поэтому он не рекомендует контактировать с ним напрямую."
 	value = 0
 	mob_trait = TRAIT_SENSITIVESNOUT
 	icon = FA_ICON_FINGERPRINT
@@ -337,20 +337,20 @@ GLOBAL_LIST_INIT(possible_snout_sensitivities, list(
 		human_holder.force_say()
 	switch(severity)
 		if(SEVERITY_STUN)
-			to_chat(quirk_holder, span_warning("[attacker] boops you on your sensitive nose, freezing you in place!"))
+			to_chat(quirk_holder, span_warning("[attacker] тычет тебя по вашему чувствительному носу, заставляя замереть на месте!"))
 			quirk_holder.Stun(1 SECONDS)
 		if(SEVERITY_SNEEZE)
 			quirk_holder.Stun(1 SECONDS)
 			if(can_emote)
-				to_chat(quirk_holder, span_warning("[attacker] boops you on your sensitive nose! You can't hold back a sneeze!"))
+				to_chat(quirk_holder, span_warning("[attacker] тычет по твоему чувствительному носу! Ты не можешь сдержать чихание!"))
 				quirk_holder.emote("sneeze")
 		if(SEVERITY_KNOCKDOWN)
-			to_chat(quirk_holder, span_warning("[attacker] boops you on your sensitive nose, sending you to the ground!"))
+			to_chat(quirk_holder, span_warning("[attacker] тычет тебя по чувствительному носу, и ты падаешь на землю!"))
 			quirk_holder.Knockdown(1 SECONDS)
 			quirk_holder.apply_damage(30, STAMINA)
 		if(SEVERITY_BLEP)
 			if(can_emote)
-				to_chat(quirk_holder, span_warning("[attacker] boops you on your sensitive nose! You stick your tongue out on reflex!"))
+				to_chat(quirk_holder, span_warning("[attacker] тычет тебя по чувствительному носу! Ты рефлекторно высовываешь язык!"))
 				quirk_holder.emote("blep")
 
 #undef SEVERITY_STUN
@@ -359,13 +359,13 @@ GLOBAL_LIST_INIT(possible_snout_sensitivities, list(
 #undef SEVERITY_BLEP
 
 /datum/quirk/overweight
-	name = "Overweight"
-	desc = "You weigh more than an average person at your size, you've gotten used to it by now."
-	gain_text = span_notice("Your body feels heavy.")
-	lose_text = span_notice("Your suddenly feel lighter!")
+	name = "Избыточный вес"
+	desc = "Вы весите больше, чем среднестатистический человек вашего размера, вы уже к этому привыкли."
+	gain_text = span_notice("Ваше тело кажется тяжелым.")
+	lose_text = span_notice("Вы внезапно чувствуете себя легче!")
 	value = 0
 	icon = FA_ICON_HAMBURGER // I'm very hungry. Give me the burger!
-	medical_record_text = "Patient weighs higher than average."
+	medical_record_text = "Я знаю пять толстых людей: четверо из них - этот пациент"
 	mob_trait = TRAIT_OFF_BALANCE_TACKLER
 
 /datum/quirk/overweight/add(client/client_source)
@@ -381,4 +381,4 @@ GLOBAL_LIST_INIT(possible_snout_sensitivities, list(
 	. = ..()
 	if(HAS_TRAIT_FROM(parent_mob, TRAIT_OFF_BALANCE_TACKLER, QUIRK_TRAIT))
 		mood_change = 0 // They are probably used to it, no reason to be viscerally upset about it.
-		description = "<b>I'm fat.</b>"
+		description = "<b>Я жирный....</b>"

@@ -26,6 +26,7 @@
 #define TRAIT_FREE_GHOST "free_ghost" // Can ghost and return freely with this trait
 #define TRAIT_GLOVES "gloves_trait" //Traits associated with wearing gloves
 #define TRAIT_LINGUIST "Linguist" // Extra language point.
+#define TRAIT_SHARP_CLAWS "sharp_claws" //sharp claws
 #define TRAIT_GLUED_ITEM "glued-item" // This is for glued items, undroppable. Syndie glue applies this.
 #define TRAIT_STICKY_FINGERS "sticky_fingers" //This is so a mob can strip items faster and picks them up after
 /// This makes trait makes it so that the person cannot be infected by the zombie virus.

@@ -1,6 +1,7 @@
 /datum/species/tajaran
-	name = "Таяран"
+	name = "Tajaran"
 	id = SPECIES_TAJARAN
+	//display_name = "Таяран"
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
@@ -12,9 +13,16 @@
 		TRAIT_FELINE,
 		TRAIT_SENSITIVE_HEARING,
 		TRAIT_NIGHT_VISION,
+		TRAIT_FREERUNNING,
+		TRAIT_HARD_SOLES,
+		TRAIT_SHARP_CLAWS,
 	)
 	mutanttongue = /obj/item/organ/tongue/cat/tajaran
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	// === Шерсть ===
+	bodytemp_normal = 308
+	bodytemp_cold_damage_limit = 238.15   // начинают мёрзнуть при -35°C
+	bodytemp_heat_damage_limit = 325.15   // перегреваются при +52°C
 	mutant_bodyparts = list()
 	payday_modifier = 1.0
 	species_language_holder = /datum/language_holder/tajaran
@@ -116,16 +124,12 @@
 
 /datum/species/tajaran/on_species_gain(mob/living/carbon/human/H, datum/species/old_species, pref_load, regenerate_icons, replace_missing)
 	. = ..()
+	H.physiology.heat_mod *= 1.25
+	H.physiology.cold_mod *= 0.81
 	var/datum/action/cooldown/tajaran_scent_tracking/track = new()
 	track.Grant(H)
 	if(!H)
 		return
-	//// === Шерсть ===
-	H.physiology.heat_mod += 0.25        // на 25% больше урона от жара
-	H.physiology.cold_mod -= 0.25        // на 25% меньше урона от холода
-	bodytemp_normal = 308
-	bodytemp_cold_damage_limit = 245
-	bodytemp_heat_damage_limit = 325
 	// === Счётчик смертей и уворот от пуль ===
 	RegisterSignal(H, COMSIG_LIVING_DEATH, PROC_REF(on_tajaran_death))
 	RegisterSignal(H, COMSIG_PROJECTILE_PREHIT, PROC_REF(on_tajaran_bullet_hit))
@@ -171,9 +175,11 @@
 
 /datum/species/tajaran/on_species_loss(mob/living/carbon/human/H, datum/species/new_species, pref_load)
 	. = ..()
+
 	if(!H)
 		return
-
+	H.physiology.cold_mod /= 0.81
+	H.physiology.heat_mod /= 1.25
 	UnregisterSignal(H, list(COMSIG_LIVING_DEATH, COMSIG_PROJECTILE_PREHIT))
 
 	var/obj/item/organ/ears/ears = H.get_organ_slot(ORGAN_SLOT_EARS)
@@ -575,7 +581,7 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = FA_ICON_EYE_DROPPER,
-			SPECIES_PERK_NAME = "Кошачий глаз",
+			SPECIES_PERK_NAME = "Таярский глаз",
 			SPECIES_PERK_DESC = "Таяры видят в темноте лучше, чем люди, но яркий свет их слепит лучше.",
 		),
 		list(
@@ -587,14 +593,26 @@
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = FA_ICON_HEADPHONES_SIMPLE,
-			SPECIES_PERK_NAME = "Кошачий слух",
+			SPECIES_PERK_NAME = "Чуткий слух",
 			SPECIES_PERK_DESC = "Таяры лучше слышат. Вы можете слышать даже самые тихие звуки, но из-за этого повышается риск повреждения слуха.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = FA_ICON_HEADPHONES_SIMPLE,
-			SPECIES_PERK_NAME = "Кошачий нюх",
+			SPECIES_PERK_NAME = "Охотничий нюх",
 			SPECIES_PERK_DESC = "У таяр - отменный нюх. Вы можете принюхаться, чтобы найти свежие следы поблизости и отследить носителя отпечатков!",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = FA_ICON_LINES_LEANING,
+			SPECIES_PERK_NAME = "Острые когти",
+			SPECIES_PERK_DESC = "У вас очень острые когти, которые с большей вероятностью нанесут кровоточащую рану при атаке.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = FA_ICON_RUNNING,
+			SPECIES_PERK_NAME = "Природная ловкость",
+			SPECIES_PERK_DESC = "Вы быстрее и легче лазаете по препятствиям, а так же комфортно себя чувствуете без обуви.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
@@ -609,16 +627,16 @@
 			SPECIES_PERK_DESC = "Таяры не страдают от падений с высоты и приземляются на ноги.",
 		),
 		list(
-			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = "shower",
-			SPECIES_PERK_NAME = "Гидрофобия",
-			SPECIES_PERK_DESC = "Таяры не любят воду и получают дискомфорт, будучи мокрыми.",
-		),
-		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = FA_ICON_ANGRY,
 			SPECIES_PERK_NAME = "Кусаца :3",
 			SPECIES_PERK_DESC = "Таяры могут кусаться.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "shower",
+			SPECIES_PERK_NAME = "Гидрофобия",
+			SPECIES_PERK_DESC = "Таяры не любят воду и получают дискомфорт, будучи мокрыми.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,

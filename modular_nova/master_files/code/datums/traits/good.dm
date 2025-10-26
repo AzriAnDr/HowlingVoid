@@ -1,32 +1,33 @@
 // NOVA GOOD TRAITS
 
 /datum/quirk/hard_soles
-	name = "Hardened Soles"
-	desc = "You're used to walking barefoot, and won't receive the negative effects of doing so."
+	name = "Закаленные ступни"
+	desc = "Вы привыкли ходить босиком, и у вас не возникнет никаких негативных последствий от этого."
 	value = 2
 	mob_trait = TRAIT_HARD_SOLES
-	gain_text = span_notice("The ground doesn't feel so rough on your feet anymore.")
-	lose_text = span_danger("You start feeling the ridges and imperfections on the ground.")
-	medical_record_text = "Patient's feet are more resilient against traction."
+	gain_text = span_notice("Земля больше не кажется такой грубой для ваших ног.")
+	lose_text = span_danger("Вы начинаете ощущать что вам неудобно ходить босиком.")
+	medical_record_text = "Стопы пациента более устойчивы к натяжению."
 	icon = FA_ICON_PERSON_RUNNING
 
 /datum/quirk/linguist
-	name = "Linguist"
-	desc = "You're a student of numerous languages and come with an additional language point."
+	name = "Лингвист"
+	desc = "Вы изучаете несколько языков и получаете дополнительный языковой балл."
 	value = 0
 	mob_trait = TRAIT_LINGUIST
-	gain_text = span_notice("Your brain seems more equipped to handle different modes of conversation.")
-	lose_text = span_danger("Your grasp of the finer points of Draconic idioms fades away.")
-	medical_record_text = "Patient demonstrates a high brain plasticity in regards to language learning."
+	gain_text = span_notice("Кажется, ваш мозг более приспособлен к разговору сразу на нескольких языках.")
+	lose_text = span_danger("Ваше понимание тонкостей драконьих идиом со временем исчезает.")
+	medical_record_text = "Пациент демонстрирует повышенные способности к изучению языков."
 	icon = FA_ICON_BOOK_ATLAS
 
 /datum/quirk/sharpclaws
-	name = "Sharp Claws"
-	desc = "Whether it's a hunter's inherent biology, or your stubborn refusal to clip your nails ahead of your Jiu-Jitsu classes, your unarmed attacks are sharper and will make people bleed."
+	name = "Острые Коготи"
+	desc = "Будь то врожденная биология охотника или ваше упрямое нежелание стричь ногти перед занятиями по джиу-джитсу, ваши атаки без оружия более резкие и заставят людей истекать кровью."
 	value = 2
-	gain_text = span_notice("Your palms hurt a bit from the sharpness of your nails.")
-	lose_text = span_danger("You feel a distinct emptiness as your nails dull; good luck scratching that itch.")
-	medical_record_text = "Patient ended up scratching through the examination table's cushions; recommended they look into clipping their claws."
+	mob_trait = TRAIT_SHARP_CLAWS
+	gain_text = span_notice("Ладони немного болят из-за острых ногтей.")
+	lose_text = span_danger("Вы чувствуете отчетливую пустоту, когда ваши ногти становятся тусклыми; удачи вам в попытках унять зуд.")
+	medical_record_text = "Пациент разодрал подушки смотрового стола; порекомендовал ему подстричь когти."
 	icon = FA_ICON_LINES_LEANING
 
 /datum/quirk/sharpclaws/add(client/client_source)
@@ -70,63 +71,63 @@
 
 // AdditionalEmotes *turf quirks
 /datum/quirk/water_aspect
-	name = "Water aspect (Emotes)"
-	desc = "(Aquatic innate) Underwater societies are home to you, space ain't much different. (Say *turf to cast)"
+	name = "Аквоид (Эмоуты)"
+	desc = "Ваш дом - глубина. Космос оказался очень похожим. (*turf, чтобы кастануть)"
 	value = 0
 	mob_trait = TRAIT_WATER_ASPECT
-	gain_text = span_notice("You feel like you can control water.")
-	lose_text = span_danger("Somehow, you've lost your ability to control water!")
-	medical_record_text = "Patient holds a collection of nanobots designed to synthesize H2O."
+	gain_text = span_notice("Вы чувствуете, что вы как рыба в воде!")
+	lose_text = span_danger("Вы теперь как человек в воде...")
+	medical_record_text = "Пациент - водное создание."
 	icon = FA_ICON_WATER
 
 /datum/quirk/webbing_aspect
-	name = "Webbing aspect (Emotes)"
-	desc = "(Insect innate) Insect folk capable of weaving aren't unfamiliar with receiving envy from those lacking a natural 3D printer. (Say *turf to cast)"
+	name = "Ткаческий талант (Эмоуты)"
+	desc = "(Врождённая способность насекомых) У вас есть возможности ткать благодаря паутине (*turf, чтобы кастануть)"
 	value = 0
 	mob_trait = TRAIT_WEBBING_ASPECT
-	gain_text = span_notice("You could easily spin a web.")
-	lose_text = span_danger("Somehow, you've lost your ability to weave.")
-	medical_record_text = "Patient has the ability to weave webs with naturally synthesized silk."
+	gain_text = span_notice("Вы легко могли бы сплести паутину.")
+	lose_text = span_danger("Каким-то образом ты утратила способность ткать.")
+	medical_record_text = "Пациент обладает способностью плести паутину из синтезированного естественным образом шелка."
 	icon = FA_ICON_STICKY_NOTE
 
 /datum/quirk/floral_aspect
-	name = "Floral aspect (Emotes)"
-	desc = "(Podperson innate) Kudzu research isn't pointless, rapid photosynthesis technology is here! (Say *turf to cast)"
+	name = "Черты растения (Эмоуты)"
+	desc = "(Врождённый Подперсон) Исследования Кудзу не бесполезны, технология быстрого фотосинтеза уже здесь! (*turf,)"
 	value = 0
 	mob_trait = TRAIT_FLORAL_ASPECT
-	gain_text = span_notice("You feel like you can grow vines.")
+	gain_text = span_notice("Вы ощущаете как из вас проростают лозы.")
 	lose_text = span_danger("Somehow, you've lost your ability to rapidly photosynthesize.")
 	medical_record_text = "Patient can rapidly photosynthesize to grow vines."
 	icon = FA_ICON_PLANT_WILT
 
 /datum/quirk/ash_aspect
-	name = "Ash aspect (Emotes)"
-	desc = "(Lizard innate) The ability to forge ash and flame, a mighty power - yet mostly used for theatrics. (Say *turf to cast)"
+	name = "Житель пустошей (Эмоуты)"
+	desc = "(Врожденная способность ящеров) Вам подвластна сила с которой вы можете дышать огнём, оставляя за собой лишь пепел. Жаль что такая способность годится только в театральных постановках... (*turf чтобы кастануть)"
 	value = 0
 	mob_trait = TRAIT_ASH_ASPECT
-	gain_text = span_notice("There is a forge smouldering inside of you.")
-	lose_text = span_danger("Somehow, you've lost your ability to breathe fire.")
-	medical_record_text = "Patients possess a fire breathing gland commonly found in lizard folk."
+	gain_text = span_notice("Внутри тебя тлеет кузница.")
+	lose_text = span_danger("Каким-то образом ты утратил способность дышать огнем.")
+	medical_record_text = "У пациентов имеется огнедышащая железа, обычно встречающаяся у ящерообразных."
 	icon = FA_ICON_FIRE
 
 /datum/quirk/sparkle_aspect
-	name = "Sparkle aspect (Emotes)"
-	desc = "(Moth innate) Sparkle like the dust off of a moth's wing, or like a cheap red-light hook-up. (Say *turf to cast)"
+	name = "ЛА-А-АМПОЧКА (Эмоуты)"
+	desc = "(Врожденный дар мотылька) Сверкают, как пыльные крылышки мотылька, или как дешевая зажигалка. (*turf чтобы  кастануть)"
 	value = 0
 	mob_trait = TRAIT_SPARKLE_ASPECT
-	gain_text = span_notice("You're covered in sparkling dust!")
-	lose_text = span_danger("Somehow, you've completely cleaned yourself of glitter..")
-	medical_record_text = "Patient seems to be looking fabulous."
+	gain_text = span_notice("Ты весь в блестящей пыли!")
+	lose_text = span_danger("Каким-то образом ты полностью очистилась от блесток..")
+	medical_record_text = "Пациент, кажется, выглядит потрясающе."
 	icon = FA_ICON_HAND_SPARKLES
 
 /datum/quirk/no_appendix
-	name = "Appendicitis Survivor"
-	desc = "You had a run in with appendicitis in the past and no longer have an appendix."
+	name = "Переживший аппендицит"
+	desc = "В прошлом у вас был аппендицит, и теперь у вас его нет."
 	icon = FA_ICON_NOTES_MEDICAL
 	value = 2
-	gain_text = span_notice("You no longer have an appendix.")
-	lose_text = span_danger("Your appendix has magically.. regrown?")
-	medical_record_text = "Patient had appendicitis in the past and has had their appendix surgically removed."
+	gain_text = span_notice("У вас больше нет аппендикса.")
+	lose_text = span_danger("Ваш аппендикс чудесным образом... вырос заново?")
+	medical_record_text = "У пациента в прошлом был аппендицит, и ему удалили аппендикс хирургическим путем."
 	/// The mob's original appendix
 	var/obj/item/organ/appendix/old_appendix
 

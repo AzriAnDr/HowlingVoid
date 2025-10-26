@@ -1,18 +1,18 @@
 // NOVA NEGATIVE TRAITS
 
 /datum/quirk/alexithymia
-	name = "Alexithymia"
-	desc = "You cannot accurately assess your feelings."
+	name = "Алекситимия"
+	desc = "Вы не можете точно оценить свои чувства."
 	value = -4
 	mob_trait = TRAIT_MOOD_NOEXAMINE
-	medical_record_text = "Patient is incapable of communicating their emotions."
+	medical_record_text = "Пациент не способен выразить свои эмоции."
 	icon = FA_ICON_QUESTION_CIRCLE
 
 /datum/quirk/fragile
-	name = "Fragility"
-	desc = "You feel incredibly fragile. Burns and bruises hurt you more than the average person!"
+	name = "Хрупкость"
+	desc = "Вы чувствуете себя невероятно уязвимым. Ожоги и синяки причиняют вам больше боли, чем обычному человеку!"
 	value = -6
-	medical_record_text = "Patient's body has adapted to low gravity. Sadly low-gravity environments are not conducive to strong bone development."
+	medical_record_text = "Тело пациента адаптировалось к низкой гравитации. К сожалению, условия низкой гравитации не способствуют развитию крепких костей."
 	icon = FA_ICON_TIRED
 	var/brute_mod
 	var/burn_mod
@@ -63,12 +63,12 @@
 	user.physiology.burn_mod /= burn_mod
 
 /datum/quirk/monophobia
-	name = "Monophobia"
-	desc = "You will become increasingly stressed when not in company of others, triggering panic reactions ranging from sickness to heart attacks."
+	name = "Монофобия"
+	desc = "Если вы не находитесь в обществе других людей, вы будете испытывать все больший стресс, что может спровоцировать панические реакции — от тошноты до сердечных приступов."
 	value = -6
-	gain_text = span_danger("You feel really lonely...")
-	lose_text = span_notice("You feel like you could be safe on your own.")
-	medical_record_text = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
+	gain_text = span_danger("Вы чувствуете себя очень одиноко...")
+	lose_text = span_notice("Вы чувствуете, что можете быть в безопасности, находясь в одиночестве.")
+	medical_record_text = "Пациент чувствует себя больным и подавленным, когда находится вдали от других людей, что приводит к потенциально смертельному уровню стресса."
 	icon = FA_ICON_PEOPLE_ARROWS_LEFT_RIGHT
 
 /datum/quirk/monophobia/post_add()
@@ -82,11 +82,11 @@
 	user?.cure_trauma_type(/datum/brain_trauma/severe/monophobia, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/no_guns
-	name = "No Guns"
-	desc = "For whatever reason, you are unable to use guns. The reasoning may vary, but is up to you to decide."
-	gain_text = span_notice("You feel like you won't be able to use guns anymore...")
-	lose_text = span_notice("You suddenly feel like you can use guns again!")
-	medical_record_text = "Patient is unable to use firearms. Reasoning unknown."
+	name = "Нет оружию!"
+	desc = "По какой-то причине вы не можете использовать оружие. Причины могут быть разными, но решать вам."
+	gain_text = span_notice("У вас такое чувство, что вы больше не сможете пользоваться оружием...")
+	lose_text = span_notice("Вы вдруг чувствуете, что снова можете пользоваться оружием!")
+	medical_record_text = "Пациент не может использовать огнестрельное оружие. Причины неизвестны."
 	value = -6
 	mob_trait = TRAIT_NOGUNS
 	icon = FA_ICON_GUN
