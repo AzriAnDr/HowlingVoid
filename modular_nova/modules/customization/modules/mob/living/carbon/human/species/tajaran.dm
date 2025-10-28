@@ -454,31 +454,29 @@
 	var/mob/living/carbon/human/scent_target = null
 
 /datum/action/cooldown/tajaran_scent_tracking/PreActivate(atom/target)
-	var/mob/living/carbon/human/H = owner
-	if(!LAZYLEN(scent_targets))
-		return FALSE
-	//Общий список информации, который увидит игрок
-	var/list/built_radial_list = list()
-	//Список для ссылки на оригинальные цели, чтобы достать их из списка сверху
-	var/list/name2subtype = list()
-	if(!(scent_target in scent_targets))
-		scent_target = null
-	//Заготовка списка. Здесь можно обработать иконки и инфо штук
-	for(var/fingerprints in scent_targets)
-		var/mob/living/carbon/human/human_target = find_best_target(H, fingerprints)
-		if(!human_target)
-			continue
-		var/datum/radial_menu_choice/option = new
-		option.image = image(icon = 'icons/mob/actions/actions_items.dmi', icon_state = "bci_question")
-		//Лишнее? Может будет проще для игрока заранее узнать как далеко цель
-		option.info = get_tajaran_scent_balloon(H, human_target)
-		name2subtype[initial(human_target.name)] = human_target
-		built_radial_list += list(initial(human_target.name) = option)
+    var/mob/living/carbon/human/H = owner
+    if(!LAZYLEN(scent_targets))
+        return FALSE
+    //Общий список информации, который увидит игрок
+    var/list/built_radial_list = list()
+    if(!(scent_target in scent_targets))
+        scent_target = null
+    //Заготовка списка. Здесь можно обработать иконки и инфо штук
+    for(var/fingerprints in scent_targets)
+        var/mob/living/carbon/human/human_target = find_best_target(H, fingerprints)
+        if(!human_target)
+            continue
+        var/datum/radial_menu_choice/option = new
+        option.name = "[human_target.gender]"
+        option.image = image(icon = 'icons/mob/actions/actions_items.dmi', icon_state = "bci_question")
+        //Лишнее? Может будет проще для игрока заранее узнать как далеко цель
+        option.info = get_tajaran_scent_balloon(H, human_target)
+        built_radial_list[human_target] = option
 
-	scent_target = name2subtype[show_radial_menu(H, H, built_radial_list, radius = 42)]
-	if(!scent_target)
-		return FALSE
-	return ..()
+    scent_target = show_radial_menu(H, H, built_radial_list, radius = 42)
+    if(!scent_target)
+        return FALSE
+    return ..()
 
 // === Вызываем стрелку при активации нюха ===
 /datum/action/cooldown/tajaran_scent_tracking/Activate(atom/target)
