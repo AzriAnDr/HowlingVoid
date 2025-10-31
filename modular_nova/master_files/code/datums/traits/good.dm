@@ -21,7 +21,7 @@
 	icon = FA_ICON_BOOK_ATLAS
 
 /datum/quirk/sharpclaws
-	name = "Sharp Claws(Острые Коготи)"
+	name = "Sharp Claws(Острые Когти)"
 	desc = "Будь то врожденная биология охотника или ваше упрямое нежелание стричь ногти перед занятиями по джиу-джитсу, ваши атаки без оружия более резкие и заставят людей истекать кровью."
 	value = 2
 	mob_trait = TRAIT_SHARP_CLAWS

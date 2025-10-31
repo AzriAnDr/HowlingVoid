@@ -402,7 +402,7 @@
 
     return log_entry
 
-// --- ФОРМАТИРОВАНИЕ ВЫВОДА ---
+// --- Дебаг ФОРМАТИРОВАНИЕ ВЫВОДА ---
 /datum/action/cooldown/tajaran_scent_scan/proc/format_forensic_message(atom/A, list/log_entry)
     if(!LAZYLEN(log_entry))
         return null
@@ -422,12 +422,12 @@
             var/t = blood_data[id] || "неизвестно"
             blood_lines += "[id] ([t])"
         lines += "&bull; Следы крови: [blood_lines.Join(", ")]"
-
+/*
     // Отпечатки
     var/list/prints = log_entry[DETSCAN_CATEGORY_FINGERS]
     if(LAZYLEN(prints))
         lines += "&bull; Отпечатки: [prints.Join(", ")]"
-
+*/
     // Частицы (реагенты)
     var/list/reagents = log_entry[DETSCAN_CATEGORY_REAGENTS]
     if(LAZYLEN(reagents))
@@ -484,12 +484,13 @@
 	if(!H)
 		return FALSE
 	// ищем подходящую цель
+	/*
 	if(scent_target)
 		to_chat(H, span_notice("Ты запоминаешь запах [scent_target.real_name]."))
 	else
 		to_chat(H, span_warning("Ты не можешь определить источник запаха."))
 		return FALSE
-
+*/
 	var/mob/living/carbon/human/T = scent_target
 	if(QDELETED(T))
 		scent_target = null
@@ -535,9 +536,9 @@
 	var/turf/yt = get_turf(you)
 	var/turf/tt = get_turf(them)
 	if(!yt || !tt)
-		return "в другом секторе!"
+		return "не понятно где!"
 	if(yt.z != tt.z)
-		return "непонятно где!"
+		return "кажется на другом этаже!"
 	var/dist = get_dist(yt, tt)
 	var/d = get_dir(yt, tt)
 	switch(dist)
