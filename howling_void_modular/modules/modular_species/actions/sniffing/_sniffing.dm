@@ -227,7 +227,7 @@
 		if(!human_target)
 			continue
 		var/datum/radial_menu_choice/option = new
-		option.name = "[human_target.gender][human_target.dna.blood_type == get_blood_type(clue) ? "- [clue]" : ""]"
+		option.name = "[human_target.gender]"
 		option.image = image(icon = 'icons/mob/actions/actions_items.dmi', icon_state = "bci_question")
 		//Лишнее? Может будет проще для игрока заранее узнать как далеко цель
 		option.info = get_scent_balloon(H, human_target)
