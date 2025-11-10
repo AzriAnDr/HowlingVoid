@@ -135,6 +135,12 @@
 		var/datum/action/cooldown/spell/teshari_hearing/hearing_action = new
 		hearing_action.Grant(H)
 
+	// === Вульпиный нюх ===
+	var/datum/action/cooldown/scent_scan/vulp/scent = new()
+	scent.Grant(H)
+	var/datum/action/cooldown/scent_tracking/track = new()
+	track.Grant(H)
+
 
 /datum/species/vulpkanin/on_species_loss(mob/living/carbon/human/H, datum/species/new_species, pref_load)
 	. = ..()
