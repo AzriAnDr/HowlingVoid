@@ -176,15 +176,9 @@
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
-			SPECIES_PERK_ICON = FA_ICON_ANGRY,
+			SPECIES_PERK_ICON = FA_ICON_LINES_LEANING,
 			SPECIES_PERK_NAME = "Острые когти",
 			SPECIES_PERK_DESC = "У вульп очень острые когти.",
-		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
-			SPECIES_PERK_ICON = FA_ICON_ANGRY,
-			SPECIES_PERK_NAME = "Шерсть",
-			SPECIES_PERK_DESC = "Вы хорошо переносите холод, но вам тяжело в жару. Интересный факт, а вы знали что шерсть хорошо горит? :)",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
