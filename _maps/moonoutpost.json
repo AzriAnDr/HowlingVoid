@@ -1,0 +1,39 @@
+{
+	"version": 1,
+	"map_name": "MoonOutpost",
+	"map_path": "map_files/MoonOutpost",
+	"map_file": "MoonOutpost.dmm",
+	"exclude_from_ci": false,
+	"planetary": 1,
+	"height_autosetup": 0,
+	"allow_space_when_planetary": 1,
+	"shuttles": {
+		"cargo": "cargo_nova",
+		"ferry": "ferry_fancy",
+		"whiteship": "whiteship_box",
+		"emergency": "emergency_box"
+	},
+	"traits": [
+		{
+			"Linkage": null,
+			"Gravity": true,
+			"Baseturf": "/turf/open/misc/dirt/forest",
+			"No Parallax": true,
+			"Up": true
+		},
+		{
+			"Linkage": null,
+			"Gravity": true,
+			"Baseturf": "/turf/open/openspace/forest",
+			"No Parallax": true,
+			"Down": true
+		},
+		{
+			"Linkage": "Cross",
+			"Gravity": false,
+			"No Parallax": false
+		}
+	],
+	"minetype": "lavaland",
+	"blacklist_file": "jungleruinblacklist.txt"
+}
