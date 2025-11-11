@@ -1,3 +1,4 @@
+#define AQUATIC_METABOLISM_MULTIPLIER 1.5 // множитель метаболизма для акуловых
 /datum/species/aquatic
 	name = "Akula (Generic)"
 	id = SPECIES_AQUATIC
@@ -9,12 +10,16 @@
 		TRAIT_MUTANT_COLORS,
 		TRAIT_SHARP_CLAWS,
 	)
+
+	/// Храним исходные значения метаболизма для персонажей, чтобы корректно восстанавливать их при смене вида.
+	var/list/original_metabolism_efficiency
 	// Храним ссылку на наш скрытый «двигатель», чтобы потом убрать.
 	//var/datum/component/akula_swim/swim_component
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	mutant_bodyparts = list()
 	mutanttongue = /obj/item/organ/tongue/aquatic
 	payday_modifier = 1.0
+	var/datum/component/jetpack/space_thruster
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	examine_limb_id = SPECIES_AKULA
 	bodypart_overrides = list(
@@ -85,61 +90,18 @@
 
 /datum/species/aquatic/get_species_lore()
 	return list(placeholder_lore)
-/// The component responsible for handling zero-g movement inertia.
-/*
-var/datum/component/jetpack/space_thruster
 
-/datum/species/aquatic/on_species_gain(mob/living/carbon/aquatic, datum/species/old_species, pref_load, regenerate_icons)
-	. = ..()
-	enable_space_thruster(aquatic)
+/// Компонент, отвечающий за обработку инерции движения в условиях невесомости.
+/// Тут короче помимо всего используется для реализации
+/// #define COMSIG_AQUATIC_SPACE_JETPACK_ACTIVATE "aquatic_space_jetpack_activate"
 
-/datum/species/aquatic/on_species_loss(mob/living/carbon/aquatic, datum/species/new_species, pref_load)
-	. = ..()
-	disable_space_thruster(aquatic)
+/// #define COMSIG_AQUATIC_SPACE_JETPACK_DEACTIVATE "aquatic_space_jetpack_deactivate"
 
-/datum/species/aquatic/proc/enable_space_thruster(mob/living/carbon/aquatic)
-	if(!aquatic)
-		return
-	disable_space_thruster(aquatic)
-	space_thruster = aquatic.AddComponent(
-		/datum/component/jetpack,
-		FALSE,
-		1.5 NEWTONS,
-		0,
-		COMSIG_AQUATIC_SPACE_JETPACK_ACTIVATE,
-		COMSIG_AQUATIC_SPACE_JETPACK_DEACTIVATE,
-		null,
-		CALLBACK(src, PROC_REF(can_use_space_thruster), aquatic),
-		CALLBACK(src, PROC_REF(can_use_space_thruster), aquatic),
-		null,
-	)
-	if(QDELETED(space_thruster))
-		space_thruster = null
-		return
-	SEND_SIGNAL(aquatic, COMSIG_AQUATIC_SPACE_JETPACK_ACTIVATE, aquatic)
-	ADD_TRAIT(aquatic, TRAIT_NOGRAV_ALWAYS_DRIFT, SPECIES_TRAIT)
-
-/datum/species/aquatic/proc/disable_space_thruster(mob/living/carbon/aquatic)
-	if(aquatic && space_thruster)
-		SEND_SIGNAL(aquatic, COMSIG_AQUATIC_SPACE_JETPACK_DEACTIVATE, aquatic)
-	QDEL_NULL(space_thruster)
-	if(aquatic)
-		REMOVE_TRAIT(aquatic, TRAIT_NOGRAV_ALWAYS_DRIFT, SPECIES_TRAIT)
-
-/datum/species/aquatic/proc/can_use_space_thruster(mob/living/carbon/aquatic, use_fuel)
-	if(!aquatic || QDELETED(aquatic))
-		return FALSE
-	if(aquatic.stat != CONSCIOUS)
-		return FALSE
-	if(INCAPACITATED_IGNORING(aquatic, INCAPABLE_RESTRAINTS))
-		return FALSE
-	return TRUE
-	*/
 /datum/species/aquatic/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
 	if(!istype(H))
 		return
-
+	//enable_space_thruster(aquatic)
 // ============================================================================
 // Акуловые когти
 // ============================================================================
@@ -153,6 +115,12 @@ var/datum/component/jetpack/space_thruster
 	if(!HAS_TRAIT(H, TRAIT_NO_SLIP_ICE))
 		ADD_TRAIT(H, TRAIT_NO_SLIP_ICE, REF(src))
 
+	// Сохраняем исходный метаболизм и ускоряем вывод реагентов для способки солёной крови.
+	LAZYINITLIST(original_metabolism_efficiency)
+	if(isnull(original_metabolism_efficiency[H]))
+		original_metabolism_efficiency[H] = H.metabolism_efficiency
+	H.metabolism_efficiency = max(0, H.metabolism_efficiency * AQUATIC_METABOLISM_MULTIPLIER)
+
 /datum/species/aquatic/on_species_loss(mob/living/carbon/human/H)
 	..()
 	if(!istype(H))
@@ -161,7 +129,68 @@ var/datum/component/jetpack/space_thruster
 		REMOVE_TRAIT(H, TRAIT_NO_SLIP_WATER, REF(src))
 	if(HAS_TRAIT(H, TRAIT_NO_SLIP_ICE))
 		REMOVE_TRAIT(H, TRAIT_NO_SLIP_ICE, REF(src))
+/*
+	disable_space_thruster(aquatic)
+		// Восстанавливаем исходное значение метаболизма при выходе из вида.
+	if(original_metabolism_efficiency)
+		var/old_value = original_metabolism_efficiency[H]
+		if(isnum(old_value))
+			H.metabolism_efficiency = old_value
+		original_metabolism_efficiency[H] = null
 
+
+
+/datum/species/aquatic/proc/get_space_thruster_component(mob/living/carbon/aquatic)
+        if(!aquatic)
+                return null
+        var/datum/component/jetpack/existing_thruster = aquatic.GetComponent(/datum/component/jetpack)
+        if(existing_thruster?.activation_signal != COMSIG_AQUATIC_SPACE_JETPACK_ACTIVATE)
+                return null
+        return existing_thruster
+
+
+
+/datum/species/aquatic/proc/enable_space_thruster(mob/living/carbon/aquatic)
+        if(!aquatic || QDELETED(aquatic))
+                return
+        disable_space_thruster(aquatic)
+        var/datum/component/jetpack/space_thruster = aquatic.AddComponent(
+                /datum/component/jetpack,
+                TRUE,
+                1.5 NEWTONS,
+                1.5 NEWTONS,
+                COMSIG_AQUATIC_SPACE_JETPACK_ACTIVATE,
+                COMSIG_AQUATIC_SPACE_JETPACK_DEACTIVATE,
+                null,
+                CALLBACK(src, PROC_REF(can_use_space_thruster), aquatic),
+                CALLBACK(src, PROC_REF(can_use_space_thruster), aquatic),
+                null,
+        )
+        if(QDELETED(space_thruster))
+                return
+        SEND_SIGNAL(aquatic, COMSIG_AQUATIC_SPACE_JETPACK_ACTIVATE, aquatic)
+        ADD_TRAIT(aquatic, TRAIT_SPACEWALK, SPECIES_TRAIT)
+        ADD_TRAIT(aquatic, TRAIT_FREE_FLOAT_MOVEMENT, SPECIES_TRAIT)
+
+/datum/species/aquatic/proc/disable_space_thruster(mob/living/carbon/aquatic)
+        if(!aquatic || QDELETED(aquatic))
+                return
+        var/datum/component/jetpack/space_thruster = get_space_thruster_component(aquatic)
+        if(space_thruster)
+                SEND_SIGNAL(aquatic, COMSIG_AQUATIC_SPACE_JETPACK_DEACTIVATE, aquatic)
+                QDEL_NULL(space_thruster)
+        REMOVE_TRAIT(aquatic, TRAIT_SPACEWALK, SPECIES_TRAIT)
+        REMOVE_TRAIT(aquatic, TRAIT_FREE_FLOAT_MOVEMENT, SPECIES_TRAIT)
+
+/datum/species/aquatic/proc/can_use_space_thruster(mob/living/carbon/aquatic, use_fuel)
+        if(!aquatic || QDELETED(aquatic))
+                return FALSE
+        if(aquatic.stat != CONSCIOUS)
+                return FALSE
+        if(INCAPACITATED_IGNORING(aquatic, INCAPABLE_RESTRAINTS))
+                return FALSE
+        return TRUE
+*/
 
 /datum/species/aquatic/create_pref_unique_perks()
 	var/list/perks = list()
@@ -202,3 +231,5 @@ var/datum/component/jetpack/space_thruster
 		SPECIES_PERK_DESC = "Ваше тело хуже переносит холод, но переносят жару лучше.",
 	))
 	return perks
+#undef AQUATIC_METABOLISM_MULTIPLIER
+
