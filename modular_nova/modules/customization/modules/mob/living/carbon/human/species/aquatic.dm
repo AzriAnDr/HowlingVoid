@@ -129,14 +129,16 @@
 		REMOVE_TRAIT(H, TRAIT_NO_SLIP_WATER, REF(src))
 	if(HAS_TRAIT(H, TRAIT_NO_SLIP_ICE))
 		REMOVE_TRAIT(H, TRAIT_NO_SLIP_ICE, REF(src))
-/*
-	disable_space_thruster(aquatic)
-		// Восстанавливаем исходное значение метаболизма при выходе из вида.
+	// Восстанавливаем исходное значение метаболизма при выходе из вида.
 	if(original_metabolism_efficiency)
 		var/old_value = original_metabolism_efficiency[H]
 		if(isnum(old_value))
 			H.metabolism_efficiency = old_value
 		original_metabolism_efficiency[H] = null
+/*
+	disable_space_thruster(aquatic)
+
+
 
 
 
