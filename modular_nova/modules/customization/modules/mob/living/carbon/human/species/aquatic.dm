@@ -85,7 +85,7 @@
 
 /datum/species/aquatic/get_species_lore()
 	return list(placeholder_lore)
-	/// The component responsible for handling zero-g movement inertia.
+/// The component responsible for handling zero-g movement inertia.
 /*
 var/datum/component/jetpack/space_thruster
 
@@ -134,11 +134,12 @@ var/datum/component/jetpack/space_thruster
 	if(INCAPACITATED_IGNORING(aquatic, INCAPABLE_RESTRAINTS))
 		return FALSE
 	return TRUE
+	*/
 /datum/species/aquatic/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
 	if(!istype(H))
 		return
-		*/
+
 // ============================================================================
 // Акуловые когти
 // ============================================================================
