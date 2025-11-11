@@ -86,6 +86,7 @@
 /datum/species/aquatic/get_species_lore()
 	return list(placeholder_lore)
 	/// The component responsible for handling zero-g movement inertia.
+/*
 var/datum/component/jetpack/space_thruster
 
 /datum/species/aquatic/on_species_gain(mob/living/carbon/aquatic, datum/species/old_species, pref_load, regenerate_icons)
@@ -110,6 +111,7 @@ var/datum/component/jetpack/space_thruster
 		null,
 		CALLBACK(src, PROC_REF(can_use_space_thruster), aquatic),
 		CALLBACK(src, PROC_REF(can_use_space_thruster), aquatic),
+		null,
 	)
 	if(QDELETED(space_thruster))
 		space_thruster = null
@@ -136,6 +138,7 @@ var/datum/component/jetpack/space_thruster
 	..()
 	if(!istype(H))
 		return
+		*/
 // ============================================================================
 // Акуловые когти
 // ============================================================================
