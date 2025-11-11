@@ -1,0 +1,9 @@
+Здесь находится весь портированный контент с других серверов/билдов.
+
+При портировании чего либо нового, стоит создать отдельную папку для этого и оставить там текстовый файл с информацией откуда это было взято.
+
+Пример:
+
+Original code: https://github.com/ALOHADAWN/HowlingVoid
+Original sprites: https://github.com/ALOHADAWN/HowlingVoid
+License: GNU AGPL v3

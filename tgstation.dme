@@ -9452,4 +9452,10 @@
 #include "modular_nova\modules\xenoarchartifacts\obj\geosample.dm"
 #include "modular_nova\modules\xenoarchartifacts\obj\particle_battery.dm"
 #include "modular_nova\modules\xenoarchartifacts\obj\wave_scanner.dm"
+#include "modularhowling_void\modules\ported_content\blue_moon\snouts\snouts.dm"
+#include "modularhowling_void\modules\ported_content\fluffy_frontier\posters\contraband.dm"
+#include "modularhowling_void\modules\ported_content\fluffy_frontier\posters\official.dm"
+#include "modularhowling_void\modules\ported_content\white_moon\clothing\code\items.dm"
+#include "modularhowling_void\modules\ported_content\white_moon\clothing\code\loadout.dm"
+#include "modularhowling_void\modules\ported_content\white_moon\posters\code.dm"
 // END_INCLUDE
