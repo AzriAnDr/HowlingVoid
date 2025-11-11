@@ -197,12 +197,6 @@ var/datum/component/jetpack/space_thruster
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
-		SPECIES_PERK_ICON = FA_ICON_LUNGS,
-		SPECIES_PERK_NAME = "Хищное спокойствие",
-		SPECIES_PERK_DESC = "Вы не показываете эмоций и способны дольше сохранять концентрацию. Однако люди чувствуют себя рядом с вами неуютно.",
-	))
-	perks += list(list(
-		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = FA_ICON_ARROW_DOWN,
 		SPECIES_PERK_NAME = "Терморегуляция",
 		SPECIES_PERK_DESC = "Ваше тело хуже переносит холод, но переносят жару лучше.",
