@@ -85,7 +85,53 @@
 
 /datum/species/aquatic/get_species_lore()
 	return list(placeholder_lore)
+	/// The component responsible for handling zero-g movement inertia.
+var/datum/component/jetpack/space_thruster
 
+/datum/species/aquatic/on_species_gain(mob/living/carbon/aquatic, datum/species/old_species, pref_load, regenerate_icons)
+	. = ..()
+	enable_space_thruster(aquatic)
+
+/datum/species/aquatic/on_species_loss(mob/living/carbon/aquatic, datum/species/new_species, pref_load)
+	. = ..()
+	disable_space_thruster(aquatic)
+
+/datum/species/aquatic/proc/enable_space_thruster(mob/living/carbon/aquatic)
+	if(!aquatic)
+		return
+	disable_space_thruster(aquatic)
+	space_thruster = aquatic.AddComponent(
+		/datum/component/jetpack,
+		FALSE,
+		1.5 NEWTONS,
+		0,
+		COMSIG_AQUATIC_SPACE_JETPACK_ACTIVATE,
+		COMSIG_AQUATIC_SPACE_JETPACK_DEACTIVATE,
+		null,
+		CALLBACK(src, PROC_REF(can_use_space_thruster), aquatic),
+		CALLBACK(src, PROC_REF(can_use_space_thruster), aquatic),
+	)
+	if(QDELETED(space_thruster))
+		space_thruster = null
+		return
+	SEND_SIGNAL(aquatic, COMSIG_AQUATIC_SPACE_JETPACK_ACTIVATE, aquatic)
+	ADD_TRAIT(aquatic, TRAIT_NOGRAV_ALWAYS_DRIFT, SPECIES_TRAIT)
+
+/datum/species/aquatic/proc/disable_space_thruster(mob/living/carbon/aquatic)
+	if(aquatic && space_thruster)
+		SEND_SIGNAL(aquatic, COMSIG_AQUATIC_SPACE_JETPACK_DEACTIVATE, aquatic)
+	QDEL_NULL(space_thruster)
+	if(aquatic)
+		REMOVE_TRAIT(aquatic, TRAIT_NOGRAV_ALWAYS_DRIFT, SPECIES_TRAIT)
+
+/datum/species/aquatic/proc/can_use_space_thruster(mob/living/carbon/aquatic, use_fuel)
+	if(!aquatic || QDELETED(aquatic))
+		return FALSE
+	if(aquatic.stat != CONSCIOUS)
+		return FALSE
+	if(INCAPACITATED_IGNORING(aquatic, INCAPABLE_RESTRAINTS))
+		return FALSE
+	return TRUE
 /datum/species/aquatic/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
 	if(!istype(H))
@@ -102,12 +148,7 @@
 		ADD_TRAIT(H, TRAIT_NO_SLIP_WATER, REF(src))
 	if(!HAS_TRAIT(H, TRAIT_NO_SLIP_ICE))
 		ADD_TRAIT(H, TRAIT_NO_SLIP_ICE, REF(src))
-/*
-	// --- Добавляем компонент плавания ---
-	if(!swim_component)
-		swim_component = H.AddComponent(/datum/component/akula_swim)
-	to_chat(H, span_notice("Ты чувствуешь себя в невесомости как дома — словно в воде."))
-*/
+
 /datum/species/aquatic/on_species_loss(mob/living/carbon/human/H)
 	..()
 	if(!istype(H))
@@ -116,92 +157,7 @@
 		REMOVE_TRAIT(H, TRAIT_NO_SLIP_WATER, REF(src))
 	if(HAS_TRAIT(H, TRAIT_NO_SLIP_ICE))
 		REMOVE_TRAIT(H, TRAIT_NO_SLIP_ICE, REF(src))
-/*
-	// --- Убираем компонент плавания ---
-	if(swim_component)
-		qdel(swim_component)
-		swim_component = null
-	to_chat(H, span_warning("Твоя подвижность в невесомости исчезает."))
 
-
-// =====================================================================
-// Component: Akula Swim (аналог джетпака без топлива)
-// =====================================================================
-
-/datum/component/akula_swim
-	dupe_mode = COMPONENT_DUPE_UNIQUE
-	var/mob/living/carbon/human/owner
-	var/active = FALSE
-	var/datum/component/jetpack/jetpack_emulation
-
-/datum/component/akula_swim/Initialize(_owner)
-	if(!istype(_owner, /mob/living/carbon/human))
-		return COMPONENT_INCOMPATIBLE
-	owner = _owner
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_move))
-	check_gravity()
-	return ..()
-
-/datum/component/akula_swim/Destroy()
-	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED))
-	disable_swim()
-	owner = null
-	return ..()
-
-/datum/component/akula_swim/proc/get_gravity_for(atom/movable/A)
-	var/turf/T = get_turf(A)
-	if(!T)
-		return STANDARD_GRAVITY
-	var/datum/controller/subsystem/gravity/G = SSGRAVITY
-	if(!G)
-		return STANDARD_GRAVITY
-	return G.get_gravity(T)
-
-/datum/component/akula_swim/proc/check_gravity()
-	if(!owner)
-		return
-	var/grav = get_gravity_for(owner)
-	if(grav <= ZERO_GRAVITY && !active)
-		enable_swim()
-	else if(grav > ZERO_GRAVITY && active)
-		disable_swim()
-
-/datum/component/akula_swim/proc/on_move(atom/source)
-	check_gravity()
-
-// включаем свободное движение (эмуляция джетпака)
-/datum/component/akula_swim/proc/enable_swim()
-	if(active)
-		return
-	active = TRUE
-
-	if(!jetpack_emulation)
-		jetpack_emulation = owner.AddComponent(
-			/datum/component/jetpack,
-			TRUE, // стабилизированный
-			1.8,  // сила тяги
-			1.3,  // сила стабилизации
-			null, null, null,
-			CALLBACK(src, PROC_REF(always_true)),
-			CALLBACK(src, PROC_REF(always_true)),
-			/datum/effect_system/trail_follow/ion/grav_allowed
-		)
-
-	to_chat(owner, span_notice("Ты начинаешь двигаться в невесомости словно в воде."))
-
-/datum/component/akula_swim/proc/disable_swim()
-	if(!active)
-		return
-	active = FALSE
-	if(jetpack_emulation)
-		qdel(jetpack_emulation)
-		jetpack_emulation = null
-	to_chat(owner, span_warning("Ты больше не можешь двигаться в невесомости."))
-
-/datum/component/akula_swim/proc/always_true()
-	return TRUE
-*/
 
 /datum/species/aquatic/create_pref_unique_perks()
 	var/list/perks = list()
