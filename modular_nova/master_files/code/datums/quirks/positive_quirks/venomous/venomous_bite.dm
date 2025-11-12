@@ -81,9 +81,9 @@
 	var/armor = target.run_armor_check(target_zone, MELEE)
 	var/obj/item/bodypart/part = target.get_bodypart(target_zone)
 
-	var/text = "[owner] sinks [owner.p_their()] teeth into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"
-	var/self_message = "You sink your teeth into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"
-	var/victim_message = "[owner] sinks [owner.p_their()] teeth into your [target.parse_zone_with_bodypart(target_zone)]!"
+	var/text = "[owner] свои клыки в [target]'s [target.parse_zone_with_bodypart(target_zone)]!" //HOWLING VOID EDIT. ORIGINAL: "[owner] sinks [owner.p_their()] teeth into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"
+	var/self_message = "Ты вонзаешь свои клыки в [target]'s [target.parse_zone_with_bodypart(target_zone)]!" //HOWLING VOID EDIT. ORIGINAL: "You sink your teeth into [target]'s [target.parse_zone_with_bodypart(target_zone)]!"
+	var/victim_message = "[owner] вонзает [owner.p_their()] в  [target.parse_zone_with_bodypart(target_zone)]!" //HOWLING VOID EDIT. ORIGINAL: "[owner] sinks [owner.p_their()] teeth into your [target.parse_zone_with_bodypart(target_zone)]!"
 
 	var/covered = FALSE
 	if (ishuman(target))
@@ -92,9 +92,9 @@
 			if (iter_clothing.clothing_flags & THICKMATERIAL)
 				covered = TRUE
 
-				text = "[owner] tries to bite [target], but breaks [owner.p_their()] teeth on [target]'s clothing! Ouch!"
-				self_message = "You try to bite [target], but you break your teeth on [target.p_their()] clothing! Ouch!"
-				victim_message = "[owner] tries to bite you, but breaks [owner.p_their()] teeth on your clothing! Ouch!"
+				text = "[owner] пытается укусить [target], но врезается зубами в твердую одежду [target]! Ауч!" //HOWLING VOID EDIT. ORIGINAL: "[owner] tries to bite [target], but breaks [owner.p_their()] teeth on [target]'s clothing! Ouch!"
+				self_message = "Ты пытаешься укусить [target], но из-за твердой одежды повреждаешь свои зубы! Ауч!" //HOWLING VOID EDIT. ORIGINAL: "You try to bite [target], but you break your teeth on [target.p_their()] clothing! Ouch!"
+				victim_message = "[owner] пытается укусить тебя, но лишь повреждает свои же зубы! Ауч!!" //HOWLING VOID EDIT. ORIGINAL: "[owner] tries to bite you, but breaks [owner.p_their()] teeth on your clothing! Ouch!"
 
 				owner.emote("scream")
 				if (isliving(owner))
