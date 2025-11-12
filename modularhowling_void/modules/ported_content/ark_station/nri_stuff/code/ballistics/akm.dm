@@ -1,10 +1,10 @@
 /obj/item/gun/ballistic/automatic/akm
 	name = "\improper KAR-84 carbine"
 	desc = "Old developments of the InteQ weapons factories. A copy of one of the Old Empire's machine guns. Has a slightly cheaper price tag, and mercenaries don't need more."
-	icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_guns40x32.dmi'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_guns40x32.dmi'
 	icon_state = "akm"
-	lefthand_file = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_lefthand.dmi'
-	righthand_file = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_righthand.dmi'
+	lefthand_file = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_lefthand.dmi'
+	righthand_file = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_righthand.dmi'
 	inhand_icon_state = "akm"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
@@ -13,13 +13,13 @@
 	can_suppress = FALSE
 	fire_delay = 2.5
 	actions_types = list()
-	worn_icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_back.dmi'
+	worn_icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_back.dmi'
 	worn_icon_state = "akm"
-	fire_sound = 'modular_nova/modules/nri_stuff/sound/guns/fire/akm_fire.ogg'
-	rack_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/ltrifle_cock.ogg'
-	load_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/ltrifle_magin.ogg'
-	load_empty_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/ltrifle_magin.ogg'
-	eject_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/ltrifle_magout.ogg'
+	fire_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/akm_fire.ogg'
+	rack_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/ltrifle_cock.ogg'
+	load_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/ltrifle_magin.ogg'
+	load_empty_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/ltrifle_magin.ogg'
+	eject_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/ltrifle_magout.ogg'
 	burst_size = 1
 
 /obj/item/gun/ballistic/automatic/akm/Initialize(mapload)
@@ -35,7 +35,7 @@
 	inhand_icon_state = "akm"
 	worn_icon_state = "akm"
 	fire_delay = 1
-	fire_sound = 'modular_nova/modules/nri_stuff/sound/guns/fire/ak12_fire.ogg'
+	fire_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/ak12_fire.ogg'
 
 /// INTEQ CIV
 /obj/item/gun/ballistic/automatic/akm/civvie
@@ -67,7 +67,7 @@
 /obj/item/ammo_box/magazine/akm
 	name = "KR-Q magazine"
 	desc = "a banana-shaped double-stack magazine able to hold 30 rounds of 5.6mm ammo."
-	icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_items.dmi'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_items.dmi'
 	icon_state = "akm"
 	ammo_type = /obj/item/ammo_casing/realistic/a762x39
 	caliber = "a762x39"
