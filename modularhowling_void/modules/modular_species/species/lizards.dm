@@ -63,7 +63,7 @@
 /datum/species/lizard/proc/on_grab(mob/lizard, new_state)
 	SIGNAL_HANDLER
 
-	if(new_state > GRAB_PASSIVE && !lizard.has_movespeed_modifier(/datum/movespeed_modifier/lizard_grab_speedboost))
+	if((new_state > GRAB_PASSIVE || lizard.has_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown)) && !lizard.has_movespeed_modifier(/datum/movespeed_modifier/lizard_grab_speedboost))
 		to_chat(lizard, "aaa")
 		lizard.add_movespeed_modifier(/datum/movespeed_modifier/lizard_grab_speedboost)
 	else if (new_state == GRAB_PASSIVE && lizard.has_movespeed_modifier(/datum/movespeed_modifier/lizard_grab_speedboost))
@@ -73,6 +73,7 @@
 	multiplicative_slowdown = -2
 
 
+//Ядовитый укус
 /datum/action/cooldown/mob_cooldown/venomous_bite/lizard
 	name = "Ядовитый укус"
 	cooldown_time = 1.5 SECONDS
@@ -113,10 +114,6 @@
 		inject(target)
 	return TRUE
 
-
-
-
-
 /datum/action/cooldown/mob_cooldown/venomous_bite/lizard/add_reagents(datum/reagents/target, harvesting = FALSE)
 	var/temp
 	if (ishuman(owner))
@@ -128,17 +125,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+///Регенерация конечностей
 /datum/action/cooldown/regenerate_limbs/lizard
 	name = "Отращивание конечностей"
 	check_flags = AB_CHECK_CONSCIOUS
