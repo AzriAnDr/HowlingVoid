@@ -1,15 +1,15 @@
 /obj/item/gun/ballistic/automatic/mg34
 	name = "\improper MG-34"
 	desc = "An Old Empire machine gun that was also used in the Civil War. InteQ mercenaries took the old designs and put this old gun into circulation."
-	icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_guns40x32.dmi'
-	lefthand_file = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_lefthand.dmi'
-	righthand_file = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_righthand.dmi'
-	worn_icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_back.dmi'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_guns40x32.dmi'
+	lefthand_file = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_lefthand.dmi'
+	righthand_file = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_righthand.dmi'
+	worn_icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_back.dmi'
 	icon_state = "mg34"
 	base_icon_state = "mg34"
 	worn_icon_state = "mg34"
 	inhand_icon_state = "mg34"
-	fire_sound = 'modular_nova/modules/nri_stuff/sound/guns/fire/mg34_fire.ogg'
+	fire_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/mg34_fire.ogg'
 	rack_sound = 'sound/items/weapons/gun/l6/l6_rack.ogg'
 	suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
 	fire_sound_volume = 70
@@ -70,7 +70,7 @@
 
 /obj/item/ammo_box/magazine/mg34
 	name = "MG-34 drum (7.92x57mm)"
-	icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_items.dmi'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_items.dmi'
 	icon_state = "mg34_drum"
 	ammo_type = /obj/item/ammo_casing/realistic/a792x57
 	caliber = "a792x57"
@@ -109,7 +109,7 @@
 	inhand_icon_state = "mg42"
 	fire_sound_volume = 100
 	fire_delay = 0.5
-	fire_sound = 'modular_nova/modules/nri_stuff/sound/guns/fire/mg42_fire.ogg'
+	fire_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/mg42_fire.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/mg42
 	spread = SPREAD_UNDEPLOYED
 	/// If we are resting, the bipod is deployed.
@@ -168,7 +168,7 @@
 	else
 		bipod_deployed = FALSE
 		spread = SPREAD_UNDEPLOYED
-	playsound(src, 'modular_nova/modules/nri_stuff/sound/guns/fire/mg42_bipod.ogg', 100)
+	playsound(src, 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/mg42_bipod.ogg', 100)
 	balloon_alert_to_viewers("bipod [bipod_deployed ? "deployed" : "undeployed"]!")
 	update_appearance()
 
@@ -179,7 +179,7 @@
 	barrel_heat += HEAT_PER_SHOT
 	if(barrel_heat >= 100)
 		overheated = TRUE
-		playsound(src, 'modular_nova/modules/nri_stuff/sound/guns/fire/mg_overheat.ogg', 100)
+		playsound(src, 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/mg_overheat.ogg', 100)
 		addtimer(CALLBACK(src, PROC_REF(reset_overheat)), TIME_TO_COOLDOWN)
 	update_appearance()
 
@@ -205,7 +205,7 @@
 
 /obj/item/ammo_box/magazine/mg42
 	name = "MG-42 drum (7.92x57mm)"
-	icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_items.dmi'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_items.dmi'
 	icon_state = "mg42_drum"
 	ammo_type = /obj/item/ammo_casing/realistic/a792x57
 	caliber = "a792x57"

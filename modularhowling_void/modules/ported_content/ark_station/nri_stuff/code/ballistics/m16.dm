@@ -1,12 +1,12 @@
 /obj/item/gun/ballistic/automatic/m16
 	name = "\improper M-61 rifle"
 	desc = "A cheap variation of the weapon used in the Civil War. Produced by the mercenary military industry InteQ."
-	icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_guns40x32.dmi'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_guns40x32.dmi'
 	icon_state = "m16"
-	lefthand_file = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_lefthand.dmi'
-	righthand_file = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_righthand.dmi'
+	lefthand_file = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_lefthand.dmi'
+	righthand_file = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_righthand.dmi'
 	inhand_icon_state = "m16"
-	worn_icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_back.dmi'
+	worn_icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_back.dmi'
 	worn_icon_state = "m16"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
@@ -16,17 +16,17 @@
 	burst_size = 3
 	fire_delay = 2
 	projectile_damage_multiplier = 0.57
-	fire_sound = 'modular_nova/modules/nri_stuff/sound/guns/fire/m16_fire.ogg'
+	fire_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/m16_fire.ogg'
 	fire_sound_volume = 50
-	rack_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/sfrifle_cock.ogg'
-	load_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/sfrifle_magin.ogg'
-	load_empty_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/sfrifle_magin.ogg'
-	eject_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/sfrifle_magout.ogg'
+	rack_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/sfrifle_cock.ogg'
+	load_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/sfrifle_magin.ogg'
+	load_empty_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/sfrifle_magin.ogg'
+	eject_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/sfrifle_magout.ogg'
 
 /obj/item/ammo_box/magazine/m16
 	name = "\improper M-61 magazine"
 	desc = "A double-stack translucent polymer magazine for use with the M-61 rifles. Holds 30 rounds of .277 Aestus."
-	icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_items.dmi'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_items.dmi'
 	icon_state = "m16e"
 	ammo_type = /obj/item/ammo_casing/a223
 	caliber = CALIBER_A223
@@ -36,7 +36,7 @@
 /obj/item/ammo_box/magazine/m16/vintage
 	name = "outdated .277 magazine"
 	desc = "A double-stack solid magazine that looks rather dated. Holds 20 rounds of .277 Aestus."
-	icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_items.dmi'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_items.dmi'
 	icon_state = "m16"
 	max_ammo = 20
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
@@ -74,7 +74,7 @@
 /obj/item/ammo_box/magazine/m16/patriot
 	name = "\improper M-61A1 drum magazine"
 	desc = "A double-stack solid polymer drum made for use with the M-61A1 rifle. Holds 50 rounds of .277 ammo."
-	icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_items.dmi'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_items.dmi'
 	icon_state = "m16"
 	max_ammo = 50
 	multiple_sprites = AMMO_BOX_FULL_EMPTY

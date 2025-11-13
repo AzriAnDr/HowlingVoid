@@ -1,12 +1,12 @@
 /obj/item/gun/ballistic/automatic/mp5
 	name = "\improper SG-5"
 	desc = "A compact submachine gun of the pilots and tank crew of the Old Empire. After its collapse, the weapon's blueprints were taken by mercenaries from InteQ."
-	icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_guns40x32.dmi'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_guns40x32.dmi'
 	icon_state = "mp5"
-	lefthand_file = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_lefthand.dmi'
-	righthand_file = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_righthand.dmi'
+	lefthand_file = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_lefthand.dmi'
+	righthand_file = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_righthand.dmi'
 	inhand_icon_state = "mp5"
-	worn_icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_back.dmi'
+	worn_icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_back.dmi'
 	worn_icon_state = "mp40_modern"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	accepted_magazine_type = /obj/item/ammo_box/magazine/mp5
@@ -14,12 +14,12 @@
 	can_suppress = FALSE
 	fire_delay = 1
 	burst_size = 1
-	fire_sound = 'modular_nova/modules/nri_stuff/sound/guns/fire/mp5_fire.ogg'
+	fire_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/mp5_fire.ogg'
 	fire_sound_volume = 100
-	rack_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/mp5_cock.ogg'
-	load_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/mp5_magin.ogg'
-	load_empty_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/mp5_magin.ogg'
-	eject_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/mp5_magout.ogg'
+	rack_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/mp5_cock.ogg'
+	load_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/mp5_magin.ogg'
+	load_empty_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/mp5_magin.ogg'
+	eject_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/mp5_magout.ogg'
 
 /obj/item/gun/ballistic/automatic/mp5/Initialize(mapload)
 	. = ..()
@@ -48,7 +48,7 @@
 /obj/item/ammo_box/magazine/mp5
 	name = "\improper SG-5 magazine"
 	desc = "Magazine with .385 caliber cartridges. Suitable for SG-5."
-	icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_items.dmi'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_items.dmi'
 	icon_state = "mp5"
 	ammo_type = /obj/item/ammo_casing/c385
 	caliber = ".385"
@@ -59,16 +59,16 @@
 /obj/item/gun/ballistic/automatic/bison
 	name = "\improper Bizon"
 	desc = "A compact submachine gun of the pilots and tank crew of the Old Empire. After its collapse, the weapon's blueprints were taken by mercenaries from InteQ."
-	icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_guns.dmi'
-	lefthand_file = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_lefthand.dmi'
-	righthand_file = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_righthand.dmi'
-	worn_icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_back.dmi'
-	fire_sound = 'modular_nova/modules/nri_stuff/sound/guns/fire/mp5_fire.ogg'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_guns.dmi'
+	lefthand_file = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_lefthand.dmi'
+	righthand_file = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_righthand.dmi'
+	worn_icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_back.dmi'
+	fire_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/mp5_fire.ogg'
 	fire_sound_volume = 100
-	rack_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/mp5_cock.ogg'
-	load_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/mp5_magin.ogg'
-	load_empty_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/mp5_magin.ogg'
-	eject_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/mp5_magout.ogg'
+	rack_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/mp5_cock.ogg'
+	load_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/mp5_magin.ogg'
+	load_empty_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/mp5_magin.ogg'
+	eject_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/mp5_magout.ogg'
 	burst_size = 1
 	icon_state = "bizon"
 	inhand_icon_state = "bizon"
@@ -79,7 +79,7 @@
 /obj/item/ammo_box/magazine/bison
 	name = "\improper SPG-X-19 Bizon magazine"
 	desc = "Magazine with .385 caliber cartridges. Suitable for Bizon."
-	icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_items.dmi'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_items.dmi'
 	icon_state = "p90"
 	ammo_type = /obj/item/ammo_casing/c385
 	caliber = ".385"
@@ -90,7 +90,7 @@
 /obj/item/gun/ballistic/automatic/bison/nri
 	name = "\improper NRI Bizon"
 	desc = "A compact submachine gun of the pilots and tank crew of the Old Empire. After its collapse, the weapon's blueprints were taken by Military Forces of NRI."
-	icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_guns.dmi'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_guns.dmi'
 	icon_state = "bison"
 	inhand_icon_state = "bison"
 	worn_icon_state = "nri_smg"

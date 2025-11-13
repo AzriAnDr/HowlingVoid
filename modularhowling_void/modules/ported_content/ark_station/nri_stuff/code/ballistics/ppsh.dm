@@ -1,12 +1,12 @@
 /obj/item/gun/ballistic/automatic/ppsh // Dont Use in GunCargo
 	name = "\improper SSG-41"
 	desc = "A reproduction of a simple Soviet SMG chambered in 7.62x25 Tokarev rounds. Its heavy wooden stock and leather breech buffer help absorb the bolt’s heavy recoil, making it great for spraying and praying. Uraaaa!"
-	icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_guns40x32.dmi'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_guns40x32.dmi'
 	icon_state = "ppsh"
-	lefthand_file = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_lefthand.dmi'
-	righthand_file = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_righthand.dmi'
+	lefthand_file = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_lefthand.dmi'
+	righthand_file = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_righthand.dmi'
 	inhand_icon_state = "ppsh"
-	worn_icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_back.dmi'
+	worn_icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_back.dmi'
 	worn_icon_state = "ppsh"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	weapon_weight = WEAPON_HEAVY
@@ -15,13 +15,13 @@
 	can_suppress = FALSE
 	spread = 20
 	fire_delay = 0.5
-	fire_sound = 'modular_nova/modules/nri_stuff/sound/guns/fire/ppsh_fire.ogg'
+	fire_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/ppsh_fire.ogg'
 	fire_sound_volume = 80
 	burst_size = 1
-	rack_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/smg_cock.ogg'
-	load_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/smg_magin.ogg'
-	load_empty_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/smg_magin.ogg'
-	eject_sound = 'modular_nova/modules/nri_stuff/sound/guns/interact/smg_magout.ogg'
+	rack_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/smg_cock.ogg'
+	load_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/smg_magin.ogg'
+	load_empty_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/smg_magin.ogg'
+	eject_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/smg_magout.ogg'
 
 /obj/item/gun/ballistic/automatic/ppsh/Initialize(mapload)
 	. = ..()
@@ -29,7 +29,7 @@
 
 /obj/item/ammo_box/magazine/ppsh
 	name = "SSG-56 magazine (7.62x25mm)"
-	icon = 'modular_nova/modules/nri_stuff/icons/guns/gunsgalore_items.dmi'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_items.dmi'
 	icon_state = "ppsh"
 	ammo_type = /obj/item/ammo_casing/realistic/a762x25
 	caliber = "a762x25"

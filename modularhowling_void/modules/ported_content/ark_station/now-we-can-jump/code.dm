@@ -58,7 +58,7 @@
 		user.adjustStaminaLoss(10)
 
 	if(!HAS_TRAIT(user, TRAIT_MIMING))
-		playsound(user, user.gender == MALE ? 'modular_nova/modules/now-we-can-jump/jump_male.ogg' : 'modular_nova/modules/now-we-can-jump/jump_female.ogg', 25, 0, 1)
+		playsound(user, user.gender == MALE ? 'modularhowling_void/modules/ported_content/ark_station/now-we-can-jump/jump_male.ogg' : 'modularhowling_void/modules/ported_content/ark_station/now-we-can-jump/jump_female.ogg', 25, 0, 1)
 	user.visible_message("<span class='danger'>[user] jumps.</span>", \
 					"<span class='warning'> I jump at the [loc]!</span>")
 	user.adjustStaminaLoss(rand(30,50))

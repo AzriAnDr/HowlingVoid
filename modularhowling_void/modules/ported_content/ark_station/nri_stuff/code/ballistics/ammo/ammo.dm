@@ -1,7 +1,7 @@
 ///NEW CARTRIDGES
 
 /obj/item/ammo_casing/realistic
-	icon = 'modular_nova/modules/nri_stuff/icons/ammo/ammo.dmi'
+	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/ammo/ammo.dmi'
 
 //GERMAN
 //7.92x33mm Kurz
