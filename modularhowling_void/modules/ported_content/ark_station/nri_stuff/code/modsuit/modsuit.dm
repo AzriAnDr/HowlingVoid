@@ -26,10 +26,10 @@
 	)
 	variants = list(
 		"frontline" = list(
-			MOD_ICON_OVERRIDE = 'modular_nova/modules/nri_stuff/icons/modsuit/mod.dmi',
-			MOD_WORN_ICON_OVERRIDE = 'modular_nova/modules/nri_stuff/icons/modsuit/wornmod.dmi',
-			MOD_DIGITIGRADE_ICON_OVERRIDE = 'modular_nova/modules/nri_stuff/icons/modsuit/worn_mod_digi.dmi',
-			MOD_SNOUT_ICON_OVERRIDE = 'modular_nova/modules/nri_stuff/icons/modsuit/worn_mod_digi.dmi',
+			MOD_ICON_OVERRIDE = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/modsuit/mod.dmi',
+			MOD_WORN_ICON_OVERRIDE = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/modsuit/wornmod.dmi',
+			MOD_DIGITIGRADE_ICON_OVERRIDE = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/modsuit/worn_mod_digi.dmi',
+			MOD_SNOUT_ICON_OVERRIDE = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/modsuit/worn_mod_digi.dmi',
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_LAYER = HEAD_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
