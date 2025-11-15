@@ -19,7 +19,6 @@
 	mutant_bodyparts = list()
 	mutanttongue = /obj/item/organ/tongue/aquatic
 	payday_modifier = 1.0
-	var/datum/component/jetpack/space_thruster
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	examine_limb_id = SPECIES_AKULA
 	bodypart_overrides = list(
@@ -91,17 +90,13 @@
 /datum/species/aquatic/get_species_lore()
 	return list(placeholder_lore)
 
-/// Компонент, отвечающий за обработку инерции движения в условиях невесомости.
-/// Тут короче помимо всего используется для реализации
-/// #define COMSIG_AQUATIC_SPACE_JETPACK_ACTIVATE "aquatic_space_jetpack_activate"
 
-/// #define COMSIG_AQUATIC_SPACE_JETPACK_DEACTIVATE "aquatic_space_jetpack_deactivate"
 
 /datum/species/aquatic/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
 	if(!istype(H))
 		return
-	//enable_space_thruster(aquatic)
+
 // ============================================================================
 // Акуловые когти
 // ============================================================================
@@ -135,64 +130,7 @@
 		if(isnum(old_value))
 			H.metabolism_efficiency = old_value
 		original_metabolism_efficiency[H] = null
-/*
-	disable_space_thruster(aquatic)
 
-
-
-
-
-/datum/species/aquatic/proc/get_space_thruster_component(mob/living/carbon/aquatic)
-        if(!aquatic)
-                return null
-        var/datum/component/jetpack/existing_thruster = aquatic.GetComponent(/datum/component/jetpack)
-        if(existing_thruster?.activation_signal != COMSIG_AQUATIC_SPACE_JETPACK_ACTIVATE)
-                return null
-        return existing_thruster
-
-
-
-/datum/species/aquatic/proc/enable_space_thruster(mob/living/carbon/aquatic)
-        if(!aquatic || QDELETED(aquatic))
-                return
-        disable_space_thruster(aquatic)
-        var/datum/component/jetpack/space_thruster = aquatic.AddComponent(
-                /datum/component/jetpack,
-                TRUE,
-                1.5 NEWTONS,
-                1.5 NEWTONS,
-                COMSIG_AQUATIC_SPACE_JETPACK_ACTIVATE,
-                COMSIG_AQUATIC_SPACE_JETPACK_DEACTIVATE,
-                null,
-                CALLBACK(src, PROC_REF(can_use_space_thruster), aquatic),
-                CALLBACK(src, PROC_REF(can_use_space_thruster), aquatic),
-                null,
-        )
-        if(QDELETED(space_thruster))
-                return
-        SEND_SIGNAL(aquatic, COMSIG_AQUATIC_SPACE_JETPACK_ACTIVATE, aquatic)
-        ADD_TRAIT(aquatic, TRAIT_SPACEWALK, SPECIES_TRAIT)
-        ADD_TRAIT(aquatic, TRAIT_FREE_FLOAT_MOVEMENT, SPECIES_TRAIT)
-
-/datum/species/aquatic/proc/disable_space_thruster(mob/living/carbon/aquatic)
-        if(!aquatic || QDELETED(aquatic))
-                return
-        var/datum/component/jetpack/space_thruster = get_space_thruster_component(aquatic)
-        if(space_thruster)
-                SEND_SIGNAL(aquatic, COMSIG_AQUATIC_SPACE_JETPACK_DEACTIVATE, aquatic)
-                QDEL_NULL(space_thruster)
-        REMOVE_TRAIT(aquatic, TRAIT_SPACEWALK, SPECIES_TRAIT)
-        REMOVE_TRAIT(aquatic, TRAIT_FREE_FLOAT_MOVEMENT, SPECIES_TRAIT)
-
-/datum/species/aquatic/proc/can_use_space_thruster(mob/living/carbon/aquatic, use_fuel)
-        if(!aquatic || QDELETED(aquatic))
-                return FALSE
-        if(aquatic.stat != CONSCIOUS)
-                return FALSE
-        if(INCAPACITATED_IGNORING(aquatic, INCAPABLE_RESTRAINTS))
-                return FALSE
-        return TRUE
-*/
 
 /datum/species/aquatic/create_pref_unique_perks()
 	var/list/perks = list()
