@@ -1,0 +1,31 @@
+{
+	"version": 1,
+	"map_name": "Water Kilo",
+	"map_path": "map_files/WaterKiloStation",
+	"map_file": "WaterKiloStation.dmm",
+	"shuttles": {
+		"emergency": "emergency_kilo",
+		"ferry": "ferry_kilo",
+		"cargo": "cargo_kilo",
+		"whiteship": "whiteship_kilo"
+	},
+	"traits": [
+		{
+			"Linkage": null,
+			"Down": 1,
+			"Gravity": true,
+			"Nearstation Ocean Ruins": true,
+			"Ocean Ruins": true,
+			"Ocean Station": true,
+			"Baseturf": "/turf/open/floor/plating/asteroid"
+		}
+	],
+	"job_changes": {
+		"Cook": {
+			"additional_cqc_areas": ["/area/station/service/bar/atrium"]
+		},
+		"Captain": {
+			"special_charter": "asteroid"
+		}
+	}
+}
