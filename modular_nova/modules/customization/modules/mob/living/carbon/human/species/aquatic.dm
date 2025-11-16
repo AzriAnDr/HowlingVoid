@@ -1,4 +1,5 @@
 #define AQUATIC_METABOLISM_MULTIPLIER 1.5 // множитель метаболизма для акуловых
+#define AQUATIC_SPACE_DRIFT_FORCE 1.25 NEWTONS // сила, с которой акуловые продолжают движение в космосе
 /datum/species/aquatic
 	name = "Akula (Generic)"
 	id = SPECIES_AQUATIC
@@ -90,6 +91,22 @@
 /datum/species/aquatic/get_species_lore()
 	return list(placeholder_lore)
 
+/datum/species/aquatic/proc/apply_space_inertia(mob/living/carbon/human/H, atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	SIGNAL_HANDLER
+	if(!movement_dir || forced || !momentum_change)
+		return
+	if(H.has_gravity())
+		return
+	var/turf/current_turf = get_turf(H)
+	if(!current_turf || !isspaceturf(current_turf))
+		return
+	var/max_drift_force = MOVE_DELAY_TO_DRIFT(H.cached_multiplicative_slowdown)
+	var/impulse_force = min(AQUATIC_SPACE_DRIFT_FORCE, max_drift_force)
+	var/move_angle = dir2angle(movement_dir)
+	if(H.drift_handler)
+		H.drift_handler.newtonian_impulse(move_angle, 0, impulse_force, max_drift_force)
+		return
+	new /datum/drift_handler(H, move_angle, TRUE, 0, impulse_force)
 
 
 /datum/species/aquatic/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
@@ -97,6 +114,7 @@
 	if(!istype(H))
 		return
 
+	RegisterSignal(H, COMSIG_MOVABLE_MOVED, PROC_REF(apply_space_inertia))
 // ============================================================================
 // Акуловые когти
 // ============================================================================
@@ -110,6 +128,10 @@
 	if(!HAS_TRAIT(H, TRAIT_NO_SLIP_ICE))
 		ADD_TRAIT(H, TRAIT_NO_SLIP_ICE, REF(src))
 
+	// --- Шагаем по космосу, как будто это вода ---
+	if(!HAS_TRAIT(H, TRAIT_SPACEWALK))
+		ADD_TRAIT(H, TRAIT_SPACEWALK, REF(src))
+
 	// Сохраняем исходный метаболизм и ускоряем вывод реагентов для способки солёной крови.
 	LAZYINITLIST(original_metabolism_efficiency)
 	if(isnull(original_metabolism_efficiency[H]))
@@ -120,6 +142,7 @@
 	..()
 	if(!istype(H))
 		return
+	UnregisterSignal(H, list(COMSIG_MOVABLE_MOVED))
 	if(HAS_TRAIT(H, TRAIT_NO_SLIP_WATER))
 		REMOVE_TRAIT(H, TRAIT_NO_SLIP_WATER, REF(src))
 	if(HAS_TRAIT(H, TRAIT_NO_SLIP_ICE))
@@ -131,7 +154,8 @@
 			H.metabolism_efficiency = old_value
 		original_metabolism_efficiency[H] = null
 
-
+	if(HAS_TRAIT(H, TRAIT_SPACEWALK))
+		REMOVE_TRAIT(H, TRAIT_SPACEWALK, REF(src))
 /datum/species/aquatic/create_pref_unique_perks()
 	var/list/perks = list()
 	perks += list(list(
@@ -171,5 +195,6 @@
 		SPECIES_PERK_DESC = "Ваше тело хуже переносит холод, но переносят жару лучше.",
 	))
 	return perks
+#undef AQUATIC_SPACE_DRIFT_FORCE
 #undef AQUATIC_METABOLISM_MULTIPLIER
 
