@@ -21,7 +21,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulp2, 32)
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulp3, 32)
 /*
 /obj/structure/sign/poster/contraband/UNKNOWN
-	name = "White Wolf Aiko"
+	name = "UNKNOWN"
 	desc = "UNKNOWN"
 	icon_state = "poster_vulp4"
 	icon = 'modularhowling_void/modules/posters/poster.dmi'
