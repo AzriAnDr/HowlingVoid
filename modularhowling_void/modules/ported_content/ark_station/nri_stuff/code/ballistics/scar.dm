@@ -21,6 +21,7 @@
 	load_empty_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/scar_mag_in.ogg'
 	eject_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/scar_mag_out.ogg'
 	burst_size = 1
+	projectile_damage_multiplier = 0.57
 
 /obj/item/gun/ballistic/automatic/scar/Initialize(mapload)
 	. = ..()
