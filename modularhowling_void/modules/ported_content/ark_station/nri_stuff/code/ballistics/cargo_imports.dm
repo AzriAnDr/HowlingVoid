@@ -14,13 +14,13 @@
 
 /datum/armament_entry/company_import/nri_surplus/firearm/akmnri
 	item_type = /obj/item/gun/ballistic/automatic/akm/nri
-	cost = 2000
+	cost = 3500
 
-/datum/armament_entry/company_import/nri_surplus/longarm/bison
+/datum/armament_entry/company_import/nri_surplus/firearm/bison
 	item_type = /obj/item/gun/ballistic/automatic/bison
 	cost = 4500
 
-/datum/armament_entry/company_import/nri_surplus/longarm/bisonnri
+/datum/armament_entry/company_import/nri_surplus/firearm/bisonnri
 	item_type = /obj/item/gun/ballistic/automatic/bison/nri
 	cost = 4500
 
@@ -142,10 +142,6 @@
 	item_type = /obj/item/ammo_box/magazine/bison
 	cost = 100
 
-/datum/armament_entry/company_import/nri_surplus/firearm_ammo/p90
-	item_type = /obj/item/ammo_box/magazine/p90
-	cost = 100
-
 //SOL
 
 /datum/armament_entry/company_import/sol_defense/magazines/mp5
@@ -166,6 +162,10 @@
 
 /datum/armament_entry/company_import/sol_defense/magazines/scar
 	item_type = /obj/item/ammo_box/magazine/scar
+	cost = 100
+
+/datum/armament_entry/company_import/sol_defense/magazines/p90
+	item_type = /obj/item/ammo_box/magazine/p90
 	cost = 100
 
 //VIT
