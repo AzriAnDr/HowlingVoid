@@ -95,7 +95,11 @@
 	if(!istype(H))
 		return
 
-
+	// === Инстинкт охотника ===
+	var/datum/action/cooldown/scent_scan/aquatic/scent = new()
+	scent.Grant(H)
+	var/datum/action/cooldown/scent_tracking/track = new()
+	track.Grant(H)
 // ============================================================================
 // Акуловые когти
 // ============================================================================
@@ -124,7 +128,6 @@
 	..()
 	if(!istype(H))
 		return
-	//UnregisterSignal(H, list(COMSIG_MOVABLE_MOVED))
 	if(HAS_TRAIT(H, TRAIT_NO_SLIP_WATER))
 		REMOVE_TRAIT(H, TRAIT_NO_SLIP_WATER, REF(src))
 	if(HAS_TRAIT(H, TRAIT_NO_SLIP_ICE))

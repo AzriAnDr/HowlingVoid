@@ -36,7 +36,7 @@
 	return ..()
 
 // ============================================================================
-// Tajaran scent tracking system — full version
+//  scent tracking system — full version
 // ============================================================================
 /*
 // === forensic defines ===
