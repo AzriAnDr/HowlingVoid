@@ -1,5 +1,4 @@
 #define AQUATIC_METABOLISM_MULTIPLIER 1.5 // множитель метаболизма для акуловых
-#define AQUATIC_SPACE_DRIFT_FORCE 1.25 NEWTONS // сила, с которой акуловые продолжают движение в космосе
 /datum/species/aquatic
 	name = "Akula (Generic)"
 	id = SPECIES_AQUATIC
@@ -14,8 +13,6 @@
 
 	/// Храним исходные значения метаболизма для персонажей, чтобы корректно восстанавливать их при смене вида.
 	var/list/original_metabolism_efficiency
-	// Храним ссылку на наш скрытый «двигатель», чтобы потом убрать.
-	//var/datum/component/akula_swim/swim_component
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	mutant_bodyparts = list()
 	mutanttongue = /obj/item/organ/tongue/aquatic
@@ -91,22 +88,6 @@
 /datum/species/aquatic/get_species_lore()
 	return list(placeholder_lore)
 
-/datum/species/aquatic/proc/apply_space_inertia(mob/living/carbon/human/H, atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
-	SIGNAL_HANDLER
-	if(!movement_dir || forced || !momentum_change)
-		return
-	if(H.has_gravity())
-		return
-	var/turf/current_turf = get_turf(H)
-	if(!current_turf || !isspaceturf(current_turf))
-		return
-	var/max_drift_force = MOVE_DELAY_TO_DRIFT(H.cached_multiplicative_slowdown)
-	var/impulse_force = min(AQUATIC_SPACE_DRIFT_FORCE, max_drift_force)
-	var/move_angle = dir2angle(movement_dir)
-	if(H.drift_handler)
-		H.drift_handler.newtonian_impulse(move_angle, 0, impulse_force, max_drift_force)
-		return
-	new /datum/drift_handler(H, move_angle, TRUE, 0, impulse_force)
 
 
 /datum/species/aquatic/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
@@ -114,7 +95,7 @@
 	if(!istype(H))
 		return
 
-	RegisterSignal(H, COMSIG_MOVABLE_MOVED, PROC_REF(apply_space_inertia))
+
 // ============================================================================
 // Акуловые когти
 // ============================================================================
@@ -142,7 +123,7 @@
 	..()
 	if(!istype(H))
 		return
-	UnregisterSignal(H, list(COMSIG_MOVABLE_MOVED))
+	//UnregisterSignal(H, list(COMSIG_MOVABLE_MOVED))
 	if(HAS_TRAIT(H, TRAIT_NO_SLIP_WATER))
 		REMOVE_TRAIT(H, TRAIT_NO_SLIP_WATER, REF(src))
 	if(HAS_TRAIT(H, TRAIT_NO_SLIP_ICE))
@@ -194,7 +175,12 @@
 		SPECIES_PERK_NAME = "Терморегуляция",
 		SPECIES_PERK_DESC = "Ваше тело хуже переносит холод, но переносят жару лучше.",
 	))
+	perks += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+		SPECIES_PERK_ICON = FA_ICON_ARROW_DOWN,
+		SPECIES_PERK_NAME = "Чувстельная морда",
+		SPECIES_PERK_DESC = "Ваша морда более чувствствительная к ударам и порой обычным касаниям.",
+	))
 	return perks
-#undef AQUATIC_SPACE_DRIFT_FORCE
 #undef AQUATIC_METABOLISM_MULTIPLIER
 
