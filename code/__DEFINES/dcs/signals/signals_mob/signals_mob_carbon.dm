@@ -109,7 +109,8 @@
 #define COMSIG_CARBON_REMOVE_OVERLAY "carbon_remove_overlay"
 ///Called when a carbon checks their mood
 #define COMSIG_CARBON_MOOD_CHECK "carbon_mod_check"
-
+#define COMSIG_CARBON_NOSE_BOOPED "carbon_nose_booped" // (mob/living/carbon/helper)
+#define COMSIG_CARBON_NOSE_STRUCK "carbon_nose_struck" // (mob/living/carbon/human/attacker, obj/item/bodypart/affecting)
 // /mob/living/carbon/human signals
 
 ///Applied preferences to a human

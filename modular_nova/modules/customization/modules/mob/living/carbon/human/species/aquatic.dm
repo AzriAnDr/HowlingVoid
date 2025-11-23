@@ -118,7 +118,8 @@
 	if(isnull(original_metabolism_efficiency[H]))
 		original_metabolism_efficiency[H] = H.metabolism_efficiency
 	H.metabolism_efficiency = max(0, H.metabolism_efficiency * AQUATIC_METABOLISM_MULTIPLIER)
-
+	RegisterSignal(H, COMSIG_CARBON_NOSE_BOOPED, PROC_REF(on_nose_boop))
+	RegisterSignal(H, COMSIG_CARBON_NOSE_STRUCK, PROC_REF(on_nose_struck))
 /datum/species/aquatic/on_species_loss(mob/living/carbon/human/H)
 	..()
 	if(!istype(H))
@@ -137,6 +138,20 @@
 
 	if(HAS_TRAIT(H, TRAIT_SPACEWALK))
 		REMOVE_TRAIT(H, TRAIT_SPACEWALK, REF(src))
+
+	UnregisterSignal(H, list(COMSIG_CARBON_NOSE_BOOPED, COMSIG_CARBON_NOSE_STRUCK))
+
+/datum/species/aquatic/proc/on_nose_boop(mob/living/carbon/human/source, mob/living/carbon/helper)
+	if(!get_location_accessible(source, BODY_ZONE_PRECISE_MOUTH))
+		return
+
+	source.add_mood_event("aquatic_snout_boop", /datum/mood_event/aquatic_snout_boop)
+
+/datum/species/aquatic/proc/on_nose_struck(mob/living/carbon/human/source, mob/living/carbon/human/attacker, obj/item/bodypart/affecting)
+	if(!affecting)
+		return
+
+	source.apply_damage(25, STAMINA, affecting)
 /datum/species/aquatic/create_pref_unique_perks()
 	var/list/perks = list()
 	perks += list(list(

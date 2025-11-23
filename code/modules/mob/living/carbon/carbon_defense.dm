@@ -342,6 +342,10 @@
 		else
 			playsound(src, 'modular_nova/modules/emotes/sound/emotes/Nose_boop.ogg', 50, 0)
 			helper.visible_message(span_notice("[helper] boops [src]'s nose."), span_notice("You boop [src] on the nose."))
+			//Howling Void Aquatic Species Nose Boop Signal
+			if(get_location_accessible(src, BODY_ZONE_PRECISE_MOUTH))
+				SEND_SIGNAL(src, COMSIG_CARBON_NOSE_BOOPED, helper)
+			//Howling void edit end
 			if(HAS_TRAIT(src, TRAIT_SENSITIVESNOUT) && get_location_accessible(src, BODY_ZONE_PRECISE_MOUTH))
 				var/datum/quirk/sensitivesnout/poor_snout = src.get_quirk(/datum/quirk/sensitivesnout)
 				poor_snout?.get_booped(helper)
