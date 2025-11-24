@@ -1,11 +1,15 @@
 /datum/quirk/item_quirk/underworld_connections
-	name = "Underworld Connections"
-	desc = "You're in with the seedier elements of the galactic underworld, and can start with a customizable black market uplink, and access to information brokers with exploitable information about the crew. Security has suspicions about you, and you may struggle to obtain a weapons permit."
+	name = "Underworld Connections(Подпольные связи)"
+	desc = "Вы связаны с наиболее сомнительными элементами галактического подполья. \
+	Получаете на старте настраиваемый чёрный рынок-аплинк и доступ к информаторам, \
+	обладающим эксплуатационной информацией о членах экипажа. \
+	Служба безопасности подозрительно к вам относится, и получение разрешения на оружие может оказаться проблемой."
 	icon = FA_ICON_SUITCASE
 	value = 0
-	gain_text = span_notice("Your contacts to the underworld are close at hand.")
-	lose_text = span_notice("Your contacts to the underworld have gone quiet.")
-	medical_record_text = "Patient records may have been tampered with in the past."
+	gain_text = span_notice("Ваши контакты в подполье оказываются на расстоянии вытянутой руки.")
+	lose_text = span_notice("Ваши контакты в подполье внезапно умолкли.")
+	medical_record_text = "Записи пациента, возможно, подвергались постороннему вмешательству."
+
 	quirk_flags = QUIRK_HIDE_FROM_SCAN
 	mail_goodies = list(/obj/item/circuitboard/machine/ltsrbt, /obj/item/stack/ore/bluespace_crystal/artificial, /datum/stock_part/ansible)
 
@@ -46,7 +50,8 @@
 	quirk_holder.mind.handle_exploitables()
 
 	// Also let the user know that they need to OPFOR if they want to do heavy antagonism. Policy request.
-	to_chat(quirk_holder, span_boldwarning("REMEMBER: The Underworld Connections quirk does NOT make you an antagonist. Please make an OPFOR request if you intend to do serious criminal activity."))
+	to_chat(quirk_holder, span_boldwarning("ПОМНИТЕ: Трейт «Подпольные связи» НЕ делает вас антагонистом. Пожалуйста, отправьте запрос на OPFOR, если планируете серьёзную криминальную активность."))
+
 
 	// Set us as 'suspected' on HUDs at roundstart and leave a note about our dark and mysterious past. No permits for us! If we're human.
 	if (ishuman(quirk_holder))
@@ -54,7 +59,8 @@
 		var/datum/record/crew/our_record = find_record(human_holder.name)
 		if (our_record)
 			our_record.wanted_status = WANTED_SUSPECT
-			our_record.security_note += "DO NOT ISSUE WEAPON PERMITS. Subject has suspected links to covert criminal elements."
+			our_record.security_note += "НЕ ВЫДАВАТЬ РАЗРЕШЕНИЯ НА ОРУЖИЕ. У субъекта предполагаются связи со скрытыми преступными элементами."
+
 
 /datum/quirk/item_quirk/underworld_connections/remove()
 	quirk_holder.mind.has_exploitables_override = FALSE
@@ -65,7 +71,7 @@
 		if (isnull(our_record))
 			return
 		if (our_record.security_note)
-			our_record.security_note = replacetext(our_record.security_note, "DO NOT ISSUE WEAPON PERMITS. Subject has suspected links to covert criminal elements.", "")
+			our_record.security_note = replacetext(our_record.security_note, "НЕ ВЫДАВАТЬ РАЗРЕШЕНИЯ НА ОРУЖИЕ. У субъекта предполагаются связи со скрытыми преступными элементами.", "")
 		if (!length(our_record.security_note)) // that was the only thing in the notes
 			our_record.security_note = null
 		if (isnull(our_record.security_note) && our_record.wanted_status == WANTED_SUSPECT) // only clear this if the security notes contain nothing but the quirk-generated note, just to be certain we are not accidentally resetting the wanted status for an unrelated crime
@@ -106,7 +112,7 @@ GLOBAL_LIST_INIT(possible_uplink_skins, list(
 	if (!..())
 		return FALSE
 
-	return "Underworld Connections" in preferences.all_quirks
+	return "Underworld Connections(Подпольные связи)" in preferences.all_quirks
 
 /datum/preference/choiced/uplink_skin/apply_to_human(mob/living/carbon/human/target, value)
 	return
@@ -122,7 +128,7 @@ GLOBAL_LIST_INIT(possible_uplink_skins, list(
 	if (!..())
 		return FALSE
 
-	return "Underworld Connections" in preferences.all_quirks
+	return "Underworld Connections(Подпольные связи)" in preferences.all_quirks
 
 /datum/preference/text/uplink_name/serialize(input)
 	return htmlrendertext(input)
@@ -140,7 +146,7 @@ GLOBAL_LIST_INIT(possible_uplink_skins, list(
 	if (!..())
 		return FALSE
 
-	return "Underworld Connections" in preferences.all_quirks
+	return "Underworld Connections(Подпольные связи)" in preferences.all_quirks
 
 /datum/preference/text/uplink_desc/serialize(input)
 	return htmlrendertext(input)

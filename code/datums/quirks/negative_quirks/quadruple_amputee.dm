@@ -1,9 +1,9 @@
 /datum/quirk/quadruple_amputee
-	name = "Quadruple Amputee"
-	desc = "Oops! All Prosthetics! Due to some truly cruel cosmic punishment, all your limbs have been replaced with surplus prosthetics."
+	name = "Quadruple Amputee(Четырёхкратный ампутант)"
+	desc = "Упс! Всё протезы! Из-за какого-то поистине жестокого космического наказания все ваши конечности были заменены лишними протезами."
 	icon = "tg-prosthetic-full"
 	value = -6
-	medical_record_text = "During physical examination, patient was found to have all low-budget prosthetic limbs."
+	medical_record_text = "При физикальном обследовании у пациента обнаружено наличие всех малобюджетных протезов конечностей."
 	hardcore_value = 6
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	mail_goodies = list(/obj/item/weldingtool/mini, /obj/item/stack/cable_coil/five)
@@ -16,13 +16,13 @@
 	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/right/robot/surplus, special = TRUE)
 
 /datum/quirk/quadruple_amputee/post_add()
-	to_chat(quirk_holder, span_bolddanger("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. \
-	Additionally, you need to use a welding tool and cables to repair them, instead of bruise packs and ointment."))
+	to_chat(quirk_holder, span_bolddanger("Все ваши конечности заменены лишними протезами. Они хрупкие и легко развалятся под давлением. \
+	Кроме того, для их ремонта вам придется использовать сварочный аппарат и кабели, а не пластыри и мазь."))
 
 /datum/quirk/quadruple_amputee/remove()
 	if(QDELING(quirk_holder))
 		return
-	
+
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.reset_to_original_bodypart(BODY_ZONE_L_ARM)
 	human_holder.reset_to_original_bodypart(BODY_ZONE_R_ARM)

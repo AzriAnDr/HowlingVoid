@@ -1,11 +1,11 @@
 /datum/quirk/blooddeficiency
-	name = "Blood Deficiency"
-	desc = "Your body can't produce enough blood to sustain itself."
+	name = "Blood Deficiency(Недостаток крови)"
+	desc = "Твой организм не может вырабатывать достаточно крови для поддержания своей жизнедеятельности."
 	icon = FA_ICON_TINT
 	value = -8
-	gain_text = span_danger("You feel your vigor slowly fading away.")
-	lose_text = span_notice("You feel vigorous again.")
-	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
+	gain_text = span_danger("Ты чувствуешь слабость и головокружение...")
+	lose_text = span_notice("Ты чувствуешь прилив сил...")
+	medical_record_text = "Пациент страдает от хронической анемии из-за неспособности организма производить достаточное количество крови."
 	hardcore_value = 8
 	mail_goodies = list(/obj/item/reagent_containers/blood/o_minus) // universal blood type that is safe for all
 	/// Minimum amount of blood the paint is set to
@@ -35,11 +35,11 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	if(human_holder.stat == DEAD || human_holder.blood_volume <= min_blood)
+
+	if(human_holder.stat == DEAD)
 		return
 
-	if(!HAS_TRAIT(quirk_holder, TRAIT_NOBLOOD))
-		human_holder.blood_volume = max(min_blood, human_holder.blood_volume - human_holder.dna.species.blood_deficiency_drain_rate * seconds_per_tick)
+	human_holder.adjust_blood_volume(-human_holder.dna.species.blood_deficiency_drain_rate * seconds_per_tick, minimum = min_blood)
 
 /// Try to update the mail goodies to match the quirk holder's blood type. If we fail for whatever reason then it will just default to the initial O- blood pack that we start with.
 /datum/quirk/blooddeficiency/proc/update_mail(mob/living/carbon/human/human_quirk_holder, datum/blood_type/new_blood_type, update_cached_blood_dna_info)

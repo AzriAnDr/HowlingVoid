@@ -1,10 +1,10 @@
 /datum/quirk/telepathic
-	name = "Telepathic"
-	desc = "You are able to transmit your thoughts to other living creatures."
-	gain_text = span_purple("Your mind roils with psychic energy.")
-	lose_text = span_notice("Mundanity encroaches upon your thoughts once again.")
-	medical_record_text = "Patient has an unusually enlarged Broca's area visible in cerebral biology, and appears to be able to communicate via extrasensory means."
-	value = 0
+	name = "Telepathic(Телепатия)"
+	desc = "Вы способны передавать свои мысли другим живым существам."
+	gain_text = span_purple("Ваш разум бурлит псионической энергией.")
+	lose_text = span_notice("Обыденность вновь окутывает ваши мысли.")
+	medical_record_text = "У пациента наблюдается необычно увеличенная область Брока, заметная при исследовании мозговой биологии; вероятно, способен к экстрасенсорной коммуникации."
+	value = 2
 	icon = FA_ICON_HEAD_SIDE_COUGH
 	/// Ref used to easily retrieve the action used when removing the quirk from silicons
 	var/datum/weakref/tele_action_ref

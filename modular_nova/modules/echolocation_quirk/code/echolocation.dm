@@ -1,12 +1,12 @@
 /datum/quirk/echolocation
-	name = "Echolocation"
-	desc = "Though your eyes no longer function, you accommodate for it by some means of extrasensory echolocation and sensitive hearing. Beware: if you're ever deafened, you'll also lose your echolocation until you recover!"
-	gain_text = span_notice("The slightest sounds map your surroundings.")
-	lose_text = span_notice("The world resolves into colour and clarity.")
+	name = "Echolocation(Эхолокация)"
+	desc = "Хотя ваши глаза больше не функционируют, вы приспосабливаетесь к этому благодаря экстрасенсорной эхолокации и чувствительному слуху. Будьте осторожны: если вы когда-нибудь оглохнете, вы потеряете и эхолокацию до полного выздоровления!"
+	gain_text = span_notice("Малейшие звуки создают карту вашего окружения.")
+	lose_text = span_notice("Мир растворяется в красках и ясности.")
 	value = 0
 	icon = FA_ICON_EAR_LISTEN
 	mob_trait = TRAIT_GOOD_HEARING
-	medical_record_text = "Patient's eyes are biologically nonfunctional. Hearing tests indicate almost supernatural acuity."
+	medical_record_text = "Глаза пациента биологически не функционируют. Проверка слуха показывает почти сверхъестественную остроту."
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	mail_goodies = list(/obj/item/clothing/glasses/sunglasses, /obj/item/cane/white)
 	/// where we store easy access to the character's echolocation component (for stuff like drugs)
@@ -15,6 +15,11 @@
 	var/datum/client_colour/echolocation_custom/esp_color
 	/// The action we add with this quirk in add(), used for easy deletion later
 	var/datum/action/cooldown/spell/added_action
+
+/datum/quirk/echolocation/is_species_appropriate(datum/species/mob_species)
+	if(ispath(mob_species, /datum/species/dullahan))
+		return FALSE
+	return ..()
 
 /datum/quirk/echolocation/add(client/client_source)
 	// echolocation component handles blinding us already so we don't need to worry about that
@@ -68,8 +73,8 @@
 /datum/client_colour/echolocation_custom
 
 /datum/action/cooldown/spell/echolocation_toggle
-	name = "Toggle echolocation"
-	desc = "Decide whether you want to stop echolocating (or start again). Useful if you need a break - it's not an easy process!"
+	name = "Включить эхолокацию"
+	desc = "Решите, хотите ли вы прекратить эхолокацию (или начать снова). Полезно, если вам нужен перерыв — это непростой процесс!"
 	spell_requirements = NONE
 	cooldown_time = 2 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS
@@ -90,12 +95,12 @@
 
 	if (quirk_esp.stall)
 		quirk_esp.stall = FALSE
-		cast_on.balloon_alert(cast_on, "started echolocating!")
-		cast_on.visible_message(span_notice("[cast_on] perks up, suddenly seeming more vigilant!"))
+		cast_on.balloon_alert(cast_on, "начал эхолокацию!")
+		cast_on.visible_message(span_notice("[cast_on] оживляется, внезапно становясь более бдительным!"))
 	else
 		quirk_esp.stall = TRUE
-		cast_on.balloon_alert(cast_on, "stopped echolocating!")
-		cast_on.visible_message(span_notice("[cast_on] relaxes slightly, seeming less vigilant for the moment."))
+		cast_on.balloon_alert(cast_on, "прекратил эхолокацию!")
+		cast_on.visible_message(span_notice("[cast_on] слегка расслабляется, на данный момент становясь менее бдительным."))
 
 /datum/quirk_constant_data/echolocation
 	associated_typepath = /datum/quirk/echolocation
@@ -111,7 +116,7 @@
 	if (!..(preferences))
 		return FALSE
 
-	return "Echolocation" in preferences.all_quirks
+	return "Echolocation(Эхолокация)" in preferences.all_quirks
 
 /datum/preference/color/echolocation_outline/apply_to_human(mob/living/carbon/human/target, value)
 	return
@@ -126,10 +131,10 @@
 	if (!..(preferences))
 		return FALSE
 
-	return "Echolocation" in preferences.all_quirks
+	return "Echolocation(Эхолокация)" in preferences.all_quirks
 
 /datum/preference/choiced/echolocation_key/init_possible_values()
-	var/list/values = list("Extrasensory", "Psychic", "Auditory/Vibrational")
+	var/list/values = list("Экстрасенсорный", "Психический", "Слуховой/Вибрационный")
 	return values
 
 /datum/preference/choiced/echolocation_key/apply_to_human(mob/living/carbon/human/target, value)
@@ -145,7 +150,7 @@
 	if (!..(preferences))
 		return FALSE
 
-	return "Echolocation" in preferences.all_quirks
+	return "Echolocation(Эхолокация)" in preferences.all_quirks
 
 /datum/preference/toggle/echolocation_overlay/apply_to_human(mob/living/carbon/human/target, value)
 	return

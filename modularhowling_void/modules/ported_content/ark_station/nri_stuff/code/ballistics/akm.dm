@@ -44,12 +44,11 @@
 	icon_state = "akm_civ"
 	inhand_icon_state = "akm_civ"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/akm/civvie
-	fire_delay = 5
+	fire_delay = 3.5
 	dual_wield_spread = 15
 	spread = 5
 	worn_icon_state = "akm_civ"
 	recoil = 0.2
-	projectile_damage_multiplier = 0.97
 
 /// NRI
 /obj/item/gun/ballistic/automatic/akm/nri

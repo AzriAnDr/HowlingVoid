@@ -142,7 +142,7 @@
 
 /obj/projectile/bullet/a762x39/civilian
 	name = "5.6mm civilian bullet"
-	damage = 18 // 34
+	damage = 20
 	wound_bonus = 15
 	armour_penetration = 10
 	wound_falloff_tile = 3

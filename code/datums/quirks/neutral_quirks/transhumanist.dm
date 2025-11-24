@@ -14,14 +14,14 @@
 
 
 /datum/quirk/transhumanist
-	name = "Transhumanist"
-	desc = "You see silicon life as the perfect lifeform and despise organic flesh. You are happier around silicons, but get frustrated when around organics. You seek to replace your failing flesh with perfect silicon. You start with a robotic augmentation."
+	name = "Transhumanist(Трансгуманист)"
+	desc = "Ты считаешь кремниевую жизнь идеальной формой жизни и презираете органическую плоть. Ты чувствуешь себя счастливее рядом с кремниевыми существами, но испытываете разочарование в присутствии органики. Ты стремишься заменить свою несовершенную плоть идеальным кремнием. Ты начинаешь с роботизированной аугментации."
 	icon = FA_ICON_ROBOT
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES|QUIRK_MOODLET_BASED
 	value = 0
-	gain_text = span_notice("You have a desire to ditch your feeble organic flesh and surround yourself with robots.")
-	lose_text = span_danger("Robots don't seem all that great anymore.")
-	medical_record_text = "Patient reports hating pathetic creatures of meat and bone."
+	gain_text = span_notice("У вас есть желание избавиться от своей немощной органической плоти и окружить себя роботами.")
+	lose_text = span_danger("Роботы уже не кажутся такими уж замечательными.")
+	medical_record_text = "Пациент сообщает о ненависти к жалким существам из мяса и костей."
 	mail_goodies = list(
 		/obj/item/stock_parts/power_store/cell/potato,
 		/obj/item/stack/cable_coil,
@@ -66,7 +66,7 @@
 			else if(organ.organ_flags & ORGAN_ORGANIC)
 				organic_bodytypes += 0.02
 
-	return list(
+	return alist(
 		BODYPART_SCORE_ORGANIC = organic_bodytypes,
 		BODYPART_SCORE_SILICON = silicon_bodytypes,
 		BODYPART_SCORE_OTHER_BODYTYPES = other_bodytypes,
@@ -76,7 +76,7 @@
 
 /datum/quirk/transhumanist/proc/calculate_bodypart_score()
 	SIGNAL_HANDLER
-	var/list/score = get_bodypart_score(quirk_holder)
+	var/alist/score = get_bodypart_score(quirk_holder)
 	var/organic_bodytypes = score[BODYPART_SCORE_ORGANIC]
 	var/silicon_bodytypes = score[BODYPART_SCORE_SILICON]
 	var/other_bodytypes = score[BODYPART_SCORE_OTHER_BODYTYPES]
@@ -136,11 +136,11 @@
 	if(!slot_string)
 		return
 	if(isbodypart(old_part))
-		to_chat(quirk_holder, span_bolddanger("Your [slot_string] has been replaced with a robotic limb. You need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
+		to_chat(quirk_holder, span_bolddanger("Ваш [slot_string] был заменён роботизированной конечностью. Для её ремонта вам потребуется сварочный аппарат и кабели вместо швов и регенеративных сеток."))
 	else if (old_part.name == "eyes")
-		to_chat(quirk_holder, span_bolddanger("You replaced your eyes with flashlights, not cameras. You can't see a thing!"))
+		to_chat(quirk_holder, span_bolddanger("Ты заменил глаза фонариками, а не камерами. Ты ничего не видишь!"))
 	else if (isorgan(old_part))
-		to_chat(quirk_holder, span_bolddanger("Your [slot_string] brings you one step closer to silicon perfection, but you feel you're not quite there yet."))
+		to_chat(quirk_holder, span_bolddanger("Ваш [slot_string] приближает вас на шаг к кремниевому совершенству, но вы чувствуете, что еще не достигли цели."))
 
 /datum/quirk/transhumanist/remove()
 	if(isnull(old_part))
@@ -177,7 +177,7 @@
 			continue
 
 		if(iscarbon(target))
-			var/list/score = get_bodypart_score(target, limbs_only = TRUE)
+			var/alist/score = get_bodypart_score(target, limbs_only = TRUE)
 			// For an average human, they'll need 2 augmented limbs to not get counted as an organic nor a silicon.
 			// If some monstrosity has 20-30 organic limbs, they'll likely need more.
 			if(score[BODYPART_SCORE_OVERALL] < 1)

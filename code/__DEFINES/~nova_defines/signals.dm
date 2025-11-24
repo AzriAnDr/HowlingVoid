@@ -54,10 +54,6 @@
 
 /// listens to wet_stacks, if wetting a mob above 10 stacks it will signal the akula race trait to apply its buffs and nerfs
 #define COMSIG_MOB_TRIGGER_WET_SKIN "mob_trigger_wet_skin"
-/// Sent when an Aquatic's innate space-thruster activates.
-#define COMSIG_AQUATIC_SPACE_JETPACK_ACTIVATE "aquatic_space_jetpack_activate"
-/// Sent when an Aquatic's innate space-thruster deactivates.
-#define COMSIG_AQUATIC_SPACE_JETPACK_DEACTIVATE "aquatic_space_jetpack_deactivate"
 //when someone casts their fishing rod
 #define COMSIG_START_FISHING "start_fishing"
 //when someone pulls back their fishing rod

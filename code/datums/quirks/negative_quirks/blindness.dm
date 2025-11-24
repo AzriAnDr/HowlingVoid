@@ -1,11 +1,11 @@
 /datum/quirk/item_quirk/blindness
-	name = "Blind"
-	desc = "You are completely blind, nothing can counteract this."
+	name = "Blind(Слепота)"
+	desc = "Вы совершенно слепы, ничто не может этому противостоять."
 	icon = FA_ICON_BLIND
 	value = -16
-	gain_text = span_danger("You can't see anything.")
-	lose_text = span_notice("You miraculously gain back your vision.")
-	medical_record_text = "Patient has permanent blindness."
+	gain_text = span_danger("Ты ничего не видишь! Тьма окружает тебя!")
+	lose_text = span_notice("Ты снова можешь видеть!")
+	medical_record_text = "У пациента слепота.."
 	hardcore_value = 15
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	mail_goodies = list(/obj/item/clothing/glasses/sunglasses, /obj/item/cane/white)
@@ -19,6 +19,11 @@
 	blindfold.add_atom_colour(client_source?.prefs.read_preference(/datum/preference/color/blindfold_color), FIXED_COLOUR_PRIORITY)
 	blindfold.colored_before = TRUE
 	give_item_to_holder(blindfold, list(LOCATION_EYES, LOCATION_HANDS))
+
+/datum/quirk/item_quirk/blindness/is_species_appropriate(datum/species/mob_species)
+	if(ispath(mob_species, /datum/species/dullahan))
+		return FALSE
+	return ..()
 
 /datum/quirk/item_quirk/blindness/add(client/client_source)
 	quirk_holder.become_blind(QUIRK_TRAIT)

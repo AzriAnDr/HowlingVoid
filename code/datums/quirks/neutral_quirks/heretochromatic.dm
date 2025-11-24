@@ -1,9 +1,9 @@
 /datum/quirk/heterochromatic
-	name = "Heterochromatic"
-	desc = "One of your eyes is a different color than the other!"
+	name = "Heterochromatic(Гетерохроматия)"
+	desc = "Один из твоих глаз отличается по цвету от другого!"
 	icon = FA_ICON_EYE_LOW_VISION // Ignore the icon name, its actually a fairly good representation of different color eyes
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
-	medical_record_text = "Patient's irises are different colors."
+	medical_record_text = "Радужки глаз у пациентов разного цвета."
 	value = 0
 	mail_goodies = list(/obj/item/clothing/glasses/eyepatch)
 
@@ -20,7 +20,7 @@
 	var/was_not_hetero = !human_holder.eye_color_heterochromatic
 	human_holder.eye_color_heterochromatic = TRUE
 	human_holder.eye_color_right = color
-	human_holder.dna.update_ui_block(DNA_EYE_COLOR_RIGHT_BLOCK)
+	human_holder.dna.update_ui_block(/datum/dna_block/identity/eye_colors)
 
 	var/obj/item/organ/eyes/eyes_of_the_holder = quirk_holder.get_organ_by_type(/obj/item/organ/eyes)
 	if(!eyes_of_the_holder)

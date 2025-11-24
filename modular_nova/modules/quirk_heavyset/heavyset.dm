@@ -1,11 +1,11 @@
 /datum/quirk/heavyset
-	name = "Heavyset"
-	desc = "You weigh significantly more than most. It's harder for you to move around and for other people to move you around."
+	name = "Heavyset(Тяжеловес)"
+	desc = "Вы весите значительно больше, чем большинство людей. Вам сложнее передвигаться, а другим людям сложнее вас переносить."
 	icon = FA_ICON_WEIGHT_HANGING
 	value = 0
-	gain_text = span_notice("You feel heavy.")
-	lose_text = span_notice("You feel light.")
-	medical_record_text = "The patient is far above average weight."
+	gain_text = span_notice("Тебе тяжело.")
+	lose_text = span_notice("Тебе легко.")
+	medical_record_text = "Пациент имеет вес значительно выше среднего."
 
 	mob_trait = TRAIT_HEAVYSET
 

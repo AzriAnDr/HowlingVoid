@@ -60,8 +60,6 @@
 /// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
 
-///from base of mob/living/carbon/soundbang_act(): (list(intensity))
-#define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"
 ///from /item/organ/proc/Insert() (/obj/item/organ/)
 #define COMSIG_CARBON_GAIN_ORGAN "carbon_gain_organ"
 ///from /item/organ/proc/Remove() (/obj/item/organ/)
@@ -109,7 +107,8 @@
 #define COMSIG_CARBON_REMOVE_OVERLAY "carbon_remove_overlay"
 ///Called when a carbon checks their mood
 #define COMSIG_CARBON_MOOD_CHECK "carbon_mod_check"
-
+#define COMSIG_CARBON_NOSE_BOOPED "carbon_nose_booped" // (mob/living/carbon/helper)
+#define COMSIG_CARBON_NOSE_STRUCK "carbon_nose_struck" // (mob/living/carbon/human/attacker, obj/item/bodypart/affecting)
 // /mob/living/carbon/human signals
 
 ///Applied preferences to a human
@@ -182,3 +181,10 @@
 
 //from base of [/obj/effect/particle_effect/fluid/smoke/proc/smoke_mob]: (seconds_per_tick)
 #define COMSIG_CARBON_EXPOSED_TO_SMOKE "carbon_exposed_to_smoke"
+
+/// From /mob/living/carbon/human/proc/update_mob_height() : (old_height)
+#define COMSIG_HUMAN_HEIGHT_UPDATED "human_height_updated"
+
+/// From /mob/living/carbon/proc/can_defib() : ()
+/// Return a defib result flag to override default defib brain check
+#define COMSIG_CARBON_DEFIB_BRAIN_CHECK "carbon_defib_brain_check"
