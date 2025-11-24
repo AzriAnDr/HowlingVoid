@@ -1,13 +1,13 @@
 /datum/quirk/friendly
-	name = "Friendly"
-	desc = "You give the best hugs, especially when you're in the right mood."
+	name = "Friendly(Дружелюбный)"
+	desc = "Вы обнимаете лучше всех, особенно когда у вас хорошее настроение."
 	icon = FA_ICON_HANDS_HELPING
 	value = 2
 	mob_trait = TRAIT_FRIENDLY
-	gain_text = span_notice("You want to hug someone.")
-	lose_text = span_danger("You no longer feel compelled to hug others.")
+	gain_text = span_notice("Хочу обнять кого-то.")
+	lose_text = span_danger("Вы больше не чувствуете необходимости обнимать других.")
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
-	medical_record_text = "Patient demonstrates low-inhibitions for physical contact and well-developed arms. Requesting another doctor take over this case."
+	medical_record_text = "Пациент демонстрирует слабое сдерживание физического контакта и хорошо развитые руки. Прошу другого врача взять это дело на себя."
 	mail_goodies = list(/obj/item/storage/box/hug)
 
 /datum/quirk/friendly/add_unique(client/client_source)
@@ -21,4 +21,4 @@
 	// Like, physically bigger.
 	holder_heart.reagents.add_reagent(/datum/reagent/consumable/nutriment/organ_tissue, 5)
 	holder_heart.transform = holder_heart.transform.Scale(1.5)
-	holder_heart.beat_noise += ". It radiates loving warmth" // wuv is a detectable diagnostic quality
+	holder_heart.beat_noise += ". Излучает любящее тепло." // wuv is a detectable diagnostic quality

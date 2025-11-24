@@ -308,7 +308,7 @@ GLOBAL_LIST_INIT(possible_snout_sensitivities, list(
 ))
 
 /datum/quirk/sensitivesnout
-	name = "Sensitive Snout (Чувствительная морда)"
+	name = "Sensitive Snout(Чувствительная морда)"
 	desc = "Твоя морда всегда была чувствительной, и тебе очень больно, когда его кто-то тыкает!"
 	gain_text = span_notice("У тебя ужасно чувствительная морда.")
 	lose_text = span_notice("Морда онемела.")

@@ -1,13 +1,13 @@
 /datum/quirk/item_quirk/pet_owner
-	name = "Pet Owner"
-	desc = "You bring your pet to work with you so that it, too, can experience the dangers of station life."
+	name = "Pet Owner(Хозяин питомца)"
+	desc = "Вы берёте своего питомца с собой на работу, чтобы он тоже смог испытать все «прелести» жизни на станции."
 	icon = FA_ICON_HORSE
 	value = 4
 	mob_trait = TRAIT_PET_OWNER
 	nova_stars_only = TRUE
-	gain_text = span_notice("You brought your pet with you to work.")
-	lose_text = span_danger("You feel lonely, as if leaving somebody behind...")
-	medical_record_text = "Patient mentions their fondness for their pet."
+	gain_text = span_notice("Вы привели своего питомца с собой на работу.")
+	lose_text = span_danger("Вы чувствуете одиночество, будто оставили кого-то позади…")
+	medical_record_text = "Пациент упоминает свою привязанность к питомцу."
 	mail_goodies = list(
 		/obj/item/clothing/neck/petcollar
 	)
@@ -47,7 +47,7 @@
 		list(
 			LOCATION_HANDS,
 		),
-		flavour_text = "Looks tightly packed - you might not be able to put the pet back in once they're out.",
+		flavour_text = "Всё кажется плотно упакованным — возможно, вы не сможете вернуть питомца обратно, когда он выберется.",
 		notify_player = TRUE,
 	)
 	//Nanotrasen
@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(possible_player_pet, list(
 	if (!..())
 		return FALSE
 
-	return "Pet Owner" in preferences.all_quirks
+	return "Pet Owner(Хозяин питомца)" in preferences.all_quirks
 
 /datum/preference/choiced/pet_owner/apply_to_human(mob/living/carbon/human/target, value)
 	return
@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(possible_player_pet, list(
 	if (!..())
 		return FALSE
 
-	return "Pet Owner" in preferences.all_quirks
+	return "Pet Owner(Хозяин питомца)" in preferences.all_quirks
 
 /datum/preference/text/pet_name/serialize(input)
 	return htmlrendertext(input)
@@ -152,7 +152,7 @@ GLOBAL_LIST_INIT(possible_player_pet, list(
 	if (!..())
 		return FALSE
 
-	return "Pet Owner" in preferences.all_quirks
+	return "Pet Owner(Хозяин питомца)" in preferences.all_quirks
 
 /datum/preference/text/pet_desc/serialize(input)
 	return htmlrendertext(input)
@@ -176,7 +176,7 @@ GLOBAL_LIST_INIT(possible_player_pet, list(
 	if (!..())
 		return FALSE
 
-	return "Pet Owner" in preferences.all_quirks
+	return "Pet Owner(Хозяин питомца)" in preferences.all_quirks
 
 /datum/preference/choiced/pet_gender/apply_to_human(mob/living/carbon/human/target, value)
 	return

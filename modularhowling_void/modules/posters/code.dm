@@ -55,7 +55,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulp7, 32)
 	icon_state = "poster_vulp8"
 
 /obj/structure/sign/poster/contraband/vulpes/vulp9
-	name = "Чулки"
+	name = "Чулочки"
 	desc = "Плакат, рекламирующий новую коллекцию нижнего белья Вульпийские секретики."
 	icon_state = "stockings"
 

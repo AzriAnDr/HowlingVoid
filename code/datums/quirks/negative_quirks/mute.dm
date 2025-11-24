@@ -1,10 +1,10 @@
 /datum/quirk/mute
-	name = "Mute"
-	desc = "For some reason you are completely unable to speak."
+	name = "Mute(Немота)"
+	desc = "По какой-то причине ты совершенно не способен говорить."
 	icon = FA_ICON_VOLUME_XMARK
 	value = -4
 	mob_trait = TRAIT_MUTE
-	gain_text = span_danger("You find yourself unable to speak!")
-	lose_text = span_notice("You feel a growing strength in your vocal chords.")
-	medical_record_text = "The patient is unable to use their voice in any capacity."
+	gain_text = span_danger("Ты не можешь говорить!")
+	lose_text = span_notice("Ты чувствуешь растущую силу своих голосовых связок.")
+	medical_record_text = "Пациент не способен использовать свой голос в какой-либо форме."
 	hardcore_value = 4

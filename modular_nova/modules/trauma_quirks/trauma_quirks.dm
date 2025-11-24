@@ -1,10 +1,10 @@
 /datum/quirk/possessive
-	name = "Possessive"
-	desc = "You feel a strong attachment over any item you own; often times you feel like you can't drop them."
+	name = "Possessive(Обладательный)"
+	desc = "Вы чувствуете сильную привязанность к любой вещи, которой владеете; часто вам кажется, что вы не можете ее бросить."
 	value = 0
-	gain_text = span_danger("You feel like everything you own is too precious to drop.")
-	lose_text = span_notice("Suddenly you feel like your stuff isn't that important anymore.")
-	medical_record_text = "Subject exhibits a possessive tendency with objects."
+	gain_text = span_danger("Вам кажется, что все, что у вас есть, слишком ценно, чтобы его выбросить.")
+	lose_text = span_notice("Внезапно вы чувствуете, что ваши вещи больше не так уж и важны.")
+	medical_record_text = "Субъект проявляет собственническую тенденцию по отношению к объектам."
 	icon = FA_ICON_HANDS_HOLDING
 
 /datum/quirk/possessive/post_add()
@@ -18,12 +18,12 @@
 	affected_human?.cure_trauma_type(/datum/brain_trauma/mild/possessive, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/kleptomaniac
-	name = "Kleptomaniac"
-	desc = "You feel a strong urge to pick up anything around, often without being aware of it."
+	name = "Kleptomaniac(Клептоманьяк)"
+	desc = "Вы чувствуете сильное желание поднять что-нибудь, часто не осознавая этого."
 	value = 0
-	gain_text = span_danger("You feel a sudden urge to take things. Surely no one will notice.")
-	lose_text = span_notice("You no longer feel the urge to take things.")
-	medical_record_text = "Subject exhibits kleptomania."
+	gain_text = span_danger("Вы чувствуете внезапное желание что-то взять. Никто, конечно, не заметит.")
+	lose_text = span_notice("Вы больше не чувствуете желания брать вещи.")
+	medical_record_text = "У субъекта наблюдается клептомания."
 	icon = FA_ICON_HAND_HOLDING
 
 /datum/quirk/kleptomaniac/post_add()

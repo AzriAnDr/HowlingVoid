@@ -1,9 +1,9 @@
 /datum/quirk/bouncy
-	name = "Bouncy!"
-	desc = "You have a waddle in your step!"
-	gain_text = span_notice("You're hopping around!")
-	lose_text = span_notice("You've lost the pep in your step...")
-	medical_record_text = "Patient walks irregularly."
+	name = "Bouncy!(Прыгающий)"
+	desc = "Ты ходишь как в южном парке."
+	gain_text = span_notice("Ты прыгаешь!")
+	lose_text = span_notice("Вы потеряли бодрость в своих шагах...")
+	medical_record_text = "Пациент ходит нетипично."
 	value = 0
 	icon = FA_ICON_TURN_UP
 
