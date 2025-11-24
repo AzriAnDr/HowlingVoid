@@ -1,12 +1,15 @@
 // Aquatic organ set without unique effects
 /obj/item/organ/brain/aquatic
-	name = "aquatic brain"
+    name = "Мозг акулы"
 
 /obj/item/organ/heart/aquatic
-	name = "aquatic heart"
+    name = "Сердце акулы"
 
 /obj/item/organ/lungs/aquatic
-	name = "aquatic lungs"
+    name = "Лёгкие акулы"
 
-/obj/item/organ/eyes/aquatic
-	name = "aquatic eyes"
+/obj/item/organ/stomach/aquatic
+    name = "Желудок акулы"
+
+/obj/item/organ/liver/aquatic
+	name = "Печень акулы"
