@@ -15,6 +15,11 @@
 	var/list/original_metabolism_efficiency
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	mutant_bodyparts = list()
+	mutantbrain = /obj/item/organ/brain/aquatic
+	mutantheart = /obj/item/organ/heart/aquatic
+	mutantlungs = /obj/item/organ/lungs/aquatic
+	mutantliver = /obj/item/organ/liver/aquatic
+	mutantstomach = /obj/item/organ/stomach/aquatic
 	mutanttongue = /obj/item/organ/tongue/aquatic
 	payday_modifier = 1.0
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
