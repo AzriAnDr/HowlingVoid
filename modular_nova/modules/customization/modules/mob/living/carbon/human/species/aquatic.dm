@@ -1,4 +1,3 @@
-#define AQUATIC_METABOLISM_MULTIPLIER 1.5 // множитель метаболизма для акуловых
 /datum/species/aquatic
 	name = "Akula (Generic)"
 	id = SPECIES_AQUATIC
@@ -122,11 +121,6 @@
 	if(!HAS_TRAIT(H, TRAIT_SPACEWALK))
 		ADD_TRAIT(H, TRAIT_SPACEWALK, REF(src))
 
-	// Сохраняем исходный метаболизм и ускоряем вывод реагентов для способки солёной крови.
-	LAZYINITLIST(original_metabolism_efficiency)
-	if(isnull(original_metabolism_efficiency[H]))
-		original_metabolism_efficiency[H] = H.metabolism_efficiency
-	H.metabolism_efficiency = max(0, H.metabolism_efficiency * AQUATIC_METABOLISM_MULTIPLIER)
 	RegisterSignal(H, COMSIG_CARBON_NOSE_BOOPED, PROC_REF(on_nose_boop))
 	RegisterSignal(H, COMSIG_CARBON_NOSE_STRUCK, PROC_REF(on_nose_struck))
 /datum/species/aquatic/on_species_loss(mob/living/carbon/human/H)
@@ -137,12 +131,6 @@
 		REMOVE_TRAIT(H, TRAIT_NO_SLIP_WATER, REF(src))
 	if(HAS_TRAIT(H, TRAIT_NO_SLIP_ICE))
 		REMOVE_TRAIT(H, TRAIT_NO_SLIP_ICE, REF(src))
-	// Восстанавливаем исходное значение метаболизма при выходе из вида.
-	if(original_metabolism_efficiency)
-		var/old_value = original_metabolism_efficiency[H]
-		if(isnum(old_value))
-			H.metabolism_efficiency = old_value
-		original_metabolism_efficiency[H] = null
 
 	if(HAS_TRAIT(H, TRAIT_SPACEWALK))
 		REMOVE_TRAIT(H, TRAIT_SPACEWALK, REF(src))
@@ -160,6 +148,8 @@
 		return
 
 	source.apply_damage(25, STAMINA, affecting)
+
+
 /datum/species/aquatic/create_pref_unique_perks()
 	var/list/perks = list()
 	perks += list(list(
@@ -205,5 +195,5 @@
 		SPECIES_PERK_DESC = "Ваша морда более чувствствительная к ударам и порой обычным касаниям.",
 	))
 	return perks
-#undef AQUATIC_METABOLISM_MULTIPLIER
+
 
