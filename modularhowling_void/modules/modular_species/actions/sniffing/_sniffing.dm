@@ -52,7 +52,7 @@
 
 /datum/action/cooldown/scent_scan
 	name = "Охотничий нюх"
-	desc = "Таяры принюхиваются, улавливая кровь, волокна, отпечатки и частицы. Если найдены отпечатки — можно выследить носителя."
+	desc = "Ваш нюх позволяет вам улавливать различные запахи и частицы в окружающей среде."
 	button_icon = 'modular_nova/modules/organs/icons/cyber_tongue.dmi'
 	button_icon_state = "cybertongue"
 	cooldown_time = 6 SECONDS
