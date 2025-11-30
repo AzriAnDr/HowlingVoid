@@ -15,3 +15,5 @@
 	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/flags.dmi'
 	icon_state = "flag_nri"
 	item_flag = /obj/item/sign/flag/nri
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/nri, 32)
