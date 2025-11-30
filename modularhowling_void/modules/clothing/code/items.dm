@@ -46,27 +46,14 @@
 	icon_state = "dress_strapped"
 	body_parts_covered = CHEST|GROIN|LEGS
 
-/obj/item/clothing/under/performer/greyscale
+/obj/item/clothing/under/dress/performer
 	name = "colorable performers one piece"
 	icon = 'modularhowling_void/modules/clothing/icons/obj/uniforms.dmi'
 	worn_icon = 'modularhowling_void/modules/clothing/icons/mob/uniform.dmi'
-	icon_state = "poly_performer"
+	icon_state = "poly"
 	can_adjust = FALSE
-	post_init_icon_state = "poly_performer"
-	greyscale_colors = "#FFFFFF"
-	greyscale_config = /datum/greyscale_config/performer
-	greyscale_config_worn = /datum/greyscale_config/performer/worn
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	flags_1 = IS_PLAYER_COLORABLE_1
-
-/datum/greyscale_config/performer
-	name = "Performer Outfit"
-	icon_file = 'modularhowling_void/modules/clothing/icons/obj/uniforms.dmi'
-	json_config = 'modularhowling_void/modules/clothing/icons/mob/performer.json'
-
-/datum/greyscale_config/performer/worn
-	name = "Performer Outfit (Worn)"
-	icon_file = 'modularhowling_void/modules/clothing/icons/mob/uniform.dmi'
 
 
 

@@ -109,6 +109,7 @@
 	scent.Grant(H)
 	var/datum/action/cooldown/scent_tracking/track = new()
 	track.Grant(H)
+
 // ============================================================================
 // Акуловые когти
 // ============================================================================
@@ -128,6 +129,8 @@
 
 	RegisterSignal(H, COMSIG_CARBON_NOSE_BOOPED, PROC_REF(on_nose_boop))
 	RegisterSignal(H, COMSIG_CARBON_NOSE_STRUCK, PROC_REF(on_nose_struck))
+	RegisterSignal(H, COMSIG_MOB_MOVESPEED_UPDATED, PROC_REF(check_water_slowdown))
+
 /datum/species/aquatic/on_species_loss(mob/living/carbon/human/H)
 	..()
 	if(!istype(H))
@@ -149,7 +152,7 @@
 	if(HAS_TRAIT(H, TRAIT_SPACEWALK))
 		REMOVE_TRAIT(H, TRAIT_SPACEWALK, REF(src))
 
-	UnregisterSignal(H, list(COMSIG_CARBON_NOSE_BOOPED, COMSIG_CARBON_NOSE_STRUCK))
+	UnregisterSignal(H, list(COMSIG_CARBON_NOSE_BOOPED, COMSIG_CARBON_NOSE_STRUCK, COMSIG_MOB_MOVESPEED_UPDATED))
 
 /datum/species/aquatic/proc/on_nose_boop(mob/living/carbon/human/source, mob/living/carbon/helper)
 	if(!get_location_accessible(source, BODY_ZONE_PRECISE_MOUTH))
@@ -240,3 +243,14 @@
 		return
 
 	H.metabolism_efficiency = original
+
+///Анти-замедление в воде
+/datum/species/aquatic/proc/check_water_slowdown(mob/living/aquatic)
+	SIGNAL_HANDLER
+
+	var/turf/open/turfy = aquatic.loc
+
+	if(!istype(turfy, /turf/open/water))
+		return
+
+	aquatic.remove_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown)
