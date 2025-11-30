@@ -1,13 +1,14 @@
 /datum/quirk/item_quirk/breather/plasma_breather
-	name = "Plasma Breather"
-	desc = "You breathe plasma, even if you might not normally breathe it. Oxygen is poisonous."
-	medical_record_text = "Patient can only breathe plasma."
-	gain_text = span_notice("You suddenly have a hard time breathing anything but plasma.")
-	lose_text = span_danger("You suddenly feel like you aren't bound to plasma anymore.")
+	name = "Plasma Breather(Дышащий плазмой)"
+	desc = "Вы дышите плазмой, даже если обычно не способны на это. Кислород для вас — яд."
+	medical_record_text = "Пациент может дышать только плазмой."
+	gain_text = span_notice("Внезапно вы с трудом можете дышать чем-то, кроме плазмы.")
+	lose_text = span_danger("Вы чувствуете, что больше не зависите от дыхания плазмой.")
 	icon = FA_ICON_FIRE_FLAME_SIMPLE
 	value = 0
 	breathing_tank = /obj/item/tank/internals/plasmaman/belt/full
 	breath_type = "plasma"
+
 
 /datum/quirk/item_quirk/breather/plasma_breather/is_species_appropriate(datum/species/mob_species)
 	// slimeppl heal their blood volume rapidly from breathing plasma, this would be op

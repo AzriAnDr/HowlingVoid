@@ -1,11 +1,11 @@
 /datum/quirk/bodytemp
-	name = "Abnormal body temperature"
-	desc = "Your body temperature is strange compared to your baseline species, being offset a certain amount above or below. This is not recommended to take with coldblooded species. \
-		The quirk ranges from -40 to +70, due to how you are delivered to the station taking this at extreme amounts may result in minor burns."
+	name = "Abnormal body temperature(Аномальная температура тела)"
+	desc = "Ваша температура тела отличается от температуры вашего вида, находясь на определённом уровне выше или ниже. Это не рекомендуется для холоднокровных видов. \
+		Диапазон причуды составляет от -40 до +70, в зависимости от способа доставки вас на станцию, прием этого вещества в экстремальных дозах может привести к небольшим ожогам."
 	value = 0
-	gain_text = span_danger("Your body temperature is feeling off.")
-	lose_text = span_notice("Your body temperature is feeling right.")
-	medical_record_text = "Patient's body has an abnormal temperature for their species."
+	gain_text = span_danger("У вас повышенная температура тела.")
+	lose_text = span_notice("Температура вашего тела в норме.")
+	medical_record_text = "У пациента наблюдается аномальная для его вида температура тела.."
 	icon = FA_ICON_THERMOMETER_HALF
 	/// The number that will be added to the original quirk_holder's bodytemp_normal
 	var/bodytemp_modifier = 0

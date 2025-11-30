@@ -1,9 +1,9 @@
 /datum/quirk/custom_tongue
-	name = "Custom Tongue"
-	desc = "Your tongue is not standard. It has a shape and texture that is unique to you, affecting the way you speak."
-	gain_text = span_notice("Your tongue feels normal.")
-	lose_text = span_notice("Your tongue feels... Different.")
-	medical_record_text = "Patient speaks a little funny."
+	name = "Custom Tongue(Индивидуальный язык)"
+	desc = "Ваш язык нестандартен. Он имеет уникальную форму и текстуру, которые влияют на вашу речь."
+	gain_text = span_notice("Ваш язык нормальный.")
+	lose_text = span_notice("Ваш язык другой")
+	medical_record_text = "Пациент говорит немного странно."
 	value = 0
 	icon = FA_ICON_FACE_GRIN_TONGUE
 
@@ -25,7 +25,7 @@
 	if (!..())
 		return FALSE
 
-	return "Custom Tongue" in preferences.all_quirks
+	return "Custom Tongue(Индивидуальный язык)" in preferences.all_quirks
 
 /datum/preference/text/custom_tongue/apply_to_human(mob/living/carbon/human/target, value)
 	return

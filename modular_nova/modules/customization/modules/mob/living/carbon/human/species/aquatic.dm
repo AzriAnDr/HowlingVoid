@@ -1,4 +1,3 @@
-#define AQUATIC_METABOLISM_MULTIPLIER 1.5 // множитель метаболизма для акуловых
 /datum/species/aquatic
 	name = "Akula (Generic)"
 	id = SPECIES_AQUATIC
@@ -12,9 +11,14 @@
 	)
 
 	/// Храним исходные значения метаболизма для персонажей, чтобы корректно восстанавливать их при смене вида.
-	var/list/original_metabolism_efficiency
+	var/list/original_metabolism_efficiency = list()
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	mutant_bodyparts = list()
+	mutantbrain = /obj/item/organ/brain/aquatic
+	mutantheart = /obj/item/organ/heart/aquatic
+	mutantlungs = /obj/item/organ/lungs/aquatic
+	mutantliver = /obj/item/organ/liver/aquatic
+	mutantstomach = /obj/item/organ/stomach/aquatic
 	mutanttongue = /obj/item/organ/tongue/aquatic
 	payday_modifier = 1.0
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
@@ -95,6 +99,11 @@
 	if(!istype(H))
 		return
 
+	original_metabolism_efficiency[H] = H.metabolism_efficiency
+	if(H.reagents)
+		RegisterSignal(H.reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagents_updated))
+	update_metabolism_efficiency(H)
+
 	// === Инстинкт охотника ===
 	var/datum/action/cooldown/scent_scan/aquatic/scent = new()
 	scent.Grant(H)
@@ -117,27 +126,25 @@
 	if(!HAS_TRAIT(H, TRAIT_SPACEWALK))
 		ADD_TRAIT(H, TRAIT_SPACEWALK, REF(src))
 
-	// Сохраняем исходный метаболизм и ускоряем вывод реагентов для способки солёной крови.
-	LAZYINITLIST(original_metabolism_efficiency)
-	if(isnull(original_metabolism_efficiency[H]))
-		original_metabolism_efficiency[H] = H.metabolism_efficiency
-	H.metabolism_efficiency = max(0, H.metabolism_efficiency * AQUATIC_METABOLISM_MULTIPLIER)
 	RegisterSignal(H, COMSIG_CARBON_NOSE_BOOPED, PROC_REF(on_nose_boop))
 	RegisterSignal(H, COMSIG_CARBON_NOSE_STRUCK, PROC_REF(on_nose_struck))
 /datum/species/aquatic/on_species_loss(mob/living/carbon/human/H)
 	..()
 	if(!istype(H))
 		return
+
+	if(H.reagents)
+		UnregisterSignal(H.reagents, COMSIG_REAGENTS_HOLDER_UPDATED)
+
+	var/original = original_metabolism_efficiency[H]
+	if(!isnull(original))
+		H.metabolism_efficiency = original
+		original_metabolism_efficiency -= H
+
 	if(HAS_TRAIT(H, TRAIT_NO_SLIP_WATER))
 		REMOVE_TRAIT(H, TRAIT_NO_SLIP_WATER, REF(src))
 	if(HAS_TRAIT(H, TRAIT_NO_SLIP_ICE))
 		REMOVE_TRAIT(H, TRAIT_NO_SLIP_ICE, REF(src))
-	// Восстанавливаем исходное значение метаболизма при выходе из вида.
-	if(original_metabolism_efficiency)
-		var/old_value = original_metabolism_efficiency[H]
-		if(isnum(old_value))
-			H.metabolism_efficiency = old_value
-		original_metabolism_efficiency[H] = null
 
 	if(HAS_TRAIT(H, TRAIT_SPACEWALK))
 		REMOVE_TRAIT(H, TRAIT_SPACEWALK, REF(src))
@@ -155,6 +162,8 @@
 		return
 
 	source.apply_damage(25, STAMINA, affecting)
+
+
 /datum/species/aquatic/create_pref_unique_perks()
 	var/list/perks = list()
 	perks += list(list(
@@ -200,5 +209,34 @@
 		SPECIES_PERK_DESC = "Ваша морда более чувствствительная к ударам и порой обычным касаниям.",
 	))
 	return perks
-#undef AQUATIC_METABOLISM_MULTIPLIER
 
+
+/datum/species/aquatic/proc/on_reagents_updated(datum/source)
+	SIGNAL_HANDLER
+	var/datum/reagents/reagents = source
+	var/mob/living/carbon/human/H = reagents?.my_atom
+	if(!istype(H))
+		return
+
+	update_metabolism_efficiency(H)
+
+/datum/species/aquatic/proc/update_metabolism_efficiency(mob/living/carbon/human/H)
+	if(!istype(H))
+		return
+
+	var/original = original_metabolism_efficiency[H]
+	if(isnull(original))
+		original = H.metabolism_efficiency
+		original_metabolism_efficiency[H] = original
+
+	var/has_medicine = H.reagents?.has_reagent(/datum/reagent/medicine, TRUE)
+	var/has_toxin = H.reagents?.has_reagent(/datum/reagent/toxin, TRUE)
+	var/has_drug = H.reagents?.has_reagent(/datum/reagent/drug, TRUE)
+	var/has_alcohol = H.reagents?.has_reagent(/datum/reagent/consumable/ethanol, TRUE)
+
+    // если в крови есть что-то из вышеуказанного -> ускоренный метаболизм
+	if(has_medicine || has_toxin || has_drug || has_alcohol)
+		H.metabolism_efficiency = original * 6.0
+		return
+
+	H.metabolism_efficiency = original

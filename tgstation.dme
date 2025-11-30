@@ -9460,6 +9460,7 @@
 #include "modular_nova\modules\xenoarchartifacts\obj\particle_battery.dm"
 #include "modular_nova\modules\xenoarchartifacts\obj\wave_scanner.dm"
 // Howling Void Modules
+#include "modularhowling_void\modules\modular_species\organs\aquatic_organs.dm"
 #include "modularhowling_void\modules\modular_species\species\lizards.dm"
 #include "modularhowling_void\modules\ported_content\ark_station\now-we-can-jump\click.dm"
 #include "modularhowling_void\modules\ported_content\ark_station\now-we-can-jump\code.dm"

@@ -1,9 +1,9 @@
 /datum/quirk/prosopagnosia
-	name = "Prosopagnosia"
-	desc = "You have a mental disorder that prevents you from being able to recognize faces at all."
+	name = "Prosopagnosia(Просопагнозия)"
+	desc = "У вас есть расстройство, из-за которого вы не можете распознавать лица других людей. Вы можете распознавать людей по их именам, голосам и другим характеристикам, но лица кажутся вам размытыми и незнакомыми."
 	icon = FA_ICON_USER_SECRET
 	value = -4
-	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
+	medical_record_text = "Пациент страдает от прозопагнозии, что затрудняет распознавание лиц. Рекомендуется использование альтернативных методов идентификации, таких как именные теги или голосовые сигналы."
 	hardcore_value = 5
 	mail_goodies = list(/obj/item/skillchip/appraiser) // bad at recognizing faces but good at recognizing IDs
 

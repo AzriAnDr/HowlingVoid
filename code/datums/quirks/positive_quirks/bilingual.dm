@@ -1,11 +1,11 @@
 /datum/quirk/bilingual
-	name = "Bilingual"
-	desc = "Over the years you've picked up an extra language!"
+	name = "Bilingual(Двуязычный)"
+	desc = "За эти годы ты выучил еще один язык!"
 	icon = FA_ICON_GLOBE
 	value = 4
-	gain_text = span_notice("Some of the words of the people around you certainly aren't common. Good thing you studied for this.")
-	lose_text = span_notice("You seem to have forgotten your second language.")
-	medical_record_text = "Patient speaks multiple languages."
+	gain_text = span_notice("Некоторые слова, которые люди вокруг вас употребляют, определённо не распространены. Хорошо, что вы подготовились к этому.")
+	lose_text = span_notice("Кажется, вы забыли свой второй язык.")
+	medical_record_text = "Пациент говорит на нескольких языках."
 	mail_goodies = list(/obj/item/taperecorder, /obj/item/clothing/head/beret/frenchberet, /obj/item/clothing/mask/fakemoustache/italian)
 
 /datum/quirk_constant_data/bilingual
@@ -26,9 +26,9 @@
 	if(!language_type || quirk_holder.has_language(language_type))
 		language_type = /datum/language/uncommon
 		if(quirk_holder.has_language(language_type))
-			to_chat(quirk_holder, span_boldnotice("You are already familiar with the quirk in your preferences, so you did not learn one."))
+			to_chat(quirk_holder, span_boldnotice("Вы уже знакомы с этой особенностью своих предпочтений, поэтому ничего не усвоили."))
 			return
-		to_chat(quirk_holder, span_boldnotice("You are already familiar with the quirk in your preferences, so you learned Galactic Uncommon instead."))
+		to_chat(quirk_holder, span_boldnotice("Вы уже знакомы с этой странностью в своих предпочтениях, поэтому вместо нее выучили «Галактический необычный»."))
 
 	var/speakable = client_source?.prefs.read_preference(/datum/preference/toggle/language_speakable)
 	var/language_skill = client_source?.prefs.read_preference(/datum/preference/choiced/language_skill) || "100%"

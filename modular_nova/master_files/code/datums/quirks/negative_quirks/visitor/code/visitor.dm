@@ -1,11 +1,11 @@
 /datum/quirk/visitor
-	name = "Visitor ID"
-	desc = "As assistant, you're given a visitor ID with limited background information. Your records will be sparse and require filling out during the shift."
+	name = "Visitor ID(Гостевой пропуск)"
+	desc = "Как ассистенту, вам выдадут удостоверение гостя с ограниченной информацией о себе. Ваши записи будут немногочисленными и потребуют заполнения в течение смены."
 	icon = FA_ICON_PERSON_CIRCLE_QUESTION
 	value = -2
-	medical_record_text = "Patient is a guest aboard the station, and has been issued a visitor's ID."
-	gain_text = span_notice("As a guest aboard the station, you've been given a special visitor ID!")
-	lose_text = span_danger("Your visitation rights have been revoked...")
+	medical_record_text = "Пациент является гостем на борту станции и ему выдано удостоверение гостя."
+	gain_text = span_notice("Как гостю станции, вам выдан специальный идентификатор гостя!")
+	lose_text = span_danger("Ваши права на посещение были аннулированы...")
 	quirk_flags = QUIRK_HIDE_FROM_SCAN
 	///holder of a copy of the user's old id
 	var/obj/item/card/id/advanced/old_id

@@ -1,12 +1,24 @@
-// Aquatic organ set without unique effects
 /obj/item/organ/brain/aquatic
-	name = "aquatic brain"
+	name = "Мозг акулы"
+	icon = 'modularhowling_void/modules/modular_species/organs/icons/aquatic_organs.dmi'
+	icon_state = "brain_aquatic"
 
 /obj/item/organ/heart/aquatic
-	name = "aquatic heart"
+	name = "Сердце акулы"
+	icon = 'modularhowling_void/modules/modular_species/organs/icons/aquatic_organs.dmi'
+	icon_state = "heart_aquatic"
 
 /obj/item/organ/lungs/aquatic
-	name = "aquatic lungs"
+	name = "Лёгкие акулы"
+	icon = 'modularhowling_void/modules/modular_species/organs/icons/aquatic_organs.dmi'
+	icon_state = "lungs_aquatic"
 
-/obj/item/organ/eyes/aquatic
-	name = "aquatic eyes"
+/obj/item/organ/stomach/aquatic
+	name = "Желудок акулы"
+	icon = 'modularhowling_void/modules/modular_species/organs/icons/aquatic_organs.dmi'
+	icon_state = "stomach_aquatic"
+
+/obj/item/organ/liver/aquatic
+	name = "Печень акулы"
+	icon = 'modularhowling_void/modules/modular_species/organs/icons/aquatic_organs.dmi'
+	icon_state = "liver_aquatic"

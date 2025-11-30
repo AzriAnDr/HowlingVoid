@@ -262,7 +262,7 @@
 	player.change_number_of_hands(4)
 
 /datum/deathmatch_modifier/paraplegic
-	name = "Paraplegic"
+	name = "Paraplegic(Параплегик)"
 	description = "Wheelchairs. For. Everyone."
 
 /datum/deathmatch_modifier/paraplegic/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)

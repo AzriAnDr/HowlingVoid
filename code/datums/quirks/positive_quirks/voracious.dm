@@ -1,10 +1,10 @@
 /datum/quirk/voracious
-	name = "Voracious"
-	desc = "Nothing gets between you and your food. You eat faster and can binge on junk food! Being fat suits you just fine."
+	name = "Voracious(Ненасытный)"
+	desc = "Ничто не встанет на пути между тобой и едой. Вы едите быстрее. Полнота вам к лицу."
 	icon = FA_ICON_DRUMSTICK_BITE
 	value = 4
 	mob_trait = TRAIT_VORACIOUS
-	gain_text = span_notice("You feel HONGRY.")
-	lose_text = span_danger("You no longer feel HONGRY.")
-	medical_record_text = "Patient has an above average appreciation for food and drink."
+	gain_text = span_notice("Вы чувствуете ГОЛОД.")
+	lose_text = span_danger("Вы больше не чувствуете ГОЛОД.")
+	medical_record_text = "Пациент испытывает выше среднего удовольствие от еды и питья."
 	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/dinner)
