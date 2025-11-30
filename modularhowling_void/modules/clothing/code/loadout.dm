@@ -25,9 +25,9 @@
 
 
 
-/datum/loadout_item/under/miscellaneous/performer_greyscale
+/datum/loadout_item/under/miscellaneous/performer
 	name = "Greyscale performers one piece"
-	item_path = /obj/item/clothing/under/performer/greyscale
+	item_path = /obj/item/clothing/under/dress/performer
 
 /datum/loadout_item/under/miscellaneous/dress_strapped
 	name = "Formal Evening Gown"
