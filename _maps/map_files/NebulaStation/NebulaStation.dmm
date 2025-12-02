@@ -3964,10 +3964,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "aEz" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32;
-	dir = 1
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/glass/reinforced/airless,
 /area/space/nearstation)
 "aEC" = (
@@ -6780,10 +6777,7 @@
 /area/station/maintenance/aft/lesser)
 "bat" = (
 /obj/structure/hedge,
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32;
-	dir = 1
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/circuit,
 /area/station/ai/upload/chamber)
 "baD" = (
@@ -11369,10 +11363,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 10
 	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32;
-	dir = 1
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /obj/structure/railing{
 	dir = 1
 	},
@@ -22280,10 +22271,7 @@
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32;
-	dir = 4
-	},
+/obj/structure/sign/nanotrasen/directional/east,
 /obj/effect/turf_decal/box/red,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
@@ -46536,10 +46524,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
 	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32;
-	dir = 1
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -49877,10 +49862,7 @@
 "hrj" = (
 /obj/structure/railing/corner,
 /obj/effect/turf_decal/siding/wideplating_new/dark/corner,
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32;
-	dir = 1
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/engine/hull/reinforced,
 /area/space/nearstation)
 "hrm" = (
@@ -54574,10 +54556,7 @@
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 6
 	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32;
-	dir = 1
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /obj/structure/railing{
 	dir = 1
 	},
@@ -58175,10 +58154,7 @@
 	pixel_x = 9;
 	pixel_y = 11
 	},
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32;
-	dir = 8
-	},
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/engine/hull/reinforced,
 /area/space/nearstation)
 "iDu" = (
@@ -67965,10 +67941,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/bot_white,
 /obj/structure/chair,
-/obj/structure/sign/nanotrasen{
-	pixel_x = 32;
-	dir = 4
-	},
+/obj/structure/sign/nanotrasen/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
@@ -88523,10 +88496,7 @@
 /area/station/service/bar)
 "nhu" = (
 /obj/structure/hedge,
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32;
-	dir = 1
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/circuit/red,
 /area/station/ai/upload/chamber)
 "nhw" = (
@@ -97704,10 +97674,7 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/bot_white,
 /obj/structure/chair,
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32;
-	dir = 8
-	},
+/obj/structure/sign/nanotrasen/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
@@ -110074,10 +110041,7 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark/corner{
 	dir = 8
 	},
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32;
-	dir = 1
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/open/floor/engine/hull/reinforced,
 /area/space/nearstation)
 "qlW" = (
@@ -124043,9 +124007,7 @@
 	},
 /area/station/maintenance/department/security)
 "sqU" = (
-/obj/structure/sign/nanotrasen{
-	dir = 1
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /turf/closed/wall,
 /area/station/maintenance/aft/lesser)
 "srd" = (
@@ -140915,10 +140877,7 @@
 /area/station/commons/lounge)
 "uTL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/nanotrasen{
-	pixel_x = -32;
-	dir = 8
-	},
+/obj/structure/sign/nanotrasen/directional/west,
 /turf/open/floor/engine/hull/reinforced,
 /area/space/nearstation)
 "uTM" = (
@@ -143552,10 +143511,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "vkH" = (
-/obj/structure/sign/nanotrasen{
-	pixel_y = 32;
-	dir = 1
-	},
+/obj/structure/sign/nanotrasen/directional/north,
 /obj/structure/flora/rock/pile/jungle/style_random,
 /turf/open/floor/glass/reinforced/airless,
 /area/space/nearstation)
