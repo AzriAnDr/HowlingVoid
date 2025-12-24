@@ -10,7 +10,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/sniffing = target
 
-		var/damage_amount = sniffing.getBruteLoss() + sniffing.getFireLoss()
+		var/damage_amount = sniffing.adjust_brute_loss() + sniffing.adjust_fire_loss()
 		var/health_message = "На [sniffing.get_visible_name()] "
 		switch(damage_amount)
 			if (0 to 15)

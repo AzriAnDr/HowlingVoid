@@ -20,9 +20,9 @@
 		if(user.handcuffed) // А если ещё и руки.
 			user.visible_message(span_alert("[user] had tried to jump while being tied, so [user.p_they()] fell and [jump_message]."))
 			if(jump_message == JUMP_MESSAGE_NOSE) // Если зарандомил ломание носа.
-				user.adjustStaminaLoss(30)
+				user.adjust_stamina_loss(30)
 				user.Paralyze(30)
-				user.adjustBruteLoss(30)
+				user.adjust_brute_loss(30)
 				user.AdjustUnconscious(10 SECONDS)
 				user.emote("scream")
 				user.overlay_fullscreen("flash_void", /atom/movable/screen/fullscreen/flash/black)
@@ -30,12 +30,12 @@
 				user.clear_fullscreen("flash_void", rand(15, 60))
 				return
 			else // Повезло просто удариться.
-				user.adjustStaminaLoss(20)
-				user.adjustBruteLoss(10)
+				user.adjust_stamina_loss(20)
+				user.adjust_brute_loss(10)
 				user.Paralyze(10)
 				return
 		user.visible_message(span_alert("[user] tried to jump with [user.p_their()] feet tied."))
-		user.adjustStaminaLoss(20)
+		user.adjust_stamina_loss(20)
 		user.Paralyze(10)
 		return
 
@@ -55,13 +55,13 @@
 	if(user.staminaloss >= 90) // ПЕРЕПРЫГАЛ? ПОЛУЧАЙ НАХУЙ ИНСУЛЬТ.
 		to_chat(user, span_notice("Tired muscles are unable to lift your carcass into the air and you fall to the floor."))
 		user.Paralyze(15)
-		user.adjustStaminaLoss(10)
+		user.adjust_stamina_loss(10)
 
 	if(!HAS_TRAIT(user, TRAIT_MIMING))
 		playsound(user, user.gender == MALE ? 'modularhowling_void/modules/ported_content/ark_station/now-we-can-jump/jump_male.ogg' : 'modularhowling_void/modules/ported_content/ark_station/now-we-can-jump/jump_female.ogg', 25, 0, 1)
 	user.visible_message("<span class='danger'>[user] jumps.</span>", \
 					"<span class='warning'> I jump at the [loc]!</span>")
-	user.adjustStaminaLoss(rand(30,50))
+	user.adjust_stamina_loss(rand(30,50))
 	user.throw_at(target, 3, 1, user, spin = (HAS_TRAIT(user, TRAIT_CLUMSY) ? TRUE : FALSE), force = MOVE_FORCE_EXTREMELY_WEAK, gentle = TRUE)
 
 #undef JUMP_MESSAGE_NOSE
