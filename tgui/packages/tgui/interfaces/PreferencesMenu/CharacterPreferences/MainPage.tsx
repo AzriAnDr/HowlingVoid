@@ -8,7 +8,6 @@ import {
   Button,
   Dropdown, // NOVA EDIT ADDITION
   Floating,
-  Icon,
   Input,
   LabeledList,
   Section,
@@ -620,43 +619,7 @@ export function MainPage(props: MainPageProps) {
               />
             </Stack.Item>
 
-            {/* HOWLING VOID - CHARACTER IMPORT/EXPORT*/}
-            <Stack.Item>
-              <Button
-                fluid
-                fontSize="1.1rem"
-                height="2.2rem"
-                mb={0.5}
-                textAlign="center"
-                onClick={() => act('import_preferences')}
-              >
-                <Box position="relative" width="100%">
-                  <Box position="absolute" left="0.25rem">
-                    <Icon name="file-import" />
-                  </Box>
-                  IMPORT PREFERENCES
-                </Box>
-              </Button>
-            </Stack.Item>
-
-            <Stack.Item>
-              <Button
-                fluid
-                fontSize="1.1rem"
-                height="2.2rem"
-                textAlign="center"
-                onClick={() => act('export_preferences')}
-              >
-                <Box position="relative" width="100%">
-                  <Box position="absolute" left="0.25rem">
-                    <Icon name="file-export" />
-                  </Box>
-                  EXPORT PREFERENCES
-                </Box>
-              </Button>
-            </Stack.Item>
-            {/* HOWLING VOID - CHARACTER IMPORT/EXPORT END*/}
-            {/* NOVA EDIT ADDITION START*/}
+            {/* NOVA EDIT ADDITION START */}
             <Stack.Item position="relative">
               <Dropdown
                 width="100%"
@@ -724,8 +687,7 @@ export function MainPage(props: MainPageProps) {
         {/* ORIGINAL: <Stack.Item grow basis={0}> */}
         <Stack.Item grow basis={0} ml="4px">
           <Stack vertical fill>
-            {
-              /* NOVA EDIT REMOVAL START
+            {/* NOVA EDIT REMOVAL START
              <PreferenceList
               randomizations={getRandomization(
                 contextualPreferences,
@@ -745,8 +707,7 @@ export function MainPage(props: MainPageProps) {
               preferences={nonContextualPreferences}
               maxHeight="auto"
             />
-            */
-              // NOVA EDIT REMOVAL END
+            */ // NOVA EDIT REMOVAL END
             }
             {/* NOVA EDIT ADDITION BEGIN: Swappable pref menus */}
             <Stack>
