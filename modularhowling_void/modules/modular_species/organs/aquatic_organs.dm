@@ -22,3 +22,8 @@
 	name = "Печень Азулеана"
 	icon = 'modularhowling_void/modules/modular_species/organs/icons/aquatic_organs.dmi'
 	icon_state = "liver_aquatic"
+
+
+/obj/item/organ/heart/aquatic/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
