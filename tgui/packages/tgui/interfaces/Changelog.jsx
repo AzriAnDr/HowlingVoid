@@ -184,20 +184,20 @@ export class Changelog extends Component {
 
     const header = (
       <Section>
-        <h1>Nova Sector</h1>
+        <h1>HOWLING VOID</h1>
         <p>
-          <b>Thanks to: </b>
+          <b>Отдельное спасибо: </b>
           Traditional Games 13, Skyrat Station 13, Baystation 12, /vg/station,
           NTstation, CDK Station devs, FacepunchStation, GoonStation devs, the
-          original Space Station 13 developers, Invisty for the title image and
-          the countless others who have contributed to the game.
+          original Space Station 13 developers, The Fluffy Frontier, Ark
+          Station, Monke Station, Syndicate Code Red(HOWLING VOID).
         </p>
         <p>
-          {'Current project maintainers can be found '}
-          <a href="https://github.com/NovaSector?tab=members">here</a>
-          {', recent GitHub contributors can be found '}
+          {'Список нынешних разработчиков проекта можно найти здесь. '}
+          <a href="https://github.com/NovaSector?tab=members">Тута</a>
+          {', Список недавних участников проекта на GitHub можно найти здесь. '}
           <a href="https://github.com/NovaSector/NovaSector/pulse/monthly">
-            here
+            Тут
           </a>
           .
         </p>
@@ -212,6 +212,23 @@ export class Changelog extends Component {
     const footer = (
       <Section>
         {dateDropdown}
+        <h3>Howling Void | Syndicate Code Red Development Team</h3>
+        <p>
+          <b>Программисты: </b>
+          ALOHADAWN, sillyzhook, Mogeko, Ahinus, Toxa
+        </p>
+        <p>
+          <b>Спрайтеры: </b>
+          Stihar, MiFRiLiK, cerberushopeless
+        </p>
+        <p>
+          <b>Мапперы: </b>
+          Impersky, Maslina
+        </p>
+        <p>
+          Дискорд:
+          <a href="https://discord.gg/qVHJ4AuW4C">Тык сюда</a>.
+        </p>
         <h3>GoonStation 13 Development Team</h3>
         <p>
           <b>Coders: </b>
@@ -347,7 +364,7 @@ export class Changelog extends Component {
         ));
 
     return (
-      <Window title="Changelog" width={675} height={650}>
+      <Window title="Чейнджлог" width={675} height={650}>
         <Window.Content scrollable>
           {header}
           {changes}
