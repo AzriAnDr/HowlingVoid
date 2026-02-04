@@ -1,12 +1,12 @@
 {
 	"version": 1,
-	"map_name": "Water Kilo",
-	"map_path": "map_files/WaterKiloStation",
-	"map_file": "WaterKiloStation.dmm",
+	"map_name": "Barstation",
+	"map_path": "map_files/Barstation",
+	"map_file": "barstation.dmm",
 	"shuttles": {
 		"emergency": "emergency_kilo",
 		"ferry": "ferry_kilo",
-		"cargo": "cargo_kilo",
+		"cargo": "cargo_nova",
 		"whiteship": "whiteship_kilo"
 	},
 	"traits": [
@@ -17,7 +17,7 @@
 			"Nearstation Ocean Ruins": true,
 			"Ocean Ruins": true,
 			"Ocean Station": true,
-			"Baseturf": "/turf/open/misc/asteroid"
+			"Baseturf": "/turf/open/floor/plating/asteroid"
 		}
 	],
 	"job_changes": {
