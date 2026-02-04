@@ -254,6 +254,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			character_preview_view.setDir(turn(character_preview_view.dir, backwards ? 90 : -90))
 			// NOVA EDIT END
 			return TRUE
+		// ========== HOWLING VOID: CHARACTER IMPORT/EXPORT ==========
+		if ("export_preferences")
+			if(parent)
+				parent.export_preferences()  // ← ВЫЗОВ СУЩЕСТВУЮЩЕГО VERB
+			return TRUE
+
+		if ("import_preferences")
+			import_preferences_from_file(parent)
+			return TRUE
+
+		// ========== END HOWLING VOID ==========
 		if ("set_preference")
 			var/requested_preference_key = params["preference"]
 			var/value = params["value"]
@@ -674,3 +685,75 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	donator_status = !!GLOB.donator_list[parent.ckey] // NOVA EDIT ADDITION - DONATOR CHECK
 	if(unlock_content || donator_status) // NOVA EDIT CHANGE - ORIGINAL: if(unlock_content)
 		max_save_slots = 50 //NOVA EDIT - ORIGINAL: max_save_slots = 8
+
+//Howling void import preferences start
+/datum/preferences/proc/import_preferences_from_file(mob/user)
+	var/F = input(
+		user,
+		"Выберите JSON-файл персонажа (.json). Название должно быть preferences.json! Просто переименуй его, если название отличается!",
+		"Импорт персонажа. Название должно быть preferences.json! Просто переименуй его, если название отличается!",
+	) as file|null
+
+	if(!F)
+		return FALSE
+
+	var/json_text = file2text(F)
+	if(!json_text)
+		to_chat(user, span_warning("Не удалось прочитать файл. Название должно быть preferences.json! Просто переименуй его, если название отличается!"))
+		return FALSE
+
+	try
+		json_decode(json_text)
+	catch()
+		to_chat(user, span_warning("Файл не является корректным JSON. Название должно быть preferences.json! Просто переименуй его, если название отличается!"))
+		return FALSE
+
+	if(!path)
+		to_chat(user, span_warning("Путь preferences не определён. Название должно быть preferences.json! Просто переименуй его, если название отличается!"))
+		return FALSE
+
+	var/backup_path = "[path].bak"
+	if(fexists(path))
+		fcopy(path, backup_path)
+
+	fdel(path)
+	text2file(json_text, path)
+
+	value_cache = list()
+	recently_updated_keys = list()
+
+	QDEL_NULL(savefile)
+	savefile = new /datum/json_savefile(path)
+
+	if(!load_preferences())
+		if(fexists(backup_path))
+			fcopy(backup_path, path)
+		to_chat(user, span_warning("Ошибка загрузки импортированных преференсов. Название должно быть preferences.json! Просто переименуй его, если название отличается!"))
+		return FALSE
+
+	load_character()
+
+	sanitize_languages()
+	sanitize_quirks()
+	validate_quirks()
+
+	apply_all_client_preferences()
+
+	if(character_preview_view)
+		character_preview_view.update_body()
+
+	save_preferences()
+	save_character()
+
+	tainted_character_profiles = TRUE
+	update_static_data(user)
+
+	to_chat(user, span_notice("Преференсы успешно импортированы."))
+	return TRUE
+
+
+
+/datum/preferences/proc/import_preferences_from_json(json_text)
+	return TRUE
+
+// Howling void import preferences end

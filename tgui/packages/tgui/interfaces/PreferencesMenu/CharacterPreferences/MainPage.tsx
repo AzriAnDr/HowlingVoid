@@ -24,7 +24,7 @@ import {
   type FeatureChoicedServerData,
   FeatureValueInput,
 } from '../preferences/features/base';
-import { Gender, GENDERS } from '../preferences/gender';
+import { GENDERS, Gender } from '../preferences/gender';
 import {
   createSetPreference,
   type PreferencesMenuData,
@@ -622,7 +622,33 @@ export function MainPage(props: MainPageProps) {
               />
             </Stack.Item>
 
-            {/* NOVA EDIT ADDITION START */}
+            {/* HOWLING VOID - CHARACTER IMPORT/EXPORT*/}
+            <Stack.Item>
+              <Button
+                icon="file-import"
+                fluid
+                fontSize="1.1rem"
+                height="2.2rem"
+                mb={0.5}
+                onClick={() => act('import_preferences')}
+              >
+                IMPORT PREFERENCES
+              </Button>
+            </Stack.Item>
+
+            <Stack.Item>
+              <Button
+                icon="file-export"
+                fluid
+                fontSize="1.1rem"
+                height="2.2rem"
+                onClick={() => act('export_preferences')}
+              >
+                EXPORT PREFERENCES
+              </Button>
+            </Stack.Item>
+            {/* HOWLING VOID - CHARACTER IMPORT/EXPORT END*/}
+            {/* NOVA EDIT ADDITION START*/}
             <Stack.Item position="relative">
               <Dropdown
                 width="100%"
@@ -693,7 +719,8 @@ export function MainPage(props: MainPageProps) {
         {/* ORIGINAL: <Stack.Item grow basis={0}> */}
         <Stack.Item grow basis={0} ml="4px">
           <Stack vertical fill>
-            {/* NOVA EDIT REMOVAL START
+            {
+              /* NOVA EDIT REMOVAL START
              <PreferenceList
               randomizations={getRandomization(
                 contextualPreferences,
@@ -713,7 +740,8 @@ export function MainPage(props: MainPageProps) {
               preferences={nonContextualPreferences}
               maxHeight="auto"
             />
-            */ // NOVA EDIT REMOVAL END
+            */
+              // NOVA EDIT REMOVAL END
             }
             {/* NOVA EDIT ADDITION BEGIN: Swappable pref menus */}
             <Stack>

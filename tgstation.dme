@@ -9517,6 +9517,7 @@
 #include "modularhowling_void\modules\modular_species\actions\sniffing\tajaran.dm"
 #include "modularhowling_void\modules\modular_species\actions\sniffing\vulpkanin.dm"
 #include "modularhowling_void\modules\modular_species\organs\aquatic_organs.dm"
+#include "modularhowling_void\modules\modular_species\organs\Akula\aquatic_organs.dm"
 #include "modularhowling_void\modules\modular_species\species\lizards.dm"
 #include "modularhowling_void\modules\ported_content\ark_station\now-we-can-jump\click.dm"
 #include "modularhowling_void\modules\ported_content\ark_station\now-we-can-jump\code.dm"
