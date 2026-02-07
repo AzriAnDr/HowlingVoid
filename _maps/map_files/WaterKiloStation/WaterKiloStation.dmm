@@ -6716,16 +6716,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
-"cjR" = (
-/obj/structure/railing/corner{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/thinplating/dark,
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 1
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/service/chapel)
 "cjS" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -8294,15 +8284,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/courtroom)
-"cLV" = (
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 4
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/service/chapel)
 "cMj" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -11367,12 +11348,6 @@
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
-"dKx" = (
-/obj/effect/turf_decal/siding/thinplating/dark/end{
-	dir = 1
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/service/chapel)
 "dKy" = (
 /obj/structure/chair/pew/left{
 	dir = 8
@@ -42927,12 +42902,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
-"nKj" = (
-/obj/effect/turf_decal/siding/thinplating/dark/end{
-	dir = 4
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/service/chapel)
 "nKn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -47735,12 +47704,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
-"prn" = (
-/obj/effect/turf_decal/siding/thinplating/dark/end{
-	dir = 8
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/service/chapel)
 "prq" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/purple,
@@ -54236,10 +54199,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating/dark/end{
-	dir = 8
-	},
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "rxt" = (
 /obj/structure/table/wood,
@@ -63524,10 +63484,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/cargo/sorting)
-"upK" = (
-/obj/effect/turf_decal/siding/thinplating/dark/end,
-/turf/open/floor/glass/reinforced,
-/area/station/service/chapel)
 "upS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -64115,13 +64071,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/lab)
-"uAn" = (
-/obj/effect/turf_decal/siding/thinplating/dark,
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 1
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/service/chapel)
 "uAt" = (
 /obj/machinery/door/airlock/atmos/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -67551,10 +67500,7 @@
 /area/station/maintenance/disposal/incinerator)
 "vEv" = (
 /obj/structure/railing,
-/obj/effect/turf_decal/siding/thinplating/dark/end{
-	dir = 8
-	},
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "vEC" = (
 /obj/effect/turf_decal/sand/plating,
@@ -70835,11 +70781,7 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/siding/thinplating/dark,
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 1
-	},
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "wBs" = (
 /obj/machinery/porta_turret/ai{
@@ -88144,7 +88086,7 @@ jAy
 dJi
 xFQ
 vmZ
-cjR
+mMp
 iFR
 aGC
 tUR
@@ -88401,7 +88343,7 @@ cdi
 dJi
 srs
 vmZ
-nKj
+wXa
 slB
 urh
 kJu
@@ -88409,7 +88351,7 @@ kUJ
 dKy
 cHg
 was
-nKj
+wXa
 vrs
 wKb
 tiv
@@ -88914,7 +88856,7 @@ snn
 snn
 tmj
 wXa
-prn
+wXa
 vmZ
 gse
 gdI
@@ -88924,7 +88866,7 @@ rcS
 hUE
 fAM
 vrs
-prn
+wXa
 wXa
 nQo
 cvi
@@ -89171,7 +89113,7 @@ vAh
 vdy
 wXa
 wXa
-uAn
+wXa
 vmZ
 owC
 rlM
@@ -89181,7 +89123,7 @@ msY
 sQz
 ssI
 vrs
-uAn
+wXa
 eXY
 oZb
 cvi
@@ -89428,17 +89370,17 @@ sjG
 tiv
 wXa
 wXa
-nKj
+wXa
 vmZ
 kUd
-dKx
-cLV
-cLV
-cLV
-upK
+wXa
+wXa
+wXa
+wXa
+wXa
 ocE
 vrs
-nKj
+wXa
 cln
 tiv
 win
