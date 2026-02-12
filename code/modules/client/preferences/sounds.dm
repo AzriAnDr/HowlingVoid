@@ -143,3 +143,28 @@
 /// default value is max/2 because 100 1x modifier, while 200 is 2x
 /datum/preference/numeric/sound_ghost_poll_prompt_volume/create_default_value()
 	return maximum/2
+
+/// Controls hearing custom title screen menu music
+/datum/preference/toggle/menu_music_enabled
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "menu_music_enabled"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/toggle/menu_music_enabled/apply_to_client_updated(client/client, value)
+	if(isnewplayer(client.mob))
+		var/mob/dead/new_player/new_player = client.mob
+		new_player.update_menu_music_settings()
+
+/// Controls volume of custom title screen menu music
+/datum/preference/numeric/volume/sound_menu_music_volume
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_menu_music_volume"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/numeric/volume/sound_menu_music_volume/create_default_value()
+	return 35
+
+/datum/preference/numeric/volume/sound_menu_music_volume/apply_to_client_updated(client/client, value)
+	if(isnewplayer(client.mob))
+		var/mob/dead/new_player/new_player = client.mob
+		new_player.update_menu_music_settings()

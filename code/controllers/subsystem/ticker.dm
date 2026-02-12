@@ -149,7 +149,6 @@ SUBSYSTEM_DEF(ticker)
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
-			to_chat(world, span_notice("<b>Welcome to [station_name()]!</b>"))
 			// NOVA EDIT ADDITION START
 			if(!discord_alerted)
 				discord_alerted = TRUE // DISCORD SPAM PREVENTION
@@ -197,6 +196,11 @@ SUBSYSTEM_DEF(ticker)
 				current_state = GAME_STATE_SETTING_UP
 				Master.SetRunLevel(RUNLEVEL_SETUP)
 				SSevents.reschedule() // NOVA EDIT ADDITION
+				// Howling Void Edit start
+				for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
+					INVOKE_ASYNC(player, TYPE_PROC_REF(/mob/dead/new_player, notify_round_started))
+					addtimer(CALLBACK(player, TYPE_PROC_REF(/mob/dead/new_player, notify_round_started)), 1 SECONDS)
+				// Howling Void Edit end
 				if(start_immediately)
 					fire()
 
@@ -500,10 +504,6 @@ SUBSYSTEM_DEF(ticker)
 				player.show_title_screen() // NOVA EDIT ADDITION
 				continue
 			player.create_character(destination)
-		// NOVA EDIT ADDITION START
-		else
-			player.show_title_screen() //NOVA EDIT ADDITION
-		// NOVA EDIT ADDITION END
 		CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/collect_minds()

@@ -85,7 +85,6 @@
 	var/this_is_like_playing_right = alert(usr, "Are you sure you wish to observe?[less_input_message]", "Observe", "Yes", "No") //NOVA EDIT CHANGE
 	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
 		ready = PLAYER_NOT_READY
-		show_title_screen() // NOVA EDIT ADDITION
 		return FALSE
 
 	hide_title_screen() // NOVA EDIT ADDITION - Nova Titlescreen

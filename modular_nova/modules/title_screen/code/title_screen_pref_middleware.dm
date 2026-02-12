@@ -9,6 +9,13 @@
 
 /datum/preference_middleware/titlescreen/post_set_preference(mob/user, preference, value)
 	// User changed the current slot's name.
-	if(!istype(user, /mob/dead/new_player) || preference != "real_name")
+	if(!istype(user, /mob/dead/new_player))
 		return
-	SStitle.update_character_name(user, value)
+
+	if(preference == "real_name")
+		SStitle.update_character_name(user, value)
+		return
+
+	if(preference == "menu_music_enabled" || preference == "sound_menu_music_volume")
+		var/mob/dead/new_player/new_player = user
+		new_player.update_menu_music_settings()

@@ -97,6 +97,7 @@
 
 	if(href_list["title_is_ready"])
 		title_screen_is_ready = TRUE
+		update_menu_music_settings()
 		return
 
 /mob/dead/new_player/Login()
@@ -115,8 +116,13 @@
 	winset(src, "nova_title_browser", "is-disabled=false;is-visible=true")
 	winset(src, "status_bar", "is-visible=false")
 
-	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/lobby) //Sending pictures to the client
-	assets.send(src)
+	// Howling Void Edit start
+	var/datum/asset/lobby_assets = get_asset_datum(/datum/asset/simple/lobby) // Sending base lobby assets
+	lobby_assets.send(src)
+
+	var/datum/asset/howling_menu_assets = get_asset_datum(/datum/asset/simple/lobby_howling_menu) // Sending custom html_menu assets
+	howling_menu_assets.send(src)
+	// Howling Void Edit end
 
 	update_title_screen()
 
@@ -128,17 +134,55 @@
 
 	src << browse(SStitle.current_title_screen, "file=loading_screen.gif;display=0")
 	src << browse(dat, "window=nova_title_browser")
+	update_menu_music_settings()
+
+// Howling Void Edit start
+/mob/dead/new_player/proc/notify_round_started()
+	if(!client)
+		return
+	client << output(1, "nova_title_browser:set_round_started")
+// Howling Void Edit end
+
+/mob/dead/new_player/proc/update_menu_music_settings()
+	if(!client)
+		return
+
+	var/datum/preferences/preferences = client.prefs
+	if(!preferences)
+		return
+
+	var/menu_music_enabled = preferences.read_preference(/datum/preference/toggle/menu_music_enabled) ? 1 : 0
+	var/menu_music_volume = clamp(preferences.read_preference(/datum/preference/numeric/volume/sound_menu_music_volume), 0, 100)
+	client << output(menu_music_enabled, "nova_title_browser:set_menu_music_enabled")
+	client << output(menu_music_volume, "nova_title_browser:set_menu_music_volume")
 
 /datum/asset/simple/lobby
 	assets = list(
 		"FixedsysExcelsior3.01Regular.ttf" = 'html/browser/FixedsysExcelsior3.01Regular.ttf',
 	)
 
+// Howling Void Edit start
+/datum/asset/simple/lobby_howling_menu
+	assets = list(
+		"menuChapters.js" = 'modularhowling_void/code/html_menu/menuChapters.js',
+		"ironHeart.js" = 'modularhowling_void/code/html_menu/ironHeart.js',
+		"jesusWept.js" = 'modularhowling_void/code/html_menu/jesusWept.js',
+		"ironHeart.css" = 'modularhowling_void/code/html_menu/ironHeart.css',
+		"jesusWept.css" = 'modularhowling_void/code/html_menu/jesusWept.css',
+		"buttonclickrelease.ogg" = 'modularhowling_void/code/html_menu/buttonclickrelease.ogg',
+		"iron_heart.ogg" = 'modularhowling_void/code/html_menu/iron_heart.ogg',
+		"jesus_wept.ogg" = 'modularhowling_void/code/html_menu/jesus_wept.ogg',
+	)
+// Howling Void Edit end
+
 /**
  * Removes the titlescreen entirely from a mob.
  */
 /mob/dead/new_player/proc/hide_title_screen()
 	if(client?.mob)
+		// Howling Void Edit start
+		client << output(null, "nova_title_browser:stop_menu_audio")
+		// Howling Void Edit end
 		winset(client, "nova_title_browser", "is-disabled=true;is-visible=false")
 		winset(client, "status_bar", "is-visible=true")
 

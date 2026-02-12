@@ -176,8 +176,10 @@ SUBSYSTEM_DEF(title)
  * * name - the real name of the current slot.
  */
 /datum/controller/subsystem/title/proc/update_character_name(mob/dead/new_player/user, name)
-	if(!(istype(user) && user.title_screen_is_ready))
+	// Howling Void Edit start
+	if(!istype(user) || !user.client)
 		return
+	// Howling Void Edit end
 
 	user.client << output(name, "nova_title_browser:update_current_character")
 

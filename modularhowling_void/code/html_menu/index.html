@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HOWLING VOID — Main Menu</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- =========================================
+         DARK FILTERS
+    ========================================= -->
+    <div class="vignette"></div>
+    <div class="noise-overlay"></div>
+
+    <!-- Красный движущийся туман -->
+    <div class="background-layer bg-layer-1"></div>
+    <div class="background-layer bg-layer-2"></div>
+
+    <!-- =========================================
+         INVERTED CROSS
+    ========================================= -->
+    <div class="inverted-cross-overlay">
+      <div class="cross-fog"></div>
+
+      <div class="inverted-cross">
+        <div class="cross-shape"></div>
+        <div class="cross-noise"></div>
+      </div>
+    </div>
+    <div class="whisper-layer"></div>
+
+    <!-- =========================================
+         START OVERLAY (согласие)
+    ========================================= -->
+    <div class="start-overlay">
+      <div class="start-center">
+        <div class="start-title">ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ</div>
+
+        <div class="start-text">
+          Прежде чем продолжить, вы должны осознанно принять условия этого
+          перехода.<br /><br />
+
+          ✦ Вы подтверждаете что вам <span class="accent">+18 лет</span>.<br />
+
+          ✦ Вы входите в пространство, содержащее сцены насилия, резкие световые
+          вспышки, искажённые образы, символику и темы, способные вызвать
+          эмоциональный или физический дискомфорт.<br />
+
+          ✦ Вы подтверждаете, что
+          <span class="accent">не страдаете эпилепсией</span>, не реагируете
+          болезненно на мерцание света, глитчи и агрессивные визуальные
+          эффекты.<br />
+
+          ✦ Вы понимаете, что любая встреченная здесь символика, религиозные
+          мотивы, оккультные элементы и образы —
+          <span class="accent"
+            >используются исключительно в художественных и атмосферных
+            целях</span
+          >, и не предназначены для пропаганды или утверждения какого-либо
+          мировоззрения.<br />
+
+          ✦ Вы соглашаетесь войти, осознавая, что увиденное — это
+          <span class="accent">выдуманный художественный мир</span>, и
+          принимаете все визуальные и эмоциональные последствия его
+          атмосферы.<br /><br />
+
+          Если вы не готовы — запечатайте этот проход.<br />
+          Если готовы — подтвердите своё намерение.
+        </div>
+
+        <label class="start-skip">
+          <input type="checkbox" id="skip-intro" />
+          <span>Пропустить вступление</span>
+        </label>
+
+        <button class="start-button">Я СОГЛАШАЮСЬ</button>
+      </div>
+    </div>
+
+    <!-- =========================================
+         INTRO OVERLAY
+    ========================================= -->
+    <div class="fisheye-lens"></div>
+    <div class="intro-overlay intro-overlay--hidden">
+      <div class="intro-center">
+        <div class="intro-line-small">A build by</div>
+        <div class="intro-line-main">Syndicate: Code Red</div>
+        <div class="intro-line-sub">Space Station 13</div>
+      </div>
+    </div>
+
+    <!-- =========================================
+         BLOOD / WHITE FLASH
+    ========================================= -->
+    <div class="blood-flash"></div>
+    <div class="white-flash"></div>
+
+    <!-- =========================================
+         MENU
+    ========================================= -->
+    <div class="menu-wrapper">
+      <!-- Главный заголовок -->
+      <div class="menu-title">
+        <div class="menu-title-small-wrap">
+          <span class="menu-title-small">SYNDICATE: CODE RED</span>
+          <span class="menu-title-small-ghost">SYNDICATE: CODE RED</span>
+        </div>
+        <span class="menu-title-main-wrap">
+          <span class="menu-title-main" data-text="HOWLING VOID"
+            >HOWLING VOID</span
+          >
+          <span class="menu-title-main-ghost">HOWLING VOID</span>
+        </span>
+
+        <div class="menu-title-sub-wrap">
+          <span class="menu-title-sub">JESUS WEPT</span>
+          <span class="menu-title-sub-ghost">JESUS WEPT</span>
+        </div>
+      </div>
+
+      <div class="menu-divider"></div>
+
+      <!-- Пункты меню -->
+      <ul class="menu-list">
+        <li class="menu-item" data-action="join-game">
+          <span class="menu-label" data-label="ЗАЙТИ В ИГРУ">ЗАЙТИ В ИГРУ</span>
+        </li>
+
+        <li class="menu-item" data-action="character-setup">
+          <span class="menu-label" data-label="ВЫБРАТЬ ПЕРСОНАЖА"
+            >ВЫБРАТЬ ПЕРСОНАЖА</span
+          >
+        </li>
+
+        <li class="menu-item" data-action="ghost">
+          <span class="menu-label" data-label="ВЫБРАТЬ ДУШУ">ВЫБРАТЬ ДУШУ</span>
+        </li>
+
+        <li class="menu-item" data-action="options">
+          <span class="menu-label" data-label="ЭКИПАЖ">ЭКИПАЖ</span>
+        </li>
+
+        <li class="menu-item" data-action="character-directory">
+          <span class="menu-label" data-label="КАТАЛОГ ПЕРСОНАЖЕЙ"
+            >КАТАЛОГ ПЕРСОНАЖЕЙ</span
+          >
+        </li>
+
+        <li class="menu-item" data-action="be-antagonist">
+          <span class="menu-label" data-label="БЫТЬ АНТАГОНИСТОМ"
+            >БЫТЬ АНТАГОНИСТОМ</span
+          >
+        </li>
+
+        <li class="menu-item" data-action="game-settigs">
+          <span class="menu-label" data-label="НАСТРОЙКИ ИГРЫ"
+            >НАСТРОЙКИ ИГРЫ</span
+          >
+        </li>
+      </ul>
+    </div>
+
+    <!-- =========================================
+         AUDIO
+
+    <audio id="hover-sound" src="buttonclick.ogg" preload="auto"></audio>     ========================================= -->
+    <audio
+      id="select-sound"
+      src="buttonclickrelease.ogg"
+      preload="auto"
+    ></audio>
+    <audio id="bgm" src="" preload="auto"></audio>
+    <script src="menuChapters.js"></script>
+  </body>
+</html>

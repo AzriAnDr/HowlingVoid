@@ -9541,4 +9541,5 @@
 #include "modularhowling_void\modules\ported_content\fluffy_frontier\posters\official.dm"
 #include "modularhowling_void\modules\posters\code.dm"
 #include "modularhowling_void\modules\snouts\snouts.dm"
+#include "modularhowling_void\modules\title_screen\code\menu_music_verb.dm"
 // END_INCLUDE
