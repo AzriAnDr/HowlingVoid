@@ -1,11 +1,14 @@
 /datum/quirk/prosopagnosia
-	name = "Prosopagnosia(Просопагнозия)"
-	desc = "У вас есть расстройство, из-за которого вы не можете распознавать лица других людей. Вы можете распознавать людей по их именам, голосам и другим характеристикам, но лица кажутся вам размытыми и незнакомыми."
+	name = "Prosopagnosia"
+	desc = "You have a mental disorder that prevents you from being able to recognize faces at all."
 	icon = FA_ICON_USER_SECRET
 	value = -4
-	medical_record_text = "Пациент страдает от прозопагнозии, что затрудняет распознавание лиц. Рекомендуется использование альтернативных методов идентификации, таких как именные теги или голосовые сигналы."
+	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
+	medical_symptom_text = "Unable to recognize familiar faces, often relying on alternative cues such as \
+		voice, clothing, identification, or context to identify individuals."
 	hardcore_value = 5
 	mail_goodies = list(/obj/item/skillchip/appraiser) // bad at recognizing faces but good at recognizing IDs
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_TRAUMALIKE
 
 /datum/quirk/prosopagnosia/add(client/client_source)
 	RegisterSignal(quirk_holder, COMSIG_MOB_REQUESTING_SCREENTIP_NAME_FROM_USER, PROC_REF(screentip_name_override))

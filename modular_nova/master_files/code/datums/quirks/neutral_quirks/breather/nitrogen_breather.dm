@@ -11,7 +11,7 @@
 
 
 /datum/quirk/item_quirk/breather/nitrogen_breather/is_species_appropriate(datum/species/mob_species)
-	if(istype(mob_species, /datum/species/vox))
+	if(ispath(mob_species, /datum/species/vox))
 		return FALSE
 	else
 		return ..()

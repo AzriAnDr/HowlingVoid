@@ -1,14 +1,17 @@
 /datum/quirk/social_anxiety
-	name = "Social Anxiety(Социальная тревожность)"
-	desc = "Тебе очень трудно общаться с людьми, и вы часто замыкаешься в себе, особенно если получаешь воздушные поцелуи или встречаетесь взглядом." //NOVA EDIT - CHANGE- ORIGINAL: desc = "Talking to people is very difficult for you, and you often stutter or even lock up."
+	name = "Social Anxiety"
+	desc = "Talking to people is very difficult for you, and you often lock up, especially if blown kisses or if you happen upon eye contact." //NOVA EDIT - CHANGE- ORIGINAL: desc = "Talking to people is very difficult for you, and you often stutter or even lock up."
 	icon = FA_ICON_COMMENT_SLASH
 	value = -3
-	gain_text = span_danger("Вы начинаете беспокоиться о том, что говорите...")
-	lose_text = span_notice("Вам снова становится легче разговаривать.") //if only it were that easy!
-	medical_record_text = "Пациент обычно испытывает тревогу при социальных контактах и ​​предпочитает их избегать."
+	gain_text = span_danger("You start worrying about what you're saying.")
+	lose_text = span_notice("You feel easier about talking again.") //if only it were that easy!
+	medical_record_text = "Patient is usually anxious in social encounters and prefers to avoid them."
+	medical_symptom_text = "Experiences intense anxiety and discomfort in social situations, \
+		leading to avoidance of social interactions and difficulty in communication."
 	hardcore_value = 4
 	mob_trait = TRAIT_ANXIOUS
 	mail_goodies = list(/obj/item/storage/pill_bottle/psicodine)
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_TRAUMALIKE
 	var/dumb_thing = TRUE
 
 /datum/quirk/social_anxiety/add(client/client_source)
@@ -51,27 +54,27 @@
 		var/list/new_message = list()
 		for(var/word in message_split)
 			if(prob(max(5, moodmod)) && word != message_split[1]) //Minimum 1/20 chance of filler
-				new_message += pick("э-э,","ум-м-м,","эм,")
+				new_message += pick("uh,","erm,","um,")
 				if(prob(min(5, moodmod))) //Max 1 in 20 chance of cutoff after a successful filler roll, for 50% odds in a 15 word sentence
 					quirk_holder.set_silence_if_lower(6 SECONDS)
-					to_chat(quirk_holder, span_danger("Вы чувствуете себя неловко и замолкаете. Вам нужно время, чтобы прийти в себя!"))
+					to_chat(quirk_holder, span_danger("You feel self-conscious and stop talking. You need a moment to recover!"))
 					break
 			new_message += word
 		message = jointext(new_message, " ")
 
 	if(prob(min(50, (0.50 * moodmod)))) //Max 50% chance of not talking
 		if(dumb_thing)
-			to_chat(quirk_holder, span_userdanger("Вы вспоминаете глупость, сказанную вами давным-давно, и кричите про себя."))
+			to_chat(quirk_holder, span_userdanger("You think of a dumb thing you said a long time ago and scream internally."))
 			dumb_thing = FALSE //only once per life
 			if(prob(1))
 				new/obj/item/food/spaghetti/pastatomato(get_turf(quirk_holder)) //now that's what I call spaghetti code
 		else
-			to_chat(quirk_holder, span_warning("Вы думаете, что это не принесет особой пользы разговору, и решаете этого не говорить."))
+			to_chat(quirk_holder, span_warning("You think that wouldn't add much to the conversation and decide not to say it."))
 			if(prob(min(25, (0.25 * moodmod)))) //Max 25% chance of silence stacks after successful not talking roll
-				to_chat(quirk_holder, span_danger("Ты замыкаешься в себе. Тебе <i>действительно</i> не до разговоров."))
+				to_chat(quirk_holder, span_danger("You retreat into yourself. You <i>really</i> don't feel up to talking."))
 				quirk_holder.set_silence_if_lower(10 SECONDS)
 
-		speech_args[SPEECH_MESSAGE] = pick("э-э.","ум-мм.","эм.")
+		speech_args[SPEECH_MESSAGE] = pick("Uh.","Erm.","Um.")
 	else
 		speech_args[SPEECH_MESSAGE] = message
 
@@ -83,7 +86,7 @@
 	if(prob(85) || (istype(mind_check) && mind_check.mind))
 		return
 
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), quirk_holder, span_smallnotice("Вы устанавливаете зрительный контакт с [A].")), 0.3 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), quirk_holder, span_smallnotice("You make eye contact with [A].")), 0.3 SECONDS)
 
 /datum/quirk/social_anxiety/proc/eye_contact(datum/source, mob/living/other_mob, triggering_examiner)
 	SIGNAL_HANDLER
@@ -92,26 +95,26 @@
 		return
 	var/msg
 	if(triggering_examiner)
-		msg = "Вы устанавливаете зрительный контакт с [other_mob], "
+		msg = "You make eye contact with [other_mob], "
 	else
-		msg = "[other_mob] смотрит вам в глаза, "
+		msg = "[other_mob] makes eye contact with you, "
 
 	switch(rand(1,3))
 		if(1)
 			quirk_holder.set_jitter_if_lower(20 SECONDS)
-			msg += "заставляя вас начать ёрзать!"
+			msg += "causing you to start fidgeting!"
 		if(2)
 			quirk_holder.set_confusion(2 SECONDS) // NOVA EDIT CHANGE - ORIGINAL: quirk_holder.set_stutter_if_lower(6 SECONDS)
-			msg += "заставляя вас спотыкаться о собственные ноги!" // NOVA EDIT CHANGE - ORIGINAL: msg += "causing you to start stuttering!"
+			msg += "causing you to trip over your own feet!" // NOVA EDIT CHANGE - ORIGINAL: msg += "causing you to start stuttering!"
 		if(3)
 			quirk_holder.Stun(2 SECONDS)
-			msg += "заставляя вас замереть!"
+			msg += "causing you to freeze up!"
 
 	quirk_holder.add_mood_event("anxiety_eyecontact", /datum/mood_event/anxiety_eyecontact)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), quirk_holder, span_userdanger("[msg]")), 3) // so the examine signal has time to fire and this will print after
 	return COMSIG_BLOCK_EYECONTACT
 
 /datum/mood_event/anxiety_eyecontact
-	description = "Иногда зрительный контакт заставляет меня так нервничать..."
+	description = "Sometimes eye contact makes me so nervous..."
 	mood_change = -5
 	timeout = 3 MINUTES

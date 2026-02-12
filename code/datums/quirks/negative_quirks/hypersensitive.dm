@@ -1,13 +1,16 @@
 /datum/quirk/hypersensitive
-	name = "Hypersensitive(Гиперчувствительный)"
-	desc = "Хорошо это или плохо, но, похоже, все вокруг влияет на настроение больше, чем следовало бы."
+	name = "Hypersensitive"
+	desc = "For better or worse, everything seems to affect your mood more than it should."
 	icon = FA_ICON_FLUSHED
 	value = -2
-	gain_text = span_danger("Кажется что ты всё делаешь из мухи слона...")
-	lose_text = span_notice("Ты снова чувствуешь себя нормально.")
-	medical_record_text = "У пациента наблюдается высокая степень эмоциональной неустойчивости."
+	gain_text = span_danger("You seem to make a big deal out of everything.")
+	lose_text = span_notice("You don't seem to make a big deal out of everything anymore.")
+	medical_record_text = "Patient demonstrates a high level of emotional volatility."
+	medical_symptom_text = "Exhibits heightened emotional responses to stimuli, \
+		leading to greatly increased sensitivity and reactivity in social situations."
 	hardcore_value = 3
 	mail_goodies = list(/obj/effect/spawner/random/entertainment/plushie_delux)
+	quirk_flags = QUIRK_TRAUMALIKE
 
 /datum/quirk/hypersensitive/add(client/client_source)
 	if (quirk_holder.mob_mood)

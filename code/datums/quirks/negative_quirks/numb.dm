@@ -1,12 +1,14 @@
 /datum/quirk/numb
-	name = "Numb(Онемение)"
-	desc = "Боли вы вообще не почувствуете."
+	name = "Numb"
+	desc = "You can't feel pain at all."
 	icon = FA_ICON_STAR_OF_LIFE
 	value = -4
-	gain_text = "Вы чувствуете, как ваше тело немеет."
-	lose_text = "Онемение отступает."
-	medical_record_text = "У пациента наблюдается врожденная гипестезия, делающая его нечувствительным к болевым раздражителям."
+	gain_text = "You feel your body becoming numb."
+	lose_text = "The numbness subsides."
+	medical_record_text = "The patient exhibits congenital hypoesthesia, making them insensitive to pain stimuli."
+	medical_symptom_text = "Exhibits an inability to perceive pain, which may lead to unintentional self-injury and delayed response to harmful stimuli."
 	hardcore_value = 4
+	quirk_flags = QUIRK_TRAUMALIKE
 
 /datum/quirk/numb/add(client/client_source)
 	quirk_holder.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)
