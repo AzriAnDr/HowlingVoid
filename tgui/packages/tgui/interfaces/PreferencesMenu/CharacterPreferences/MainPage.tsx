@@ -7,6 +7,7 @@ import {
   Button,
   Dropdown, // NOVA EDIT ADDITION
   Floating,
+  Icon,
   Input,
   LabeledList,
   Section,
@@ -625,26 +626,36 @@ export function MainPage(props: MainPageProps) {
             {/* HOWLING VOID - CHARACTER IMPORT/EXPORT*/}
             <Stack.Item>
               <Button
-                icon="file-import"
                 fluid
                 fontSize="1.1rem"
                 height="2.2rem"
                 mb={0.5}
+                textAlign="center"
                 onClick={() => act('import_preferences')}
               >
-                IMPORT PREFERENCES
+                <Box position="relative" width="100%">
+                  <Box position="absolute" left="0.25rem">
+                    <Icon name="file-import" />
+                  </Box>
+                  IMPORT PREFERENCES
+                </Box>
               </Button>
             </Stack.Item>
 
             <Stack.Item>
               <Button
-                icon="file-export"
                 fluid
                 fontSize="1.1rem"
                 height="2.2rem"
+                textAlign="center"
                 onClick={() => act('export_preferences')}
               >
-                EXPORT PREFERENCES
+                <Box position="relative" width="100%">
+                  <Box position="absolute" left="0.25rem">
+                    <Icon name="file-export" />
+                  </Box>
+                  EXPORT PREFERENCES
+                </Box>
               </Button>
             </Stack.Item>
             {/* HOWLING VOID - CHARACTER IMPORT/EXPORT END*/}

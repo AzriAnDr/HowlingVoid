@@ -697,6 +697,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(!F)
 		return FALSE
 
+	var/file_size = length(F)
+	var/max_file_size = 5 * 1024 * 1024
+	if(!isnum(file_size) || file_size <= 0 || file_size > max_file_size)
+		to_chat(user, span_warning("Размер файла должен быть больше 0 и не превышать 5 МБ. Название должно быть preferences.json! Просто переименуй его, если название отличается!"))
+		return FALSE
+
 	var/json_text = file2text(F)
 	if(!json_text)
 		to_chat(user, span_warning("Не удалось прочитать файл. Название должно быть preferences.json! Просто переименуй его, если название отличается!"))
@@ -750,6 +756,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	to_chat(user, span_notice("Преференсы успешно импортированы."))
 	return TRUE
+
+
 
 
 
