@@ -898,8 +898,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		to_chat(user, span_warning("Your [atk_verb] misses [target]!"))
 		log_combat(user, target, "attempted to punch")
 		return FALSE
-	// Специальный сигнал для акул. Минус настроение и стамина
-	if(hit_zone == BODY_ZONE_PRECISE_MOUTH && get_location_accessible(target, BODY_ZONE_PRECISE_MOUTH))
+	//HOWLING VOID. SHARKS DEBUFF. Специальный сигнал для акул. Минус настроение и стамина
+	if(hit_zone == BODY_ZONE_PRECISE_MOUTH && target?.is_location_accessible(BODY_ZONE_PRECISE_MOUTH))
 		SEND_SIGNAL(target, COMSIG_CARBON_NOSE_STRUCK, user, affecting)
 
 	var/armor_block = target.run_armor_check(affecting, MELEE)

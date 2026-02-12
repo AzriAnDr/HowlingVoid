@@ -1,24 +1,17 @@
 /datum/quirk/item_quirk/breather/water_breather
-	name = "Water Breather(Дышащий под водой)"
-	desc = "У вас есть жабры, и вы можете получать кислород только из воды. Оставайтесь влажным, чтобы дышать!"
-	alert_text = "Не забудьте надеть ваш испаритель — иначе можете попросту задохнуться!"
+	name = "Water Breather"
+	desc = "You have a pair of gills and are only capable of breathing oxygen through water, stay wet to breathe!"
+	alert_text = "Be sure to equip your vaporizer, or you may end up choking to death!"
 	icon = FA_ICON_FISH
-	medical_record_text = "У пациента обнаружены жабры."
-	gain_text = span_notice("Внезапно вы с трудом можете дышать обычным воздухом.")
-	lose_text = span_danger("Вы чувствуете, что больше не зависите от дыхания через жидкость.")
+	medical_record_text = "Patient has a pair of gills on their body."
+	gain_text = span_notice("You suddenly have a hard time breathing through thin air.")
+	lose_text = span_danger("You suddenly feel like you aren't bound to breathing through liquid anymore.")
 	value = 0
 	breathing_mask = NONE
 	breathing_tank = /obj/item/clothing/accessory/vaporizer
 	breath_type = "water"
 	// bonus trait
 	mob_trait = TRAIT_WATER_BREATHING
-
-
-/datum/quirk/item_quirk/breather/water_breather/is_species_appropriate(datum/species/mob_species)
-	if(istype(mob_species, /datum/species/akula))
-		return FALSE
-	else
-		return ..()
 
 /datum/quirk/item_quirk/breather/water_breather/add_adaptation()
 	// this proc is guaranteed to be called multiple times

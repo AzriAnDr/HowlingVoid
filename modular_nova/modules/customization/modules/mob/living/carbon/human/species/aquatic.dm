@@ -13,12 +13,6 @@
 	/// Храним исходные значения метаболизма для персонажей, чтобы корректно восстанавливать их при смене вида.
 	var/list/original_metabolism_efficiency = list()
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	mutant_bodyparts = list()
-	mutantbrain = /obj/item/organ/brain/aquatic
-	mutantheart = /obj/item/organ/heart/aquatic
-	mutantlungs = /obj/item/organ/lungs/aquatic
-	mutantliver = /obj/item/organ/liver/aquatic
-	mutantstomach = /obj/item/organ/stomach/aquatic
 	mutanttongue = /obj/item/organ/tongue/aquatic
 	payday_modifier = 1.0
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
@@ -34,12 +28,12 @@
 
 /datum/species/aquatic/get_default_mutant_bodyparts()
 	return list(
-		FEATURE_TAIL = list("Shark", TRUE),
-		FEATURE_SNOUT = list("Shark", TRUE),
-		FEATURE_HORNS = list("None", FALSE),
-		FEATURE_EARS = list("Hammerhead", TRUE),
-		FEATURE_LEGS = list("Normal Legs", FALSE),
-		FEATURE_WINGS = list("None", FALSE),
+		FEATURE_TAIL = MUTPART_BLUEPRINT("Shark", is_randomizable = TRUE),
+		FEATURE_SNOUT = MUTPART_BLUEPRINT("Shark", is_randomizable = TRUE),
+		FEATURE_HORNS = MUTPART_BLUEPRINT(SPRITE_ACCESSORY_NONE, is_randomizable = FALSE),
+		FEATURE_EARS = MUTPART_BLUEPRINT("Hammerhead", is_randomizable = TRUE),
+		FEATURE_LEGS = MUTPART_BLUEPRINT(NORMAL_LEGS, is_randomizable = FALSE, is_feature = TRUE),
+		FEATURE_WINGS = MUTPART_BLUEPRINT(SPRITE_ACCESSORY_NONE, is_randomizable = FALSE),
 	)
 
 /obj/item/organ/tongue/aquatic
@@ -155,7 +149,7 @@
 	UnregisterSignal(H, list(COMSIG_CARBON_NOSE_BOOPED, COMSIG_CARBON_NOSE_STRUCK, COMSIG_MOB_MOVESPEED_UPDATED))
 
 /datum/species/aquatic/proc/on_nose_boop(mob/living/carbon/human/source, mob/living/carbon/helper)
-	if(!get_location_accessible(source, BODY_ZONE_PRECISE_MOUTH))
+	if(!source?.is_location_accessible(BODY_ZONE_PRECISE_MOUTH))
 		return
 
 	source.add_mood_event("aquatic_snout_boop", /datum/mood_event/aquatic_snout_boop)
