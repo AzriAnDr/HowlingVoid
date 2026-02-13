@@ -1,9 +1,9 @@
 /datum/quirk/system_shock
-	name = "System Shock(Системный сбой)"
-	desc = "У вас с электричеством нестабильные отношения. Одна искра может принудительно перезагрузить ваши системы. Примечание: эта особенность работает только на синтах."
-	gain_text = span_danger("Вам нервно рядом с розетками.")
-	lose_text = span_notice("Вам нет дела до розеток.")
-	medical_record_text = "Процессоры пациента необычно неизолированы."
+	name = "System Shock"
+	desc = "You and electricity have a volatile relationship. One spark's liable to forcefully reboot your systems. Note: This quirk only works on synths."
+	gain_text = span_danger("You start feeling nervous around plug sockets.")
+	lose_text = span_notice("You feel normal about sparks.")
+	medical_record_text = "Patient's processors are unusually uninsulated."
 	value = -8
 	mob_trait = TRAIT_SYSTEM_SHOCK
 	icon = FA_ICON_PLUG_CIRCLE_XMARK
@@ -33,8 +33,8 @@
 /datum/quirk/system_shock/proc/do_system_shock()
 	var/knockout_length = rand(8 SECONDS, 10 SECONDS)
 	quirk_holder.set_static_vision(knockout_length)
-	quirk_holder.balloon_alert(quirk_holder, "перекалибровка систем...")
-	to_chat(quirk_holder, span_danger("НЕСТАБИЛЬНОСТЬ ЭНЕРГЕТИКИ: ПЕРЕКАЛИБРОВКА СИСТЕМЫ."))
+	quirk_holder.balloon_alert(quirk_holder, "system rebooting")
+	to_chat(quirk_holder, span_danger("POWER INSTABILITY: SYSTEM RECALIBRATING."))
 	addtimer(CALLBACK(src, PROC_REF(knock_out), knockout_length - 0.4 SECONDS), 2 SECONDS)
 	//The intent with the 0.4 seconds is so that the visual static effect lasts longer than the actual knockout/sleeping effect.
 	COOLDOWN_START(src, system_shock_cooldown, knockout_length + 5 SECONDS)
