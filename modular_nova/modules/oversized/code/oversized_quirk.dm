@@ -4,15 +4,14 @@
 // Before making any changes to oversized, please see the module's readme.md file
 
 /datum/quirk/oversized
-	name = "Oversized(Гигантский)"
-	desc = "По какой-то причине вы гораздо выше нормы, и из-за этого будете сталкиваться с рядом неудобств."
-	gain_text = span_notice("Этот шлюз выглядит подозрительно маленьким…")
-	lose_text = span_notice("Он всё ещё такого же размера…?") // Лол
-	medical_record_text = "Пациент аномально высокого роста."
+	name = "Oversized"
+	desc = "You, for whatever reason, are FAR too tall, and will encounter some rough situations because of it."
+	gain_text = span_notice("That airlock looks small...")
+	lose_text = span_notice("Is it still the same size...?") //Lol
+	medical_record_text = "Patient is abnormally tall."
 	value = 0
 	mob_trait = TRAIT_OVERSIZED
 	icon = FA_ICON_EXPAND_ARROWS_ALT
-
 
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
 	/// Saves refs to the original (normal size) organs, which are on ice in nullspace in case this quirk gets removed somehow.

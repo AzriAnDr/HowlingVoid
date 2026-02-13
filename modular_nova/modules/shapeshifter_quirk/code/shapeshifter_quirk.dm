@@ -1,13 +1,12 @@
 /datum/quirk/shapeshifter
-	name = "Shapeshifter(Оборотень)"
-	desc = "Вы способны произвольно изменять форму своего тела."
+	name = "Shapeshifter"
+	desc = "You are able to shapeshift your body at-will."
 	icon = FA_ICON_SHAPES
-	gain_text = span_purple("Ваше тело кажется изменяемым, податливым.")
-	lose_text = span_notice("Ваше тело теряет ощущение податливости.")
-	medical_record_text = "У пациента необычная физиология, позволяющая физически преобразовывать своё тело."
+	gain_text = span_purple("Your body feels alterable, malleable.")
+	lose_text = span_notice("Your body loses its alterable feeling.")
+	medical_record_text = "Patient has an unusual physiology that allows them to physically transform their body."
 	value = 8
 	quirk_flags = QUIRK_HUMAN_ONLY
-
 
 /datum/quirk/shapeshifter/is_species_appropriate(datum/species/mob_species)
 	if(ispath(mob_species, /datum/species/dullahan))

@@ -68,44 +68,44 @@
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_TOOTH,
-		SPECIES_PERK_NAME = "Челюсти",
-		SPECIES_PERK_DESC = "Вместо того, чтобы просто бить своих врагов, вы используете свои мощные челюсти.",
+		SPECIES_PERK_NAME = "Big Bites",
+		SPECIES_PERK_DESC = "Instead of throwing punches, you use your sharp teeth to bite for more damage."
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_PERSON_WALKING,
-		SPECIES_PERK_NAME = "Как рыба в воде",
-		SPECIES_PERK_DESC = "Ты двигаться в нулевой гравитации так же легко, как и в воде.",
+		SPECIES_PERK_NAME = "Space Walking",
+		SPECIES_PERK_DESC = "You can move around in zero-gravity environments, just like your ancestors."
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_HAND,
-		SPECIES_PERK_NAME = "Скользкая кожа",
-		SPECIES_PERK_DESC = "Если вы достаточно мокрые, у вас есть дополнительный шанс вырваться из захвата."
+		SPECIES_PERK_NAME = "Slippery Skin",
+		SPECIES_PERK_DESC = "When sufficiently wet, you have a bonus chance to escape from grabs."
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = FA_ICON_SHIRT,
-		SPECIES_PERK_NAME = "Гидрокостюмы",
-		SPECIES_PERK_DESC = "Вы появляетесь в одежде, которая будет держать вас постоянно мокрой, если ее не снять."
+		SPECIES_PERK_NAME = "Wetsuits",
+		SPECIES_PERK_DESC = "You spawn with clothing that will keep you perpetually wet if not removed."
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_LUNGS,
-		SPECIES_PERK_NAME = "Жабры",
-		SPECIES_PERK_DESC = "Если вы не мокрые, вы не сможете дышать кислородом!",
+		SPECIES_PERK_NAME = "Gills",
+		SPECIES_PERK_DESC = "If you are not wet, you will not be able to breathe oxygen!",
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_ARROW_DOWN,
-		SPECIES_PERK_NAME = "ДНК кочевников",
-		SPECIES_PERK_DESC = "Никогда не хочется оставаться на одном месте."
+		SPECIES_PERK_NAME = "Nomadic DNA",
+		SPECIES_PERK_DESC = "You never want to stay in one place."
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = FA_ICON_PERSON_FALLING,
-		SPECIES_PERK_NAME = "Скользкие ступни",
-		SPECIES_PERK_DESC = "Когда вы достаточно мокрые, все скольжения отправят вас в полет, даже просто мокрый пол.",
+		SPECIES_PERK_NAME = "Slippery Soles",
+		SPECIES_PERK_DESC = "When sufficiently wet, all slips will send you flying, even just a wet floor.",
 	))
 	return perks
 

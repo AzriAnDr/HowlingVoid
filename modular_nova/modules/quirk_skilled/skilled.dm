@@ -14,13 +14,13 @@ GLOBAL_LIST_INIT(skill_choices, init_skill_choices())
 		.[initial(skill.name)] = skill
 
 /datum/quirk/skilled
-	name = "Skilled(Квалифицированный)"
-	desc = "Прежде чем работать на этой станции, вы отточили свои навыки до уровня, значительно превосходящего уровень обычного космонавта. Теперь вы можете использовать свои знания на благо общества. Или просто похвастаться ими."
-	medical_record_text = "Пациент продолжает утверждать, что он — высококлассный специалист, даже если это не связано с осмотром.."
+	name = "Skilled"
+	desc = "Before working on this station you honed your skill to a level far above that of an average spaceman. Now you can use your knowledge for the greater good. Or just boast about it."
+	medical_record_text = "Patient keeps stating the fact they are a top professional even if it is not related to a checkup."
 	icon = FA_ICON_USER_PLUS
 	value = 4
-	gain_text = span_notice("Вы чувствуете себя профессионалом.")
-	lose_text = span_notice("Вы больше не чувствуете себя профессионалом.")
+	gain_text = span_notice("You feel professional.")
+	lose_text = span_notice("You no longer feel professional.")
 	quirk_flags = QUIRK_HIDE_FROM_SCAN
 
 /datum/quirk_constant_data/skilled
@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(skill_choices, init_skill_choices())
 	if (!..())
 		return FALSE
 
-	return "Skilled(Квалифицированный)" in preferences.all_quirks
+	return "Skilled" in preferences.all_quirks
 
 /datum/preference/choiced/skilled/apply_to_human(mob/living/carbon/human/target, value)
 	return

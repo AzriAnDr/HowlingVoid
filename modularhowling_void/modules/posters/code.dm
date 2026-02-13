@@ -1,27 +1,27 @@
-/*
+﻿/*
 *
 *			CONTRABAND
 *
 */
 
 /obj/structure/sign/poster/contraband/vulpes
-	name = "Вульпочки"
-	desc = "Похоже на рекламу фильма про вулканинов."
+	name = "Vulpies"
+	desc = "Looks like an ad for a movie about vulpkanins."
 	icon_state = "poster_vulp1"
 	icon = 'modularhowling_void/modules/posters/poster.dmi'
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes, 32)
 
 /obj/structure/sign/poster/contraband/vulpes/vulp2
-	name = "Вульпочки и пиво!"
-	desc = "На этом плакате написано: «Лиськи, сиськи и пиво!». Вероятно, это новая рекламная компания Space Beer."
+	name = "Vulpies and Beer!"
+	desc = "This poster says: 'Foxes, boobs and beer!'. Probably a new Space Beer campaign."
 	icon_state = "poster_vulp2"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp2, 32)
 
 /obj/structure/sign/poster/contraband/vulpes/vulp3
-	name = "Вульпочка-медсестричка"
-	desc = "Белая вулканинка на фоне зеленого креста, один из межпланетных символов здоровья и помощи."
+	name = "Nurse Vulp"
+	desc = "A white vulpkanin on the background of a green cross, one of the interplanetary symbols of health and aid."
 	icon_state = "poster_vulp3"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp3, 32)
@@ -35,43 +35,43 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp3, 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulp4, 32)
 */
 /obj/structure/sign/poster/contraband/vulpes/vulp5
-	name = "ВУЛЬПЕНТАЙД"
-	desc = "Бунтарский плакат, символизирующий солидарность вулканцев и помощников."
+	name = "VULPENTIDE"
+	desc = "A rebellious poster symbolizing solidarity between vulpkanins and assistants."
 	icon_state = "poster_vulp5"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp5, 32)
 
 /obj/structure/sign/poster/contraband/vulpes/vulp6
-	name = "Вульповский мануал по взлому"
-	desc = "На этом плакате изображена вульпа, взламывающая шлюз где-то в технических туннелях.."
+	name = "Vulp Hacking Manual"
+	desc = "This poster depicts a vulpkanin hacking an airlock somewhere in maintenance tunnels."
 	icon_state = "poster_vulp6"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp6, 32)
 
 /obj/structure/sign/poster/contraband/vulpes/vulp7
-	name = "Синди-вульпа"
-	desc = "Плакат, изображающий печально известный преступный конгломерат в виде обнажённого вулканина. На нём изображена эмблема Синдиката."
+	name = "Syndi-Vulp"
+	desc = "A poster depicting the infamous criminal conglomerate as a nude vulpkanin. It bears the Syndicate emblem."
 	icon_state = "poster_vulp7"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp7, 32)
 
 /obj/structure/sign/poster/contraband/vulpes/vulp8
-	name = "Нанотрейзеновская вульпа"
-	desc = "Плакат, изображающий знаменитую вульпу в форме известной мегакорпорации. На нём изображён логотип Нанотрейзен."
+	name = "Nanotrasen Vulp"
+	desc = "A poster depicting a famous vulpkanin in the uniform of a well-known megacorp. It bears the Nanotrasen logo."
 	icon_state = "poster_vulp8"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp8, 32)
 
 /obj/structure/sign/poster/contraband/vulpes/vulp9
-	name = "Чулочки"
-	desc = "Плакат, рекламирующий новую коллекцию нижнего белья Вульпийские секретики."
+	name = "Stockings"
+	desc = "A poster advertising Vulp's Secret new underwear collection."
 	icon_state = "stockings"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp9, 32)
 
 /obj/structure/sign/poster/contraband/vulpes/vulp10
-	name = "Лапки!"
-	desc = "На этом непристойном плакате изображена вулканка, ожидающего своего партнёра."
+	name = "Paws!"
+	desc = "This lewd poster depicts a vulpkanin waiting for their partner."
 	icon_state = "paws"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp10, 32)
@@ -85,7 +85,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp10/
 //INTEQ//
 /obj/structure/sign/poster/contraband/modular
 	name = "InteQ Recruitment"
-	desc = "Увидь Галактику! Заработай денег! Вступай сегодня!"
+	desc = "See the galaxy! Earn money! Enlist today!"
 	icon_state = "poster_inteq"
 	icon = 'modularhowling_void/modules/posters/poster.dmi'
 
@@ -93,21 +93,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/inteq,
 
 /obj/structure/sign/poster/contraband/modular/inteq_sign
 	name = "InteQ poster"
-	desc = "Частная Военная Компания, занимающаяся обороной частных предприятий и выполнением заказов. В данный момент они занимаются пиратством в области владений Nanotrasen..."
+	desc = "A private military company that protects private enterprises and fulfills contracts. At the moment they are engaged in piracy across Nanotrasen holdings..."
 	icon_state = "poster_inteq_baza"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/inteq_sign, 32)
 
 /obj/structure/sign/poster/contraband/modular/inteq_no_sex
 	name = "No SEX"
-	desc = "Хватит дрочить, вступай в ЧВК 'InteQ'!"
+	desc = "Stop jerking off, enlist in PMC 'InteQ'!"
 	icon_state = "poster_inteq_no_sex"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/inteq_no_sex, 32)
 
 /obj/structure/sign/poster/contraband/modular/inteq_vulp
 	name = "InteQ Recruitment"
-	desc = "Коричневый постер. На нём написано: 'Даже если ты дрочишь на вульп, вступай в ЧВК 'InteQ'. Сокрушим врагов вместе!'."
+	desc = "A brown poster. It says: 'Even if you jerk off to vulps, enlist in PMC 'InteQ'. We'll crush our enemies together!'."
 	icon_state = "poster_inteq_vulp"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/inteq_vulp, 32)
@@ -185,7 +185,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/erthel
 
 /obj/structure/sign/poster/contraband/modular/joy
 	name = "Happiness Pill"
-	desc = "Погрузись в мир счастья."
+	desc = "Dive into a world of happiness."
 	icon_state = "joy"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/joy, 32)
@@ -267,8 +267,8 @@ Original: https://github.com/Skyrat-SS13/Skyrat13
 License: GNU APGLv3
 */
 /obj/structure/sign/poster/contraband/nri
-	name = "Реклама военных пайков Содружества"
-	desc = "Этот плакат, предположительно, рекламирует военные пайки, производимые некоей частной компанией по госзаказу Коллегии обороны. Правая рука этого адмирала, похоже, и впрямь взволнована."
+	name = "Commonwealth military rations ad"
+	desc = "This poster appears to advertise military rations produced by a private company under Defense Collegium contract. The admiral's right hand does look genuinely excited."
 	icon = 'modularhowling_void/modules/posters/skyrat_posters.dmi'
 	icon_state = "nri_rations"
 
@@ -377,7 +377,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/modular/solgov, 
 
 /obj/structure/sign/poster/official/modular/solgov/terra
 	name = "Terra"
-	desc = "Terra, or Earth as it's called by inhabitants, the third planet in the Sol system. Home to the only life as humans knew it, until contact with the outside universe. This poster in particular is trying to attract tourists to Terra, listing attractions like the Grand Orrery and Neue Waldstätte."
+	desc = "Terra, or Earth as it's called by inhabitants, the third planet in the Sol system. Home to the only life as humans knew it, until contact with the outside universe. This poster in particular is trying to attract tourists to Terra, listing attractions like the Grand Orrery and Neue WaldstГ¤tte."
 	icon_state = "poster-solgov-terra"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/modular/solgov/terra, 32)

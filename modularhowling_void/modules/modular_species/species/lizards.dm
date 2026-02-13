@@ -1,10 +1,10 @@
-/datum/species/lizard
-	//10% к защите от урона
+﻿/datum/species/lizard
+	// 10% damage resistance
 	damage_modifier = 10
 	var/maxHealth_bonus = 10
 
 /datum/species/lizard/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons, replace_missing)
-	//Прибавка к макс хп
+	// Max HP bonus
 	human_who_gained_species.maxHealth += maxHealth_bonus
 	human_who_gained_species.health += maxHealth_bonus
 
@@ -16,7 +16,7 @@
 	var/datum/action/cooldown/regenerate_limbs/lizard/regeneration = new()
 	regeneration.Grant(human_who_gained_species)
 
-	//Удары когтями к обычному урону
+	// Claw strikes for unarmed attacks
 	var/obj/item/bodypart/arm/left/left_arm = human_who_gained_species.get_bodypart(BODY_ZONE_L_ARM)
 	if(left_arm)
 		left_arm.unarmed_attack_verbs = list("slash")
@@ -73,9 +73,9 @@
 	multiplicative_slowdown = -2
 
 
-//Ядовитый укус
+// Venomous bite
 /datum/action/cooldown/mob_cooldown/venomous_bite/lizard
-	name = "Ядовитый укус"
+	name = "Venomous Bite"
 	cooldown_time = 1.5 SECONDS
 	click_to_activate = TRUE
 
@@ -91,21 +91,21 @@
 	if (iscarbon(owner))
 		var/mob/living/carbon/carbon_holder = owner
 		if (carbon_holder.is_mouth_covered())
-			owner.balloon_alert(owner, "рот закрыт!")
+			owner.balloon_alert(owner, "mouth covered!")
 			return FALSE
 
 	var/mob/living/target = target_atom
 
 	if (!owner.Adjacent(target))
-		owner.balloon_alert(owner, "слишком далеко!")
+		owner.balloon_alert(owner, "too far away!")
 		return FALSE
 
 	if (target == owner)
-		owner.balloon_alert(owner, "нельзя укусить себя!")
+		owner.balloon_alert(owner, "you can't bite yourself!")
 		return FALSE
 
-	owner.visible_message(span_warning("[owner] кусает [target]!"), span_warning("Ты кусаешь [target]!"), ignored_mobs = target)
-	to_chat(target, span_userdanger("[owner] кусает тебя!"))
+	owner.visible_message(span_warning("[owner] bites [target]!"), span_warning("You bite [target]!"), ignored_mobs = target)
+	to_chat(target, span_userdanger("[owner] bites you!"))
 
 	StartCooldown()
 
@@ -125,9 +125,9 @@
 
 
 
-///Регенерация конечностей
+/// Limb regeneration
 /datum/action/cooldown/regenerate_limbs/lizard
-	name = "Отращивание конечностей"
+	name = "Regrow Limbs"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimeheal"
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
@@ -152,14 +152,14 @@
 	var/mob/living/carbon/human/H = owner
 	var/list/limbs_to_heal = H.get_missing_limbs() - BODY_ZONE_HEAD - BODY_ZONE_CHEST
 	if(!length(limbs_to_heal))
-		to_chat(H, span_notice("Тебе нечего отращивать."))
+		to_chat(H, span_notice("You have nothing to regrow."))
 		return
-	to_chat(H, span_notice("Ты фокусируешься на отращивании [length(limbs_to_heal) >= 2 ? "потерянных конечностей" : "потерянной конечности"]..."))
+	to_chat(H, span_notice("You focus on regrowing [length(limbs_to_heal) >= 2 ? "lost limbs" : "a lost limb"]..."))
 	if(do_after(H, 3 SECONDS, H))
 		if(H.nutrition >= limb_regeneration_cost * length(limbs_to_heal) + NUTRITION_LEVEL_HUNGRY)
 			H.regenerate_limbs(list(BODY_ZONE_CHEST, BODY_ZONE_HEAD))
 			H.nutrition -= limb_regeneration_cost * length(limbs_to_heal)
-			to_chat(H, span_notice("...и спустя мгновение ты вернул их!"))
+			to_chat(H, span_notice("...and moments later, you have them back!"))
 			return
 		else if(H.nutrition >= limb_regeneration_cost)
 			while(H.nutrition >= NUTRITION_LEVEL_HUNGRY + limb_regeneration_cost)
@@ -167,10 +167,10 @@
 				H.regenerate_limb(healed_limb)
 				limbs_to_heal -= healed_limb
 				H.nutrition -= limb_regeneration_cost
-			to_chat(H, span_warning("...но тебе не хватает сил! Тебе нужно съесть больше, чтобы восстановиться полностью!"))
+			to_chat(H, span_warning("...but you don't have enough energy! Eat more to fully recover!"))
 			return
-		to_chat(H, span_warning("...но ты ужасно голоден! На пустой желудок не получится сделать этого!"))
-	to_chat(H, span_notice("...но в последний момент... передумываешь."))
+		to_chat(H, span_warning("...but you're starving! You can't do this on an empty stomach!"))
+	to_chat(H, span_notice("...but at the last moment, you change your mind."))
 
 	. = ..()
 	return TRUE

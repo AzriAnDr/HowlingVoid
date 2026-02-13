@@ -8,17 +8,16 @@ GLOBAL_LIST_INIT(possible_unusual_biochem_blood_types, list(
 
 /datum/quirk/unusual_biochemistry
 	name = "Unusual Biochemistry"
-	desc = "Химический состав вашей крови отличается от состава обычного члена экипажа."
+	desc = "Your blood's chemical makeup differs from that of a typical crew member."
 	icon = FA_ICON_DROPLET
 	value = 0
 	mob_trait = TRAIT_UNUSUAL_BIOCHEMISTRY
-	gain_text = span_notice("У вас необычная биохимия.")
-	lose_text = span_danger("Ваша биохимия стала... нормальной.")
-	medical_record_text = "Пациент обладает необычной биохимией. Для переливания крови может потребоваться помощь химика."
+	gain_text = span_notice("You have an unusual biochemistry.")
+	lose_text = span_danger("Your biochemistry has become... normal.")
+	medical_record_text = "Patient possessess an unusual biochemistry. Blood transfusions may require the assistance of a chemist."
 	quirk_flags = QUIRK_HUMAN_ONLY
-	/// Выбранный необычный тип крови (через настройки трейта)
+	/// The unusual blood type chosen by quirk prefs
 	var/datum/blood_type/blood_type
-
 
 /datum/quirk_constant_data/unusual_biochemistry
 	associated_typepath = /datum/quirk/unusual_biochemistry

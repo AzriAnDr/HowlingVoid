@@ -1,14 +1,13 @@
 /datum/quirk/item_quirk/ration_system
-	name = "Ration Ticket Receiver(Получатель рационных талонов)"
-	desc = "По стечению обстоятельств вы были включены в программу рационных талонов. \
-		Половина вашей зарплаты будет удерживаться, а взамен вы будете получать талоны, \
-		которые можно обменять на еду и другие товары через консоль карго."
+	name = "Ration Ticket Receiver"
+	desc = "Due to some circumstance of your life, you have enrolled in the ration tickets program, \
+		which will halve all of your paychecks in exchange for granting you ration tickets, which can be \
+		redeemed at a cargo console for food and other items."
 	icon = FA_ICON_DONATE
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_HIDE_FROM_SCAN
-	medical_record_text = "Участник программы рационных талонов."
+	medical_record_text = "Has enrolled in the ration ticket program."
 	value = 0
 	hardcore_value = 0
-
 
 /datum/quirk/item_quirk/ration_system/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -25,7 +24,7 @@
 			LOCATION_BACKPACK,
 			LOCATION_HANDS,
 		),
-		flavour_text = "Не забудьте сохранить свою проездную книжку, в случае утери ее нельзя будет восстановить, и все ваши продовольственные талоны хранятся там!",
+		flavour_text = "You remember to keep close hold of your ticket book, it can't be replaced if lost and all of your ration tickets are placed there!",
 		notify_player = TRUE,
 	)
 	account.tracked_ticket_book = WEAKREF(new_ticket_book)
@@ -74,8 +73,8 @@
 		last_ticket_luxury = !last_ticket_luxury
 		if(!ticket_book.atom_storage.can_insert(created_ticket, messages = FALSE))
 			qdel(created_ticket)
-			bank_card_talk("ОШИБКА: Не удалось поместить продовольственный талон в билетную книжку. Убедитесь, что книжка не заполнена.")
+			bank_card_talk("ERROR: Failed to place ration ticket in ticket book, ensure book is not full.")
 			// We can stop here, it's joever for trying to place tickets in the book this payday. You snooze you lose!
 			return
 		created_ticket.forceMove(ticket_book)
-		bank_card_talk("Новый талон на [last_ticket_luxury ? "luxury item" : "standard"] добавлен в вашу книжку талонов.")
+		bank_card_talk("A new [last_ticket_luxury ? "luxury item" : "standard"] ration ticket has been placed in your ticket book.")
