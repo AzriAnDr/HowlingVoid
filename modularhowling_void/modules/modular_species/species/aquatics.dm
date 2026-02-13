@@ -8,18 +8,14 @@
 		TRAIT_SHARP_CLAWS,
 	)
 
-	/// Store base metabolism value per mob and restore it safely on species loss.
-	var/list/original_metabolism_efficiency = list()
-
 /datum/species/aquatic/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
 	if(!istype(H))
 		return
 
-	original_metabolism_efficiency[H] = H.metabolism_efficiency
-	if(H.reagents)
-		RegisterSignal(H.reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagents_updated))
-	update_metabolism_efficiency(H)
+	UnregisterSignal(H, COMSIG_MOB_REAGENT_TICK)
+	RegisterSignal(H, COMSIG_MOB_REAGENT_TICK, PROC_REF(on_reagent_tick))
+	RegisterSignal(H, COMSIG_MOVABLE_MOVED, PROC_REF(update_water_mobility))
 
 	var/datum/action/cooldown/scent_scan/aquatic/scent = new()
 	scent.Grant(H)
@@ -39,20 +35,15 @@
 
 	RegisterSignal(H, COMSIG_CARBON_NOSE_BOOPED, PROC_REF(on_nose_boop))
 	RegisterSignal(H, COMSIG_CARBON_NOSE_STRUCK, PROC_REF(on_nose_struck))
-	RegisterSignal(H, COMSIG_MOB_MOVESPEED_UPDATED, PROC_REF(check_water_slowdown))
+	update_water_mobility(H, null)
 
 /datum/species/aquatic/on_species_loss(mob/living/carbon/human/H)
 	..()
 	if(!istype(H))
 		return
 
-	if(H.reagents)
-		UnregisterSignal(H.reagents, COMSIG_REAGENTS_HOLDER_UPDATED)
-
-	var/original = original_metabolism_efficiency[H]
-	if(!isnull(original))
-		H.metabolism_efficiency = original
-		original_metabolism_efficiency -= H
+	UnregisterSignal(H, COMSIG_MOB_REAGENT_TICK)
+	UnregisterSignal(H, COMSIG_MOVABLE_MOVED)
 
 	if(HAS_TRAIT(H, TRAIT_NO_SLIP_WATER))
 		REMOVE_TRAIT(H, TRAIT_NO_SLIP_WATER, REF(src))
@@ -62,7 +53,9 @@
 	if(HAS_TRAIT(H, TRAIT_SPACEWALK))
 		REMOVE_TRAIT(H, TRAIT_SPACEWALK, REF(src))
 
-	UnregisterSignal(H, list(COMSIG_CARBON_NOSE_BOOPED, COMSIG_CARBON_NOSE_STRUCK, COMSIG_MOB_MOVESPEED_UPDATED))
+	H.remove_movespeed_modifier(/datum/movespeed_modifier/aquatic_water_speedboost)
+	H.remove_movespeed_modifier(/datum/movespeed_modifier/aquatic_deep_water_speedboost)
+	UnregisterSignal(H, list(COMSIG_CARBON_NOSE_BOOPED, COMSIG_CARBON_NOSE_STRUCK))
 
 /datum/species/aquatic/proc/on_nose_boop(mob/living/carbon/human/source, mob/living/carbon/helper)
 	if(!source?.is_location_accessible(BODY_ZONE_PRECISE_MOUTH))
@@ -75,6 +68,114 @@
 		return
 
 	source.apply_damage(25, STAMINA, affecting)
+
+/datum/species/aquatic/proc/on_reagent_tick(mob/living/carbon/human/source, datum/reagent/reagent, seconds_per_tick)
+	SIGNAL_HANDLER
+	if(!istype(source) || !istype(reagent) || !source?.reagents)
+		return
+
+	// Apply only to blood chemistry, not stomach digestion or organ digestion.
+	if(reagent.holder != source.reagents)
+		return
+
+	if(!is_blood_metabolism_target(reagent))
+		return
+
+	var/bonus_metabolized = reagent.compute_metabolization(source, seconds_per_tick) * 0.3
+	if(bonus_metabolized <= 0)
+		return
+
+	source.reagents.remove_reagent(reagent.type, bonus_metabolized)
+
+/datum/species/aquatic/proc/is_blood_metabolism_target(datum/reagent/reagent)
+	if(!istype(reagent))
+		return FALSE
+
+	if(
+		istype(reagent, /datum/reagent/medicine) \
+		|| istype(reagent, /datum/reagent/toxin) \
+		|| istype(reagent, /datum/reagent/drug) \
+		|| istype(reagent, /datum/reagent/consumable/ethanol)
+	)
+		return TRUE
+
+	return FALSE
+
+/datum/species/aquatic/proc/is_aquatic_speed_tile(atom/location)
+	if(!isturf(location))
+		return FALSE
+
+	var/turf/check_turf = location
+	if(HAS_TRAIT(check_turf, TRAIT_TURF_IGNORE_SLOWDOWN))
+		return FALSE
+
+	if(istype(check_turf, /turf/open/water))
+		return TRUE
+
+	// Only grant speed on sufficiently deep liquids tiles (prevents boost from fresh spills/puddles).
+	if(check_turf.liquids && check_turf.liquids.liquid_state >= LIQUID_STATE_WAIST)
+		return TRUE
+
+	return FALSE
+
+/datum/species/aquatic/proc/is_aquatic_deep_tile(atom/location)
+	if(!isturf(location))
+		return FALSE
+
+	var/turf/check_turf = location
+	if(HAS_TRAIT(check_turf, TRAIT_TURF_IGNORE_SLOWDOWN))
+		return FALSE
+
+	if(istype(check_turf, /turf/open/water))
+		var/turf/open/water/water_turf = check_turf
+		if(water_turf.is_swimming_tile)
+			return TRUE
+
+	if(check_turf.liquids && check_turf.liquids.liquid_state >= LIQUID_STATE_SHOULDERS)
+		return TRUE
+
+	return FALSE
+
+/datum/species/aquatic/proc/update_water_mobility(mob/living/carbon/human/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+	if(!istype(source))
+		return
+
+	var/was_water = is_aquatic_speed_tile(old_loc)
+	var/is_water = is_aquatic_speed_tile(source.loc)
+	var/is_deep = is_aquatic_deep_tile(source.loc)
+
+	// only apply shark speed bonuses in water, never remove engine slowdowns.
+	source.remove_movespeed_modifier(/datum/movespeed_modifier/aquatic_water_speedboost)
+	source.remove_movespeed_modifier(/datum/movespeed_modifier/aquatic_deep_water_speedboost)
+
+	if(!is_water)
+		if(was_water)
+			// Prevent short lingering post-water slowdown from the swimming status effect.
+			source.remove_status_effect(/datum/status_effect/swimming)
+			// Keep shark momentum briefly after leaving water.
+			source.add_movespeed_modifier(/datum/movespeed_modifier/aquatic_water_speedboost)
+			addtimer(CALLBACK(src, PROC_REF(clear_water_exit_boost), source), 1.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		return
+
+	source.add_movespeed_modifier(/datum/movespeed_modifier/aquatic_water_speedboost)
+	if(is_deep)
+		source.add_movespeed_modifier(/datum/movespeed_modifier/aquatic_deep_water_speedboost)
+
+/datum/species/aquatic/proc/clear_water_exit_boost(mob/living/carbon/human/source)
+	if(!istype(source))
+		return
+	if(!istype(source.dna?.species, /datum/species/aquatic))
+		return
+	if(is_aquatic_speed_tile(source.loc))
+		return
+	source.remove_movespeed_modifier(/datum/movespeed_modifier/aquatic_water_speedboost)
+
+/datum/movespeed_modifier/aquatic_water_speedboost
+	multiplicative_slowdown = -0.2
+
+/datum/movespeed_modifier/aquatic_deep_water_speedboost
+	multiplicative_slowdown = -1.65
 
 /datum/species/aquatic/create_pref_unique_perks()
 	var/list/perks = list()
@@ -121,42 +222,3 @@
 		SPECIES_PERK_DESC = "Your snout is more sensitive to hits and even occasional light touches.",
 	))
 	return perks
-
-/datum/species/aquatic/proc/on_reagents_updated(datum/source)
-	SIGNAL_HANDLER
-	var/datum/reagents/reagents = source
-	var/mob/living/carbon/human/H = reagents?.my_atom
-	if(!istype(H))
-		return
-
-	update_metabolism_efficiency(H)
-
-/datum/species/aquatic/proc/update_metabolism_efficiency(mob/living/carbon/human/H)
-	if(!istype(H))
-		return
-
-	var/original = original_metabolism_efficiency[H]
-	if(isnull(original))
-		original = H.metabolism_efficiency
-		original_metabolism_efficiency[H] = original
-
-	var/has_medicine = H.reagents?.has_reagent(/datum/reagent/medicine, TRUE)
-	var/has_toxin = H.reagents?.has_reagent(/datum/reagent/toxin, TRUE)
-	var/has_drug = H.reagents?.has_reagent(/datum/reagent/drug, TRUE)
-	var/has_alcohol = H.reagents?.has_reagent(/datum/reagent/consumable/ethanol, TRUE)
-
-	if(has_medicine || has_toxin || has_drug || has_alcohol)
-		H.metabolism_efficiency = original * 6.0
-		return
-
-	H.metabolism_efficiency = original
-
-/datum/species/aquatic/proc/check_water_slowdown(mob/living/aquatic)
-	SIGNAL_HANDLER
-
-	var/turf/open/turfy = aquatic.loc
-
-	if(!istype(turfy, /turf/open/water))
-		return
-
-	aquatic.remove_movespeed_modifier(/datum/movespeed_modifier/turf_slowdown)

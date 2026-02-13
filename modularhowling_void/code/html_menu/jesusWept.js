@@ -141,7 +141,7 @@
     if (!hoverSound) return;
     try {
       hoverSound.currentTime = 0;
-      hoverSound.volume = 0.3;
+      hoverSound.volume = 0.1;
       hoverSound.play().catch(() => {});
     } catch {}
   }
@@ -150,7 +150,7 @@
     if (!selectSound) return;
     try {
       selectSound.currentTime = 0;
-      selectSound.volume = 0.18;
+      selectSound.volume = 0.06;
       selectSound.play().catch(() => {});
     } catch {}
   }

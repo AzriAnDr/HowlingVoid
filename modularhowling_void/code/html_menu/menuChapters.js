@@ -41,7 +41,7 @@
     },
   };
 
-  var CURRENT_CHAPTER = 'jesusWept';
+  var CURRENT_CHAPTER = 'ironHeart';
   var currentStyleEl = null;
   var currentScriptEl = null;
   var revealTimer = null;
@@ -234,7 +234,7 @@
       }
       try {
         selectSound.currentTime = 0;
-        selectSound.volume = 0.18;
+        selectSound.volume = 0.06;
         selectSound.play();
       } catch (e) {}
     }

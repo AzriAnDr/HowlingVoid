@@ -42,7 +42,7 @@
     if (!selectSound) return;
     try {
       selectSound.currentTime = 0;
-      selectSound.volume = 0.18;
+      selectSound.volume = 0.06;
       selectSound.play().catch(() => {});
     } catch {}
   }
