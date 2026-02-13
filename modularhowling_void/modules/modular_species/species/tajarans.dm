@@ -17,10 +17,14 @@
 	bodytemp_normal = 308
 	bodytemp_cold_damage_limit = 238.15
 	bodytemp_heat_damage_limit = 325.15
+	/// Trait source key used for DNR that comes specifically from Tajaran Nine Lives.
+	var/static/nine_lives_trait_source = "tajaran_nine_lives"
+	/// How many deaths a Tajaran can have before permanent death is enforced.
+	var/nine_lives_max_deaths = 9
 
-/datum/species/tajaran
-	var/death_count = 0
-	var/death_count_max = 8
+/mob/living/carbon/human
+	/// Personal death counter for Tajaran Nine Lives.
+	var/tajaran_nine_lives_death_count = 0
 
 /datum/species/tajaran/proc/on_tajaran_bullet_hit(mob/living/carbon/human/tajaran, obj/projectile/hit_projectile)
 	SIGNAL_HANDLER
@@ -36,6 +40,9 @@
 	. = ..()
 	if(!H)
 		return
+
+	if(H.tajaran_nine_lives_death_count < nine_lives_max_deaths)
+		REMOVE_TRAIT(H, TRAIT_DNR, nine_lives_trait_source)
 
 	H.physiology.heat_mod *= 1.25
 	H.physiology.cold_mod *= 0.81
@@ -85,6 +92,8 @@
 	if(!H)
 		return
 
+	REMOVE_TRAIT(H, TRAIT_DNR, nine_lives_trait_source)
+
 	H.physiology.cold_mod /= 0.81
 	H.physiology.heat_mod /= 1.25
 	UnregisterSignal(H, list(COMSIG_LIVING_DEATH, COMSIG_PROJECTILE_PREHIT, COMSIG_LIVING_DODGE_MELEE))
@@ -93,16 +102,23 @@
 	if(ears)
 		ears.damage_multiplier = initial(ears.damage_multiplier)
 
-/datum/species/tajaran/proc/on_tajaran_death(mob/living/carbon/human/tajaran)
+/datum/species/tajaran/proc/on_tajaran_death(mob/living/carbon/human/tajaran, gibbed)
 	SIGNAL_HANDLER
-	death_count++
-	if(death_count == death_count_max)
-		to_chat(tajaran, span_danger("You feel this life is your last one..."))
-	if(death_count < death_count_max)
+
+	if(!istype(tajaran))
 		return
+
+	tajaran.tajaran_nine_lives_death_count++
+
+	if(tajaran.tajaran_nine_lives_death_count == (nine_lives_max_deaths - 1))
+		to_chat(tajaran, span_danger("You feel this life is your last one..."))
+
+	if(tajaran.tajaran_nine_lives_death_count < nine_lives_max_deaths)
+		return
+
 	if(!HAS_TRAIT(tajaran, TRAIT_DNR))
 		tajaran.visible_message(span_warning("[tajaran.get_visible_name()] has exhausted all lives and won't rise again."))
-		ADD_TRAIT(tajaran, TRAIT_DNR, ADMIN_TRAIT)
+		ADD_TRAIT(tajaran, TRAIT_DNR, nine_lives_trait_source)
 
 /datum/species/tajaran/proc/tajaran_dodge_melee(mob/living/carbon/human/tajaran)
 	SIGNAL_HANDLER
