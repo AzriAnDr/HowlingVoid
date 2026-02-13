@@ -1,11 +1,11 @@
 /datum/quirk/item_quirk/limp_leg
-	name = "Limp Leg(Хромая нога)"
-	desc = "По той или иной причине твоя нога хромает. Костыль помогает тебе идти в ногу со всеми остальными."
+	name = "Limp Leg"
+	desc = "Your leg is limp, for one reason or another. A crutch helps you keep up with everyone else."
 	icon = FA_ICON_WALKING
 	value = -4
-	gain_text = span_notice("Вы чувствуете, как ваша нога подкашивается.")
-	lose_text = span_notice("Ходьба снова становится естественной.")
-	medical_record_text = "У пациента наблюдается нарушение подвижности из-за хромоты ноги."
+	gain_text = span_notice("You feel your leg give out beneath you.")
+	lose_text = span_notice("Walking feels natural again.")
+	medical_record_text = "The patient demonstrates impaired mobility due to a limp leg."
 	quirk_flags = QUIRK_HUMAN_ONLY
 
 /datum/quirk_constant_data/limp_leg
@@ -20,7 +20,7 @@
 		list(
 			LOCATION_HANDS,
 		),
-		flavour_text = "Костыль необходим для быстрого передвижения. Не потеряйте его.",
+		flavour_text = "Your crutch is essential for moving at full speed. Don't lose it.",
 		notify_player = TRUE,
 	)
 

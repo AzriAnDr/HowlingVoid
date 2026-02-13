@@ -1,9 +1,9 @@
 /datum/quirk/phobia
-	name = "Phobia(Фобия)"
-	desc = "Вы иррационально боитесь чего-то."
+	name = "Phobia"
+	desc = "You are irrationally afraid of something."
 	icon = FA_ICON_SPIDER
 	value = 0
-	medical_record_text = "У пациента возникает иррациональный страх перед чем-то."
+	medical_record_text = "Patient has an irrational fear of something."
 	mail_goodies = list(/obj/item/clothing/glasses/blindfold, /obj/item/storage/pill_bottle/psicodine)
 
 /datum/quirk_constant_data/phobia

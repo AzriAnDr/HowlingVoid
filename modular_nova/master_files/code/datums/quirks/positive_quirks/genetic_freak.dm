@@ -14,16 +14,15 @@ GLOBAL_LIST_INIT(genetic_mutation_choice, list(
 ))
 
 /datum/quirk/genetic_mutation
-	name = "Genetic Mutation(Генетические мутации)"
-	desc = "По какой-то причине у вас имеется необычная генетическая мутация — остальное предоставлено судьбе."
+	name = "Genetic Mutation"
+	desc = "For some reason or another, you've got an unusual genetic mutation, the rest is up to fate."
 	icon = FA_ICON_RECEIPT
 	value = 6
-	gain_text = "Если все становятся супер, то супер не становится никто."
-	lose_text = "Кажется, что суперспособными могут быть все… кроме вас."
-	medical_record_text = "У пациента обнаружены нетипичные генетические последовательности."
-	/// Мутация, применённая к мобу, для удобства её удаления
+	gain_text = "If everyone's super, no one is."
+	lose_text = "You feel like everyone else might be super after all."
+	medical_record_text = "Patient has unusual genetic sequences."
+	/// The mutation that's applied to the mob, for ease of removal
 	var/applied_mutation
-
 
 /datum/quirk_constant_data/genetic_mutation
 	associated_typepath = /datum/quirk/genetic_mutation
@@ -55,7 +54,7 @@ GLOBAL_LIST_INIT(genetic_mutation_choice, list(
 	if (!.)
 		return FALSE
 
-	return "Genetic Mutation(Генетические мутации)" in preferences.all_quirks
+	return "Genetic Mutation" in preferences.all_quirks
 
 /datum/preference/choiced/genetic_mutation/apply_to_human(mob/living/carbon/human/target, value)
 	return

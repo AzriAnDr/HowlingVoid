@@ -14,7 +14,7 @@
 	if (!.)
 		return FALSE
 
-	return "Prosthetic Organ(Протез органа)" in preferences.all_quirks
+	return "Prosthetic Organ" in preferences.all_quirks
 
 /datum/preference/choiced/prosthetic_organ/apply_to_human(mob/living/carbon/human/target, value)
 	return

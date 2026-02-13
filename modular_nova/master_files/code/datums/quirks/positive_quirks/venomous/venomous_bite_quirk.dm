@@ -1,12 +1,11 @@
 /datum/quirk/venomous_bite
-	name = "Venomous Bite(Ядовитый укус)"
-	desc = "У вас есть ядовитая железа, и вы можете укусить человека, вводя выбранный вами токсин."
+	name = "Venomous Bite"
+	desc = "You have a venom gland, and can bite people to inject them with a toxin of your choosing."
 	icon = FA_ICON_TEETH_OPEN
 	value = 8
-	gain_text = span_notice("Вы ощущаете ядовитую железу в глубине горла.")
-	lose_text = span_warning("Ваша ядовитая железа исчезает.")
-	medical_record_text = "У пациента обнаружена ядовитая железа."
-
+	gain_text = span_notice("You feel a venom gland in the back of your throat.")
+	lose_text = span_warning("Your venom gland vanishes.")
+	medical_record_text = "Patient possesses a venom gland."
 
 /datum/quirk/venomous_bite/add(client/client_source)
 	var/datum/reagent/reagent = text2path(client_source?.prefs?.read_preference(/datum/preference/choiced/venomous_bite_venom))
@@ -114,7 +113,7 @@
 	if (!.)
 		return FALSE
 
-	return "Venomous Bite(Ядовитый укус)" in preferences.all_quirks
+	return "Venomous Bite" in preferences.all_quirks
 
 /datum/preference/choiced/venomous_bite_venom/apply_to_human(mob/living/carbon/human/target, value)
 	return

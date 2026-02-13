@@ -1,9 +1,9 @@
 /datum/quirk/item_quirk/family_heirloom
-	name = "Family Heirloom(Семейная реликвия)"
-	desc = "Вы — нынешний владелец семейной реликвии, передающейся из поколения в поколение. Вы должны её беречь!"
+	name = "Family Heirloom"
+	desc = "You are the current owner of an heirloom, passed down for generations. You have to keep it safe!"
 	icon = FA_ICON_TOOLBOX
 	value = -2
-	medical_record_text = "Пациент демонстрирует неестественную привязанность к семейной реликвии."
+	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
 	hardcore_value = 1
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES|QUIRK_MOODLET_BASED
 	/// A weak reference to our heirloom.
@@ -39,7 +39,7 @@
 			LOCATION_BACKPACK,
 			LOCATION_HANDS,
 		),
-		flavour_text = "Это драгоценная семейная реликвия, передающаяся из поколения в поколение. Берегите её!",
+		flavour_text = "This is a precious family heirloom, passed down from generation to generation. Keep it safe!",
 		notify_player = TRUE,
 	)
 
@@ -49,7 +49,7 @@
 
 	var/obj/family_heirloom = heirloom?.resolve()
 	if(!family_heirloom)
-		to_chat(quirk_holder, span_boldnotice("Волна экзистенциального ужаса охватывает вас, когда вы осознаёте пропажу вашей драгоценной семейной реликвии. Возможно, боги сжалятся над вашей проклятой душой?"))
+		to_chat(quirk_holder, span_boldnotice("A wave of existential dread runs over you as you realize your precious family heirloom is missing. Perhaps the Gods will show mercy on your cursed soul?"))
 		return
 	family_heirloom.AddComponent(/datum/component/heirloom, quirk_holder.mind, family_name)
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_heirloom, protagonist = quirk_holder, heirloom_name = initial(family_heirloom.name))

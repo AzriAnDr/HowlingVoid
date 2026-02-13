@@ -1,14 +1,14 @@
 
 /datum/quirk/item_quirk/lunchbox_owner
-	name = "Lunchbox User(Любитель ланчбоксов)"
-	desc = "Вы принесли с собой обед, домашнего приготовления или нет, и решили захватить его с собой!"
+	name = "Lunchbox User"
+	desc = "You brought a lunch, homemade or not, you decided to pack one for yourself!"
 	icon = FA_ICON_BOX
 	value = 0
 	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_HIDE_FROM_SCAN
 	mob_trait = TRAIT_LUNCHBOX_OWNER
-	gain_text = span_notice("Ты принесла с собой свой ланч-бокс, ура!")
-	lose_text = span_danger("Чувство... любовь... страсть к домашней еде покидает вас... слеза течет по вашему лицу, рыдание... печаль... извинение, когда вы прощаетесь со своими восхитительными домашними деликатесами.")
-	medical_record_text = "Пациент упоминает о своей любви к еде и напиткам, приготовленным на открытом воздухе."
+	gain_text = span_notice("You brought your lunchbox with you, yippee!.")
+	lose_text = span_danger("The feeling... the love... the passion for a home made meal leaves you... a tear sheds down your face, a weep... a sorrow... an apology as you say goodbye to your delicious homemade delectables.")
+	medical_record_text = "Patient mentions their fondness for exterior foods and drinks."
 	mail_goodies = list()
 
 	/// What design of lunchbox does the player want?
@@ -97,13 +97,13 @@
 	new lunchbox_drink_choice(lunchbox_base)
 	new lunchbox_dessert_choice(lunchbox_base)
 
-	lunchbox_base.name = "Ланчбокс [quirk_holder.real_name]"
+	lunchbox_base.name = "[quirk_holder.real_name]'s lunchbox"
 	give_item_to_holder(
 		lunchbox_base,
 		list(
 			LOCATION_HANDS,
 		),
-		flavour_text = "Выглядит хорошо упакованным... вкусно!",
+		flavour_text = "Looks well packed... delicious!",
 		notify_player = TRUE,
 	)
 
@@ -154,7 +154,7 @@ GLOBAL_LIST_INIT(possible_player_lunchbox_design_choice, list(
 	if (!..())
 		return FALSE
 
-	return "Lunchbox User(Любитель ланчбоксов)" in preferences.all_quirks
+	return "Lunchbox User" in preferences.all_quirks
 
 /datum/preference/choiced/lunchbox_design/apply_to_human(mob/living/carbon/human/target, value)
 	return
@@ -266,7 +266,7 @@ GLOBAL_LIST_INIT(possible_player_lunchbox_meal_choice, list(
 	if (!..())
 		return FALSE
 
-	return "Lunchbox User(Любитель ланчбоксов)" in preferences.all_quirks
+	return "Lunchbox User" in preferences.all_quirks
 
 /datum/preference/choiced/lunchbox_meal_choice/apply_to_human(mob/living/carbon/human/target, value)
 	return
@@ -380,7 +380,7 @@ GLOBAL_LIST_INIT(possible_player_lunchbox_snack_choice, list(
 	if (!..())
 		return FALSE
 
-	return "Lunchbox User(Любитель ланчбоксов)" in preferences.all_quirks
+	return "Lunchbox User" in preferences.all_quirks
 
 /datum/preference/choiced/lunchbox_first_snack_choice/apply_to_human(mob/living/carbon/human/target, value)
 	return
@@ -411,7 +411,7 @@ GLOBAL_LIST_INIT(possible_player_lunchbox_snack_choice, list(
 	if (!..())
 		return FALSE
 
-	return "Lunchbox User(Любитель ланчбоксов)" in preferences.all_quirks
+	return "Lunchbox User" in preferences.all_quirks
 
 /datum/preference/choiced/lunchbox_second_snack_choice/apply_to_human(mob/living/carbon/human/target, value)
 	return
@@ -499,7 +499,7 @@ GLOBAL_LIST_INIT(possible_player_lunchbox_drink_choice, list(
 	if (!..())
 		return FALSE
 
-	return "Lunchbox User(Любитель ланчбоксов)" in preferences.all_quirks
+	return "Lunchbox User" in preferences.all_quirks
 
 /datum/preference/choiced/lunchbox_drink_choice/apply_to_human(mob/living/carbon/human/target, value)
 	return
@@ -569,7 +569,7 @@ GLOBAL_LIST_INIT(possible_player_lunchbox_desert_choice, list(
 	if (!..())
 		return FALSE
 
-	return "Lunchbox User(Любитель ланчбоксов)" in preferences.all_quirks
+	return "Lunchbox User" in preferences.all_quirks
 /datum/preference/choiced/lunchbox_desert_choice/apply_to_human(mob/living/carbon/human/target, value)
 	return
 

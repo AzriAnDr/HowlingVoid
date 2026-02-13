@@ -1,11 +1,11 @@
 /datum/quirk/empath
-	name = "Empath(Эмпат)"
-	desc = "Будь то шестое чувство или тщательное изучение языка тела, тебе достаточно одного быстрого взгляда на человека, чтобы понять, что он чувствует."
+	name = "Empath"
+	desc = "Whether it's a sixth sense or careful study of body language, it only takes you a quick glance at someone to understand how they feel."
 	icon = FA_ICON_SMILE_BEAM
 	value = 8
-	gain_text = span_notice("Вы чувствуете гармонию с окружающими.")
-	lose_text = span_danger("Вы чувствуете себя изолированным от других.")
-	medical_record_text = "Пациент крайне восприимчив и чувствителен к социальным сигналам, возможно, страдает экстрасенсорным восприятием. Необходимы дальнейшие исследования."
+	gain_text = span_notice("You feel in tune with those around you.")
+	lose_text = span_danger("You feel isolated from others.")
+	medical_record_text = "Patient is highly perceptive of and sensitive to social cues, or may possibly have ESP. Further testing needed."
 	mail_goodies = list(/obj/item/toy/foamfinger)
 
 /datum/quirk/empath/add(client/client_source)
