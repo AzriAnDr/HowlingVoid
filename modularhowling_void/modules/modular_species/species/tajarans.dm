@@ -113,6 +113,9 @@
 		return COMPONENT_DODGE_SUCCEEDED
 	return COMPONENT_DODGE_FAILED
 
+/datum/species/tajaran/get_hiss_sound(mob/living/carbon/human/tajaran)
+	return 'sound/mobs/humanoids/felinid/felinid_hiss.ogg'
+
 /datum/action/cooldown/tajaran_grooming
 	name = "Grooming"
 	desc = "Clean fur, wash blood and dirt, maybe stop bleeding and heal a little."

@@ -11,24 +11,45 @@
 	var/tmp/list/space_coast_skip = list()
 	/// Last client move direction for pending coast step.
 	var/tmp/list/space_coast_dir = list()
+	/// Whether sharp claws quirk was injected by this species (key = mob, value = TRUE/FALSE).
+	var/tmp/list/species_added_sharpclaws = list()
+	/// Species-granted actions tracked for cleanup.
+	var/tmp/list/species_scent_scan_action = list()
+	var/tmp/list/species_scent_track_action = list()
 
 /datum/species/aquatic/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
-	..()
 	if(!istype(H))
 		return
+	. = ..()
 
 	UnregisterSignal(H, COMSIG_MOB_REAGENT_TICK)
 	RegisterSignal(H, COMSIG_MOB_REAGENT_TICK, PROC_REF(on_reagent_tick))
 	RegisterSignal(H, COMSIG_MOVABLE_MOVED, PROC_REF(update_water_mobility))
 	RegisterSignal(H, COMSIG_MOB_CLIENT_MOVED, PROC_REF(on_spacewalk_step))
 
+	var/datum/action/cooldown/scent_scan/aquatic/old_scent = species_scent_scan_action[H]
+	if(old_scent)
+		old_scent.Remove(H)
+		qdel(old_scent)
+	species_scent_scan_action[H] = null
+
+	var/datum/action/cooldown/scent_tracking/old_track = species_scent_track_action[H]
+	if(old_track)
+		old_track.Remove(H)
+		qdel(old_track)
+	species_scent_track_action[H] = null
+
 	var/datum/action/cooldown/scent_scan/aquatic/scent = new()
 	scent.Grant(H)
+	species_scent_scan_action[H] = scent
 	var/datum/action/cooldown/scent_tracking/track = new()
 	track.Grant(H)
+	species_scent_track_action[H] = track
 
+	species_added_sharpclaws[H] = FALSE
 	if(!H.has_quirk(/datum/quirk/sharpclaws))
-		H.add_quirk(/datum/quirk/sharpclaws)
+		if(H.add_quirk(/datum/quirk/sharpclaws, override_client = H.client, announce = FALSE))
+			species_added_sharpclaws[H] = TRUE
 
 	if(!HAS_TRAIT(H, TRAIT_NO_SLIP_WATER))
 		ADD_TRAIT(H, TRAIT_NO_SLIP_WATER, REF(src))
@@ -42,9 +63,9 @@
 	update_water_mobility(H, null)
 
 /datum/species/aquatic/on_species_loss(mob/living/carbon/human/H)
-	..()
 	if(!istype(H))
 		return
+	. = ..()
 
 	UnregisterSignal(H, COMSIG_MOB_REAGENT_TICK)
 	UnregisterSignal(H, COMSIG_MOVABLE_MOVED)
@@ -60,6 +81,23 @@
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/aquatic_water_speedboost)
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/aquatic_deep_water_speedboost)
 	UnregisterSignal(H, list(COMSIG_CARBON_NOSE_BOOPED, COMSIG_CARBON_NOSE_STRUCK))
+
+	var/datum/action/cooldown/scent_scan/aquatic/scent = species_scent_scan_action[H]
+	if(scent)
+		scent.Remove(H)
+		qdel(scent)
+	species_scent_scan_action[H] = null
+
+	var/datum/action/cooldown/scent_tracking/track = species_scent_track_action[H]
+	if(track)
+		track.Remove(H)
+		qdel(track)
+	species_scent_track_action[H] = null
+
+	if(species_added_sharpclaws[H] && H.has_quirk(/datum/quirk/sharpclaws))
+		H.remove_quirk(/datum/quirk/sharpclaws)
+	species_added_sharpclaws[H] = null
+
 	space_coast_skip -= H
 	space_coast_dir -= H
 

@@ -9588,6 +9588,7 @@
 #include "modularhowling_void\code\datums\mood_event\aquatic_snout_boop.dm"
 #include "modularhowling_void\modules\clothing\code\items.dm"
 #include "modularhowling_void\modules\clothing\code\loadout.dm"
+#include "modularhowling_void\modules\emotes\code\meow1.dm"
 #include "modularhowling_void\modules\modular_species\actions\sniffing\_sniffing.dm"
 #include "modularhowling_void\modules\modular_species\actions\sniffing\aquatic.dm"
 #include "modularhowling_void\modules\modular_species\actions\sniffing\tajaran.dm"

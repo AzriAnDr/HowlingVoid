@@ -2,21 +2,41 @@
 	// 10% damage resistance
 	damage_modifier = 10
 	var/maxHealth_bonus = 10
+	/// Species-granted actions tracked for cleanup.
+	var/tmp/list/species_venom_action = list()
+	var/tmp/list/species_regen_action = list()
 
 /datum/species/lizard/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons, replace_missing)
+	if(!istype(human_who_gained_species))
+		return
+
 	// Max HP bonus
 	human_who_gained_species.maxHealth += maxHealth_bonus
 	human_who_gained_species.health += maxHealth_bonus
 
 	. = ..()
 
+	var/datum/action/cooldown/mob_cooldown/venomous_bite/lizard/old_venom = species_venom_action[human_who_gained_species]
+	if(old_venom)
+		old_venom.Remove(human_who_gained_species)
+		qdel(old_venom)
+	species_venom_action[human_who_gained_species] = null
+
+	var/datum/action/cooldown/regenerate_limbs/lizard/old_regen = species_regen_action[human_who_gained_species]
+	if(old_regen)
+		old_regen.Remove(human_who_gained_species)
+		qdel(old_regen)
+	species_regen_action[human_who_gained_species] = null
+
 	var/datum/action/cooldown/mob_cooldown/venomous_bite/lizard/action = new()
 	action.Grant(human_who_gained_species)
+	species_venom_action[human_who_gained_species] = action
 
 	var/datum/action/cooldown/regenerate_limbs/lizard/regeneration = new()
 	regeneration.Grant(human_who_gained_species)
+	species_regen_action[human_who_gained_species] = regeneration
 
-	// Claw strikes for unarmed attacks
+
 	var/obj/item/bodypart/arm/left/left_arm = human_who_gained_species.get_bodypart(BODY_ZONE_L_ARM)
 	if(left_arm)
 		left_arm.unarmed_attack_verbs = list("slash")
@@ -37,6 +57,9 @@
 	RegisterSignal(human_who_gained_species, COMSIG_MOVABLE_SET_GRAB_STATE, PROC_REF(on_grab))
 
 /datum/species/lizard/on_species_loss(mob/living/carbon/human/human, datum/species/new_species, pref_load)
+	if(!istype(human))
+		return
+
 	. = ..()
 
 	human.maxHealth -= maxHealth_bonus
@@ -58,13 +81,24 @@
 		right_arm.unarmed_miss_sound = initial(right_arm.unarmed_miss_sound)
 		right_arm.unarmed_sharpness = initial(right_arm.unarmed_sharpness)
 
+	var/datum/action/cooldown/mob_cooldown/venomous_bite/lizard/action = species_venom_action[human]
+	if(action)
+		action.Remove(human)
+		qdel(action)
+	species_venom_action[human] = null
+
+	var/datum/action/cooldown/regenerate_limbs/lizard/regeneration = species_regen_action[human]
+	if(regeneration)
+		regeneration.Remove(human)
+		qdel(regeneration)
+	species_regen_action[human] = null
+
 	UnregisterSignal(human, COMSIG_MOVABLE_SET_GRAB_STATE)
 
 /datum/species/lizard/proc/on_grab(mob/lizard, new_state)
 	SIGNAL_HANDLER
 
 	if((new_state > GRAB_PASSIVE || lizard.has_movespeed_modifier(/datum/movespeed_modifier/grab_slowdown)) && !lizard.has_movespeed_modifier(/datum/movespeed_modifier/lizard_grab_speedboost))
-		to_chat(lizard, "aaa")
 		lizard.add_movespeed_modifier(/datum/movespeed_modifier/lizard_grab_speedboost)
 	else if (new_state == GRAB_PASSIVE && lizard.has_movespeed_modifier(/datum/movespeed_modifier/lizard_grab_speedboost))
 		lizard.remove_movespeed_modifier(/datum/movespeed_modifier/lizard_grab_speedboost)
@@ -157,7 +191,7 @@
 	to_chat(H, span_notice("You focus on regrowing [length(limbs_to_heal) >= 2 ? "lost limbs" : "a lost limb"]..."))
 	if(do_after(H, 3 SECONDS, H))
 		if(H.nutrition >= limb_regeneration_cost * length(limbs_to_heal) + NUTRITION_LEVEL_HUNGRY)
-			H.regenerate_limbs(list(BODY_ZONE_CHEST, BODY_ZONE_HEAD))
+			H.regenerate_limbs(limbs_to_heal)
 			H.nutrition -= limb_regeneration_cost * length(limbs_to_heal)
 			to_chat(H, span_notice("...and moments later, you have them back!"))
 			return
