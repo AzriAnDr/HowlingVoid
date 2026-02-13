@@ -298,15 +298,15 @@
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
-		SPECIES_PERK_ICON = FA_ICON_SHIRT,
-		SPECIES_PERK_NAME = "Salty Blood",
-		SPECIES_PERK_DESC = "Your blood has elevated salinity - it purges toxins faster, but handles medicine worse.",
-	))
-	perks += list(list(
-		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = FA_ICON_ARROW_DOWN,
 		SPECIES_PERK_NAME = "Thermoregulation",
 		SPECIES_PERK_DESC = "Your body handles cold worse, but tolerates heat better.",
+	))
+	perks += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+		SPECIES_PERK_ICON = FA_ICON_SHIRT,
+		SPECIES_PERK_NAME = "Salty Blood",
+		SPECIES_PERK_DESC = "Your blood has elevated salinity - it purges toxins faster, but handles medicine worse.",
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
