@@ -382,17 +382,39 @@
 			if(src_tail && !(src_tail.wag_flags & WAG_WAGGING))
 				emote("wag")
 		//NOVA EDIT ADDITION END
-
+//Howling void addittion
 	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && !isnull(src.get_organ_by_type(/obj/item/organ/tail)))
-		helper.visible_message(span_notice("[helper] pulls on [src]'s tail!"), \
-					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
-		to_chat(helper, span_notice("You pull on [src]'s tail!"))
-		to_chat(src, span_notice("[helper] pulls on your tail!"))
-		if(HAS_TRAIT(src, TRAIT_BADTOUCH)) //How dare they!
-			to_chat(helper, span_warning("[src] makes a grumbling noise as you pull on [p_their()] tail."))
-		else
-			add_mood_event("tailpulled", /datum/mood_event/tailpulled)
+		var/obj/item/organ/tail/tail = src.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+		if(istype(tail, /obj/item/organ/tail/lizard))
+			helper.visible_message(
+				span_danger("[helper] pulls on [src]'s tail... and it rips off!"),
+				null,
+				span_hear("You hear a wet tearing sound."),
+				DEFAULT_MESSAGE_RANGE,
+				list(helper, src),
+			)
+			to_chat(helper, span_danger("You pull on [src]'s tail... and it rips off!"))
+			to_chat(src, span_userdanger("[helper] pulls on your tail... and it rips off!"))
+			playsound(loc, 'sound/effects/wounds/crack2.ogg', 75, TRUE)
 
+			tail.Remove(src, movement_flags = KEEP_IN_MUTANT_BODYPARTS)
+			tail.forceMove(get_turf(src))
+			if(!helper.put_in_hands(tail))
+				tail.forceMove(get_turf(helper))
+
+			src.adjust_brute_loss(8)
+			helper.add_mood_event("rippedtail", /datum/mood_event/rippedtail)
+			src.emote("scream")
+		else
+			helper.visible_message(span_notice("[helper] pulls on [src]'s tail!"), \
+						null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+			to_chat(helper, span_notice("You pull on [src]'s tail!"))
+			to_chat(src, span_notice("[helper] pulls on your tail!"))
+			if(HAS_TRAIT(src, TRAIT_BADTOUCH)) //How dare they!
+				to_chat(helper, span_warning("[src] makes a grumbling noise as you pull on [p_their()] tail."))
+			else
+				add_mood_event("tailpulled", /datum/mood_event/tailpulled)
+//Howling void addition end
 	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && (istype(head, /obj/item/clothing/head/costume/kitty) || istype(head, /obj/item/clothing/head/collectable/kitty)))
 		var/obj/item/clothing/head/faketail = head
 		helper.visible_message(span_danger("[helper] pulls on [src]'s tail... and it rips off!"), \
