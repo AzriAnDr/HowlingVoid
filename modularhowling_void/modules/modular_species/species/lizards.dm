@@ -176,7 +176,7 @@
 	if(!.)
 		return
 	var/mob/living/carbon/human/H = owner
-	var/list/limbs_to_heal = H.get_missing_limbs()
+	var/list/limbs_to_heal = H.get_missing_limbs() - BODY_ZONE_HEAD - BODY_ZONE_CHEST
 	if(!length(limbs_to_heal))
 		return FALSE
 	if(H.nutrition >= NUTRITION_LEVEL_HUNGRY + limb_regeneration_cost)
@@ -191,7 +191,8 @@
 	to_chat(H, span_notice("You focus on regrowing [length(limbs_to_heal) >= 2 ? "lost limbs" : "a lost limb"]..."))
 	if(do_after(H, 3 SECONDS, H))
 		if(H.nutrition >= limb_regeneration_cost * length(limbs_to_heal) + NUTRITION_LEVEL_HUNGRY)
-			H.regenerate_limbs(limbs_to_heal)
+			for(var/limb_zone in limbs_to_heal)
+				H.regenerate_limb(limb_zone)
 			H.nutrition -= limb_regeneration_cost * length(limbs_to_heal)
 			to_chat(H, span_notice("...and moments later, you have them back!"))
 			return
