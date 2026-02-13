@@ -1,4 +1,4 @@
-﻿/datum/species/lizard
+/datum/species/lizard
 	// 10% damage resistance
 	damage_modifier = 10
 	var/maxHealth_bonus = 10
