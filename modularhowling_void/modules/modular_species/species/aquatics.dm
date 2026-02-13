@@ -139,6 +139,12 @@
 			continue
 		if(isliving(A))
 			continue
+		if(istype(A, /obj/structure/lattice))
+			return TRUE
+		if(istype(A, /obj/structure/grille))
+			return TRUE
+		if(istype(A, /obj/structure/window))
+			return TRUE
 		if(A.density)
 			return TRUE
 
