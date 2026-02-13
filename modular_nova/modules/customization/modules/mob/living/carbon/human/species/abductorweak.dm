@@ -36,19 +36,21 @@
 
 /datum/species/abductor/abductorweak/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
+	if(!human_who_gained_species)
+		return
 	var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
 	abductor_hud.show_to(human_who_gained_species)
 
 /datum/species/abductor/abductorweak/on_species_loss(mob/living/carbon/human/former_rogue, datum/species/new_species, pref_load)
 	. = ..()
+	if(!former_rogue)
+		return
 	var/datum/atom_hud/abductor_hud = GLOB.huds[DATA_HUD_ABDUCTOR]
 	abductor_hud.hide_from(former_rogue)
 
 /datum/species/abductor/abductorweak/get_species_description()
-	return list(
-		"Rogues are naturally three fingered, pale skinned inquisitive aliens who can't communicate well to the average crew-member \
-		without either a Text-To-Speech device or a replacement voicebox. They originate from the Abductors, but know little more than the average crewman.",
-	)
+	return "Rogues are naturally three fingered, pale skinned inquisitive aliens who can't communicate well to the average crew-member \
+	without either a Text-To-Speech device or a replacement voicebox. They originate from the Abductors, but know little more than the average crewman."
 
 /datum/species/abductor/abductorweak/get_species_lore()
 	return list(
