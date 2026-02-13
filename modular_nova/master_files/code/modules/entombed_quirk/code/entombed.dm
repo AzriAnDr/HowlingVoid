@@ -2,11 +2,11 @@
 #define ENTOMBED_TICK_DAMAGE 1.5
 
 /datum/quirk/equipping/entombed
-	name = "Entombed(Погребённый)"
-	desc = "Вы постоянно соединены (или иным образом зависите) с одним модулем MOD, который невозможно снять с вас. Если он разрядится или выключится, вы начнёте умирать!"
-	gain_text = span_warning("Ваш экзоскелет — это и тюрьма, и дом.")
-	lose_text = span_notice("Наконец-то вы освободились от этого ужасного экзоскелета.")
-	medical_record_text = "Пациент физиологически зависим от аппарата MOD для поддержания гомеостаза. Не пытайтесь его удалить."
+	name = "Entombed"
+	desc = "You are permanently fused to (or otherwise reliant on) a single MOD unit that can never be removed from your person. If it runs out of charge or is turned off, you'll start to die!"
+	gain_text = span_warning("Your exosuit is both prison and home.")
+	lose_text = span_notice("At last, you're finally free from that horrible exosuit.")
+	medical_record_text = "Patient is physiologically reliant on a MOD unit for homeostasis. Do not attempt removal."
 	value = 0
 	icon = FA_ICON_ARROW_CIRCLE_DOWN
 	forced_items = list(/obj/item/mod/control/pre_equipped/entombed = list(ITEM_SLOT_BACK))
@@ -55,8 +55,8 @@
 	// Warn the player and begin the gradual dying process.
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
-	human_holder.visible_message(span_danger("[human_holder] внезапно шатается, ужасная бледность охватывает [human_holder.p_their()] как слабый 'брип' исходит из костюма..."), span_userdanger("Ужас нарастает, когда система жизнеобеспечения вашего костюма начинает слабо пищать, а затем наступает ужасающая тишина."))
-	human_holder.balloon_alert(human_holder, "система жизнеобеспечения скафандра вышла из строя!")
+	human_holder.visible_message(span_danger("[human_holder] suddenly staggers, a dire pallor overtaking [human_holder.p_their()] features as a feeble 'breep' emanates from their suit..."), span_userdanger("Terror descends as your suit's life support system breeps feebly, and then goes horrifyingly silent."))
+	human_holder.balloon_alert(human_holder, "suit life support failing!")
 	playsound(human_holder, 'sound/effects/alert.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE) // OH GOD THE STRESS NOISE
 	life_support_failed = TRUE
 
@@ -302,7 +302,7 @@
 	if (!..())
 		return FALSE
 
-	return "Entombed(Погребённый)" in preferences.all_quirks
+	return "Entombed" in preferences.all_quirks
 
 /datum/preference/choiced/entombed_skin/apply_to_human(mob/living/carbon/human/target, value)
 	return
@@ -318,7 +318,7 @@
 	if (!..())
 		return FALSE
 
-	return "Entombed(Погребённый)" in preferences.all_quirks
+	return "Entombed" in preferences.all_quirks
 
 /datum/preference/text/entombed_mod_name/serialize(input)
 	return htmlrendertext(input)
@@ -369,7 +369,7 @@
 	if (!..())
 		return FALSE
 
-	return "Entombed(Погребённый)" in preferences.all_quirks
+	return "Entombed" in preferences.all_quirks
 
 /datum/preference/text/entombed_mod_prefix/serialize(input)
 	return htmlrendertext(input)
@@ -392,7 +392,7 @@
 	if (!..(preferences))
 		return FALSE
 
-	return "Entombed(Погребённый)" in preferences.all_quirks
+	return "Entombed" in preferences.all_quirks
 
 /datum/preference/toggle/entombed_deploy_lock/apply_to_human(mob/living/carbon/human/target, value)
 	return

@@ -61,44 +61,42 @@
 	H.physiology.cold_mod /= 0.729
 
 /datum/species/vulpkanin/create_pref_unique_perks()
-	var/list/to_add = list()
-
-	to_add += list(
+	var/list/to_add = list(
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = FA_ICON_EYE_DROPPER,
-			SPECIES_PERK_NAME = "Вульпийские глаза",
-			SPECIES_PERK_DESC = "Вульпы видят в темноте лучше, чем люди, но яркий свет их слепит лучше.",
+			SPECIES_PERK_ICON = FA_ICON_MOON,
+			SPECIES_PERK_NAME = "Night Vision",
+			SPECIES_PERK_DESC = "Vulps can see better in the dark than humans, but bright light dazzles them more.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = FA_ICON_HEADPHONES_SIMPLE,
-			SPECIES_PERK_NAME = "Чуткий слух",
-			SPECIES_PERK_DESC = "Вульпы лучше слышат. Вы можете слышать даже самые тихие звуки, но из-за этого уши стали более чувствительные!",
+			SPECIES_PERK_NAME = "Keen Hearing",
+			SPECIES_PERK_DESC = "Vulps hear better. You can pick up even the quietest sounds, but your ears are also more sensitive.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = FA_ICON_HEADPHONES_SIMPLE,
-			SPECIES_PERK_NAME = "Чуткий нюх",
-			SPECIES_PERK_DESC = "У вульп - отменный нюх. Вы можете принюхаться, чтобы найти свежие следы поблизости, отследить носителя отпечатков и даже учуять реагенты в ёмкости!",
+			SPECIES_PERK_NAME = "Keen Smell",
+			SPECIES_PERK_DESC = "Vulps have an excellent sense of smell. You can sniff for fresh nearby trails, track who left prints, and even detect reagents in containers.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = FA_ICON_ANGRY,
-			SPECIES_PERK_NAME = "Шерсть",
-			SPECIES_PERK_DESC = "Вы хорошо переносите холод, но вам тяжело в жару. Интересный факт, а вы знали что шерсть хорошо горит? :)",
+			SPECIES_PERK_NAME = "Fur",
+			SPECIES_PERK_DESC = "You handle cold well, but heat is harder for you. Also, fur burns very well.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = FA_ICON_LINES_LEANING,
-			SPECIES_PERK_NAME = "Острые когти",
-			SPECIES_PERK_DESC = "У вульп очень острые когти.",
+			SPECIES_PERK_NAME = "Sharp Claws",
+			SPECIES_PERK_DESC = "Vulps have very sharp claws.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = FA_ICON_PERSON_RUNNING,
-			SPECIES_PERK_NAME = "Подушечки на лапах",
-			SPECIES_PERK_DESC = "Вы комфортно себя чувствуете без обуви.",
+			SPECIES_PERK_NAME = "Soft Paw Pads",
+			SPECIES_PERK_DESC = "You feel comfortable without shoes.",
 		),
 	)
 
