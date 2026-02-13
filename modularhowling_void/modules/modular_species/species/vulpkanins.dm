@@ -7,8 +7,10 @@
 		TRAIT_SENSITIVE_HEARING,
 		TRAIT_NIGHT_VISION,
 		TRAIT_CANINE,
+		TRAIT_FREERUNNING,
 		TRAIT_HARD_SOLES,
 		TRAIT_SHARP_CLAWS,
+		TRAIT_WATER_HATER,
 	)
 	bodytemp_cold_damage_limit = 228.15
 	bodytemp_heat_damage_limit = 323.15
@@ -18,14 +20,17 @@
 	var/tmp/list/species_hearing_action = list()
 	var/tmp/list/species_scent_scan_action = list()
 	var/tmp/list/species_scent_track_action = list()
+/datum/movespeed_modifier/vulpkanin_speedboost
+	multiplicative_slowdown = -0.08
 
 /datum/species/vulpkanin/on_species_gain(mob/living/carbon/human/H, datum/species/old_species, pref_load, regenerate_icons, replace_missing)
 	if(!istype(H))
 		return
 
 	. = ..()
-	H.physiology.heat_mod *= 1.25
-	H.physiology.cold_mod *= 0.729
+	H.physiology.heat_mod *= 1.3
+	H.physiology.cold_mod *= 0.7
+	H.add_movespeed_modifier(/datum/movespeed_modifier/vulpkanin_speedboost)
 
 	var/list/added_quirks = list()
 	species_added_quirks[H] = added_quirks
@@ -75,8 +80,9 @@
 	if(!H)
 		return
 
-	H.physiology.heat_mod /= 1.25
-	H.physiology.cold_mod /= 0.729
+	H.physiology.heat_mod /= 1.3
+	H.physiology.cold_mod /= 0.7
+	H.remove_movespeed_modifier(/datum/movespeed_modifier/vulpkanin_speedboost)
 
 	var/list/added_quirks = species_added_quirks[H]
 	if(length(added_quirks))
@@ -119,6 +125,12 @@
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = FA_ICON_PERSON_RUNNING,
+			SPECIES_PERK_NAME = "Predator Mobility",
+			SPECIES_PERK_DESC = "Vulps move through obstacles and uneven terrain more comfortably than humans.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = FA_ICON_HEADPHONES_SIMPLE,
 			SPECIES_PERK_NAME = "Keen Smell",
 			SPECIES_PERK_DESC = "Vulps have an excellent sense of smell. You can sniff for fresh nearby trails, track who left prints, and even detect reagents in containers.",
@@ -128,6 +140,12 @@
 			SPECIES_PERK_ICON = FA_ICON_ANGRY,
 			SPECIES_PERK_NAME = "Fur",
 			SPECIES_PERK_DESC = "You handle cold well, but heat is harder for you. Also, fur burns very well.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "shower",
+			SPECIES_PERK_NAME = "Hydrophobia",
+			SPECIES_PERK_DESC = "Vulps dislike being soaked and feel worse in wet conditions.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
@@ -144,3 +162,4 @@
 	)
 
 	return to_add
+
