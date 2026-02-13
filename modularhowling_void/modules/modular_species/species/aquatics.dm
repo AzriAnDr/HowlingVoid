@@ -7,6 +7,10 @@
 		TRAIT_MUTANT_COLORS,
 		TRAIT_SHARP_CLAWS,
 	)
+	/// Guard to ignore movement signal emitted by our own coast step.
+	var/tmp/list/space_coast_skip = list()
+	/// Last client move direction for pending coast step.
+	var/tmp/list/space_coast_dir = list()
 
 /datum/species/aquatic/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
@@ -16,6 +20,7 @@
 	UnregisterSignal(H, COMSIG_MOB_REAGENT_TICK)
 	RegisterSignal(H, COMSIG_MOB_REAGENT_TICK, PROC_REF(on_reagent_tick))
 	RegisterSignal(H, COMSIG_MOVABLE_MOVED, PROC_REF(update_water_mobility))
+	RegisterSignal(H, COMSIG_MOB_CLIENT_MOVED, PROC_REF(on_spacewalk_step))
 
 	var/datum/action/cooldown/scent_scan/aquatic/scent = new()
 	scent.Grant(H)
@@ -29,7 +34,6 @@
 		ADD_TRAIT(H, TRAIT_NO_SLIP_WATER, REF(src))
 	if(!HAS_TRAIT(H, TRAIT_NO_SLIP_ICE))
 		ADD_TRAIT(H, TRAIT_NO_SLIP_ICE, REF(src))
-
 	if(!HAS_TRAIT(H, TRAIT_SPACEWALK))
 		ADD_TRAIT(H, TRAIT_SPACEWALK, REF(src))
 
@@ -44,18 +48,101 @@
 
 	UnregisterSignal(H, COMSIG_MOB_REAGENT_TICK)
 	UnregisterSignal(H, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(H, COMSIG_MOB_CLIENT_MOVED)
 
 	if(HAS_TRAIT(H, TRAIT_NO_SLIP_WATER))
 		REMOVE_TRAIT(H, TRAIT_NO_SLIP_WATER, REF(src))
 	if(HAS_TRAIT(H, TRAIT_NO_SLIP_ICE))
 		REMOVE_TRAIT(H, TRAIT_NO_SLIP_ICE, REF(src))
-
 	if(HAS_TRAIT(H, TRAIT_SPACEWALK))
 		REMOVE_TRAIT(H, TRAIT_SPACEWALK, REF(src))
 
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/aquatic_water_speedboost)
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/aquatic_deep_water_speedboost)
 	UnregisterSignal(H, list(COMSIG_CARBON_NOSE_BOOPED, COMSIG_CARBON_NOSE_STRUCK))
+	space_coast_skip -= H
+	space_coast_dir -= H
+
+/datum/species/aquatic/proc/on_spacewalk_step(mob/living/carbon/human/source, move_dir, old_dir)
+	SIGNAL_HANDLER
+	if(!istype(source) || !source.client || !move_dir)
+		return
+	if(source.has_gravity() || !isturf(source.loc))
+		return
+	if(source.buckled || source.pulledby || source.throwing || source.incapacitated)
+		return
+
+	if(space_coast_skip[source])
+		space_coast_skip -= source
+		return
+
+	space_coast_dir[source] = move_dir
+	addtimer(CALLBACK(src, PROC_REF(apply_spacewalk_coast), source), 1, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/datum/species/aquatic/proc/apply_spacewalk_coast(mob/living/carbon/human/source)
+	var/move_dir = space_coast_dir[source]
+	space_coast_dir -= source
+	if(!istype(source) || !source.client || !move_dir)
+		return
+	if(!istype(source.dna?.species, /datum/species/aquatic))
+		return
+	if(source.has_gravity() || !isturf(source.loc))
+		return
+	if(source.buckled || source.pulledby || source.throwing || source.incapacitated)
+		return
+	// Coast only when player has released movement input.
+	if(source.client.intended_direction)
+		return
+	// No coast when passing close to any non-space tile or nearby blocking structure.
+	if(is_near_obstruction_for_coast(source))
+		return
+	if(is_coast_step_blocked(source, move_dir))
+		return
+
+	var/turf/next_turf = get_step(source, move_dir)
+	if(!istype(next_turf))
+		return
+
+	space_coast_skip[source] = TRUE
+	source.Move(next_turf, move_dir)
+
+/datum/species/aquatic/proc/is_coast_step_blocked(mob/living/carbon/human/source, move_dir)
+	if(!istype(source) || !move_dir)
+		return TRUE
+
+	var/turf/next_turf = get_step(source, move_dir)
+	if(!istype(next_turf) || next_turf.density)
+		return TRUE
+
+	for(var/atom/thing in next_turf)
+		if(thing == source)
+			continue
+		if(isliving(thing))
+			continue
+		if(thing.density)
+			return TRUE
+
+	return FALSE
+
+/datum/species/aquatic/proc/is_near_obstruction_for_coast(mob/living/carbon/human/source)
+	if(!istype(source))
+		return TRUE
+
+	for(var/turf/T in range(1, source))
+		if(T == source.loc)
+			continue
+		if(!isspaceturf(T))
+			return TRUE
+
+	for(var/atom/A in range(1, source))
+		if(A == source || A == source.loc)
+			continue
+		if(isliving(A))
+			continue
+		if(A.density)
+			return TRUE
+
+	return FALSE
 
 /datum/species/aquatic/proc/on_nose_boop(mob/living/carbon/human/source, mob/living/carbon/helper)
 	if(!source?.is_location_accessible(BODY_ZONE_PRECISE_MOUTH))
@@ -100,7 +187,7 @@
 		return TRUE
 
 	return FALSE
-
+// Water Swimming
 /datum/species/aquatic/proc/is_aquatic_speed_tile(atom/location)
 	if(!isturf(location))
 		return FALSE
@@ -145,7 +232,7 @@
 	var/is_water = is_aquatic_speed_tile(source.loc)
 	var/is_deep = is_aquatic_deep_tile(source.loc)
 
-	// only apply shark speed bonuses in water, never remove engine slowdowns.
+	// Apply shark speed bonuses in water without removing engine slowdowns.
 	source.remove_movespeed_modifier(/datum/movespeed_modifier/aquatic_water_speedboost)
 	source.remove_movespeed_modifier(/datum/movespeed_modifier/aquatic_deep_water_speedboost)
 
