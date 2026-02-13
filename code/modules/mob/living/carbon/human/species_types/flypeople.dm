@@ -28,10 +28,14 @@
 
 /datum/species/fly/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
+	if(!human_who_gained_species)
+		return
 	RegisterSignal(human_who_gained_species, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 
 /datum/species/fly/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
+	if(!C)
+		return
 	UnregisterSignal(C, COMSIG_ATOM_ATTACKBY)
 
 /datum/species/fly/proc/on_attackby(mob/living/source, obj/item/attacking_item, mob/living/attacker, list/modifiers, list/attack_modifiers)
@@ -52,12 +56,12 @@
 /datum/species/fly/get_species_lore()
 	return list(
 		"Flypeople are a curious species with a striking resemblance to the insect order of Diptera, \
-		commonly known as flies. With no publically known origin, flypeople are rumored to be a side effect of bluespace travel, \
+		commonly known as flies. With no publicly known origin, flypeople are rumored to be a side effect of bluespace travel, \
 		despite statements from Nanotrasen officials.",
 
 		"Little is known about the origins of this race, \
-		however they posess the ability to communicate with giant spiders, originally discovered in the Australicus sector \
-		and now a common occurence in black markets as a result of a breakthrough in syndicate bioweapon research.",
+		however they possess the ability to communicate with giant spiders, originally discovered in the Australicus sector \
+		and now a common occurrence in black markets as a result of a breakthrough in syndicate bioweapon research.",
 
 		"Flypeople are often feared or avoided among other species, their appearance often described as unclean or frightening in some cases, \
 		and their eating habits even more so with an insufferable accent to top it off.",
