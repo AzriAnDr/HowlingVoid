@@ -41,7 +41,7 @@
     },
   };
 
-  var CURRENT_CHAPTER = 'ironHeart';
+  var CURRENT_CHAPTER = 'jesusWept';
   var currentStyleEl = null;
   var currentScriptEl = null;
   var revealTimer = null;

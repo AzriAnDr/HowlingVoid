@@ -2,6 +2,7 @@
 // IRON HEART
 // =========================================================
 (() => {
+  const MENU_SETTINGS = window.__HOWLING_MENU_SETTINGS || {};
   const timeouts = new Set();
   const tset = (fn, ms) => {
     const id = setTimeout(() => {
@@ -75,6 +76,10 @@
 
   let fadeRaf = 0;
   const clamp01 = (x) => Math.max(0, Math.min(1, x));
+  const getConfiguredMenuVolume = () =>
+    clamp01(Number(MENU_SETTINGS.musicVolume) || 0);
+  const isMenuMusicEnabled = () =>
+    MENU_SETTINGS.musicEnabled !== false && getConfiguredMenuVolume() > 0;
 
   function fadeBgmTo(targetVolume, duration) {
     if (!bgm) return;
@@ -98,11 +103,21 @@
 
   function startBgm() {
     if (!bgm) return;
+
+    if (!isMenuMusicEnabled()) {
+      try {
+        bgm.pause();
+        bgm.currentTime = 0;
+      } catch {}
+      return;
+    }
+
     bgm.loop = true;
     bgm.volume = 0;
 
     const p = bgm.play();
-    if (p && p.then) p.then(() => fadeBgmTo(0.38, 1800)).catch(() => {});
+    if (p && p.then)
+      p.then(() => fadeBgmTo(getConfiguredMenuVolume(), 1800)).catch(() => {});
   }
 
   const TIMINGS = { REVEAL_SOFT: 6.5 };
@@ -114,7 +129,7 @@
     const at = (sec, fn) => {
       const delay = Math.max(0, (sec - startTime) * 1000);
       tset(() => {
-        if (!bgm || bgm.paused) return;
+        if (!bgm) return;
         fn();
       }, delay);
     };

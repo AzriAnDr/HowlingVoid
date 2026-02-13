@@ -303,7 +303,10 @@ GLOBAL_LIST_EMPTY(startup_messages)
 
 						if(introAccepted && bgm.paused && bgm.src) {
 							try {
-								bgm.play();
+								var play_promise = bgm.play();
+								if(play_promise && play_promise.catch) {
+									play_promise.catch(function() {});
+								}
 							} catch(e) {}
 						}
 					}

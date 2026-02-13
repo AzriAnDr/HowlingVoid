@@ -98,10 +98,14 @@
 	if(href_list["title_is_ready"])
 		title_screen_is_ready = TRUE
 		update_menu_music_settings()
+		if(SSticker && SSticker.current_state > GAME_STATE_PREGAME)
+			client << output(1, "nova_title_browser:set_round_started")
 		return
 
 /mob/dead/new_player/Login()
 	. = ..()
+	if(client)
+		stop_sound_channel(CHANNEL_LOBBYMUSIC)
 	show_title_screen()
 
 /**
@@ -112,6 +116,8 @@
 		return
 	if(client.interviewee)
 		return
+
+	stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
 	winset(src, "nova_title_browser", "is-disabled=false;is-visible=true")
 	winset(src, "status_bar", "is-visible=false")
