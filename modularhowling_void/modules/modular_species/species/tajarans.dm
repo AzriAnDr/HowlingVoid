@@ -31,8 +31,7 @@
 
 	if(prob(25) && tajaran.stat == CONSCIOUS)
 		tajaran.visible_message(span_danger("[tajaran.get_visible_name()] dodges the bullet!"))
-		INVOKE_ASYNC(tajaran, TYPE_PROC_REF(/mob, emote), "jump")
-		INVOKE_ASYNC(tajaran, TYPE_PROC_REF(/mob, emote), "hiss")
+		play_tajaran_dodge_fx(tajaran)
 		playsound(tajaran.loc, "sound/items/weapons/effects/ric[rand(1, 5)]", 25, TRUE, -1)
 		return PROJECTILE_INTERRUPT_HIT
 
@@ -124,12 +123,22 @@
 	SIGNAL_HANDLER
 
 	if(prob(25))
-		INVOKE_ASYNC(tajaran, TYPE_PROC_REF(/mob/living/carbon/human, emote), "jump")
-		INVOKE_ASYNC(tajaran, TYPE_PROC_REF(/mob/living/carbon/human, emote), "hiss")
+		src.play_tajaran_dodge_fx(tajaran)
 		return COMPONENT_DODGE_SUCCEEDED
 	return COMPONENT_DODGE_FAILED
 
-/datum/species/tajaran/get_hiss_sound(mob/living/carbon/human/tajaran)
+/datum/species/tajaran/proc/play_tajaran_dodge_fx(mob/living/carbon/human/tajaran)
+	if(!tajaran)
+		return
+
+	// Run emotes async to avoid sleeping-proc violations from signal handlers.
+	INVOKE_ASYNC(tajaran, TYPE_PROC_REF(/mob/living/carbon/human, emote), "jump")
+	INVOKE_ASYNC(tajaran, TYPE_PROC_REF(/mob/living/carbon/human, emote), "hiss")
+
+	playsound(tajaran, 'sound/items/weapons/thudswoosh.ogg', 35, TRUE)
+	playsound(tajaran, get_hiss_sound(tajaran), 45, TRUE)
+
+/datum/species/tajaran/get_hiss_sound(mob/living/carbon/human/tajaran = null)
 	return 'sound/mobs/humanoids/felinid/felinid_hiss.ogg'
 
 /datum/action/cooldown/tajaran_grooming
