@@ -98,14 +98,7 @@
 	if(isliving(target))
 		if(ishuman(target))
 			var/mob/living/carbon/human/human_target = target
-			if(
-				human_target.mob_height >= HUMAN_HEIGHT_MEDIUM
-				&& (
-					human_target.stat == DEAD
-					|| human_target.body_position == LYING_DOWN
-					|| human_target.stat >= SOFT_CRIT
-				)
-			)
+			if(human_target.mob_height >= HUMAN_HEIGHT_MEDIUM && (human_target.stat == DEAD || human_target.body_position == LYING_DOWN || human_target.stat >= SOFT_CRIT))
 				to_chat(source, span_warning("This body is too heavy for you to drag."))
 				return COMSIG_LIVING_CANCEL_PULL
 		return
