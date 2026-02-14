@@ -125,7 +125,7 @@
 /datum/action/cooldown/moth_lamp_sense
 	name = "Lamp Sense"
 	desc = "Focus your antennae and lock onto the brightest nearby direction."
-	button_icon = 'icons/obj/lighting/note_light.dmi'
+	button_icon = 'icons/effects/particles/notes/note_light.dmi'
 	button_icon_state = "power_10"
 	cooldown_time = 14 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS
