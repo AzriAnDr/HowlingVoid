@@ -6515,14 +6515,6 @@
 	pixel_x = 8;
 	pixel_y = 6
 	},
-/obj/item/computer_disk/engineering{
-	pixel_x = 10;
-	pixel_y = -8
-	},
-/obj/item/computer_disk/engineering{
-	pixel_x = 10;
-	pixel_y = -8
-	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)
 "chI" = (
@@ -10046,12 +10038,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
-"dpc" = (
-/obj/effect/turf_decal/siding/thinplating/dark/end{
-	dir = 4
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/service/chapel/monastery)
 "dpe" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -12371,7 +12357,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/siding/purple,
 /obj/machinery/dna_infuser,
-/obj/item/infuser_book,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
@@ -18695,9 +18680,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/bridge)
 "gbB" = (
-/obj/item/computer_disk/medical,
-/obj/item/computer_disk/medical,
-/obj/item/computer_disk/medical,
 /obj/item/clothing/neck/stethoscope{
 	pixel_y = 5
 	},
@@ -23504,23 +23486,10 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/fore)
 "hCY" = (
-/obj/item/computer_disk{
-	pixel_x = -5;
-	pixel_y = 8
-	},
-/obj/item/computer_disk{
-	pixel_x = 7;
-	pixel_y = 2
-	},
-/obj/item/computer_disk{
-	pixel_x = -8;
-	pixel_y = -3
-	},
 /obj/structure/table,
-/obj/item/computer_disk/ordnance{
-	pixel_x = 2;
-	pixel_y = 1
-	},
+/obj/item/disk/computer/ordnance,
+/obj/item/disk/computer/ordnance,
+/obj/item/disk/computer/ordnance,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/office)
 "hDa" = (
@@ -31855,6 +31824,7 @@
 	dir = 1
 	},
 /obj/item/radio/intercom/directional/south,
+/obj/item/disk/computer/engineering,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage_shared)
 "kgD" = (
@@ -35785,9 +35755,6 @@
 "ltQ" = (
 /obj/structure/table,
 /obj/item/clipboard,
-/obj/item/computer_disk/ordnance,
-/obj/item/computer_disk/ordnance,
-/obj/item/computer_disk/ordnance,
 /obj/item/circuitboard/aicore{
 	pixel_y = 5
 	},
@@ -40739,12 +40706,6 @@
 /obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
-"mYv" = (
-/obj/effect/turf_decal/siding/thinplating/dark/end{
-	dir = 8
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/service/chapel/monastery)
 "mYV" = (
 /obj/structure/chair{
 	dir = 8
@@ -43326,9 +43287,6 @@
 /obj/structure/table,
 /obj/item/clipboard,
 /obj/item/folder/yellow,
-/obj/item/computer_disk/quartermaster,
-/obj/item/computer_disk/quartermaster,
-/obj/item/computer_disk/quartermaster,
 /obj/item/pen/fountain,
 /obj/item/stamp/denied{
 	pixel_x = 8;
@@ -43362,6 +43320,7 @@
 /obj/item/stamp/granted{
 	pixel_x = 8
 	},
+/obj/item/disk/computer/quartermaster,
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/qm)
 "nTG" = (
@@ -56015,6 +55974,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
+/obj/item/disk/computer/medical,
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/medbay/central)
 "sbX" = (
@@ -88870,7 +88830,7 @@ wXa
 wXa
 nQo
 cvi
-mYv
+piu
 piu
 vSG
 kpS
@@ -89127,7 +89087,7 @@ wXa
 eXY
 oZb
 cvi
-dpc
+piu
 piu
 vSG
 kpS
@@ -91183,7 +91143,7 @@ piu
 ykv
 sVD
 cvi
-mYv
+piu
 piu
 vSG
 kpS
@@ -91440,7 +91400,7 @@ ggb
 ikg
 hda
 cvi
-dpc
+piu
 piu
 vSG
 kpS
