@@ -86,8 +86,8 @@
 	applied_modules = list(
 		/obj/item/mod/module/storage/syndicate,
 		/obj/item/mod/module/thermal_regulator,
-		/obj/item/mod/module/status_readout/operational,
-		/obj/item/mod/module/auto_doc,
+		/obj/item/mod/module/status_readout,
+		/obj/item/mod/module/adrenaline_boost,
 		/obj/item/mod/module/visor/thermal,
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/magboot/advanced,
@@ -98,8 +98,6 @@
 		/obj/item/mod/module/magboot/advanced,
 	)
 
-/// Not exactly a MODsuit thing but it's needed for the refills huh?
-/obj/item/reagent_containers/cup/glass/waterbottle/large/cryptobiolin
-	name = "bottle of cryptobiolin"
-	desc = "Nothing screams budget cuts like bottled suit fluid."
-	list_reagents = list(/datum/reagent/cryptobiolin = 100)
+// Howling Void Edit start
+// Removed dependency on legacy novaya_ert autodoc refill reagent/item.
+// Howling Void Edit end
