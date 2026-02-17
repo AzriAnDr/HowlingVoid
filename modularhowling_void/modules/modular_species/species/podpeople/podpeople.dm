@@ -228,7 +228,7 @@
 
 /datum/status_effect/pod_rooted_intake_active
 	id = "pod_rooted_intake_active"
-	duration = POD_ROOTED_INTAKE_DURATION
+	duration = STATUS_EFFECT_PERMANENT
 	tick_interval = POD_ROOTED_INTAKE_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
@@ -288,15 +288,7 @@
 	clear_spawned_roots()
 
 	var/obj/effect/pod_roots/center_roots = new(current_turf)
-	center_roots.alpha = 230
 	spawned_roots += center_roots
-
-	for(var/turf/adjacent_turf in range(1, current_turf))
-		if(!istype(adjacent_turf) || adjacent_turf == current_turf)
-			continue
-		var/obj/effect/pod_roots/edge_roots = new(adjacent_turf)
-		edge_roots.alpha = 150
-		spawned_roots += edge_roots
 
 /datum/status_effect/pod_rooted_intake_active/proc/drain_water_from_liquids(obj/effect/abstract/liquid_turf/liquids, wanted)
 	if(!liquids || wanted <= 0)
@@ -353,6 +345,12 @@
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 210
+
+/obj/effect/pod_roots/Initialize(mapload)
+	. = ..()
+	// Keep roots on one tile, but vary their look per cast.
+	alpha = rand(185, 240)
+	transform = turn(matrix(), pick(0, 90, 180, 270))
 
 /datum/species/pod/podweak/create_pref_unique_perks()
 	. = ..()
