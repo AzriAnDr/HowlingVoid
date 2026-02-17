@@ -1,7 +1,3 @@
-#define ACTIONSPEED_ID_HOWLING_MOTH_LIGHTSTRIDE "howling_moth_lightstride"
-#define ACTIONSPEED_ID_HOWLING_MOTH_DARKDRAG "howling_moth_darkdrag"
-#define MOOD_CATEGORY_HOWLING_MOTH_LIGHT "howling_moth_light"
-
 /datum/species/moth
 	/// Species-granted action tracked for cleanup.
 	var/tmp/list/species_lamp_sense_action = list()
@@ -252,7 +248,3 @@
 	color = "#E0B84A"
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-8, 8)
-
-#undef ACTIONSPEED_ID_HOWLING_MOTH_LIGHTSTRIDE
-#undef ACTIONSPEED_ID_HOWLING_MOTH_DARKDRAG
-#undef MOOD_CATEGORY_HOWLING_MOTH_LIGHT

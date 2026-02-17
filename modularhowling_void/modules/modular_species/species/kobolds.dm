@@ -1,5 +1,3 @@
-#define ACTIONSPEED_ID_HOWLING_KOBOLD_QUICKWORK "howling_kobold_quickwork"
-
 /datum/actionspeed_modifier/kobold_quickwork
 	id = ACTIONSPEED_ID_HOWLING_KOBOLD_QUICKWORK
 	variable = TRUE
@@ -214,5 +212,3 @@
 			SPECIES_PERK_DESC = "Bright flashes hit kobolds harder, causing extra stun and stress.",
 		),
 	)
-
-#undef ACTIONSPEED_ID_HOWLING_KOBOLD_QUICKWORK

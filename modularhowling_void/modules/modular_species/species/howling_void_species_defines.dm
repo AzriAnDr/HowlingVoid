@@ -1,0 +1,105 @@
+// ==========================================
+// HEMOPHAGE
+// ==========================================
+#define HEMOPHAGE_DARK_REGEN_BRUTE_PER_SECOND 2
+#define HEMOPHAGE_DARK_REGEN_BURN_PER_SECOND 2
+#define HEMOPHAGE_DARK_REGEN_TOX_PER_SECOND 1.5
+#define HEMOPHAGE_DARK_REGEN_BLOOD_COST_PER_DAMAGE 0.25
+#define HEMOPHAGE_DARK_REGEN_LIGHT_THRESHOLD 0.1
+#define HEMOPHAGE_DARK_REGEN_START_DELAY 1 SECONDS
+
+// ==========================================
+// KOBOLD
+// ==========================================
+#define ACTIONSPEED_ID_HOWLING_KOBOLD_QUICKWORK "howling_kobold_quickwork"
+
+// ==========================================
+// MOTH
+// ==========================================
+#define ACTIONSPEED_ID_HOWLING_MOTH_LIGHTSTRIDE "howling_moth_lightstride"
+#define ACTIONSPEED_ID_HOWLING_MOTH_DARKDRAG "howling_moth_darkdrag"
+#define MOOD_CATEGORY_HOWLING_MOTH_LIGHT "howling_moth_light"
+
+// ==========================================
+// PODPERSON: WATER RESERVE
+// ==========================================
+#define POD_WATER_RESERVE_MAX BLOOD_VOLUME_MAXIMUM
+
+#define POD_WATER_START_VOLUME 1200
+#define POD_WATER_DRAIN_PER_SECOND 0.05
+#define POD_WATER_ABSORB_PER_SECOND 1.5
+#define POD_WITHER_DAMAGE_MAX_PER_SECOND 0.8
+
+// ==========================================
+// PODPERSON: ROOTED INTAKE
+// ==========================================
+#define POD_ROOTED_INTAKE_DURATION 6 SECONDS
+#define POD_ROOTED_INTAKE_TICK 0.5 SECONDS
+#define POD_ROOTED_INTAKE_ABSORB_PER_SECOND 12
+
+// ==========================================
+// PODPERSON: LIGHT REGEN
+// ==========================================
+#define POD_LIGHT_REGEN_BRUTE_PER_SECOND 2
+#define POD_LIGHT_REGEN_BURN_PER_SECOND 2
+#define POD_LIGHT_REGEN_TOX_PER_SECOND 1.5
+#define POD_LIGHT_REGEN_WATER_COST_PER_DAMAGE 0.25
+#define POD_LIGHT_REGEN_LIGHT_THRESHOLD 0.1
+#define POD_LIGHT_REGEN_START_DELAY 1 SECONDS
+#define POD_LIGHT_REGEN_MIN_WATER (BLOOD_VOLUME_BAD + 1)
+
+// ==========================================
+// PODPERSON: PLANT DISEASE RISK
+// ==========================================
+#define POD_PLANT_DISEASE_MIN_LIGHT 0.08
+#define POD_PLANT_DISEASE_DARK_CHANCE 0.2
+#define POD_PLANT_DISEASE_DRY_CHANCE 0.35
+#define POD_PLANT_DISEASE_BASE_CHANCE 0.03
+#define POD_PLANT_DISEASE_DIRTY_TRAY_CHANCE 0.9
+#define POD_PLANT_DISEASE_MOLD_NEARBY_CHANCE 1.6
+#define POD_PLANT_DISEASE_WEEDKILLER_CHANCE 3.0
+#define POD_PLANT_DISEASE_ANTS_CHANCE 3.8
+#define POD_PLANT_DISEASE_HEAVY_PESTS_CHANCE 1.9
+
+// ==========================================
+// PODPERSON: EXPOSURE MODEL
+// ==========================================
+#define POD_PLANT_EXPOSURE_PER_SECOND_BASE 0.35
+#define POD_PLANT_EXPOSURE_SAFE_DECAY_PER_SECOND 0.9
+#define POD_PLANT_EXPOSURE_INFECT_THRESHOLD 16
+
+#define POD_PLANT_EXPOSURE_DARK_BONUS 0.20
+#define POD_PLANT_EXPOSURE_DRY_BONUS 0.30
+#define POD_PLANT_EXPOSURE_WEEDKILLER_BONUS 2.1
+#define POD_PLANT_EXPOSURE_DIRTY_TRAY_BONUS 0.9
+#define POD_PLANT_EXPOSURE_MOLD_BONUS 1.4
+#define POD_PLANT_EXPOSURE_ANTS_BONUS 2.4
+#define POD_PLANT_EXPOSURE_HEAVY_PESTS_BONUS 1.2
+
+#define POD_PLANT_ANTS_SHOES_MULT 0.25
+#define POD_PLANT_HEAVY_PESTS_RANGE 1
+
+// ==========================================
+// PODPERSON: PARASITOSIS DAMAGE
+// ==========================================
+#define POD_PARASITOSIS_TOX_PER_STAGE_SECOND 0.10
+#define POD_PARASITOSIS_BRUTE_PER_STAGE_SECOND 0.04
+#define POD_PARASITOSIS_STAMINA_PER_STAGE_SECOND 0.35
+#define POD_PARASITOSIS_NUTRITION_PER_STAGE_SECOND 0.8
+#define POD_PARASITOSIS_SCRATCH_CHANCE_PER_STAGE 1.6
+
+// ==========================================
+// PODPERSON: PLANT DISEASE SYMPTOMS
+// ==========================================
+#define POD_ROOT_ROT_WHEEZE_CHANCE_PER_STAGE 0.8
+#define POD_ROOT_ROT_DIZZY_CHANCE_PER_STAGE 0.5
+
+#define POD_LEAF_RUST_COUGH_CHANCE_PER_STAGE 0.9
+#define POD_LEAF_RUST_BLUR_CHANCE_PER_STAGE 0.6
+
+#define POD_POWDER_MOLD_COUGH_CHANCE_PER_STAGE 1.3
+#define POD_POWDER_MOLD_SNEEZE_CHANCE_PER_STAGE 1.1
+#define POD_POWDER_MOLD_CONFUSION_CHANCE_PER_STAGE 0.7
+
+#define POD_PARASITOSIS_JITTER_CHANCE_PER_STAGE 0.8
+#define POD_PARASITOSIS_CONFUSION_CHANCE_PER_STAGE 0.5

@@ -1,14 +1,6 @@
 /datum/species/hemophage/New()
 	. = ..()
 
-
-#define HEMOPHAGE_DARK_REGEN_BRUTE_PER_SECOND 2
-#define HEMOPHAGE_DARK_REGEN_BURN_PER_SECOND 2
-#define HEMOPHAGE_DARK_REGEN_TOX_PER_SECOND 1.5
-#define HEMOPHAGE_DARK_REGEN_BLOOD_COST_PER_DAMAGE 0.25
-#define HEMOPHAGE_DARK_REGEN_LIGHT_THRESHOLD 0.1
-#define HEMOPHAGE_DARK_REGEN_START_DELAY 1 SECONDS
-
 /datum/species/hemophage/on_species_gain(mob/living/carbon/human/new_hemophage, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	if(istype(new_hemophage))
@@ -115,10 +107,3 @@
 	regenerator.adjust_blood_volume(-blood_used * HEMOPHAGE_DARK_REGEN_BLOOD_COST_PER_DAMAGE)
 	regenerator.updatehealth()
 	new /obj/effect/temp_visual/heal(get_turf(regenerator), COLOR_EFFECT_HEAL_RED)
-
-#undef HEMOPHAGE_DARK_REGEN_BRUTE_PER_SECOND
-#undef HEMOPHAGE_DARK_REGEN_BURN_PER_SECOND
-#undef HEMOPHAGE_DARK_REGEN_TOX_PER_SECOND
-#undef HEMOPHAGE_DARK_REGEN_BLOOD_COST_PER_DAMAGE
-#undef HEMOPHAGE_DARK_REGEN_LIGHT_THRESHOLD
-#undef HEMOPHAGE_DARK_REGEN_START_DELAY

@@ -216,15 +216,23 @@
 		for(var/datum/experiment/experiment as anything in linked_techweb.available_experiments)
 			if(istype(experiment, /datum/experiment/autopsy))
 				data["experiments"] += list(experiment.to_ui_data())
-
-	var/list/operations = GLOB.operations.get_instances_from(GLOB.operations.unlocked | advanced_surgeries)
+	// HOWLING VOID ADD START
+	var/list/operation_typepaths = GLOB.operations.unlocked | advanced_surgeries
+	var/list/operations = GLOB.operations.get_instances_from(operation_typepaths)
 	var/any_recommended = FALSE
 	for(var/datum/surgery_operation/operation as anything in operations)
 		var/recommend = FALSE
 		if(table?.patient && operation.show_as_next_step(table.patient, target_zone))
-			recommend = TRUE
-			any_recommended = TRUE
+			// Keep full catalog visible, but restrict "Possible Operations" hints by patient type.
+			var/is_pod_operation = hv_is_podweak_operation(operation)
+			if(hv_is_podweak_human(table.patient))
+				recommend = is_pod_operation
+			else
+				recommend = !is_pod_operation
 
+			if(recommend)
+				any_recommended = TRUE
+	// HOWLING VOID ADDING END
 		data["surgeries"] += list(list(
 			"name" = operation.rnd_name || operation.name,
 			"desc" = operation.rnd_desc || operation.desc,

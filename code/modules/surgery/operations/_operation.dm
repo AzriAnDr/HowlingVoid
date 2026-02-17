@@ -100,6 +100,15 @@
 	// Signals can add operation types to the list to unlock special ones
 	SEND_SIGNAL(src, COMSIG_LIVING_OPERATING_ON, operating_on, possible_operations)
 	SEND_SIGNAL(operating_on, COMSIG_ATOM_BEING_OPERATED_ON, src, possible_operations)
+	// HOWLING VOID ADD START
+	// If we're operating directly on a limb, also notify the limb owner.
+	// Species hooks (like podperson surgery filtering) are registered on the patient mob,
+	// so without this call they won't trigger for limb-targeted radial surgery checks.
+	if(isbodypart(operating_on))
+		var/obj/item/bodypart/limb = operating_on
+		if(isliving(limb.owner))
+			SEND_SIGNAL(limb.owner, COMSIG_ATOM_BEING_OPERATED_ON, src, possible_operations)
+	// HOWLING VOID ADDING END
 
 	var/list/operations = list()
 	for(var/datum/surgery_operation/operation as anything in GLOB.operations.get_instances_from(possible_operations))
@@ -529,11 +538,35 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 /datum/surgery_operation/proc/get_radial_options(atom/movable/operating_on, obj/item/tool, operating_zone)
 	if(!main_option)
 		main_option = new()
-		main_option.image = get_default_radial_image()
+		// HOWLING VOID ADD START
+		// Podweak operations should display botanical tools in radial choices,
+		// not inherited human surgery icons.
+		var/image/radial_icon = hv_get_podweak_radial_image() || get_default_radial_image()
+		main_option.image = radial_icon
+		// HOWLING VOID ADDING END
 		main_option.name = name
 		main_option.info = desc
 
 	return main_option
+
+// HOWLING VOID ADD START
+/datum/surgery_operation/proc/hv_get_podweak_radial_image()
+	if(!findtext("[type]", "/podweak"))
+		return null
+
+	for(var/tool_key in implements)
+		if(ispath(tool_key, /obj/item))
+			return image(tool_key)
+
+	var/list/remove_tools = vars["remove_implements"]
+	if(islist(remove_tools))
+		for(var/tool_key in remove_tools)
+			if(ispath(tool_key, /obj/item))
+				return image(tool_key)
+
+	// Fallback for podweak ops without explicit botanical implement list.
+	return image(/obj/item/cultivator)
+// HOWLING VOID ADDING END
 
 /**
  * Checks to see if this operation can be performed on the provided target
