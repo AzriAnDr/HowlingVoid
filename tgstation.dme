@@ -9615,6 +9615,7 @@
 #include "modularhowling_void\modules\modular_species\species\unathi.dm"
 #include "modularhowling_void\modules\modular_species\species\voxes.dm"
 #include "modularhowling_void\modules\modular_species\species\vox_primalis.dm"
+#include "modularhowling_void\modules\modular_species\species\xenohybrids.dm"
 #include "modularhowling_void\modules\modular_species\species\vulpkanins.dm"
 #include "modularhowling_void\modules\police_modsuit\code\mod_suit.dm"
 #include "modularhowling_void\modules\ported_content\ark_station\now-we-can-jump\click.dm"
