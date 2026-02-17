@@ -21,6 +21,11 @@
 #define MOOD_CATEGORY_HOWLING_MOTH_LIGHT "howling_moth_light"
 
 // ==========================================
+// VOX
+// ==========================================
+#define ACTIONSPEED_ID_HOWLING_VOX_QUICKHANDS "howling_vox_quickhands"
+
+// ==========================================
 // PODPERSON: WATER RESERVE
 // ==========================================
 #define POD_WATER_RESERVE_MAX BLOOD_VOLUME_MAXIMUM
