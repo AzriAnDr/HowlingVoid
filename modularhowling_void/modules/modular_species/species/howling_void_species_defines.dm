@@ -26,6 +26,11 @@
 #define ACTIONSPEED_ID_HOWLING_VOX_QUICKHANDS "howling_vox_quickhands"
 
 // ==========================================
+// TESHARI
+// ==========================================
+#define ACTIONSPEED_ID_HOWLING_TESHARI_TECH_APTITUDE "howling_teshari_tech_aptitude"
+
+// ==========================================
 // PODPERSON: WATER RESERVE
 // ==========================================
 #define POD_WATER_RESERVE_MAX BLOOD_VOLUME_MAXIMUM
