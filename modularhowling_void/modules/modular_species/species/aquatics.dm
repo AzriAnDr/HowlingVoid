@@ -308,6 +308,21 @@
 /datum/movespeed_modifier/aquatic_deep_water_speedboost
 	multiplicative_slowdown = -1.65
 
+/datum/species/aquatic/prepare_human_for_preview(mob/living/carbon/human/aquatic)
+	var/main_color = "#4A6D7A"
+	var/secondary_color = "#cccccc"
+	var/tertiary_color = "#c2c2c2"
+
+	aquatic.dna.features[FEATURE_MUTANT_COLOR] = main_color
+	aquatic.dna.features[FEATURE_MUTANT_COLOR_TWO] = secondary_color
+	aquatic.dna.features[FEATURE_MUTANT_COLOR_THREE] = tertiary_color
+	aquatic.dna.mutant_bodyparts[FEATURE_TAIL] = aquatic.dna.species.build_mutant_part("Shark", list(main_color, secondary_color, tertiary_color))
+	aquatic.dna.mutant_bodyparts[FEATURE_SNOUT] = aquatic.dna.species.build_mutant_part("hShark", list(main_color, secondary_color, tertiary_color))
+	aquatic.dna.mutant_bodyparts[FEATURE_EARS] = aquatic.dna.species.build_mutant_part("Sergal", list(main_color, secondary_color, tertiary_color))
+	aquatic.dna.features[FEATURE_LEGS] = NORMAL_LEGS
+	regenerate_organs(aquatic, src, visual_only = TRUE)
+	aquatic.update_body(TRUE)
+
 /datum/species/aquatic/create_pref_unique_perks()
 	var/list/perks = list()
 	perks += list(list(
