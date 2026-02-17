@@ -170,14 +170,14 @@
 // Howling Void Edit start
 /datum/asset/simple/lobby_howling_menu
 	assets = list(
-		"menuChapters.js" = 'modular_HV/code/html_menu/menuChapters.js',
-		"ironHeart.js" = 'modular_HV/code/html_menu/ironHeart.js',
-		"jesusWept.js" = 'modular_HV/code/html_menu/jesusWept.js',
-		"ironHeart.css" = 'modular_HV/code/html_menu/ironHeart.css',
-		"jesusWept.css" = 'modular_HV/code/html_menu/jesusWept.css',
-		"buttonclickrelease.ogg" = 'modular_HV/code/html_menu/buttonclickrelease.ogg',
-		"iron_heart.ogg" = 'modular_HV/code/html_menu/iron_heart.ogg',
-		"jesus_wept.ogg" = 'modular_HV/code/html_menu/jesus_wept.ogg',
+		"menuChapters.js" = 'modularhowling_void/code/html_menu/menuChapters.js',
+		"ironHeart.js" = 'modularhowling_void/code/html_menu/ironHeart.js',
+		"jesusWept.js" = 'modularhowling_void/code/html_menu/jesusWept.js',
+		"ironHeart.css" = 'modularhowling_void/code/html_menu/ironHeart.css',
+		"jesusWept.css" = 'modularhowling_void/code/html_menu/jesusWept.css',
+		"buttonclickrelease.ogg" = 'modularhowling_void/code/html_menu/buttonclickrelease.ogg',
+		"iron_heart.ogg" = 'modularhowling_void/code/html_menu/iron_heart.ogg',
+		"jesus_wept.ogg" = 'modularhowling_void/code/html_menu/jesus_wept.ogg',
 	)
 // Howling Void Edit end
 
