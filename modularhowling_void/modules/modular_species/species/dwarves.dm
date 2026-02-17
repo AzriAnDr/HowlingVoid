@@ -3,6 +3,7 @@
 		TRAIT_DWARF,
 		TRAIT_FRIENDLY,
 		TRAIT_ALCOHOL_TOLERANCE,
+		TRAIT_STUBBY_BODY,
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_LITERATE,
@@ -14,6 +15,7 @@
 	if(!istype(H))
 		return
 
+	H.physiology.cold_mod *= 0.8
 	H.add_movespeed_mod_immunities(REF(src), list(
 		/datum/movespeed_modifier/equipment_speedmod,
 		/datum/movespeed_modifier/equipment_speedmod/immutable,
@@ -21,6 +23,7 @@
 	H.update_equipment_speed_mods()
 	RegisterSignal(H, COMSIG_MOB_ITEM_ATTACK, PROC_REF(on_dwarf_item_attack))
 	RegisterSignal(H, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_dwarf_shield_reflect))
+	RegisterSignal(H, COMSIG_MOB_FIRED_GUN, PROC_REF(on_dwarf_fired_gun))
 	RegisterSignal(H, COMSIG_MOB_UPDATE_HELD_ITEMS, PROC_REF(update_clan_arms_bonus))
 	update_clan_arms_bonus(H)
 
@@ -29,6 +32,7 @@
 	if(!istype(H))
 		return
 
+	H.physiology.cold_mod /= 0.8
 	H.remove_movespeed_mod_immunities(REF(src), list(
 		/datum/movespeed_modifier/equipment_speedmod,
 		/datum/movespeed_modifier/equipment_speedmod/immutable,
@@ -36,8 +40,24 @@
 	H.update_equipment_speed_mods()
 	UnregisterSignal(H, COMSIG_MOB_ITEM_ATTACK)
 	UnregisterSignal(H, COMSIG_LIVING_CHECK_BLOCK)
+	UnregisterSignal(H, COMSIG_MOB_FIRED_GUN)
 	UnregisterSignal(H, COMSIG_MOB_UPDATE_HELD_ITEMS)
 	REMOVE_TRAIT(H, TRAIT_GRABRESISTANCE, REF(src))
+
+/datum/species/dwarf/spec_life(mob/living/carbon/human/H, seconds_per_tick)
+	. = ..()
+
+/datum/species/dwarf/proc/on_dwarf_fired_gun(mob/living/carbon/human/source, obj/item/gun/gun_fired, atom/target, params, zone_override, list/bonus_spread_values)
+	SIGNAL_HANDLER
+
+	if(!istype(source))
+		return
+
+	var/drunkenness = source.get_drunk_amount()
+	// Drunken Vision: being fully sober makes dwarven aiming less steady.
+	if(drunkenness < 12)
+		bonus_spread_values[MIN_BONUS_SPREAD_INDEX] += 6
+		bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += 18
 
 /datum/species/dwarf/proc/update_clan_arms_bonus(mob/living/carbon/human/H)
 	SIGNAL_HANDLER
@@ -168,5 +188,17 @@
 		SPECIES_PERK_ICON = FA_ICON_BACON,
 		SPECIES_PERK_NAME = "Dwarven Tongue",
 		SPECIES_PERK_DESC = "You bellow when speaking and have distinct food preferences: meat, dairy and alcohol are favored.",
+	))
+	perks += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+		SPECIES_PERK_ICON = "eye",
+		SPECIES_PERK_NAME = "Drunken Vision",
+		SPECIES_PERK_DESC = "Stone-cold sober dwarves shoot less steadily. A little drink helps them keep aim.",
+	))
+	perks += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+		SPECIES_PERK_ICON = FA_ICON_PERSON,
+		SPECIES_PERK_NAME = "Short Stride",
+		SPECIES_PERK_DESC = "Climbing up obstacles takes longer for dwarves.",
 	))
 	return perks
