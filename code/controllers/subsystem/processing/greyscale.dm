@@ -23,6 +23,28 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 		var/datum/greyscale_config/config = new greyscale_type()
 		configurations["[greyscale_type]"] = config
 
+	// HOWLING VOID ADD START
+	// Enforce stable robe cape greyscale sources before Refresh()/IconForge loading.
+	var/static/list/hv_config_json_override = list(
+		"/datum/greyscale_config/robe_cape" = "code/datums/greyscale/json_configs/robe_cape.json",
+		"/datum/greyscale_config/robe_cape/worn" = "code/datums/greyscale/json_configs/robe_cape_worn.json",
+	)
+	var/static/list/hv_config_icon_override = list(
+		"/datum/greyscale_config/robe_cape" = "icons/obj/clothing/neck.dmi",
+		"/datum/greyscale_config/robe_cape/worn" = "icons/mob/clothing/neck.dmi",
+	)
+	for(var/greyscale_type in configurations)
+		var/datum/greyscale_config/config = configurations[greyscale_type]
+		var/json_override = hv_config_json_override[greyscale_type]
+		if(json_override)
+			config.string_json_config = json_override
+			config.json_config = file(json_override)
+		var/icon_override = hv_config_icon_override[greyscale_type]
+		if(icon_override)
+			config.string_icon_file = icon_override
+			config.icon_file = file(icon_override)
+	// HOWLING VOID ADDING END
+
 	// We do this after all the types have been loaded into the listing so reference layers don't care about init order
 	for(var/greyscale_type in configurations)
 		CHECK_TICK
