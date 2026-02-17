@@ -425,6 +425,9 @@ ROUNDSTART_RACES golemweak
 ROUNDSTART_RACES dullahan
 ROUNDSTART_RACES kobold
 
+## HOWLING VOID RACES DOWN THERE
+ROUNDSTART_RACES nabber
+
 ##-------------------------------------------------------------------------------------------
 
 ## Roundstart no-reset races
