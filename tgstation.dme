@@ -9598,6 +9598,7 @@
 #include "modularhowling_void\modules\modular_species\actions\sniffing\vulpkanin.dm"
 #include "modularhowling_void\modules\modular_species\organs\aquatic\aquatic_organs.dm"
 #include "modularhowling_void\modules\modular_species\species\aquatics.dm"
+#include "modularhowling_void\modules\modular_species\species\dwarves.dm"
 #include "modularhowling_void\modules\modular_species\species\dullahans.dm"
 #include "modularhowling_void\modules\modular_species\species\flypeople.dm"
 #include "modularhowling_void\modules\modular_species\species\lizards.dm"
