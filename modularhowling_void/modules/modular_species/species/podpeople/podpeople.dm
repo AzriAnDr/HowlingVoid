@@ -291,9 +291,8 @@
 	center_roots.alpha = 230
 	spawned_roots += center_roots
 
-	for(var/check_dir in GLOB.cardinals)
-		var/turf/adjacent_turf = get_step(current_turf, check_dir)
-		if(!istype(adjacent_turf) || adjacent_turf.density)
+	for(var/turf/adjacent_turf in range(1, current_turf))
+		if(!istype(adjacent_turf) || adjacent_turf == current_turf)
 			continue
 		var/obj/effect/pod_roots/edge_roots = new(adjacent_turf)
 		edge_roots.alpha = 150
