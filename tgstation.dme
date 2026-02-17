@@ -9609,6 +9609,7 @@
 #include "modularhowling_void\modules\modular_species\species\podpeople\podpeople.dm"
 #include "modularhowling_void\modules\modular_species\species\podpeople\podpeople_diseases.dm"
 #include "modularhowling_void\modules\modular_species\species\podpeople\podpeople_surgery.dm"
+#include "modularhowling_void\modules\modular_species\species\synthetics.dm"
 #include "modularhowling_void\modules\modular_species\species\skrell.dm"
 #include "modularhowling_void\modules\modular_species\species\tajarans.dm"
 #include "modularhowling_void\modules\modular_species\species\teshari.dm"
