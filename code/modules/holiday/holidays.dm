@@ -220,7 +220,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	name = "День спонтанного проявления доброты"
 	begin_day = 17
 	begin_month = FEBRUARY
-	poster_name = "плакат с частичкой доброты"
+	poster_name = "Плакат с частичкой доброты"
 	poster_desc = "Плакат, оповещающий читателя о том, что сегодня — День «Проявления доброты». Какое приятное событие!"
 	poster_icon = "holiday_kind"
 
