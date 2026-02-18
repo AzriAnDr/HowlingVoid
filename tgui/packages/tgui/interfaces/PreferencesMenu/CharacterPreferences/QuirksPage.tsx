@@ -335,7 +335,7 @@ function QuirkPage() {
     }
   });
 
-  let quirkPoints = data.quirks_balance;
+  const quirkPoints = data.quirks_balance;
   let positiveQuirks = 0;
 
   for (const selectedQuirkName of selectedQuirks) {

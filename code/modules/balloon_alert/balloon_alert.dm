@@ -40,7 +40,12 @@
 // if this would look bad on laggy clients.
 /atom/proc/balloon_alert_perform(mob/viewer, text)
 
-	var/client/viewer_client = viewer?.client
+	// Howling Void add. Ensure the viewer is actually a mob with a client before accessing `.client`.
+	if (!viewer || !istype(viewer, /mob))
+		return
+
+	var/client/viewer_client = viewer.client
+	//Howling void add end
 	if (isnull(viewer_client))
 		return
 
