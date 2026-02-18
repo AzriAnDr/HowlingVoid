@@ -48,7 +48,8 @@
 	var/list/data = list()
 
 	data["selected_quirks"] = get_selected_quirks()
-	data["default_quirk_balance"] = CONFIG_GET(number/default_quirk_points)
+	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species) // Howling Void edit
+	data["default_quirk_balance"] = CONFIG_GET(number/default_quirk_points) + get_species_positive_quirk_points_bonus(species_type) // Howling Void edit
 	data["species_disallowed_quirks"] = get_species_compatibility()
 
 	return data
@@ -60,6 +61,8 @@
 		tainted = FALSE
 		data["selected_quirks"] = get_selected_quirks()
 		data["species_disallowed_quirks"] = get_species_compatibility()
+		var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species) // Howling Void edit
+		data["default_quirk_balance"] = CONFIG_GET(number/default_quirk_points) + get_species_positive_quirk_points_bonus(species_type) // Howling Void edit
 
 	return data
 
@@ -111,7 +114,8 @@
 
 	preferences.validate_quirks()
 	var/list/new_quirks = preferences.all_quirks | quirk_name
-	if (SSquirks.filter_invalid_quirks(new_quirks, preferences.augments) != new_quirks)// NOVA EDIT - AUGMENTS+
+	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species) // Howling Void edit
+	if (SSquirks.filter_invalid_quirks(new_quirks, preferences.augments, species_type) != new_quirks)// NOVA EDIT - AUGMENTS+ // Howling Void edit
 		// If the client is sending an invalid give_quirk, that means that
 		// something went wrong with the client prediction, so we should
 		// catch it back up to speed.
@@ -128,7 +132,8 @@
 	var/quirk_name = params["quirk"]
 
 	var/list/new_quirks = preferences.all_quirks - quirk_name
-	if (!(quirk_name in preferences.all_quirks) || SSquirks.filter_invalid_quirks(new_quirks, preferences.augments) != new_quirks)// NOVA EDIT - AUGMENTS+
+	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species) // Howling Void edit
+	if (!(quirk_name in preferences.all_quirks) || SSquirks.filter_invalid_quirks(new_quirks, preferences.augments, species_type) != new_quirks)// NOVA EDIT - AUGMENTS+ // Howling Void edit
 		// If the client is sending an invalid remove_quirk, that means that
 		// something went wrong with the client prediction, so we should
 		// catch it back up to speed.

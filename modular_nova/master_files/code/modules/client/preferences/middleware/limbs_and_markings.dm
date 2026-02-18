@@ -95,7 +95,8 @@
 	else
 		preferences.augments[limbs_to_process[limb_slot]] = augment_to_path[augment_name]
 	// Remove some positive quirks if the point balance becomes too low.
-	var/list/filtered_quirks = SSquirks.filter_invalid_quirks(preferences.all_quirks, preferences.augments)
+	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species) // Howling Void edit
+	var/list/filtered_quirks = SSquirks.filter_invalid_quirks(preferences.all_quirks, preferences.augments, species_type) // Howling Void edit
 	if(filtered_quirks != preferences.all_quirks)
 		preferences.all_quirks = filtered_quirks
 		preferences.update_static_data(user)
@@ -231,7 +232,8 @@
 	else
 		preferences.augments[organs_to_process[organ_slot]] = augment_to_path[augment_name]
 	// Remove some positive quirks if the point balance becomes too low.
-	var/list/filtered_quirks = SSquirks.filter_invalid_quirks(preferences.all_quirks, preferences.augments)
+	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species) // Howling Void edit
+	var/list/filtered_quirks = SSquirks.filter_invalid_quirks(preferences.all_quirks, preferences.augments, species_type) // Howling Void edit
 	if(filtered_quirks != preferences.all_quirks)
 		preferences.all_quirks = filtered_quirks
 		preferences.update_static_data(user)

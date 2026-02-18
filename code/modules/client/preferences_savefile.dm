@@ -389,7 +389,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(job_preferences[j] != JP_LOW && job_preferences[j] != JP_MEDIUM && job_preferences[j] != JP_HIGH)
 			job_preferences -= j
 
-	all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks), SANITIZE_LIST(augments)) // NOVA EDIT CHANGE - AUGMENTS+ - ORIGINAL: all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks))
+	var/datum/species/species_type = read_preference(/datum/preference/choiced/species) // Howling Void edit
+	all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks), SANITIZE_LIST(augments), species_type) // NOVA EDIT CHANGE - AUGMENTS+ - ORIGINAL: all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks)) // Howling Void edit original: all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks), SANITIZE_LIST(augments))
 	validate_quirks()
 	sanitize_languages() // NOVA EDIT ADDITION
 

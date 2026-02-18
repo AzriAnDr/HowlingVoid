@@ -505,7 +505,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return TRUE
 
 /datum/preferences/proc/GetQuirkBalance()
-	var/bal = CONFIG_GET(number/default_quirk_points)
+	var/datum/species/species_type = read_preference(/datum/preference/choiced/species) // Howling Void edit
+	var/bal = CONFIG_GET(number/default_quirk_points) + get_species_positive_quirk_points_bonus(species_type) // Howling Void edit
 	for(var/V in all_quirks)
 		var/datum/quirk/T = SSquirks.quirks[V]
 		bal -= initial(T.value)
@@ -521,6 +522,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	for(var/q in all_quirks)
 		if(SSquirks.quirk_points[q] > 0)
 			.++
+
+/proc/get_species_positive_quirk_points_bonus(datum/species/species_type)
+	if(!istype(species_type)) // Howling Void edit
+		return 0 // Howling Void edit
+
+	switch(species_type.id) // Howling Void edit
+		if(SPECIES_HUMAN) // Howling Void edit
+			return 6 // Howling Void edit
+		if(SPECIES_HUMANOID) // Howling Void edit
+			return 4 // Howling Void edit
+		if(SPECIES_INSECTOID) // Howling Void edit
+			return 4 // Howling Void edit
+		if(SPECIES_MAMMAL) // Howling Void edit
+			return 4 // Howling Void edit
+
+	return 0 // Howling Void edit
 
 /datum/preferences/proc/validate_quirks()
 	var/datum/species/species_type = read_preference(/datum/preference/choiced/species)

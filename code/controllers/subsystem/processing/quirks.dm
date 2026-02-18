@@ -196,12 +196,12 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /// be valid.
 /// If no changes need to be made, will return the same list.
 /// Expects all quirk names to be unique, but makes no other expectations.
-/datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks, list/augments) // NOVA EDIT CHANGE - AUGMENTS+ - ORIGINAL: /datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks)
+/datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks, list/augments, datum/species/species_type = null) // NOVA EDIT CHANGE - AUGMENTS+ - ORIGINAL: /datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks) // Howling Void edit old:/datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks, list/augments)
 	var/list/new_quirks = list()
 	var/list/positive_quirks = list()
 	var/points_enabled = !CONFIG_GET(flag/disable_quirk_points)
 	var/max_positive_quirks = CONFIG_GET(number/max_positive_quirks)
-	var/balance = -CONFIG_GET(number/default_quirk_points)
+	var/balance = -CONFIG_GET(number/default_quirk_points) - get_species_positive_quirk_points_bonus(species_type) // Howling Void edit
 
 	var/list/all_quirks = get_quirks()
 
