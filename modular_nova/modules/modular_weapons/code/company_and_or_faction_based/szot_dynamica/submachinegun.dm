@@ -34,7 +34,7 @@
 
 	// This thing shoots faster then the Zashch, but the DPS and killing speed should not be that fast overall
 	projectile_wound_bonus = -10
-	projectile_damage_multiplier = 0.65
+	projectile_damage_multiplier = 0.55
 	spread = 6
 
 	lore_blurb = "The Napadayuschiy is what happens when you take the Zashchitnik pistol's design principles and feed them a steady diet of \
