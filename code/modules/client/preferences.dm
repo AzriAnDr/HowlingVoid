@@ -523,11 +523,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(SSquirks.quirk_points[q] > 0)
 			.++
 
-/proc/get_species_positive_quirk_points_bonus(datum/species/species_type)
-	if(!istype(species_type)) // Howling Void edit
+/proc/get_species_positive_quirk_points_bonus(species_type)
+	var/species_id
+	if(ispath(species_type, /datum/species)) // Howling Void edit
+		species_id = initial(species_type:id) // Howling Void edit
+	else if(istype(species_type, /datum/species)) // Howling Void edit
+		var/datum/species/species_datum = species_type // Howling Void edit
+		species_id = species_datum.id // Howling Void edit
+	else // Howling Void edit
 		return 0 // Howling Void edit
 
-	switch(species_type.id) // Howling Void edit
+	switch(species_id) // Howling Void edit
 		if(SPECIES_HUMAN) // Howling Void edit
 			return 6 // Howling Void edit
 		if(SPECIES_HUMANOID) // Howling Void edit

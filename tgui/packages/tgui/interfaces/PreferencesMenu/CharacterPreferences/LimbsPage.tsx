@@ -129,7 +129,7 @@ export const LimbPage = (props) => {
 export const AugmentationPage = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
   const { data } = useBackend<PreferencesMenuData>();
-  const balance = -data.quirks_balance;
+  const quirkPoints = data.quirks_balance;
   if (props.limb.can_augment) {
     return (
       <div style={{ marginBottom: '1.5em' }}>
@@ -148,7 +148,7 @@ export const AugmentationPage = (props) => {
                       // it's added and not substracted
                       if (
                         data.quirk_points_enabled &&
-                        balance + props.limb.costs[value] > 0
+                        quirkPoints - props.limb.costs[value] < 0
                       ) {
                         return;
                       }
@@ -190,7 +190,7 @@ export const AugmentationPage = (props) => {
 export const OrganPage = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
   const { data } = useBackend<PreferencesMenuData>();
-  const balance = -data.quirks_balance;
+  const quirkPoints = data.quirks_balance;
   return (
     <Stack.Item>
       <Stack fill>
@@ -204,7 +204,7 @@ export const OrganPage = (props) => {
               // Since the costs are positive, it's added and not substracted
               if (
                 data.quirk_points_enabled &&
-                balance + props.organ.costs[value] > 0
+                quirkPoints - props.organ.costs[value] < 0
               ) {
                 return;
               }
@@ -224,7 +224,7 @@ export const LimbsPage = (props) => {
   const { data } = useBackend<PreferencesMenuData>();
   const { act } = useBackend<PreferencesMenuData>();
   const markings = data.marking_presets ? data.marking_presets : [];
-  const balance = -data.quirks_balance;
+  const quirkPoints = Math.max(0, data.quirks_balance);
   return (
     <Stack minHeight="100%">
       <Stack.Item minWidth="33%" minHeight="100%">
@@ -257,22 +257,16 @@ export const LimbsPage = (props) => {
             <Section
               fill
               align="center"
-              title="Quirk Points Balance"
               style={{ marginTop: '3em' }}
             >
+              <Box className="PreferencesMenu__Quirks__AugmentsPointsTitle">
+                Quirk Points
+              </Box>
               <Stack justify="center">
                 <Box
-                  backgroundColor="#eee"
-                  bold
-                  color="black"
-                  fontSize="1.2em"
-                  py={0.5}
-                  style={{
-                    width: '20%',
-                    alignItems: 'center',
-                  }}
+                  className="PreferencesMenu__Quirks__AugmentsPointsValue"
                 >
-                  {balance}
+                  {quirkPoints}
                 </Box>
               </Stack>
             </Section>
