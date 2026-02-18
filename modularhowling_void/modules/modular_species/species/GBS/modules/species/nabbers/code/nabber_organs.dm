@@ -6,7 +6,7 @@
 #define NABBER_HEAT_THRESHOLD_2 440
 #define NABBER_HEAT_THRESHOLD_3 600
 
-#define ORGGAN_ICON_NABBER 'modularhowling_void/modules/modular_species/GBS/modules/species/nabbers/icons/organs/nabber_organs.dmi'
+#define ORGGAN_ICON_NABBER 'modularhowling_void/modules/modular_species/species/GBS/modules/species/nabbers/icons/organs/nabber_organs.dmi'
 
 /obj/item/organ/tongue/nabber
 	name = "nabber tongue"
@@ -107,6 +107,11 @@
 	icon_state = "liver"
 	icon = ORGGAN_ICON_NABBER
 	liver_resistance = 0.8 * LIVER_DEFAULT_TOX_RESISTANCE // -40%
+
+/obj/item/organ/stomach/nabber
+	name = "nabber stomach"
+	icon = ORGGAN_ICON_NABBER
+	icon_state = "stomach"
 
 #undef ORGGAN_ICON_NABBER
 #undef NABBER_COLD_THRESHOLD_1

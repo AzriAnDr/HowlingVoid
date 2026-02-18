@@ -3,7 +3,7 @@
 	desc = "Strengthen your chitin by coloring it with a battle color. Gaining extra speed!"
 	cooldown_time = 10 SECONDS
 
-	button_icon = 'modularhowling_void/modules/modular_species/GBS/modules/species/nabbers/icons/actions.dmi'
+	button_icon = 'modularhowling_void/modules/modular_species/species/GBS/modules/species/nabbers/icons/actions.dmi'
 	var/active = FALSE
 
 /datum/action/cooldown/nabber_threat/New(Target, original)

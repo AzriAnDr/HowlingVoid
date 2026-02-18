@@ -1,4 +1,4 @@
-#define NABBER_THREAT_ICON 'modularhowling_void/modules/modular_species/GBS/modules/species/nabbers/icons/effects.dmi'
+#define NABBER_THREAT_ICON 'modularhowling_void/modules/modular_species/species/GBS/modules/species/nabbers/icons/effects.dmi'
 #define NABBER_THREAT_ICON_STATE "nabber_threat"
 
 /datum/status_effect/nabber_combat

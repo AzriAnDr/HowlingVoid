@@ -427,6 +427,7 @@ ROUNDSTART_RACES kobold
 
 ## HOWLING VOID RACES DOWN THERE
 ROUNDSTART_RACES nabber
+ROUNDSTART_RACES shadekin
 
 ##-------------------------------------------------------------------------------------------
 

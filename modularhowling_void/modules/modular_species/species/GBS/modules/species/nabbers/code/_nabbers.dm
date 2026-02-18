@@ -39,6 +39,7 @@
 	mutantlungs = /obj/item/organ/lungs/nabber
 	mutantheart = /obj/item/organ/heart/nabber
 	mutantliver = /obj/item/organ/liver/nabber
+	mutantstomach = /obj/item/organ/stomach/nabber
 	mutantears = /obj/item/organ/ears/nabber
 	mutantappendix = null
 	bodypart_overrides = list(

@@ -52,25 +52,25 @@
 
 /datum/greyscale_config/nabber
 	name = "Nabber clothing"
-	icon_file = 'modularhowling_void/modules/modular_species/GBS/modules/species/nabbers/icons/nabber_fallbacks.dmi'
-	json_config = 'modularhowling_void/modules/modular_species/GBS/modules/species/nabbers/json_configs/nabber_fallbacks/under.json'
+	icon_file = 'modularhowling_void/modules/modular_species/species/GBS/modules/species/nabbers/icons/nabber_fallbacks.dmi'
+	json_config = 'modularhowling_void/modules/modular_species/species/GBS/modules/species/nabbers/json_configs/nabber_fallbacks/under.json'
 
 /datum/greyscale_config/nabber/cloak
 	name = "Nabber Poncho"
-	json_config = 'modularhowling_void/modules/modular_species/GBS/modules/species/nabbers/json_configs/nabber_fallbacks/cloak.json'
+	json_config = 'modularhowling_void/modules/modular_species/species/GBS/modules/species/nabbers/json_configs/nabber_fallbacks/cloak.json'
 
 /datum/greyscale_config/nabber/tie
 	name = "Nabber Tie"
-	json_config = 'modularhowling_void/modules/modular_species/GBS/modules/species/nabbers/json_configs/nabber_fallbacks/tie.json'
+	json_config = 'modularhowling_void/modules/modular_species/species/GBS/modules/species/nabbers/json_configs/nabber_fallbacks/tie.json'
 
 /datum/greyscale_config/nabber/scarf
 	name = "Nabber Scarf"
-	json_config = 'modularhowling_void/modules/modular_species/GBS/modules/species/nabbers/json_configs/nabber_fallbacks/scarf.json'
+	json_config = 'modularhowling_void/modules/modular_species/species/GBS/modules/species/nabbers/json_configs/nabber_fallbacks/scarf.json'
 
 /datum/greyscale_config/nabber/gloves
 	name = "Nabber Gloves"
-	json_config = 'modularhowling_void/modules/modular_species/GBS/modules/species/nabbers/json_configs/nabber_fallbacks/gloves.json'
+	json_config = 'modularhowling_void/modules/modular_species/species/GBS/modules/species/nabbers/json_configs/nabber_fallbacks/gloves.json'
 
 /datum/greyscale_config/nabber/belt
 	name = "Nabber Belt"
-	json_config = 'modularhowling_void/modules/modular_species/GBS/modules/species/nabbers/json_configs/nabber_fallbacks/backpack.json'
+	json_config = 'modularhowling_void/modules/modular_species/species/GBS/modules/species/nabbers/json_configs/nabber_fallbacks/backpack.json'

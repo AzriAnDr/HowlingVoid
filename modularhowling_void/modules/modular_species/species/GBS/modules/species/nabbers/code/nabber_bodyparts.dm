@@ -1,6 +1,6 @@
 #define NABBER_PUNCH_LOW 3 // Гуманоидная пара рук - слабая.
 #define NABBER_PUNCH_HIGH 5
-#define BODYPART_ICON_NABBER 'modularhowling_void/modules/modular_species/GBS/modules/species/nabbers/icons/bodyparts/nabber_parts_greyscale.dmi'
+#define BODYPART_ICON_NABBER 'modularhowling_void/modules/modular_species/species/GBS/modules/species/nabbers/icons/bodyparts/nabber_parts_greyscale.dmi'
 #define NABBER_BRUTE_MODIFIER 0.7 // SHEE-E--E-E-E-E-E-ES, да это живые танки.
 #define NABBER_BURN_MODIFIER 1.2
 //Nabbers
@@ -12,7 +12,7 @@
 	brute_modifier = NABBER_BRUTE_MODIFIER
 	burn_modifier = NABBER_BURN_MODIFIER
 	head_flags = HEAD_EYESPRITES|HEAD_EYECOLOR|HEAD_EYEHOLES
-	eyes_icon = 'modularhowling_void/modules/modular_species/GBS/modules/species/nabbers/icons/organs/nabber_eyes.dmi'
+	eyes_icon = 'modularhowling_void/modules/modular_species/species/GBS/modules/species/nabbers/icons/organs/nabber_eyes.dmi'
 
 /obj/item/bodypart/head/mutant/nabber/Initialize(mapload)
 	worn_ears_offset = new(

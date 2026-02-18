@@ -6,7 +6,7 @@
 	desc = "Blend it with your surroundings and become transparent."
 	cooldown_time = 10 SECONDS
 
-	button_icon = 'modularhowling_void/modules/modular_species/GBS/modules/species/nabbers/icons/actions.dmi'
+	button_icon = 'modularhowling_void/modules/modular_species/species/GBS/modules/species/nabbers/icons/actions.dmi'
 	var/active = FALSE
 	var/camouflage_alpha = 35
 

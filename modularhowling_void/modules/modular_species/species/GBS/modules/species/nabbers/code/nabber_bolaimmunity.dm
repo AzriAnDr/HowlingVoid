@@ -4,8 +4,8 @@
 	desc = "You should not see this."
 	gender = PLURAL
 	inhand_icon_state = "nabber_r_leg"
-	lefthand_file = 'modularhowling_void/modules/modular_species/GBS/modules/species/nabbers/icons/bodyparts/nabber_parts_greyscale.dmi'
-	righthand_file = 'modularhowling_void/modules/modular_species/GBS/modules/species/nabbers/icons/bodyparts/nabber_parts_greyscale.dmi'
+	lefthand_file = 'modularhowling_void/modules/modular_species/species/GBS/modules/species/nabbers/icons/bodyparts/nabber_parts_greyscale.dmi'
+	righthand_file = 'modularhowling_void/modules/modular_species/species/GBS/modules/species/nabbers/icons/bodyparts/nabber_parts_greyscale.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slowdown = 0
 	alpha = 0
