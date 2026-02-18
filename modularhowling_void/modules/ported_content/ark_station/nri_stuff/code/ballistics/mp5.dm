@@ -76,6 +76,11 @@
 	fire_delay = 1.3
 	accepted_magazine_type = /obj/item/ammo_box/magazine/bison
 
+
+/obj/item/gun/ballistic/automatic/bison/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, fire_delay)
+
 /obj/item/ammo_box/magazine/bison
 	name = "\improper SPG-X-19 Bizon magazine"
 	desc = "Magazine with .385 caliber cartridges. Suitable for Bizon."
