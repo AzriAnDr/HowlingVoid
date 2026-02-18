@@ -34,7 +34,7 @@
 	icon_state = "akm_modern"
 	inhand_icon_state = "akm"
 	worn_icon_state = "akm"
-	fire_delay = 1
+	fire_delay = 1.5
 	fire_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/ak12_fire.ogg'
 
 /// INTEQ CIV

@@ -68,7 +68,7 @@
 	inhand_icon_state = "m16"
 	worn_icon_state = "m16"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m16/patriot
-	fire_delay = 0.5
+	fire_delay = 1.0
 	projectile_damage_multiplier = 0.28
 
 /obj/item/ammo_box/magazine/m16/patriot
