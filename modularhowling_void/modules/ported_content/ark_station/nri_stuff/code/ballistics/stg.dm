@@ -17,6 +17,7 @@
 	burst_size = 1
 	actions_types = list()
 	fire_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/stg_fire.ogg'
+	projectile_damage_multiplier = 3.3333333 // makes 7.92x33 base 6 -> ~20 per shot
 	fire_sound_volume = 70
 	rack_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/ltrifle_cock.ogg'
 	load_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/ltrifle_magin.ogg'

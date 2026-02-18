@@ -19,7 +19,8 @@
 	spread = 15
 	accepted_magazine_type = /obj/item/ammo_box/magazine/mg34
 	can_suppress = FALSE
-	fire_delay = 1
+	fire_delay = 1.25
+	projectile_damage_multiplier = 0.9 // unified moderate: damage -10%
 	bolt_type = BOLT_TYPE_OPEN
 	show_bolt_icon = FALSE
 	tac_reloads = FALSE
@@ -108,7 +109,8 @@
 	worn_icon_state = "mg42"
 	inhand_icon_state = "mg42"
 	fire_sound_volume = 100
-	fire_delay = 0.5
+	fire_delay = 0.625
+	projectile_damage_multiplier = 0.9 // unified moderate applied to MG-42 subtype
 	fire_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/mg42_fire.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/mg42
 	spread = SPREAD_UNDEPLOYED

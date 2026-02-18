@@ -15,6 +15,7 @@
 	can_suppress = FALSE
 	spread = 20
 	fire_delay = 0.5
+	projectile_damage_multiplier = 3.2 // makes base 7.62x25 (damage=5) -> ~16 for SSG-41
 	fire_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/ppsh_fire.ogg'
 	fire_sound_volume = 80
 	burst_size = 1
@@ -44,3 +45,4 @@
 	inhand_icon_state = "ppsh"
 	spread = 15
 	burst_size = 1
+	projectile_damage_multiplier = 4.6 // makes base 7.62x25 (damage=5) -> ~23 for SSG-56

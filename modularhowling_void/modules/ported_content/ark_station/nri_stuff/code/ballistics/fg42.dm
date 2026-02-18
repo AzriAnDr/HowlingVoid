@@ -14,6 +14,7 @@
 	burst_size = 1
 	spread = 0
 	fire_delay = 3
+	projectile_damage_multiplier = 2.8571429 // makes 7.92x57 base 7 -> ~20 per shot
 	worn_icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_back.dmi'
 	worn_icon_state = "fg42"
 	fire_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/fg42_fire.ogg'

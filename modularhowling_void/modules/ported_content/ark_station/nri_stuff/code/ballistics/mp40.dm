@@ -14,6 +14,7 @@
 	can_suppress = FALSE
 	burst_size = 1
 	fire_delay = 1.7
+	projectile_damage_multiplier = 0.5333333 // makes 9mm base 30 -> ~16 for MP-40
 	fire_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/mp40_fire.ogg'
 	fire_sound_volume = 100
 	rack_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/interact/smg_cock.ogg'
@@ -43,3 +44,4 @@
 	worn_icon_state = "mp40"
 	burst_size = 1
 	fire_delay = 1.5
+	projectile_damage_multiplier = 0.6666667 // makes 9mm base 30 -> ~20 for SSG-56 Modern

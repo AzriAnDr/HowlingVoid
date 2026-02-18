@@ -11,6 +11,7 @@
 	weapon_weight = WEAPON_HEAVY
 	can_suppress = FALSE
 	fire_delay = 3
+	projectile_damage_multiplier = 3.0 // makes base 7.62x25 (damage=5) -> ~15 for SSG-43
 	worn_icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_back.dmi'
 	worn_icon_state = "pps"
 	fire_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/pps_fire.ogg'

@@ -12,7 +12,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/mp5
 	weapon_weight = WEAPON_HEAVY
 	can_suppress = FALSE
-	fire_delay = 1
+	fire_delay = 1.5
 	burst_size = 1
 	fire_sound = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/sound/guns/fire/mp5_fire.ogg'
 	fire_sound_volume = 100
