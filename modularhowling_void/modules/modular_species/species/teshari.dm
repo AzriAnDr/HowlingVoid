@@ -2,10 +2,38 @@
 	id = ACTIONSPEED_ID_HOWLING_TESHARI_TECH_APTITUDE
 	variable = TRUE
 
+/obj/effect/temp_visual/howling_teshari_feathers
+	name = "feathers"
+	icon = 'modular_nova/modules/modular_items/lewd_items/icons/obj/lewd_decals/lewd_decals.dmi'
+	icon_state = "feathers"
+	duration = 14
+
+/datum/effect_system/basic/howling_teshari_feathers
+	effect_type = /obj/effect/temp_visual/howling_teshari_feathers
+
+/datum/species/teshari
+	/// Cached maxHealth before Teshari override (key = mob)
+	var/tmp/list/teshari_prev_max_health = list()
+	/// Cached feather hit effects per Teshari (key = mob)
+	var/tmp/list/teshari_hit_feather_effects = list()
+
 /datum/species/teshari/on_species_gain(mob/living/carbon/human/new_teshari, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	if(!istype(new_teshari))
 		return
+
+	if(!isnum(teshari_prev_max_health[new_teshari]))
+		teshari_prev_max_health[new_teshari] = new_teshari.maxHealth
+
+	new_teshari.maxHealth = 90
+	new_teshari.health = min(new_teshari.health, new_teshari.maxHealth)
+
+	if(!teshari_hit_feather_effects[new_teshari])
+		var/datum/effect_system/basic/howling_teshari_feathers/hit_feathers = new(new_teshari, 2, FALSE)
+		hit_feathers.attach(new_teshari)
+		teshari_hit_feather_effects[new_teshari] = hit_feathers
+
+	RegisterSignal(new_teshari, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(on_teshari_after_apply_damage))
 
 	// Teshari are naturally fast and precise with interaction-heavy work.
 	new_teshari.add_or_update_variable_actionspeed_modifier(/datum/actionspeed_modifier/teshari_technical_aptitude, multiplicative_slowdown = -0.12)
@@ -17,6 +45,39 @@
 
 	var/mob/living/carbon/human/former_teshari = C
 	former_teshari.remove_actionspeed_modifier(ACTIONSPEED_ID_HOWLING_TESHARI_TECH_APTITUDE)
+	UnregisterSignal(former_teshari, COMSIG_MOB_AFTER_APPLY_DAMAGE)
+	if(isnum(teshari_prev_max_health[former_teshari]))
+		former_teshari.maxHealth = teshari_prev_max_health[former_teshari]
+		former_teshari.health = min(former_teshari.health, former_teshari.maxHealth)
+		teshari_prev_max_health -= former_teshari
+	var/datum/effect_system/basic/howling_teshari_feathers/feather_effect = teshari_hit_feather_effects[former_teshari]
+	if(feather_effect)
+		qdel(feather_effect)
+	teshari_hit_feather_effects -= former_teshari
+
+/datum/species/teshari/proc/on_teshari_after_apply_damage(
+	mob/living/carbon/human/source,
+	damage_dealt,
+	damagetype,
+	def_zone,
+	blocked,
+	wound_bonus,
+	exposed_wound_bonus,
+	sharpness,
+	attack_direction,
+	obj/item/attacking_item
+)
+	SIGNAL_HANDLER
+
+	if(!istype(source))
+		return
+	if(damage_dealt <= 0)
+		return
+	if(damagetype == STAMINA)
+		return
+
+	var/datum/effect_system/basic/howling_teshari_feathers/feather_effect = teshari_hit_feather_effects[source]
+	feather_effect?.start()
 
 /datum/species/teshari/get_species_description()
 	return "Teshari are lightweight avian sophonts with fast reflexes, compact bodies, and strong adaptation to colder climates."
