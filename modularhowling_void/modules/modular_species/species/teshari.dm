@@ -12,8 +12,6 @@
 	effect_type = /obj/effect/temp_visual/howling_teshari_feathers
 
 /datum/species/teshari
-	/// Cached maxHealth before Teshari override (key = mob)
-	var/tmp/list/teshari_prev_max_health = list()
 	/// Cached feather hit effects per Teshari (key = mob)
 	var/tmp/list/teshari_hit_feather_effects = list()
 
@@ -21,12 +19,6 @@
 	. = ..()
 	if(!istype(new_teshari))
 		return
-
-	if(!isnum(teshari_prev_max_health[new_teshari]))
-		teshari_prev_max_health[new_teshari] = new_teshari.maxHealth
-
-	new_teshari.maxHealth = 90
-	new_teshari.health = min(new_teshari.health, new_teshari.maxHealth)
 
 	if(!teshari_hit_feather_effects[new_teshari])
 		var/datum/effect_system/basic/howling_teshari_feathers/hit_feathers = new(new_teshari, 2, FALSE)
@@ -46,10 +38,6 @@
 	var/mob/living/carbon/human/former_teshari = C
 	former_teshari.remove_actionspeed_modifier(ACTIONSPEED_ID_HOWLING_TESHARI_TECH_APTITUDE)
 	UnregisterSignal(former_teshari, COMSIG_MOB_AFTER_APPLY_DAMAGE)
-	if(isnum(teshari_prev_max_health[former_teshari]))
-		former_teshari.maxHealth = teshari_prev_max_health[former_teshari]
-		former_teshari.health = min(former_teshari.health, former_teshari.maxHealth)
-		teshari_prev_max_health -= former_teshari
 	var/datum/effect_system/basic/howling_teshari_feathers/feather_effect = teshari_hit_feather_effects[former_teshari]
 	if(feather_effect)
 		qdel(feather_effect)
