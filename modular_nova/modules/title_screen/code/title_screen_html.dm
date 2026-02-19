@@ -223,15 +223,42 @@ GLOBAL_LIST_EMPTY(startup_messages)
 					}
 
 					function set_round_started() {
-						if(!ready_mark)
-							return;
-						ready_mark.id = "";
-						ready_mark.href = "byond://?src=[text_ref(src)];late_join=1";
-						ready_mark.innerHTML = "<span class='menu-label'>JOIN GAME</span>";
-						var ready_item = ready_mark.closest ? ready_mark.closest(".menu-item") : null;
-						if(ready_item) {
-							ready_item.dataset.action = "join-game";
+						var join_href = "byond://?src=[text_ref(src)];late_join=1";
+						var join_anchor = null;
+						var menu_items = document.querySelectorAll(".menu-item");
+						for(var i = 0; i < menu_items.length; i++) {
+							var item = menu_items.item(i);
+							if(item && item.dataset && item.dataset.action === "join-game") {
+								join_anchor = item.querySelector("a.menu-link");
+								break;
+							}
 						}
+						if(ready_mark) {
+							ready_mark.id = "";
+							ready_mark.href = join_href;
+							ready_mark.innerHTML = "<span class='menu-label'>JOIN GAME</span>";
+							var ready_item = ready_mark.closest ? ready_mark.closest(".menu-item") : null;
+							if(ready_item) {
+								ready_item.dataset.action = "join-game";
+							}
+							return;
+						}
+
+						if(join_anchor) {
+							join_anchor.href = join_href;
+							return;
+						}
+
+						var menu_list = document.querySelector(".menu-list");
+						if(!menu_list) {
+							return;
+						}
+
+						var join_item = document.createElement("li");
+						join_item.className = "menu-item";
+						join_item.dataset.action = "join-game";
+						join_item.innerHTML = "<a class='menu-link' href='" + join_href + "'><span class='menu-label'>JOIN GAME</span></a>";
+						menu_list.insertBefore(join_item, menu_list.firstChild);
 					}
 
 					var antag_int = [client.prefs.read_preference(/datum/preference/toggle/be_antag) ? 1 : 0];

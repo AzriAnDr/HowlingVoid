@@ -653,3 +653,77 @@ body[data-chapter="ironHeart"] .inverted-cross-overlay * {
 		transform: translate(0px, 0px);
 	}
 }
+
+@media (max-width: 1366px), (max-height: 900px) {
+	.menu-wrapper {
+		justify-content: flex-start;
+		padding-top: 5vh;
+	}
+
+	.menu-title-small {
+		font-size: 1.05rem;
+		letter-spacing: 0.3em;
+	}
+
+	.menu-title-main {
+		margin-top: 8px;
+		font-size: clamp(2.2rem, 5.8vw, 2.7rem);
+	}
+
+	.menu-title-sub {
+		margin-top: 10px;
+		font-size: 1.2rem;
+		letter-spacing: 0.28em;
+	}
+
+	.menu-divider {
+		width: min(320px, 72vw);
+		margin: 16px auto 18px;
+	}
+
+	.menu-list {
+		gap: 12px;
+	}
+
+	.menu-item {
+		padding: 7px 20px;
+		font-size: 0.95rem;
+		letter-spacing: 0.14em;
+	}
+}
+
+@media (max-height: 760px) {
+	.menu-wrapper {
+		padding-top: 3.2vh;
+	}
+
+	.menu-title-small {
+		font-size: 0.9rem;
+		letter-spacing: 0.24em;
+	}
+
+	.menu-title-main {
+		font-size: clamp(1.9rem, 4.8vw, 2.3rem);
+		letter-spacing: 0.12em;
+	}
+
+	.menu-title-sub {
+		margin-top: 8px;
+		font-size: 1rem;
+		letter-spacing: 0.2em;
+	}
+
+	.menu-divider {
+		margin: 12px auto 14px;
+	}
+
+	.menu-list {
+		gap: 8px;
+	}
+
+	.menu-item {
+		padding: 5px 16px;
+		font-size: 0.84rem;
+		letter-spacing: 0.11em;
+	}
+}
