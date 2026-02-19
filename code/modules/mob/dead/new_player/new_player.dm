@@ -154,7 +154,29 @@
 	var/datum/job/job = SSjob.get_job(rank)
 	if(!(job.job_flags & JOB_NEW_PLAYER_JOINABLE))
 		return JOB_UNAVAILABLE_GENERIC
-	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
+//howling void edit
+	if(latejoin && job.total_positions != -1)
+		var/living_role_bodies = 0
+		for(var/mob/living/living_body as anything in GLOB.alive_mob_list)
+			if(QDELETED(living_body))
+				continue
+			if(living_body.job != rank)
+				continue
+			if(living_body.stat == DEAD)
+				var/slot_should_stay_blocked = FALSE
+				if(living_body.client) // dead but still in-body client
+					slot_should_stay_blocked = TRUE
+				else if(iscarbon(living_body))
+					var/mob/living/carbon/dead_carbon = living_body
+					// Keep the slot blocked while the body can still realistically come back.
+					slot_should_stay_blocked = dead_carbon.can_defib_client()
+				if(!slot_should_stay_blocked)
+					continue
+			living_role_bodies++
+			if(living_role_bodies >= job.total_positions)
+				return JOB_UNAVAILABLE_SLOTFULL
+	if(!latejoin && (job.current_positions >= job.total_positions) && job.total_positions != -1)
+//howling void edit end
 		if(is_assistant_job(job))
 			if(isnum(client.player_age) && client.player_age <= 14) //Newbies can always be assistants
 				return JOB_AVAILABLE
