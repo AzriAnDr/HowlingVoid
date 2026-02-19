@@ -157,13 +157,27 @@ SUBSYSTEM_DEF(economy)
 	for(var/i in 1 to length(cached_processing))
 		var/datum/bank_account/bank_account = cached_processing[cached_processing[i]]
 		if(bank_account?.account_job && !ispath(bank_account.account_job))
-			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
+			temporary_total += get_expected_roundstart_funds(bank_account)
 		bank_account.payday(1, skippable = TRUE)
 		station_total += bank_account.account_balance
 		if(MC_TICK_CHECK)
 			cached_processing.Cut(1, i + 1)
 			return FALSE
 	return TRUE
+
+/**
+ * Returns expected initial personal funds for a given bank account.
+ * Uses job.starting_funds when present, otherwise falls back to legacy paycheck * STARTING_PAYCHECKS.
+ */
+/datum/controller/subsystem/economy/proc/get_expected_roundstart_funds(datum/bank_account/bank_account)
+	if(!bank_account?.account_job)
+		return 0
+
+	var/datum/job/job = bank_account.account_job
+	if(isnum(job.starting_funds))
+		return max(0, round(job.starting_funds))
+
+	return max(0, round(job.paycheck * STARTING_PAYCHECKS))
 
 /**
  * Updates the the inflation_value, effecting newscaster alerts and the mail system.

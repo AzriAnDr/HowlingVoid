@@ -9587,6 +9587,8 @@
 #include "modularhowling_void\code\datums\mood_event\aquatic_snout_boop.dm"
 #include "modularhowling_void\code\datums\mood_event\kobold_flash.dm"
 #include "modularhowling_void\code\datums\mood_event\moth_light.dm"
+#include "modularhowling_void\code\economy\job_pay_rebalance.dm"
+#include "modularhowling_void\code\economy\vending_price_rebalance.dm"
 #include "modularhowling_void\code\projectiles\projectile_speed_multiplier.dm"
 #include "modularhowling_void\modules\clothing\code\items.dm"
 #include "modularhowling_void\modules\clothing\code\loadout.dm"

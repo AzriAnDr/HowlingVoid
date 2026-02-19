@@ -57,6 +57,8 @@
 
 	///How much money does this crew member make in a single paycheck? Note that passive paychecks are capped to PAYCHECK_CREW in regular gameplay after roundstart.
 	var/paycheck = PAYCHECK_CREW
+	/// Optional fixed amount of credits granted to this job at spawn. If null, STARTING_PAYCHECKS logic is used.
+	var/starting_funds = null
 	///Which department does this paycheck pay from?
 	var/paycheck_department = ACCOUNT_CIV
 
@@ -213,7 +215,13 @@
 /mob/living/carbon/human/on_job_equipping(datum/job/equipping, client/player_client)
 	if(equipping.paycheck_department)
 		var/datum/bank_account/bank_account = new(real_name, equipping, dna.species.payday_modifier)
-		bank_account.payday(STARTING_PAYCHECKS, free = TRUE)
+		if(isnum(equipping.starting_funds))
+			var/starting_amount = max(0, round(equipping.starting_funds))
+			if(starting_amount)
+				bank_account.adjust_money(starting_amount, "Nanotrasen: Shift Payment")
+				SSeconomy.station_target += starting_amount
+		else
+			bank_account.payday(STARTING_PAYCHECKS, free = TRUE)
 		account_id = bank_account.account_id
 		bank_account.replaceable = FALSE
 		add_mob_memory(/datum/memory/key/account, remembered_id = account_id)
