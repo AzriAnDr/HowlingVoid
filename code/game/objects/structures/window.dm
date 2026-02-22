@@ -78,6 +78,9 @@
 	if (flags_1 & ON_BORDER_1)
 		AddElement(/datum/element/connect_loc, loc_connections)
 
+	// Howling Void edit: hook modular debris impact particles for window hits.
+	add_debris_element()
+
 /obj/structure/window/mouse_drop_receive(atom/dropping, mob/user, params)
 	. = ..()
 	if (flags_1 & ON_BORDER_1)
