@@ -453,7 +453,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	else
 		body.wipe_state()
 
+	// Reset preview dummy scale state every rebuild to prevent cumulative transform drift.
+	// Without this, repeated preference updates can occasionally collapse the preview sprite.
+	body.transform = matrix()
+	body.current_size = RESIZE_DEFAULT_SIZE
+	body.maptext_height = initial(body.maptext_height)
+	if(body.dna)
+		body.dna.current_body_size = BODY_SIZE_NORMAL
+
 	appearance = preferences.render_new_preview_appearance(body, show_job_clothes)
+
+	// Keep enlarged bodies inside the preview frame by nudging them down a bit.
+	pixel_y = 0
+	var/body_size = body?.dna?.features?["body_size"]
+	if(isnum(body_size) && body_size > BODY_SIZE_NORMAL)
+		pixel_y = -round((body_size - BODY_SIZE_NORMAL) * 16)
 
 /atom/movable/screen/map_view/char_preview/proc/create_body()
 	QDEL_NULL(body)
