@@ -14,7 +14,14 @@
 	AddElement(/datum/element/debris, DEBRIS_ROCK, -10, 5, 1)
 
 /obj/structure/girder/add_debris_element()
-	AddElement(/datum/element/debris, DEBRIS_SPARKS, -15, 8, 1)
+	AddElement(/datum/element/debris, DEBRIS_SPARKS, -15, 8, 1, FALSE)
+
+/obj/machinery/door/poddoor/shutters/Initialize(mapload)
+	. = ..()
+	add_debris_element()
+
+/obj/machinery/door/poddoor/shutters/add_debris_element()
+	AddElement(/datum/element/debris, DEBRIS_SPARKS, -15, 8, 1, FALSE)
 
 /obj/structure/mineral_door/wood/add_debris_element()
 	AddElement(/datum/element/debris, DEBRIS_WOOD, -10, 5)
@@ -30,6 +37,13 @@
 
 /obj/machinery/power/shuttle_engine/add_debris_element()
 	AddElement(/datum/element/debris, DEBRIS_SPARKS, -15, 8, 1)
+
+/obj/machinery/door/airlock/Initialize(mapload)
+	. = ..()
+	add_debris_element()
+
+/obj/machinery/door/airlock/add_debris_element()
+	AddElement(/datum/element/debris, DEBRIS_SPARKS, -15, 8, 1, FALSE)
 
 /turf/closed/Initialize(mapload)
 	. = ..()
@@ -53,4 +67,3 @@
 
 /turf/closed/wall/add_debris_element()
 	AddElement(/datum/element/debris, DEBRIS_SPARKS, -15, 8, 1)
-

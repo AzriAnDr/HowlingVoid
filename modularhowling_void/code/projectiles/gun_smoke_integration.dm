@@ -45,8 +45,8 @@
 		return
 	if(pierce_hit)
 		return
-	// Walls/windows/girders already receive debris impact smoke from the debris system.
-	if(!isliving(target))
+	// Do not spawn powder impact smoke on living targets.
+	if(isliving(target))
 		return
 
 	var/turf/impact_turf = get_turf(target)

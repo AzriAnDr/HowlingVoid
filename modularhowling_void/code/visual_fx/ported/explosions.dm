@@ -247,7 +247,7 @@
 	icon_state = "explosionfast"
 	duration = 4
 
-/obj/effect/temp_visual/explosion/Initialize(mapload, radius, color, small = FALSE, large = FALSE)
+/obj/effect/temp_visual/explosion/Initialize(mapload, radius = 3, color = LIGHT_COLOR_FIRE, small = FALSE, large = FALSE)
 	. = ..()
 	set_light(radius, radius, color)
 	generate_particles(radius, small, large)
@@ -325,3 +325,9 @@
 	QDEL_NULL(falling_debris)
 	QDEL_NULL(dirt_kickup)
 	return ..()
+
+// Integrate ported explosion visuals into the default explosion effect system.
+/datum/effect_system/explosion/start()
+	new /obj/effect/temp_visual/explosion(location)
+	var/datum/effect_system/basic/expl_particles/boom_particles = new(location)
+	boom_particles.start()

@@ -5,7 +5,7 @@
 #define DEBRIS_WOOD "dot"
 #endif
 #ifndef DEBRIS_ROCK
-#define DEBRIS_ROCK "curl"
+#define DEBRIS_ROCK "dot"
 #endif
 #ifndef DEBRIS_GLASS
 #define DEBRIS_GLASS "cross"
@@ -15,7 +15,7 @@
 #endif
 
 /particles/debris
-	icon = 'icons/effects/particles/generic_particles.dmi'
+	icon = 'icons/effects/particles/generic.dmi'
 	width = 500
 	height = 500
 	count = 10
@@ -55,13 +55,16 @@
 	var/debris_amount = 8
 	///Scale of particle debris
 	var/debris_scale = 0.7
+	///Whether impact smoke should be spawned
+	var/spawn_smoke = TRUE
 
-/datum/element/debris/Attach(datum/target, _debris_icon_state, _debris_velocity = -15, _debris_amount = 8, _debris_scale = 0.7)
+/datum/element/debris/Attach(datum/target, _debris_icon_state, _debris_velocity = -15, _debris_amount = 8, _debris_scale = 0.7, _spawn_smoke = TRUE)
 	. = ..()
 	debris = _debris_icon_state
 	debris_velocity = _debris_velocity
 	debris_amount = _debris_amount
 	debris_scale = _debris_scale
+	spawn_smoke = _spawn_smoke
 	RegisterSignal(target, COMSIG_ATOM_BULLET_ACT, PROC_REF(register_for_impact))
 
 /datum/element/debris/Detach(datum/source, force)
@@ -81,10 +84,12 @@
 	var/obj/effect/abstract/particle_holder/debris_visuals
 	var/obj/effect/abstract/particle_holder/smoke_visuals
 	var/position_offset = rand(-6,6)
-	smoke_visuals = new(source, /particles/impact_smoke)
-	smoke_visuals.particles.position = list(position_offset, position_offset)
-	smoke_visuals.particles.velocity = list(x_component_smoke, y_component_smoke)
-	if(debris && !((ENERGY == P.armor_flag) || (BULLET == P.armor_flag)))
+	if(spawn_smoke)
+		smoke_visuals = new(source, /particles/impact_smoke)
+		smoke_visuals.particles.position = list(position_offset, position_offset)
+		smoke_visuals.particles.velocity = list(x_component_smoke, y_component_smoke)
+	// Show impact debris for kinetic projectiles too; suppress for energy shots.
+	if(debris && (ENERGY != P.armor_flag))
 		debris_visuals = new(source, /particles/debris)
 		debris_visuals.particles.position = generator(GEN_CIRCLE, position_offset, position_offset)
 		debris_visuals.particles.velocity = list(x_component, y_component)
@@ -93,7 +98,8 @@
 		debris_visuals.particles.count = debris_amount
 		debris_visuals.particles.spawning = debris_amount
 		debris_visuals.particles.scale = debris_scale
-	smoke_visuals.layer = ABOVE_OBJ_LAYER + 0.01
+	if(smoke_visuals)
+		smoke_visuals.layer = ABOVE_OBJ_LAYER + 0.01
 	addtimer(CALLBACK(src, PROC_REF(remove_ping), src, smoke_visuals, debris_visuals), 0.7 SECONDS)
 
 /datum/element/debris/proc/remove_ping(hit, obj/effect/abstract/particle_holder/smoke_visuals, obj/effect/abstract/particle_holder/debris_visuals)
