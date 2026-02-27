@@ -6,13 +6,17 @@ import { classes } from 'tgui-core/react';
 
 import type { PreferencesMenuData } from '../../../types';
 import {
+  getCharacterPreferencesLanguage,
+  localize,
+} from '../../../CharacterPreferences/localization';
+import {
   CheckboxInput,
   type FeatureChoiced,
   type FeatureChoicedServerData,
   type FeatureToggle,
   type FeatureValueProps,
 } from '../base';
-import { FeatureDropdownInput } from '../dropdowns';
+import { FeatureDropdownInput, translateDropdownText } from '../dropdowns';
 
 export const ghost_accs: FeatureChoiced = {
   name: 'Ghost accessories',
@@ -34,6 +38,7 @@ function GhostFormInput(
   props: FeatureValueProps<string, string, FeatureChoicedServerData>,
 ) {
   const { data } = useBackend<PreferencesMenuData>();
+  const interfaceLanguage = getCharacterPreferencesLanguage(data);
 
   const serverData = props.serverData;
   if (!serverData) {
@@ -42,7 +47,11 @@ function GhostFormInput(
 
   const displayNames = serverData.display_names;
   if (!displayNames) {
-    return <Box color="red">No display names for ghost_form!</Box>;
+    return (
+      <Box color="red">
+        {localize(interfaceLanguage, 'No display names for ghost_form!')}
+      </Box>
+    );
   }
 
   const displayTexts = {};
@@ -52,6 +61,11 @@ function GhostFormInput(
   }[] = [];
 
   for (const [name, displayName] of Object.entries(displayNames)) {
+    const localizedDisplayName = translateDropdownText(
+      displayName,
+      interfaceLanguage,
+    );
+
     const displayText = (
       <Flex key={name}>
         <Flex.Item>
@@ -60,7 +74,7 @@ function GhostFormInput(
           />
         </Flex.Item>
 
-        <Flex.Item grow={1}>{displayName}</Flex.Item>
+        <Flex.Item grow={1}>{localizedDisplayName}</Flex.Item>
       </Flex>
     );
 

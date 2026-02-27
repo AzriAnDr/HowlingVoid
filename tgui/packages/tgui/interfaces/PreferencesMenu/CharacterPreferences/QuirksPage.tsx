@@ -673,10 +673,11 @@ export function QuirkPersonalityPage() {
 
   return (
     <Stack fill vertical>
-      <Stack.Item>
-        <Stack>
+      <Stack.Item className="PreferencesMenu__Quirks__TopTabsContainer">
+        <Stack className="PreferencesMenu__Quirks__TopTabs">
           <Stack.Item grow>
             <Button
+              className="PreferencesMenu__Quirks__TopTabButton"
               selected={contentPage === 'quirks'}
               onClick={() => setContentPage('quirks')}
               fluid
@@ -688,6 +689,7 @@ export function QuirkPersonalityPage() {
           </Stack.Item>
           <Stack.Item grow>
             <Button
+              className="PreferencesMenu__Quirks__TopTabButton"
               selected={contentPage === 'personality'}
               onClick={() => setContentPage('personality')}
               fluid

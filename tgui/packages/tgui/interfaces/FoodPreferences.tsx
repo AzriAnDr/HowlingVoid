@@ -1,4 +1,5 @@
 // THIS IS A NOVA SECTOR UI FILE
+import '../styles/interfaces/FoodPreferences.scss';
 import {
   Box,
   Button,
@@ -46,7 +47,8 @@ export const FoodPreferences = (props) => {
   return (
     <Window width={1300} height={600}>
       <Window.Content scrollable>
-        {
+        <Box className="FoodPreferences">
+          {
           <StyleableSection
             style={{
               'margin-bottom': '1em',
@@ -82,6 +84,7 @@ export const FoodPreferences = (props) => {
                 </Tooltip>
 
                 <Button
+                  className="FoodPreferences__TopButton"
                   style={{ position: 'absolute', right: '20em' }}
                   color={'red'}
                   onClick={() => act('reset')}
@@ -91,6 +94,7 @@ export const FoodPreferences = (props) => {
                 </Button>
 
                 <Button
+                  className="FoodPreferences__TopButton"
                   style={{ position: 'absolute', right: '0.5em' }}
                   icon={enabled ? 'check-square-o' : 'square-o'}
                   color={enabled ? 'green' : 'red'}
@@ -223,7 +227,8 @@ export const FoodPreferences = (props) => {
               })}
             </Box>
           </StyleableSection>
-        }
+          }
+        </Box>
       </Window.Content>
     </Window>
   );
@@ -234,6 +239,7 @@ const FoodButton = (props) => {
   const { foodName, foodPreference, color, selected, ...rest } = props;
   return (
     <Button
+      className="FoodPreferences__ChoiceButton"
       icon={selected ? 'check-square-o' : 'square-o'}
       color={selected ? color : 0x3e6189}
       onClick={() =>

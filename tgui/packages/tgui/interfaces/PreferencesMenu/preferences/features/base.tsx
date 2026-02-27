@@ -1,4 +1,4 @@
-import { sortBy } from 'es-toolkit';
+﻿import { sortBy } from 'es-toolkit';
 import {
   type ComponentType,
   createElement,
@@ -25,6 +25,7 @@ import {
   type PreferencesMenuData,
 } from '../../types';
 import { useServerPrefs } from '../../useServerPrefs';
+import { getCharacterPreferencesLanguage, localize } from '../../CharacterPreferences/localization';
 
 export function sortChoices(array: [string, ReactNode][]) {
   return sortBy(array, [([name]) => name]);
@@ -67,8 +68,9 @@ export type FeatureValueProps<
 }>;
 
 export function FeatureColorInput(props: FeatureValueProps<string>) {
-  const { act } = useBackend<PreferencesMenuData>();
+  const { act, data } = useBackend<PreferencesMenuData>();
   const { featureId, shrink, value } = props;
+  const language = getCharacterPreferencesLanguage(data);
 
   return (
     <Button
@@ -96,7 +98,9 @@ export function FeatureColorInput(props: FeatureValueProps<string>) {
           />
         </Stack.Item>
 
-        {!shrink && <Stack.Item>Change</Stack.Item>}
+        {!shrink && (
+          <Stack.Item>{localize(language, 'Change')}</Stack.Item>
+        )}
       </Stack>
     </Button>
   );
@@ -106,10 +110,12 @@ export type FeatureToggle = Feature<BooleanLike, boolean>;
 
 export function CheckboxInput(props: FeatureValueProps<BooleanLike, boolean>) {
   const { handleSetValue, value } = props;
+  const checked = !!value;
 
   return (
     <Button.Checkbox
-      checked={!!value}
+      className={`PreferencesMenu__Toggle ${checked ? 'PreferencesMenu__Toggle--checked' : ''}`}
+      checked={checked}
       onClick={() => {
         handleSetValue(!value);
       }}
@@ -121,10 +127,12 @@ export function CheckboxInputInverse(
   props: FeatureValueProps<BooleanLike, boolean>,
 ) {
   const { handleSetValue, value } = props;
+  const checked = !value;
 
   return (
     <Button.Checkbox
-      checked={!value}
+      className={`PreferencesMenu__Toggle ${checked ? 'PreferencesMenu__Toggle--checked' : ''}`}
+      checked={checked}
       onClick={() => {
         handleSetValue(!value);
       }}
@@ -142,6 +150,7 @@ export function createDropdownInput<T extends string | number = string>(
 
     return (
       <Dropdown
+        className="PreferencesMenu__Character__FieldDropdown"
         selected={choices[value] as string}
         onSelected={handleSetValue}
         width="100%"
@@ -290,8 +299,9 @@ export const FeatureTextInput = (
 };
 
 export const FeatureTriColorInput = (props: FeatureValueProps<string[]>) => {
-  const { act } = useBackend<PreferencesMenuData>();
+  const { act, data } = useBackend<PreferencesMenuData>();
   const { featureId, shrink, value } = props;
+  const language = getCharacterPreferencesLanguage(data);
 
   const buttonFromValue = (index) => {
     return (
@@ -324,7 +334,9 @@ export const FeatureTriColorInput = (props: FeatureValueProps<string[]>) => {
               />
             </Stack.Item>
 
-            {!shrink && <Stack.Item>Change</Stack.Item>}
+            {!shrink && (
+              <Stack.Item>{localize(language, 'Change')}</Stack.Item>
+            )}
           </Stack>
         </Button>
       </Stack.Item>
@@ -365,3 +377,4 @@ export const FeatureTriBoolInput = (props: FeatureValueProps<boolean[]>) => {
   );
 };
 // NOVA EDIT ADDITION END
+

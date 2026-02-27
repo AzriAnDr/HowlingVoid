@@ -70,6 +70,8 @@
 
 	for (var/language_path, language_instance in GLOB.language_datum_instances)
 		var/datum/language/language = language_instance
+		if(language_path == /datum/language/carptongue || language_path == /datum/language/wormspeak)
+			continue
 		if(language.secret && (isnull(species.language_prefs_whitelist) || isnull(species.language_prefs_whitelist[language_path]))) // For ghostrole species who are able to speak a secret language, e.g. ashwalkers, display it.
 			continue
 

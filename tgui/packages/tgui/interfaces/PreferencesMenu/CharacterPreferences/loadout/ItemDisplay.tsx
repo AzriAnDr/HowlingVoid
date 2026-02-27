@@ -10,6 +10,7 @@ import {
 import { createSearch } from 'tgui-core/string';
 
 import type { LoadoutCategory, LoadoutItem, LoadoutManagerData } from './base';
+import { localize } from '../localization';
 
 type Props = {
   item: LoadoutItem;
@@ -101,6 +102,7 @@ export function ItemDisplay(props: DisplayProps) {
 
 type ListProps = {
   items: LoadoutItem[];
+  language: 'english' | 'russian';
 };
 
 type LoadoutGroup = {
@@ -140,7 +142,7 @@ export function ItemListDisplay(props: ListProps) {
             {itemGroups.length > 1 && (
               <>
                 <Stack.Item mt={-1.5} mb={-0.8} ml={1.5}>
-                  <h3 color="grey">{group.title}</h3>
+                  <h3 color="grey">{localize(props.language, group.title)}</h3>
                 </Stack.Item>
                 <Stack.Divider />
               </>
@@ -169,6 +171,7 @@ export function ItemListDisplay(props: ListProps) {
 
 type TabProps = {
   category: LoadoutCategory | undefined;
+  language: 'english' | 'russian';
 };
 
 // NOVA EDIT ADDITION START - Expanded loadout framework
@@ -197,7 +200,7 @@ const FilterItemList = (items: LoadoutItem[]) => {
 
 // NOVA EDIT ADDITION END
 export function LoadoutTabDisplay(props: TabProps) {
-  const { category } = props;
+  const { category, language } = props;
   if (!category) {
     return (
       <NoticeBox>
@@ -206,16 +209,17 @@ export function LoadoutTabDisplay(props: TabProps) {
     );
   }
 
-  return <ItemListDisplay items={category.contents} />;
+  return <ItemListDisplay items={category.contents} language={language} />;
 }
 
 type SearchProps = {
   loadout_tabs: LoadoutCategory[];
   currentSearch: string;
+  language: 'english' | 'russian';
 };
 
 export function SearchDisplay(props: SearchProps) {
-  const { loadout_tabs, currentSearch } = props;
+  const { loadout_tabs, currentSearch, language } = props;
   const { data } = useBackend<LoadoutManagerData>(); // NOVA EDIT ADDITION
   const { erp_pref } = data; // NOVA EDIT ADDITION
 
@@ -234,8 +238,8 @@ export function SearchDisplay(props: SearchProps) {
     .sort((a, b) => (a.name > b.name ? 1 : -1));
 
   if (validLoadoutItems.length === 0) {
-    return <NoticeBox>No items found!</NoticeBox>;
+    return <NoticeBox>{localize(language, 'No items found!')}</NoticeBox>;
   }
 
-  return <ItemListDisplay items={validLoadoutItems} />;
+  return <ItemListDisplay items={validLoadoutItems} language={language} />;
 }

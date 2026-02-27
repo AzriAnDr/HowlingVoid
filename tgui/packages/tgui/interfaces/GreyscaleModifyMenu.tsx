@@ -13,6 +13,7 @@ import {
   Table,
 } from 'tgui-core/components';
 
+import '../styles/interfaces/GreyscaleModifyMenu.scss';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
@@ -185,6 +186,33 @@ const SingleDirection = (props) => {
   );
 };
 
+const extractIconSrc = (raw: unknown): string | null => {
+  if (!raw) {
+    return null;
+  }
+  const value = String(raw);
+  if (!value.includes('<img')) {
+    return value;
+  }
+  const doubleQuoted = value.match(/src="([^"]+)"/i);
+  if (doubleQuoted?.[1]) {
+    return doubleQuoted[1];
+  }
+  const singleQuoted = value.match(/src='([^']+)'/i);
+  if (singleQuoted?.[1]) {
+    return singleQuoted[1];
+  }
+  return null;
+};
+
+const extractIconHtml = (raw: unknown): string | null => {
+  if (!raw) {
+    return null;
+  }
+  const value = String(raw);
+  return value.includes('<img') ? value : null;
+};
+
 const IconStatesDisplay = (props) => {
   const { data, act } = useBackend<GreyscaleMenuData>();
   return (
@@ -207,6 +235,8 @@ const IconStatesDisplay = (props) => {
 
 const PreviewDisplay = (props) => {
   const { data } = useBackend<GreyscaleMenuData>();
+  const finishedSrc = extractIconSrc(data.sprites?.finished);
+  const finishedHtml = extractIconHtml(data.sprites?.finished);
   return (
     <Section title={`Preview (${data.sprites_dir})`}>
       <Table>
@@ -214,9 +244,18 @@ const PreviewDisplay = (props) => {
           <Table.Cell width="50%">
             <PreviewCompassSelect />
           </Table.Cell>
-          {data.sprites?.finished ? (
+          {finishedHtml ? (
             <Table.Cell>
-              <Image m={0} mx="10%" src={data.sprites.finished} width="75%" />
+              <Box
+                m={0}
+                mx="10%"
+                width="75%"
+                dangerouslySetInnerHTML={{ __html: finishedHtml }}
+              />
+            </Table.Cell>
+          ) : finishedSrc ? (
+            <Table.Cell>
+              <Image m={0} mx="10%" src={finishedSrc} width="75%" />
             </Table.Cell>
           ) : (
             <Table.Cell>
@@ -267,7 +306,15 @@ const PreviewDisplay = (props) => {
 
 const SingleSprite = (props) => {
   const { source } = props;
-  return <Image src={source} />;
+  const parsedHtml = extractIconHtml(source);
+  const parsedSource = extractIconSrc(source);
+  if (parsedHtml) {
+    return <Box dangerouslySetInnerHTML={{ __html: parsedHtml }} />;
+  }
+  if (!parsedSource) {
+    return <Icon name="image" />;
+  }
+  return <Image src={parsedSource} />;
 };
 
 const LoadingAnimation = () => {
@@ -283,52 +330,59 @@ export const GreyscaleModifyMenu = (props) => {
   return (
     <Window title="Color Configuration" width={325} height={800}>
       <Window.Content scrollable>
-        <ConfigDisplay />
-        <ColorDisplay />
-        <IconStatesDisplay />
-        <Flex direction="column">
-          {!!data.unlocked && (
-            <Flex.Item justify="flex-start">
+        <Box className="GreyscaleModifyMenu">
+          <ConfigDisplay />
+          <ColorDisplay />
+          <IconStatesDisplay />
+          <Flex direction="column">
+            {!!data.unlocked && (
+              <Flex.Item justify="flex-start">
+                <Button
+                  className="GreyscaleModifyMenu__ActionButton"
+                  content={
+                    <Icon name="file-image-o" spin={data.monitoring_files} />
+                  }
+                  tooltip="Continuously checks files for changes and reloads when necessary. WARNING: Very expensive"
+                  selected={data.monitoring_files}
+                  onClick={() => act('toggle_mass_refresh')}
+                  width={1.9}
+                  mr={-0.2}
+                />
+                <Button
+                  className="GreyscaleModifyMenu__ActionButton"
+                  content="Refresh Icon File"
+                  tooltip="Loads the json configuration and icon file fresh from disk. This is useful to avoid restarting the server to see changes. WARNING: Expensive"
+                  onClick={() => act('refresh_file')}
+                />
+                <Button
+                  className="GreyscaleModifyMenu__ActionButton"
+                  content="Save Icon File"
+                  tooltip="Saves the icon to a temp file in tmp/. This is useful if you want to use a generated icon elsewhere or just view a more accurate representation"
+                  onClick={() => act('save_dmi')}
+                />
+              </Flex.Item>
+            )}
+            <Flex.Item>
               <Button
-                content={
-                  <Icon name="file-image-o" spin={data.monitoring_files} />
-                }
-                tooltip="Continuously checks files for changes and reloads when necessary. WARNING: Very expensive"
-                selected={data.monitoring_files}
-                onClick={() => act('toggle_mass_refresh')}
-                width={1.9}
-                mr={-0.2}
+                className="GreyscaleModifyMenu__ActionButton"
+                content="Apply"
+                tooltip="Applies changes made to the object this menu was created from."
+                color="red"
+                onClick={() => act('apply')}
               />
-              <Button
-                content="Refresh Icon File"
-                tooltip="Loads the json configuration and icon file fresh from disk. This is useful to avoid restarting the server to see changes. WARNING: Expensive"
-                onClick={() => act('refresh_file')}
-              />
-              <Button
-                content="Save Icon File"
-                tooltip="Saves the icon to a temp file in tmp/. This is useful if you want to use a generated icon elsewhere or just view a more accurate representation"
-                onClick={() => act('save_dmi')}
+              <Button.Checkbox
+                className="GreyscaleModifyMenu__ActionButton"
+                content="Full Preview"
+                tooltip="Generates and displays the full sprite generation process instead of just the final output."
+                disabled={!data.generate_full_preview && !data.unlocked}
+                checked={data.generate_full_preview}
+                onClick={() => act('toggle_full_preview')}
               />
             </Flex.Item>
-          )}
-          <Flex.Item>
-            <Button
-              content="Apply"
-              tooltip="Applies changes made to the object this menu was created from."
-              color="red"
-              onClick={() => act('apply')}
-            />
-            <Button.Checkbox
-              content="Full Preview"
-              tooltip="Generates and displays the full sprite generation process instead of just the final output."
-              disabled={!data.generate_full_preview && !data.unlocked}
-              checked={data.generate_full_preview}
-              onClick={() => act('toggle_full_preview')}
-            />
-          </Flex.Item>
-        </Flex>
-        <PreviewDisplay />
-        {!!data.refreshing && <LoadingAnimation />}
+          </Flex>
+          <PreviewDisplay />
+          {!!data.refreshing && <LoadingAnimation />}
+        </Box>
       </Window.Content>
     </Window>
   );

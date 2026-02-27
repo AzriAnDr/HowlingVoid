@@ -15,8 +15,9 @@ import type { PreferencesMenuData } from '../types';
 export const RotateCharacterButtons = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
   return (
-    <Box mt={1}>
+    <Box mt={1} className="PreferencesMenu__Augments__RotateButtons">
       <Button
+        className="PreferencesMenu__Augments__ActionButton"
         onClick={() => act('rotate', { backwards: false })}
         fontSize="22px"
         icon="redo"
@@ -24,6 +25,7 @@ export const RotateCharacterButtons = (props) => {
         tooltipPosition="bottom"
       />
       <Button
+        className="PreferencesMenu__Augments__ActionButton"
         onClick={() => act('rotate', { backwards: true })}
         fontSize="22px"
         icon="undo"
@@ -44,6 +46,7 @@ export const Markings = (props) => {
           <Stack fill>
             <Stack.Item grow>
               <Dropdown
+                className="PreferencesMenu__Augments__Dropdown"
                 width="100%"
                 options={props.limb.markings.marking_choices}
                 selected={marking.name}
@@ -58,6 +61,7 @@ export const Markings = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Button
+                className="PreferencesMenu__Augments__ActionButton"
                 onClick={() =>
                   act('color_marking', {
                     limb_slot: props.limb.slot,
@@ -70,6 +74,7 @@ export const Markings = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Button
+                className="PreferencesMenu__Augments__ActionButton"
                 color={marking.emissive ? 'good' : 'bad'}
                 tooltip="The 'E' is for 'Emissive', meaning does it glow or not. Green for glow, red for no glow."
                 onClick={() =>
@@ -85,6 +90,7 @@ export const Markings = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Button
+                className="PreferencesMenu__Augments__ActionButton"
                 color="bad"
                 onClick={() =>
                   act('remove_marking', {
@@ -101,6 +107,7 @@ export const Markings = (props) => {
       ))}
       <Stack.Item>
         <Button
+          className="PreferencesMenu__Augments__ActionButton"
           color="good"
           onClick={() => act('add_marking', { limb_slot: props.limb.slot })}
         >
@@ -115,7 +122,7 @@ export const LimbPage = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
   return (
     <div>
-      <Section fill title={props.limb.name}>
+      <Section className="PreferencesMenu__Augments__Card" fill title={props.limb.name}>
         <Stack vertical fill>
           <Stack.Item>
             <Markings limb={props.limb} />
@@ -133,13 +140,14 @@ export const AugmentationPage = (props) => {
   if (props.limb.can_augment) {
     return (
       <div style={{ marginBottom: '1.5em' }}>
-        <Section fill title={props.limb.name}>
+        <Section className="PreferencesMenu__Augments__Card" fill title={props.limb.name}>
           <Stack fill vertical>
             <Stack.Item>
               <Stack fill>
                 <Stack.Item>Augumentation:</Stack.Item>
                 <Stack.Item grow>
                   <Dropdown
+                    className="PreferencesMenu__Augments__Dropdown"
                     width="100%"
                     options={Object.values(props.limb.aug_choices) as string[]}
                     selected={props.limb.chosen_aug}
@@ -166,6 +174,7 @@ export const AugmentationPage = (props) => {
                 <Stack.Item>Style:</Stack.Item>
                 <Stack.Item grow>
                   <Dropdown
+                    className="PreferencesMenu__Augments__Dropdown"
                     width="100%"
                     options={props.data.robotic_styles}
                     selected={props.limb.chosen_style}
@@ -197,6 +206,7 @@ export const OrganPage = (props) => {
         <Stack.Item>{`${props.organ.name}: `}</Stack.Item>
         <Stack.Item grow>
           <Dropdown
+            className="PreferencesMenu__Augments__Dropdown"
             width="100%"
             options={Object.values(props.organ.organ_choices) as string[]}
             selected={props.organ.chosen_organ}
@@ -226,11 +236,12 @@ export const LimbsPage = (props) => {
   const markings = data.marking_presets ? data.marking_presets : [];
   const quirkPoints = Math.max(0, data.quirks_balance);
   return (
-    <Stack minHeight="100%">
+    <Stack className="PreferencesMenu__Augments" minHeight="100%">
       <Stack.Item minWidth="33%" minHeight="100%">
-        <Section fill scrollable title="Markings" height="197%">
+        <Section className="PreferencesMenu__Augments__Panel" fill scrollable title="Markings" height="197%">
           <div>
             <Dropdown
+              className="PreferencesMenu__Augments__Dropdown"
               width="100%"
               options={Object.values(markings)}
               selected={Object.values(markings)[1]}
@@ -246,7 +257,7 @@ export const LimbsPage = (props) => {
         </Section>
       </Stack.Item>
       <Stack.Item minWidth="33%">
-        <Section title="Character Preview" fill align="center" height="197%">
+        <Section className="PreferencesMenu__Augments__Panel" title="Character Preview" fill align="center" height="197%">
           <CharacterPreview
             id={data.character_preview_view}
             height="25%"
@@ -276,14 +287,14 @@ export const LimbsPage = (props) => {
         </Section>
       </Stack.Item>
       <Stack.Item minWidth="33%">
-        <Section fill title="Organs" height="87%">
+        <Section className="PreferencesMenu__Augments__Panel" fill title="Organs" height="87%">
           <Stack fill vertical>
             {data.organs_data.map((val) => (
               <OrganPage key={val.slot} organ={val} data={data} />
             ))}
           </Stack>
         </Section>
-        <Section fill scrollable title="Augmentations" height="107%">
+        <Section className="PreferencesMenu__Augments__Panel" fill scrollable title="Augmentations" height="107%">
           {data.limbs_data.map((val) => (
             <AugmentationPage key={val.slot} limb={val} data={data} />
           ))}

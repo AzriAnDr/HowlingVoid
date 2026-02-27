@@ -1,5 +1,5 @@
 /datum/language/uncommon
-	name = "Galactic Uncommon"
+	name = "Neu-Deutsch"
 	desc = "The second-most spoken Human language."
 	key = "!"
 	flags = TONGUELESS_SPEECH
@@ -10,12 +10,20 @@
 	additional_syllable_low = 0
 	additional_syllable_high = 0
 	syllables = list(
-		"ba", "be", "bo", "ca", "ce", "co", "da", "de", "do",
-		"fa", "fe", "fo", "ga", "ge", "go", "ha", "he", "ho",
-		"ja", "je", "jo", "ka", "ke", "ko", "la", "le", "lo",
-		"ma", "me", "mo", "na", "ne", "no", "ra", "re", "ro",
-		"sa", "se", "so", "ta", "te", "to", "va", "ve", "vo",
-		"xa", "xe", "xo", "ya", "ye", "yo", "za", "ze", "zo"
+		"ach", "echt", "icht", "och", "uch",
+		"sch", "schla", "schne", "schwar", "scho",
+		"st", "ste", "sto", "stra", "stru",
+		"br", "bra", "bre", "bro",
+		"kr", "kra", "kre", "kro",
+		"gr", "gra", "gre", "gro",
+		"tr", "tra", "tre", "tro",
+		"kl", "kla", "kle", "klo",
+		"fl", "fla", "fle", "flo",
+		"wald", "berg", "heim", "dorf",
+		"mann", "stein", "feld", "burg",
+		"hart", "reich", "blut", "nacht",
+		"jä", "kön", "für", "wölf",
+		"zorn", "eisen", "sturm", "licht"
 	)
 	icon_state = "galuncom"
 	default_priority = 90

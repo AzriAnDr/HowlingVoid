@@ -1,0 +1,95 @@
+.GreyscaleModifyMenu {
+  .Section {
+    border: 1px solid hsla(36, 22%, 48%, 0.45);
+    border-radius: 8px;
+    background: linear-gradient(
+      180deg,
+      hsla(220, 17%, 18%, 0.95) 0%,
+      hsla(220, 19%, 12%, 0.98) 100%
+    );
+    box-shadow:
+      inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+      0 8px 16px hsla(0, 0%, 0%, 0.3);
+  }
+
+  .Section__title {
+    border-bottom: 1px solid hsla(210, 25%, 42%, 0.45);
+    background: linear-gradient(
+      180deg,
+      hsla(220, 16%, 24%, 0.52) 0%,
+      hsla(220, 17%, 14%, 0.4) 100%
+    );
+    border-radius: 7px 7px 0 0;
+  }
+
+  .Section__titleText {
+    color: hsla(40, 92%, 87%, 0.96);
+    text-shadow: 0 0 4px hsla(38, 80%, 65%, 0.2);
+    font-weight: 700;
+  }
+
+  .LabeledList .LabeledList__label {
+    color: hsla(210, 18%, 88%, 0.9);
+  }
+
+  .Input,
+  .Input__input,
+  .Dropdown .Button,
+  .Dropdown .Button__content,
+  .Button:not(.Button--color--red):not(.Button--selected) {
+    border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+    border-radius: 7px !important;
+    background: linear-gradient(
+      180deg,
+      hsla(217, 18%, 28%, 0.92) 0%,
+      hsla(220, 20%, 20%, 0.97) 100%
+    ) !important;
+    background-color: hsla(220, 21%, 24%, 0.97) !important;
+    color: hsla(210, 18%, 92%, 0.96) !important;
+    box-shadow:
+      inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+      inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+  }
+
+  .Button--selected {
+    border-color: hsla(39, 58%, 61%, 0.75) !important;
+    background: linear-gradient(
+      180deg,
+      hsla(38, 46%, 27%, 0.92) 0%,
+      hsla(33, 44%, 14%, 0.97) 100%
+    ) !important;
+    color: hsla(40, 92%, 87%, 0.97) !important;
+  }
+
+  .Button--color--red,
+  .Button.Button--color--red {
+    border: 1px solid hsla(0, 64%, 54%, 0.85) !important;
+    border-radius: 7px !important;
+    box-shadow:
+      inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+      0 0 8px hsla(0, 60%, 40%, 0.22) !important;
+  }
+
+  .Table {
+    border: 1px solid hsla(36, 20%, 54%, 0.22);
+    border-radius: 8px;
+    background: linear-gradient(
+      180deg,
+      hsla(220, 28%, 7%, 0.92) 0%,
+      hsla(220, 22%, 5%, 0.96) 100%
+    );
+  }
+
+  .Table__row {
+    border-bottom: 1px solid hsla(210, 20%, 40%, 0.35);
+  }
+
+  .Divider {
+    border-top-color: hsla(210, 20%, 40%, 0.45) !important;
+  }
+
+  &__ActionButton {
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+}

@@ -43,7 +43,7 @@ export const ColorSelector: React.FC<ColorSelectorProps> = React.memo(
     const hexColor = hsvaToHex(color);
 
     return (
-      <Stack direction="row">
+      <Stack className="PreferencesMenu__ColorPickerModal__Body" direction="row">
         <Stack.Item mr={2} mt={2.5}>
           <Stack vertical>
             <Stack.Item>
@@ -110,6 +110,7 @@ export const ColorSelector: React.FC<ColorSelectorProps> = React.memo(
                   </Stack.Item>
                   <Stack.Item>
                     <Button
+                      className="PreferencesMenu__ColorPickerModal__PresetButton"
                       icon="chevron-down"
                       onClick={() => setShowPresets(true)}
                     >

@@ -7,6 +7,7 @@ import { PageButton } from '../components/PageButton';
 import type { PreferencesMenuData } from '../types';
 import { AntagsPage } from './AntagsPage';
 import { JobsPage } from './JobsPage';
+import { getCharacterPreferencesLanguage, localize } from './localization';
 // NOVA EDIT ADDITION START
 import { LanguagesPage } from './LanguagesMenu';
 import { LimbsPage } from './LimbsPage';
@@ -33,24 +34,27 @@ type ProfileProps = {
   activeSlot: number;
   onClick: (index: number) => void;
   profiles: (string | null)[];
+  newCharacterText: string;
 };
 
 function CharacterProfiles(props: ProfileProps) {
-  const { activeSlot, onClick, profiles } = props;
+  const { activeSlot, onClick, profiles, newCharacterText } = props;
 
   return (
     <Flex /* NOVA EDIT CHANGE START - Nova uses a dropdown instead of buttons */
+      className="PreferencesMenu__Character__Profiles"
       align="center"
       justify="center"
     >
       <Flex.Item width="25%">
         <Dropdown
+          className="PreferencesMenu__Character__ProfilesDropdown"
           width="100%"
           selected={activeSlot as unknown as string}
           displayText={profiles[activeSlot]}
           options={profiles.map((profile, slot) => ({
             value: slot,
-            displayText: profile ?? 'New Character',
+            displayText: profile ?? newCharacterText,
           }))}
           onSelected={(slot) => {
             onClick(slot);
@@ -63,6 +67,7 @@ function CharacterProfiles(props: ProfileProps) {
 
 export function CharacterPreferenceWindow(props) {
   const { act, data } = useBackend<PreferencesMenuData>();
+  const interfaceLanguage = getCharacterPreferencesLanguage(data);
 
   const [currentPage, setCurrentPage] = useState(Page.Main);
 
@@ -108,7 +113,7 @@ export function CharacterPreferenceWindow(props) {
   }
 
   return (
-    <Stack vertical fill>
+    <Stack className="PreferencesMenu__Character" vertical fill>
       <Stack.Item>
         <CharacterProfiles
           activeSlot={data.active_slot - 1}
@@ -118,16 +123,20 @@ export function CharacterPreferenceWindow(props) {
             });
           }}
           profiles={data.character_profiles}
+          newCharacterText={localize(interfaceLanguage, 'New Character')}
         />
       </Stack.Item>
       {!data.content_unlocked && (
-        <Stack.Item align="center">
-          Buy BYOND premium for more slots!
+        <Stack.Item
+          align="center"
+          className="PreferencesMenu__Character__PremiumNotice"
+        >
+          {localize(interfaceLanguage, 'Buy BYOND premium for more slots!')}
         </Stack.Item>
       )}
       <Stack.Divider />
       <Stack.Item>
-        <Stack fill>
+        <Stack fill className="PreferencesMenu__Character__TopTabs">
           <Stack.Item grow>
             <PageButton
               currentPage={currentPage}
@@ -135,7 +144,7 @@ export function CharacterPreferenceWindow(props) {
               setPage={setCurrentPage}
               otherActivePages={[Page.Species]}
             >
-              Character
+              {localize(interfaceLanguage, 'Character')}
             </PageButton>
           </Stack.Item>
 
@@ -145,7 +154,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Loadout}
               setPage={setCurrentPage}
             >
-              Loadout
+              {localize(interfaceLanguage, 'Loadout')}
             </PageButton>
           </Stack.Item>
 
@@ -159,7 +168,7 @@ export function CharacterPreferenceWindow(props) {
                     Fun fact: This isn't "Jobs" so that it intentionally
                     catches your eyes, because it's really important!
                   */}
-              Occupations
+              {localize(interfaceLanguage, 'Occupations')}
             </PageButton>
           </Stack.Item>
           {/* NOVA EDIT ADDITION START */}
@@ -169,7 +178,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Limbs}
               setPage={setCurrentPage}
             >
-              Augments+
+              {localize(interfaceLanguage, 'Augments+')}
             </PageButton>
           </Stack.Item>
 
@@ -179,7 +188,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Languages}
               setPage={setCurrentPage}
             >
-              Languages
+              {localize(interfaceLanguage, 'Languages')}
             </PageButton>
           </Stack.Item>
           {/* NOVA EDIT ADDITION end */}
@@ -189,7 +198,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Antags}
               setPage={setCurrentPage}
             >
-              Antagonists
+              {localize(interfaceLanguage, 'Antagonists')}
             </PageButton>
           </Stack.Item>
 
@@ -199,7 +208,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Quirks}
               setPage={setCurrentPage}
             >
-              Quirks and Personality
+              {localize(interfaceLanguage, 'Quirks and Personality')}
             </PageButton>
           </Stack.Item>
         </Stack>
@@ -211,3 +220,4 @@ export function CharacterPreferenceWindow(props) {
     </Stack>
   );
 }
+

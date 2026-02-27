@@ -6,11 +6,19 @@ type Props<TPage> = {
   page: TPage;
   otherActivePages?: TPage[];
   setPage: Dispatch<SetStateAction<TPage>>;
+  className?: string;
   children?: ReactNode;
 };
 
 export function PageButton<TPage extends number>(props: Props<TPage>) {
-  const { children, currentPage, page, otherActivePages, setPage } = props;
+  const {
+    children,
+    currentPage,
+    page,
+    otherActivePages,
+    setPage,
+    className,
+  } = props;
 
   const pageIsActive =
     currentPage === page ||
@@ -18,6 +26,7 @@ export function PageButton<TPage extends number>(props: Props<TPage>) {
 
   return (
     <Button
+      className={className}
       align="center"
       fontSize="1.2em"
       fluid

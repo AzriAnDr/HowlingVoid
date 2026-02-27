@@ -72,6 +72,7 @@ function PersonalityButton(props: ButtonProps) {
   const isDisabled = disabled || invalid || false;
   return (
     <Button
+      className={`PreferencesMenu__Personality__Card ${selected ? 'PreferencesMenu__Personality__Card--selected' : ''}`}
       onClick={isDisabled ? undefined : onClick}
       p={1}
       pt={0.2}
@@ -89,6 +90,7 @@ function PersonalityButton(props: ButtonProps) {
     >
       <Stack vertical wrap justify="center">
         <Stack.Item
+          className="PreferencesMenu__Personality__CardTitle"
           textAlign="center"
           bold
           fontSize="16px"
@@ -103,6 +105,7 @@ function PersonalityButton(props: ButtonProps) {
           {personality.name}
         </Stack.Item>
         <Stack.Item
+          className="PreferencesMenu__Personality__CardDescription"
           color="#999999"
           mt={-1}
           pt={0.2}
@@ -118,6 +121,7 @@ function PersonalityButton(props: ButtonProps) {
         </Stack.Item>
         {personality.pos_gameplay_description && (
           <Stack.Item
+            className="PreferencesMenu__Personality__CardPos"
             mt={-0.8}
             color="green"
             style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}
@@ -127,6 +131,7 @@ function PersonalityButton(props: ButtonProps) {
         )}
         {personality.neg_gameplay_description && (
           <Stack.Item
+            className="PreferencesMenu__Personality__CardNeg"
             mt={-0.8}
             color="red"
             style={{
@@ -139,6 +144,7 @@ function PersonalityButton(props: ButtonProps) {
         )}
         {personality.neut_gameplay_description && (
           <Stack.Item
+            className="PreferencesMenu__Personality__CardNeut"
             mt={-0.8}
             color="yellow"
             style={{
@@ -285,9 +291,10 @@ export function PersonalityPage() {
     .sort((a, b) => sortPersonalities(a, b, selectedPersonalities));
 
   return (
-    <Section fill>
+    <Section className="PreferencesMenu__Personality" fill>
       <Stack vertical fill>
         <Stack.Item
+          className="PreferencesMenu__Personality__Summary"
           align="center"
           textAlign="center"
           fontSize="20px"
@@ -307,13 +314,14 @@ export function PersonalityPage() {
               )}
             </Flex.Item>
             <Flex.Item width="120px">
-              <Box backgroundColor="white" color="black" p={0.5}>
+              <Box className="PreferencesMenu__Personality__Counter" p={0.5}>
                 {selectedPersonalities?.length || 0} /{' '}
                 {data.max_personalities === -1 ? '∞' : data.max_personalities}
               </Box>
             </Flex.Item>
             <Flex.Item ml={1}>
               <Button
+                className="PreferencesMenu__Personality__ClearButton"
                 color="red"
                 icon="trash"
                 disabled={!selectedPersonalities?.length}
@@ -344,6 +352,7 @@ export function PersonalityPage() {
         )}
         <Stack.Item mb={1}>
           <Input
+            className="PreferencesMenu__Personality__Search"
             fluid
             placeholder="Search..."
             value={searchQuery}
@@ -351,7 +360,7 @@ export function PersonalityPage() {
           />
         </Stack.Item>
         <Stack.Item grow>
-          <Section fill scrollable>
+          <Section className="PreferencesMenu__Personality__GridSection" fill scrollable>
             <Flex wrap width="100%">
               {filteredPersonalities.map((personality) => (
                 <Flex.Item

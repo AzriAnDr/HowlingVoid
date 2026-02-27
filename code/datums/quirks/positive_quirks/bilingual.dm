@@ -28,7 +28,7 @@
 		if(quirk_holder.has_language(language_type))
 			to_chat(quirk_holder, span_boldnotice("You are already familiar with the quirk in your preferences, so you did not learn one."))
 			return
-		to_chat(quirk_holder, span_boldnotice("You are already familiar with the quirk in your preferences, so you learned Galactic Uncommon instead."))
+		to_chat(quirk_holder, span_boldnotice("You are already familiar with the quirk in your preferences, so you learned Neu-Deutsch instead."))
 
 	var/speakable = client_source?.prefs.read_preference(/datum/preference/toggle/language_speakable)
 	var/language_skill = client_source?.prefs.read_preference(/datum/preference/choiced/language_skill) || "100%"

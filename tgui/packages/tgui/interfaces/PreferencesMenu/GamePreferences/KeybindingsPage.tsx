@@ -16,6 +16,11 @@ import { isEscape, KEY } from 'tgui-core/keys';
 
 import { LoadingScreen } from '../../common/LoadingScreen';
 import type { PreferencesMenuData } from '../types';
+import { getCharacterPreferencesLanguage } from '../CharacterPreferences/localization';
+import {
+  getKeybindingsUiText,
+  localizeKeybinding,
+} from './keybindingsLocalization';
 import { TabbedMenu } from './TabbedMenu';
 
 type Keybinding = {
@@ -38,6 +43,12 @@ type KeybindingsPageState = {
    */
   rebindingHotkey?: [string, number];
 };
+
+type InterfaceLanguage = 'english' | 'russian';
+
+function getLanguage(data: PreferencesMenuData): InterfaceLanguage {
+  return getCharacterPreferencesLanguage(data);
+}
 
 function isStandardKey(event: KeyboardEvent): boolean {
   return (
@@ -121,6 +132,7 @@ class KeybindingButton extends Component<{
   currentHotkey?: string;
   onClick?: () => void;
   typingHotkey?: string;
+  unboundLabel: string;
 }> {
   shouldComponentUpdate(nextProps) {
     return (
@@ -130,10 +142,11 @@ class KeybindingButton extends Component<{
   }
 
   render() {
-    const { currentHotkey, onClick, typingHotkey } = this.props;
+    const { currentHotkey, onClick, typingHotkey, unboundLabel } = this.props;
 
     const child = (
       <Button
+        className="PreferencesMenu__Keybindings__BindButton"
         fluid
         textAlign="center"
         captureKeys={typingHotkey === undefined}
@@ -143,7 +156,7 @@ class KeybindingButton extends Component<{
         }}
         selected={typingHotkey !== undefined}
       >
-        {typingHotkey || currentHotkey || 'Unbound'}
+        {typingHotkey || currentHotkey || unboundLabel}
       </Button>
     );
 
@@ -185,6 +198,7 @@ function KeybindingName(props: KeybindingNameProps) {
 
 type ResetToDefaultButtonProps = {
   keybindingId: string;
+  label: string;
 };
 
 function ResetToDefaultButton(props: ResetToDefaultButtonProps) {
@@ -192,6 +206,7 @@ function ResetToDefaultButton(props: ResetToDefaultButtonProps) {
 
   return (
     <Button
+      className="PreferencesMenu__Keybindings__ResetOneButton"
       fluid
       textAlign="center"
       onClick={() => {
@@ -200,40 +215,46 @@ function ResetToDefaultButton(props: ResetToDefaultButtonProps) {
         });
       }}
     >
-      Reset to Defaults
+      {props.label}
     </Button>
   );
 }
 
 // Generates react nodes for keybindings
 function getKeybindingNodes(
+  category: string,
   input: Record<string, Keybinding>,
   searchText: string | undefined,
   selectedKeybindings: PreferencesMenuData['keybindings'] | undefined,
   getTypingHotkey: (keybindingId: string, slot: number) => string | undefined,
   getKeybindingOnClick: (keybindingId: string, slot: number) => () => void,
+  text: ReturnType<typeof getKeybindingsUiText>,
+  language: InterfaceLanguage,
 ) {
   return sortKeybindings(Object.entries(input))
     .map(([keybindingId, keybinding]) => {
+      const localizedKeybinding = localizeKeybinding(
+        keybinding,
+        category,
+        language,
+      );
       if (
         searchText &&
         searchText.length >= 2 &&
-        !keybinding.name.toLowerCase().includes(searchText.toLowerCase())
+        !localizedKeybinding.name
+          .toLowerCase()
+          .includes(searchText.toLowerCase())
       ) {
         return null;
       }
       const keys = selectedKeybindings![keybindingId] || [];
 
-      const name = (
-        <Stack.Item basis="25%">
-          <KeybindingName keybinding={keybinding} />
-        </Stack.Item>
-      );
-
       return (
-        <Stack.Item key={keybindingId} mb={1}>
+        <Stack.Item className="PreferencesMenu__Keybindings__Row" key={keybindingId} mb={1}>
           <Stack fill>
-            {name}
+            <Stack.Item className="PreferencesMenu__Keybindings__NameCell" basis="25%">
+              <KeybindingName keybinding={localizedKeybinding} />
+            </Stack.Item>
 
             {range(0, 3).map((key) => (
               <Stack.Item key={key} grow basis="10%">
@@ -241,12 +262,16 @@ function getKeybindingNodes(
                   currentHotkey={keys[key]}
                   typingHotkey={getTypingHotkey(keybindingId, key)}
                   onClick={getKeybindingOnClick(keybindingId, key)}
+                  unboundLabel={text.unbound}
                 />
               </Stack.Item>
             ))}
 
             <Stack.Item shrink>
-              <ResetToDefaultButton keybindingId={keybindingId} />
+              <ResetToDefaultButton
+                keybindingId={keybindingId}
+                label={text.resetToDefaults}
+              />
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -258,6 +283,7 @@ export class KeybindingsPage extends Component<any, KeybindingsPageState> {
   cancelNextKeyUp?: number;
   keybindingOnClicks: Record<string, (() => void)[]> = {};
   lastKeybinds?: PreferencesMenuData['keybindings'];
+  currentLanguage: InterfaceLanguage = 'english';
 
   state: KeybindingsPageState = {
     lastKeyboardEvent: undefined,
@@ -401,6 +427,7 @@ export class KeybindingsPage extends Component<any, KeybindingsPageState> {
   }
 
   getTypingHotkey(keybindingId: string, slot: number): string | undefined {
+    const text = getKeybindingsUiText(this.currentLanguage);
     const { lastKeyboardEvent, rebindingHotkey } = this.state;
 
     if (!rebindingHotkey) {
@@ -412,7 +439,7 @@ export class KeybindingsPage extends Component<any, KeybindingsPageState> {
     }
 
     if (lastKeyboardEvent === undefined) {
-      return 'Set New / ESC to Clear';
+      return text.setNewOrEsc;
     }
 
     return formatKeyboardEvent(lastKeyboardEvent);
@@ -444,7 +471,10 @@ export class KeybindingsPage extends Component<any, KeybindingsPageState> {
   }
 
   render() {
-    const { act } = useBackend();
+    const { act, data } = useBackend<PreferencesMenuData>();
+    const language = getLanguage(data);
+    this.currentLanguage = language;
+    const text = getKeybindingsUiText(language);
     const keybindings = this.state.keybindings;
 
     if (!keybindings) {
@@ -466,29 +496,37 @@ export class KeybindingsPage extends Component<any, KeybindingsPageState> {
         />
 
         <Stack vertical fill>
-          <Stack.Item grow>
+      <Stack.Item grow>
             <TabbedMenu
+              className="PreferencesMenu__Keybindings__TabbedMenu"
               categoryEntries={keybindingEntries.map(
                 ([category, keybindings]) => {
                   return [
                     category,
                     getKeybindingNodes(
+                      category,
                       keybindings,
                       this.state.searchText,
                       this.state.selectedKeybindings,
                       this.getTypingHotkey.bind(this),
                       this.getKeybindingOnClick.bind(this),
+                      text,
+                      language,
                     ),
                   ];
                 },
               )}
+              interfaceLanguage={language}
               setSearchText={this.state.setSearchText}
             />
           </Stack.Item>
 
           <Stack.Item align="center">
-            <Button.Confirm onClick={() => act('reset_all_keybinds')}>
-              Reset all keybindings
+            <Button.Confirm
+              className="PreferencesMenu__Keybindings__ResetAllButton"
+              onClick={() => act('reset_all_keybinds')}
+            >
+              {text.resetAll}
             </Button.Confirm>
           </Stack.Item>
         </Stack>

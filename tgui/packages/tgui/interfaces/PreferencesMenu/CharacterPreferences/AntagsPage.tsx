@@ -14,6 +14,7 @@ import { classes } from 'tgui-core/react';
 
 import { type Antagonist, Category } from '../antagonists/base';
 import type { PreferencesMenuData } from '../types';
+import { getCharacterPreferencesLanguage, localize } from './localization';
 
 const requireAntag = require.context(
   '../antagonists/antagonists',
@@ -53,6 +54,7 @@ type AntagSelectionProps = {
 
 function AntagSelection(props: AntagSelectionProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
+  const language = getCharacterPreferencesLanguage(data);
   const className = 'PreferencesMenu__Antags__antagSelection';
 
   const [predictedState, setPredictedState] = useState(
@@ -97,11 +99,11 @@ function AntagSelection(props: AntagSelectionProps) {
       buttons={
         <>
           <Button color="good" onClick={() => enableAntags(antagonistKeys)}>
-            Enable All
+            {localize(language, 'Enable All')}
           </Button>
 
           <Button color="bad" onClick={() => disableAntags(antagonistKeys)}>
-            Disable All
+            {localize(language, 'Disable All')}
           </Button>
         </>
       }
@@ -143,7 +145,11 @@ function AntagSelection(props: AntagSelectionProps) {
                   <Tooltip
                     content={
                       isBanned
-                        ? `You are banned from ${antagonist.name}.`
+                        ? localize(
+                            language,
+                            'You are banned from {name}.',
+                            `Вы забанены от ${antagonist.name}.`,
+                          ).replace('{name}', antagonist.name)
                         : antagonist.description.map((text, index) => {
                             return (
                               <div key={antagonist.key + index}>
@@ -184,7 +190,11 @@ function AntagSelection(props: AntagSelectionProps) {
 
                       {daysLeft > 0 && (
                         <Box className="antagonist-days-left">
-                          <b>{daysLeft}</b> days left
+                          {localize(
+                            language,
+                            '{days} days left',
+                            '{days} дн. осталось',
+                          ).replace('{days}', String(daysLeft))}
                         </Box>
                       )}
                     </Box>
@@ -200,20 +210,23 @@ function AntagSelection(props: AntagSelectionProps) {
 }
 
 export function AntagsPage() {
+  const { data } = useBackend<PreferencesMenuData>();
+  const language = getCharacterPreferencesLanguage(data);
+
   return (
     <Box className="PreferencesMenu__Antags">
       <AntagSelection
-        name="Roundstart"
+        name={localize(language, 'Roundstart')}
         antagonists={antagsByCategory.get(Category.Roundstart)!}
       />
 
       <AntagSelection
-        name="Midround"
+        name={localize(language, 'Midround')}
         antagonists={antagsByCategory.get(Category.Midround)!}
       />
 
       <AntagSelection
-        name="Latejoin"
+        name={localize(language, 'Latejoin')}
         antagonists={antagsByCategory.get(Category.Latejoin)!}
       />
     </Box>

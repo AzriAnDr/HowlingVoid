@@ -18,12 +18,172 @@ $department_map: (
 
 .ChoicedSelection {
   padding: var(--space-m);
-  background-color: var(--color-base);
-  box-shadow: 0 0.5em 1em hsla(0, 0%, 0%, 0.5);
+  border: 1px solid hsla(36, 22%, 48%, 0.45);
+  border-radius: 9px;
+  background: linear-gradient(
+    180deg,
+    hsla(220, 17%, 18%, 0.96) 0%,
+    hsla(220, 19%, 12%, 0.99) 100%
+  );
+  box-shadow:
+    inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+    0 8px 16px hsla(0, 0%, 0%, 0.35);
+
+  .Section {
+    border: 1px solid hsla(36, 22%, 48%, 0.35);
+    border-radius: 8px;
+    background: linear-gradient(
+      180deg,
+      hsla(220, 17%, 16%, 0.95) 0%,
+      hsla(220, 19%, 11%, 0.98) 100%
+    );
+  }
+
+  .Section__titleText {
+    color: hsla(40, 92%, 87%, 0.96);
+    text-shadow: 0 0 4px hsla(38, 80%, 65%, 0.2);
+  }
+
+  .Input,
+  .Input__input {
+    border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+    border-radius: 7px !important;
+    background: linear-gradient(
+      180deg,
+      hsla(220, 18%, 16%, 0.94) 0%,
+      hsla(221, 20%, 12%, 0.98) 100%
+    ) !important;
+    background-color: hsla(220, 21%, 14%, 0.98) !important;
+    color: hsla(210, 18%, 92%, 0.97) !important;
+  }
+
+  .Button {
+    border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+    border-radius: 7px !important;
+    background: linear-gradient(
+      180deg,
+      hsla(220, 18%, 16%, 0.94) 0%,
+      hsla(221, 20%, 12%, 0.98) 100%
+    ) !important;
+    background-color: hsla(220, 21%, 14%, 0.98) !important;
+    color: hsla(210, 18%, 92%, 0.97) !important;
+  }
+
+  // Grid item cards in select popups (e.g. Select backpack)
+  .Section .Button {
+    border: 1px solid hsla(210, 16%, 34%, 0.65) !important;
+    border-radius: 7px !important;
+    background: linear-gradient(
+      180deg,
+      hsla(220, 20%, 15%, 0.95) 0%,
+      hsla(221, 22%, 11%, 0.99) 100%
+    ) !important;
+    background-color: hsla(220, 22%, 13%, 0.98) !important;
+  }
+
+  .Section .Button.Button--selected {
+    border: 1px solid hsla(140, 52%, 56%, 0.9) !important;
+    background: linear-gradient(
+      180deg,
+      hsla(140, 45%, 27%, 0.96) 0%,
+      hsla(135, 44%, 15%, 0.99) 100%
+    ) !important;
+    background-color: hsla(138, 38%, 20%, 0.99) !important;
+    box-shadow:
+      inset 0 1px 0 hsla(0, 0%, 100%, 0.13),
+      0 0 8px hsla(140, 80%, 45%, 0.26) !important;
+  }
 }
 
 .PreferencesMenu {
   &__Antags {
+    border: 1px solid hsla(36, 22%, 48%, 0.45);
+    border-radius: 9px;
+    padding: 8px;
+    background: linear-gradient(
+      180deg,
+      hsla(220, 17%, 18%, 0.95) 0%,
+      hsla(220, 19%, 12%, 0.98) 100%
+    );
+    box-shadow:
+      inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+      0 8px 16px hsla(0, 0%, 0%, 0.3);
+
+    .Section {
+      border: 1px solid hsla(36, 22%, 48%, 0.45);
+      border-radius: 8px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.95) 0%,
+        hsla(220, 19%, 12%, 0.98) 100%
+      );
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+        0 8px 16px hsla(0, 0%, 0%, 0.28);
+    }
+
+    .Section__title {
+      border-bottom: 1px solid hsla(210, 25%, 42%, 0.45);
+      background: linear-gradient(
+        180deg,
+        hsla(220, 16%, 24%, 0.52) 0%,
+        hsla(220, 17%, 14%, 0.4) 100%
+      );
+      border-radius: 7px 7px 0 0;
+    }
+
+    .Section__titleText {
+      color: hsla(40, 92%, 87%, 0.96);
+      text-shadow: 0 0 4px hsla(38, 80%, 65%, 0.2);
+      font-weight: 700;
+    }
+
+    .Section .Button {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(217, 18%, 28%, 0.92) 0%,
+        hsla(220, 20%, 20%, 0.97) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 24%, 0.97) !important;
+      color: hsla(210, 18%, 92%, 0.96) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    .Section .Button.Button--color--good,
+    .Section .Button.Button--color--green {
+      border: 1px solid hsla(140, 52%, 56%, 0.9) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(140, 45%, 27%, 0.96) 0%,
+        hsla(135, 44%, 15%, 0.99) 100%
+      ) !important;
+      background-color: hsla(138, 38%, 20%, 0.99) !important;
+      color: hsla(132, 92%, 90%, 0.99) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.13),
+        0 0 8px hsla(140, 80%, 45%, 0.26) !important;
+    }
+
+    .Section .Button.Button--color--bad,
+    .Section .Button.Button--color--red,
+    .Section .Button.Button--color--danger {
+      border: 1px solid hsla(0, 64%, 54%, 0.85) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(0, 58%, 34%, 0.94) 0%,
+        hsla(0, 54%, 18%, 0.98) 100%
+      ) !important;
+      background-color: hsla(0, 45%, 24%, 0.98) !important;
+      color: hsla(10, 100%, 93%, 0.98) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.1),
+        0 0 8px hsla(0, 70%, 50%, 0.24) !important;
+    }
+
     &__antagSelection {
       gap: var(--space-l);
 
@@ -61,7 +221,8 @@ $department_map: (
           @include animate-hover;
 
           .antagonist-icon-parent {
-            border-color: var(--color-red);
+            border-color: hsl(0, 62%, 45%);
+            box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.06);
 
             .antagonist-icon {
               opacity: 0.5;
@@ -77,13 +238,14 @@ $department_map: (
           @include animate-hover;
 
           .antagonist-icon-parent {
-            border-color: var(--color-green);
+            border-color: hsl(140, 42%, 40%);
+            box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0.08);
           }
         }
 
         &--banned {
           .antagonist-icon-parent {
-            border-color: var(--color-grey);
+            border-color: hsla(0, 0%, 58%, 0.95);
           }
 
           .antagonist-icon {
@@ -224,7 +386,492 @@ $department_map: (
     }
   }
 
+  &__Character {
+    &__AltNamesModal {
+      border: 1px solid hsla(36, 22%, 48%, 0.45);
+      border-radius: 9px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.96) 0%,
+        hsla(220, 19%, 12%, 0.99) 100%
+      );
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+        0 8px 16px hsla(0, 0%, 0%, 0.35);
+
+      .Section__title {
+        border-bottom: 1px solid hsla(210, 25%, 42%, 0.45);
+        background: linear-gradient(
+          180deg,
+          hsla(220, 16%, 24%, 0.52) 0%,
+          hsla(220, 17%, 14%, 0.4) 100%
+        );
+      }
+
+      .Section__titleText {
+        color: hsla(40, 92%, 87%, 0.96);
+        text-shadow: 0 0 4px hsla(38, 80%, 65%, 0.2);
+        font-weight: 700;
+      }
+
+      .LabeledList__item {
+        border-bottom: 1px solid hsla(210, 25%, 42%, 0.25);
+      }
+
+      .Input,
+      .Button {
+        border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+        border-radius: 7px !important;
+      }
+    }
+
+    &__Profiles {
+      margin-top: 2px;
+      margin-bottom: 2px;
+    }
+
+    &__ProfilesDropdown,
+    &__ProfilesDropdown .Dropdown,
+    &__ProfilesDropdown .Button,
+    &__ProfilesDropdown .Button__content {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(217, 18%, 28%, 0.92) 0%,
+        hsla(220, 20%, 20%, 0.97) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 24%, 0.97) !important;
+      color: hsla(210, 18%, 92%, 0.96) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    &__PremiumNotice {
+      margin-top: 2px;
+      margin-bottom: 2px;
+      padding: 7px 16px;
+      border: 1px solid hsla(39, 58%, 61%, 0.75);
+      border-radius: 8px;
+      background: linear-gradient(
+        180deg,
+        hsla(38, 46%, 27%, 0.92) 0%,
+        hsla(33, 44%, 14%, 0.97) 100%
+      );
+      color: hsla(40, 92%, 87%, 0.97);
+      text-shadow: 0 0 4px hsla(38, 80%, 65%, 0.2);
+      box-shadow:
+        inset 0 1px 0 hsla(42, 45%, 84%, 0.16),
+        0 0 10px hsla(38, 60%, 45%, 0.15);
+      font-weight: 700;
+    }
+
+    &__TopTabs {
+      .Button {
+        border: 1px solid hsla(210, 20%, 40%, 0.68);
+        border-radius: 7px;
+        background: linear-gradient(
+          180deg,
+          hsla(218, 20%, 30%, 0.92) 0%,
+          hsla(221, 23%, 20%, 0.97) 100%
+        ) !important;
+        background-color: hsla(220, 21%, 24%, 0.97) !important;
+        color: hsla(210, 18%, 92%, 0.96);
+        box-shadow:
+          inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+          inset 0 -1px 0 hsla(0, 0%, 0%, 0.15);
+      }
+
+      .Button--selected {
+        border: 1px solid hsla(39, 58%, 61%, 0.75);
+        background: linear-gradient(
+          180deg,
+          hsla(38, 46%, 27%, 0.92) 0%,
+          hsla(33, 44%, 14%, 0.97) 100%
+        ) !important;
+        background-color: hsla(34, 40%, 19%, 0.98) !important;
+        color: hsla(40, 92%, 87%, 0.97);
+        box-shadow:
+          inset 0 1px 0 hsla(42, 45%, 84%, 0.16),
+          0 0 10px hsla(38, 60%, 45%, 0.2);
+      }
+
+      .Button.Button--selected {
+        border: 1px solid hsla(39, 58%, 61%, 0.75) !important;
+        background: linear-gradient(
+          180deg,
+          hsla(38, 46%, 27%, 0.92) 0%,
+          hsla(33, 44%, 14%, 0.97) 100%
+        ) !important;
+        background-color: hsla(34, 40%, 19%, 0.98) !important;
+        color: hsla(40, 92%, 87%, 0.97) !important;
+      }
+    }
+
+    &__TransferRow {
+      gap: 6px;
+      border: 0 !important;
+      border-radius: 0 !important;
+      padding: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+
+      > .Stack,
+      > .Stack > .Stack__item {
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+    }
+
+    &__ActionButton {
+      border: 1px solid hsla(36, 22%, 48%, 0.45);
+      border-radius: 7px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 16%, 16%, 0.95) 0%,
+        hsla(220, 17%, 11%, 0.98) 100%
+      );
+      color: hsla(210, 18%, 90%, 0.96);
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.08),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15);
+    }
+
+    &__MainLayout {
+      border: 1px solid hsla(36, 20%, 54%, 0.22);
+      border-radius: 10px;
+      padding: 6px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.7) 0%,
+        hsla(220, 20%, 11%, 0.84) 100%
+      );
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.05),
+        0 8px 16px hsla(0, 0%, 0%, 0.18);
+    }
+
+    &__Sidebar,
+    &__VisualSlots,
+    &__ProfilePanel {
+      border: 1px solid hsla(36, 22%, 48%, 0.45);
+      border-radius: 8px;
+      padding: 6px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.95) 0%,
+        hsla(220, 19%, 12%, 0.98) 100%
+      );
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+        0 8px 16px hsla(0, 0%, 0%, 0.3);
+    }
+
+    &__Sidebar {
+      .Button,
+      .Dropdown,
+      .Dropdown .Button,
+      .Dropdown .Button__content,
+      .Input,
+      .Input__input {
+        border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+        border-radius: 7px !important;
+        background: linear-gradient(
+          180deg,
+          hsla(217, 18%, 28%, 0.92) 0%,
+          hsla(220, 20%, 20%, 0.97) 100%
+        ) !important;
+        background-color: hsla(220, 21%, 24%, 0.97) !important;
+        color: hsla(210, 18%, 92%, 0.96) !important;
+        box-shadow:
+          inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+          inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+      }
+
+      .Dropdown .Button {
+        width: 100%;
+      }
+    }
+
+    &__IconButton {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 18%, 16%, 0.94) 0%,
+        hsla(221, 20%, 12%, 0.98) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 14%, 0.98) !important;
+      color: hsla(210, 18%, 92%, 0.97) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    .Button.PreferencesMenu__Character__IconButton.Button--color--red,
+    .Button.PreferencesMenu__Character__IconButton.Button--color--danger {
+      border: 1px solid hsla(0, 64%, 54%, 0.85) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(0, 58%, 34%, 0.94) 0%,
+        hsla(0, 54%, 18%, 0.98) 100%
+      ) !important;
+      background-color: hsla(0, 45%, 24%, 0.98) !important;
+      color: hsla(10, 100%, 93%, 0.98) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.1),
+        0 0 8px hsla(0, 70%, 50%, 0.24) !important;
+    }
+
+    &__DeleteModal {
+      border: 1px solid hsla(36, 22%, 48%, 0.55);
+      border-radius: 10px;
+      padding: 14px 16px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.98) 0%,
+        hsla(220, 19%, 12%, 1) 100%
+      );
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.1),
+        0 10px 22px hsla(0, 0%, 0%, 0.45);
+    }
+
+    &__DeleteConfirmButton,
+    &__DeleteCancelButton {
+      border-radius: 7px !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    &__DeleteConfirmButton {
+      border: 1px solid hsla(0, 64%, 54%, 0.85) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(0, 58%, 34%, 0.94) 0%,
+        hsla(0, 54%, 18%, 0.98) 100%
+      ) !important;
+      color: hsla(10, 100%, 93%, 0.98) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.1),
+        0 0 8px hsla(0, 70%, 50%, 0.24) !important;
+    }
+
+    &__DeleteCancelButton {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(217, 18%, 28%, 0.92) 0%,
+        hsla(220, 20%, 20%, 0.97) 100%
+      ) !important;
+      color: hsla(210, 18%, 92%, 0.96) !important;
+    }
+
+    &__GenderPopover {
+      border: 1px solid hsla(36, 22%, 48%, 0.45);
+      border-radius: 8px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.98) 0%,
+        hsla(220, 19%, 12%, 1) 100%
+      );
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+        0 8px 16px hsla(0, 0%, 0%, 0.3);
+
+      .Button--selected {
+        border-color: hsla(39, 58%, 61%, 0.8) !important;
+        background: linear-gradient(
+          180deg,
+          hsla(38, 46%, 27%, 0.94) 0%,
+          hsla(33, 44%, 14%, 0.99) 100%
+        ) !important;
+      }
+    }
+
+    &__ProfilePanel {
+      .Button,
+      .Input,
+      .Input__input {
+        border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+        border-radius: 7px !important;
+        background: linear-gradient(
+          180deg,
+          hsla(220, 18%, 16%, 0.94) 0%,
+          hsla(221, 20%, 12%, 0.98) 100%
+        ) !important;
+        background-color: hsla(220, 21%, 14%, 0.98) !important;
+        color: hsla(210, 18%, 92%, 0.97) !important;
+      }
+
+      .Button:hover {
+        border-color: hsla(39, 58%, 61%, 0.65) !important;
+      }
+    }
+
+    &__FieldDropdown,
+    &__FieldDropdown .Button,
+    &__FieldDropdown .Button__content,
+    &__FieldDropdown .Button--dropdown,
+    &__FieldDropdown .Button--dropdown .Button__content,
+    &__FieldDropdown .Button--icon {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 18%, 16%, 0.94) 0%,
+        hsla(221, 20%, 12%, 0.98) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 14%, 0.98) !important;
+      color: hsla(210, 18%, 92%, 0.97) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    &__ModalSection {
+      .Button,
+      .Input,
+      .Input__input,
+      select {
+        border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+        border-radius: 7px !important;
+        background: linear-gradient(
+          180deg,
+          hsla(220, 18%, 16%, 0.94) 0%,
+          hsla(221, 20%, 12%, 0.98) 100%
+        ) !important;
+        background-color: hsla(220, 21%, 14%, 0.98) !important;
+        color: hsla(210, 18%, 92%, 0.97) !important;
+      }
+    }
+
+    &__PreviewCell {
+      height: 320px;
+      min-height: 320px;
+      max-height: 320px;
+      border: 1px solid hsla(36, 22%, 48%, 0.45);
+      border-radius: 8px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.95) 0%,
+        hsla(220, 19%, 12%, 0.98) 100%
+      );
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+        0 8px 16px hsla(0, 0%, 0%, 0.3);
+      overflow: hidden;
+    }
+
+    &__PrefTabs {
+      margin-bottom: 6px;
+      gap: 6px;
+
+      .Button,
+      .PreferencesMenu__Character__PrefTabButton {
+        border: 1px solid hsla(210, 14%, 35%, 0.6);
+        border-radius: 7px;
+        background: linear-gradient(
+          180deg,
+          hsla(217, 18%, 28%, 0.9) 0%,
+          hsla(220, 20%, 20%, 0.95) 100%
+        );
+        color: hsla(210, 18%, 92%, 0.96);
+        box-shadow:
+          inset 0 1px 0 hsla(0, 0%, 100%, 0.07),
+          inset 0 -1px 0 hsla(0, 0%, 0%, 0.2);
+      }
+
+      .Button .Button__content,
+      .PreferencesMenu__Character__PrefTabButton .Button__content {
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+      }
+
+      .Button--selected,
+      .PreferencesMenu__Character__PrefTabButton.Button--selected {
+        border: 1px solid hsla(39, 58%, 61%, 0.75);
+        background: linear-gradient(
+          180deg,
+          hsla(38, 46%, 27%, 0.92) 0%,
+          hsla(33, 44%, 14%, 0.97) 100%
+        );
+        color: hsla(40, 92%, 87%, 0.97);
+      }
+
+      .Button--selected .Button__content,
+      .PreferencesMenu__Character__PrefTabButton.Button--selected
+        .Button__content {
+        border: 0 !important;
+        background: transparent !important;
+      }
+    }
+
+    &__VisualSlots .Button {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 18%, 16%, 0.94) 0%,
+        hsla(221, 20%, 12%, 0.98) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 14%, 0.98) !important;
+      color: hsla(210, 18%, 92%, 0.97) !important;
+    }
+  }
+
   &__Quirks {
+    &__TopTabsContainer {
+      border: 1px solid hsla(36, 22%, 48%, 0.45);
+      border-radius: 9px;
+      padding: 6px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.95) 0%,
+        hsla(220, 19%, 12%, 0.98) 100%
+      );
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+        0 8px 16px hsla(0, 0%, 0%, 0.3);
+    }
+
+    &__TopTabs {
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    &__TopTabButton {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(217, 18%, 28%, 0.92) 0%,
+        hsla(220, 20%, 20%, 0.97) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 24%, 0.97) !important;
+      color: hsla(210, 18%, 92%, 0.96) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    &__TopTabButton.Button--selected {
+      border: 1px solid hsla(39, 58%, 61%, 0.75) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(38, 46%, 27%, 0.92) 0%,
+        hsla(33, 44%, 14%, 0.97) 100%
+      ) !important;
+      color: hsla(40, 92%, 87%, 0.97) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(42, 45%, 84%, 0.16),
+        0 0 10px hsla(38, 60%, 45%, 0.12) !important;
+    }
+
     &__AugmentsPointsTitle {
       margin: 0 auto 10px auto;
       padding: 5px 12px;
@@ -429,4 +1076,1163 @@ $department_map: (
       }
     }
   }
+
+  &__Loadout {
+    &__TopSection,
+    &__PreviewSection,
+    &__CatalogSection,
+    &__SelectedSection,
+    &__Body > .Stack__item > .Section {
+      border: 1px solid hsla(36, 22%, 48%, 0.45);
+      border-radius: 8px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.95) 0%,
+        hsla(220, 19%, 12%, 0.98) 100%
+      );
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+        0 8px 16px hsla(0, 0%, 0%, 0.3);
+    }
+
+    .Section__title {
+      border-bottom: 1px solid hsla(210, 25%, 42%, 0.45);
+      background: linear-gradient(
+        180deg,
+        hsla(220, 16%, 24%, 0.52) 0%,
+        hsla(220, 17%, 14%, 0.4) 100%
+      );
+      border-radius: 7px 7px 0 0;
+    }
+
+    .Section__titleText {
+      color: hsla(40, 92%, 87%, 0.96);
+      text-shadow: 0 0 4px hsla(38, 80%, 65%, 0.2);
+      font-weight: 700;
+    }
+
+    &__SearchInput,
+    &__SearchInput .Input,
+    &__SearchInput .Input__input {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 18%, 16%, 0.94) 0%,
+        hsla(221, 20%, 12%, 0.98) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 14%, 0.98) !important;
+      color: hsla(210, 18%, 92%, 0.97) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    .Tabs {
+      border-top: 1px solid hsla(210, 25%, 42%, 0.28);
+      padding-top: 4px;
+      gap: 4px;
+    }
+
+    .Tabs__Tab,
+    .Tabs .Tabs__Tab {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 18%, 16%, 0.94) 0%,
+        hsla(221, 20%, 12%, 0.98) 100%
+      ) !important;
+      color: hsla(210, 18%, 92%, 0.97) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    .Tabs__Tab--selected,
+    .Tabs .Tabs__Tab--selected {
+      border-color: hsla(39, 58%, 61%, 0.75) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(38, 46%, 27%, 0.92) 0%,
+        hsla(33, 44%, 14%, 0.97) 100%
+      ) !important;
+      color: hsla(40, 92%, 87%, 0.97) !important;
+    }
+
+    &__ActionButton,
+    .Button,
+    .Dropdown .Button,
+    .Dropdown .Button__content,
+    .Input,
+    .Input__input {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(217, 18%, 28%, 0.92) 0%,
+        hsla(220, 20%, 20%, 0.97) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 24%, 0.97) !important;
+      color: hsla(210, 18%, 92%, 0.96) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    &__Dropdown {
+      width: 100%;
+    }
+
+    &__Dropdown,
+    &__Dropdown .Button,
+    &__Dropdown .Button__content,
+    &__Dropdown .Dropdown,
+    &__Dropdown .Dropdown .Button,
+    &__Dropdown .Dropdown .Button__content {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 18%, 16%, 0.94) 0%,
+        hsla(221, 20%, 12%, 0.98) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 14%, 0.98) !important;
+      color: hsla(210, 18%, 92%, 0.97) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    &__ActionButton,
+    .Button.PreferencesMenu__Loadout__ActionButton {
+      border: 1px solid hsla(36, 22%, 48%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 18%, 16%, 0.94) 0%,
+        hsla(221, 20%, 12%, 0.98) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 14%, 0.98) !important;
+      color: hsla(210, 18%, 92%, 0.97) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    .Button--selected {
+      border-color: hsla(39, 58%, 61%, 0.75) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(38, 46%, 27%, 0.92) 0%,
+        hsla(33, 44%, 14%, 0.97) 100%
+      ) !important;
+      color: hsla(40, 92%, 87%, 0.97) !important;
+    }
+
+    .ImageButton {
+      border: 1px solid hsla(210, 18%, 30%, 0.55) !important;
+      border-radius: 8px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 16%, 16%, 0.94) 0%,
+        hsla(221, 18%, 12%, 0.98) 100%
+      ) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.08),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    .ImageButton--selected,
+    .ImageButton.Button--selected {
+      border-color: hsla(39, 58%, 61%, 0.75) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(38, 46%, 27%, 0.92) 0%,
+        hsla(33, 44%, 14%, 0.97) 100%
+      ) !important;
+    }
+
+    &__SelectedSection .Section__title {
+      border-bottom: 1px solid hsla(39, 52%, 58%, 0.45);
+      background: linear-gradient(
+        180deg,
+        hsla(38, 30%, 26%, 0.55) 0%,
+        hsla(32, 34%, 14%, 0.45) 100%
+      );
+    }
+
+    .Divider {
+      border-top-color: hsla(210, 20%, 40%, 0.45) !important;
+    }
+
+    &__PresetDimmer {
+      border: 1px solid hsla(36, 22%, 48%, 0.45);
+      border-radius: 9px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.98) 0%,
+        hsla(220, 19%, 12%, 1) 100%
+      ) !important;
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+        0 8px 16px hsla(0, 0%, 0%, 0.3) !important;
+    }
+  }
+
+  &__Character {
+    &__Species {
+      border: 1px solid hsla(36, 22%, 48%, 0.45);
+      border-radius: 9px;
+      padding: 6px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.95) 0%,
+        hsla(220, 19%, 12%, 0.98) 100%
+      );
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+        0 8px 16px hsla(0, 0%, 0%, 0.3);
+    }
+
+    &__SpeciesBackButton {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(217, 18%, 28%, 0.92) 0%,
+        hsla(220, 20%, 20%, 0.97) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 24%, 0.97) !important;
+      color: hsla(210, 18%, 92%, 0.96) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    .Button.PreferencesMenu__Character__SpeciesBackButton,
+    .Button.PreferencesMenu__Character__SpeciesBackButton .Button__content {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(217, 18%, 28%, 0.92) 0%,
+        hsla(220, 20%, 20%, 0.97) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 24%, 0.97) !important;
+      color: hsla(210, 18%, 92%, 0.96) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    .Button.PreferencesMenu__Character__SpeciesBackButton:hover,
+    .Button.PreferencesMenu__Character__SpeciesBackButton:hover .Button__content {
+      border-color: hsla(39, 58%, 61%, 0.75) !important;
+      color: hsla(40, 92%, 87%, 0.97) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(42, 45%, 84%, 0.12),
+        0 0 8px hsla(38, 60%, 45%, 0.14) !important;
+    }
+
+    &__SpeciesList {
+      border: 1px solid hsla(36, 22%, 48%, 0.45);
+      border-radius: 8px;
+      padding: 6px 4px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 18%, 16%, 0.95) 0%,
+        hsla(221, 20%, 11%, 0.98) 100%
+      );
+      box-shadow: inset 0 0 0 1px hsla(38, 40%, 80%, 0.07);
+    }
+
+    &__SpeciesCard {
+      border: 1px solid hsla(210, 14%, 35%, 0.55) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(217, 18%, 28%, 0.9) 0%,
+        hsla(220, 20%, 20%, 0.95) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 24%, 0.95) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.08),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+      margin-bottom: 4px;
+    }
+
+    &__SpeciesCard.Button--selected {
+      border: 1px solid hsla(39, 58%, 61%, 0.8) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(38, 46%, 27%, 0.94) 0%,
+        hsla(33, 44%, 14%, 0.99) 100%
+      ) !important;
+      background-color: hsla(34, 40%, 19%, 0.99) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(42, 45%, 84%, 0.16),
+        0 0 10px hsla(38, 60%, 45%, 0.2) !important;
+    }
+
+    &__SpeciesInfo,
+    &__SpeciesLore,
+    &__SpeciesSubsection {
+      border: 1px solid hsla(36, 22%, 48%, 0.45) !important;
+      border-radius: 8px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.95) 0%,
+        hsla(220, 19%, 12%, 0.98) 100%
+      ) !important;
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+        0 8px 16px hsla(0, 0%, 0%, 0.28) !important;
+    }
+
+    &__SpeciesInfo .Section__title,
+    &__SpeciesLore .Section__title,
+    &__SpeciesSubsection .Section__title {
+      border-bottom: 1px solid hsla(210, 25%, 42%, 0.45);
+      background: linear-gradient(
+        180deg,
+        hsla(220, 16%, 24%, 0.52) 0%,
+        hsla(220, 17%, 14%, 0.4) 100%
+      );
+      border-radius: 7px 7px 0 0;
+    }
+
+    &__SpeciesInfo .Section__titleText,
+    &__SpeciesLore .Section__titleText,
+    &__SpeciesSubsection .Section__titleText {
+      color: hsla(40, 92%, 87%, 0.96);
+      text-shadow: 0 0 4px hsla(38, 80%, 65%, 0.2);
+      font-weight: 700;
+    }
+  }
+
+  &__Character {
+    &__JobsPage {
+      border: 1px solid hsla(36, 22%, 48%, 0.45);
+      border-radius: 9px;
+      padding: 8px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.95) 0%,
+        hsla(220, 19%, 12%, 0.98) 100%
+      );
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+        0 8px 16px hsla(0, 0%, 0%, 0.3);
+    }
+
+    &__Jobs {
+      margin-top: 2px;
+    }
+
+    &__JobsGrid {
+      gap: 8px !important;
+      align-items: flex-start;
+    }
+
+    &__JobsColumn {
+      border: 1px solid hsla(36, 20%, 54%, 0.22);
+      border-radius: 8px;
+      padding: 4px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.7) 0%,
+        hsla(220, 20%, 11%, 0.84) 100%
+      );
+      box-shadow: inset 0 0 0 1px hsla(38, 40%, 80%, 0.05);
+    }
+
+    &__JobsRoleDropdown,
+    &__JobsRoleDropdown .Button,
+    &__JobsRoleDropdown .Button__content,
+    &__JobsRoleDropdown .Dropdown,
+    &__JobsRoleDropdown .Dropdown .Button,
+    &__JobsRoleDropdown .Dropdown .Button__content {
+      border: 1px solid hsla(39, 58%, 61%, 0.75) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(38, 46%, 27%, 0.92) 0%,
+        hsla(33, 44%, 14%, 0.97) 100%
+      ) !important;
+      background-color: hsla(34, 40%, 19%, 0.98) !important;
+      color: hsla(40, 92%, 87%, 0.97) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(42, 45%, 84%, 0.16),
+        0 0 10px hsla(38, 60%, 45%, 0.15) !important;
+    }
+
+    &__JobsDropdown,
+    &__JobsDropdown .Button,
+    &__JobsDropdown .Button__content,
+    &__JobsDropdown .Dropdown,
+    &__JobsDropdown .Dropdown .Button,
+    &__JobsDropdown .Dropdown .Button__content {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(217, 18%, 28%, 0.92) 0%,
+        hsla(220, 20%, 20%, 0.97) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 24%, 0.97) !important;
+      color: hsla(210, 18%, 92%, 0.96) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+  }
+
+  &__Jobs {
+    &__PriorityHeader {
+      color: hsla(40, 92%, 87%, 0.9);
+      text-shadow: 0 0 4px hsla(38, 80%, 65%, 0.2);
+      font-weight: 700;
+    }
+
+    &__departments {
+      .job-name {
+        color: hsla(0, 0%, 96%, 0.96);
+        text-shadow: 0 1px 0 hsla(0, 0%, 0%, 0.3);
+      }
+
+      .options {
+        border-left: 1px solid hsla(210, 20%, 30%, 0.4);
+      }
+
+      &__priority {
+        border-color: hsla(0, 0%, 0%, 0.35);
+        box-shadow:
+          inset 0 1px 0 hsla(0, 0%, 100%, 0.15),
+          inset 0 -1px 0 hsla(0, 0%, 0%, 0.15);
+      }
+    }
+  }
+
+  &__Augments {
+    border: 1px solid hsla(36, 22%, 48%, 0.45);
+    border-radius: 9px;
+    padding: 8px;
+    background: linear-gradient(
+      180deg,
+      hsla(220, 17%, 18%, 0.95) 0%,
+      hsla(220, 19%, 12%, 0.98) 100%
+    );
+    box-shadow:
+      inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+      0 8px 16px hsla(0, 0%, 0%, 0.3);
+
+    &__Panel,
+    &__Card {
+      border: 1px solid hsla(36, 22%, 48%, 0.45);
+      border-radius: 8px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.95) 0%,
+        hsla(220, 19%, 12%, 0.98) 100%
+      );
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+        0 8px 16px hsla(0, 0%, 0%, 0.28);
+    }
+
+    // Prevent stacked section borders from visually "doubling" in Markings/Augments lists.
+    &__Card {
+      margin-bottom: 6px;
+    }
+
+    &__Panel .Section__title,
+    &__Card .Section__title {
+      border-bottom: 1px solid hsla(210, 25%, 42%, 0.45);
+      background: linear-gradient(
+        180deg,
+        hsla(220, 16%, 24%, 0.52) 0%,
+        hsla(220, 17%, 14%, 0.4) 100%
+      );
+      border-radius: 7px 7px 0 0;
+    }
+
+    &__Panel .Section__titleText,
+    &__Card .Section__titleText {
+      color: hsla(40, 92%, 87%, 0.96);
+      text-shadow: 0 0 4px hsla(38, 80%, 65%, 0.2);
+      font-weight: 700;
+    }
+
+    &__Dropdown,
+    &__Dropdown .Button,
+    &__Dropdown .Button__content,
+    &__Dropdown .Dropdown,
+    &__Dropdown .Dropdown .Button,
+    &__Dropdown .Dropdown .Button__content {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(217, 18%, 28%, 0.92) 0%,
+        hsla(220, 20%, 20%, 0.97) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 24%, 0.97) !important;
+      color: hsla(210, 18%, 92%, 0.96) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    &__ActionButton,
+    .Button.PreferencesMenu__Augments__ActionButton {
+      border: 1px solid hsla(36, 22%, 48%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 18%, 16%, 0.94) 0%,
+        hsla(221, 20%, 12%, 0.98) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 14%, 0.98) !important;
+      color: hsla(210, 18%, 92%, 0.97) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    .Button--selected {
+      border-color: hsla(39, 58%, 61%, 0.75) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(38, 46%, 27%, 0.92) 0%,
+        hsla(33, 44%, 14%, 0.97) 100%
+      ) !important;
+      color: hsla(40, 92%, 87%, 0.97) !important;
+    }
+
+    &__RotateButtons {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+    }
+
+    .Divider {
+      border-top-color: hsla(210, 20%, 40%, 0.45) !important;
+    }
+  }
+
+  &__Languages {
+    border: 1px solid hsla(36, 22%, 48%, 0.45);
+    border-radius: 9px;
+    padding: 8px;
+    background: linear-gradient(
+      180deg,
+      hsla(220, 17%, 18%, 0.95) 0%,
+      hsla(220, 19%, 12%, 0.98) 100%
+    );
+    box-shadow:
+      inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+      0 8px 16px hsla(0, 0%, 0%, 0.3);
+
+    &__Info,
+    &__Column,
+    &__LanguageCard {
+      border: 1px solid hsla(36, 22%, 48%, 0.45);
+      border-radius: 8px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.95) 0%,
+        hsla(220, 19%, 12%, 0.98) 100%
+      );
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+        0 8px 16px hsla(0, 0%, 0%, 0.28);
+    }
+
+    .Section__title {
+      border-bottom: 1px solid hsla(210, 25%, 42%, 0.45);
+      background: linear-gradient(
+        180deg,
+        hsla(220, 16%, 24%, 0.52) 0%,
+        hsla(220, 17%, 14%, 0.4) 100%
+      );
+      border-radius: 7px 7px 0 0;
+    }
+
+    .Section__titleText,
+    &__ColumnTitle {
+      color: hsla(40, 92%, 87%, 0.96);
+      text-shadow: 0 0 4px hsla(38, 80%, 65%, 0.2);
+      font-weight: 700;
+    }
+
+    &__Description {
+      border-left: 2px solid hsla(39, 58%, 61%, 0.5);
+      margin: 0 0 8px 0;
+      padding: 6px 8px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 20%, 11%, 0.72) 0%,
+        hsla(220, 24%, 8%, 0.78) 100%
+      );
+      color: hsla(210, 16%, 88%, 0.93);
+    }
+
+    &__ActionButton,
+    .Button.PreferencesMenu__Languages__ActionButton {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(217, 18%, 28%, 0.92) 0%,
+        hsla(220, 20%, 20%, 0.97) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 24%, 0.97) !important;
+      color: hsla(210, 18%, 92%, 0.96) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+      margin-right: 4px;
+    }
+
+    .Button.PreferencesMenu__Languages__ActionButton.Button--color--good,
+    .Button.PreferencesMenu__Languages__ActionButton.Button--color--green {
+      border: 1px solid hsla(140, 52%, 56%, 0.85) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(140, 45%, 27%, 0.94) 0%,
+        hsla(135, 44%, 15%, 0.98) 100%
+      ) !important;
+      background-color: hsla(138, 38%, 20%, 0.98) !important;
+      color: hsla(132, 92%, 90%, 0.98) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.12),
+        0 0 8px hsla(140, 80%, 45%, 0.24) !important;
+    }
+
+    .Button.PreferencesMenu__Languages__ActionButton.Button--color--bad,
+    .Button.PreferencesMenu__Languages__ActionButton.Button--color--red {
+      border: 1px solid hsla(0, 64%, 54%, 0.85) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(0, 58%, 34%, 0.94) 0%,
+        hsla(0, 54%, 18%, 0.98) 100%
+      ) !important;
+      background-color: hsla(0, 45%, 24%, 0.98) !important;
+      color: hsla(10, 100%, 93%, 0.98) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.1),
+        0 0 8px hsla(0, 70%, 50%, 0.24) !important;
+    }
+
+    .Button--selected {
+      border-color: hsla(39, 58%, 61%, 0.75) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(38, 46%, 27%, 0.92) 0%,
+        hsla(33, 44%, 14%, 0.97) 100%
+      ) !important;
+      color: hsla(40, 92%, 87%, 0.97) !important;
+    }
+  }
+
+  &__Personality {
+    border: 1px solid hsla(36, 22%, 48%, 0.45);
+    border-radius: 9px;
+    padding: 8px;
+    background: linear-gradient(
+      180deg,
+      hsla(220, 17%, 18%, 0.95) 0%,
+      hsla(220, 19%, 12%, 0.98) 100%
+    );
+    box-shadow:
+      inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+      0 8px 16px hsla(0, 0%, 0%, 0.3);
+
+    .Section {
+      border: 1px solid hsla(36, 22%, 48%, 0.45);
+      border-radius: 8px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.95) 0%,
+        hsla(220, 19%, 12%, 0.98) 100%
+      );
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+        0 8px 16px hsla(0, 0%, 0%, 0.28);
+    }
+
+    &__Summary {
+      border: 1px solid hsla(210, 25%, 42%, 0.45);
+      border-radius: 8px;
+      padding: 8px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 16%, 24%, 0.52) 0%,
+        hsla(220, 17%, 14%, 0.4) 100%
+      );
+      color: hsla(40, 92%, 90%, 0.97);
+      text-shadow: 0 0 4px hsla(38, 80%, 65%, 0.2);
+    }
+
+    &__Counter {
+      border: 1px solid hsla(39, 58%, 61%, 0.75);
+      border-radius: 7px;
+      background: linear-gradient(
+        180deg,
+        hsla(38, 46%, 27%, 0.92) 0%,
+        hsla(33, 44%, 14%, 0.97) 100%
+      );
+      color: hsla(40, 92%, 90%, 0.98);
+      box-shadow:
+        inset 0 1px 0 hsla(42, 45%, 84%, 0.16),
+        0 0 10px hsla(38, 60%, 45%, 0.15);
+    }
+
+    &__ClearButton,
+    .Button.PreferencesMenu__Personality__ClearButton {
+      border: 1px solid hsla(0, 64%, 54%, 0.85) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(0, 58%, 34%, 0.94) 0%,
+        hsla(0, 54%, 18%, 0.98) 100%
+      ) !important;
+      background-color: hsla(0, 45%, 24%, 0.98) !important;
+      color: hsla(10, 100%, 93%, 0.98) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.1),
+        0 0 8px hsla(0, 70%, 50%, 0.24) !important;
+    }
+
+    &__Search,
+    &__Search .Input,
+    &__Search .Input__input {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 18%, 16%, 0.94) 0%,
+        hsla(221, 20%, 12%, 0.98) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 14%, 0.98) !important;
+      color: hsla(210, 18%, 92%, 0.97) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    &__GridSection {
+      border: 1px solid hsla(36, 22%, 48%, 0.45);
+      border-radius: 8px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.95) 0%,
+        hsla(220, 19%, 12%, 0.98) 100%
+      );
+    }
+
+    &__Card {
+      border-radius: 8px !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.08),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.16) !important;
+      transition:
+        border-color var(--transition-time-fast) ease,
+        filter var(--transition-time-fast) ease;
+
+      &:hover {
+        filter: brightness(1.08);
+      }
+    }
+
+    &__Card--selected {
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.12),
+        0 0 8px hsla(140, 60%, 45%, 0.22) !important;
+    }
+
+    &__CardTitle {
+      color: hsla(0, 0%, 96%, 0.98);
+      text-shadow: 0 1px 0 hsla(0, 0%, 0%, 0.32);
+    }
+
+    &__CardDescription {
+      color: hsla(210, 15%, 84%, 0.95) !important;
+      border-top-color: hsla(210, 14%, 34%, 0.6) !important;
+      border-left-color: hsla(210, 14%, 34%, 0.6) !important;
+    }
+
+    &__CardPos {
+      color: hsla(142, 90%, 62%, 0.98) !important;
+      text-shadow: 0 0 4px hsla(140, 80%, 35%, 0.3);
+    }
+
+    &__CardNeg {
+      color: hsla(6, 95%, 68%, 0.98) !important;
+      text-shadow: 0 0 4px hsla(0, 80%, 35%, 0.28);
+    }
+
+    &__CardNeut {
+      color: hsla(46, 96%, 70%, 0.98) !important;
+      text-shadow: 0 0 4px hsla(42, 80%, 35%, 0.28);
+    }
+  }
+  &__GameTabbed {
+    border: 1px solid hsla(36, 22%, 48%, 0.45);
+    border-radius: 9px;
+    padding: 6px 6px 0 6px;
+    background: linear-gradient(
+      180deg,
+      hsla(220, 17%, 18%, 0.95) 0%,
+      hsla(220, 19%, 12%, 0.98) 100%
+    );
+    box-shadow:
+      inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+      0 8px 16px hsla(0, 0%, 0%, 0.3);
+
+    &__CategoryButton {
+      border: 1px solid hsla(210, 20%, 40%, 0.68) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(218, 20%, 30%, 0.92) 0%,
+        hsla(221, 23%, 20%, 0.97) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 24%, 0.97) !important;
+      color: hsla(210, 18%, 92%, 0.96) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    &__CategoryButton.Button--selected {
+      border: 1px solid hsla(39, 58%, 61%, 0.75) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(38, 46%, 27%, 0.92) 0%,
+        hsla(33, 44%, 14%, 0.97) 100%
+      ) !important;
+      color: hsla(40, 92%, 87%, 0.97) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(42, 45%, 84%, 0.16),
+        0 0 10px hsla(38, 60%, 45%, 0.15) !important;
+    }
+
+    &__Search,
+    &__Search .Input,
+    &__Search .Input__input {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 18%, 16%, 0.94) 0%,
+        hsla(221, 20%, 12%, 0.98) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 14%, 0.98) !important;
+      color: hsla(210, 18%, 92%, 0.97) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    &__Content {
+      margin-top: 2px;
+      border-top: 1px solid hsla(210, 20%, 40%, 0.35);
+      padding-top: 4px;
+    }
+
+    &__Section {
+      border: 1px solid hsla(36, 22%, 48%, 0.45) !important;
+      border-radius: 8px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 17%, 18%, 0.95) 0%,
+        hsla(220, 19%, 12%, 0.98) 100%
+      ) !important;
+      box-shadow:
+        inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
+        0 8px 16px hsla(0, 0%, 0%, 0.28) !important;
+    }
+
+    &__Section .Section__title {
+      border-bottom: 1px solid hsla(210, 25%, 42%, 0.45);
+      background: linear-gradient(
+        180deg,
+        hsla(220, 16%, 24%, 0.52) 0%,
+        hsla(220, 17%, 14%, 0.4) 100%
+      );
+      border-radius: 7px 7px 0 0;
+    }
+
+    &__Section .Section__titleText {
+      color: hsla(40, 92%, 87%, 0.96);
+      text-shadow: 0 0 4px hsla(38, 80%, 65%, 0.2);
+      font-weight: 700;
+    }
+  }
+
+  &__GameTopTabs {
+    gap: 6px;
+    padding: 0 4px;
+  }
+
+  .PreferencesMenu__GameTopTabs .Button {
+    border: 1px solid hsla(210, 20%, 40%, 0.68) !important;
+    border-radius: 7px !important;
+    background: linear-gradient(
+      180deg,
+      hsla(218, 20%, 30%, 0.92) 0%,
+      hsla(221, 23%, 20%, 0.97) 100%
+    ) !important;
+    background-color: hsla(220, 21%, 24%, 0.97) !important;
+    color: hsla(210, 18%, 92%, 0.96) !important;
+    box-shadow:
+      inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+      inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+  }
+
+  .PreferencesMenu__GameTopTabs .Button.Button--selected {
+    border: 1px solid hsla(39, 58%, 61%, 0.75) !important;
+    background: linear-gradient(
+      180deg,
+      hsla(38, 46%, 27%, 0.92) 0%,
+      hsla(33, 44%, 14%, 0.97) 100%
+    ) !important;
+    background-color: hsla(34, 40%, 19%, 0.98) !important;
+    color: hsla(40, 92%, 87%, 0.97) !important;
+    box-shadow:
+      inset 0 1px 0 hsla(42, 45%, 84%, 0.16),
+      0 0 10px hsla(38, 60%, 45%, 0.2) !important;
+  }
+
+  .Button.PreferencesMenu__GameTopTabs__Button {
+    border: 1px solid hsla(210, 20%, 40%, 0.68) !important;
+    border-radius: 7px !important;
+    background: linear-gradient(
+      180deg,
+      hsla(218, 20%, 30%, 0.92) 0%,
+      hsla(221, 23%, 20%, 0.97) 100%
+    ) !important;
+    background-color: hsla(220, 21%, 24%, 0.97) !important;
+    color: hsla(210, 18%, 92%, 0.96) !important;
+    box-shadow:
+      inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+      inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+  }
+
+  .Button.PreferencesMenu__GameTopTabs__Button.Button--selected {
+    border: 1px solid hsla(39, 58%, 61%, 0.75) !important;
+    background: linear-gradient(
+      180deg,
+      hsla(38, 46%, 27%, 0.92) 0%,
+      hsla(33, 44%, 14%, 0.97) 100%
+    ) !important;
+    background-color: hsla(34, 40%, 19%, 0.98) !important;
+    color: hsla(40, 92%, 87%, 0.97) !important;
+    box-shadow:
+      inset 0 1px 0 hsla(42, 45%, 84%, 0.16),
+      0 0 10px hsla(38, 60%, 45%, 0.2) !important;
+  }
+
+  &__Keybindings {
+    &__Row {
+      margin-bottom: 6px;
+      padding: 4px 6px;
+      border: 1px solid hsla(210, 20%, 35%, 0.32);
+      border-radius: 7px;
+      background: linear-gradient(
+        180deg,
+        hsla(220, 20%, 12%, 0.58) 0%,
+        hsla(220, 23%, 9%, 0.75) 100%
+      );
+    }
+
+    &__NameCell {
+      color: hsla(210, 18%, 92%, 0.97);
+    }
+
+    &__BindButton,
+    &__ResetOneButton,
+    &__ResetAllButton {
+      border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+      border-radius: 7px !important;
+      background: linear-gradient(
+        180deg,
+        hsla(217, 18%, 28%, 0.92) 0%,
+        hsla(220, 20%, 20%, 0.97) 100%
+      ) !important;
+      background-color: hsla(220, 21%, 24%, 0.97) !important;
+      color: hsla(210, 18%, 92%, 0.96) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+        inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    &__BindButton.Button--selected {
+      border-color: hsla(39, 58%, 61%, 0.75) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(38, 46%, 27%, 0.92) 0%,
+        hsla(33, 44%, 14%, 0.97) 100%
+      ) !important;
+      color: hsla(40, 92%, 87%, 0.97) !important;
+      box-shadow:
+        inset 0 1px 0 hsla(42, 45%, 84%, 0.16),
+        0 0 10px hsla(38, 60%, 45%, 0.15) !important;
+    }
+
+    &__ResetAllButton {
+      margin-top: 4px;
+      min-width: 220px;
+      border-color: hsla(39, 58%, 61%, 0.75) !important;
+      background: linear-gradient(
+        180deg,
+        hsla(38, 46%, 27%, 0.92) 0%,
+        hsla(33, 44%, 14%, 0.97) 100%
+      ) !important;
+      color: hsla(40, 92%, 87%, 0.97) !important;
+    }
+  }
+}
+
+// Keep checkbox styling stable across all Preferences tabs.
+// These rules are intentionally high-specificity to override generic button theming.
+.PreferencesMenu .Button.PreferencesMenu__Toggle {
+  border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+  border-radius: 6px !important;
+  background: linear-gradient(
+    180deg,
+    hsla(220, 18%, 16%, 0.94) 0%,
+    hsla(221, 20%, 12%, 0.98) 100%
+  ) !important;
+  background-color: hsla(220, 21%, 14%, 0.98) !important;
+  color: hsla(210, 18%, 88%, 0.92) !important;
+  box-shadow:
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.08),
+    inset 0 -1px 0 hsla(0, 0%, 0%, 0.2) !important;
+}
+
+.PreferencesMenu .Button.PreferencesMenu__Toggle.PreferencesMenu__Toggle--checked,
+.PreferencesMenu .Button.PreferencesMenu__Toggle.Button--selected,
+.PreferencesMenu .Button.PreferencesMenu__Toggle.Button--checked,
+.PreferencesMenu .Button.PreferencesMenu__Toggle[data-checked='true'],
+.PreferencesMenu .Button.PreferencesMenu__Toggle[aria-checked='true'] {
+  border: 1px solid hsla(140, 52%, 56%, 0.9) !important;
+  background: linear-gradient(
+    180deg,
+    hsla(140, 45%, 27%, 0.96) 0%,
+    hsla(135, 44%, 15%, 0.99) 100%
+  ) !important;
+  background-color: hsla(138, 38%, 20%, 0.99) !important;
+  color: hsla(132, 92%, 90%, 0.99) !important;
+  box-shadow:
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.13),
+    0 0 8px hsla(140, 80%, 45%, 0.26) !important;
+}
+
+.PreferencesMenu .Button.PreferencesMenu__Toggle .Button__content,
+.PreferencesMenu .Button.PreferencesMenu__Toggle .Button__text {
+  color: hsla(210, 14%, 72%, 0.9) !important;
+}
+
+.PreferencesMenu .Button.PreferencesMenu__Toggle .Button--icon,
+.PreferencesMenu .Button.PreferencesMenu__Toggle .Icon,
+.PreferencesMenu .Button.PreferencesMenu__Toggle [class*='fa-'] {
+  color: hsla(210, 14%, 72%, 0.9) !important;
+}
+
+.PreferencesMenu .Button.PreferencesMenu__Toggle.PreferencesMenu__Toggle--checked .Button--icon,
+.PreferencesMenu .Button.PreferencesMenu__Toggle.Button--selected .Button--icon,
+.PreferencesMenu .Button.PreferencesMenu__Toggle.Button--checked .Button--icon,
+.PreferencesMenu .Button.PreferencesMenu__Toggle[data-checked='true'] .Button--icon,
+.PreferencesMenu .Button.PreferencesMenu__Toggle[aria-checked='true'] .Button--icon,
+.PreferencesMenu .Button.PreferencesMenu__Toggle.PreferencesMenu__Toggle--checked .Icon,
+.PreferencesMenu .Button.PreferencesMenu__Toggle.Button--selected .Icon,
+.PreferencesMenu .Button.PreferencesMenu__Toggle.Button--checked .Icon,
+.PreferencesMenu .Button.PreferencesMenu__Toggle[data-checked='true'] .Icon,
+.PreferencesMenu .Button.PreferencesMenu__Toggle[aria-checked='true'] .Icon,
+.PreferencesMenu .Button.PreferencesMenu__Toggle.PreferencesMenu__Toggle--checked [class*='fa-'],
+.PreferencesMenu .Button.PreferencesMenu__Toggle.Button--selected [class*='fa-'],
+.PreferencesMenu .Button.PreferencesMenu__Toggle.Button--checked [class*='fa-'],
+.PreferencesMenu .Button.PreferencesMenu__Toggle[data-checked='true'] [class*='fa-'],
+.PreferencesMenu .Button.PreferencesMenu__Toggle[aria-checked='true'] [class*='fa-'],
+.PreferencesMenu .Button.PreferencesMenu__Toggle.PreferencesMenu__Toggle--checked .Button__content,
+.PreferencesMenu .Button.PreferencesMenu__Toggle.Button--selected .Button__content,
+.PreferencesMenu .Button.PreferencesMenu__Toggle.Button--checked .Button__content,
+.PreferencesMenu .Button.PreferencesMenu__Toggle[data-checked='true'] .Button__content,
+.PreferencesMenu .Button.PreferencesMenu__Toggle[aria-checked='true'] .Button__content,
+.PreferencesMenu .Button.PreferencesMenu__Toggle.PreferencesMenu__Toggle--checked .Button__text,
+.PreferencesMenu .Button.PreferencesMenu__Toggle.Button--selected .Button__text,
+.PreferencesMenu .Button.PreferencesMenu__Toggle.Button--checked .Button__text,
+.PreferencesMenu .Button.PreferencesMenu__Toggle[data-checked='true'] .Button__text,
+.PreferencesMenu .Button.PreferencesMenu__Toggle[aria-checked='true'] .Button__text {
+  color: hsla(132, 92%, 90%, 0.99) !important;
+  text-shadow: 0 0 6px hsla(140, 80%, 45%, 0.38);
+}
+
+// Final high-priority override for top Game Preferences tabs
+.PreferencesMenu .PreferencesMenu__GameTopTabsContainer .Button {
+  border: 1px solid hsla(210, 20%, 40%, 0.68) !important;
+  border-radius: 7px !important;
+  background: linear-gradient(
+    180deg,
+    hsla(218, 20%, 30%, 0.92) 0%,
+    hsla(221, 23%, 20%, 0.97) 100%
+  ) !important;
+  background-color: hsla(220, 21%, 24%, 0.97) !important;
+  color: hsla(210, 18%, 92%, 0.96) !important;
+  box-shadow:
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+    inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+}
+
+.PreferencesMenu .PreferencesMenu__GameTopTabsContainer .Button.Button--selected {
+  border: 1px solid hsla(39, 58%, 61%, 0.75) !important;
+  background: linear-gradient(
+    180deg,
+    hsla(38, 46%, 27%, 0.92) 0%,
+    hsla(33, 44%, 14%, 0.97) 100%
+  ) !important;
+  background-color: hsla(34, 40%, 19%, 0.98) !important;
+  color: hsla(40, 92%, 87%, 0.97) !important;
+  box-shadow:
+    inset 0 1px 0 hsla(42, 45%, 84%, 0.16),
+    0 0 10px hsla(38, 60%, 45%, 0.2) !important;
+}
+
+// Final high-priority override for Occupations dropdowns.
+// Applied here to win against legacy and module-level rules.
+.PreferencesMenu .PreferencesMenu__Jobs .job-name .Dropdown,
+.PreferencesMenu .PreferencesMenu__Jobs .job-name .Dropdown .Button,
+.PreferencesMenu .PreferencesMenu__Jobs .job-name .Dropdown .Button__content {
+  border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
+  border-radius: 7px !important;
+  background: linear-gradient(
+    180deg,
+    hsla(217, 18%, 28%, 0.92) 0%,
+    hsla(220, 20%, 20%, 0.97) 100%
+  ) !important;
+  background-color: hsla(220, 21%, 24%, 0.97) !important;
+  color: hsla(210, 18%, 92%, 0.96) !important;
+  box-shadow:
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
+    inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+}
+
+.PreferencesMenu .PreferencesMenu__Character__JobsRoleDropdown .Dropdown,
+.PreferencesMenu .PreferencesMenu__Character__JobsRoleDropdown .Button,
+.PreferencesMenu .PreferencesMenu__Character__JobsRoleDropdown .Button__content {
+  border: 1px solid hsla(39, 58%, 61%, 0.75) !important;
+  border-radius: 7px !important;
+  background: linear-gradient(
+    180deg,
+    hsla(38, 46%, 27%, 0.92) 0%,
+    hsla(33, 44%, 14%, 0.97) 100%
+  ) !important;
+  background-color: hsla(34, 40%, 19%, 0.98) !important;
+  color: hsla(40, 92%, 87%, 0.97) !important;
+  box-shadow:
+    inset 0 1px 0 hsla(42, 45%, 84%, 0.16),
+    0 0 10px hsla(38, 60%, 45%, 0.15) !important;
 }

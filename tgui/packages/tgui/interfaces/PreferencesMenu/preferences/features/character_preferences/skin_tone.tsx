@@ -63,6 +63,7 @@ export const skin_tone: Feature<string, string, SkinToneServerData> = {
 
     return (
       <Dropdown
+        className="PreferencesMenu__Character__FieldDropdown"
         buttons
         displayText={
           displayNames.find((option) => option.value === value.value)

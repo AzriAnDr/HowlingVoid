@@ -1,6 +1,7 @@
 import { binaryInsertWith } from 'common/collections';
 import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -15,7 +16,9 @@ import {
 } from 'tgui-core/components';
 
 import type { Name } from '../types';
+import type { PreferencesMenuData } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
+import { getCharacterPreferencesLanguage, localize } from './localization';
 
 type NameWithKey = {
   key: string;
@@ -42,6 +45,8 @@ type MultiNameProps = {
 
 export function MultiNameInput(props: MultiNameProps) {
   const { handleUpdateName, handleRandomizeName } = props;
+  const { data } = useBackend<PreferencesMenuData>();
+  const language = getCharacterPreferencesLanguage(data);
 
   const data = useServerPrefs();
   if (!data) return;
@@ -62,12 +67,13 @@ export function MultiNameInput(props: MultiNameProps) {
     <Modal>
       <TrackOutsideClicks onOutsideClick={props.handleClose}>
         <Section
+          className="PreferencesMenu__Character__AltNamesModal"
           buttons={
             <Button color="red" onClick={props.handleClose}>
-              Close
+              {localize(language, 'Close')}
             </Button>
           }
-          title="Alternate names"
+          title={localize(language, 'Alternate names')}
         >
           <LabeledList>
             {sortNameWithKeyEntries(Object.entries(namesIntoGroups)).map(
@@ -84,7 +90,10 @@ export function MultiNameInput(props: MultiNameProps) {
                     const [prefix, suffix] = currentValue.split('-');
                     // NOVA EDIT ADDITION END
                     return (
-                      <LabeledList.Item key={key} label={name.explanation}>
+                      <LabeledList.Item
+                        key={key}
+                        label={localize(language, name.explanation)}
+                      >
                         <Stack fill>
                           {/* NOVA EDIT REMOVAL START - DRONE NAMING (the removed part is integrated in the added block below)
                           <Stack.Item grow>
@@ -162,7 +171,7 @@ export function MultiNameInput(props: MultiNameProps) {
                             <Stack.Item>
                               <Button
                                 icon="dice"
-                                tooltip="Randomize"
+                                tooltip={localize(language, 'Randomize')}
                                 tooltipPosition="right"
                                 onClick={() => handleRandomizeName(key)}
                               />
@@ -191,6 +200,8 @@ type NameInputProps = {
 };
 
 export function NameInput(props: NameInputProps) {
+  const { data } = useBackend<PreferencesMenuData>();
+  const language = getCharacterPreferencesLanguage(data);
   const [lastNameBeforeEdit, setLastNameBeforeEdit] = useState<string | null>(
     null,
   );
@@ -201,7 +212,7 @@ export function NameInput(props: NameInputProps) {
     props.handleUpdateName(value);
   }
 
-  const data = useServerPrefs();
+  const serverData = useServerPrefs();
 
   return (
     <Button
@@ -253,11 +264,11 @@ export function NameInput(props: NameInputProps) {
         </Stack.Item>
 
         {/* We only know other names when the server tells us */}
-        {data?.names && (
+        {serverData?.names && (
           <Stack.Item>
             <Button
               as="span"
-              tooltip="Alternate Names"
+              tooltip={localize(language, 'Alternate names')}
               tooltipPosition="bottom"
               style={{
                 background: 'rgba(0, 0, 0, 0.7)',

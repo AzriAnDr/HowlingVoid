@@ -176,6 +176,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	data["quirk_points_enabled"] = !CONFIG_GET(flag/disable_quirk_points)
 	data["quirks_balance"] = GetQuirkBalance()
 	data["positive_quirk_count"] = GetPositiveQuirkCount()
+	data["interface_language"] = read_preference(/datum/preference/choiced/interface_language) // Howling Void edit
 	//NOVA EDIT ADDITION END
 
 	data["character_preferences"] = compile_character_preferences(user)
@@ -204,6 +205,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	data["window"] = current_window
 
 	data["content_unlocked"] = unlock_content
+	data["interface_language"] = read_preference(/datum/preference/choiced/interface_language) // Howling Void edit
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		data += preference_middleware.get_ui_static_data(user)
@@ -463,8 +465,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	appearance = preferences.render_new_preview_appearance(body, show_job_clothes)
 
-	// Keep enlarged bodies inside the preview frame by nudging them down a bit.
-	pixel_y = 0
 	var/body_size = body?.dna?.features?["body_size"]
 	if(isnum(body_size) && body_size > BODY_SIZE_NORMAL)
 		pixel_y = -round((body_size - BODY_SIZE_NORMAL) * 16)

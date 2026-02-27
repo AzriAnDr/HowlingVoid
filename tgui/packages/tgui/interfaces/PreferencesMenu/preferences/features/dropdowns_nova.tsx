@@ -88,6 +88,7 @@ export function FeatureBloodTypeDropdownInput(props: ColorDropdownInputProps) {
     <Stack vertical>
       <Stack.Item>
         <Dropdown
+          className="PreferencesMenu__Character__FieldDropdown"
           buttons
           displayText={
             <Stack>

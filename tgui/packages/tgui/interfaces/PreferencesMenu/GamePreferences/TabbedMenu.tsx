@@ -1,24 +1,44 @@
-import { type ComponentProps, type ReactNode, useRef } from 'react';
+﻿import { type ComponentProps, type ReactNode, useRef } from 'react';
 import { Button, type Flex, Input, Section, Stack } from 'tgui-core/components';
+import { localize } from '../CharacterPreferences/localization';
+import categoriesRu from './locales/categories.ru.json';
 
 type TabbedMenuProps = {
   categoryEntries: [string, ReactNode[]][];
   contentProps?: ComponentProps<typeof Flex>;
   searchText?: string;
   setSearchText?: (text: string) => void;
+  interfaceLanguage?: 'english' | 'russian';
+  className?: string;
 };
 
 export function TabbedMenu(props: TabbedMenuProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const categoryRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const language = props.interfaceLanguage ?? 'english';
+
+  const categoryTranslations: Record<string, string> =
+    language === 'russian'
+      ? (categoriesRu as Record<string, string>)
+      : {};
+
+  const translateCategory = (category: string) =>
+    categoryTranslations[category] || category;
+
+  const searchPlaceholder = localize(language, 'Search...');
 
   return (
-    <Stack vertical fill>
+    <Stack
+      className={`PreferencesMenu__GameTabbed${props.className ? ` ${props.className}` : ''}`}
+      vertical
+      fill
+    >
       <Stack.Item>
         <Stack fill px={5}>
           {props.categoryEntries.map(([category, children]) => (
             <Stack.Item key={category} grow basis="content">
               <Button
+                className="PreferencesMenu__GameTabbed__CategoryButton"
                 align="center"
                 fontSize="1.2em"
                 fluid
@@ -37,19 +57,21 @@ export function TabbedMenu(props: TabbedMenuProps) {
                   currentSection.scrollTop = offsetTop;
                 }}
               >
-                {category}
+                {translateCategory(category)}
               </Button>
             </Stack.Item>
           ))}
         </Stack>
       </Stack.Item>
+
       {!!props.setSearchText && (
         <Stack.Item px={2} pl={5} pr={5}>
           <Input
+            className="PreferencesMenu__GameTabbed__Search"
             fluid
             height="2em"
             fontSize="1.2em"
-            placeholder="Search..."
+            placeholder={searchPlaceholder}
             value={props.searchText}
             onChange={props.setSearchText}
           />
@@ -57,6 +79,7 @@ export function TabbedMenu(props: TabbedMenuProps) {
       )}
 
       <Stack.Item
+        className="PreferencesMenu__GameTabbed__Content"
         grow
         ref={sectionRef}
         position="relative"
@@ -73,7 +96,11 @@ export function TabbedMenu(props: TabbedMenuProps) {
                   categoryRefs.current[category] = ref;
                 }}
               >
-                <Section fill title={category}>
+                <Section
+                  className="PreferencesMenu__GameTabbed__Section"
+                  fill
+                  title={translateCategory(category)}
+                >
                   {children}
                 </Section>
               </div>
@@ -84,3 +111,4 @@ export function TabbedMenu(props: TabbedMenuProps) {
     </Stack>
   );
 }
+

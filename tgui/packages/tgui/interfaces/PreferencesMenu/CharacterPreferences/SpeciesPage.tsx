@@ -22,6 +22,7 @@ import {
   type Species,
 } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
+import { getCharacterPreferencesLanguage, localize } from './localization';
 
 const FOOD_ICONS = {
   [Food.Bugs]: 'bug',
@@ -259,6 +260,7 @@ type SpeciesPageInnerProps = {
 
 function SpeciesPageInner(props: SpeciesPageInnerProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
+  const interfaceLanguage = getCharacterPreferencesLanguage(data);
   const setSpecies = createSetPreference(act, 'species');
 
   const species: [string, Species][] = Object.entries(props.species).map(
@@ -278,21 +280,31 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
   })[0][1];
 
   return (
-    <Stack vertical fill>
+    <Stack vertical fill className="PreferencesMenu__Character__Species">
       <Stack.Item>
-        <Button icon="arrow-left" onClick={props.handleClose}>
-          Go Back
+        <Button
+          className="PreferencesMenu__Character__SpeciesBackButton"
+          icon="arrow-left"
+          onClick={props.handleClose}
+        >
+          {localize(interfaceLanguage, 'Go Back')}
         </Button>
       </Stack.Item>
 
       <Stack.Item grow>
         <Stack fill>
           <Stack.Item>
-            <Box height="calc(100vh - 170px)" overflowY="auto" pr={3}>
+            <Box
+              className="PreferencesMenu__Character__SpeciesList"
+              height="calc(100vh - 170px)"
+              overflowY="auto"
+              pr={3}
+            >
               {species.map(([speciesKey, species]) => {
                 // NOVA EDIT START - Nova star-only species
                 let speciesPage = (
                   <Button
+                    className="PreferencesMenu__Character__SpeciesCard"
                     key={speciesKey}
                     onClick={() => {
                       if (species.nova_stars_only && !data.is_nova_star) {
@@ -319,7 +331,11 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                 if (species.nova_stars_only && !data.is_nova_star) {
                   const tooltipContent =
                     species.name +
-                    ' - You need to be a Nova star to select this race, apply today!';
+                    ' - ' +
+                    localize(
+                      interfaceLanguage,
+                      'You need to be a Nova star to select this race, apply today!',
+                    );
                   speciesPage = (
                     <Tooltip content={tooltipContent}>{speciesPage}</Tooltip>
                   );
@@ -336,6 +352,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                 <Stack fill>
                   <Stack.Item width="70%">
                     <Section
+                      className="PreferencesMenu__Character__SpeciesInfo"
                       title={currentSpecies.name}
                       buttons={
                         // NOHUNGER species have no diet (diet = null),
@@ -346,12 +363,20 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                       }
                     >
                       {/* NOVA EDIT CHANGE START - Adds maxHeight, scrollable*/}
-                      <Section title="Description" maxHeight="14vh" scrollable>
+                      <Section
+                        className="PreferencesMenu__Character__SpeciesSubsection"
+                        title={localize(interfaceLanguage, 'Description')}
+                        maxHeight="14vh"
+                        scrollable
+                      >
                         {/* NOVA EDIT CHANGE END */}
                         {currentSpecies.desc}
                       </Section>
 
-                      <Section title="Features">
+                      <Section
+                        className="PreferencesMenu__Character__SpeciesSubsection"
+                        title={localize(interfaceLanguage, 'Features')}
+                      >
                         <SpeciesPerks perks={currentSpecies.perks} />
                       </Section>
                     </Section>
@@ -367,7 +392,10 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
               </Box>
 
               <Box mt={1}>
-                <Section title="Lore">
+                <Section
+                  className="PreferencesMenu__Character__SpeciesLore"
+                  title={localize(interfaceLanguage, 'Lore')}
+                >
                   <BlockQuote /* NOVA EDIT START - scrollable lore */
                     overflowY="auto"
                     maxHeight="45vh"

@@ -7237,6 +7237,7 @@
 #include "modular_nova\master_files\code\modules\client\preferences\laugh.dm"
 #include "modular_nova\master_files\code\modules\client\preferences\loadout_override_preference.dm"
 #include "modular_nova\master_files\code\modules\client\preferences\looc.dm"
+#include "modularhowling_void\modules\client\preferences\interface_language.dm"
 #include "modular_nova\master_files\code\modules\client\preferences\mutant_parts.dm"
 #include "modular_nova\master_files\code\modules\client\preferences\out_of_combat_fov_darkness.dm"
 #include "modular_nova\master_files\code\modules\client\preferences\player_panel.dm"

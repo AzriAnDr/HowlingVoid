@@ -43,14 +43,14 @@ export const ColorPickerModal: React.FC<ColorPickerModalProps> = () => {
   }
 
   return (
-    <Window
+      <Window
       height={message ? 465 : 430}
       title={title}
       width={700}
       theme="generic"
     >
       {!!timeout && <Loader value={timeout} />}
-      <Window.Content>
+      <Window.Content className="PreferencesMenu__ColorPickerModal">
         <Stack fill vertical>
           {!!autofocus && <Autofocus />}
           {message && (
