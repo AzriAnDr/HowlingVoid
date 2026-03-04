@@ -9683,4 +9683,5 @@
 #include "modularhowling_void\modules\posters\code.dm"
 #include "modularhowling_void\modules\snouts\snouts.dm"
 #include "modularhowling_void\modules\title_screen\code\menu_music_verb.dm"
+#include "modularhowling_void\code\admin\cuckold_camera_view.dm"
 // END_INCLUDE

@@ -25,7 +25,9 @@
 	if(istype(thrown_proj, /obj/projectile/beam) || istype(thrown_proj, /obj/projectile/energy))
 		return
 
-	RegisterSignal(thrown_proj, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_powder_projectile_hit))
+	// Howling Void: disable powder puff on impact.
+	// Keep the integration file loaded, but do not attach on-hit smoke behavior.
+	return
 
 /obj/item/ammo_casing/proc/on_powder_projectile_hit(
 	obj/projectile/source,

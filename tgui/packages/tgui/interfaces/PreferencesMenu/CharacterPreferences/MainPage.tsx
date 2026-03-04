@@ -63,7 +63,7 @@ type CharacterControlsProps = {
 
 function CharacterControls(props: CharacterControlsProps) {
   return (
-    <Stack>
+    <Stack g={0.35}>
       <Stack.Item>
         <Button
           className="PreferencesMenu__Character__IconButton"
@@ -108,7 +108,7 @@ function CharacterControls(props: CharacterControlsProps) {
       </Stack.Item>
       <Stack.Item>
         <Button
-          className="PreferencesMenu__Character__IconButton"
+          className="PreferencesMenu__Character__IconButton PreferencesMenu__Character__IconButton--delete"
           onClick={props.handleDeleteCharacter}
           fontSize="22px"
           icon="trash"
@@ -691,6 +691,7 @@ export function MainPage(props: MainPageProps) {
             <Stack.Item grow>
               <Box className="PreferencesMenu__Character__PreviewCell">
                 <CharacterPreview
+                  width="100%"
                   height="100%"
                   id={data.character_preview_view}
                 />

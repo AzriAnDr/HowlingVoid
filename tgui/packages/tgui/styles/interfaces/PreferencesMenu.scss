@@ -610,6 +610,10 @@ $department_map: (
         inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
     }
 
+    &__IconButton--delete {
+      margin-left: 4px;
+    }
+
     .Button.PreferencesMenu__Character__IconButton.Button--color--red,
     .Button.PreferencesMenu__Character__IconButton.Button--color--danger {
       border: 1px solid hsla(0, 64%, 54%, 0.85) !important;
@@ -750,9 +754,9 @@ $department_map: (
     }
 
     &__PreviewCell {
-      height: 320px;
-      min-height: 320px;
-      max-height: 320px;
+      height: 300px;
+      min-height: 300px;
+      max-height: 300px;
       border: 1px solid hsla(36, 22%, 48%, 0.45);
       border-radius: 8px;
       background: linear-gradient(
