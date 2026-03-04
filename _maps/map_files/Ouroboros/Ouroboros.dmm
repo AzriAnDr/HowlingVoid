@@ -7311,13 +7311,12 @@
 /obj/item/stamp/head/hop{
 	pixel_y = 12
 	},
-/obj/item/stamp{
-	pixel_y = 6;
-	pixel_x = 6
-	},
 /obj/item/stamp/denied{
 	pixel_y = 6;
 	pixel_x = -6
+	},
+/obj/item/stamp/granted{
+	pixel_x = 6
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -20649,11 +20648,11 @@
 /obj/item/stamp/head/qm{
 	pixel_y = 5
 	},
-/obj/item/stamp{
-	pixel_x = 5
-	},
 /obj/item/stamp/denied{
 	pixel_x = -5
+	},
+/obj/item/stamp/granted{
+	pixel_x = 6
 	},
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
@@ -38089,12 +38088,11 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/stamp{
-	pixel_x = 10;
-	pixel_y = 6
-	},
 /obj/item/stamp/denied{
 	pixel_x = 10
+	},
+/obj/item/stamp/granted{
+	pixel_x = -3
 	},
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/cargo/office)
@@ -44758,16 +44756,15 @@
 	pixel_x = -7;
 	pixel_y = 9
 	},
-/obj/item/stamp{
-	pixel_x = -7;
-	pixel_y = 1
-	},
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/requests_console/auto_name/directional/south,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/supplies,
 /obj/effect/mapping_helpers/requests_console/assistance,
 /obj/effect/mapping_helpers/requests_console/announcement,
+/obj/item/stamp/granted{
+	pixel_x = 6
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep)
 "mPi" = (

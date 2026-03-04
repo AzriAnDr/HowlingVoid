@@ -1437,10 +1437,11 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/stamp{
-	pixel_x = -6
-	},
 /obj/structure/disposalpipe/segment,
+/obj/item/stamp/granted{
+	pixel_x = -6;
+	pixel_y = -2
+	},
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
 	},
@@ -14809,9 +14810,8 @@
 	pixel_x = -7;
 	pixel_y = 9
 	},
-/obj/item/stamp{
-	pixel_x = -7;
-	pixel_y = 1
+/obj/item/stamp/granted{
+	pixel_x = -6
 	},
 /turf/open/floor/iron/smooth_edge{
 	dir = 8
@@ -29934,10 +29934,6 @@
 	pixel_x = -7;
 	pixel_y = 9
 	},
-/obj/item/stamp{
-	pixel_x = -7;
-	pixel_y = 1
-	},
 /obj/item/folder/red{
 	pixel_x = 11;
 	pixel_y = 4
@@ -29952,6 +29948,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/stamp/granted{
+	pixel_x = -6;
+	pixel_y = -2
+	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
 "iCx" = (
@@ -61768,9 +61768,6 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/stamp{
-	pixel_x = -6
-	},
 /obj/item/coin/adamantine{
 	pixel_x = -2;
 	pixel_y = 16
@@ -61781,6 +61778,10 @@
 	},
 /obj/item/melee/chainofcommand{
 	pixel_y = 5
+	},
+/obj/item/stamp/granted{
+	pixel_x = -6;
+	pixel_y = -2
 	},
 /turf/open/floor/carpet/royalblue,
 /area/station/command/heads_quarters/captain)

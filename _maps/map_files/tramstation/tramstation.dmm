@@ -44652,6 +44652,13 @@
 	name = "Captain's Desk";
 	req_access = list("captain")
 	},
+/obj/item/stamp/granted{
+	pixel_x = 10;
+	pixel_y = 12
+	},
+/obj/item/stamp/denied{
+	pixel_x = 9
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "oDP" = (
