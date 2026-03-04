@@ -55851,10 +55851,6 @@
 	pixel_x = -2;
 	pixel_y = -4
 	},
-/obj/item/stamp{
-	pixel_y = 11;
-	pixel_x = 9
-	},
 /obj/item/stamp/denied{
 	pixel_y = 12
 	},
@@ -55870,6 +55866,10 @@
 	pixel_x = 12
 	},
 /obj/machinery/firealarm/directional/south,
+/obj/item/stamp/granted{
+	pixel_x = 10;
+	pixel_y = 12
+	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/storage)
 "oTt" = (
