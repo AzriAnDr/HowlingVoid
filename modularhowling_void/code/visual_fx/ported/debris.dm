@@ -97,7 +97,8 @@
 		debris_visuals.particles.icon_state = debris
 		debris_visuals.particles.count = debris_amount
 		debris_visuals.particles.spawning = debris_amount
-		debris_visuals.particles.scale = debris_scale
+		// Keep debris readable but noticeably smaller than default.
+		debris_visuals.particles.scale = max(0.2, debris_scale * 0.45)
 	if(smoke_visuals)
 		smoke_visuals.layer = ABOVE_OBJ_LAYER + 0.01
 	addtimer(CALLBACK(src, PROC_REF(remove_ping), src, smoke_visuals, debris_visuals), 0.7 SECONDS)
