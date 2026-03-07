@@ -72,7 +72,7 @@ function PersonalityButton(props: ButtonProps) {
   const isDisabled = disabled || invalid || false;
   return (
     <Button
-      className={`PreferencesMenu__Personality__Card ${selected ? 'PreferencesMenu__Personality__Card--selected' : ''}`}
+      className={`PreferencesMenu__Personality__Card${selected ? ' PreferencesMenu__Personality__Card--selected' : ''}`}
       onClick={isDisabled ? undefined : onClick}
       p={1}
       pt={0.2}

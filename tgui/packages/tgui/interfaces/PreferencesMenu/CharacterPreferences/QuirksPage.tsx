@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 import { createSearch } from 'tgui-core/string';
+import { CharacterPreview } from '../../common/CharacterPreview'; // NOVA EDIT ADDITION
 
 import {
   type PreferencesMenuData,
@@ -102,8 +103,11 @@ function QuirkDisplay(props: QuirkDisplayProps) {
   const { icon, value, name, description, customizable, failTooltip } = quirk;
 
   const [customizationExpanded, setCustomizationExpanded] = useState(false);
+  const { data } = useBackend<PreferencesMenuData>(); // NOVA EDIT ADDITION
 
   const className = 'PreferencesMenu__Quirks__QuirkList__quirk';
+  const iconCellClass = `${className}__iconcell`;
+  const iconCellQualityClass = `${iconCellClass}--${getColorValueClass(quirk)}`;
 
   const child = (
     <Box
@@ -113,7 +117,8 @@ function QuirkDisplay(props: QuirkDisplayProps) {
         pointerEvents: props.quirkActionLocked ? 'none' : 'auto',
       }}
       onClick={() => {
-        if (quirkActionLocked) return;
+        if (quirkActionLocked)
+          return;
         if (selected) {
           setCustomizationExpanded(false);
         }
@@ -123,8 +128,8 @@ function QuirkDisplay(props: QuirkDisplayProps) {
     >
       <Stack fill g={0}>
         <Stack.Item
+          className={`${iconCellClass} ${iconCellQualityClass}`}
           align="stretch"
-          className={`${className}__iconcell ${className}__iconcell--${getColorValueClass(quirk)}`}
           style={{
             minWidth: '15%',
             maxWidth: '15%',
@@ -134,10 +139,11 @@ function QuirkDisplay(props: QuirkDisplayProps) {
             justifyContent: 'center',
           }}
         >
-          <Icon color="#f0f3f8" fontSize={3} name={icon} />
+          <Icon color="#333" fontSize={3} name={icon} />
         </Stack.Item>
 
         <Stack.Item
+          className={`${iconCellClass} ${iconCellQualityClass}`}
           align="stretch"
           ml={0}
           style={{
@@ -288,6 +294,22 @@ function QuirkPopper(props: QuirkPopperProps) {
   );
 }
 
+function StatDisplay(props) {
+  const { children, className } = props;
+
+  return (
+    <Box
+      className={className}
+      bold
+      fontSize="1.2em"
+      px={3}
+      py={0.5}
+    >
+      {children}
+    </Box>
+  );
+}
+
 function QuirkPage() {
   const { act, data } = useBackend<PreferencesMenuData>();
 
@@ -335,7 +357,7 @@ function QuirkPage() {
     }
   });
 
-  const quirkPoints = data.quirks_balance;
+  let balance = -data.default_quirk_balance;
   let positiveQuirks = 0;
 
   for (const selectedQuirkName of selectedQuirks) {
@@ -347,9 +369,9 @@ function QuirkPage() {
     if (selectedQuirk.value > 0) {
       positiveQuirks += 1;
     }
-  }
 
-  const availableQuirkPoints = Math.max(0, quirkPoints);
+    balance += selectedQuirk.value;
+  }
 
   function getReasonToNotAdd(quirkName: string) {
     const quirk = quirkInfo[quirkName];
@@ -357,7 +379,7 @@ function QuirkPage() {
     if (quirk.value > 0) {
       if (maxPositiveQuirks !== -1 && positiveQuirks >= maxPositiveQuirks) {
         return "You can't have any more positive quirks!";
-      } else if (pointsEnabled && quirkPoints - quirk.value < 0) {
+      } else if (pointsEnabled && balance + quirk.value > 0) {
         return 'You need a negative quirk to balance this out!';
       }
     }
@@ -393,7 +415,7 @@ function QuirkPage() {
   function getReasonToNotRemove(quirkName: string) {
     const quirk = quirkInfo[quirkName];
 
-    if (pointsEnabled && quirkPoints + quirk.value < 0) {
+    if (pointsEnabled && balance - quirk.value > 0) {
       return 'You need to remove a positive quirk first!';
     }
 
@@ -401,28 +423,14 @@ function QuirkPage() {
   }
 
   return (
-    <Stack fill className="PreferencesMenu__Quirks">
+    <Stack fill>
       <Stack.Item basis="50%">
-        <Stack
-          vertical
-          fill
-          align="center"
-          className="PreferencesMenu__Quirks__Column PreferencesMenu__Quirks__Column--available"
-        >
+        <Stack vertical fill align="center">
           <Stack.Item>
             {maxPositiveQuirks > 0 ? (
               <Box
-                px={2}
-                py={0.4}
-                bold
-                style={{
-                  border: '1px solid #58c98a',
-                  borderRadius: '6px',
-                  background:
-                    'linear-gradient(180deg, rgba(24,60,42,0.85) 0%, rgba(16,38,28,0.95) 100%)',
-                  color: '#bdf9d7',
-                  textShadow: '0 0 4px rgba(120,255,190,0.35)',
-                }}
+                className="PreferencesMenu__Quirks__StatTitle PreferencesMenu__Quirks__AugmentsPointsTitle"
+                fontSize="1.3em"
               >
                 Positive Quirks
               </Box>
@@ -433,52 +441,27 @@ function QuirkPage() {
 
           <Stack.Item>
             {maxPositiveQuirks > 0 ? (
-              <Box
-                px={3}
-                py={0.5}
-                bold
-                fontSize="1.2em"
-                style={{
-                  border: '1px solid #58c98a',
-                  borderRadius: '4px',
-                  backgroundColor: 'rgba(10, 26, 18, 0.95)',
-                  color: '#d5ffe8',
-                }}
-              >
+              <StatDisplay className="PreferencesMenu__Quirks__StatValue PreferencesMenu__Quirks__AugmentsPointsValue">
                 {positiveQuirks} / {maxPositiveQuirks}
-              </Box>
+              </StatDisplay>
             ) : (
               <Box mt={pointsEnabled ? 3.4 : 0} />
             )}
           </Stack.Item>
 
           <Stack.Item>
-            <Box
-              as="b"
-              fontSize="1.35em"
-              px={2}
-              py={0.4}
-              style={{
-                border: '1px solid #9a9a9a',
-                borderRadius: '6px',
-                background:
-                  'linear-gradient(180deg, rgba(58,58,58,0.85) 0%, rgba(34,34,34,0.95) 100%)',
-                color: '#f2f2f2',
-                textShadow: '0 0 4px rgba(255,255,255,0.15)',
-              }}
-            >
+            <Box as="b" fontSize="1.6em">
               Available Quirks
             </Box>
           </Stack.Item>
           <Stack.Item>
-            <Box className="PreferencesMenu__Quirks__SearchInput">
-              <Input
-                placeholder="Search quirks..."
-                width="230px"
-                value={searchQuery}
-                onChange={setSearchQuery}
-              />
-            </Box>
+            <Input
+              className="PreferencesMenu__Quirks__SearchInput"
+              placeholder="Search quirks..."
+              width="200px"
+              value={searchQuery}
+              onChange={setSearchQuery}
+            />
           </Stack.Item>
           <Stack.Item
             grow
@@ -521,62 +504,38 @@ function QuirkPage() {
       </Stack.Item>
 
       <Stack.Item align="center">
-        <Box
-          px={2}
-          py={1}
-          style={{
-            minWidth: '130px',
-            border: '1px solid #b08f54',
-            borderRadius: '8px',
-            background:
-              'linear-gradient(180deg, rgba(56,44,26,0.9) 0%, rgba(34,27,16,0.95) 100%)',
-            boxShadow: '0 0 8px rgba(176,143,84,0.25)',
-            textAlign: 'center',
-          }}
-        >
-          <Box bold color="#f4deb4" style={{ letterSpacing: '0.4px' }}>
-            Quirk Points
-          </Box>
-          <Box
-            mt={0.3}
-            bold
-            fontSize="1.5em"
-            color={availableQuirkPoints > 0 ? '#b7ffcf' : '#ffd4d4'}
+        { /* <Icon name="exchange-alt" size={1.5} ml={2} mr={2} /> // NOVA EDIT REMOVAL - moved down */ }
+        {/* NOVA EDIT ADDITION START */}
+        <Stack vertical fill align="center">
+          {/* Keep the CharacterPreview alive but "hidden", so that traits that affect appearance (e.g. Oversized) refresh rendering calculations immediately. */}
+          <Stack.Item
             style={{
-              textShadow:
-                availableQuirkPoints > 0
-                  ? '0 0 6px rgba(90,255,150,0.45)'
-                  : '0 0 6px rgba(255,90,90,0.45)',
+              padding: '-1px',
+              width: 1,
+              height: 1,
+              opacity: 0.0,
             }}
           >
-            {availableQuirkPoints}
-          </Box>
-        </Box>
+            <CharacterPreview
+              id={data.character_preview_view}
+              height="1px"
+              width="1px"
+            />
+          </Stack.Item>
+          <Icon name="exchange-alt" size={1.5} ml={2} mr={2} />
+        </Stack>
+        {/* NOVA EDIT ADDITION END */}
       </Stack.Item>
 
       <Stack.Item basis="50%">
-        <Stack
-          vertical
-          fill
-          align="center"
-          className="PreferencesMenu__Quirks__Column PreferencesMenu__Quirks__Column--current"
-        >
+        <Stack vertical fill align="center">
           <Stack.Item>
             {pointsEnabled ? (
               <Box
-                px={2}
-                py={0.4}
-                bold
-                style={{
-                  border: '1px solid #d1a85d',
-                  borderRadius: '6px',
-                  background:
-                    'linear-gradient(180deg, rgba(70,50,22,0.85) 0%, rgba(45,31,13,0.95) 100%)',
-                  color: '#ffe2af',
-                  textShadow: '0 0 4px rgba(255,220,140,0.3)',
-                }}
+                className="PreferencesMenu__Quirks__StatTitle PreferencesMenu__Quirks__AugmentsPointsTitle"
+                fontSize="1.3em"
               >
-                Quirk Points
+                Quirk Balance
               </Box>
             ) : (
               <Box mt={maxPositiveQuirks > 0 ? 3.4 : 0} />
@@ -584,39 +543,15 @@ function QuirkPage() {
           </Stack.Item>
           <Stack.Item>
             {pointsEnabled ? (
-              <Box
-                px={3}
-                py={0.5}
-                bold
-                fontSize="1.2em"
-                style={{
-                  border: '1px solid #d1a85d',
-                  borderRadius: '4px',
-                  backgroundColor: 'rgba(30, 20, 8, 0.95)',
-                  color: '#ffecc9',
-                }}
-              >
-                {availableQuirkPoints}
-              </Box>
+              <StatDisplay className="PreferencesMenu__Quirks__StatValue PreferencesMenu__Quirks__AugmentsPointsValue">
+                {balance}
+              </StatDisplay>
             ) : (
               <Box mt={maxPositiveQuirks > 0 ? 3.4 : 0} />
             )}
           </Stack.Item>
           <Stack.Item>
-            <Box
-              as="b"
-              fontSize="1.35em"
-              px={2}
-              py={0.4}
-              style={{
-                border: '1px solid #9a9a9a',
-                borderRadius: '6px',
-                background:
-                  'linear-gradient(180deg, rgba(58,58,58,0.85) 0%, rgba(34,34,34,0.95) 100%)',
-                color: '#f2f2f2',
-                textShadow: '0 0 4px rgba(255,255,255,0.15)',
-              }}
-            >
+            <Box as="b" fontSize="1.6em">
               Current Quirks
             </Box>
           </Stack.Item>
@@ -635,9 +570,7 @@ function QuirkPage() {
 
                 withQuirkDebounce(() => {
                   setSelectedQuirks(
-                    selectedQuirks.filter(
-                      (otherQuirk) => quirkName !== otherQuirk,
-                    ),
+                    selectedQuirks.filter((otherQuirk) => quirkName !== otherQuirk),
                   );
 
                   act('remove_quirk', { quirk: quirk.name });

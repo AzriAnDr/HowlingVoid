@@ -1,4 +1,5 @@
 import characterFeaturesRu from './locales/character_features.ru.json';
+import jobsRu from './locales/jobs.ru.json';
 import uiRu from './locales/ui.ru.json';
 
 type InterfaceLanguage = 'english' | 'russian';
@@ -8,6 +9,10 @@ const RU_CHARACTER_FEATURE_NAMES_BY_EN = characterFeaturesRu as Record<
   string
 >;
 const RU_UI_BY_EN = uiRu as Record<string, string>;
+const RU_JOBS = jobsRu as {
+  job_names?: Record<string, string>;
+  alt_job_titles?: Record<string, string>;
+};
 
 function normalizeLanguage(raw: unknown): InterfaceLanguage | null {
   if (typeof raw !== 'string') {
@@ -113,4 +118,24 @@ export function localizeCharacterFeatureName(
     RU_UI_BY_EN[englishFeatureName] ??
     englishFeatureName
   );
+}
+
+export function localizeJobName(
+  language: InterfaceLanguage,
+  englishJobName: string,
+): string {
+  if (language !== 'russian') {
+    return englishJobName;
+  }
+  return RU_JOBS.job_names?.[englishJobName] ?? englishJobName;
+}
+
+export function localizeAltJobTitle(
+  language: InterfaceLanguage,
+  englishAltTitle: string,
+): string {
+  if (language !== 'russian') {
+    return englishAltTitle;
+  }
+  return RU_JOBS.alt_job_titles?.[englishAltTitle] ?? englishAltTitle;
 }

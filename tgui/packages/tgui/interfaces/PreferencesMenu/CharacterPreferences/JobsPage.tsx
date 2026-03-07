@@ -3,11 +3,6 @@ import type { PropsWithChildren, ReactNode } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Dropdown, Stack, Tooltip } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
-import jobsRu from './locales/jobs.ru.json';
-import {
-  getCharacterPreferencesLanguage,
-  localize,
-} from './localization';
 
 import {
   createSetPreference,
@@ -17,39 +12,12 @@ import {
   type PreferencesMenuData,
 } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
-
-type JobsLocale = {
-  job_names: Record<string, string>;
-  alt_job_titles: Record<string, string>;
-  experience_types: Record<string, string>;
-};
-
-const JOBS_LOCALE_RU = jobsRu as JobsLocale;
-
-function localizeJobName(language: 'english' | 'russian', name: string): string {
-  if (language !== 'russian') {
-    return name;
-  }
-  return JOBS_LOCALE_RU.job_names[name] ?? name;
-}
-
-function localizeAltTitle(language: 'english' | 'russian', title: string): string {
-  if (language !== 'russian') {
-    return title;
-  }
-  return (
-    JOBS_LOCALE_RU.alt_job_titles[title] ??
-    JOBS_LOCALE_RU.job_names[title] ??
-    title
-  );
-}
-
-function localizeExperienceType(language: 'english' | 'russian', exp: string): string {
-  if (language !== 'russian') {
-    return exp;
-  }
-  return JOBS_LOCALE_RU.experience_types[exp] ?? exp;
-}
+import {
+  getCharacterPreferencesLanguage,
+  localize,
+  localizeAltJobTitle,
+  localizeJobName,
+} from './localization';
 
 function sortJobs(entries: [string, Job][], head?: string) {
   return sortBy(entries, [
@@ -126,21 +94,19 @@ function createCreateSetPriorityFromName(jobName: string): CreateSetPriority {
 }
 
 function PriorityHeaders() {
+  const className = 'PreferencesMenu__Jobs__PriorityHeader';
   const { data } = useBackend<PreferencesMenuData>();
   const language = getCharacterPreferencesLanguage(data);
-  const className = 'PreferencesMenu__Jobs__PriorityHeader';
+  const t = (text: string) => localize(language, text);
 
   return (
     <Stack>
       <Stack.Item grow />
 
-      <Stack.Item className={className}>{localize(language, 'Off')}</Stack.Item>
-
-      <Stack.Item className={className}>{localize(language, 'Low')}</Stack.Item>
-
-      <Stack.Item className={className}>{localize(language, 'Medium')}</Stack.Item>
-
-      <Stack.Item className={className}>{localize(language, 'High')}</Stack.Item>
+      <Stack.Item className={className}>{t('Off')}</Stack.Item>
+      <Stack.Item className={className}>{t('Low')}</Stack.Item>
+      <Stack.Item className={className}>{t('Medium')}</Stack.Item>
+      <Stack.Item className={className}>{t('High')}</Stack.Item>
     </Stack>
   );
 }
@@ -154,6 +120,7 @@ type PriorityButtonsProps = {
 function PriorityButtons(props: PriorityButtonsProps) {
   const { data } = useBackend<PreferencesMenuData>();
   const language = getCharacterPreferencesLanguage(data);
+  const t = (text: string) => localize(language, text);
   const { createSetPriority, isOverflow, priority } = props;
 
   return (
@@ -170,7 +137,7 @@ function PriorityButtons(props: PriorityButtonsProps) {
       {isOverflow ? (
         <>
           <PriorityButton
-            name={localize(language, 'Off')}
+            name={t('Off')}
             modifier="off"
             color="light-grey"
             enabled={!priority}
@@ -178,7 +145,7 @@ function PriorityButtons(props: PriorityButtonsProps) {
           />
 
           <PriorityButton
-            name={localize(language, 'On')}
+            name={t('On')}
             color="green"
             enabled={!!priority}
             onClick={createSetPriority(JobPriority.High)}
@@ -187,7 +154,7 @@ function PriorityButtons(props: PriorityButtonsProps) {
       ) : (
         <>
           <PriorityButton
-            name={localize(language, 'Off')}
+            name={t('Off')}
             modifier="off"
             color="light-grey"
             enabled={!priority}
@@ -195,21 +162,21 @@ function PriorityButtons(props: PriorityButtonsProps) {
           />
 
           <PriorityButton
-            name={localize(language, 'Low')}
+            name={t('Low')}
             color="red"
             enabled={priority === JobPriority.Low}
             onClick={createSetPriority(JobPriority.Low)}
           />
 
           <PriorityButton
-            name={localize(language, 'Medium')}
+            name={t('Medium')}
             color="yellow"
             enabled={priority === JobPriority.Medium}
             onClick={createSetPriority(JobPriority.Medium)}
           />
 
           <PriorityButton
-            name={localize(language, 'High')}
+            name={t('High')}
             color="green"
             enabled={priority === JobPriority.High}
             onClick={createSetPriority(JobPriority.High)}
@@ -229,6 +196,7 @@ type JobRowProps = {
 function JobRow(props: JobRowProps) {
   const { data, act } = useBackend<PreferencesMenuData>(); // NOVA EDIT CHANGE - Adds act param
   const language = getCharacterPreferencesLanguage(data);
+  const t = (text: string) => localize(language, text);
   const { className, job, name } = props;
 
   const isOverflow = data.overflow_role === name;
@@ -253,19 +221,17 @@ function JobRow(props: JobRowProps) {
 
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
-          <Stack.Item grow textAlign="right">
-          <b>{hoursNeeded}h</b> {localize(language, 'as')} {localizeExperienceType(language, experience_type)}
+        <Stack.Item grow textAlign="right">
+          <b>{hoursNeeded}h</b> {t('as')} {experience_type}
         </Stack.Item>
       </Stack>
     );
   } else if (daysLeft > 0) {
-    const daysSuffix =
-      daysLeft === 1 ? localize(language, 'day') : localize(language, 'days');
-    const daysLeftText = localize(language, 'left');
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
         <Stack.Item grow textAlign="right">
-          <b>{daysLeft}</b> {daysSuffix} {daysLeftText}
+          <b>{daysLeft}</b> {t('day')}
+          {daysLeft === 1 ? '' : t('s')} {t('left')}
         </Stack.Item>
       </Stack>
     );
@@ -273,7 +239,7 @@ function JobRow(props: JobRowProps) {
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
         <Stack.Item grow textAlign="right">
-          <b>{localize(language, 'Banned')}</b>
+          <b>{t('Banned')}</b>
         </Stack.Item>
       </Stack>
     );
@@ -282,7 +248,7 @@ function JobRow(props: JobRowProps) {
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
         <Stack.Item grow textAlign="right">
-          <b>{localize(language, 'Nova Stars Only')}</b>
+          <b>{t('Nova Stars Only')}</b>
         </Stack.Item>
       </Stack>
     );
@@ -293,7 +259,7 @@ function JobRow(props: JobRowProps) {
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
         <Stack.Item grow textAlign="right">
-          <b>{localize(language, 'Bad species')}</b>
+          <b>{t('Bad species')}</b>
         </Stack.Item>
       </Stack>
     );
@@ -328,11 +294,10 @@ function JobRow(props: JobRowProps) {
                   className="PreferencesMenu__Character__JobsDropdown"
                   width="100%"
                   options={job.alt_titles.map((title) => ({
-                    displayText: localizeAltTitle(language, title),
                     value: title,
+                    displayText: localizeAltJobTitle(language, title),
                   }))}
                   selected={alt_title_selected}
-                  displayText={localizeAltTitle(language, alt_title_selected)}
                   onSelected={(value) =>
                     act('set_job_title', { job: name, new_title: value })
                   }
@@ -404,47 +369,40 @@ function Department(props: DepartmentProps) {
 function JoblessRoleDropdown(props) {
   const { act, data } = useBackend<PreferencesMenuData>();
   const language = getCharacterPreferencesLanguage(data);
+  const t = (text: string) => localize(language, text);
   const selected = data.character_preferences.misc.joblessrole;
-  const overflowRole = localizeJobName(language, data.overflow_role);
-  const overflowTemplate = localize(language, 'Join as {role} if unavailable');
-  const overflowText = overflowTemplate.replace('{role}', overflowRole);
 
-  const optionsRaw = [
+  const options = [
     {
-      displayText: overflowText,
+      displayText:
+        language === 'russian'
+          ? `Если недоступно, зайти как ${localizeJobName(
+              language,
+              data.overflow_role,
+            )}`
+          : `Join as ${data.overflow_role} if unavailable`,
       value: JoblessRole.BeOverflow,
     },
     {
-      displayText: `Join as a random job if unavailable`,
+      displayText: t('Join as a random job if unavailable'),
       value: JoblessRole.BeRandomJob,
     },
     {
-      displayText: `Return to lobby if unavailable`,
+      displayText: t('Return to lobby if unavailable'),
       value: JoblessRole.ReturnToLobby,
     },
   ];
-
-  const options = optionsRaw.map((option) => ({
-    ...option,
-    displayText: localize(language, option.displayText),
-  }));
 
   const selection = options?.find(
     (option) => option.value === selected,
   )?.displayText;
 
   return (
-    <Box
-      className="PreferencesMenu__Character__JobsRoleDropdown"
-      position="absolute"
-      right={0}
-      width="30%"
-    >
+    <Box position="absolute" right={0} width="30%">
       <Dropdown
         className="PreferencesMenu__Character__JobsRoleDropdown"
         width="100%"
         selected={selection}
-        displayText={selection}
         onSelected={createSetPreference(act, 'joblessrole')}
         options={options}
       />

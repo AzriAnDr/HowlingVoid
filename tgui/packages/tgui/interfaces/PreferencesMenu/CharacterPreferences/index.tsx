@@ -1,13 +1,13 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
-import { Dropdown, Flex, Stack } from 'tgui-core/components'; // NOVA EDIT CHANGE - ORIGINAL: import { Button, Stack } from 'tgui-core/components';
+import { Box, Dropdown, Flex, Stack } from 'tgui-core/components'; // NOVA EDIT CHANGE - ORIGINAL: import { Button, Stack } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
 import { PageButton } from '../components/PageButton';
 import type { PreferencesMenuData } from '../types';
+import { getCharacterPreferencesLanguage, localize } from './localization';
 import { AntagsPage } from './AntagsPage';
 import { JobsPage } from './JobsPage';
-import { getCharacterPreferencesLanguage, localize } from './localization';
 // NOVA EDIT ADDITION START
 import { LanguagesPage } from './LanguagesMenu';
 import { LimbsPage } from './LimbsPage';
@@ -34,11 +34,11 @@ type ProfileProps = {
   activeSlot: number;
   onClick: (index: number) => void;
   profiles: (string | null)[];
-  newCharacterText: string;
+  t: (text: string) => string;
 };
 
 function CharacterProfiles(props: ProfileProps) {
-  const { activeSlot, onClick, profiles, newCharacterText } = props;
+  const { activeSlot, onClick, profiles, t } = props;
 
   return (
     <Flex /* NOVA EDIT CHANGE START - Nova uses a dropdown instead of buttons */
@@ -54,7 +54,7 @@ function CharacterProfiles(props: ProfileProps) {
           displayText={profiles[activeSlot]}
           options={profiles.map((profile, slot) => ({
             value: slot,
-            displayText: profile ?? newCharacterText,
+            displayText: profile ?? t('New Character'),
           }))}
           onSelected={(slot) => {
             onClick(slot);
@@ -67,7 +67,8 @@ function CharacterProfiles(props: ProfileProps) {
 
 export function CharacterPreferenceWindow(props) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const interfaceLanguage = getCharacterPreferencesLanguage(data);
+  const language = getCharacterPreferencesLanguage(data);
+  const t = (text: string) => localize(language, text);
 
   const [currentPage, setCurrentPage] = useState(Page.Main);
 
@@ -113,53 +114,55 @@ export function CharacterPreferenceWindow(props) {
   }
 
   return (
-    <Stack className="PreferencesMenu__Character" vertical fill>
+    <Stack vertical fill className="PreferencesMenu__Character">
       <Stack.Item>
         <CharacterProfiles
           activeSlot={data.active_slot - 1}
+          t={t}
           onClick={(slot) => {
             act('change_slot', {
               slot: slot + 1,
             });
           }}
           profiles={data.character_profiles}
-          newCharacterText={localize(interfaceLanguage, 'New Character')}
         />
       </Stack.Item>
       {!data.content_unlocked && (
-        <Stack.Item
-          align="center"
-          className="PreferencesMenu__Character__PremiumNotice"
-        >
-          {localize(interfaceLanguage, 'Buy BYOND premium for more slots!')}
+        <Stack.Item align="center">
+          <Box className="PreferencesMenu__Character__PremiumNotice">
+            {t('Buy BYOND premium for more slots!')}
+          </Box>
         </Stack.Item>
       )}
       <Stack.Divider />
-      <Stack.Item>
-        <Stack fill className="PreferencesMenu__Character__TopTabs">
+      <Stack.Item className="PreferencesMenu__Character__TopTabs">
+        <Stack fill>
           <Stack.Item grow>
             <PageButton
+              className="PreferencesMenu__Character__TopTabButton"
               currentPage={currentPage}
               page={Page.Main}
               setPage={setCurrentPage}
               otherActivePages={[Page.Species]}
             >
-              {localize(interfaceLanguage, 'Character')}
+              {t('Character')}
             </PageButton>
           </Stack.Item>
 
           <Stack.Item grow>
             <PageButton
+              className="PreferencesMenu__Character__TopTabButton"
               currentPage={currentPage}
               page={Page.Loadout}
               setPage={setCurrentPage}
             >
-              {localize(interfaceLanguage, 'Loadout')}
+              {t('Loadout')}
             </PageButton>
           </Stack.Item>
 
           <Stack.Item grow>
             <PageButton
+              className="PreferencesMenu__Character__TopTabButton"
               currentPage={currentPage}
               page={Page.Jobs}
               setPage={setCurrentPage}
@@ -168,47 +171,51 @@ export function CharacterPreferenceWindow(props) {
                     Fun fact: This isn't "Jobs" so that it intentionally
                     catches your eyes, because it's really important!
                   */}
-              {localize(interfaceLanguage, 'Occupations')}
+              {t('Occupations')}
             </PageButton>
           </Stack.Item>
           {/* NOVA EDIT ADDITION START */}
           <Stack.Item grow>
             <PageButton
+              className="PreferencesMenu__Character__TopTabButton"
               currentPage={currentPage}
               page={Page.Limbs}
               setPage={setCurrentPage}
             >
-              {localize(interfaceLanguage, 'Augments+')}
+              {t('Augments+')}
             </PageButton>
           </Stack.Item>
 
           <Stack.Item grow>
             <PageButton
+              className="PreferencesMenu__Character__TopTabButton"
               currentPage={currentPage}
               page={Page.Languages}
               setPage={setCurrentPage}
             >
-              {localize(interfaceLanguage, 'Languages')}
+              {t('Languages')}
             </PageButton>
           </Stack.Item>
           {/* NOVA EDIT ADDITION end */}
           <Stack.Item grow>
             <PageButton
+              className="PreferencesMenu__Character__TopTabButton"
               currentPage={currentPage}
               page={Page.Antags}
               setPage={setCurrentPage}
             >
-              {localize(interfaceLanguage, 'Antagonists')}
+              {t('Antagonists')}
             </PageButton>
           </Stack.Item>
 
           <Stack.Item grow>
             <PageButton
+              className="PreferencesMenu__Character__TopTabButton"
               currentPage={currentPage}
               page={Page.Quirks}
               setPage={setCurrentPage}
             >
-              {localize(interfaceLanguage, 'Quirks and Personality')}
+              {t('Quirks and Personality')}
             </PageButton>
           </Stack.Item>
         </Stack>

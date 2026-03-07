@@ -1,7 +1,6 @@
 import { binaryInsertWith } from 'common/collections';
 import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
-import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -16,7 +15,6 @@ import {
 } from 'tgui-core/components';
 
 import type { Name } from '../types';
-import type { PreferencesMenuData } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
 import { getCharacterPreferencesLanguage, localize } from './localization';
 
@@ -45,11 +43,11 @@ type MultiNameProps = {
 
 export function MultiNameInput(props: MultiNameProps) {
   const { handleUpdateName, handleRandomizeName } = props;
-  const { data } = useBackend<PreferencesMenuData>();
-  const language = getCharacterPreferencesLanguage(data);
 
   const data = useServerPrefs();
   if (!data) return;
+  const language = getCharacterPreferencesLanguage(data);
+  const t = (text: string) => localize(language, text);
 
   const namesIntoGroups: Record<string, NameWithKey[]> = {};
 
@@ -70,10 +68,10 @@ export function MultiNameInput(props: MultiNameProps) {
           className="PreferencesMenu__Character__AltNamesModal"
           buttons={
             <Button color="red" onClick={props.handleClose}>
-              {localize(language, 'Close')}
+              {t('Close')}
             </Button>
           }
-          title={localize(language, 'Alternate names')}
+          title={t('Alternate names')}
         >
           <LabeledList>
             {sortNameWithKeyEntries(Object.entries(namesIntoGroups)).map(
@@ -90,10 +88,7 @@ export function MultiNameInput(props: MultiNameProps) {
                     const [prefix, suffix] = currentValue.split('-');
                     // NOVA EDIT ADDITION END
                     return (
-                      <LabeledList.Item
-                        key={key}
-                        label={localize(language, name.explanation)}
-                      >
+                      <LabeledList.Item key={key} label={t(name.explanation)}>
                         <Stack fill>
                           {/* NOVA EDIT REMOVAL START - DRONE NAMING (the removed part is integrated in the added block below)
                           <Stack.Item grow>
@@ -169,12 +164,12 @@ export function MultiNameInput(props: MultiNameProps) {
                           {/* NOVA EDIT ADDITION END*/}
                           {!!name.can_randomize && (
                             <Stack.Item>
-                              <Button
-                                icon="dice"
-                                tooltip={localize(language, 'Randomize')}
-                                tooltipPosition="right"
-                                onClick={() => handleRandomizeName(key)}
-                              />
+                                <Button
+                                  icon="dice"
+                                  tooltip={t('Randomize')}
+                                  tooltipPosition="right"
+                                  onClick={() => handleRandomizeName(key)}
+                                />
                             </Stack.Item>
                           )}
                         </Stack>
@@ -200,8 +195,6 @@ type NameInputProps = {
 };
 
 export function NameInput(props: NameInputProps) {
-  const { data } = useBackend<PreferencesMenuData>();
-  const language = getCharacterPreferencesLanguage(data);
   const [lastNameBeforeEdit, setLastNameBeforeEdit] = useState<string | null>(
     null,
   );
@@ -212,7 +205,9 @@ export function NameInput(props: NameInputProps) {
     props.handleUpdateName(value);
   }
 
-  const serverData = useServerPrefs();
+  const data = useServerPrefs();
+  const language = getCharacterPreferencesLanguage(data);
+  const t = (text: string) => localize(language, text);
 
   return (
     <Button
@@ -264,11 +259,11 @@ export function NameInput(props: NameInputProps) {
         </Stack.Item>
 
         {/* We only know other names when the server tells us */}
-        {serverData?.names && (
+        {data?.names && (
           <Stack.Item>
             <Button
               as="span"
-              tooltip={localize(language, 'Alternate names')}
+              tooltip={t('Alternate Names')}
               tooltipPosition="bottom"
               style={{
                 background: 'rgba(0, 0, 0, 0.7)',

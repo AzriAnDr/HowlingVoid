@@ -469,14 +469,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	else
 		body.wipe_state()
 
-	// Reset preview dummy scale state every rebuild to prevent cumulative transform drift.
-	// Without this, repeated preference updates can occasionally collapse the preview sprite.
-	body.transform = matrix()
-	body.current_size = RESIZE_DEFAULT_SIZE
-	body.maptext_height = initial(body.maptext_height)
-	if(body.dna)
-		body.dna.current_body_size = BODY_SIZE_NORMAL
-
 	appearance = preferences.render_new_preview_appearance(body, show_job_clothes)
 
 	// NOVA EDIT ADDITION BEGIN: Better character preview
@@ -760,7 +752,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(unlock_content || donator_status) // NOVA EDIT CHANGE - ORIGINAL: if(unlock_content)
 		max_save_slots = 50 //NOVA EDIT - ORIGINAL: max_save_slots = 8
 
-//Howling void import preferences start
 /datum/preferences/proc/import_preferences_from_file(mob/user)
 	var/F = input(
 		user,

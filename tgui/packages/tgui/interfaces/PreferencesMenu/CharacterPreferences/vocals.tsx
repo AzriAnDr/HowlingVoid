@@ -11,8 +11,8 @@ import {
 } from 'tgui-core/components';
 
 import { getRandomization, PreferenceList } from './MainPage';
-import type { PreferencesMenuData } from '../types';
 import { getCharacterPreferencesLanguage, localize } from './localization';
+import type { PreferencesMenuData } from '../types';
 
 type VocalsProps = {
   handleClose: () => void;
@@ -73,9 +73,10 @@ function FeatureValueInput({ feature, value }: FeatureValueInputProps) {
 }
 
 export function VocalsInput(props: VocalsProps) {
-  const { vocals, handleClose } = props;
   const { data } = useBackend<PreferencesMenuData>();
+  const { vocals, handleClose } = props;
   const language = getCharacterPreferencesLanguage(data);
+  const t = (text: string) => localize(language, text);
 
   return (
     <Modal>
@@ -85,10 +86,10 @@ export function VocalsInput(props: VocalsProps) {
         }}
       >
         <Section
-          title={localize(language, 'Character Voice')}
+          title={t('Character Voice')}
           buttons={
             <Button color="red" onClick={handleClose}>
-              {localize(language, 'Close')}
+              {t('Close')}
             </Button>
           }
         >
@@ -117,7 +118,7 @@ type VoiceInputProps = {
 export function VoiceInput(props: VoiceInputProps) {
   const { data } = useBackend<PreferencesMenuData>();
   const language = getCharacterPreferencesLanguage(data);
-
+  const t = (text: string) => localize(language, text);
   return (
     <Button
       onClick={(event) => {
@@ -142,7 +143,7 @@ export function VoiceInput(props: VoiceInputProps) {
 
         <Stack.Item grow position="relative" mt={0.6}>
           <FitText maxFontSize={16} maxWidth={130}>
-            {localize(language, 'Voice Settings')}
+            {t('Voice Settings')}
           </FitText>
         </Stack.Item>
       </Stack>

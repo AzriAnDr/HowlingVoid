@@ -15,7 +15,7 @@ import type { PreferencesMenuData } from '../types';
 export const RotateCharacterButtons = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
   return (
-    <Box mt={1} className="PreferencesMenu__Augments__RotateButtons">
+    <Box mt={1}>
       <Button
         className="PreferencesMenu__Augments__ActionButton"
         onClick={() => act('rotate', { backwards: false })}
@@ -136,7 +136,7 @@ export const LimbPage = (props) => {
 export const AugmentationPage = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
   const { data } = useBackend<PreferencesMenuData>();
-  const quirkPoints = data.quirks_balance;
+  const balance = -data.quirks_balance;
   if (props.limb.can_augment) {
     return (
       <div style={{ marginBottom: '1.5em' }}>
@@ -156,7 +156,7 @@ export const AugmentationPage = (props) => {
                       // it's added and not substracted
                       if (
                         data.quirk_points_enabled &&
-                        quirkPoints - props.limb.costs[value] < 0
+                        balance + props.limb.costs[value] > 0
                       ) {
                         return;
                       }
@@ -199,7 +199,7 @@ export const AugmentationPage = (props) => {
 export const OrganPage = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
   const { data } = useBackend<PreferencesMenuData>();
-  const quirkPoints = data.quirks_balance;
+  const balance = -data.quirks_balance;
   return (
     <Stack.Item>
       <Stack fill>
@@ -214,7 +214,7 @@ export const OrganPage = (props) => {
               // Since the costs are positive, it's added and not substracted
               if (
                 data.quirk_points_enabled &&
-                quirkPoints - props.organ.costs[value] < 0
+                balance + props.organ.costs[value] > 0
               ) {
                 return;
               }
@@ -234,9 +234,9 @@ export const LimbsPage = (props) => {
   const { data } = useBackend<PreferencesMenuData>();
   const { act } = useBackend<PreferencesMenuData>();
   const markings = data.marking_presets ? data.marking_presets : [];
-  const quirkPoints = Math.max(0, data.quirks_balance);
+  const balance = -data.quirks_balance;
   return (
-    <Stack className="PreferencesMenu__Augments" minHeight="100%">
+    <Stack minHeight="100%" className="PreferencesMenu__Augments">
       <Stack.Item minWidth="33%" minHeight="100%">
         <Section className="PreferencesMenu__Augments__Panel" fill scrollable title="Markings" height="197%">
           <div>
@@ -266,18 +266,26 @@ export const LimbsPage = (props) => {
           <RotateCharacterButtons />
           {data.quirk_points_enabled ? (
             <Section
+              className="PreferencesMenu__Augments__PointsSection"
               fill
               align="center"
-              style={{ marginTop: '3em' }}
+              title="Quirk Points Balance"
+              style={{
+                marginTop: '3em',
+              }}
             >
-              <Box className="PreferencesMenu__Quirks__AugmentsPointsTitle">
-                Quirk Points
-              </Box>
               <Stack justify="center">
                 <Box
-                  className="PreferencesMenu__Quirks__AugmentsPointsValue"
+                  className="PreferencesMenu__Augments__PointsValue"
+                  bold
+                  fontSize="1.2em"
+                  py={0.5}
+                  style={{
+                    width: '20%',
+                    alignItems: 'center',
+                  }}
                 >
-                  {quirkPoints}
+                  {balance}
                 </Box>
               </Stack>
             </Section>

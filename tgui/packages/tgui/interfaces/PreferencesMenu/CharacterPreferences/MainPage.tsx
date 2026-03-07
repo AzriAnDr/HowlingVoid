@@ -6,9 +6,7 @@ import { sendAct } from 'tgui/events/act';
 import {
   Box,
   Button,
-  Dropdown, // NOVA EDIT ADDITION
   Floating,
-  Icon,
   Input,
   LabeledList,
   Section,
@@ -20,6 +18,7 @@ import { createSearch } from 'tgui-core/string';
 import { CharacterPreview } from '../../common/CharacterPreview';
 import { PageButton } from '../components/PageButton'; // NOVA EDIT ADDITION
 import { RandomizationButton } from '../components/RandomizationButton';
+import { SideDropdown } from '../components/SideDropdown'; // NOVA EDIT ADDITION
 import { features } from '../preferences/features';
 import {
   type FeatureChoicedServerData,
@@ -51,7 +50,8 @@ const CLOTHING_SELECTION_WIDTH = 5.4;
 const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 
 type CharacterControlsProps = {
-  handleRotate: () => void;
+  t: (text: string) => string;
+  handleRotate: (backwards: boolean) => void; // NOVA EDIT CHANGE - Original: handleRotate: () => void;
   handleOpenSpecies: () => void;
   handleFood: () => void; // NOVA EDIT ADDITION
   gender: Gender;
@@ -63,17 +63,30 @@ type CharacterControlsProps = {
 
 function CharacterControls(props: CharacterControlsProps) {
   return (
-    <Stack g={0.35}>
+    <Stack>
       <Stack.Item>
         <Button
           className="PreferencesMenu__Character__IconButton"
-          onClick={props.handleRotate}
+          onClick={() => props.handleRotate(false)} // NOVA EDIT CHANGE - Original: onClick={props.handleRotate}
           fontSize="22px"
           icon="undo"
-          tooltip="Rotate"
+          tooltip={props.t('Rotate')}
           tooltipPosition="top"
         />
       </Stack.Item>
+
+      {/* NOVA EDIT ADDITION START */}
+      <Stack.Item>
+        <Button
+          className="PreferencesMenu__Character__IconButton"
+          onClick={() => props.handleRotate(true)}
+          fontSize="22px"
+          icon="redo"
+          tooltip={props.t('Rotate')}
+          tooltipPosition="top"
+        />
+      </Stack.Item>
+      {/* NOVA EDIT ADDITION END */}
 
       <Stack.Item>
         <Button
@@ -81,7 +94,7 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={props.handleOpenSpecies}
           fontSize="22px"
           icon="paw"
-          tooltip="Species"
+          tooltip={props.t('Species')}
           tooltipPosition="top"
         />
       </Stack.Item>
@@ -101,7 +114,7 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={props.handleFood}
           fontSize="22px"
           icon="drumstick-bite"
-          tooltip="Edit Food Preferences"
+          tooltip={props.t('Edit Food Preferences')}
           tooltipPosition="top"
         />
         {/* NOVA EDIT ADDITION END */}
@@ -113,7 +126,7 @@ function CharacterControls(props: CharacterControlsProps) {
           fontSize="22px"
           icon="trash"
           color="red"
-          tooltip="Delete Character"
+          tooltip={props.t('Delete Character')}
           tooltipPosition="top"
           disabled={!props.canDeleteCharacter}
         />
@@ -235,8 +248,9 @@ function GenderButton(props: GenderButtonProps) {
   return (
     <Floating
       placement="right"
+      contentClasses="PreferencesMenu__Character__GenderPopover"
       content={
-        <Stack className="PreferencesMenu__Character__GenderPopover" p={0.3}>
+        <Stack p={0.3}>
           {[Gender.Male, Gender.Female, Gender.Other, Gender.Other2].map(
             (gender) => {
               return (
@@ -384,8 +398,8 @@ type PreferenceListProps = {
 
 export function PreferenceList(props: PreferenceListProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
+  const language = getCharacterPreferencesLanguage(data);
   const { preferences, randomizations, maxHeight, children } = props;
-  const interfaceLanguage = getCharacterPreferencesLanguage(data);
 
   return (
     <Stack.Item
@@ -416,11 +430,12 @@ export function PreferenceList(props: PreferenceListProps) {
             return (
               <LabeledList.Item
                 key={featureId}
+                // NOVA EDIT CHANGE - ORIGINAL: label={feature.name}
                 label={
                   <Box mt={0.5}>
-                    {localizeCharacterFeatureName(interfaceLanguage, feature.name)}
+                    {localizeCharacterFeatureName(language, feature.name)}
                   </Box>
-                }
+                } // replicate middle align
                 tooltip={feature.description}
                 verticalAlign="top" // NOVA EDIT CHANGE - Original: middle
               >
@@ -483,7 +498,9 @@ type MainPageProps = {
 
 export function MainPage(props: MainPageProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const interfaceLanguage = getCharacterPreferencesLanguage(data);
+  const language = getCharacterPreferencesLanguage(data);
+  const t = (text: string, russianText?: string) =>
+    localize(language, text, russianText);
 
   const [deleteCharacterPopupOpen, setDeleteCharacterPopupOpen] =
     useState(false);
@@ -495,20 +512,6 @@ export function MainPage(props: MainPageProps) {
 
   const currentSpeciesData =
     serverData?.species[data.character_preferences.misc.species];
-
-  const previewOptions = (data.preview_options || []).map((option) =>
-    String(option),
-  );
-  const previewLocalizedToOriginal = Object.fromEntries(
-    previewOptions.map((option) => [localize(interfaceLanguage, option), option]),
-  ) as Record<string, string>;
-  const localizedPreviewOptions = previewOptions.map((option) =>
-    localize(interfaceLanguage, option),
-  );
-  const selectedLocalizedPreview = localize(
-    interfaceLanguage,
-    String(data.preview_selection ?? ''),
-  );
 
   const contextualPreferences =
     data.character_preferences.secondary_features || [];
@@ -583,6 +586,31 @@ export function MainPage(props: MainPageProps) {
 
   return (
     <>
+      <Stack className="PreferencesMenu__Character__TransferRow" mb={0.5}>
+        <Stack.Item grow>
+          <Button
+            className="PreferencesMenu__Character__ActionButton"
+            align="center"
+            fluid
+            icon="file-import"
+            onClick={() => act('import_preferences')}
+          >
+            {t('IMPORT PREFERENCES')}
+          </Button>
+        </Stack.Item>
+        <Stack.Item grow>
+          <Button
+            className="PreferencesMenu__Character__ActionButton"
+            align="center"
+            fluid
+            icon="file-export"
+            onClick={() => act('export_preferences')}
+          >
+            {t('EXPORT PREFERENCES')}
+          </Button>
+        </Stack.Item>
+      </Stack>
+
       {multiNameInputOpen && (
         <MultiNameInput
           handleClose={() => setMultiNameInputOpen(false)}
@@ -615,60 +643,19 @@ export function MainPage(props: MainPageProps) {
         />
       )}
 
-      <Stack vertical fill>
-        {/* HOWLING VOID - CHARACTER IMPORT/EXPORT*/}
-        <Stack.Item className="PreferencesMenu__Character__TransferRow">
-          <Stack fill g={0.5}>
-            <Stack.Item grow>
-              <Button
-                className="PreferencesMenu__Character__ActionButton"
-                fluid
-                fontSize="1.1rem"
-                height="2.2rem"
-                textAlign="center"
-                onClick={() => act('import_preferences')}
-              >
-                <Box position="relative" width="100%" pl="1.2rem">
-                  <Box position="absolute" left="0.25rem">
-                    <Icon name="file-import" />
-                  </Box>
-                  {localize(interfaceLanguage, 'IMPORT PREFERENCES')}
-                </Box>
-              </Button>
-            </Stack.Item>
-            <Stack.Item grow>
-              <Button
-                className="PreferencesMenu__Character__ActionButton"
-                fluid
-                fontSize="1.1rem"
-                height="2.2rem"
-                textAlign="center"
-                onClick={() => act('export_preferences')}
-              >
-                <Box position="relative" width="100%" pl="1.2rem">
-                  <Box position="absolute" left="0.25rem">
-                    <Icon name="file-export" />
-                  </Box>
-                  {localize(interfaceLanguage, 'EXPORT PREFERENCES')}
-                </Box>
-              </Button>
-            </Stack.Item>
-          </Stack>
-        </Stack.Item>
-        {/* HOWLING VOID - CHARACTER IMPORT/EXPORT END*/}
-
-        <Stack
-          className="PreferencesMenu__Character__MainLayout"
-          height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}
-        >
+      <Stack
+        className="PreferencesMenu__Character__MainLayout"
+        height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}
+      >
         <Stack.Item className="PreferencesMenu__Character__Sidebar">
           <Stack vertical fill>
             <Stack.Item>
               <CharacterControls
+                t={t}
                 gender={data.character_preferences.misc.gender}
                 handleOpenSpecies={props.openSpecies}
-                handleRotate={() => {
-                  act('rotate');
+                handleRotate={(value) => { // NOVA EDIT CHANGE - Original: handleRotate={() => { 
+                  act('rotate', { backwards: value }); // NOVA EDIT CHANGE - Original: act('rotate');
                 }}
                 setGender={createSetPreference(act, 'gender')}
                 showGender={
@@ -688,30 +675,51 @@ export function MainPage(props: MainPageProps) {
               />
             </Stack.Item>
 
-            <Stack.Item grow>
-              <Box className="PreferencesMenu__Character__PreviewCell">
-                <CharacterPreview
-                  width="100%"
-                  height="100%"
-                  id={data.character_preview_view}
-                />
-              </Box>
+            <Stack.Item className="PreferencesMenu__Character__PreviewCell" grow>
+              <CharacterPreview
+                width="100%"
+                height="100%"
+                id={data.character_preview_view}
+              />
             </Stack.Item>
+
             {/* NOVA EDIT ADDITION START */}
             <Stack.Item position="relative">
-              <Dropdown
-                className="PreferencesMenu__Character__ProfilesDropdown"
+              <SideDropdown
+                className="PreferencesMenu__Character__FieldDropdown"
                 width="100%"
-                selected={selectedLocalizedPreview}
-                options={localizedPreviewOptions}
+                selected={data.preview_selection}
+                options={data.preview_options.map((option) => ({
+                  value: option,
+                  displayText: t(option),
+                }))}
                 onSelected={(value) =>
                   act('update_preview', {
-                    updated_preview:
-                      previewLocalizedToOriginal[String(value)] ?? value,
+                    updated_preview: value,
                   })
                 }
               />
             </Stack.Item>
+            {/* NOVA EDIT ADDITION START: Background Selection */}
+            <Stack.Item position="relative">
+              <SideDropdown
+                className="PreferencesMenu__Character__FieldDropdown"
+                width="100%"
+                selected={data.character_preferences.misc.background_state}
+                options={(serverData?.background_state.choices || []).map(
+                  (option) => ({
+                    value: option,
+                    displayText: t(option),
+                  }),
+                )}
+                onSelected={(value) =>
+                  act('update_background', {
+                    new_background: value,
+                  })
+                }
+              />
+            </Stack.Item>
+            {/* NOVA EDIT ADDITION END: Background Selection */}
             {/* NOVA EDIT ADDITION END */}
             <Stack.Item position="relative">
               <NameInput
@@ -772,8 +780,7 @@ export function MainPage(props: MainPageProps) {
           ml="4px"
         >
           <Stack vertical fill>
-            {
-              /* NOVA EDIT REMOVAL START
+            {/* // NOVA EDIT REMOVAL START
              <PreferenceList
               randomizations={getRandomization(
                 contextualPreferences,
@@ -793,9 +800,7 @@ export function MainPage(props: MainPageProps) {
               preferences={nonContextualPreferences}
               maxHeight="auto"
             />
-            */
-              // NOVA EDIT REMOVAL END
-            }
+            // NOVA EDIT REMOVAL END */ }
             {/* NOVA EDIT ADDITION BEGIN: Swappable pref menus */}
             <Stack className="PreferencesMenu__Character__PrefTabs">
               <Stack.Item grow={2}>
@@ -805,7 +810,7 @@ export function MainPage(props: MainPageProps) {
                   page={PrefPage.Visual}
                   setPage={setCurrentPrefPage}
                 >
-                  {localize(interfaceLanguage, 'Character Visuals')}
+                  {t('Character Visuals')}
                 </PageButton>
               </Stack.Item>
               <Stack.Item grow={2}>
@@ -815,7 +820,7 @@ export function MainPage(props: MainPageProps) {
                   page={PrefPage.Profile}
                   setPage={setCurrentPrefPage}
                 >
-                  {localize(interfaceLanguage, 'Character Profile')}
+                  {t('Character Profile')}
                 </PageButton>
               </Stack.Item>
             </Stack>
@@ -823,7 +828,6 @@ export function MainPage(props: MainPageProps) {
           </Stack>
         </Stack.Item>
         {/* NOVA EDIT ADDITION END: Swappable pref menus */}
-        </Stack>
       </Stack>
     </>
   );
