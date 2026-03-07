@@ -28420,15 +28420,15 @@
 	pixel_x = -13;
 	pixel_y = 10
 	},
-/obj/item/stamp{
-	pixel_x = -9;
-	pixel_y = 3
-	},
 /obj/item/stamp/denied{
 	pixel_x = -3;
 	pixel_y = -2
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/stamp/granted{
+	pixel_x = -9;
+	pixel_y = 3
+	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "ieP" = (
@@ -49112,14 +49112,14 @@
 	pixel_x = -7;
 	pixel_y = 9
 	},
-/obj/item/stamp{
-	pixel_x = -7;
-	pixel_y = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/stamp/head/qm{
 	pixel_y = 5;
 	pixel_x = 3
+	},
+/obj/item/stamp/granted{
+	pixel_x = -9;
+	pixel_y = 3
 	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/qm)
@@ -63474,9 +63474,9 @@
 	pixel_x = -7;
 	pixel_y = 9
 	},
-/obj/item/stamp{
-	pixel_x = -7;
-	pixel_y = 1
+/obj/item/stamp/granted{
+	pixel_x = -9;
+	pixel_y = 3
 	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/nt_rep)

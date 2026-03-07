@@ -5239,14 +5239,6 @@
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/stamp{
-	pixel_x = -3;
-	pixel_y = 9
-	},
-/obj/item/stamp/head/hop{
-	pixel_x = -3;
-	pixel_y = 6
-	},
 /obj/item/stamp/denied{
 	pixel_x = -3;
 	pixel_y = 3
@@ -5255,6 +5247,14 @@
 /obj/machinery/recharger{
 	pixel_x = 8;
 	pixel_y = 5
+	},
+/obj/item/stamp/granted{
+	pixel_x = -3;
+	pixel_y = 9
+	},
+/obj/item/stamp/head/hop{
+	pixel_x = -3;
+	pixel_y = 6
 	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
@@ -18347,9 +18347,6 @@
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/stamp{
-	pixel_x = -6
-	},
 /obj/structure/disposalpipe/segment,
 /obj/item/paper_bin/carbon{
 	pixel_x = -21;
@@ -18360,6 +18357,9 @@
 	},
 /obj/item/stamp/centcom{
 	pixel_x = 6
+	},
+/obj/item/stamp/granted{
+	pixel_x = -6
 	},
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/nt_rep)
@@ -83011,11 +83011,13 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stamp,
 /obj/effect/turf_decal/siding/brown{
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/stamp/granted{
+	pixel_x = -6
+	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/sorting)
 "qKN" = (
@@ -95901,15 +95903,15 @@
 	pixel_x = 5;
 	pixel_y = 2
 	},
-/obj/item/stamp{
-	pixel_x = -6
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor/right/directional/west{
 	name = "Captain's Desk";
 	req_access = list("captain")
+	},
+/obj/item/stamp/granted{
+	pixel_x = -6
 	},
 /turf/open/floor/carpet/blue,
 /area/station/command/heads_quarters/captain/private)
@@ -97292,7 +97294,9 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/stamp,
+/obj/item/stamp/granted{
+	pixel_x = -6
+	},
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "tCJ" = (
