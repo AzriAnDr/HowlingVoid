@@ -2,13 +2,14 @@ import { Fragment, useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { CharacterPreview } from 'tgui/interfaces/common/CharacterPreview';
 import { removeAllSkiplines } from 'tgui/interfaces/TextInputModal'; // NOVA EDIT ADDITION: Multiple loadout presets
-import { Flex } from 'tgui-core/components'; // NOVA EDIT ADDITION: Multiple loadout presets
 import {
   Box,
   Button,
   Dimmer, // NOVA EDIT ADDITION: Multiple loadout presets
   Divider,
-  Dropdown, // NOVA EDIT ADDITION: Multiple loadout presets
+  Dropdown,
+  // NOVA EDIT ADDITION: Multiple loadout presets
+  Flex,
   Icon,
   Input,
   NoticeBox,
@@ -69,7 +70,10 @@ export function LoadoutPage(props) {
       <Stack.Item>
         {/* NOVA EDIT ADDITION START: Multiple loadout presets */}
         {!!managingPreset && (
-          <Dimmer className="PreferencesMenu__Loadout__PresetDimmer" style={{ zIndex: '100' }}>
+          <Dimmer
+            className="PreferencesMenu__Loadout__PresetDimmer"
+            style={{ zIndex: '100' }}
+          >
             <Stack
               vertical
               width="400px"
@@ -299,9 +303,9 @@ function LoadoutTabs(props: LoadoutTabsProps) {
                           data.character_preferences.misc.loadout_index ===
                           'Default'
                         }
-                          tooltip={
-                            data.character_preferences.misc.loadout_index ===
-                            'Default'
+                        tooltip={
+                          data.character_preferences.misc.loadout_index ===
+                          'Default'
                             ? t(
                                 'loadout_cant_delete_default',
                                 "Can't delete the default loadout entry.",
@@ -364,7 +368,10 @@ function LoadoutTabs(props: LoadoutTabsProps) {
         ) : (
           <Section className="PreferencesMenu__Loadout__CatalogSection" fill>
             <Box>
-              {t('loadout_no_contents_selected_tab', 'No contents for selected tab.')}
+              {t(
+                'loadout_no_contents_selected_tab',
+                'No contents for selected tab.',
+              )}
             </Box>
           </Section>
         )}
@@ -491,7 +498,8 @@ function LoadoutSelectedSection(props: LoadoutSelectedSectionProps) {
 
 function LoadoutPreviewSection() {
   const { act, data } = useBackend<LoadoutManagerData>();
-  const { t, localizeServerTextById } = usePreferencesLocalization(data);
+  const { t, localizeDataLabelById, localizeDataLabel } =
+    usePreferencesLocalization(data);
 
   return (
     <Section
@@ -511,7 +519,12 @@ function LoadoutPreviewSection() {
     >
       <Stack vertical fill>
         <Stack.Item grow align="center">
-          <CharacterPreview height="100%" width="240px" id={data.character_preview_view} /> {/* NOVA EDIT CHANGE - ORIGINAL: <CharacterPreview height="100%" id={data.character_preview_view} /> */}
+          <CharacterPreview
+            height="100%"
+            width="240px"
+            id={data.character_preview_view}
+          />{' '}
+          {/* NOVA EDIT CHANGE - ORIGINAL: <CharacterPreview height="100%" id={data.character_preview_view} /> */}
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item align="center">
@@ -523,10 +536,12 @@ function LoadoutPreviewSection() {
                 selected={data.preview_selection}
                 options={data.preview_options.map((option) => ({
                   value: option,
-                  displayText: localizeServerTextById(
-                    data.preview_option_ids?.[option],
-                    option,
-                  ),
+                  displayText: data.preview_option_ids?.[option]
+                    ? localizeDataLabelById(
+                        data.preview_option_ids[option],
+                        option,
+                      )
+                    : localizeDataLabel(option),
                 }))}
                 onSelected={(value) =>
                   act('update_preview', {

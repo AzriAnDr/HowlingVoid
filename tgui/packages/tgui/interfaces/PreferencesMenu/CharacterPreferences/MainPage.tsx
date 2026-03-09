@@ -110,7 +110,10 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={props.handleFood}
           fontSize="22px"
           icon="drumstick-bite"
-          tooltip={props.t('main_edit_food_preferences', 'Edit Food Preferences')}
+          tooltip={props.t(
+            'main_edit_food_preferences',
+            'Edit Food Preferences',
+          )}
           tooltipPosition="top"
         />
         {/* NOVA EDIT ADDITION END */}
@@ -442,7 +445,7 @@ export function PreferenceList(props: PreferenceListProps) {
                 // NOVA EDIT CHANGE - ORIGINAL: label={feature.name}
                 label={
                   <Box mt={0.5}>
-                    {localizeCharacterFeatureName(feature.name)}
+                    {localizeCharacterFeatureName(feature.name, featureId)}
                   </Box>
                 } // replicate middle align
                 tooltip={feature.description}
@@ -507,7 +510,8 @@ type MainPageProps = {
 
 export function MainPage(props: MainPageProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { t, localizeServerTextById } = usePreferencesLocalization(data);
+  const { t, localizeDataLabelById, localizeDataLabel } =
+    usePreferencesLocalization(data);
 
   const [deleteCharacterPopupOpen, setDeleteCharacterPopupOpen] =
     useState(false);
@@ -661,7 +665,8 @@ export function MainPage(props: MainPageProps) {
                 t={t}
                 gender={data.character_preferences.misc.gender}
                 handleOpenSpecies={props.openSpecies}
-                handleRotate={(value) => { // NOVA EDIT CHANGE - Original: handleRotate={() => { 
+                handleRotate={(value) => {
+                  // NOVA EDIT CHANGE - Original: handleRotate={() => {
                   act('rotate', { backwards: value }); // NOVA EDIT CHANGE - Original: act('rotate');
                 }}
                 setGender={createSetPreference(act, 'gender')}
@@ -682,7 +687,10 @@ export function MainPage(props: MainPageProps) {
               />
             </Stack.Item>
 
-            <Stack.Item className="PreferencesMenu__Character__PreviewCell" grow>
+            <Stack.Item
+              className="PreferencesMenu__Character__PreviewCell"
+              grow
+            >
               <CharacterPreview
                 width="100%"
                 height="100%"
@@ -698,10 +706,12 @@ export function MainPage(props: MainPageProps) {
                 selected={data.preview_selection}
                 options={data.preview_options.map((option) => ({
                   value: option,
-                  displayText: localizeServerTextById(
-                    data.preview_option_ids?.[option],
-                    option,
-                  ),
+                  displayText: data.preview_option_ids?.[option]
+                    ? localizeDataLabelById(
+                        data.preview_option_ids[option],
+                        option,
+                      )
+                    : localizeDataLabel(option),
                 }))}
                 onSelected={(value) =>
                   act('update_preview', {
@@ -719,11 +729,16 @@ export function MainPage(props: MainPageProps) {
                 options={(serverData?.background_state.choices || []).map(
                   (option) => ({
                     value: option,
-                    displayText: localizeServerTextById(
-                      serverData?.background_state.choice_ids?.[option] ??
-                        serverData?.background_state_ids?.[option],
-                      option,
-                    ),
+                    displayText:
+                      (serverData?.background_state.choice_ids?.[option] ??
+                      serverData?.background_state_ids?.[option])
+                        ? localizeDataLabelById(
+                            (serverData?.background_state.choice_ids?.[
+                              option
+                            ] ?? serverData?.background_state_ids?.[option])!,
+                            option,
+                          )
+                        : localizeDataLabel(option),
                   }),
                 )}
                 onSelected={(value) =>
@@ -814,7 +829,7 @@ export function MainPage(props: MainPageProps) {
               preferences={nonContextualPreferences}
               maxHeight="auto"
             />
-            // NOVA EDIT REMOVAL END */ }
+            // NOVA EDIT REMOVAL END */}
             {/* NOVA EDIT ADDITION BEGIN: Swappable pref menus */}
             <Stack className="PreferencesMenu__Character__PrefTabs">
               <Stack.Item grow={2}>

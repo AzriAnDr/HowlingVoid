@@ -12,105 +12,107 @@ import uiRu from './locales/ui.ru.json';
 
 export type InterfaceLanguage = 'english' | 'russian';
 
-const RU_CHARACTER_FEATURE_NAMES_BY_EN = characterFeaturesRu as Record<
-  string,
-  string
->;
+type DataTable = {
+  english: Record<string, string>;
+  russian: Record<string, string>;
+};
+
 const EN_UI_BY_KEY = {
   ...(uiCharacterEn as Record<string, string>),
   ...(uiGameEn as Record<string, string>),
 } as Record<string, string>;
-const RU_UI_BY_EN = uiRu as Record<string, string>;
+
 const RU_UI_BY_KEY = {
   ...(uiCharacterRu as Record<string, string>),
   ...(uiGameRu as Record<string, string>),
 } as Record<string, string>;
+
 const UI_BY_LANGUAGE: Record<InterfaceLanguage, Record<string, string>> = {
   english: EN_UI_BY_KEY,
   russian: RU_UI_BY_KEY,
 };
+
+const RU_CHARACTER_FEATURE_NAMES_BY_EN = characterFeaturesRu as Record<
+  string,
+  string
+>;
+
 const RU_JOBS = jobsRu as {
   job_names?: Record<string, string>;
   alt_job_titles?: Record<string, string>;
 };
 
-function normalizeLookupKey(value: string): string {
-  return value.replace(/\s+/g, ' ').trim();
+const RU_SERVER_LABELS_BY_EN = uiRu as Record<string, string>;
+
+function toDataId(value: string): string {
+  const normalized = (value ?? '')
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/[:]/g, '')
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+
+  return normalized || 'unknown';
 }
 
-const RU_UI_BY_EN_NORMALIZED = Object.fromEntries(
-  Object.entries(RU_UI_BY_EN).map(([key, value]) => [
-    normalizeLookupKey(key),
-    value,
-  ]),
-) as Record<string, string>;
+function buildEnglishIdMap(
+  source: Record<string, string>,
+): Record<string, string> {
+  const result: Record<string, string> = {};
 
-const RU_CHARACTER_FEATURE_NAMES_BY_EN_NORMALIZED = Object.fromEntries(
-  Object.entries(RU_CHARACTER_FEATURE_NAMES_BY_EN).map(([key, value]) => [
-    normalizeLookupKey(key),
-    value,
-  ]),
-) as Record<string, string>;
-
-function getLegacyLookupCandidates(raw: string): string[] {
-  const key = (raw ?? '').toString();
-  const trimmed = key.trim();
-  const noColon = trimmed.endsWith(':') ? trimmed.slice(0, -1) : trimmed;
-  const withColon = trimmed.endsWith(':') ? trimmed : `${trimmed}:`;
-  const normalizedKey = normalizeLookupKey(key);
-  const normalizedTrimmed = normalizeLookupKey(trimmed);
-  const normalizedNoColon = normalizeLookupKey(noColon);
-  const normalizedWithColon = normalizeLookupKey(withColon);
-
-  return [
-    key,
-    trimmed,
-    noColon,
-    withColon,
-    normalizedKey,
-    normalizedTrimmed,
-    normalizedNoColon,
-    normalizedWithColon,
-  ];
-}
-
-function localizeLegacyServerText(
-  language: InterfaceLanguage,
-  englishText: string,
-): string | null {
-  if (language !== 'russian') {
-    return null;
+  for (const key of Object.keys(source)) {
+    const id = toDataId(key);
+    if (result[id] === undefined) {
+      result[id] = key;
+    }
   }
 
-  const [
-    key,
-    trimmed,
-    noColon,
-    withColon,
-    normalizedKey,
-    normalizedTrimmed,
-    normalizedNoColon,
-    normalizedWithColon,
-  ] = getLegacyLookupCandidates(englishText);
+  return result;
+}
+
+function buildLocalizedIdMap(
+  source: Record<string, string>,
+): Record<string, string> {
+  const result: Record<string, string> = {};
+
+  for (const [key, value] of Object.entries(source)) {
+    const id = toDataId(key);
+    if (result[id] === undefined) {
+      result[id] = value;
+    }
+  }
+
+  return result;
+}
+
+function createDataTable(source: Record<string, string>): DataTable {
+  return {
+    english: buildEnglishIdMap(source),
+    russian: buildLocalizedIdMap(source),
+  };
+}
+
+const CHARACTER_FEATURE_NAMES_BY_ID = createDataTable(
+  RU_CHARACTER_FEATURE_NAMES_BY_EN,
+);
+const JOB_NAMES_BY_ID = createDataTable(RU_JOBS.job_names ?? {});
+const ALT_JOB_TITLES_BY_ID = createDataTable(RU_JOBS.alt_job_titles ?? {});
+const SERVER_LABELS_BY_ID = createDataTable(RU_SERVER_LABELS_BY_EN);
+
+function resolveDataId(
+  language: InterfaceLanguage,
+  table: DataTable,
+  id: string,
+  fallback?: string,
+): string {
+  const normalizedId = toDataId(id);
 
   return (
-    RU_UI_BY_EN[key] ??
-    RU_UI_BY_EN[trimmed] ??
-    RU_UI_BY_EN[noColon] ??
-    RU_UI_BY_EN[withColon] ??
-    RU_UI_BY_EN_NORMALIZED[normalizedKey] ??
-    RU_UI_BY_EN_NORMALIZED[normalizedTrimmed] ??
-    RU_UI_BY_EN_NORMALIZED[normalizedNoColon] ??
-    RU_UI_BY_EN_NORMALIZED[normalizedWithColon] ??
-    RU_CHARACTER_FEATURE_NAMES_BY_EN[key] ??
-    RU_CHARACTER_FEATURE_NAMES_BY_EN[trimmed] ??
-    RU_CHARACTER_FEATURE_NAMES_BY_EN[noColon] ??
-    RU_CHARACTER_FEATURE_NAMES_BY_EN[withColon] ??
-    RU_CHARACTER_FEATURE_NAMES_BY_EN_NORMALIZED[normalizedKey] ??
-    RU_CHARACTER_FEATURE_NAMES_BY_EN_NORMALIZED[normalizedTrimmed] ??
-    RU_CHARACTER_FEATURE_NAMES_BY_EN_NORMALIZED[normalizedNoColon] ??
-    RU_CHARACTER_FEATURE_NAMES_BY_EN_NORMALIZED[normalizedWithColon] ??
-    null
+    table[language][normalizedId] ??
+    table.english[normalizedId] ??
+    fallback ??
+    normalizedId
   );
 }
 
@@ -120,6 +122,7 @@ function translateUi(
   fallback?: string,
 ): string {
   const textKey = (key ?? '').toString();
+
   return (
     UI_BY_LANGUAGE[language][textKey] ??
     EN_UI_BY_KEY[textKey] ??
@@ -162,7 +165,12 @@ function extractLanguage(raw: unknown, depth = 0): InterfaceLanguage | null {
       return commonValue;
     }
 
-    for (const key of ['interface_language', 'language', 'selected', 'current']) {
+    for (const key of [
+      'interface_language',
+      'language',
+      'selected',
+      'current',
+    ]) {
       const nested = extractLanguage(obj[key], depth + 1);
       if (nested) {
         return nested;
@@ -194,26 +202,55 @@ export function getCharacterPreferencesLanguage(data: any): InterfaceLanguage {
 export function localizeCharacterFeatureName(
   language: InterfaceLanguage,
   englishFeatureName: string,
+  featureId?: string,
 ): string {
-  if (language !== 'russian') {
-    return englishFeatureName;
-  }
-
-  const normalized = normalizeLookupKey(englishFeatureName);
-  return (
-    RU_CHARACTER_FEATURE_NAMES_BY_EN[englishFeatureName] ??
-    RU_CHARACTER_FEATURE_NAMES_BY_EN_NORMALIZED[normalized] ??
-    RU_UI_BY_EN[englishFeatureName] ??
-    RU_UI_BY_EN_NORMALIZED[normalized] ??
-    englishFeatureName
+  return resolveDataId(
+    language,
+    CHARACTER_FEATURE_NAMES_BY_ID,
+    featureId ?? englishFeatureName,
+    englishFeatureName,
   );
 }
 
-export function localizeServerText(
+export function localizeJobName(
   language: InterfaceLanguage,
-  englishText: string,
+  englishJobName: string,
+  jobId?: string,
 ): string {
-  return localizeLegacyServerText(language, englishText) ?? englishText;
+  return resolveDataId(
+    language,
+    JOB_NAMES_BY_ID,
+    jobId ?? englishJobName,
+    englishJobName,
+  );
+}
+
+export function localizeAltJobTitle(
+  language: InterfaceLanguage,
+  englishAltTitle: string,
+  altId?: string,
+): string {
+  return resolveDataId(
+    language,
+    ALT_JOB_TITLES_BY_ID,
+    altId ?? englishAltTitle,
+    englishAltTitle,
+  );
+}
+
+export function localizeDataLabelById(
+  language: InterfaceLanguage,
+  id: string,
+  fallback?: string,
+): string {
+  return resolveDataId(language, SERVER_LABELS_BY_ID, id, fallback);
+}
+
+export function localizeDataLabel(
+  language: InterfaceLanguage,
+  text: string,
+): string {
+  return resolveDataId(language, SERVER_LABELS_BY_ID, text, text);
 }
 
 export function getPreferencesLocalization(data: unknown) {
@@ -222,37 +259,18 @@ export function getPreferencesLocalization(data: unknown) {
   return {
     language,
     t: (key: string, fallback?: string) => translateUi(language, key, fallback),
-    localizeJobName: (englishJobName: string) =>
-      localizeJobName(language, englishJobName),
-    localizeAltJobTitle: (englishAltTitle: string) =>
-      localizeAltJobTitle(language, englishAltTitle),
-    localizeCharacterFeatureName: (englishFeatureName: string) =>
-      localizeCharacterFeatureName(language, englishFeatureName),
-    localizeServerText: (englishText: string) =>
-      localizeServerText(language, englishText),
-    localizeServerTextById: (id: string | undefined, englishText: string) =>
-      id ? translateUi(language, id, englishText) : localizeServerText(language, englishText),
+    localizeJobName: (englishJobName: string, jobId?: string) =>
+      localizeJobName(language, englishJobName, jobId),
+    localizeAltJobTitle: (englishAltTitle: string, altId?: string) =>
+      localizeAltJobTitle(language, englishAltTitle, altId),
+    localizeCharacterFeatureName: (
+      englishFeatureName: string,
+      featureId?: string,
+    ) => localizeCharacterFeatureName(language, englishFeatureName, featureId),
+    localizeDataLabel: (text: string) => localizeDataLabel(language, text),
+    localizeDataLabelById: (id: string, fallback?: string) =>
+      localizeDataLabelById(language, id, fallback),
   };
-}
-
-export function localizeJobName(
-  language: InterfaceLanguage,
-  englishJobName: string,
-): string {
-  if (language !== 'russian') {
-    return englishJobName;
-  }
-  return RU_JOBS.job_names?.[englishJobName] ?? englishJobName;
-}
-
-export function localizeAltJobTitle(
-  language: InterfaceLanguage,
-  englishAltTitle: string,
-): string {
-  if (language !== 'russian') {
-    return englishAltTitle;
-  }
-  return RU_JOBS.alt_job_titles?.[englishAltTitle] ?? englishAltTitle;
 }
 
 export function usePreferencesLocalization(data?: unknown) {
@@ -266,24 +284,27 @@ export function usePreferencesLocalization(data?: unknown) {
     [language],
   );
   const localizeJobNameForLanguage = useCallback(
-    (englishJobName: string) => resolved.localizeJobName(englishJobName),
+    (englishJobName: string, jobId?: string) =>
+      resolved.localizeJobName(englishJobName, jobId),
     [language],
   );
   const localizeAltJobTitleForLanguage = useCallback(
-    (englishAltTitle: string) => resolved.localizeAltJobTitle(englishAltTitle),
+    (englishAltTitle: string, altId?: string) =>
+      resolved.localizeAltJobTitle(englishAltTitle, altId),
     [language],
   );
   const localizeCharacterFeatureNameForLanguage = useCallback(
-    (englishFeatureName: string) => resolved.localizeCharacterFeatureName(englishFeatureName),
+    (englishFeatureName: string, featureId?: string) =>
+      resolved.localizeCharacterFeatureName(englishFeatureName, featureId),
     [language],
   );
-  const localizeServerTextForLanguage = useCallback(
-    (englishText: string) => resolved.localizeServerText(englishText),
+  const localizeDataLabelForLanguage = useCallback(
+    (text: string) => resolved.localizeDataLabel(text),
     [language],
   );
-  const localizeServerTextByIdForLanguage = useCallback(
-    (id: string | undefined, englishText: string) =>
-      resolved.localizeServerTextById(id, englishText),
+  const localizeDataLabelByIdForLanguage = useCallback(
+    (id: string, fallback?: string) =>
+      resolved.localizeDataLabelById(id, fallback),
     [language],
   );
 
@@ -293,7 +314,7 @@ export function usePreferencesLocalization(data?: unknown) {
     localizeJobName: localizeJobNameForLanguage,
     localizeAltJobTitle: localizeAltJobTitleForLanguage,
     localizeCharacterFeatureName: localizeCharacterFeatureNameForLanguage,
-    localizeServerText: localizeServerTextForLanguage,
-    localizeServerTextById: localizeServerTextByIdForLanguage,
+    localizeDataLabel: localizeDataLabelForLanguage,
+    localizeDataLabelById: localizeDataLabelByIdForLanguage,
   };
 }

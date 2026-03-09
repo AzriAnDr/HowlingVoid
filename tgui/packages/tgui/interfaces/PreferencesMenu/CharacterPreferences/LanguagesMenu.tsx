@@ -6,7 +6,8 @@ import { usePreferencesLocalization } from './localization';
 
 export function KnownLanguage(props: { language: Language }) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { t, localizeServerTextById } = usePreferencesLocalization(data);
+  const { t, localizeDataLabelById, localizeDataLabel } =
+    usePreferencesLocalization(data);
 
   return (
     <Stack.Item>
@@ -20,16 +21,23 @@ export function KnownLanguage(props: { language: Language }) {
               className={`languages16x16 ${props.language.icon}`}
             />
             <Box inline>
-              {localizeServerTextById(props.language.name_id, props.language.name)}
+              {props.language.name_id
+                ? localizeDataLabelById(
+                    props.language.name_id,
+                    props.language.name,
+                  )
+                : localizeDataLabel(props.language.name)}
             </Box>
           </>
         }
       >
         <BlockQuote>
-          {localizeServerTextById(
-            props.language.description_id,
-            props.language.description,
-          )}
+          {props.language.description_id
+            ? localizeDataLabelById(
+                props.language.description_id,
+                props.language.description,
+              )
+            : localizeDataLabel(props.language.description)}
         </BlockQuote>
         <Button
           className="PreferencesMenu__Languages__ActionButton"
@@ -80,7 +88,8 @@ export function KnownLanguage(props: { language: Language }) {
 
 export function UnknownLanguage(props: { language: Language }) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { t, localizeServerTextById } = usePreferencesLocalization(data);
+  const { t, localizeDataLabelById, localizeDataLabel } =
+    usePreferencesLocalization(data);
   const noPoints =
     data.selected_languages.length === data.total_language_points;
 
@@ -96,16 +105,23 @@ export function UnknownLanguage(props: { language: Language }) {
               className={`languages16x16 ${props.language.icon}`}
             />
             <Box inline>
-              {localizeServerTextById(props.language.name_id, props.language.name)}
+              {props.language.name_id
+                ? localizeDataLabelById(
+                    props.language.name_id,
+                    props.language.name,
+                  )
+                : localizeDataLabel(props.language.name)}
             </Box>
           </>
         }
       >
         <BlockQuote>
-          {localizeServerTextById(
-            props.language.description_id,
-            props.language.description,
-          )}
+          {props.language.description_id
+            ? localizeDataLabelById(
+                props.language.description_id,
+                props.language.description,
+              )
+            : localizeDataLabel(props.language.description)}
         </BlockQuote>
         <Button
           className="PreferencesMenu__Languages__ActionButton"
@@ -159,7 +175,8 @@ export function LanguagesPage() {
         <br />
         {t('languages_may_be_either', 'Languages may be either')}{' '}
         <b>{t('spoken_and_understood', 'spoken and understood')}</b>{' '}
-        {t('language_or', 'or')} <b>{t('just_understood', 'just understood.')}</b>
+        {t('language_or', 'or')}{' '}
+        <b>{t('just_understood', 'just understood.')}</b>
         <br />
         {t('one_language_is_worth', 'One language is worth')}{' '}
         <b>{t('one_point', '1 point,')}</b>{' '}
