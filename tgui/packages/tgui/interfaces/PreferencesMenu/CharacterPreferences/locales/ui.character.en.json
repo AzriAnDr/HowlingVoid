@@ -132,6 +132,8 @@
 	"limbs_rotate_counter_clockwise": "Rotate Counter-Clockwise",
 	"limbs_markings_label": "Markings",
 	"limbs_emissive_tooltip": "Toggle emissive.",
+	"limbs_remove_marking_tooltip": "Remove marking.",
+	"limbs_add_marking_tooltip": "Add marking.",
 	"limbs_augmentation_label": "Augmentation",
 	"limbs_style_label": "Style",
 	"limbs_markings_title": "Markings",

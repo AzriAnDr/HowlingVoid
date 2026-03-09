@@ -158,7 +158,6 @@ export function LoadoutPage(props) {
         <Section
           className="PreferencesMenu__Loadout__TopSection"
           fitted
-          title="&nbsp;"
           buttons={
             <Input
               className="PreferencesMenu__Loadout__SearchInput"
@@ -297,7 +296,6 @@ function LoadoutTabs(props: LoadoutTabsProps) {
                         icon="trash"
                         color="red"
                         align="center"
-                        confirmContent="✓"
                         disabled={
                           data.character_preferences.misc.loadout_index ===
                           'Default'

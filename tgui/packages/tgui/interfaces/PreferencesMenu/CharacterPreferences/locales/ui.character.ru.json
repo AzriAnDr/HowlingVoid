@@ -132,6 +132,8 @@
 	"limbs_rotate_counter_clockwise": "Повернуть против часовой",
 	"limbs_markings_label": "Метки",
 	"limbs_emissive_tooltip": "Переключить эмиссив.",
+	"limbs_remove_marking_tooltip": "Удалить метку.",
+	"limbs_add_marking_tooltip": "Добавить метку.",
 	"limbs_augmentation_label": "Аугментация",
 	"limbs_style_label": "Стиль",
 	"limbs_markings_title": "Метки",

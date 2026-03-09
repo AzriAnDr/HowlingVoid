@@ -132,6 +132,7 @@ export const Markings = (props) => {
                 className="PreferencesMenu__Augments__ActionButton"
                 color={marking.emissive ? 'good' : 'bad'}
                 tooltip={t('limbs_emissive_tooltip')}
+                icon="lightbulb"
                 onClick={() =>
                   act('change_emissive', {
                     limb_slot: props.limb.slot,
@@ -139,23 +140,21 @@ export const Markings = (props) => {
                     emissive: marking.emissive,
                   })
                 }
-              >
-                E
-              </Button>
+              />
             </Stack.Item>
             <Stack.Item>
               <Button
                 className="PreferencesMenu__Augments__ActionButton"
                 color="bad"
+                icon="minus"
+                tooltip={t('limbs_remove_marking_tooltip')}
                 onClick={() =>
                   act('remove_marking', {
                     limb_slot: props.limb.slot,
                     marking_id: marking.marking_id,
                   })
                 }
-              >
-                -
-              </Button>
+              />
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -164,10 +163,10 @@ export const Markings = (props) => {
         <Button
           className="PreferencesMenu__Augments__ActionButton"
           color="good"
+          icon="plus"
+          tooltip={t('limbs_add_marking_tooltip')}
           onClick={() => act('add_marking', { limb_slot: props.limb.slot })}
-        >
-          +
-        </Button>
+        />
       </Stack.Item>
     </Stack>
   );
