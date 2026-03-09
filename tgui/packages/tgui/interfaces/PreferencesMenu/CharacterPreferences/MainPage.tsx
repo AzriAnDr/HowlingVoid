@@ -1,4 +1,4 @@
-﻿import { sortBy } from 'es-toolkit';
+import { sortBy } from 'es-toolkit';
 import { filter, map } from 'es-toolkit/compat';
 import { type ReactNode, useState } from 'react';
 import { useBackend } from 'tgui/backend';
@@ -110,9 +110,7 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={props.handleFood}
           fontSize="22px"
           icon="drumstick-bite"
-          tooltip={props.t(
-            'main_edit_food_preferences',
-          )}
+          tooltip={props.t('main_edit_food_preferences')}
           tooltipPosition="top"
         />
         {/* NOVA EDIT ADDITION END */}
@@ -148,11 +146,7 @@ function ChoicedSelection(props: ChoicedSelectionProps) {
   const [searchText, setSearchText] = useState('');
 
   if (!catalog.icons) {
-    return (
-      <Box color="red">
-        {t('main_catalog_missing_icons')}
-      </Box>
-    );
+    return <Box color="red">{t('main_catalog_missing_icons')}</Box>;
   }
 
   return (
@@ -404,7 +398,8 @@ type PreferenceListProps = {
 };
 
 export function PreferenceList(props: PreferenceListProps) {
-  const { localizeCharacterFeatureName, t } = usePreferencesLocalization();
+  const { localizeCharacterFeatureName, localizeDataLabel, t } =
+    usePreferencesLocalization();
   const { preferences, randomizations, maxHeight, children } = props;
 
   return (
@@ -429,9 +424,10 @@ export function PreferenceList(props: PreferenceListProps) {
               return (
                 <Stack.Item key={featureId}>
                   <b>
-                    {t(
-                      'main_feature_not_recognized',
-                    ).replace('{feature}', featureId)}
+                    {t('main_feature_not_recognized').replace(
+                      '{feature}',
+                      featureId,
+                    )}
                   </b>
                 </Stack.Item>
               );
@@ -446,7 +442,11 @@ export function PreferenceList(props: PreferenceListProps) {
                     {localizeCharacterFeatureName(feature.name, featureId)}
                   </Box>
                 } // replicate middle align
-                tooltip={feature.description}
+                tooltip={
+                  feature.description
+                    ? localizeDataLabel(feature.description)
+                    : undefined
+                }
                 verticalAlign="top" // NOVA EDIT CHANGE - Original: middle
               >
                 <Stack fill>
@@ -859,4 +859,3 @@ export function MainPage(props: MainPageProps) {
     </>
   );
 }
-

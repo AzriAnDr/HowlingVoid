@@ -1,11 +1,10 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Dropdown, Flex, Stack } from 'tgui-core/components'; // NOVA EDIT CHANGE - ORIGINAL: import { Button, Stack } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
 import { PageButton } from '../components/PageButton';
 import type { PreferencesMenuData } from '../types';
-import { usePreferencesLocalization } from './localization';
 import { AntagsPage } from './AntagsPage';
 import { JobsPage } from './JobsPage';
 // NOVA EDIT ADDITION START
@@ -13,6 +12,7 @@ import { LanguagesPage } from './LanguagesMenu';
 import { LimbsPage } from './LimbsPage';
 // NOVA EDIT ADDITION END
 import { LoadoutPage } from './loadout';
+import { usePreferencesLocalization } from './localization';
 import { MainPage } from './MainPage';
 import { QuirkPersonalityPage } from './QuirksPage';
 import { SpeciesPage } from './SpeciesPage';
@@ -129,10 +129,7 @@ export function CharacterPreferenceWindow(props) {
       {!data.content_unlocked && (
         <Stack.Item align="center">
           <Box className="PreferencesMenu__Character__PremiumNotice">
-            {t(
-              'buy_byond_premium_more_slots',
-              'Buy BYOND premium for more slots!',
-            )}
+            {t('buy_byond_premium_more_slots')}
           </Box>
         </Stack.Item>
       )}
@@ -229,5 +226,3 @@ export function CharacterPreferenceWindow(props) {
     </Stack>
   );
 }
-
-

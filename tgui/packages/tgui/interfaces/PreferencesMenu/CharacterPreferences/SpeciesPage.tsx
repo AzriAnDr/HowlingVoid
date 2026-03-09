@@ -262,7 +262,7 @@ type SpeciesPageInnerProps = {
 
 function SpeciesPageInner(props: SpeciesPageInnerProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { t } = usePreferencesLocalization(data);
+  const { t, localizeDataLabel } = usePreferencesLocalization(data);
   const setSpecies = createSetPreference(act, 'species');
 
   const species: [string, Species][] = Object.entries(props.species).map(
@@ -317,7 +317,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                     selected={
                       data.character_preferences.misc.species === speciesKey
                     }
-                    tooltip={species.name}
+                    tooltip={localizeDataLabel(species.name)}
                     style={{
                       display: 'block',
                       height: '64px',
@@ -332,7 +332,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                 );
                 if (species.nova_stars_only && !data.is_nova_star) {
                   const tooltipContent =
-                    species.name +
+                    localizeDataLabel(species.name) +
                     ` - ${t('species_nova_only_tooltip')}`;
                   speciesPage = (
                     <Tooltip content={tooltipContent}>{speciesPage}</Tooltip>
@@ -351,7 +351,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                   <Stack.Item width="70%">
                     <Section
                       className="PreferencesMenu__Character__SpeciesInfo"
-                      title={currentSpecies.name}
+                      title={localizeDataLabel(currentSpecies.name)}
                       buttons={
                         // NOHUNGER species have no diet (diet = null),
                         // so we have nothing to show

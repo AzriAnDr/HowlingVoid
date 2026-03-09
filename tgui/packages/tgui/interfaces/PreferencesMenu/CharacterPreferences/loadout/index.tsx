@@ -1,4 +1,4 @@
-﻿import { Fragment, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { CharacterPreview } from 'tgui/interfaces/common/CharacterPreview';
 import { removeAllSkiplines } from 'tgui/interfaces/TextInputModal'; // NOVA EDIT ADDITION: Multiple loadout presets
@@ -40,7 +40,9 @@ export function LoadoutPage(props) {
   const erp_pref = useBackend<LoadoutManagerData>().data.erp_pref;
 
   const [searchLoadout, setSearchLoadout] = useState('');
-  const [selectedTabName, setSelectedTab] = useState(loadout_tabs?.[0].name || '');
+  const [selectedTabName, setSelectedTab] = useState(
+    loadout_tabs?.[0].name || '',
+  );
   const [modifyItemDimmer, setModifyItemDimmer] = useState<LoadoutItem | null>(
     null,
   );
@@ -100,7 +102,7 @@ export function LoadoutPage(props) {
                         data.character_preferences.misc.loadout_lists.loadouts
                           .length
                       }{' '}
-                      of 12 total)
+                      / 12)
                     </Flex.Item>
                   )}
                   <Flex.Item ml="auto">
@@ -116,9 +118,7 @@ export function LoadoutPage(props) {
               </Stack.Item>
               <Stack.Item width="100%" height="20px">
                 <Input
-                  placeholder={t(
-                    'loadout_maximum_24_characters',
-                  )}
+                  placeholder={t('loadout_maximum_24_characters')}
                   width="100%"
                   maxLength={24}
                   onChange={(value) => onType(value)}
@@ -237,7 +237,7 @@ function LoadoutTabs(props: LoadoutTabsProps) {
   const searching = currentSearch.length > 1;
 
   const { act, data } = useBackend<PreferencesMenuData>(); // NOVA EDIT ADDITION: Multiple loadout presets
-  const { t } = usePreferencesLocalization(data);
+  const { t, localizeDataLabel } = usePreferencesLocalization(data);
   return (
     <Stack className="PreferencesMenu__Loadout__Body" fill>
       <Stack.Item align="center" width="250px" height="100%">
@@ -297,7 +297,7 @@ function LoadoutTabs(props: LoadoutTabsProps) {
                         icon="trash"
                         color="red"
                         align="center"
-                        confirmContent="вњ“"
+                        confirmContent="✓"
                         disabled={
                           data.character_preferences.misc.loadout_index ===
                           'Default'
@@ -305,12 +305,8 @@ function LoadoutTabs(props: LoadoutTabsProps) {
                         tooltip={
                           data.character_preferences.misc.loadout_index ===
                           'Default'
-                            ? t(
-                                'loadout_cant_delete_default',
-                              )
-                            : t(
-                                'loadout_delete_current_entry',
-                              )
+                            ? t('loadout_cant_delete_default')
+                            : t('loadout_delete_current_entry')
                         }
                         onClick={() => act('remove_loadout_preset')}
                       />
@@ -335,16 +331,14 @@ function LoadoutTabs(props: LoadoutTabsProps) {
           <Section
             className="PreferencesMenu__Loadout__CatalogSection"
             title={
-              searching
-                ? t('loadout_search_results')
-                : t('loadout_catalog')
+              searching ? t('loadout_search_results') : t('loadout_catalog')
             }
             fill
             scrollable
             buttons={
               activeCategory?.category_info ? (
                 <Box italic mt={0.5}>
-                  {activeCategory.category_info}
+                  {localizeDataLabel(activeCategory.category_info)}
                 </Box>
               ) : null
             }
@@ -364,11 +358,7 @@ function LoadoutTabs(props: LoadoutTabsProps) {
           </Section>
         ) : (
           <Section className="PreferencesMenu__Loadout__CatalogSection" fill>
-            <Box>
-              {t(
-                'loadout_no_contents_selected_tab',
-              )}
-            </Box>
+            <Box>{t('loadout_no_contents_selected_tab')}</Box>
           </Section>
         )}
       </Stack.Item>
@@ -400,7 +390,8 @@ type LoadoutSelectedItemProps = {
 
 function LoadoutSelectedItem(props: LoadoutSelectedItemProps) {
   const { all_tabs, path, modifyItemDimmer, setModifyItemDimmer } = props;
-  const { act } = useBackend();
+  const { act, data } = useBackend<LoadoutManagerData>();
+  const { localizeDataLabel } = usePreferencesLocalization(data);
 
   const item = typepathToLoadoutItem(path, all_tabs);
   if (!item) {
@@ -412,7 +403,7 @@ function LoadoutSelectedItem(props: LoadoutSelectedItemProps) {
       <Stack.Item>
         <ItemIcon item={item} scale={1} />
       </Stack.Item>
-      <Stack.Item width="55%">{item.name}</Stack.Item>
+      <Stack.Item width="55%">{localizeDataLabel(item.name)}</Stack.Item>
       {item.buttons.length ? (
         <Stack.Item>
           <Button
@@ -466,9 +457,7 @@ function LoadoutSelectedSection(props: LoadoutSelectedSectionProps) {
           color="red"
           align="center"
           disabled={!loadout_list || Object.keys(loadout_list).length === 0}
-          tooltip={t(
-            'loadout_clear_all_tooltip',
-          )}
+          tooltip={t('loadout_clear_all_tooltip')}
           onClick={() => act('clear_all_items')}
         >
           {t('loadout_clear_all')}
@@ -574,4 +563,3 @@ function LoadoutPreviewSection() {
     </Section>
   );
 }
-
