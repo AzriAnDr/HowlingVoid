@@ -7,10 +7,7 @@ import {
   GamePreferencesSelectedPage,
   type PreferencesMenuData,
 } from '../types';
-import {
-  getCharacterPreferencesLanguage,
-  localize,
-} from '../CharacterPreferences/localization';
+import { usePreferencesLocalization } from '../CharacterPreferences/localization';
 import { GamePreferencesPage } from './GamePreferencesPage';
 import { KeybindingsPage } from './KeybindingsPage';
 
@@ -20,7 +17,7 @@ type Props = {
 
 export function GamePreferenceWindow(props: Props) {
   const { data } = useBackend<PreferencesMenuData>();
-  const interfaceLanguage = getCharacterPreferencesLanguage(data);
+  const { t } = usePreferencesLocalization(data);
 
   const [currentPage, setCurrentPage] = useState(
     props.startingPage ?? GamePreferencesSelectedPage.Settings,
@@ -77,7 +74,7 @@ export function GamePreferenceWindow(props: Props) {
               }
               onClick={() => setCurrentPage(GamePreferencesSelectedPage.Settings)}
             >
-              {localize(interfaceLanguage, 'Settings')}
+              {t('game_settings', 'Settings')}
             </Button>
           </Stack.Item>
 
@@ -97,7 +94,7 @@ export function GamePreferenceWindow(props: Props) {
                 setCurrentPage(GamePreferencesSelectedPage.Keybindings)
               }
             >
-              {localize(interfaceLanguage, 'Keybindings')}
+              {t('game_keybindings', 'Keybindings')}
             </Button>
           </Stack.Item>
         </Stack>

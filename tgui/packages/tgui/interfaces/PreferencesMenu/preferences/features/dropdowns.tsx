@@ -9,7 +9,7 @@ import { Box, Dropdown, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { capitalizeFirst } from 'tgui-core/string';
 import type { PreferencesMenuData } from '../../types';
-import { getCharacterPreferencesLanguage } from '../../CharacterPreferences/localization';
+import { usePreferencesLocalization } from '../../CharacterPreferences/localization';
 import dropdownsRu from './locales/dropdowns.ru.json';
 
 import type {
@@ -86,7 +86,7 @@ export function generateOptions(
 
 export function FeatureDropdownInput(props: DropdownInputProps) {
   const { data } = useBackend<PreferencesMenuData>();
-  const language = getCharacterPreferencesLanguage(data);
+  const { language } = usePreferencesLocalization(data);
 
   return FeatureDropdownInputCore(props, (serverData, setDropdownOptions) =>
     setDropdownOptions(generateOptions(serverData, language)),
@@ -111,7 +111,7 @@ export function FeatureDropdownInputCore(
   }, [serverData, populateOptions]);
 
   const { data } = useBackend<PreferencesMenuData>();
-  const language = getCharacterPreferencesLanguage(data);
+  const { language } = usePreferencesLocalization(data);
 
   const displayTextRaw = serverData?.display_names?.[value] || String(value);
   const displayText = translateDropdownText(displayTextRaw, language);
@@ -133,7 +133,7 @@ export function FeatureDropdownInputCore(
 export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
   const { serverData, handleSetValue, value } = props;
   const { data } = useBackend<PreferencesMenuData>();
-  const language = getCharacterPreferencesLanguage(data);
+  const { language } = usePreferencesLocalization(data);
 
   const [dropdownOptions, setDropdownOptions] = useState<DropdownOptions>([]);
 
@@ -197,5 +197,4 @@ export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
     />
   );
 }
-
 

@@ -25,7 +25,7 @@ import {
   type PreferencesMenuData,
 } from '../../types';
 import { useServerPrefs } from '../../useServerPrefs';
-import { getCharacterPreferencesLanguage, localize } from '../../CharacterPreferences/localization';
+import { usePreferencesLocalization } from '../../CharacterPreferences/localization';
 
 export function sortChoices(array: [string, ReactNode][]) {
   return sortBy(array, [([name]) => name]);
@@ -70,7 +70,7 @@ export type FeatureValueProps<
 export function FeatureColorInput(props: FeatureValueProps<string>) {
   const { act, data } = useBackend<PreferencesMenuData>();
   const { featureId, shrink, value } = props;
-  const language = getCharacterPreferencesLanguage(data);
+  const { t } = usePreferencesLocalization(data);
 
   return (
     <Button
@@ -99,7 +99,7 @@ export function FeatureColorInput(props: FeatureValueProps<string>) {
         </Stack.Item>
 
         {!shrink && (
-          <Stack.Item>{localize(language, 'Change')}</Stack.Item>
+          <Stack.Item>{t('feature_change', 'Change')}</Stack.Item>
         )}
       </Stack>
     </Button>
@@ -301,7 +301,7 @@ export const FeatureTextInput = (
 export const FeatureTriColorInput = (props: FeatureValueProps<string[]>) => {
   const { act, data } = useBackend<PreferencesMenuData>();
   const { featureId, shrink, value } = props;
-  const language = getCharacterPreferencesLanguage(data);
+  const { t } = usePreferencesLocalization(data);
 
   const buttonFromValue = (index) => {
     return (
@@ -335,7 +335,7 @@ export const FeatureTriColorInput = (props: FeatureValueProps<string[]>) => {
             </Stack.Item>
 
             {!shrink && (
-              <Stack.Item>{localize(language, 'Change')}</Stack.Item>
+              <Stack.Item>{t('feature_change', 'Change')}</Stack.Item>
             )}
           </Stack>
         </Button>

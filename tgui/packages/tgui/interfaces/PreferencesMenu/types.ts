@@ -105,7 +105,9 @@ export type Quirk = {
 // NOVA EDIT START
 export type Language = {
   description: string;
+  description_id?: string;
   name: string;
+  name_id?: string;
   icon: string;
   speaking: boolean;
 };
@@ -239,6 +241,7 @@ export type PreferencesMenuData = {
 
   // NOVA EDIT ADDITION START
   preview_options: string[];
+  preview_option_ids?: Record<string, string>;
   preview_selection: string;
 
   erp_pref: BooleanLike;
@@ -300,6 +303,10 @@ export type ServerData = {
     loadout_tabs: LoadoutCategory[];
   };
   species: Record<string, Species>;
-  background_state: { choices: string[] }; // NOVA EDIT ADDITION
+  background_state: {
+    choices: string[];
+    choice_ids?: Record<string, string>;
+  }; // NOVA EDIT ADDITION
+  background_state_ids?: Record<string, string>;
   [otherKey: string]: unknown;
 };

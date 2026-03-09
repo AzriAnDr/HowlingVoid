@@ -17,7 +17,7 @@ import {
 
 import type { Name, PreferencesMenuData } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
-import { getCharacterPreferencesLanguage, localize } from './localization';
+import { usePreferencesLocalization } from './localization';
 
 type NameWithKey = {
   key: string;
@@ -45,11 +45,10 @@ type MultiNameProps = {
 export function MultiNameInput(props: MultiNameProps) {
   const { handleUpdateName, handleRandomizeName } = props;
   const { data: backendData } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization(backendData);
 
   const data = useServerPrefs();
-  if (!data) return;
-  const language = getCharacterPreferencesLanguage(backendData);
-  const t = (text: string) => localize(language, text);
+  if (!data) return null;
 
   const namesIntoGroups: Record<string, NameWithKey[]> = {};
 
@@ -70,10 +69,10 @@ export function MultiNameInput(props: MultiNameProps) {
           className="PreferencesMenu__Character__AltNamesModal"
           buttons={
             <Button color="red" onClick={props.handleClose}>
-              {t('Close')}
+              {t('close', 'Close')}
             </Button>
           }
-          title={t('Alternate names')}
+          title={t('alternate_names', 'Alternate names')}
         >
           <LabeledList>
             {sortNameWithKeyEntries(Object.entries(namesIntoGroups)).map(
@@ -168,7 +167,7 @@ export function MultiNameInput(props: MultiNameProps) {
                             <Stack.Item>
                                 <Button
                                   icon="dice"
-                                  tooltip={t('Randomize')}
+                                  tooltip={t('randomize', 'Randomize')}
                                   tooltipPosition="right"
                                   onClick={() => handleRandomizeName(key)}
                                 />
@@ -209,8 +208,7 @@ export function NameInput(props: NameInputProps) {
 
   const { data } = useBackend<PreferencesMenuData>();
   const serverData = useServerPrefs();
-  const language = getCharacterPreferencesLanguage(data);
-  const t = (text: string) => localize(language, text);
+  const { t } = usePreferencesLocalization(data);
 
   return (
     <Button
@@ -266,7 +264,7 @@ export function NameInput(props: NameInputProps) {
           <Stack.Item>
             <Button
               as="span"
-              tooltip={t('Alternate names')}
+              tooltip={t('alternate_names', 'Alternate names')}
               tooltipPosition="bottom"
               style={{
                 background: 'rgba(0, 0, 0, 0.7)',

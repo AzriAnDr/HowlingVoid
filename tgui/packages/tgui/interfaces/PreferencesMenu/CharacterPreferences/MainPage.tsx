@@ -34,11 +34,7 @@ import {
 import { useRandomToggleState } from '../useRandomToggleState';
 import { useServerPrefs } from '../useServerPrefs';
 import { DeleteCharacterPopup } from './DeleteCharacterPopup';
-import {
-  getCharacterPreferencesLanguage,
-  localize,
-  localizeCharacterFeatureName,
-} from './localization';
+import { usePreferencesLocalization } from './localization';
 import { MultiNameInput, NameInput } from './names';
 import { VocalsInput, VoiceInput } from './vocals'; // NOVA EDIT ADDITION
 
@@ -50,7 +46,7 @@ const CLOTHING_SELECTION_WIDTH = 5.4;
 const CLOTHING_SELECTION_MULTIPLIER = 5.2;
 
 type CharacterControlsProps = {
-  t: (text: string) => string;
+  t: (key: string, fallback?: string) => string;
   handleRotate: (backwards: boolean) => void; // NOVA EDIT CHANGE - Original: handleRotate: () => void;
   handleOpenSpecies: () => void;
   handleFood: () => void; // NOVA EDIT ADDITION
@@ -70,7 +66,7 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={() => props.handleRotate(false)} // NOVA EDIT CHANGE - Original: onClick={props.handleRotate}
           fontSize="22px"
           icon="undo"
-          tooltip={props.t('Rotate')}
+          tooltip={props.t('main_rotate', 'Rotate')}
           tooltipPosition="top"
         />
       </Stack.Item>
@@ -82,7 +78,7 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={() => props.handleRotate(true)}
           fontSize="22px"
           icon="redo"
-          tooltip={props.t('Rotate')}
+          tooltip={props.t('main_rotate', 'Rotate')}
           tooltipPosition="top"
         />
       </Stack.Item>
@@ -94,7 +90,7 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={props.handleOpenSpecies}
           fontSize="22px"
           icon="paw"
-          tooltip={props.t('Species')}
+          tooltip={props.t('main_species', 'Species')}
           tooltipPosition="top"
         />
       </Stack.Item>
@@ -114,7 +110,7 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={props.handleFood}
           fontSize="22px"
           icon="drumstick-bite"
-          tooltip={props.t('Edit Food Preferences')}
+          tooltip={props.t('main_edit_food_preferences', 'Edit Food Preferences')}
           tooltipPosition="top"
         />
         {/* NOVA EDIT ADDITION END */}
@@ -126,7 +122,7 @@ function CharacterControls(props: CharacterControlsProps) {
           fontSize="22px"
           icon="trash"
           color="red"
-          tooltip={props.t('Delete Character')}
+          tooltip={props.t('main_delete_character', 'Delete Character')}
           tooltipPosition="top"
           disabled={!props.canDeleteCharacter}
         />
@@ -145,11 +141,16 @@ type ChoicedSelectionProps = {
 };
 
 function ChoicedSelection(props: ChoicedSelectionProps) {
+  const { t } = usePreferencesLocalization();
   const { catalog, supplementalFeature, supplementalValue } = props;
   const [searchText, setSearchText] = useState('');
 
   if (!catalog.icons) {
-    return <Box color="red">Provided catalog had no icons!</Box>;
+    return (
+      <Box color="red">
+        {t('main_catalog_missing_icons', 'Provided catalog had no icons!')}
+      </Box>
+    );
   }
 
   return (
@@ -166,7 +167,10 @@ function ChoicedSelection(props: ChoicedSelectionProps) {
         <Stack.Item>
           <Section
             fill
-            title={`Select ${props.name.toLowerCase()}`}
+            title={t('main_select_catalog_item', 'Select {item}').replace(
+              '{item}',
+              props.name.toLowerCase(),
+            )}
             buttons={
               supplementalFeature && (
                 <FeatureValueInput
@@ -181,7 +185,7 @@ function ChoicedSelection(props: ChoicedSelectionProps) {
             <Input
               autoFocus
               fluid
-              placeholder="Search..."
+              placeholder={t('search_placeholder', 'Search...')}
               onChange={setSearchText}
             />
           </Section>
@@ -245,6 +249,7 @@ type GenderButtonProps = {
 };
 
 function GenderButton(props: GenderButtonProps) {
+  const { t } = usePreferencesLocalization();
   return (
     <Floating
       placement="right"
@@ -278,7 +283,7 @@ function GenderButton(props: GenderButtonProps) {
           className="PreferencesMenu__Character__IconButton"
           fontSize="22px"
           icon={GENDERS[props.gender].icon}
-          tooltip="Gender"
+          tooltip={t('main_gender', 'Gender')}
           tooltipPosition="top"
         />
       </div>
@@ -397,8 +402,7 @@ type PreferenceListProps = {
 };
 
 export function PreferenceList(props: PreferenceListProps) {
-  const { act, data } = useBackend<PreferencesMenuData>();
-  const language = getCharacterPreferencesLanguage(data);
+  const { localizeCharacterFeatureName, t } = usePreferencesLocalization();
   const { preferences, randomizations, maxHeight, children } = props;
 
   return (
@@ -422,7 +426,12 @@ export function PreferenceList(props: PreferenceListProps) {
             if (feature === undefined) {
               return (
                 <Stack.Item key={featureId}>
-                  <b>Feature {featureId} is not recognized.</b>
+                  <b>
+                    {t(
+                      'main_feature_not_recognized',
+                      'Feature {feature} is not recognized.',
+                    ).replace('{feature}', featureId)}
+                  </b>
                 </Stack.Item>
               );
             }
@@ -433,7 +442,7 @@ export function PreferenceList(props: PreferenceListProps) {
                 // NOVA EDIT CHANGE - ORIGINAL: label={feature.name}
                 label={
                   <Box mt={0.5}>
-                    {localizeCharacterFeatureName(language, feature.name)}
+                    {localizeCharacterFeatureName(feature.name)}
                   </Box>
                 } // replicate middle align
                 tooltip={feature.description}
@@ -498,9 +507,7 @@ type MainPageProps = {
 
 export function MainPage(props: MainPageProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const language = getCharacterPreferencesLanguage(data);
-  const t = (text: string, russianText?: string) =>
-    localize(language, text, russianText);
+  const { t, localizeServerTextById } = usePreferencesLocalization(data);
 
   const [deleteCharacterPopupOpen, setDeleteCharacterPopupOpen] =
     useState(false);
@@ -595,7 +602,7 @@ export function MainPage(props: MainPageProps) {
             icon="file-import"
             onClick={() => act('import_preferences')}
           >
-            {t('IMPORT PREFERENCES')}
+            {t('main_import_preferences', 'IMPORT PREFERENCES')}
           </Button>
         </Stack.Item>
         <Stack.Item grow>
@@ -606,7 +613,7 @@ export function MainPage(props: MainPageProps) {
             icon="file-export"
             onClick={() => act('export_preferences')}
           >
-            {t('EXPORT PREFERENCES')}
+            {t('main_export_preferences', 'EXPORT PREFERENCES')}
           </Button>
         </Stack.Item>
       </Stack>
@@ -691,7 +698,10 @@ export function MainPage(props: MainPageProps) {
                 selected={data.preview_selection}
                 options={data.preview_options.map((option) => ({
                   value: option,
-                  displayText: t(option),
+                  displayText: localizeServerTextById(
+                    data.preview_option_ids?.[option],
+                    option,
+                  ),
                 }))}
                 onSelected={(value) =>
                   act('update_preview', {
@@ -709,7 +719,11 @@ export function MainPage(props: MainPageProps) {
                 options={(serverData?.background_state.choices || []).map(
                   (option) => ({
                     value: option,
-                    displayText: t(option),
+                    displayText: localizeServerTextById(
+                      serverData?.background_state.choice_ids?.[option] ??
+                        serverData?.background_state_ids?.[option],
+                      option,
+                    ),
                   }),
                 )}
                 onSelected={(value) =>
@@ -810,7 +824,7 @@ export function MainPage(props: MainPageProps) {
                   page={PrefPage.Visual}
                   setPage={setCurrentPrefPage}
                 >
-                  {t('Character Visuals')}
+                  {t('main_character_visuals', 'Character Visuals')}
                 </PageButton>
               </Stack.Item>
               <Stack.Item grow={2}>
@@ -820,7 +834,7 @@ export function MainPage(props: MainPageProps) {
                   page={PrefPage.Profile}
                   setPage={setCurrentPrefPage}
                 >
-                  {t('Character Profile')}
+                  {t('main_character_profile', 'Character Profile')}
                 </PageButton>
               </Stack.Item>
             </Stack>

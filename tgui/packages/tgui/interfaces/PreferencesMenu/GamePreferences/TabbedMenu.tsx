@@ -1,6 +1,6 @@
 ﻿import { type ComponentProps, type ReactNode, useRef } from 'react';
 import { Button, type Flex, Input, Section, Stack } from 'tgui-core/components';
-import { localize } from '../CharacterPreferences/localization';
+import { usePreferencesLocalization } from '../CharacterPreferences/localization';
 import categoriesRu from './locales/categories.ru.json';
 
 type TabbedMenuProps = {
@@ -15,6 +15,7 @@ type TabbedMenuProps = {
 export function TabbedMenu(props: TabbedMenuProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const categoryRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const { t } = usePreferencesLocalization();
   const language = props.interfaceLanguage ?? 'english';
 
   const categoryTranslations: Record<string, string> =
@@ -25,7 +26,7 @@ export function TabbedMenu(props: TabbedMenuProps) {
   const translateCategory = (category: string) =>
     categoryTranslations[category] || category;
 
-  const searchPlaceholder = localize(language, 'Search...');
+  const searchPlaceholder = t('search_placeholder', 'Search...');
 
   return (
     <Stack

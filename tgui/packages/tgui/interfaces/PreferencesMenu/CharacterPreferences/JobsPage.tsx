@@ -1,4 +1,4 @@
-import { sortBy } from 'es-toolkit';
+﻿import { sortBy } from 'es-toolkit';
 import type { PropsWithChildren, ReactNode } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Dropdown, Stack, Tooltip } from 'tgui-core/components';
@@ -12,12 +12,7 @@ import {
   type PreferencesMenuData,
 } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
-import {
-  getCharacterPreferencesLanguage,
-  localize,
-  localizeAltJobTitle,
-  localizeJobName,
-} from './localization';
+import { usePreferencesLocalization } from './localization';
 
 function sortJobs(entries: [string, Job][], head?: string) {
   return sortBy(entries, [
@@ -40,7 +35,6 @@ function PriorityButton(props: PriorityButtonProps) {
   const className = `PreferencesMenu__Jobs__departments__priority`;
 
   return (
-    // NOVA EDIT START
     <Button
       className={classes([
         className,
@@ -54,7 +48,6 @@ function PriorityButton(props: PriorityButtonProps) {
       height={PRIORITY_BUTTON_SIZE}
       width={PRIORITY_BUTTON_SIZE}
     />
-    // NOVA EDIT END
   );
 }
 
@@ -95,18 +88,15 @@ function createCreateSetPriorityFromName(jobName: string): CreateSetPriority {
 
 function PriorityHeaders() {
   const className = 'PreferencesMenu__Jobs__PriorityHeader';
-  const { data } = useBackend<PreferencesMenuData>();
-  const language = getCharacterPreferencesLanguage(data);
-  const t = (text: string) => localize(language, text);
+  const { t } = usePreferencesLocalization();
 
   return (
     <Stack>
       <Stack.Item grow />
-
-      <Stack.Item className={className}>{t('Off')}</Stack.Item>
-      <Stack.Item className={className}>{t('Low')}</Stack.Item>
-      <Stack.Item className={className}>{t('Medium')}</Stack.Item>
-      <Stack.Item className={className}>{t('High')}</Stack.Item>
+      <Stack.Item className={className}>{t('jobs_off', 'Off')}</Stack.Item>
+      <Stack.Item className={className}>{t('jobs_low', 'Low')}</Stack.Item>
+      <Stack.Item className={className}>{t('jobs_medium', 'Medium')}</Stack.Item>
+      <Stack.Item className={className}>{t('jobs_high', 'High')}</Stack.Item>
     </Stack>
   );
 }
@@ -118,26 +108,24 @@ type PriorityButtonsProps = {
 };
 
 function PriorityButtons(props: PriorityButtonsProps) {
-  const { data } = useBackend<PreferencesMenuData>();
-  const language = getCharacterPreferencesLanguage(data);
-  const t = (text: string) => localize(language, text);
+  const { t } = usePreferencesLocalization();
   const { createSetPriority, isOverflow, priority } = props;
 
   return (
-    <Box // NOVA EDIT - Originally a stack
+    <Box
       style={{
         alignItems: 'center',
         height: '100%',
         justifyContent: 'flex-end',
         paddingLeft: '0.3em',
-        paddingTop: '0.12em', // NOVA EDIT ADDITION - Add some vertical padding
-        paddingBottom: '0.12em', // NOVA EDIT ADDITION - To make this look nicer
+        paddingTop: '0.12em',
+        paddingBottom: '0.12em',
       }}
     >
       {isOverflow ? (
         <>
           <PriorityButton
-            name={t('Off')}
+            name={t('jobs_off', 'Off')}
             modifier="off"
             color="light-grey"
             enabled={!priority}
@@ -145,7 +133,7 @@ function PriorityButtons(props: PriorityButtonsProps) {
           />
 
           <PriorityButton
-            name={t('On')}
+            name={t('jobs_on', 'On')}
             color="green"
             enabled={!!priority}
             onClick={createSetPriority(JobPriority.High)}
@@ -154,7 +142,7 @@ function PriorityButtons(props: PriorityButtonsProps) {
       ) : (
         <>
           <PriorityButton
-            name={t('Off')}
+            name={t('jobs_off', 'Off')}
             modifier="off"
             color="light-grey"
             enabled={!priority}
@@ -162,28 +150,28 @@ function PriorityButtons(props: PriorityButtonsProps) {
           />
 
           <PriorityButton
-            name={t('Low')}
+            name={t('jobs_low', 'Low')}
             color="red"
             enabled={priority === JobPriority.Low}
             onClick={createSetPriority(JobPriority.Low)}
           />
 
           <PriorityButton
-            name={t('Medium')}
+            name={t('jobs_medium', 'Medium')}
             color="yellow"
             enabled={priority === JobPriority.Medium}
             onClick={createSetPriority(JobPriority.Medium)}
           />
 
           <PriorityButton
-            name={t('High')}
+            name={t('jobs_high', 'High')}
             color="green"
             enabled={priority === JobPriority.High}
             onClick={createSetPriority(JobPriority.High)}
           />
         </>
       )}
-    </Box> // NOVA EDIT - Originally a stack
+    </Box>
   );
 }
 
@@ -194,9 +182,9 @@ type JobRowProps = {
 };
 
 function JobRow(props: JobRowProps) {
-  const { data, act } = useBackend<PreferencesMenuData>(); // NOVA EDIT CHANGE - Adds act param
-  const language = getCharacterPreferencesLanguage(data);
-  const t = (text: string) => localize(language, text);
+  const { data, act } = useBackend<PreferencesMenuData>();
+  const { t, localizeAltJobTitle, localizeJobName } =
+    usePreferencesLocalization(data);
   const { className, job, name } = props;
 
   const isOverflow = data.overflow_role === name;
@@ -207,11 +195,9 @@ function JobRow(props: JobRowProps) {
   const experienceNeeded = data.job_required_experience?.[name];
   const daysLeft = data.job_days_left ? data.job_days_left[name] : 0;
 
-  // NOVA EDIT ADDITION START
-  const alt_title_selected = data.job_alt_titles[name]
+  const altTitleSelected = data.job_alt_titles[name]
     ? data.job_alt_titles[name]
     : name;
-  // NOVA EDIT ADDITION END
 
   let rightSide: ReactNode;
 
@@ -222,7 +208,7 @@ function JobRow(props: JobRowProps) {
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
         <Stack.Item grow textAlign="right">
-          <b>{hoursNeeded}h</b> {t('as')} {experience_type}
+          <b>{hoursNeeded}h</b> {t('jobs_as', 'as')} {experience_type}
         </Stack.Item>
       </Stack>
     );
@@ -230,8 +216,9 @@ function JobRow(props: JobRowProps) {
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
         <Stack.Item grow textAlign="right">
-          <b>{daysLeft}</b> {t('day')}
-          {daysLeft === 1 ? '' : t('s')} {t('left')}
+          <b>{daysLeft}</b> {t('jobs_day', 'day')}
+          {daysLeft === 1 ? '' : t('jobs_day_plural_suffix', 's')}{' '}
+          {t('jobs_left', 'left')}
         </Stack.Item>
       </Stack>
     );
@@ -239,16 +226,15 @@ function JobRow(props: JobRowProps) {
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
         <Stack.Item grow textAlign="right">
-          <b>{t('Banned')}</b>
+          <b>{t('jobs_banned', 'Banned')}</b>
         </Stack.Item>
       </Stack>
     );
-    // NOVA EDIT START
   } else if (job.nova_star && !data.is_nova_star) {
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
         <Stack.Item grow textAlign="right">
-          <b>{t('Nova Stars Only')}</b>
+          <b>{t('jobs_nova_stars_only', 'Nova Stars Only')}</b>
         </Stack.Item>
       </Stack>
     );
@@ -259,11 +245,10 @@ function JobRow(props: JobRowProps) {
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
         <Stack.Item grow textAlign="right">
-          <b>{t('Bad species')}</b>
+          <b>{t('jobs_bad_species', 'Bad species')}</b>
         </Stack.Item>
       </Stack>
     );
-    // NOVA EDIT END
   } else {
     rightSide = (
       <PriorityButtons
@@ -285,26 +270,22 @@ function JobRow(props: JobRowProps) {
               paddingLeft: '0.3em',
             }}
           >
-            {
-              // NOVA EDIT CHANGE START - ORIGINAL: {name}
-              !job.alt_titles ? (
-                localizeJobName(language, name)
-              ) : (
-                <Dropdown
-                  className="PreferencesMenu__Character__JobsDropdown"
-                  width="100%"
-                  options={job.alt_titles.map((title) => ({
-                    value: title,
-                    displayText: localizeAltJobTitle(language, title),
-                  }))}
-                  selected={alt_title_selected}
-                  onSelected={(value) =>
-                    act('set_job_title', { job: name, new_title: value })
-                  }
-                />
-              )
-              // NOVA EDIT CHANGE END
-            }
+            {!job.alt_titles ? (
+              localizeJobName(name)
+            ) : (
+              <Dropdown
+                className="PreferencesMenu__Character__JobsDropdown"
+                width="100%"
+                options={job.alt_titles.map((title) => ({
+                  value: title,
+                  displayText: localizeAltJobTitle(title),
+                }))}
+                selected={altTitleSelected}
+                onSelected={(value) =>
+                  act('set_job_title', { job: name, new_title: value })
+                }
+              />
+            )}
           </Stack.Item>
         </Tooltip>
 
@@ -325,15 +306,11 @@ function Department(props: DepartmentProps) {
   const className = `PreferencesMenu__Jobs__departments--${name}`;
 
   const data = useServerPrefs();
-  if (!data) return;
+  if (!data) return null;
 
   const { departments, jobs } = data.jobs;
   const department = departments[name];
 
-  // This isn't necessarily a bug, it's like this
-  // so that you can remove entire departments without
-  // having to edit the UI.
-  // This is used in events, for instance.
   if (!department) {
     return null;
   }
@@ -346,16 +323,16 @@ function Department(props: DepartmentProps) {
   return (
     <Box>
       <Stack fill vertical g={0}>
-        {jobsForDepartment.map(([name, job]) => {
+        {jobsForDepartment.map(([jobName, job]) => {
           return (
             <JobRow
               className={classes([
                 className,
-                name === department.head && 'head',
+                jobName === department.head && 'head',
               ])}
-              key={name}
+              key={jobName}
               job={job}
-              name={name}
+              name={jobName}
             />
           );
         })}
@@ -366,36 +343,37 @@ function Department(props: DepartmentProps) {
   );
 }
 
-function JoblessRoleDropdown(props) {
+function JoblessRoleDropdown() {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const language = getCharacterPreferencesLanguage(data);
-  const t = (text: string) => localize(language, text);
+  const { t, localizeJobName } = usePreferencesLocalization(data);
   const selected = data.character_preferences.misc.joblessrole;
+  const overflowRoleName = localizeJobName(data.overflow_role);
 
   const options = [
     {
-      displayText:
-        language === 'russian'
-          ? `Если недоступно, зайти как ${localizeJobName(
-              language,
-              data.overflow_role,
-            )}`
-          : `Join as ${data.overflow_role} if unavailable`,
+      displayText: t(
+        'jobs_join_as_role_if_unavailable',
+        `Join as ${overflowRoleName} if unavailable`,
+      ).replace('{role}', overflowRoleName),
       value: JoblessRole.BeOverflow,
     },
     {
-      displayText: t('Join as a random job if unavailable'),
+      displayText: t(
+        'jobs_join_as_random_if_unavailable',
+        'Join as a random job if unavailable',
+      ),
       value: JoblessRole.BeRandomJob,
     },
     {
-      displayText: t('Return to lobby if unavailable'),
+      displayText: t(
+        'jobs_return_to_lobby_if_unavailable',
+        'Return to lobby if unavailable',
+      ),
       value: JoblessRole.ReturnToLobby,
     },
   ];
 
-  const selection = options?.find(
-    (option) => option.value === selected,
-  )?.displayText;
+  const selection = options.find((option) => option.value === selected)?.displayText;
 
   return (
     <Box position="absolute" right={0} width="30%">

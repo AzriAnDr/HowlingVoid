@@ -1,10 +1,10 @@
-import { binaryInsertWith } from 'common/collections';
+﻿import { binaryInsertWith } from 'common/collections';
 import { sortBy } from 'es-toolkit';
 import { type ReactNode, useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Flex, Tooltip } from 'tgui-core/components';
 
-import { getCharacterPreferencesLanguage } from '../CharacterPreferences/localization';
+import { usePreferencesLocalization } from '../CharacterPreferences/localization';
 import { features } from '../preferences/features';
 import { FeatureValueInput } from '../preferences/features/base';
 import type { PreferencesMenuData } from '../types';
@@ -42,7 +42,7 @@ function sortByName(array: [string, PreferenceChild[]][]) {
 
 export function GamePreferencesPage(props) {
   const { data } = useBackend<PreferencesMenuData>();
-  const interfaceLanguage = getCharacterPreferencesLanguage(data);
+  const { language: interfaceLanguage, t } = usePreferencesLocalization(data);
 
   const gamePreferences: Record<string, PreferenceChild[]> = {};
 
@@ -112,9 +112,7 @@ export function GamePreferencesPage(props) {
             />
           ) : (
             <Box as="b" color="red">
-              {interfaceLanguage === 'russian'
-                ? '...настройка заполнена некорректно!!!'
-                : '...is not filled out properly!!!'}
+              {t('game_preference_not_filled_out', '...is not filled out properly!!!')}
             </Box>
           )}
         </Flex.Item>
@@ -165,3 +163,4 @@ export function GamePreferencesPage(props) {
     />
   );
 }
+

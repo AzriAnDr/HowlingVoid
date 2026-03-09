@@ -5,10 +5,7 @@ import { Box, Dropdown, Flex } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import type { PreferencesMenuData } from '../../../types';
-import {
-  getCharacterPreferencesLanguage,
-  localize,
-} from '../../../CharacterPreferences/localization';
+import { usePreferencesLocalization } from '../../../CharacterPreferences/localization';
 import {
   CheckboxInput,
   type FeatureChoiced,
@@ -38,7 +35,7 @@ function GhostFormInput(
   props: FeatureValueProps<string, string, FeatureChoicedServerData>,
 ) {
   const { data } = useBackend<PreferencesMenuData>();
-  const interfaceLanguage = getCharacterPreferencesLanguage(data);
+  const { language, t } = usePreferencesLocalization(data);
 
   const serverData = props.serverData;
   if (!serverData) {
@@ -49,7 +46,10 @@ function GhostFormInput(
   if (!displayNames) {
     return (
       <Box color="red">
-        {localize(interfaceLanguage, 'No display names for ghost_form!')}
+        {t(
+          'ghost_no_display_names_for_ghost_form',
+          'No display names for ghost_form!',
+        )}
       </Box>
     );
   }
@@ -63,7 +63,7 @@ function GhostFormInput(
   for (const [name, displayName] of Object.entries(displayNames)) {
     const localizedDisplayName = translateDropdownText(
       displayName,
-      interfaceLanguage,
+      language,
     );
 
     const displayText = (

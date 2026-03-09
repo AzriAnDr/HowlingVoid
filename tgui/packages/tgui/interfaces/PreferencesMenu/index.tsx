@@ -8,6 +8,7 @@ import { Window } from '../../layouts';
 import { logger } from '../../logging';
 import { LoadingScreen } from '../common/LoadingScreen';
 import { CharacterPreferenceWindow } from './CharacterPreferences';
+import { usePreferencesLocalization } from './CharacterPreferences/localization';
 import { GamePreferenceWindow } from './GamePreferences';
 import {
   GamePreferencesSelectedPage,
@@ -20,13 +21,17 @@ import { ServerPrefs } from './useServerPrefs';
 
 export function PreferencesMenu(props) {
   return (
-    <Window width={1080} height={920}>
-      <Window.Content>
-        <Suspense fallback={<LoadingScreen />}>
-          <PrefsWindowInner />
-        </Suspense>
-      </Window.Content>
-    </Window>
+    <Suspense
+      fallback={
+        <Window width={1080} height={920}>
+          <Window.Content>
+            <LoadingScreen />
+          </Window.Content>
+        </Window>
+      }
+    >
+      <PrefsWindowInner />
+    </Suspense>
   );
 }
 
@@ -34,6 +39,7 @@ export function PreferencesMenu(props) {
 function PrefsWindowInner(props) {
   const { data } = useBackend<PreferencesMenuData>();
   const { window } = data;
+  const { t } = usePreferencesLocalization(data);
 
   const [serverData, setServerData] = useState<ServerData>();
   const randomization = useState(false);
@@ -54,11 +60,11 @@ function PrefsWindowInner(props) {
   switch (window) {
     case PrefsWindow.Character:
       content = <CharacterPreferenceWindow />;
-      title = 'Character Preferences';
+      title = t('window_character_preferences', 'Character Preferences');
       break;
     case PrefsWindow.Game:
       content = <GamePreferenceWindow />;
-      title = 'Game Preferences';
+      title = t('window_game_preferences', 'Game Preferences');
       break;
     case PrefsWindow.Keybindings:
       content = (
@@ -66,17 +72,21 @@ function PrefsWindowInner(props) {
           startingPage={GamePreferencesSelectedPage.Keybindings}
         />
       );
-      title = 'Keybindings';
+      title = t('window_keybindings', 'Keybindings');
       break;
     default:
       exhaustiveCheck(window);
   }
 
   return (
-    <ServerPrefs.Provider value={serverData}>
-      <RandomToggleState.Provider value={randomization}>
-        {content}
-      </RandomToggleState.Provider>
-    </ServerPrefs.Provider>
+    <Window width={1080} height={920} title={title}>
+      <Window.Content>
+        <ServerPrefs.Provider value={serverData}>
+          <RandomToggleState.Provider value={randomization}>
+            {content}
+          </RandomToggleState.Provider>
+        </ServerPrefs.Provider>
+      </Window.Content>
+    </Window>
   );
 }

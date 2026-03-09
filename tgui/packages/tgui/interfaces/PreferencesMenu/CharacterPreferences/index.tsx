@@ -5,7 +5,7 @@ import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
 import { PageButton } from '../components/PageButton';
 import type { PreferencesMenuData } from '../types';
-import { getCharacterPreferencesLanguage, localize } from './localization';
+import { usePreferencesLocalization } from './localization';
 import { AntagsPage } from './AntagsPage';
 import { JobsPage } from './JobsPage';
 // NOVA EDIT ADDITION START
@@ -34,7 +34,7 @@ type ProfileProps = {
   activeSlot: number;
   onClick: (index: number) => void;
   profiles: (string | null)[];
-  t: (text: string) => string;
+  t: (key: string, fallback?: string) => string;
 };
 
 function CharacterProfiles(props: ProfileProps) {
@@ -54,7 +54,7 @@ function CharacterProfiles(props: ProfileProps) {
           displayText={profiles[activeSlot]}
           options={profiles.map((profile, slot) => ({
             value: slot,
-            displayText: profile ?? t('New Character'),
+            displayText: profile ?? t('new_character', 'New Character'),
           }))}
           onSelected={(slot) => {
             onClick(slot);
@@ -67,8 +67,7 @@ function CharacterProfiles(props: ProfileProps) {
 
 export function CharacterPreferenceWindow(props) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const language = getCharacterPreferencesLanguage(data);
-  const t = (text: string) => localize(language, text);
+  const { t } = usePreferencesLocalization(data);
 
   const [currentPage, setCurrentPage] = useState(Page.Main);
 
@@ -130,7 +129,10 @@ export function CharacterPreferenceWindow(props) {
       {!data.content_unlocked && (
         <Stack.Item align="center">
           <Box className="PreferencesMenu__Character__PremiumNotice">
-            {t('Buy BYOND premium for more slots!')}
+            {t(
+              'buy_byond_premium_more_slots',
+              'Buy BYOND premium for more slots!',
+            )}
           </Box>
         </Stack.Item>
       )}
@@ -145,7 +147,7 @@ export function CharacterPreferenceWindow(props) {
               setPage={setCurrentPage}
               otherActivePages={[Page.Species]}
             >
-              {t('Character')}
+              {t('tab_character', 'Character')}
             </PageButton>
           </Stack.Item>
 
@@ -156,7 +158,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Loadout}
               setPage={setCurrentPage}
             >
-              {t('Loadout')}
+              {t('tab_loadout', 'Loadout')}
             </PageButton>
           </Stack.Item>
 
@@ -171,7 +173,7 @@ export function CharacterPreferenceWindow(props) {
                     Fun fact: This isn't "Jobs" so that it intentionally
                     catches your eyes, because it's really important!
                   */}
-              {t('Occupations')}
+              {t('tab_occupations', 'Occupations')}
             </PageButton>
           </Stack.Item>
           {/* NOVA EDIT ADDITION START */}
@@ -182,7 +184,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Limbs}
               setPage={setCurrentPage}
             >
-              {t('Augments+')}
+              {t('tab_augments', 'Augments+')}
             </PageButton>
           </Stack.Item>
 
@@ -193,7 +195,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Languages}
               setPage={setCurrentPage}
             >
-              {t('Languages')}
+              {t('tab_languages', 'Languages')}
             </PageButton>
           </Stack.Item>
           {/* NOVA EDIT ADDITION end */}
@@ -204,7 +206,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Antags}
               setPage={setCurrentPage}
             >
-              {t('Antagonists')}
+              {t('tab_antagonists', 'Antagonists')}
             </PageButton>
           </Stack.Item>
 
@@ -215,7 +217,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Quirks}
               setPage={setCurrentPage}
             >
-              {t('Quirks and Personality')}
+              {t('tab_quirks_personality', 'Quirks and Personality')}
             </PageButton>
           </Stack.Item>
         </Stack>

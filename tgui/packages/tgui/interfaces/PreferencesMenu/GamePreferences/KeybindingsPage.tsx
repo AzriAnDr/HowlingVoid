@@ -16,7 +16,10 @@ import { isEscape, KEY } from 'tgui-core/keys';
 
 import { LoadingScreen } from '../../common/LoadingScreen';
 import type { PreferencesMenuData } from '../types';
-import { getCharacterPreferencesLanguage } from '../CharacterPreferences/localization';
+import {
+  getPreferencesLocalization,
+  type InterfaceLanguage,
+} from '../CharacterPreferences/localization';
 import {
   getKeybindingsUiText,
   localizeKeybinding,
@@ -44,10 +47,8 @@ type KeybindingsPageState = {
   rebindingHotkey?: [string, number];
 };
 
-type InterfaceLanguage = 'english' | 'russian';
-
 function getLanguage(data: PreferencesMenuData): InterfaceLanguage {
-  return getCharacterPreferencesLanguage(data);
+  return getPreferencesLocalization(data).language;
 }
 
 function isStandardKey(event: KeyboardEvent): boolean {

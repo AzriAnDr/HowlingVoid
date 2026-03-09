@@ -2,12 +2,11 @@ import { useBackend } from 'tgui/backend';
 import { BlockQuote, Box, Button, Section, Stack } from 'tgui-core/components';
 
 import type { Language, PreferencesMenuData } from '../types';
-import { getCharacterPreferencesLanguage, localize } from './localization';
+import { usePreferencesLocalization } from './localization';
 
 export function KnownLanguage(props: { language: Language }) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const lang = getCharacterPreferencesLanguage(data);
-  const t = (text: string) => localize(lang, text);
+  const { t, localizeServerTextById } = usePreferencesLocalization(data);
 
   return (
     <Stack.Item>
@@ -20,16 +19,24 @@ export function KnownLanguage(props: { language: Language }) {
               inline
               className={`languages16x16 ${props.language.icon}`}
             />
-            <Box inline>{t(props.language.name)}</Box>
+            <Box inline>
+              {localizeServerTextById(props.language.name_id, props.language.name)}
+            </Box>
           </>
         }
       >
-        <BlockQuote>{t(props.language.description)}</BlockQuote>
+        <BlockQuote>
+          {localizeServerTextById(
+            props.language.description_id,
+            props.language.description,
+          )}
+        </BlockQuote>
         <Button
           className="PreferencesMenu__Languages__ActionButton"
           color="bad"
           icon="brain"
           tooltip={t(
+            'language_forget_understand_warning',
             'Forgetting how to understand the language will also prevent you from speaking it.',
           )}
           onClick={() =>
@@ -38,7 +45,7 @@ export function KnownLanguage(props: { language: Language }) {
             })
           }
         >
-          {t('Forget')}
+          {t('forget', 'Forget')}
         </Button>
         <Button
           className="PreferencesMenu__Languages__ActionButton"
@@ -47,9 +54,10 @@ export function KnownLanguage(props: { language: Language }) {
           tooltip={
             props.language.speaking
               ? t(
+                  'language_forget_speak_keep_understand',
                   'Forget how to speak the language, but you keep your understanding of it.',
                 )
-              : t('Learn to speak the language.')
+              : t('language_learn_speak', 'Learn to speak the language.')
           }
           onClick={() =>
             act(
@@ -60,7 +68,10 @@ export function KnownLanguage(props: { language: Language }) {
             )
           }
         >
-          {t('Can')} {props.language.speaking ? t('speak') : t('only understand')}
+          {t('language_can', 'Can')}{' '}
+          {props.language.speaking
+            ? t('language_speak_inline', 'speak')
+            : t('language_only_understand', 'only understand')}
         </Button>
       </Section>
     </Stack.Item>
@@ -69,8 +80,7 @@ export function KnownLanguage(props: { language: Language }) {
 
 export function UnknownLanguage(props: { language: Language }) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const lang = getCharacterPreferencesLanguage(data);
-  const t = (text: string) => localize(lang, text);
+  const { t, localizeServerTextById } = usePreferencesLocalization(data);
   const noPoints =
     data.selected_languages.length === data.total_language_points;
 
@@ -85,32 +95,45 @@ export function UnknownLanguage(props: { language: Language }) {
               inline
               className={`languages16x16 ${props.language.icon}`}
             />
-            <Box inline>{t(props.language.name)}</Box>
+            <Box inline>
+              {localizeServerTextById(props.language.name_id, props.language.name)}
+            </Box>
           </>
         }
       >
-        <BlockQuote>{t(props.language.description)}</BlockQuote>
+        <BlockQuote>
+          {localizeServerTextById(
+            props.language.description_id,
+            props.language.description,
+          )}
+        </BlockQuote>
         <Button
           className="PreferencesMenu__Languages__ActionButton"
           color={!noPoints ? 'good' : 'grey'}
           icon="comment"
-          tooltip={t('Learn to speak and understand the language.')}
+          tooltip={t(
+            'language_learn_speak_understand',
+            'Learn to speak and understand the language.',
+          )}
           onClick={() =>
             act('speak_language', { language_name: props.language.name })
           }
         >
-          {t('Speak')}
+          {t('language_speak_action', 'Speak')}
         </Button>
         <Button
           className="PreferencesMenu__Languages__ActionButton"
           color={!!noPoints && 'grey'}
           icon="brain"
-          tooltip={t('Learn to understand the language but not speak it.')}
+          tooltip={t(
+            'language_learn_understand_only',
+            'Learn to understand the language but not speak it.',
+          )}
           onClick={() =>
             act('understand_language', { language_name: props.language.name })
           }
         >
-          {t('Understand')}
+          {t('language_understand', 'Understand')}
         </Button>
       </Section>
     </Stack.Item>
@@ -119,26 +142,39 @@ export function UnknownLanguage(props: { language: Language }) {
 
 export function LanguagesPage() {
   const { data } = useBackend<PreferencesMenuData>();
-  const lang = getCharacterPreferencesLanguage(data);
-  const t = (text: string) => localize(lang, text);
+  const { t } = usePreferencesLocalization(data);
 
   return (
     <Box className="PreferencesMenu__Languages">
       <Section textAlign="center">
-        {t('Here, you can learn languages using a point system.')} <b>{t('Linguist')}</b>{' '}
-        {t('neutral quirk will give you one extra point.')}
+        {t(
+          'languages_intro_learn_points',
+          'Here, you can learn languages using a point system.',
+        )}{' '}
+        <b>{t('linguist', 'Linguist')}</b>{' '}
+        {t(
+          'neutral_quirk_extra_point',
+          'neutral quirk will give you one extra point.',
+        )}
         <br />
-        {t('Languages may be either')} <b>{t('spoken and understood')}</b> {t('or')}{' '}
-        <b>{t('just understood.')}</b>
+        {t('languages_may_be_either', 'Languages may be either')}{' '}
+        <b>{t('spoken_and_understood', 'spoken and understood')}</b>{' '}
+        {t('language_or', 'or')} <b>{t('just_understood', 'just understood.')}</b>
         <br />
-        {t('One language is worth')} <b>{t('1 point,')}</b>{' '}
-        {t('even if that language is only understood and not spoken.')}
+        {t('one_language_is_worth', 'One language is worth')}{' '}
+        <b>{t('one_point', '1 point,')}</b>{' '}
+        {t(
+          'language_points_even_if_understood_only',
+          'even if that language is only understood and not spoken.',
+        )}
         <br />
         {t(
+          'languages_sol_common_requirement',
           'You must have at least one known language, and you must understand Sol Common to play most station jobs.',
         )}{' '}
         <br />
         {t(
+          'language_toggle_speech_free',
           'It does not cost points to toggle speech of a language - it only costs points to add an entirely new language.',
         )}
       </Section>
@@ -147,7 +183,8 @@ export function LanguagesPage() {
           <Section
             title={
               <Box fontSize="150%">
-                {data.unselected_languages.length} {t('available languages')}
+                {data.unselected_languages.length}{' '}
+                {t('available_languages', 'available languages')}
               </Box>
             }
           >
@@ -163,7 +200,7 @@ export function LanguagesPage() {
             title={
               <Box fontSize="150%">
                 {data.selected_languages.length}/{data.total_language_points}{' '}
-                {t('known languages')}
+                {t('known_languages', 'known languages')}
               </Box>
             }
           >
