@@ -5530,7 +5530,11 @@
 "qmX" = (/obj/structure/table/wood/fancy/red,/obj/item/radio/intercom,/obj/effect/turf_decal/siding/wood{dir = 4},/turf/open/floor/wood,/area/station/security/courtroom)
 "qna" = (/obj/effect/turf_decal/siding/wood{dir = 4},/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{dir = 8},/obj/machinery/power/apc/auto_name/directional/east,/obj/structure/cable,/turf/open/floor/wood/tile,/area/station/common/nightclubbooth1)
 "qng" = (/obj/structure/cable,/obj/effect/spawner/random/trash/cigpack,/turf/open/floor/plating,/area/station/maintenance/department/science/ordnance_maint)
+<<<<<<< Updated upstream
 "qnh" = (/obj/structure/lattice/catwalk,/obj/structure/marker_beacon/burgundy,/obj/structure/window/spawner/directional/north,/turf/open/misc/ocean,/area/station/asteroid{name = "Ocean"})
+=======
+"qnh" = (/obj/structure/lattice/catwalk,/obj/structure/marker_beacon/burgundy,/obj/structure/window/spawner/directional/north,/turf/open/misc/ocean,/area/ocean)
+>>>>>>> Stashed changes
 "qno" = (/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/green/opposingcorners,/turf/open/floor/iron,/area/station/hallway/primary/aftstarboardhall)
 "qnx" = (/obj/machinery/door/airlock/hatch{name = "Telecomms Server Room"},/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 1},/obj/structure/cable,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/turf/open/floor/iron/dark,/area/station/tcommsat/server)
 "qnA" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/closed/wall,/area/station/maintenance/radshelter/sec)

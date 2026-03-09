@@ -1,6 +1,7 @@
 import { binaryInsertWith } from 'common/collections';
 import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -14,7 +15,7 @@ import {
   TrackOutsideClicks,
 } from 'tgui-core/components';
 
-import type { Name } from '../types';
+import type { Name, PreferencesMenuData } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
 import { getCharacterPreferencesLanguage, localize } from './localization';
 
@@ -43,10 +44,11 @@ type MultiNameProps = {
 
 export function MultiNameInput(props: MultiNameProps) {
   const { handleUpdateName, handleRandomizeName } = props;
+  const { data: backendData } = useBackend<PreferencesMenuData>();
 
   const data = useServerPrefs();
   if (!data) return;
-  const language = getCharacterPreferencesLanguage(data);
+  const language = getCharacterPreferencesLanguage(backendData);
   const t = (text: string) => localize(language, text);
 
   const namesIntoGroups: Record<string, NameWithKey[]> = {};
@@ -205,7 +207,8 @@ export function NameInput(props: NameInputProps) {
     props.handleUpdateName(value);
   }
 
-  const data = useServerPrefs();
+  const { data } = useBackend<PreferencesMenuData>();
+  const serverData = useServerPrefs();
   const language = getCharacterPreferencesLanguage(data);
   const t = (text: string) => localize(language, text);
 
@@ -259,11 +262,11 @@ export function NameInput(props: NameInputProps) {
         </Stack.Item>
 
         {/* We only know other names when the server tells us */}
-        {data?.names && (
+        {serverData?.names && (
           <Stack.Item>
             <Button
               as="span"
-              tooltip={t('Alternate Names')}
+              tooltip={t('Alternate names')}
               tooltipPosition="bottom"
               style={{
                 background: 'rgba(0, 0, 0, 0.7)',

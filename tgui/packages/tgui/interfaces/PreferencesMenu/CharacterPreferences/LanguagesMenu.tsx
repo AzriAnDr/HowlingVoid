@@ -24,7 +24,7 @@ export function KnownLanguage(props: { language: Language }) {
           </>
         }
       >
-        <BlockQuote>{props.language.description}</BlockQuote>
+        <BlockQuote>{t(props.language.description)}</BlockQuote>
         <Button
           className="PreferencesMenu__Languages__ActionButton"
           color="bad"
@@ -89,7 +89,7 @@ export function UnknownLanguage(props: { language: Language }) {
           </>
         }
       >
-        <BlockQuote>{props.language.description}</BlockQuote>
+        <BlockQuote>{t(props.language.description)}</BlockQuote>
         <Button
           className="PreferencesMenu__Languages__ActionButton"
           color={!noPoints ? 'good' : 'grey'}

@@ -19,6 +19,7 @@ import {
 
 import type { PreferencesMenuData } from '../../types'; // NOVA EDIT ADDITION: Multiple loadout presets
 import { useServerPrefs } from '../../useServerPrefs';
+import { getCharacterPreferencesLanguage, localize } from '../localization';
 import type {
   LoadoutCategory,
   LoadoutItem,
@@ -46,6 +47,8 @@ export function LoadoutPage(props) {
   const [managingPreset, _setManagingPreset] = useState<string | null>(null);
   const { act, data } = useBackend<PreferencesMenuData>();
   const [input, setInput] = useState('');
+  const language = getCharacterPreferencesLanguage(data);
+  const t = (text: string) => localize(language, text);
   const setManagingPreset = (value) => {
     _setManagingPreset(value);
     setInput('');
@@ -82,7 +85,7 @@ export function LoadoutPage(props) {
               <Stack.Item height="20px" width="100%">
                 <Flex>
                   <Flex.Item fontSize="1.3rem">
-                    {managingPreset} Loadout Preset
+                    {t(managingPreset || '')} {t('Loadout Preset')}
                   </Flex.Item>
                   {managingPreset === 'Add' && (
                     <Flex.Item ml="6px" mt="4px">
@@ -107,7 +110,7 @@ export function LoadoutPage(props) {
               </Stack.Item>
               <Stack.Item width="100%" height="20px">
                 <Input
-                  placeholder="Maximum of 24 characters long"
+                  placeholder={t('Maximum of 24 characters long')}
                   width="100%"
                   maxLength={24}
                   onChange={(value) => onType(value)}
@@ -130,7 +133,7 @@ export function LoadoutPage(props) {
                       setManagingPreset(null);
                     }}
                   >
-                    Done
+                    {t('Done')}
                   </Button>
                 </Stack>
               </Stack.Item>
@@ -153,7 +156,7 @@ export function LoadoutPage(props) {
               className="PreferencesMenu__Loadout__SearchInput"
               width="200px"
               onChange={setSearchLoadout}
-              placeholder="Search for an item..."
+              placeholder={t('Search for an item...')}
               value={searchLoadout}
             />
           }
@@ -225,6 +228,8 @@ function LoadoutTabs(props: LoadoutTabsProps) {
   const searching = currentSearch.length > 1;
 
   const { act, data } = useBackend<PreferencesMenuData>(); // NOVA EDIT ADDITION: Multiple loadout presets
+  const language = getCharacterPreferencesLanguage(data);
+  const t = (text: string) => localize(language, text);
   return (
     <Stack className="PreferencesMenu__Loadout__Body" fill>
       <Stack.Item align="center" width="250px" height="100%">
@@ -275,7 +280,7 @@ function LoadoutTabs(props: LoadoutTabsProps) {
                         icon="plus"
                         color="good"
                       >
-                        Add New Loadout
+                        {t('Add New Loadout')}
                       </Button>
                     </Stack.Item>
                     <Stack.Item ml={12.5}>
@@ -289,11 +294,11 @@ function LoadoutTabs(props: LoadoutTabsProps) {
                           data.character_preferences.misc.loadout_index ===
                           'Default'
                         }
-                        tooltip={
-                          data.character_preferences.misc.loadout_index ===
-                          'Default'
-                            ? "Can't delete the default loadout entry."
-                            : 'Delete the current loadout entry.'
+                          tooltip={
+                            data.character_preferences.misc.loadout_index ===
+                            'Default'
+                            ? t("Can't delete the default loadout entry.")
+                            : t('Delete the current loadout entry.')
                         }
                         onClick={() => act('remove_loadout_preset')}
                       />
@@ -317,7 +322,7 @@ function LoadoutTabs(props: LoadoutTabsProps) {
         {searching || activeCategory?.contents ? (
           <Section
             className="PreferencesMenu__Loadout__CatalogSection"
-            title={searching ? 'Search results' : 'Catalog'}
+            title={searching ? t('Search results') : t('Catalog')}
             fill
             scrollable
             buttons={
@@ -343,7 +348,7 @@ function LoadoutTabs(props: LoadoutTabsProps) {
           </Section>
         ) : (
           <Section className="PreferencesMenu__Loadout__CatalogSection" fill>
-            <Box>No contents for selected tab.</Box>
+            <Box>{t('No contents for selected tab.')}</Box>
           </Section>
         )}
       </Stack.Item>
@@ -424,13 +429,15 @@ type LoadoutSelectedSectionProps = {
 
 function LoadoutSelectedSection(props: LoadoutSelectedSectionProps) {
   const { act, data } = useBackend<LoadoutManagerData>();
+  const language = getCharacterPreferencesLanguage(data);
+  const t = (text: string) => localize(language, text);
   const loadout_list = data.character_preferences.misc.loadout_lists.loadout; // NOVA EDIT CHANGE - Multiple loadout presets - ORIGINAL: const { loadout_list } = data.character_preferences.misc;
   const { all_tabs, modifyItemDimmer, setModifyItemDimmer } = props;
 
   return (
     <Section
       className="PreferencesMenu__Loadout__SelectedSection"
-      title="Selected Items"
+      title={t('Selected Items')}
       scrollable
       fill
       buttons={
@@ -440,10 +447,10 @@ function LoadoutSelectedSection(props: LoadoutSelectedSectionProps) {
           color="red"
           align="center"
           disabled={!loadout_list || Object.keys(loadout_list).length === 0}
-          tooltip="Clears ALL selected items from all categories."
+          tooltip={t('Clears ALL selected items from all categories.')}
           onClick={() => act('clear_all_items')}
         >
-          Clear All
+          {t('Clear All')}
         </Button.Confirm>
       }
     >
@@ -465,12 +472,14 @@ function LoadoutSelectedSection(props: LoadoutSelectedSectionProps) {
 
 function LoadoutPreviewSection() {
   const { act, data } = useBackend<LoadoutManagerData>();
+  const language = getCharacterPreferencesLanguage(data);
+  const t = (text: string) => localize(language, text);
 
   return (
     <Section
       className="PreferencesMenu__Loadout__PreviewSection"
       fill
-      title="Preview"
+      title={t('Preview')}
       buttons={
         <Button.Checkbox
           className="PreferencesMenu__Loadout__ActionButton"
@@ -478,7 +487,7 @@ function LoadoutPreviewSection() {
           checked={data.job_clothes}
           onClick={() => act('toggle_job_clothes')}
         >
-          Job Clothes
+          {t('Job Clothes')}
         </Button.Checkbox>
       }
     >
