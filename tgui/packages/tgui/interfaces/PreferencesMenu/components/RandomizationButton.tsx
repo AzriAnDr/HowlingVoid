@@ -1,24 +1,9 @@
+import { useBackend } from 'tgui/backend';
 import { Dropdown } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
-import { RandomSetting } from '../types';
-
-const options = [
-  {
-    displayText: 'Do not randomize',
-    value: RandomSetting.Disabled,
-  },
-
-  {
-    displayText: 'Always randomize',
-    value: RandomSetting.Enabled,
-  },
-
-  {
-    displayText: 'Randomize when antagonist',
-    value: RandomSetting.AntagOnly,
-  },
-];
+import { usePreferencesLocalization } from '../CharacterPreferences/localization';
+import { type PreferencesMenuData, RandomSetting } from '../types';
 
 type Props = {
   dropdownProps?: Record<string, unknown>;
@@ -28,6 +13,25 @@ type Props = {
 
 export function RandomizationButton(props: Props) {
   const { dropdownProps = {}, setValue, value } = props;
+  const { data } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization(data);
+
+  const options = [
+    {
+      displayText: t('randomization_disabled'),
+      value: RandomSetting.Disabled,
+    },
+
+    {
+      displayText: t('randomization_always'),
+      value: RandomSetting.Enabled,
+    },
+
+    {
+      displayText: t('randomization_antag_only'),
+      value: RandomSetting.AntagOnly,
+    },
+  ];
 
   let color;
 

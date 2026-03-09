@@ -1,4 +1,4 @@
-import { sortBy } from 'es-toolkit';
+﻿import { sortBy } from 'es-toolkit';
 import { filter, map } from 'es-toolkit/compat';
 import { type ReactNode, useState } from 'react';
 import { useBackend } from 'tgui/backend';
@@ -66,7 +66,7 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={() => props.handleRotate(false)} // NOVA EDIT CHANGE - Original: onClick={props.handleRotate}
           fontSize="22px"
           icon="undo"
-          tooltip={props.t('main_rotate', 'Rotate')}
+          tooltip={props.t('main_rotate')}
           tooltipPosition="top"
         />
       </Stack.Item>
@@ -78,7 +78,7 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={() => props.handleRotate(true)}
           fontSize="22px"
           icon="redo"
-          tooltip={props.t('main_rotate', 'Rotate')}
+          tooltip={props.t('main_rotate')}
           tooltipPosition="top"
         />
       </Stack.Item>
@@ -90,7 +90,7 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={props.handleOpenSpecies}
           fontSize="22px"
           icon="paw"
-          tooltip={props.t('main_species', 'Species')}
+          tooltip={props.t('main_species')}
           tooltipPosition="top"
         />
       </Stack.Item>
@@ -112,7 +112,6 @@ function CharacterControls(props: CharacterControlsProps) {
           icon="drumstick-bite"
           tooltip={props.t(
             'main_edit_food_preferences',
-            'Edit Food Preferences',
           )}
           tooltipPosition="top"
         />
@@ -125,7 +124,7 @@ function CharacterControls(props: CharacterControlsProps) {
           fontSize="22px"
           icon="trash"
           color="red"
-          tooltip={props.t('main_delete_character', 'Delete Character')}
+          tooltip={props.t('main_delete_character')}
           tooltipPosition="top"
           disabled={!props.canDeleteCharacter}
         />
@@ -144,14 +143,14 @@ type ChoicedSelectionProps = {
 };
 
 function ChoicedSelection(props: ChoicedSelectionProps) {
-  const { t } = usePreferencesLocalization();
+  const { t, localizeDataLabel } = usePreferencesLocalization();
   const { catalog, supplementalFeature, supplementalValue } = props;
   const [searchText, setSearchText] = useState('');
 
   if (!catalog.icons) {
     return (
       <Box color="red">
-        {t('main_catalog_missing_icons', 'Provided catalog had no icons!')}
+        {t('main_catalog_missing_icons')}
       </Box>
     );
   }
@@ -170,9 +169,9 @@ function ChoicedSelection(props: ChoicedSelectionProps) {
         <Stack.Item>
           <Section
             fill
-            title={t('main_select_catalog_item', 'Select {item}').replace(
+            title={t('main_select_catalog_item').replace(
               '{item}',
-              props.name.toLowerCase(),
+              localizeDataLabel(props.name),
             )}
             buttons={
               supplementalFeature && (
@@ -188,7 +187,7 @@ function ChoicedSelection(props: ChoicedSelectionProps) {
             <Input
               autoFocus
               fluid
-              placeholder={t('search_placeholder', 'Search...')}
+              placeholder={t('search_placeholder')}
               onChange={setSearchText}
             />
           </Section>
@@ -286,7 +285,7 @@ function GenderButton(props: GenderButtonProps) {
           className="PreferencesMenu__Character__IconButton"
           fontSize="22px"
           icon={GENDERS[props.gender].icon}
-          tooltip={t('main_gender', 'Gender')}
+          tooltip={t('main_gender')}
           tooltipPosition="top"
         />
       </div>
@@ -432,7 +431,6 @@ export function PreferenceList(props: PreferenceListProps) {
                   <b>
                     {t(
                       'main_feature_not_recognized',
-                      'Feature {feature} is not recognized.',
                     ).replace('{feature}', featureId)}
                   </b>
                 </Stack.Item>
@@ -606,7 +604,7 @@ export function MainPage(props: MainPageProps) {
             icon="file-import"
             onClick={() => act('import_preferences')}
           >
-            {t('main_import_preferences', 'IMPORT PREFERENCES')}
+            {t('main_import_preferences')}
           </Button>
         </Stack.Item>
         <Stack.Item grow>
@@ -617,7 +615,7 @@ export function MainPage(props: MainPageProps) {
             icon="file-export"
             onClick={() => act('export_preferences')}
           >
-            {t('main_export_preferences', 'EXPORT PREFERENCES')}
+            {t('main_export_preferences')}
           </Button>
         </Stack.Item>
       </Stack>
@@ -839,7 +837,7 @@ export function MainPage(props: MainPageProps) {
                   page={PrefPage.Visual}
                   setPage={setCurrentPrefPage}
                 >
-                  {t('main_character_visuals', 'Character Visuals')}
+                  {t('main_character_visuals')}
                 </PageButton>
               </Stack.Item>
               <Stack.Item grow={2}>
@@ -849,7 +847,7 @@ export function MainPage(props: MainPageProps) {
                   page={PrefPage.Profile}
                   setPage={setCurrentPrefPage}
                 >
-                  {t('main_character_profile', 'Character Profile')}
+                  {t('main_character_profile')}
                 </PageButton>
               </Stack.Item>
             </Stack>
@@ -861,3 +859,4 @@ export function MainPage(props: MainPageProps) {
     </>
   );
 }
+

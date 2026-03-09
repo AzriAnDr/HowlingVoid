@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from 'react';
+﻿import { Suspense, useEffect, useState } from 'react';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 import { fetchRetry } from 'tgui-core/http';
 
@@ -60,11 +60,11 @@ function PrefsWindowInner(props) {
   switch (window) {
     case PrefsWindow.Character:
       content = <CharacterPreferenceWindow />;
-      title = t('window_character_preferences', 'Character Preferences');
+      title = t('window_character_preferences');
       break;
     case PrefsWindow.Game:
       content = <GamePreferenceWindow />;
-      title = t('window_game_preferences', 'Game Preferences');
+      title = t('window_game_preferences');
       break;
     case PrefsWindow.Keybindings:
       content = (
@@ -72,7 +72,7 @@ function PrefsWindowInner(props) {
           startingPage={GamePreferencesSelectedPage.Keybindings}
         />
       );
-      title = t('window_keybindings', 'Keybindings');
+      title = t('window_keybindings');
       break;
     default:
       exhaustiveCheck(window);
@@ -90,3 +90,4 @@ function PrefsWindowInner(props) {
     </Window>
   );
 }
+

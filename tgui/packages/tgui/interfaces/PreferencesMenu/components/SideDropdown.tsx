@@ -2,10 +2,13 @@
 // Ported from Bubberstation: https://github.com/Bubberstation/Bubberstation/commit/07daef9517a879f04281fe4b97b69d4f9a6d2338
 
 import { type ComponentProps, type ReactNode, useRef, useState } from 'react';
+import { useBackend } from 'tgui/backend';
 import { type Box, Button, Floating, Icon } from 'tgui-core/components';
 import { KEY } from 'tgui-core/keys';
 import { classes } from 'tgui-core/react';
 import { unit } from 'tgui-core/ui';
+import { usePreferencesLocalization } from '../CharacterPreferences/localization';
+import type { PreferencesMenuData } from '../types';
 
 type SideDropdownEntry = {
   displayText: ReactNode;
@@ -76,6 +79,8 @@ function getOptionValue(option: SideDropdownOption) {
  * and displays selected entry.
  */
 export function SideDropdown(props: Props) {
+  const { data } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     autoScroll = true,
     buttons,
@@ -92,7 +97,7 @@ export function SideDropdown(props: Props) {
     onClick,
     onSelected,
     options = [],
-    placeholder = 'Select...',
+    placeholder = t('side_dropdown_select_placeholder'),
     selected,
     width = 15,
   } = props;
@@ -157,7 +162,9 @@ export function SideDropdown(props: Props) {
         content={
           <div ref={innerRef} className="Dropdown__menu">
             {options.length === 0 ? (
-              <div className="Dropdown__menu--entry">No options</div>
+              <div className="Dropdown__menu--entry">
+                {t('side_dropdown_no_options')}
+              </div>
             ) : (
               options.map((option) => {
                 const value = getOptionValue(option);

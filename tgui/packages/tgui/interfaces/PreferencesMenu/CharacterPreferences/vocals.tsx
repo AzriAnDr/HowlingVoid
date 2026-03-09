@@ -1,18 +1,19 @@
 import { useBackend } from 'tgui/backend';
-import { filter } from 'es-toolkit/compat';
 import {
   Box,
   Button,
   FitText,
   Icon,
+  LabeledList,
   Modal,
   Section,
   Stack,
 } from 'tgui-core/components';
 
-import { getRandomization, PreferenceList } from './MainPage';
-import { usePreferencesLocalization } from './localization';
+import { features } from '../preferences/features';
+import { FeatureValueInput as BaseFeatureValueInput } from '../preferences/features/base';
 import type { PreferencesMenuData } from '../types';
+import { usePreferencesLocalization } from './localization';
 
 type VocalsProps = {
   handleClose: () => void;
@@ -22,60 +23,43 @@ type VocalsProps = {
 type VocalFeature = {
   id: string;
   label: string;
-  type: string;
 };
 
 const vocalFeatures: VocalFeature[] = [
-  { id: 'voice_type', label: 'Voice Type', type: 'string' },
-  { id: 'tts_voice', label: 'Voice', type: 'string' },
-  { id: 'tts_voice_pitch', label: 'Voice Pitch Adjustments', type: 'number' },
-  { id: 'fallback_to_blooper', label: 'Fallback to Blooper', type: 'boolean' },
-  { id: 'blooper_speech', label: 'Blooper Speech', type: 'string' },
-  { id: 'blooper_speech_speed', label: 'Blooper Speed', type: 'number' },
-  { id: 'blooper_speech_pitch', label: 'Blooper Pitch', type: 'number' },
-  { id: 'blooper_pitch_range', label: 'Blooper Range', type: 'number' },
+  { id: 'voice_type', label: 'Voice Type' },
+  { id: 'tts_voice', label: 'Voice' },
+  { id: 'tts_voice_pitch', label: 'Voice Pitch Adjustments' },
+  { id: 'fallback_to_blooper', label: 'Fallback to Blooper' },
+  { id: 'blooper_speech', label: 'Blooper Speech' },
+  { id: 'blooper_speech_speed', label: 'Blooper Speed' },
+  { id: 'blooper_speech_pitch', label: 'Blooper Pitch' },
+  { id: 'blooper_pitch_range', label: 'Blooper Range' },
 ];
 
-type FeatureValueInputProps = {
-  feature: VocalFeature;
+type VocalFeatureInputProps = {
+  featureId: string;
   value: string | number | boolean;
 };
 
-function getCorrespondingPreferences(
-  customization_options: string[],
-  relevant_preferences: Record<string, string | number | boolean>,
-) {
-  return Object.fromEntries(
-    filter(Object.entries(relevant_preferences), ([key, value]) =>
-      customization_options.includes(key),
-    ),
-  );
-}
+function VocalFeatureInput(props: VocalFeatureInputProps) {
+  const registryFeature = features[props.featureId];
+  if (!registryFeature) {
+    return null;
+  }
 
-function FeatureValueInput({ feature, value }: FeatureValueInputProps) {
   return (
-    <Stack.Item>
-      <PreferenceList
-        preferences={getCorrespondingPreferences([feature.id], {
-          [feature.id]: value,
-        })}
-        randomizations={getRandomization(
-          getCorrespondingPreferences([feature.id], {
-            [feature.id]: value,
-          }),
-          undefined,
-          false,
-        )}
-        maxHeight="160px"
-      />
-    </Stack.Item>
+    <BaseFeatureValueInput
+      feature={registryFeature}
+      featureId={props.featureId}
+      value={props.value}
+    />
   );
 }
 
 export function VocalsInput(props: VocalsProps) {
   const { data } = useBackend<PreferencesMenuData>();
   const { vocals, handleClose } = props;
-  const { t } = usePreferencesLocalization(data);
+  const { t, localizeDataLabel } = usePreferencesLocalization(data);
 
   return (
     <Modal>
@@ -85,25 +69,29 @@ export function VocalsInput(props: VocalsProps) {
         }}
       >
         <Section
-          title={t('character_voice', 'Character Voice')}
+          title={t('voice_settings')}
           buttons={
             <Button color="red" onClick={handleClose}>
-              {t('close', 'Close')}
+              {t('close')}
             </Button>
           }
         >
-          <Stack vertical>
+          <LabeledList>
             {vocalFeatures.map((feature) => {
               const value = vocals[feature.id];
               if (value === undefined) return null;
 
               return (
-                <Stack.Item key={feature.id} verticalAlign="top">
-                  <FeatureValueInput feature={feature} value={value} />
-                </Stack.Item>
+                <LabeledList.Item
+                  key={feature.id}
+                  label={localizeDataLabel(feature.label)}
+                  verticalAlign="top"
+                >
+                  <VocalFeatureInput featureId={feature.id} value={value} />
+                </LabeledList.Item>
               );
             })}
-          </Stack>
+          </LabeledList>
         </Section>
       </Box>
     </Modal>
@@ -141,7 +129,7 @@ export function VoiceInput(props: VoiceInputProps) {
 
         <Stack.Item grow position="relative" mt={0.6}>
           <FitText maxFontSize={16} maxWidth={130}>
-            {t('voice_settings', 'Voice Settings')}
+            {t('character_voice')}
           </FitText>
         </Stack.Item>
       </Stack>

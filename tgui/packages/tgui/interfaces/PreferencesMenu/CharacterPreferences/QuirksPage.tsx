@@ -23,6 +23,7 @@ import { useRandomToggleState } from '../useRandomToggleState';
 import { useServerPrefs } from '../useServerPrefs';
 import { getRandomization, PreferenceList } from './MainPage';
 import { PersonalityPage } from './PersonalityPage';
+import { usePreferencesLocalization } from './localization';
 
 function getColorValueClass(quirk: Quirk) {
   if (quirk.value > 0) {
@@ -103,7 +104,6 @@ function QuirkDisplay(props: QuirkDisplayProps) {
   const { icon, value, name, description, customizable, failTooltip } = quirk;
 
   const [customizationExpanded, setCustomizationExpanded] = useState(false);
-  const { data } = useBackend<PreferencesMenuData>(); // NOVA EDIT ADDITION
 
   const className = 'PreferencesMenu__Quirks__QuirkList__quirk';
   const iconCellClass = `${className}__iconcell`;
@@ -220,6 +220,7 @@ type QuirkPopperProps = {
 
 function QuirkPopper(props: QuirkPopperProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     customizationExpanded,
     quirk,
@@ -283,7 +284,7 @@ function QuirkPopper(props: QuirkPopperProps) {
           <Button
             selected={customizationExpanded}
             icon="cog"
-            tooltip="Customize"
+            tooltip={t('quirks_customize')}
             style={{
               float: 'right',
             }}
@@ -312,6 +313,7 @@ function StatDisplay(props) {
 
 function QuirkPage() {
   const { act, data } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization(data);
 
   // this is mainly just here to copy from MainPage.tsx
   const [randomToggleEnabled] = useRandomToggleState();
@@ -416,14 +418,14 @@ function QuirkPage() {
 
     if (quirk.value > 0) {
       if (maxPositiveQuirks !== -1 && positiveQuirks >= maxPositiveQuirks) {
-        return "You can't have any more positive quirks!";
+        return t('quirks_no_more_positive');
       } else if (pointsEnabled && balance + quirk.value > 0) {
-        return 'You need a negative quirk to balance this out!';
+        return t('quirks_need_negative_balance');
       }
     }
     // NOVA EDIT START - Nova star quirks
     if (quirk.nova_stars_only && !data.is_nova_star) {
-      return 'You need to be a Nova star to select this quirk, apply today!';
+      return t('quirks_need_nova_star');
     }
     // NOVA EDIT END
     const selectedQuirkNames = selectedQuirks.map((quirkKey) => {
@@ -440,12 +442,15 @@ function QuirkPage() {
           incompatibleQuirk !== quirk.name &&
           selectedQuirkNames.indexOf(incompatibleQuirk) !== -1
         ) {
-          return `This is incompatible with ${incompatibleQuirk}!`;
+          return t('quirks_incompatible_with').replace(
+            '{quirk}',
+            incompatibleQuirk,
+          );
         }
       }
     }
     if (data.species_disallowed_quirks.includes(quirk.name)) {
-      return 'This quirk is incompatible with your selected species.';
+      return t('quirks_incompatible_with_species');
     }
     return;
   }
@@ -454,7 +459,7 @@ function QuirkPage() {
     const quirk = quirkInfo[quirkName];
 
     if (pointsEnabled && balance - quirk.value > 0) {
-      return 'You need to remove a positive quirk first!';
+      return t('quirks_remove_positive_first');
     }
 
     return;
@@ -470,7 +475,7 @@ function QuirkPage() {
                 className="PreferencesMenu__Quirks__StatTitle PreferencesMenu__Quirks__AugmentsPointsTitle"
                 fontSize="1.3em"
               >
-                Positive Quirks
+                {t('quirks_positive')}
               </Box>
             ) : (
               <Box mt={pointsEnabled ? 3.4 : 0} />
@@ -489,13 +494,13 @@ function QuirkPage() {
 
           <Stack.Item>
             <Box as="b" fontSize="1.6em">
-              Available Quirks
+              {t('quirks_available')}
             </Box>
           </Stack.Item>
           <Stack.Item>
             <Input
               className="PreferencesMenu__Quirks__SearchInput"
-              placeholder="Search quirks..."
+              placeholder={t('quirks_search_placeholder')}
               width="200px"
               value={searchQuery}
               onChange={setSearchQuery}
@@ -573,7 +578,7 @@ function QuirkPage() {
                 className="PreferencesMenu__Quirks__StatTitle PreferencesMenu__Quirks__AugmentsPointsTitle"
                 fontSize="1.3em"
               >
-                Quirk Balance
+                {t('quirks_balance')}
               </Box>
             ) : (
               <Box mt={maxPositiveQuirks > 0 ? 3.4 : 0} />
@@ -590,7 +595,7 @@ function QuirkPage() {
           </Stack.Item>
           <Stack.Item>
             <Box as="b" fontSize="1.6em">
-              Current Quirks
+              {t('quirks_current')}
             </Box>
           </Stack.Item>
           <Stack.Item p={1.5} /> {/* Filler to better align the menu*/}
@@ -641,6 +646,7 @@ export function QuirkPersonalityPage() {
   const [contentPage, setContentPage] = useState<'quirks' | 'personality'>(
     'quirks',
   );
+  const { t } = usePreferencesLocalization();
 
   return (
     <Stack fill vertical>
@@ -655,7 +661,7 @@ export function QuirkPersonalityPage() {
               align="center"
               fontSize="14px"
             >
-              Quirks
+              {t('tab_quirks')}
             </Button>
           </Stack.Item>
           <Stack.Item grow>
@@ -667,7 +673,7 @@ export function QuirkPersonalityPage() {
               align="center"
               fontSize="14px"
             >
-              Personality
+              {t('tab_personality')}
             </Button>
           </Stack.Item>
         </Stack>

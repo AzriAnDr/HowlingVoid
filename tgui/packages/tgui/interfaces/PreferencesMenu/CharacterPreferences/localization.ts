@@ -8,7 +8,7 @@ import uiCharacterEn from './locales/ui.character.en.json';
 import uiCharacterRu from './locales/ui.character.ru.json';
 import uiGameEn from './locales/ui.game.en.json';
 import uiGameRu from './locales/ui.game.ru.json';
-import uiRu from './locales/ui.ru.json';
+import serverLabelsRu from './locales/server_labels.ru.json';
 
 export type InterfaceLanguage = 'english' | 'russian';
 
@@ -42,7 +42,7 @@ const RU_JOBS = jobsRu as {
   alt_job_titles?: Record<string, string>;
 };
 
-const RU_SERVER_LABELS_BY_EN = uiRu as Record<string, string>;
+const RU_SERVER_LABELS_BY_EN = serverLabelsRu as Record<string, string>;
 
 function toDataId(value: string): string {
   const normalized = (value ?? '')
@@ -204,10 +204,20 @@ export function localizeCharacterFeatureName(
   englishFeatureName: string,
   featureId?: string,
 ): string {
+  const byFeatureId = resolveDataId(
+    language,
+    CHARACTER_FEATURE_NAMES_BY_ID,
+    featureId ?? '',
+    '',
+  );
+  if (byFeatureId && byFeatureId !== 'unknown') {
+    return byFeatureId;
+  }
+
   return resolveDataId(
     language,
     CHARACTER_FEATURE_NAMES_BY_ID,
-    featureId ?? englishFeatureName,
+    englishFeatureName,
     englishFeatureName,
   );
 }

@@ -26,7 +26,7 @@ export function TabbedMenu(props: TabbedMenuProps) {
   const translateCategory = (category: string) =>
     categoryTranslations[category] || category;
 
-  const searchPlaceholder = t('search_placeholder', 'Search...');
+  const searchPlaceholder = t('search_placeholder');
 
   return (
     <Stack
@@ -112,4 +112,5 @@ export function TabbedMenu(props: TabbedMenuProps) {
     </Stack>
   );
 }
+
 

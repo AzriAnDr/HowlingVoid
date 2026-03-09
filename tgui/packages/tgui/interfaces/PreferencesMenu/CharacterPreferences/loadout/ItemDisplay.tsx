@@ -9,6 +9,7 @@ import {
 } from 'tgui-core/components';
 import { createSearch } from 'tgui-core/string';
 
+import { usePreferencesLocalization } from '../localization';
 import type { LoadoutCategory, LoadoutItem, LoadoutManagerData } from './base';
 
 type Props = {
@@ -198,10 +199,11 @@ const FilterItemList = (items: LoadoutItem[]) => {
 // NOVA EDIT ADDITION END
 export function LoadoutTabDisplay(props: TabProps) {
   const { category } = props;
+  const { t } = usePreferencesLocalization();
   if (!category) {
     return (
       <NoticeBox>
-        Erroneous category detected! This is a bug, please report it.
+        {t('loadout_erroneous_category')}
       </NoticeBox>
     );
   }
@@ -218,6 +220,7 @@ export function SearchDisplay(props: SearchProps) {
   const { loadout_tabs, currentSearch } = props;
   const { data } = useBackend<LoadoutManagerData>(); // NOVA EDIT ADDITION
   const { erp_pref } = data; // NOVA EDIT ADDITION
+  const { t } = usePreferencesLocalization(data);
 
   const search = createSearch(
     currentSearch,
@@ -227,14 +230,16 @@ export function SearchDisplay(props: SearchProps) {
   const validLoadoutItems = loadout_tabs
     // NOVA EDIT ADDITION START - Prefslocked tabs
     .filter(
-      (curTab) => !curTab.erp_category || (curTab.erp_category && erp_pref),
+      (curTab) =>
+        (!curTab.erp_category || (curTab.erp_category && erp_pref)) &&
+        curTab.name?.toLowerCase() !== 'erotic',
     ) // NOVA EDIT ADDITION END
     .flatMap((tab) => tab.contents)
     .filter(search)
     .sort((a, b) => (a.name > b.name ? 1 : -1));
 
   if (validLoadoutItems.length === 0) {
-    return <NoticeBox>No items found!</NoticeBox>;
+    return <NoticeBox>{t('loadout_no_items_found')}</NoticeBox>;
   }
 
   return <ItemListDisplay items={validLoadoutItems} />;

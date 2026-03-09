@@ -68,9 +68,8 @@ export type FeatureValueProps<
 }>;
 
 export function FeatureColorInput(props: FeatureValueProps<string>) {
-  const { act, data } = useBackend<PreferencesMenuData>();
+  const { act } = useBackend<PreferencesMenuData>();
   const { featureId, shrink, value } = props;
-  const { t } = usePreferencesLocalization(data);
 
   return (
     <Button
@@ -99,7 +98,7 @@ export function FeatureColorInput(props: FeatureValueProps<string>) {
         </Stack.Item>
 
         {!shrink && (
-          <Stack.Item>{t('feature_change', 'Change')}</Stack.Item>
+          <Stack.Item>{value}</Stack.Item>
         )}
       </Stack>
     </Button>
@@ -281,9 +280,11 @@ export const FeatureTextInput = (
   props: FeatureValueProps<string, string, FeatureShortTextData>,
 ) => {
   const { serverData, handleSetValue, value } = props;
+  const { data } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization(data);
 
   if (!serverData) {
-    return <Box>Loading...</Box>;
+    return <Box>{t('loading')}</Box>;
   }
 
   return (
@@ -299,9 +300,8 @@ export const FeatureTextInput = (
 };
 
 export const FeatureTriColorInput = (props: FeatureValueProps<string[]>) => {
-  const { act, data } = useBackend<PreferencesMenuData>();
+  const { act } = useBackend<PreferencesMenuData>();
   const { featureId, shrink, value } = props;
-  const { t } = usePreferencesLocalization(data);
 
   const buttonFromValue = (index) => {
     return (
@@ -335,7 +335,7 @@ export const FeatureTriColorInput = (props: FeatureValueProps<string[]>) => {
             </Stack.Item>
 
             {!shrink && (
-              <Stack.Item>{t('feature_change', 'Change')}</Stack.Item>
+              <Stack.Item>{value[index]}</Stack.Item>
             )}
           </Stack>
         </Button>
@@ -377,4 +377,5 @@ export const FeatureTriBoolInput = (props: FeatureValueProps<boolean[]>) => {
   );
 };
 // NOVA EDIT ADDITION END
+
 

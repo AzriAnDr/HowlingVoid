@@ -31,6 +31,32 @@ const FOOD_DISLIKED = 2;
 const FOOD_NEUTRAL = 3;
 const FOOD_LIKED = 4;
 
+const FOOD_NAMES_RU: Record<string, string> = {
+  Meat: 'Мясо',
+  Vegetables: 'Овощи',
+  'Raw food': 'Сырая еда',
+  'Junk food': 'Фастфуд',
+  Grain: 'Зерновые',
+  Fruits: 'Фрукты',
+  'Dairy products': 'Молочные продукты',
+  'Fried food': 'Жареная еда',
+  Alcohol: 'Алкоголь',
+  'Sugary food': 'Сладкая еда',
+  'Gross food': 'Отвратительная еда',
+  'Toxic food': 'Токсичная еда',
+  Pineapples: 'Ананасы',
+  'Breakfast food': 'Еда для завтрака',
+  Clothing: 'Одежда',
+  Nuts: 'Орехи',
+  Seafood: 'Морепродукты',
+  Oranges: 'Апельсины',
+  Bugs: 'Насекомые',
+  Gore: 'Плоть',
+  Bloody: 'Кровавая еда',
+};
+
+const foodNameRu = (name: string) => FOOD_NAMES_RU[name] || name;
+
 export const FoodPreferences = (props) => {
   const { act, data } = useBackend<Data>();
   const {
@@ -62,22 +88,22 @@ export const FoodPreferences = (props) => {
                 <Tooltip
                   position="bottom"
                   content={
-                    'You HAVE to pick at lease ONE TOXIC food and TWO Disliked foods. You Can have a maximum of THREE LIKED foods.'
+                    'Нужно выбрать минимум ОДНУ токсичную еду и ДВЕ нелюбимые. Максимум — ТРИ любимых типа еды.'
                   }
                 >
                   <Box inline>
                     <Button icon="circle-question" mr="0.5em" />
                     {invalid ? (
                       <Box as="span" color="#bd2020">
-                        Prefrences are Invalid!{' '}
+                        Предпочтения некорректны!{' '}
                         {invalid.charAt(0).toUpperCase() + invalid.slice(1)} |{' '}
                         {counts.disliked < 2
-                          ? `${counts.disliked}/2 Disliked`
-                          : `${counts.toxic}/1 Toxic`}
+                          ? `${counts.disliked}/2 Нелюбимые`
+                          : `${counts.toxic}/1 Токсичная`}
                       </Box>
                     ) : (
                       <Box as="span" color="green">
-                        Preferences are Valid! | <b>{counts.liked}</b>/3 Liked
+                        Предпочтения валидны! | <b>{counts.liked}</b>/3 Любимые
                       </Box>
                     )}
                   </Box>
@@ -88,9 +114,9 @@ export const FoodPreferences = (props) => {
                   style={{ position: 'absolute', right: '20em' }}
                   color={'red'}
                   onClick={() => act('reset')}
-                  tooltip="Reset to the default values!"
+                  tooltip="Сбросить к значениям по умолчанию"
                 >
-                  Reset
+                  Сброс
                 </Button>
 
                 <Button
@@ -102,29 +128,25 @@ export const FoodPreferences = (props) => {
                   disabled={race_disabled}
                   tooltip={
                     <>
-                      Toggles if these food preferences will be applied to your
-                      character on spawn.
+                      Переключает применение этих предпочтений при спавне персонажа.
                       <Divider />
-                      Remember, these are mostly suggestions, and you are
-                      encouraged to roleplay liking meals that your character
-                      likes, even if you don&apos;t have it&apos;s food type
-                      liked here!
+                      Это в основном рекомендации — можно отыгрывать вкусы
+                      персонажа, даже если тип еды здесь не отмечен как любимый.
                     </>
                   }
                 >
-                  Use Custom Food Preferences
+                  Использовать кастомные пищевые предпочтения
                 </Button>
               </Box>
             }
           >
             {(race_disabled && (
-              <ErrorOverlay>
-                You&apos;re using a race which isn&apos;t affected by food
-                preferences!
+                <ErrorOverlay>
+                Вы используете расу, на которую пищевые предпочтения не влияют!
               </ErrorOverlay>
             )) ||
               (!enabled && (
-                <ErrorOverlay>Your food preferences are disabled!</ErrorOverlay>
+                <ErrorOverlay>Ваши пищевые предпочтения отключены!</ErrorOverlay>
               ))}
             <Box style={{ columns: '30em' }}>
               {Object.entries(food_types).map((element) => {
@@ -134,9 +156,9 @@ export const FoodPreferences = (props) => {
                     <Section
                       title={
                         <>
-                          {foodName}
+                          {foodNameRu(foodName)}
                           {obscure_food_types.includes(foodName) && (
-                            <Tooltip content="This food doesn't count towards your maximum likes, and is free!">
+                            <Tooltip content="Этот тип еды не учитывается в лимите любимых и даётся бесплатно!">
                               <Box
                                 as="span"
                                 fontSize={0.75}
@@ -158,9 +180,9 @@ export const FoodPreferences = (props) => {
                           (!selection[foodName] &&
                             foodPointValues === FOOD_TOXIC)
                         }
-                        content={<>Toxic</>}
+                        content={<>Токсичная</>}
                         color="olive"
-                        tooltip="Your character will almost immediately throw up on eating anything toxic."
+                        tooltip="Персонажа почти сразу вырвет от любой токсичной еды."
                       />
                       <FoodButton
                         foodName={foodName}
@@ -174,9 +196,9 @@ export const FoodPreferences = (props) => {
                           (!selection[foodName] &&
                             foodPointValues === FOOD_DISLIKED)
                         }
-                        content={<>Disliked</>}
+                        content={<>Нелюбимая</>}
                         color="red"
-                        tooltip="Your character will become grossed out, before eventually throwing up after a decent intake of disliked food."
+                        tooltip="Персонажу станет плохо, а затем он может вырвать после достаточного количества нелюбимой еды."
                       />
                       <FoodButton
                         foodName={foodName}
@@ -192,9 +214,9 @@ export const FoodPreferences = (props) => {
                           (!selection[foodName] &&
                             foodPointValues === FOOD_NEUTRAL)
                         }
-                        content={<>Neutral</>}
+                        content={<>Нейтральная</>}
                         color="yellow"
-                        tooltip="Your character has very little to say about something that's neutral."
+                        tooltip="Персонаж нейтрально относится к этой еде."
                       />
                       <FoodButton
                         foodName={foodName}
@@ -212,13 +234,13 @@ export const FoodPreferences = (props) => {
                           (!selection[foodName] &&
                             foodPointValues === FOOD_LIKED)
                         }
-                        content={<>Liked</>}
+                        content={<>Любимая</>}
                         color="green"
                         tooltip={
                           !obscure_food_types.includes(foodName) &&
                           counts.liked >= 3
-                            ? 'You currently have too many liked foods, you cannot have more than three foods that are not obscure!'
-                            : "Your character will enjoy anything that's liked."
+                            ? 'Сейчас у вас слишком много любимых типов еды. Нельзя выбрать больше трёх не-особых.'
+                            : 'Персонажу нравится эта еда.'
                         }
                       />
                     </Section>

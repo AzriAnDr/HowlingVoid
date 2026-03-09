@@ -13,6 +13,7 @@ import {
 import { createSearch } from 'tgui-core/string';
 import type { Personality, PreferencesMenuData } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
+import { usePreferencesLocalization } from './localization';
 
 type ButtonData = {
   backgroundColor: string;
@@ -24,19 +25,23 @@ function getButtonColors(
   selected: boolean | undefined,
   invalid: boolean | string | null | undefined,
   disabled: boolean | undefined,
+  t: (key: string, fallback?: string) => string,
 ): ButtonData {
   if (invalid) {
     return {
       backgroundColor: 'rgba(64, 34, 34, 0.5)',
       borderColor: 'darkred',
-      tooltip: `You cannot select this personality with ${invalid}.`,
+      tooltip: t('personality_cannot_select_with').replace(
+        '{personality}',
+        String(invalid),
+      ),
     };
   }
   if (disabled) {
     return {
       backgroundColor: 'rgba(64, 64, 64, 0.5)',
       borderColor: '#666666',
-      tooltip: 'You are at the maximum number of personalities.',
+      tooltip: t('personality_maximum_reached'),
     };
   }
   if (selected) {
@@ -63,11 +68,13 @@ type ButtonProps = {
 
 function PersonalityButton(props: ButtonProps) {
   const { personality, selected, invalid, disabled, onClick } = props;
+  const { t } = usePreferencesLocalization();
 
   const { backgroundColor, borderColor, tooltip } = getButtonColors(
     selected,
     invalid,
     disabled,
+    t,
   );
   const isDisabled = disabled || invalid || false;
   return (
@@ -152,7 +159,7 @@ function PersonalityButton(props: ButtonProps) {
               wordBreak: 'break-word',
             }}
           >
-            ± {personality.neut_gameplay_description}
+            +/- {personality.neut_gameplay_description}
           </Stack.Item>
         )}
       </Stack>
@@ -182,6 +189,7 @@ function isIncompatible(
   allPersonalities: Personality[],
   selectedPersonalities: string[] | null,
   personalityIncompatibilities: Record<string, string[]>,
+  t: (key: string, fallback?: string) => string,
 ): string | null {
   if (!selectedPersonalities || !personality.groups) return null;
   // personalityIncompatibilities is keyed by group -
@@ -192,7 +200,7 @@ function isIncompatible(
       if (personalityIncompatibilities[group].includes(selectedTypePath)) {
         return (
           getPersonalityName(allPersonalities, selectedTypePath) ||
-          'an unknown personality'
+          t('personality_unknown')
         );
       }
     }
@@ -236,6 +244,7 @@ function getPersonalityName(
 function getAllSelectedPersonalitiesString(
   allPersonalities: Personality[],
   selectedPersonalities: string[] | null,
+  t: (key: string, fallback?: string) => string,
 ) {
   const personalityNames: string[] = [];
   for (const personality of allPersonalities) {
@@ -244,7 +253,7 @@ function getAllSelectedPersonalitiesString(
     }
   }
   if (personalityNames.length === 0) {
-    return 'You have no personality.';
+    return t('personality_none_selected');
   }
   personalityNames.sort((a, b) => (a < b ? -1 : 1));
   let finalString = '';
@@ -259,14 +268,18 @@ function getAllSelectedPersonalitiesString(
       if (finalString[finalString.length - 1] !== ' ') {
         finalString += ' ';
       }
-      finalString += 'and ';
+      finalString += `${t('personality_and')} `;
     }
   }
-  return `You are ${finalString}.`;
+  return t('personality_you_are').replace(
+    '{personality}',
+    finalString,
+  );
 }
 
 export function PersonalityPage() {
   const { act, data } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization(data);
 
   const server_data = useServerPrefs();
   if (!server_data) return;
@@ -311,12 +324,15 @@ export function PersonalityPage() {
               {getAllSelectedPersonalitiesString(
                 personalities,
                 selectedPersonalities,
+                t,
               )}
             </Flex.Item>
             <Flex.Item width="120px">
               <Box className="PreferencesMenu__Personality__Counter" p={0.5}>
                 {selectedPersonalities?.length || 0} /{' '}
-                {data.max_personalities === -1 ? '∞' : data.max_personalities}
+                {data.max_personalities === -1
+                  ? t('personality_infinity')
+                  : data.max_personalities}
               </Box>
             </Flex.Item>
             <Flex.Item ml={1}>
@@ -342,10 +358,7 @@ export function PersonalityPage() {
                 <Flex.Item>
                   <Icon name="exclamation-triangle" mr={1} />
                 </Flex.Item>
-                <Flex.Item>
-                  Mood is disabled on this server. You can still select
-                  personalities, but they will have no effect.
-                </Flex.Item>
+                <Flex.Item>{t('personality_mood_disabled')}</Flex.Item>
               </Flex>
             </NoticeBox>
           </Stack.Item>
@@ -354,7 +367,7 @@ export function PersonalityPage() {
           <Input
             className="PreferencesMenu__Personality__Search"
             fluid
-            placeholder="Search..."
+            placeholder={t('personality_search_placeholder')}
             value={searchQuery}
             onChange={(v) => setSearchQuery(v)}
           />
@@ -377,6 +390,7 @@ export function PersonalityPage() {
                       personalities,
                       selectedPersonalities,
                       personalityIncompatibilities,
+                      t,
                     )}
                     disabled={isDisabled(
                       selectedPersonalities,

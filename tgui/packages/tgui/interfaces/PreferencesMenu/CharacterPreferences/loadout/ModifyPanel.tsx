@@ -10,6 +10,7 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { usePreferencesLocalization } from '../localization';
 
 import type {
   FAIcon,
@@ -87,6 +88,7 @@ type ButtonsProps = {
 
 function LoadoutModifyButtons(props: ButtonsProps) {
   const { act, data } = useBackend<LoadoutManagerData>();
+  const { t } = usePreferencesLocalization(data);
   const loadout_list = data.character_preferences.misc.loadout_lists.loadout; // NOVA EDIT CHANGE - Multiple loadout presets - ORIGINAL: const { loadout_list } = data.character_preferences.misc;
   const { modifyItemDimmer } = props;
 
@@ -103,7 +105,7 @@ function LoadoutModifyButtons(props: ButtonsProps) {
       <Stack.Item>
         <LabeledList>
           {!!modifyItemDimmer.reskins && (
-            <LabeledList.Item label="Styles" verticalAlign="middle">
+            <LabeledList.Item label={t('loadout_styles')} verticalAlign="middle">
               <Flex wrap width="100%">
                 {modifyItemDimmer.reskins.map((reskin) => (
                   <Flex.Item key={reskin.tooltip} mr={1} mb={1}>
@@ -180,7 +182,8 @@ type DimmerProps = {
 };
 
 export function LoadoutModifyDimmer(props: DimmerProps) {
-  const { act } = useBackend();
+  const { act, data } = useBackend<LoadoutManagerData>();
+  const { t } = usePreferencesLocalization(data);
   const { modifyItemDimmer, setModifyItemDimmer } = props;
 
   return (
@@ -233,7 +236,7 @@ export function LoadoutModifyDimmer(props: DimmerProps) {
                 act('close_greyscale_menu');
               }}
             >
-              Done
+              {t('loadout_done')}
             </Button>
           </Stack>
         </Stack.Item>

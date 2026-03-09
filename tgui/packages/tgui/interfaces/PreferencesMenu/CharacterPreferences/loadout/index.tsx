@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+﻿import { Fragment, useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { CharacterPreview } from 'tgui/interfaces/common/CharacterPreview';
 import { removeAllSkiplines } from 'tgui/interfaces/TextInputModal'; // NOVA EDIT ADDITION: Multiple loadout presets
@@ -32,15 +32,15 @@ import { LoadoutModifyDimmer } from './ModifyPanel';
 
 export function LoadoutPage(props) {
   const serverData = useServerPrefs();
-  const loadout_tabs = serverData?.loadout.loadout_tabs || [];
+  const loadout_tabs = (serverData?.loadout.loadout_tabs || []).filter(
+    (tab) => tab.name?.toLowerCase() !== 'erotic',
+  );
   /* NOVA EDIT CHANGE - Original: const { data } = useBackend<LoadoutManagerData>();
   const { erp_pref } = data; */
   const erp_pref = useBackend<LoadoutManagerData>().data.erp_pref;
 
   const [searchLoadout, setSearchLoadout] = useState('');
-  const [selectedTabName, setSelectedTab] = useState(
-    loadout_tabs?.[0].name || '',
-  );
+  const [selectedTabName, setSelectedTab] = useState(loadout_tabs?.[0].name || '');
   const [modifyItemDimmer, setModifyItemDimmer] = useState<LoadoutItem | null>(
     null,
   );
@@ -48,7 +48,7 @@ export function LoadoutPage(props) {
   const [managingPreset, _setManagingPreset] = useState<string | null>(null);
   const { act, data } = useBackend<PreferencesMenuData>();
   const [input, setInput] = useState('');
-  const { t } = usePreferencesLocalization(data);
+  const { t, localizeDataLabel } = usePreferencesLocalization(data);
   const setManagingPreset = (value) => {
     _setManagingPreset(value);
     setInput('');
@@ -62,7 +62,7 @@ export function LoadoutPage(props) {
   // NOVA EDIT END
 
   if (!serverData) {
-    return <NoticeBox>{t('loading', 'Loading...')}</NoticeBox>;
+    return <NoticeBox>{t('loading')}</NoticeBox>;
   }
 
   return (
@@ -90,9 +90,8 @@ export function LoadoutPage(props) {
                   <Flex.Item fontSize="1.3rem">
                     {t(
                       `loadout_preset_action_${(managingPreset || '').toLowerCase()}`,
-                      managingPreset || '',
                     )}{' '}
-                    {t('loadout_preset', 'Loadout Preset')}
+                    {t('loadout_preset')}
                   </Flex.Item>
                   {managingPreset === 'Add' && (
                     <Flex.Item ml="6px" mt="4px">
@@ -119,7 +118,6 @@ export function LoadoutPage(props) {
                 <Input
                   placeholder={t(
                     'loadout_maximum_24_characters',
-                    'Maximum of 24 characters long',
                   )}
                   width="100%"
                   maxLength={24}
@@ -143,7 +141,7 @@ export function LoadoutPage(props) {
                       setManagingPreset(null);
                     }}
                   >
-                    {t('loadout_done', 'Done')}
+                    {t('loadout_done')}
                   </Button>
                 </Stack>
               </Stack.Item>
@@ -166,7 +164,7 @@ export function LoadoutPage(props) {
               className="PreferencesMenu__Loadout__SearchInput"
               width="200px"
               onChange={setSearchLoadout}
-              placeholder={t('loadout_search_item', 'Search for an item...')}
+              placeholder={t('loadout_search_item')}
               value={searchLoadout}
             />
           }
@@ -176,7 +174,8 @@ export function LoadoutPage(props) {
               // NOVA EDIT ADDITION START - Prefslocked tabs
               .filter(
                 (curTab) =>
-                  !curTab.erp_category || (curTab.erp_category && erp_pref),
+                  (!curTab.erp_category || (curTab.erp_category && erp_pref)) &&
+                  curTab.name?.toLowerCase() !== 'erotic',
               ) // NOVA EDIT ADDITION END
               .map((curTab) => (
                 <Tabs.Tab
@@ -193,7 +192,7 @@ export function LoadoutPage(props) {
                     {curTab.category_icon && (
                       <Icon name={curTab.category_icon} mr={1} />
                     )}
-                    {curTab.name}
+                    {localizeDataLabel(curTab.name)}
                   </Box>
                 </Tabs.Tab>
               ))}
@@ -289,7 +288,7 @@ function LoadoutTabs(props: LoadoutTabsProps) {
                         icon="plus"
                         color="good"
                       >
-                        {t('loadout_add_new', 'Add New Loadout')}
+                        {t('loadout_add_new')}
                       </Button>
                     </Stack.Item>
                     <Stack.Item ml={12.5}>
@@ -298,7 +297,7 @@ function LoadoutTabs(props: LoadoutTabsProps) {
                         icon="trash"
                         color="red"
                         align="center"
-                        confirmContent="✓"
+                        confirmContent="вњ“"
                         disabled={
                           data.character_preferences.misc.loadout_index ===
                           'Default'
@@ -308,11 +307,9 @@ function LoadoutTabs(props: LoadoutTabsProps) {
                           'Default'
                             ? t(
                                 'loadout_cant_delete_default',
-                                "Can't delete the default loadout entry.",
                               )
                             : t(
                                 'loadout_delete_current_entry',
-                                'Delete the current loadout entry.',
                               )
                         }
                         onClick={() => act('remove_loadout_preset')}
@@ -339,8 +336,8 @@ function LoadoutTabs(props: LoadoutTabsProps) {
             className="PreferencesMenu__Loadout__CatalogSection"
             title={
               searching
-                ? t('loadout_search_results', 'Search results')
-                : t('loadout_catalog', 'Catalog')
+                ? t('loadout_search_results')
+                : t('loadout_catalog')
             }
             fill
             scrollable
@@ -370,7 +367,6 @@ function LoadoutTabs(props: LoadoutTabsProps) {
             <Box>
               {t(
                 'loadout_no_contents_selected_tab',
-                'No contents for selected tab.',
               )}
             </Box>
           </Section>
@@ -460,7 +456,7 @@ function LoadoutSelectedSection(props: LoadoutSelectedSectionProps) {
   return (
     <Section
       className="PreferencesMenu__Loadout__SelectedSection"
-      title={t('loadout_selected_items', 'Selected Items')}
+      title={t('loadout_selected_items')}
       scrollable
       fill
       buttons={
@@ -472,11 +468,10 @@ function LoadoutSelectedSection(props: LoadoutSelectedSectionProps) {
           disabled={!loadout_list || Object.keys(loadout_list).length === 0}
           tooltip={t(
             'loadout_clear_all_tooltip',
-            'Clears ALL selected items from all categories.',
           )}
           onClick={() => act('clear_all_items')}
         >
-          {t('loadout_clear_all', 'Clear All')}
+          {t('loadout_clear_all')}
         </Button.Confirm>
       }
     >
@@ -505,7 +500,7 @@ function LoadoutPreviewSection() {
     <Section
       className="PreferencesMenu__Loadout__PreviewSection"
       fill
-      title={t('loadout_preview', 'Preview')}
+      title={t('loadout_preview')}
       buttons={
         <Button.Checkbox
           className="PreferencesMenu__Loadout__ActionButton"
@@ -513,7 +508,7 @@ function LoadoutPreviewSection() {
           checked={data.job_clothes}
           onClick={() => act('toggle_job_clothes')}
         >
-          {t('loadout_job_clothes', 'Job Clothes')}
+          {t('loadout_job_clothes')}
         </Button.Checkbox>
       }
     >
@@ -579,3 +574,4 @@ function LoadoutPreviewSection() {
     </Section>
   );
 }
+

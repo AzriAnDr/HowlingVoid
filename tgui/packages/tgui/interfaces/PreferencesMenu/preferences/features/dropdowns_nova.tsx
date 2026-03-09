@@ -3,6 +3,7 @@ import { type ComponentProps, type ReactNode, useEffect, useState } from 'react'
 import { Box, ColorBox, Dropdown, Stack } from 'tgui-core/components';
 import { capitalizeFirst } from 'tgui-core/string';
 
+import { usePreferencesLocalization } from '../../CharacterPreferences/localization';
 import type { Feature, FeatureChoicedServerData, FeatureValueProps } from './base';
 
 type ColorDropdownInputProps = FeatureValueProps<
@@ -29,6 +30,7 @@ type DropdownOptions = ComponentProps<typeof Dropdown>['options'];
 
 export function FeatureBloodTypeDropdownInput(props: ColorDropdownInputProps) {
   const { serverData, handleSetValue, value } = props;
+  const { t } = usePreferencesLocalization();
 
   const [dropdownOptions, setDropdownOptions] = useState<DropdownOptions>([]);
 
@@ -114,7 +116,7 @@ export function FeatureBloodTypeDropdownInput(props: ColorDropdownInputProps) {
       <Stack vertical>
         <Stack.Item>
           <Box mt={1} color="white">
-            <b>Blood Chemical:</b> {chemical}
+            <b>{t('blood_chemical_label')}</b> {chemical}
           </Box>
         </Stack.Item>
         {!!blurb && (

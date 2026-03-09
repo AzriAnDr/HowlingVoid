@@ -54,7 +54,7 @@ function CharacterProfiles(props: ProfileProps) {
           displayText={profiles[activeSlot]}
           options={profiles.map((profile, slot) => ({
             value: slot,
-            displayText: profile ?? t('new_character', 'New Character'),
+            displayText: profile ?? t('new_character'),
           }))}
           onSelected={(slot) => {
             onClick(slot);
@@ -147,7 +147,7 @@ export function CharacterPreferenceWindow(props) {
               setPage={setCurrentPage}
               otherActivePages={[Page.Species]}
             >
-              {t('tab_character', 'Character')}
+              {t('tab_character')}
             </PageButton>
           </Stack.Item>
 
@@ -158,7 +158,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Loadout}
               setPage={setCurrentPage}
             >
-              {t('tab_loadout', 'Loadout')}
+              {t('tab_loadout')}
             </PageButton>
           </Stack.Item>
 
@@ -173,7 +173,7 @@ export function CharacterPreferenceWindow(props) {
                     Fun fact: This isn't "Jobs" so that it intentionally
                     catches your eyes, because it's really important!
                   */}
-              {t('tab_occupations', 'Occupations')}
+              {t('tab_occupations')}
             </PageButton>
           </Stack.Item>
           {/* NOVA EDIT ADDITION START */}
@@ -184,7 +184,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Limbs}
               setPage={setCurrentPage}
             >
-              {t('tab_augments', 'Augments+')}
+              {t('tab_augments')}
             </PageButton>
           </Stack.Item>
 
@@ -195,7 +195,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Languages}
               setPage={setCurrentPage}
             >
-              {t('tab_languages', 'Languages')}
+              {t('tab_languages')}
             </PageButton>
           </Stack.Item>
           {/* NOVA EDIT ADDITION end */}
@@ -206,7 +206,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Antags}
               setPage={setCurrentPage}
             >
-              {t('tab_antagonists', 'Antagonists')}
+              {t('tab_antagonists')}
             </PageButton>
           </Stack.Item>
 
@@ -217,7 +217,7 @@ export function CharacterPreferenceWindow(props) {
               page={Page.Quirks}
               setPage={setCurrentPage}
             >
-              {t('tab_quirks_personality', 'Quirks and Personality')}
+              {t('tab_quirks_personality')}
             </PageButton>
           </Stack.Item>
         </Stack>
@@ -229,4 +229,5 @@ export function CharacterPreferenceWindow(props) {
     </Stack>
   );
 }
+
 

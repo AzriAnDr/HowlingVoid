@@ -18,7 +18,9 @@ type PreferenceChild = {
 
 type FeaturesRuJson = {
   feature_names_by_id: Record<string, string>;
+  feature_names_by_en?: Record<string, string>;
   feature_descriptions_by_id: Record<string, string>;
+  feature_descriptions_by_en?: Record<string, string>;
 };
 
 const RU_FEATURES = featuresRu as FeaturesRuJson;
@@ -52,6 +54,9 @@ export function GamePreferencesPage(props) {
     const translatedName =
       interfaceLanguage === 'russian'
         ? RU_FEATURES.feature_names_by_id[featureId] ||
+          (feature?.name
+            ? RU_FEATURES.feature_names_by_en?.[feature.name]
+            : undefined) ||
           feature?.name ||
           featureId
         : feature?.name || featureId;
@@ -59,6 +64,9 @@ export function GamePreferencesPage(props) {
     const translatedDescription =
       interfaceLanguage === 'russian'
         ? RU_FEATURES.feature_descriptions_by_id[featureId] ||
+          (feature?.name
+            ? RU_FEATURES.feature_descriptions_by_en?.[feature.name]
+            : undefined) ||
           feature?.description
         : feature?.description;
 
@@ -106,7 +114,6 @@ export function GamePreferencesPage(props) {
             <Box as="b" color="red">
               {t(
                 'game_preference_not_filled_out',
-                '...is not filled out properly!!!',
               )}
             </Box>
           )}

@@ -1,6 +1,9 @@
+import { useBackend } from 'tgui/backend';
 import { Box, Dropdown, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
+import { usePreferencesLocalization } from '../../../CharacterPreferences/localization';
+import type { PreferencesMenuData } from '../../../types';
 import {
   type FeatureChoiced,
   type FeatureChoicedServerData,
@@ -11,6 +14,8 @@ import {
 function UIStyleInput(
   props: FeatureValueProps<string, string, FeatureChoicedServerData>,
 ) {
+  const { data } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization(data);
   const { serverData, value } = props;
   if (!serverData) {
     return null;
@@ -19,7 +24,7 @@ function UIStyleInput(
   const { icons } = serverData;
 
   if (!icons) {
-    return <Box color="red">ui_style had no icons!</Box>;
+    return <Box color="red">{t('ui_style_no_icons')}</Box>;
   }
 
   const choices = Object.fromEntries(

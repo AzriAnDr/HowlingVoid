@@ -14,6 +14,7 @@ import { classes } from 'tgui-core/react';
 
 import { type Antagonist, Category } from '../antagonists/base';
 import type { PreferencesMenuData } from '../types';
+import { usePreferencesLocalization } from './localization';
 
 const requireAntag = require.context(
   '../antagonists/antagonists',
@@ -53,6 +54,7 @@ type AntagSelectionProps = {
 
 function AntagSelection(props: AntagSelectionProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization(data);
   const className = 'PreferencesMenu__Antags__antagSelection';
 
   const [predictedState, setPredictedState] = useState(
@@ -97,11 +99,11 @@ function AntagSelection(props: AntagSelectionProps) {
       buttons={
         <>
           <Button color="good" onClick={() => enableAntags(antagonistKeys)}>
-            Enable All
+            {t('antags_enable_all')}
           </Button>
 
           <Button color="bad" onClick={() => disableAntags(antagonistKeys)}>
-            Disable All
+            {t('antags_disable_all')}
           </Button>
         </>
       }
@@ -143,7 +145,10 @@ function AntagSelection(props: AntagSelectionProps) {
                   <Tooltip
                     content={
                       isBanned
-                        ? `You are banned from ${antagonist.name}.`
+                        ? t('antags_banned_tooltip').replace(
+                            '{name}',
+                            antagonist.name,
+                          )
                         : antagonist.description.map((text, index) => {
                             return (
                               <div key={antagonist.key + index}>
@@ -184,7 +189,7 @@ function AntagSelection(props: AntagSelectionProps) {
 
                       {daysLeft > 0 && (
                         <Box className="antagonist-days-left">
-                          <b>{daysLeft}</b> days left
+                          <b>{daysLeft}</b> {t('antags_days_left')}
                         </Box>
                       )}
                     </Box>
@@ -200,20 +205,23 @@ function AntagSelection(props: AntagSelectionProps) {
 }
 
 export function AntagsPage() {
+  const { data } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization(data);
+
   return (
     <Box className="PreferencesMenu__Antags">
       <AntagSelection
-        name="Roundstart"
+        name={t('antags_roundstart')}
         antagonists={antagsByCategory.get(Category.Roundstart)!}
       />
 
       <AntagSelection
-        name="Midround"
+        name={t('antags_midround')}
         antagonists={antagsByCategory.get(Category.Midround)!}
       />
 
       <AntagSelection
-        name="Latejoin"
+        name={t('antags_latejoin')}
         antagonists={antagsByCategory.get(Category.Latejoin)!}
       />
     </Box>

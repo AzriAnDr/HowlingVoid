@@ -1,4 +1,4 @@
-import { binaryInsertWith } from 'common/collections';
+﻿import { binaryInsertWith } from 'common/collections';
 import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
@@ -45,7 +45,7 @@ type MultiNameProps = {
 export function MultiNameInput(props: MultiNameProps) {
   const { handleUpdateName, handleRandomizeName } = props;
   const { data: backendData } = useBackend<PreferencesMenuData>();
-  const { t } = usePreferencesLocalization(backendData);
+  const { t, localizeDataLabel } = usePreferencesLocalization(backendData);
 
   const data = useServerPrefs();
   if (!data) return null;
@@ -69,10 +69,10 @@ export function MultiNameInput(props: MultiNameProps) {
           className="PreferencesMenu__Character__AltNamesModal"
           buttons={
             <Button color="red" onClick={props.handleClose}>
-              {t('close', 'Close')}
+              {t('close')}
             </Button>
           }
-          title={t('alternate_names', 'Alternate names')}
+          title={t('alternate_names')}
         >
           <LabeledList>
             {sortNameWithKeyEntries(Object.entries(namesIntoGroups)).map(
@@ -89,7 +89,10 @@ export function MultiNameInput(props: MultiNameProps) {
                     const [prefix, suffix] = currentValue.split('-');
                     // NOVA EDIT ADDITION END
                     return (
-                      <LabeledList.Item key={key} label={t(name.explanation)}>
+                      <LabeledList.Item
+                        key={key}
+                        label={localizeDataLabel(name.explanation)}
+                      >
                         <Stack fill>
                           {/* NOVA EDIT REMOVAL START - DRONE NAMING (the removed part is integrated in the added block below)
                           <Stack.Item grow>
@@ -161,13 +164,13 @@ export function MultiNameInput(props: MultiNameProps) {
                             </Stack.Item>
                           )}
 
-                          {/* Randomize button — works for drone_name too */}
+                          {/* Randomize button вЂ” works for drone_name too */}
                           {/* NOVA EDIT ADDITION END*/}
                           {!!name.can_randomize && (
                             <Stack.Item>
                                 <Button
                                   icon="dice"
-                                  tooltip={t('randomize', 'Randomize')}
+                                  tooltip={t('randomize')}
                                   tooltipPosition="right"
                                   onClick={() => handleRandomizeName(key)}
                                 />
@@ -264,7 +267,7 @@ export function NameInput(props: NameInputProps) {
           <Stack.Item>
             <Button
               as="span"
-              tooltip={t('alternate_names', 'Alternate names')}
+              tooltip={t('alternate_names')}
               tooltipPosition="bottom"
               style={{
                 background: 'rgba(0, 0, 0, 0.7)',
@@ -298,3 +301,4 @@ export function NameInput(props: NameInputProps) {
     </Button>
   );
 }
+

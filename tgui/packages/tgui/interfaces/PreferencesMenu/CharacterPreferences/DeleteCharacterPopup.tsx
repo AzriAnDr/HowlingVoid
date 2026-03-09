@@ -3,6 +3,7 @@ import { useBackend } from 'tgui/backend';
 import { Box, Button, Modal, Stack } from 'tgui-core/components';
 
 import type { PreferencesMenuData } from '../types';
+import { usePreferencesLocalization } from './localization';
 
 type Props = {
   close: () => void;
@@ -10,6 +11,7 @@ type Props = {
 
 export function DeleteCharacterPopup(props: Props) {
   const { data, act } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization(data);
   const [secondsLeft, setSecondsLeft] = useState(3);
 
   const { close } = props;
@@ -26,11 +28,16 @@ export function DeleteCharacterPopup(props: Props) {
     <Modal>
       <Stack vertical textAlign="center" align="center">
         <Stack.Item>
-          <Box fontSize="3em">Wait!</Box>
+          <Box fontSize="3em">{t('delete_popup_wait')}</Box>
         </Stack.Item>
 
         <Stack.Item maxWidth="300px">
-          <Box>{`You're about to delete ${data.character_preferences.names[data.name_to_use]} forever. Are you sure you want to do this?`}</Box>
+          <Box>
+            {t('delete_popup_confirm_text').replace(
+              '{name}',
+              data.character_preferences.names[data.name_to_use],
+            )}
+          </Box>
         </Stack.Item>
 
         <Stack.Item>
@@ -46,12 +53,14 @@ export function DeleteCharacterPopup(props: Props) {
                   close();
                 }}
               >
-                {secondsLeft <= 0 ? 'Delete' : `Delete (${secondsLeft})`}
+                {secondsLeft <= 0
+                  ? t('delete_popup_delete')
+                  : `${t('delete_popup_delete')} (${secondsLeft})`}
               </Button>
             </Stack.Item>
 
             <Stack.Item>
-              <Button onClick={close}>{"No, don't delete"}</Button>
+              <Button onClick={close}>{t('delete_popup_no_delete')}</Button>
             </Stack.Item>
           </Stack>
         </Stack.Item>

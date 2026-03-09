@@ -22,6 +22,7 @@ import {
   type Species,
 } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
+import { usePreferencesLocalization } from './localization';
 
 const FOOD_ICONS = {
   [Food.Bugs]: 'bug',
@@ -44,23 +45,23 @@ const FOOD_ICONS = {
 };
 
 const FOOD_NAMES: Record<keyof typeof FOOD_ICONS, string> = {
-  [Food.Bugs]: 'Bugs',
-  [Food.Cloth]: 'Clothing',
-  [Food.Dairy]: 'Dairy',
-  [Food.Fried]: 'Fried food',
-  [Food.Fruit]: 'Fruit',
-  [Food.Gore]: 'Gore',
-  [Food.Grain]: 'Grain',
-  [Food.Gross]: 'Gross food',
-  [Food.Junkfood]: 'Junk food',
-  [Food.Meat]: 'Meat',
-  [Food.Nuts]: 'Nuts',
-  [Food.Raw]: 'Raw',
-  [Food.Seafood]: 'Seafood',
-  [Food.Stone]: 'Rocks',
-  [Food.Sugar]: 'Sugar',
-  [Food.Toxic]: 'Toxic food',
-  [Food.Vegetables]: 'Vegetables',
+  [Food.Bugs]: 'food_bugs',
+  [Food.Cloth]: 'food_clothing',
+  [Food.Dairy]: 'food_dairy',
+  [Food.Fried]: 'food_fried',
+  [Food.Fruit]: 'food_fruit',
+  [Food.Gore]: 'food_gore',
+  [Food.Grain]: 'food_grain',
+  [Food.Gross]: 'food_gross',
+  [Food.Junkfood]: 'food_junk',
+  [Food.Meat]: 'food_meat',
+  [Food.Nuts]: 'food_nuts',
+  [Food.Raw]: 'food_raw',
+  [Food.Seafood]: 'food_seafood',
+  [Food.Stone]: 'food_rocks',
+  [Food.Sugar]: 'food_sugar',
+  [Food.Toxic]: 'food_toxic',
+  [Food.Vegetables]: 'food_vegetables',
 };
 
 const IGNORE_UNLESS_LIKED: Set<Food> = new Set([
@@ -84,6 +85,7 @@ type FoodListProps = {
 };
 
 function FoodList(props: FoodListProps) {
+  const { t } = usePreferencesLocalization();
   const { food = [], icon, name, className } = props;
 
   if (food.length === 0) {
@@ -99,9 +101,9 @@ function FoodList(props: FoodListProps) {
           <Divider />
           <Box>
             {food
-              .reduce((names, food) => {
+              .reduce<string[]>((names, food) => {
                 const foodName = FOOD_NAMES[food];
-                return foodName ? names.concat(foodName) : names;
+                return foodName ? names.concat(t(foodName)) : names;
               }, [])
               .join(', ')}
           </Box>
@@ -133,6 +135,7 @@ type DietProps = {
 };
 
 function Diet(props: DietProps) {
+  const { t } = usePreferencesLocalization();
   const { diet } = props;
   if (!diet) {
     return null;
@@ -146,7 +149,7 @@ function Diet(props: DietProps) {
         <FoodList
           food={liked_food}
           icon="heart"
-          name="Liked food"
+          name={t('species_liked_food')}
           className="color-pink"
         />
       </Stack.Item>
@@ -155,7 +158,7 @@ function Diet(props: DietProps) {
         <FoodList
           food={disliked_food.filter(notIn(IGNORE_UNLESS_LIKED))}
           icon="thumbs-down"
-          name="Disliked food"
+          name={t('species_disliked_food')}
           className="color-red"
         />
       </Stack.Item>
@@ -164,7 +167,7 @@ function Diet(props: DietProps) {
         <FoodList
           food={toxic_food.filter(notIn(IGNORE_UNLESS_LIKED))}
           icon="biohazard"
-          name="Toxic food"
+          name={t('species_toxic_food')}
           className="color-olive"
         />
       </Stack.Item>
@@ -259,6 +262,7 @@ type SpeciesPageInnerProps = {
 
 function SpeciesPageInner(props: SpeciesPageInnerProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization(data);
   const setSpecies = createSetPreference(act, 'species');
 
   const species: [string, Species][] = Object.entries(props.species).map(
@@ -285,7 +289,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
           icon="arrow-left"
           onClick={props.handleClose}
         >
-          Go Back
+          {t('species_go_back')}
         </Button>
       </Stack.Item>
 
@@ -329,7 +333,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                 if (species.nova_stars_only && !data.is_nova_star) {
                   const tooltipContent =
                     species.name +
-                    ' - You need to be a Nova star to select this race, apply today!';
+                    ` - ${t('species_nova_only_tooltip')}`;
                   speciesPage = (
                     <Tooltip content={tooltipContent}>{speciesPage}</Tooltip>
                   );
@@ -359,7 +363,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                       {/* NOVA EDIT CHANGE START - Adds maxHeight, scrollable*/}
                       <Section
                         className="PreferencesMenu__Character__SpeciesSubsection"
-                        title="Description"
+                        title={t('species_description')}
                         maxHeight="14vh"
                         scrollable
                       >
@@ -369,7 +373,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
 
                       <Section
                         className="PreferencesMenu__Character__SpeciesSubsection"
-                        title="Features"
+                        title={t('species_features')}
                       >
                         <SpeciesPerks perks={currentSpecies.perks} />
                       </Section>
@@ -386,7 +390,10 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
               </Box>
 
               <Box mt={1}>
-                <Section className="PreferencesMenu__Character__SpeciesLore" title="Lore">
+                <Section
+                  className="PreferencesMenu__Character__SpeciesLore"
+                  title={t('species_lore')}
+                >
                   <BlockQuote /* NOVA EDIT START - scrollable lore */
                     overflowY="auto"
                     maxHeight="45vh"

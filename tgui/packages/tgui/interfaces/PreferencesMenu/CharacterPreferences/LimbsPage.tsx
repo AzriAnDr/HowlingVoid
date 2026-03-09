@@ -12,6 +12,7 @@ import {
 import { CharacterPreview } from '../../common/CharacterPreview';
 import type { PreferencesMenuData } from '../types';
 import { useServerPrefs } from '../useServerPrefs';
+import { usePreferencesLocalization } from './localization';
 
 const getQuirkBalanceLikeQuirksPage = (data, serverData) => {
   let fallbackBalance = -data.quirks_balance;
@@ -63,6 +64,7 @@ const getAugmentsBudgetBalance = (data, serverData) => {
 
 export const RotateCharacterButtons = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization();
   return (
     <Box mt={1}>
       <Button
@@ -70,7 +72,7 @@ export const RotateCharacterButtons = (props) => {
         onClick={() => act('rotate', { backwards: false })}
         fontSize="22px"
         icon="redo"
-        tooltip="Rotate Clockwise"
+        tooltip={t('limbs_rotate_clockwise')}
         tooltipPosition="bottom"
       />
       <Button
@@ -78,7 +80,7 @@ export const RotateCharacterButtons = (props) => {
         onClick={() => act('rotate', { backwards: true })}
         fontSize="22px"
         icon="undo"
-        tooltip="Rotate Counter-Clockwise"
+        tooltip={t('limbs_rotate_counter_clockwise')}
         tooltipPosition="bottom"
       />
     </Box>
@@ -87,9 +89,10 @@ export const RotateCharacterButtons = (props) => {
 
 export const Markings = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
+  const { t, localizeDataLabel } = usePreferencesLocalization();
   return (
     <Stack fill vertical>
-      <Stack.Item>Markings:</Stack.Item>
+      <Stack.Item>{t('limbs_markings_label')}</Stack.Item>
       {props.limb.markings.markings_list.map((marking, index) => (
         <Stack.Item key={marking.marking_id}>
           <Stack fill>
@@ -97,7 +100,10 @@ export const Markings = (props) => {
               <Dropdown
                 className="PreferencesMenu__Augments__Dropdown"
                 width="100%"
-                options={props.limb.markings.marking_choices}
+                options={props.limb.markings.marking_choices.map((choice) => ({
+                  value: choice,
+                  displayText: localizeDataLabel(choice),
+                }))}
                 selected={marking.name}
                 onSelected={(shit) =>
                   act('change_marking', {
@@ -125,7 +131,7 @@ export const Markings = (props) => {
               <Button
                 className="PreferencesMenu__Augments__ActionButton"
                 color={marking.emissive ? 'good' : 'bad'}
-                tooltip="The 'E' is for 'Emissive', meaning does it glow or not. Green for glow, red for no glow."
+                tooltip={t('limbs_emissive_tooltip')}
                 onClick={() =>
                   act('change_emissive', {
                     limb_slot: props.limb.slot,
@@ -168,10 +174,14 @@ export const Markings = (props) => {
 };
 
 export const LimbPage = (props) => {
-  const { act } = useBackend<PreferencesMenuData>();
+  const { localizeDataLabel } = usePreferencesLocalization();
   return (
     <div>
-      <Section className="PreferencesMenu__Augments__Card" fill title={props.limb.name}>
+      <Section
+        className="PreferencesMenu__Augments__Card"
+        fill
+        title={localizeDataLabel(props.limb.name)}
+      >
         <Stack vertical fill>
           <Stack.Item>
             <Markings limb={props.limb} />
@@ -185,21 +195,31 @@ export const LimbPage = (props) => {
 export const AugmentationPage = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
   const { data } = useBackend<PreferencesMenuData>();
+  const { t, localizeDataLabel } = usePreferencesLocalization(data);
   const serverData = useServerPrefs();
   const balance = getAugmentsBudgetBalance(data, serverData);
   if (props.limb.can_augment) {
     return (
       <div style={{ marginBottom: '1.5em' }}>
-        <Section className="PreferencesMenu__Augments__Card" fill title={props.limb.name}>
+        <Section
+          className="PreferencesMenu__Augments__Card"
+          fill
+          title={localizeDataLabel(props.limb.name)}
+        >
           <Stack fill vertical>
             <Stack.Item>
               <Stack fill>
-                <Stack.Item>Augumentation:</Stack.Item>
+                <Stack.Item>{t('limbs_augmentation_label')}</Stack.Item>
                 <Stack.Item grow>
                   <Dropdown
                     className="PreferencesMenu__Augments__Dropdown"
                     width="100%"
-                    options={Object.values(props.limb.aug_choices) as string[]}
+                    options={(Object.values(props.limb.aug_choices) as string[]).map(
+                      (choice) => ({
+                        value: choice,
+                        displayText: localizeDataLabel(choice),
+                      }),
+                    )}
                     selected={props.limb.chosen_aug}
                     onSelected={(value) => {
                       // Since the costs are positive,
@@ -221,12 +241,15 @@ export const AugmentationPage = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Stack fill vertical>
-                <Stack.Item>Style:</Stack.Item>
+                <Stack.Item>{t('limbs_style_label')}</Stack.Item>
                 <Stack.Item grow>
                   <Dropdown
                     className="PreferencesMenu__Augments__Dropdown"
                     width="100%"
-                    options={props.data.robotic_styles}
+                    options={props.data.robotic_styles.map((style) => ({
+                      value: style,
+                      displayText: localizeDataLabel(style),
+                    }))}
                     selected={props.limb.chosen_style}
                     onSelected={(value) =>
                       act('set_limb_aug_style', {
@@ -249,17 +272,23 @@ export const AugmentationPage = (props) => {
 export const OrganPage = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
   const { data } = useBackend<PreferencesMenuData>();
+  const { localizeDataLabel } = usePreferencesLocalization(data);
   const serverData = useServerPrefs();
   const balance = getAugmentsBudgetBalance(data, serverData);
   return (
     <Stack.Item>
       <Stack fill>
-        <Stack.Item>{`${props.organ.name}: `}</Stack.Item>
+        <Stack.Item>{`${localizeDataLabel(props.organ.name)}: `}</Stack.Item>
         <Stack.Item grow>
           <Dropdown
             className="PreferencesMenu__Augments__Dropdown"
             width="100%"
-            options={Object.values(props.organ.organ_choices) as string[]}
+            options={(Object.values(props.organ.organ_choices) as string[]).map(
+              (choice) => ({
+                value: choice,
+                displayText: localizeDataLabel(choice),
+              }),
+            )}
             selected={props.organ.chosen_organ}
             onSelected={(value) => {
               // Since the costs are positive, it's added and not substracted
@@ -284,20 +313,27 @@ export const OrganPage = (props) => {
 export const LimbsPage = (props) => {
   const { data } = useBackend<PreferencesMenuData>();
   const { act } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization(data);
   const serverData = useServerPrefs();
   const markings = data.marking_presets ? data.marking_presets : [];
   const displayBalance = getAugmentsBudgetBalance(data, serverData);
   return (
     <Stack minHeight="100%" className="PreferencesMenu__Augments">
       <Stack.Item minWidth="33%" minHeight="100%">
-        <Section className="PreferencesMenu__Augments__Panel" fill scrollable title="Markings" height="197%">
+        <Section
+          className="PreferencesMenu__Augments__Panel"
+          fill
+          scrollable
+          title={t('limbs_markings_title')}
+          height="197%"
+        >
           <div>
             <Dropdown
               className="PreferencesMenu__Augments__Dropdown"
               width="100%"
               options={Object.values(markings)}
               selected={Object.values(markings)[1]}
-              placeholder="Pick a preset:"
+              placeholder={t('limbs_pick_preset')}
               onSelected={(value) => act('set_preset', { preset: value })}
             />
           </div>
@@ -309,7 +345,13 @@ export const LimbsPage = (props) => {
         </Section>
       </Stack.Item>
       <Stack.Item minWidth="33%">
-        <Section className="PreferencesMenu__Augments__Panel" title="Character Preview" fill align="center" height="197%">
+        <Section
+          className="PreferencesMenu__Augments__Panel"
+          title={t('limbs_character_preview')}
+          fill
+          align="center"
+          height="197%"
+        >
           <CharacterPreview
             id={data.character_preview_view}
             height="25%"
@@ -321,7 +363,7 @@ export const LimbsPage = (props) => {
               className="PreferencesMenu__Augments__PointsSection"
               fill
               align="center"
-              title="Quirk Points Balance"
+              title={t('limbs_quirk_points_balance')}
               style={{
                 marginTop: '3em',
               }}
@@ -347,14 +389,25 @@ export const LimbsPage = (props) => {
         </Section>
       </Stack.Item>
       <Stack.Item minWidth="33%">
-        <Section className="PreferencesMenu__Augments__Panel" fill title="Organs" height="87%">
+        <Section
+          className="PreferencesMenu__Augments__Panel"
+          fill
+          title={t('limbs_organs')}
+          height="87%"
+        >
           <Stack fill vertical>
             {data.organs_data.map((val) => (
               <OrganPage key={val.slot} organ={val} data={data} />
             ))}
           </Stack>
         </Section>
-        <Section className="PreferencesMenu__Augments__Panel" fill scrollable title="Augmentations" height="107%">
+        <Section
+          className="PreferencesMenu__Augments__Panel"
+          fill
+          scrollable
+          title={t('limbs_augmentations')}
+          height="107%"
+        >
           {data.limbs_data.map((val) => (
             <AugmentationPage key={val.slot} limb={val} data={data} />
           ))}

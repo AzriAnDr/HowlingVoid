@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Button, Stack } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
@@ -74,7 +74,7 @@ export function GamePreferenceWindow(props: Props) {
               }
               onClick={() => setCurrentPage(GamePreferencesSelectedPage.Settings)}
             >
-              {t('game_settings', 'Settings')}
+              {t('game_settings')}
             </Button>
           </Stack.Item>
 
@@ -94,7 +94,7 @@ export function GamePreferenceWindow(props: Props) {
                 setCurrentPage(GamePreferencesSelectedPage.Keybindings)
               }
             >
-              {t('game_keybindings', 'Keybindings')}
+              {t('game_keybindings')}
             </Button>
           </Stack.Item>
         </Stack>
@@ -108,3 +108,4 @@ export function GamePreferenceWindow(props: Props) {
     </Stack>
   );
 }
+

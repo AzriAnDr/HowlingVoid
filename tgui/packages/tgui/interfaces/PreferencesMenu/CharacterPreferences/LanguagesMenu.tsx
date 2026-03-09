@@ -1,4 +1,4 @@
-import { useBackend } from 'tgui/backend';
+﻿import { useBackend } from 'tgui/backend';
 import { BlockQuote, Box, Button, Section, Stack } from 'tgui-core/components';
 
 import type { Language, PreferencesMenuData } from '../types';
@@ -45,7 +45,6 @@ export function KnownLanguage(props: { language: Language }) {
           icon="brain"
           tooltip={t(
             'language_forget_understand_warning',
-            'Forgetting how to understand the language will also prevent you from speaking it.',
           )}
           onClick={() =>
             act('forget_understand_language', {
@@ -53,7 +52,7 @@ export function KnownLanguage(props: { language: Language }) {
             })
           }
         >
-          {t('forget', 'Forget')}
+          {t('language_understand')}
         </Button>
         <Button
           className="PreferencesMenu__Languages__ActionButton"
@@ -63,9 +62,8 @@ export function KnownLanguage(props: { language: Language }) {
             props.language.speaking
               ? t(
                   'language_forget_speak_keep_understand',
-                  'Forget how to speak the language, but you keep your understanding of it.',
                 )
-              : t('language_learn_speak', 'Learn to speak the language.')
+              : t('language_learn_speak')
           }
           onClick={() =>
             act(
@@ -76,10 +74,10 @@ export function KnownLanguage(props: { language: Language }) {
             )
           }
         >
-          {t('language_can', 'Can')}{' '}
+          {t('language_can')}{' '}
           {props.language.speaking
-            ? t('language_speak_inline', 'speak')
-            : t('language_only_understand', 'only understand')}
+            ? t('language_speak_inline')
+            : t('language_only_understand')}
         </Button>
       </Section>
     </Stack.Item>
@@ -129,13 +127,12 @@ export function UnknownLanguage(props: { language: Language }) {
           icon="comment"
           tooltip={t(
             'language_learn_speak_understand',
-            'Learn to speak and understand the language.',
           )}
           onClick={() =>
             act('speak_language', { language_name: props.language.name })
           }
         >
-          {t('language_speak_action', 'Speak')}
+          {t('language_speak_action')}
         </Button>
         <Button
           className="PreferencesMenu__Languages__ActionButton"
@@ -143,13 +140,12 @@ export function UnknownLanguage(props: { language: Language }) {
           icon="brain"
           tooltip={t(
             'language_learn_understand_only',
-            'Learn to understand the language but not speak it.',
           )}
           onClick={() =>
             act('understand_language', { language_name: props.language.name })
           }
         >
-          {t('language_understand', 'Understand')}
+          {t('language_understand')}
         </Button>
       </Section>
     </Stack.Item>
@@ -165,34 +161,29 @@ export function LanguagesPage() {
       <Section textAlign="center">
         {t(
           'languages_intro_learn_points',
-          'Here, you can learn languages using a point system.',
         )}{' '}
-        <b>{t('linguist', 'Linguist')}</b>{' '}
+        <b>{t('linguist')}</b>{' '}
         {t(
           'neutral_quirk_extra_point',
-          'neutral quirk will give you one extra point.',
         )}
         <br />
-        {t('languages_may_be_either', 'Languages may be either')}{' '}
-        <b>{t('spoken_and_understood', 'spoken and understood')}</b>{' '}
-        {t('language_or', 'or')}{' '}
-        <b>{t('just_understood', 'just understood.')}</b>
+        {t('languages_may_be_either')}{' '}
+        <b>{t('spoken_and_understood')}</b>{' '}
+        {t('language_or')}{' '}
+        <b>{t('just_understood')}</b>
         <br />
-        {t('one_language_is_worth', 'One language is worth')}{' '}
-        <b>{t('one_point', '1 point,')}</b>{' '}
+        {t('one_language_is_worth')}{' '}
+        <b>{t('one_point')}</b>{' '}
         {t(
           'language_points_even_if_understood_only',
-          'even if that language is only understood and not spoken.',
         )}
         <br />
         {t(
           'languages_sol_common_requirement',
-          'You must have at least one known language, and you must understand Sol Common to play most station jobs.',
         )}{' '}
         <br />
         {t(
           'language_toggle_speech_free',
-          'It does not cost points to toggle speech of a language - it only costs points to add an entirely new language.',
         )}
       </Section>
       <Stack>
@@ -201,7 +192,7 @@ export function LanguagesPage() {
             title={
               <Box fontSize="150%">
                 {data.unselected_languages.length}{' '}
-                {t('available_languages', 'available languages')}
+                {t('available_languages')}
               </Box>
             }
           >
@@ -217,7 +208,7 @@ export function LanguagesPage() {
             title={
               <Box fontSize="150%">
                 {data.selected_languages.length}/{data.total_language_points}{' '}
-                {t('known_languages', 'known languages')}
+                {t('known_languages')}
               </Box>
             }
           >
@@ -232,3 +223,4 @@ export function LanguagesPage() {
     </Box>
   );
 }
+
