@@ -158,44 +158,50 @@ export function LoadoutPage(props) {
         <Section
           className="PreferencesMenu__Loadout__TopSection"
           fitted
-          buttons={
-            <Input
-              className="PreferencesMenu__Loadout__SearchInput"
-              width="200px"
-              onChange={setSearchLoadout}
-              placeholder={t('loadout_search_item')}
-              value={searchLoadout}
-            />
-          }
         >
-          <Tabs fluid align="center">
-            {loadout_tabs // NOVA EDIT CHANGE - Adds filter before map()
-              // NOVA EDIT ADDITION START - Prefslocked tabs
-              .filter(
-                (curTab) =>
-                  (!curTab.erp_category || (curTab.erp_category && erp_pref)) &&
-                  curTab.name?.toLowerCase() !== 'erotic',
-              ) // NOVA EDIT ADDITION END
-              .map((curTab) => (
-                <Tabs.Tab
-                  key={curTab.name}
-                  selected={
-                    searchLoadout.length <= 1 && curTab.name === selectedTabName
-                  }
-                  onClick={() => {
-                    setSelectedTab(curTab.name);
-                    setSearchLoadout('');
-                  }}
-                >
-                  <Box>
-                    {curTab.category_icon && (
-                      <Icon name={curTab.category_icon} mr={1} />
-                    )}
-                    {localizeDataLabel(curTab.name)}
-                  </Box>
-                </Tabs.Tab>
-              ))}
-          </Tabs>
+          <Stack className="PreferencesMenu__Loadout__TopRow" align="center">
+            <Stack.Item grow>
+              <Tabs fluid align="center">
+                {loadout_tabs // NOVA EDIT CHANGE - Adds filter before map()
+                  // NOVA EDIT ADDITION START - Prefslocked tabs
+                  .filter(
+                    (curTab) =>
+                      (!curTab.erp_category ||
+                        (curTab.erp_category && erp_pref)) &&
+                      curTab.name?.toLowerCase() !== 'erotic',
+                  ) // NOVA EDIT ADDITION END
+                  .map((curTab) => (
+                    <Tabs.Tab
+                      key={curTab.name}
+                      selected={
+                        searchLoadout.length <= 1 &&
+                        curTab.name === selectedTabName
+                      }
+                      onClick={() => {
+                        setSelectedTab(curTab.name);
+                        setSearchLoadout('');
+                      }}
+                    >
+                      <Box>
+                        {curTab.category_icon && (
+                          <Icon name={curTab.category_icon} mr={1} />
+                        )}
+                        {localizeDataLabel(curTab.name)}
+                      </Box>
+                    </Tabs.Tab>
+                  ))}
+              </Tabs>
+            </Stack.Item>
+            <Stack.Item>
+              <Input
+                className="PreferencesMenu__Loadout__SearchInput"
+                width="210px"
+                onChange={setSearchLoadout}
+                placeholder={t('loadout_search_item')}
+                value={searchLoadout}
+              />
+            </Stack.Item>
+          </Stack>
         </Section>
       </Stack.Item>
       <Stack.Item grow>
@@ -329,17 +335,23 @@ function LoadoutTabs(props: LoadoutTabsProps) {
           <Section
             className="PreferencesMenu__Loadout__CatalogSection"
             title={
-              searching ? t('loadout_search_results') : t('loadout_catalog')
+              searching ? (
+                t('loadout_search_results')
+              ) : (
+                <Stack align="center">
+                  <Stack.Item>{t('loadout_catalog')}</Stack.Item>
+                  {!!activeCategory?.category_info && (
+                    <Stack.Item ml={1}>
+                      <Box italic opacity={0.85}>
+                        {localizeDataLabel(activeCategory.category_info)}
+                      </Box>
+                    </Stack.Item>
+                  )}
+                </Stack>
+              )
             }
             fill
             scrollable
-            buttons={
-              activeCategory?.category_info ? (
-                <Box italic mt={0.5}>
-                  {localizeDataLabel(activeCategory.category_info)}
-                </Box>
-              ) : null
-            }
           >
             <Stack vertical>
               <Stack.Item>

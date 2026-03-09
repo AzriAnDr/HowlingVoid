@@ -17,4 +17,4 @@
 	if (!.)
 		return FALSE
 
-	return "Sensitive Snout(Чувствительная морда)" in preferences.all_quirks
+	return "Sensitive Snout" in preferences.all_quirks
