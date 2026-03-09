@@ -183,7 +183,7 @@ type JobRowProps = {
 
 function JobRow(props: JobRowProps) {
   const { data, act } = useBackend<PreferencesMenuData>();
-  const { t, localizeAltJobTitle, localizeJobName } =
+  const { t, localizeAltJobTitle, localizeDataLabel, localizeJobName } =
     usePreferencesLocalization(data);
   const { className, job, name } = props;
 
@@ -208,7 +208,8 @@ function JobRow(props: JobRowProps) {
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
         <Stack.Item grow textAlign="right">
-          <b>{hoursNeeded}h</b> {t('jobs_as')} {experience_type}
+          <b>{hoursNeeded}h</b> {t('jobs_as')}{' '}
+          {localizeDataLabel(experience_type)}
         </Stack.Item>
       </Stack>
     );
@@ -262,7 +263,7 @@ function JobRow(props: JobRowProps) {
   return (
     <Stack.Item className={className} height="100%" mt={0}>
       <Stack fill align="center">
-        <Tooltip content={job.description} position="bottom-start">
+        <Tooltip content={localizeDataLabel(job.description)} position="bottom-start">
           <Stack.Item
             className="job-name"
             width="50%"

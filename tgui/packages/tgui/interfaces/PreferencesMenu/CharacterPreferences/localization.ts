@@ -32,6 +32,13 @@ const UI_BY_LANGUAGE: Record<InterfaceLanguage, Record<string, string>> = {
   russian: RU_UI_BY_KEY,
 };
 
+const GENDER_TEXT_KEY_BY_ID: Record<string, string> = {
+  male: 'gender_male_pronouns',
+  female: 'gender_female_pronouns',
+  plural: 'gender_plural_pronouns',
+  neuter: 'gender_neuter_pronouns',
+};
+
 const RU_CHARACTER_FEATURE_NAMES_BY_EN = characterFeaturesRu as Record<
   string,
   string
@@ -263,6 +270,14 @@ export function localizeDataLabel(
   return resolveDataId(language, SERVER_LABELS_BY_ID, text, text);
 }
 
+export function localizeGender(
+  language: InterfaceLanguage,
+  genderId: string,
+): string {
+  const key = GENDER_TEXT_KEY_BY_ID[genderId];
+  return key ? translateUi(language, key, genderId) : genderId;
+}
+
 export function getPreferencesLocalization(data: unknown) {
   const language = getCharacterPreferencesLanguage(data);
 
@@ -277,6 +292,7 @@ export function getPreferencesLocalization(data: unknown) {
       englishFeatureName: string,
       featureId?: string,
     ) => localizeCharacterFeatureName(language, englishFeatureName, featureId),
+    localizeGender: (genderId: string) => localizeGender(language, genderId),
     localizeDataLabel: (text: string) => localizeDataLabel(language, text),
     localizeDataLabelById: (id: string, fallback?: string) =>
       localizeDataLabelById(language, id, fallback),
@@ -308,6 +324,10 @@ export function usePreferencesLocalization(data?: unknown) {
       resolved.localizeCharacterFeatureName(englishFeatureName, featureId),
     [language],
   );
+  const localizeGenderForLanguage = useCallback(
+    (genderId: string) => resolved.localizeGender(genderId),
+    [language],
+  );
   const localizeDataLabelForLanguage = useCallback(
     (text: string) => resolved.localizeDataLabel(text),
     [language],
@@ -324,6 +344,7 @@ export function usePreferencesLocalization(data?: unknown) {
     localizeJobName: localizeJobNameForLanguage,
     localizeAltJobTitle: localizeAltJobTitleForLanguage,
     localizeCharacterFeatureName: localizeCharacterFeatureNameForLanguage,
+    localizeGender: localizeGenderForLanguage,
     localizeDataLabel: localizeDataLabelForLanguage,
     localizeDataLabelById: localizeDataLabelByIdForLanguage,
   };

@@ -54,7 +54,7 @@ type AntagSelectionProps = {
 
 function AntagSelection(props: AntagSelectionProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { t } = usePreferencesLocalization(data);
+  const { t, localizeDataLabel } = usePreferencesLocalization(data);
   const className = 'PreferencesMenu__Antags__antagSelection';
 
   const [predictedState, setPredictedState] = useState(
@@ -138,7 +138,7 @@ function AntagSelection(props: AntagSelectionProps) {
                     textAlign: 'center',
                   }}
                 >
-                  {antagonist.name}
+                  {localizeDataLabel(antagonist.name)}
                 </Stack.Item>
 
                 <Stack.Item align="center">
@@ -152,7 +152,7 @@ function AntagSelection(props: AntagSelectionProps) {
                         : antagonist.description.map((text, index) => {
                             return (
                               <div key={antagonist.key + index}>
-                                {text}
+                                {localizeDataLabel(text)}
                                 {index !==
                                   antagonist.description.length - 1 && (
                                   <Divider />

@@ -198,7 +198,7 @@ function ChoicedSelection(props: ChoicedSelectionProps) {
                         props.onSelect(name);
                       }}
                       selected={name === props.selected}
-                      tooltip={name}
+                      tooltip={localizeDataLabel(name)}
                       tooltipPosition="right"
                       style={{
                         height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
@@ -245,7 +245,7 @@ type GenderButtonProps = {
 };
 
 function GenderButton(props: GenderButtonProps) {
-  const { t } = usePreferencesLocalization();
+  const { t, localizeGender } = usePreferencesLocalization();
   return (
     <Floating
       placement="right"
@@ -264,7 +264,7 @@ function GenderButton(props: GenderButtonProps) {
                     }}
                     fontSize="22px"
                     icon={GENDERS[gender].icon}
-                    tooltip={GENDERS[gender].text}
+                    tooltip={localizeGender(gender)}
                     tooltipPosition="top"
                   />
                 </Stack.Item>

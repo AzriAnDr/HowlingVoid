@@ -102,6 +102,7 @@ type QuirkDisplayProps = {
 function QuirkDisplay(props: QuirkDisplayProps) {
   const { quirk, quirkKey, handleClick, selected, quirkActionLocked } = props;
   const { icon, value, name, description, customizable, failTooltip } = quirk;
+  const { localizeDataLabel } = usePreferencesLocalization();
 
   const [customizationExpanded, setCustomizationExpanded] = useState(false);
 
@@ -174,7 +175,7 @@ function QuirkDisplay(props: QuirkDisplayProps) {
                 }}
               >
                 <Stack.Item grow basis="content">
-                  <b>{name}</b>
+                  <b>{localizeDataLabel(name)}</b>
                 </Stack.Item>
 
                 <Stack.Item>
@@ -191,7 +192,7 @@ function QuirkDisplay(props: QuirkDisplayProps) {
                 padding: '3px',
               }}
             >
-              {description}
+              {localizeDataLabel(description)}
               {!!customizable && (
                 <QuirkPopper
                   {...props}

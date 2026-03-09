@@ -68,7 +68,7 @@ type ButtonProps = {
 
 function PersonalityButton(props: ButtonProps) {
   const { personality, selected, invalid, disabled, onClick } = props;
-  const { t } = usePreferencesLocalization();
+  const { t, localizeDataLabel } = usePreferencesLocalization();
 
   const { backgroundColor, borderColor, tooltip } = getButtonColors(
     selected,
@@ -109,7 +109,7 @@ function PersonalityButton(props: ButtonProps) {
             paddingLeft: '0.5em',
           }}
         >
-          {personality.name}
+          {localizeDataLabel(personality.name)}
         </Stack.Item>
         <Stack.Item
           className="PreferencesMenu__Personality__CardDescription"
@@ -124,7 +124,7 @@ function PersonalityButton(props: ButtonProps) {
             paddingLeft: '0.5em',
           }}
         >
-          {personality.description}
+          {localizeDataLabel(personality.description)}
         </Stack.Item>
         {personality.pos_gameplay_description && (
           <Stack.Item
@@ -133,7 +133,7 @@ function PersonalityButton(props: ButtonProps) {
             color="green"
             style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}
           >
-            + {personality.pos_gameplay_description}
+            + {localizeDataLabel(personality.pos_gameplay_description)}
           </Stack.Item>
         )}
         {personality.neg_gameplay_description && (
@@ -146,7 +146,7 @@ function PersonalityButton(props: ButtonProps) {
               wordBreak: 'break-word',
             }}
           >
-            - {personality.neg_gameplay_description}
+            - {localizeDataLabel(personality.neg_gameplay_description)}
           </Stack.Item>
         )}
         {personality.neut_gameplay_description && (
@@ -159,7 +159,7 @@ function PersonalityButton(props: ButtonProps) {
               wordBreak: 'break-word',
             }}
           >
-            +/- {personality.neut_gameplay_description}
+            +/- {localizeDataLabel(personality.neut_gameplay_description)}
           </Stack.Item>
         )}
       </Stack>

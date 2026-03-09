@@ -182,15 +182,16 @@ type SpeciesPerkProps = {
 
 function SpeciesPerk(props: SpeciesPerkProps) {
   const { className, perk } = props;
+  const { localizeDataLabel } = usePreferencesLocalization();
 
   return (
     <Tooltip
       position="bottom-end"
       content={
         <Box>
-          <Box as="b">{perk.name}</Box>
+          <Box as="b">{localizeDataLabel(perk.name)}</Box>
           <Divider />
-          <Box>{perk.description}</Box>
+          <Box>{localizeDataLabel(perk.description)}</Box>
         </Box>
       }
     >
@@ -368,7 +369,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                         scrollable
                       >
                         {/* NOVA EDIT CHANGE END */}
-                        {currentSpecies.desc}
+                        {localizeDataLabel(currentSpecies.desc)}
                       </Section>
 
                       <Section
@@ -401,7 +402,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                   >
                     {currentSpecies.lore.map((text, index) => (
                       <Box key={index} maxWidth="100%">
-                        {text}
+                        {localizeDataLabel(text)}
                         {index !== currentSpecies.lore.length - 1 && (
                           <>
                             <br />
