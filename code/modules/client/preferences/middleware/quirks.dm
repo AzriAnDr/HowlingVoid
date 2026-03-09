@@ -42,14 +42,11 @@
 	return species_blacklist
 
 /datum/preference_middleware/quirks/get_ui_static_data(mob/user)
-	if (preferences.current_window != PREFERENCE_TAB_CHARACTER_PREFERENCES)
-		return list()
-
 	var/list/data = list()
 
 	data["selected_quirks"] = get_selected_quirks()
-	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species) // Howling Void edit
-	data["default_quirk_balance"] = CONFIG_GET(number/default_quirk_points) + get_species_positive_quirk_points_bonus(species_type) // Howling Void edit
+	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	data["default_quirk_balance"] = CONFIG_GET(number/default_quirk_points) + get_species_quirk_points_bonus(species_type)
 	data["species_disallowed_quirks"] = get_species_compatibility()
 
 	return data
@@ -57,12 +54,13 @@
 /datum/preference_middleware/quirks/get_ui_data(mob/user)
 	var/list/data = list()
 
-	if (tainted)
-		tainted = FALSE
-		data["selected_quirks"] = get_selected_quirks()
-		data["species_disallowed_quirks"] = get_species_compatibility()
-		var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species) // Howling Void edit
-		data["default_quirk_balance"] = CONFIG_GET(number/default_quirk_points) + get_species_positive_quirk_points_bonus(species_type) // Howling Void edit
+	// Always expose current quirk payload so all character subtabs (including Augments+)
+	// can render the same effective balance as Quirks without waiting for a tainted refresh.
+	data["selected_quirks"] = get_selected_quirks()
+	data["species_disallowed_quirks"] = get_species_compatibility()
+	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	data["default_quirk_balance"] = CONFIG_GET(number/default_quirk_points) + get_species_quirk_points_bonus(species_type)
+	tainted = FALSE
 
 	return data
 
@@ -114,8 +112,8 @@
 
 	preferences.validate_quirks()
 	var/list/new_quirks = preferences.all_quirks | quirk_name
-	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species) // Howling Void edit
-	if (SSquirks.filter_invalid_quirks(new_quirks, preferences.augments, species_type) != new_quirks)// NOVA EDIT - AUGMENTS+ // Howling Void edit
+	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	if (SSquirks.filter_invalid_quirks(new_quirks, preferences.augments, species_type) != new_quirks)// NOVA EDIT - AUGMENTS+
 		// If the client is sending an invalid give_quirk, that means that
 		// something went wrong with the client prediction, so we should
 		// catch it back up to speed.
@@ -132,8 +130,8 @@
 	var/quirk_name = params["quirk"]
 
 	var/list/new_quirks = preferences.all_quirks - quirk_name
-	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species) // Howling Void edit
-	if (!(quirk_name in preferences.all_quirks) || SSquirks.filter_invalid_quirks(new_quirks, preferences.augments, species_type) != new_quirks)// NOVA EDIT - AUGMENTS+ // Howling Void edit
+	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	if (!(quirk_name in preferences.all_quirks) || SSquirks.filter_invalid_quirks(new_quirks, preferences.augments, species_type) != new_quirks)// NOVA EDIT - AUGMENTS+
 		// If the client is sending an invalid remove_quirk, that means that
 		// something went wrong with the client prediction, so we should
 		// catch it back up to speed.

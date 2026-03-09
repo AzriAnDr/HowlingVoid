@@ -9602,6 +9602,7 @@
 #include "modularhowling_void\modules\clothing\code\loadout.dm"
 #include "modularhowling_void\modules\emotes\code\meow1.dm"
 #include "modularhowling_void\modules\modular_species\species\howling_void_species_defines.dm"
+#include "modularhowling_void\modules\modular_species\species\quirk_points_bonus.dm"
 #include "modularhowling_void\modules\modular_species\species\hemophage_passives.dm"
 #include "modularhowling_void\modules\modular_species\actions\sniffing\_sniffing.dm"
 #include "modularhowling_void\modules\modular_species\actions\sniffing\aquatic.dm"

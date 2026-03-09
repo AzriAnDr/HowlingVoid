@@ -11,6 +11,55 @@ import {
 
 import { CharacterPreview } from '../../common/CharacterPreview';
 import type { PreferencesMenuData } from '../types';
+import { useServerPrefs } from '../useServerPrefs';
+
+const getQuirkBalanceLikeQuirksPage = (data, serverData) => {
+  let fallbackBalance = -data.quirks_balance;
+
+  if (
+    !serverData ||
+    !serverData.quirks ||
+    !data.selected_quirks ||
+    typeof data.default_quirk_balance !== 'number'
+  ) {
+    return fallbackBalance;
+  }
+
+  const quirkInfo = serverData.quirks.quirk_info || {};
+  let balance = -data.default_quirk_balance;
+
+  for (const quirkKey of data.selected_quirks) {
+    const selectedQuirk = quirkInfo[quirkKey];
+    if (!selectedQuirk) {
+      continue;
+    }
+    balance += selectedQuirk.value || 0;
+  }
+
+  return balance;
+};
+
+const getAugmentsBudgetBalance = (data, serverData) => {
+  let balance = getQuirkBalanceLikeQuirksPage(data, serverData);
+
+  // Add currently selected augment costs for purchase validation logic.
+  for (const limb of data.limbs_data || []) {
+    const chosen = limb?.chosen_aug;
+    if (!chosen || chosen === 'None') {
+      continue;
+    }
+    balance += limb?.costs?.[chosen] || 0;
+  }
+  for (const organ of data.organs_data || []) {
+    const chosen = organ?.chosen_organ;
+    if (!chosen || chosen === 'Default') {
+      continue;
+    }
+    balance += organ?.costs?.[chosen] || 0;
+  }
+
+  return balance;
+};
 
 export const RotateCharacterButtons = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
@@ -136,7 +185,8 @@ export const LimbPage = (props) => {
 export const AugmentationPage = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
   const { data } = useBackend<PreferencesMenuData>();
-  const balance = -data.quirks_balance;
+  const serverData = useServerPrefs();
+  const balance = getAugmentsBudgetBalance(data, serverData);
   if (props.limb.can_augment) {
     return (
       <div style={{ marginBottom: '1.5em' }}>
@@ -199,7 +249,8 @@ export const AugmentationPage = (props) => {
 export const OrganPage = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
   const { data } = useBackend<PreferencesMenuData>();
-  const balance = -data.quirks_balance;
+  const serverData = useServerPrefs();
+  const balance = getAugmentsBudgetBalance(data, serverData);
   return (
     <Stack.Item>
       <Stack fill>
@@ -233,8 +284,9 @@ export const OrganPage = (props) => {
 export const LimbsPage = (props) => {
   const { data } = useBackend<PreferencesMenuData>();
   const { act } = useBackend<PreferencesMenuData>();
+  const serverData = useServerPrefs();
   const markings = data.marking_presets ? data.marking_presets : [];
-  const balance = -data.quirks_balance;
+  const displayBalance = getAugmentsBudgetBalance(data, serverData);
   return (
     <Stack minHeight="100%" className="PreferencesMenu__Augments">
       <Stack.Item minWidth="33%" minHeight="100%">
@@ -285,7 +337,7 @@ export const LimbsPage = (props) => {
                     alignItems: 'center',
                   }}
                 >
-                  {balance}
+                  {displayBalance}
                 </Box>
               </Stack>
             </Section>

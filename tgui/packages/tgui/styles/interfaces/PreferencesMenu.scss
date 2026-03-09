@@ -69,7 +69,6 @@ $department_map: (
     color: hsla(210, 18%, 92%, 0.97) !important;
   }
 
-  // Grid item cards in select popups (e.g. Select backpack)
   .Section .Button {
     border: 1px solid hsla(210, 16%, 34%, 0.65) !important;
     border-radius: 7px !important;
@@ -951,23 +950,6 @@ $department_map: (
       text-shadow: 0 0 6px hsla(140, 90%, 62%, 0.25);
     }
 
-    &__Column {
-      border-radius: 10px;
-      padding: 4px;
-      background: transparent;
-      box-shadow: none;
-    }
-
-    &__Column--available {
-      background: transparent;
-      box-shadow: none;
-    }
-
-    &__Column--current {
-      background: transparent;
-      box-shadow: none;
-    }
-
     &__SearchInput {
       .Input {
         border: 1px solid hsla(38, 30%, 70%, 0.55);
@@ -1462,41 +1444,6 @@ $department_map: (
   }
 
   &__Character {
-    &__JobsPage {
-      border: 1px solid hsla(36, 22%, 48%, 0.45);
-      border-radius: 9px;
-      padding: 8px;
-      background: linear-gradient(
-        180deg,
-        hsla(220, 17%, 18%, 0.95) 0%,
-        hsla(220, 19%, 12%, 0.98) 100%
-      );
-      box-shadow:
-        inset 0 0 0 1px hsla(38, 40%, 80%, 0.08),
-        0 8px 16px hsla(0, 0%, 0%, 0.3);
-    }
-
-    &__Jobs {
-      margin-top: 2px;
-    }
-
-    &__JobsGrid {
-      gap: 8px !important;
-      align-items: flex-start;
-    }
-
-    &__JobsColumn {
-      border: 1px solid hsla(36, 20%, 54%, 0.22);
-      border-radius: 8px;
-      padding: 4px;
-      background: linear-gradient(
-        180deg,
-        hsla(220, 17%, 18%, 0.7) 0%,
-        hsla(220, 20%, 11%, 0.84) 100%
-      );
-      box-shadow: inset 0 0 0 1px hsla(38, 40%, 80%, 0.05);
-    }
-
     &__JobsRoleDropdown,
     &__JobsRoleDropdown .Button,
     &__JobsRoleDropdown .Button__content,
@@ -2495,7 +2442,6 @@ $department_map: (
   overflow: hidden;
 }
 
-// High-priority: Import/Export row must stay dark and centered like legacy style.
 .PreferencesMenu
   .PreferencesMenu__Character__TransferRow
   .PreferencesMenu__Character__ActionButton {
@@ -2531,8 +2477,6 @@ $department_map: (
   left: 10px;
 }
 
-// High-priority: old dark modal controls for Alternate names.
-// NOTE: modal is portaled, so do NOT scope by `.PreferencesMenu`.
 .PreferencesMenu__Character__AltNamesModal .Button,
 .PreferencesMenu__Character__AltNamesModal .Button.Input,
 .PreferencesMenu__Character__AltNamesModal .Input,
@@ -2566,7 +2510,6 @@ $department_map: (
   color: hsla(210, 18%, 92%, 0.97);
 }
 
-// Final high-priority override for Augments+ controls.
 .PreferencesMenu__Augments .Button,
 .PreferencesMenu__Augments .Dropdown .Button,
 .PreferencesMenu__Augments .Dropdown .Button__content,
@@ -2621,7 +2564,6 @@ $department_map: (
     0 0 8px hsla(0, 70%, 50%, 0.24) !important;
 }
 
-// Final high-priority fix for Quirks columns/icon cells.
 .PreferencesMenu__Quirks__QuirkList--current {
   background: linear-gradient(
     180deg,
@@ -2634,7 +2576,6 @@ $department_map: (
     0 8px 16px hsla(0, 0%, 0%, 0.3) !important;
 }
 
-// Quirks icon cell palette, matched to legacy look.
 .PreferencesMenu__Quirks__QuirkList__quirk__iconcell--negative {
   background: linear-gradient(
     180deg,
@@ -2671,7 +2612,6 @@ $department_map: (
   box-shadow: inset 0 0 0 1px hsla(286, 90%, 72%, 0.16) !important;
 }
 
-// Final high-priority personality styling hook-up.
 .PreferencesMenu__Personality {
   border: 1px solid hsla(36, 22%, 48%, 0.45) !important;
   border-radius: 9px !important;
@@ -2743,15 +2683,11 @@ $department_map: (
   color: hsla(10, 100%, 93%, 0.98) !important;
 }
 
-// Final high-priority Quirk Points Balance styling for Augments+.
 .PreferencesMenu__Augments__PointsSection {
-  border: 1px solid hsla(39, 58%, 61%, 0.75) !important;
-  border-radius: 8px !important;
-  background: linear-gradient(
-    180deg,
-    hsla(220, 17%, 18%, 0.95) 0%,
-    hsla(220, 19%, 12%, 0.98) 100%
-  ) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .PreferencesMenu__Augments__PointsSection .Section__title {

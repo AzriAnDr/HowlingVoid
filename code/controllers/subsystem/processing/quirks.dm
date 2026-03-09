@@ -201,7 +201,8 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/list/positive_quirks = list()
 	var/points_enabled = !CONFIG_GET(flag/disable_quirk_points)
 	var/max_positive_quirks = CONFIG_GET(number/max_positive_quirks)
-	var/balance = -CONFIG_GET(number/default_quirk_points) - get_species_positive_quirk_points_bonus(species_type) // Howling Void edit
+	// Keep validation math in sync with UI balance math (default points + species bonus - quirks + aug costs <= 0).
+	var/balance = -CONFIG_GET(number/default_quirk_points) - get_species_quirk_points_bonus(species_type)
 
 	var/list/all_quirks = get_quirks()
 

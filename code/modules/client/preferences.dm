@@ -239,7 +239,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			// Save existing character
 			save_character()
 			// SAFETY: `switch_to_slot` performs sanitization on the slot number
-			switch_to_slot(params["slot"])
+			switch_to_slot(params["slot"], usr)
 			return TRUE
 		if ("remove_current_slot")
 			remove_current_slot()
@@ -552,11 +552,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return TRUE
 
 /datum/preferences/proc/GetQuirkBalance()
-	var/datum/species/species_type = read_preference(/datum/preference/choiced/species) // Howling Void edit
-	var/bal = CONFIG_GET(number/default_quirk_points) + get_species_positive_quirk_points_bonus(species_type) // Howling Void edit
+	var/datum/species/species_type = read_preference(/datum/preference/choiced/species)
+	var/bal = CONFIG_GET(number/default_quirk_points) + get_species_quirk_points_bonus(species_type)
 	for(var/V in all_quirks)
-		var/datum/quirk/T = SSquirks.quirks[V]
-		bal -= initial(T.value)
+		bal -= get_quirk_value(V)
 	//NOVA EDIT ADDITION
 	for(var/key in augments)
 		var/datum/augment_item/aug = GLOB.augment_items[augments[key]]
@@ -567,30 +566,31 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/GetPositiveQuirkCount()
 	. = 0
 	for(var/q in all_quirks)
-		if(SSquirks.quirk_points[q] > 0)
+		if(get_quirk_value(q) > 0)
 			.++
 
-/proc/get_species_positive_quirk_points_bonus(species_type)
-	var/species_id
-	if(ispath(species_type, /datum/species)) // Howling Void edit
-		species_id = initial(species_type:id) // Howling Void edit
-	else if(istype(species_type, /datum/species)) // Howling Void edit
-		var/datum/species/species_datum = species_type // Howling Void edit
-		species_id = species_datum.id // Howling Void edit
-	else // Howling Void edit
-		return 0 // Howling Void edit
+/datum/preferences/proc/get_quirk_value(quirk_name)
+	if(isnull(quirk_name))
+		return 0
 
-	switch(species_id) // Howling Void edit
-		if(SPECIES_HUMAN) // Howling Void edit
-			return 6 // Howling Void edit
-		if(SPECIES_HUMANOID) // Howling Void edit
-			return 4 // Howling Void edit
-		if(SPECIES_INSECTOID) // Howling Void edit
-			return 4 // Howling Void edit
-		if(SPECIES_MAMMAL) // Howling Void edit
-			return 4 // Howling Void edit
+	var/value = SSquirks.quirk_points[quirk_name]
+	if(isnum(value))
+		return value
 
-	return 0 // Howling Void edit
+	var/datum/quirk/quirk_type = SSquirks.quirks[quirk_name]
+	if(ispath(quirk_type, /datum/quirk))
+		return initial(quirk_type.value)
+
+	// Compatibility fallback for old/altered save entries.
+	var/safe_name = sanitize_css_class_name("[quirk_name]")
+	for(var/raw_name in SSquirks.quirk_points)
+		if(sanitize_css_class_name(raw_name) != safe_name)
+			continue
+		value = SSquirks.quirk_points[raw_name]
+		if(isnum(value))
+			return value
+
+	return 0
 
 /datum/preferences/proc/validate_quirks()
 	var/datum/species/species_type = read_preference(/datum/preference/choiced/species)

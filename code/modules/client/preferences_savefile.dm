@@ -437,9 +437,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	return TRUE
 
-/datum/preferences/proc/switch_to_slot(new_slot)
+/datum/preferences/proc/switch_to_slot(new_slot, mob/user = null)
 	if(new_slot == default_slot) // sanity check, nothing to do here.
 		return
+	if(isnull(user))
+		user = usr
 	// SAFETY: `load_character` performs sanitization on the slot number
 	if (!load_character(new_slot))
 		tainted_character_profiles = TRUE
@@ -447,9 +449,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		save_character()
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
-		preference_middleware.on_new_character(usr)
+		preference_middleware.on_new_character(user)
 
 	character_preview_view.update_body()
+	if(user)
+		update_static_data(user, always_instant = TRUE)
 	SSstatpanels.update_job_estimation(ckey = parent.ckey) // update the job estimations with their new char // NOVA EDIT ADDITION
 
 /datum/preferences/proc/remove_current_slot()
@@ -475,7 +479,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	savefile.remove_entry("character[default_slot]")
 	tainted_character_profiles = TRUE
-	switch_to_slot(closest_slot)
+	switch_to_slot(closest_slot, usr)
 
 /datum/preferences/proc/sanitize_be_special(list/input_be_special)
 	var/list/output = list()

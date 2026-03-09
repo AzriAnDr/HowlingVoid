@@ -99,8 +99,10 @@
 	var/list/filtered_quirks = SSquirks.filter_invalid_quirks(preferences.all_quirks, preferences.augments, species_type) // Howling Void edit
 	if(filtered_quirks != preferences.all_quirks)
 		preferences.all_quirks = filtered_quirks
-		preferences.update_static_data(user)
+		preferences.update_static_data(user, always_instant = TRUE)
 	preferences.character_preview_view.update_body()
+	preferences.update_static_data(user, always_instant = TRUE)
+	preferences.update_data_for_all_viewers()
 	return TRUE
 
 /datum/preference_middleware/limbs_and_markings/proc/set_limb_aug_style(list/params, mob/user)
@@ -236,8 +238,10 @@
 	var/list/filtered_quirks = SSquirks.filter_invalid_quirks(preferences.all_quirks, preferences.augments, species_type) // Howling Void edit
 	if(filtered_quirks != preferences.all_quirks)
 		preferences.all_quirks = filtered_quirks
-		preferences.update_static_data(user)
+		preferences.update_static_data(user, always_instant = TRUE)
 	preferences.character_preview_view.update_body()
+	preferences.update_static_data(user, always_instant = TRUE)
+	preferences.update_data_for_all_viewers()
 	return TRUE
 
 /datum/preference_middleware/limbs_and_markings/proc/set_preset(list/params, mob/user)

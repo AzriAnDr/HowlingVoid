@@ -357,7 +357,47 @@ function QuirkPage() {
     }
   });
 
-  let balance = -data.default_quirk_balance;
+  const getAugmentsSyncedBalance = () => {
+    let syncedBalance = -data.quirks_balance;
+
+    if (
+      server_data &&
+      server_data.quirks &&
+      data.selected_quirks &&
+      typeof data.default_quirk_balance === 'number'
+    ) {
+      const quirkInfoLocal = server_data.quirks.quirk_info || {};
+      syncedBalance = -data.default_quirk_balance;
+
+      for (const quirkKey of data.selected_quirks) {
+        const selectedQuirk = quirkInfoLocal[quirkKey];
+        if (!selectedQuirk) {
+          continue;
+        }
+        syncedBalance += selectedQuirk.value || 0;
+      }
+    }
+
+    for (const limb of data.limbs_data || []) {
+      const chosen = limb?.chosen_aug;
+      if (!chosen || chosen === 'None') {
+        continue;
+      }
+      syncedBalance += limb?.costs?.[chosen] || 0;
+    }
+
+    for (const organ of data.organs_data || []) {
+      const chosen = organ?.chosen_organ;
+      if (!chosen || chosen === 'Default') {
+        continue;
+      }
+      syncedBalance += organ?.costs?.[chosen] || 0;
+    }
+
+    return syncedBalance;
+  };
+
+  let balance = getAugmentsSyncedBalance();
   let positiveQuirks = 0;
 
   for (const selectedQuirkName of selectedQuirks) {
@@ -369,8 +409,6 @@ function QuirkPage() {
     if (selectedQuirk.value > 0) {
       positiveQuirks += 1;
     }
-
-    balance += selectedQuirk.value;
   }
 
   function getReasonToNotAdd(quirkName: string) {
