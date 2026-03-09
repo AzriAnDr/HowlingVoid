@@ -14,6 +14,24 @@ const RU_JOBS = jobsRu as {
   alt_job_titles?: Record<string, string>;
 };
 
+function normalizeLookupKey(value: string): string {
+  return value.replace(/\s+/g, ' ').trim();
+}
+
+const RU_UI_BY_EN_NORMALIZED = Object.fromEntries(
+  Object.entries(RU_UI_BY_EN).map(([key, value]) => [
+    normalizeLookupKey(key),
+    value,
+  ]),
+) as Record<string, string>;
+
+const RU_CHARACTER_FEATURE_NAMES_BY_EN_NORMALIZED = Object.fromEntries(
+  Object.entries(RU_CHARACTER_FEATURE_NAMES_BY_EN).map(([key, value]) => [
+    normalizeLookupKey(key),
+    value,
+  ]),
+) as Record<string, string>;
+
 function normalizeLanguage(raw: unknown): InterfaceLanguage | null {
   if (typeof raw !== 'string') {
     return null;
@@ -90,16 +108,28 @@ export function localize(
   const trimmed = key.trim();
   const noColon = trimmed.endsWith(':') ? trimmed.slice(0, -1) : trimmed;
   const withColon = trimmed.endsWith(':') ? trimmed : `${trimmed}:`;
+  const normalizedKey = normalizeLookupKey(key);
+  const normalizedTrimmed = normalizeLookupKey(trimmed);
+  const normalizedNoColon = normalizeLookupKey(noColon);
+  const normalizedWithColon = normalizeLookupKey(withColon);
 
   return (
     RU_UI_BY_EN[key] ??
     RU_UI_BY_EN[trimmed] ??
     RU_UI_BY_EN[noColon] ??
     RU_UI_BY_EN[withColon] ??
+    RU_UI_BY_EN_NORMALIZED[normalizedKey] ??
+    RU_UI_BY_EN_NORMALIZED[normalizedTrimmed] ??
+    RU_UI_BY_EN_NORMALIZED[normalizedNoColon] ??
+    RU_UI_BY_EN_NORMALIZED[normalizedWithColon] ??
     RU_CHARACTER_FEATURE_NAMES_BY_EN[key] ??
     RU_CHARACTER_FEATURE_NAMES_BY_EN[trimmed] ??
     RU_CHARACTER_FEATURE_NAMES_BY_EN[noColon] ??
     RU_CHARACTER_FEATURE_NAMES_BY_EN[withColon] ??
+    RU_CHARACTER_FEATURE_NAMES_BY_EN_NORMALIZED[normalizedKey] ??
+    RU_CHARACTER_FEATURE_NAMES_BY_EN_NORMALIZED[normalizedTrimmed] ??
+    RU_CHARACTER_FEATURE_NAMES_BY_EN_NORMALIZED[normalizedNoColon] ??
+    RU_CHARACTER_FEATURE_NAMES_BY_EN_NORMALIZED[normalizedWithColon] ??
     russianText ??
     key
   );
@@ -113,9 +143,12 @@ export function localizeCharacterFeatureName(
     return englishFeatureName;
   }
 
+  const normalized = normalizeLookupKey(englishFeatureName);
   return (
     RU_CHARACTER_FEATURE_NAMES_BY_EN[englishFeatureName] ??
+    RU_CHARACTER_FEATURE_NAMES_BY_EN_NORMALIZED[normalized] ??
     RU_UI_BY_EN[englishFeatureName] ??
+    RU_UI_BY_EN_NORMALIZED[normalized] ??
     englishFeatureName
   );
 }

@@ -20,7 +20,7 @@ export function KnownLanguage(props: { language: Language }) {
               inline
               className={`languages16x16 ${props.language.icon}`}
             />
-            <Box inline>{props.language.name}</Box>
+            <Box inline>{t(props.language.name)}</Box>
           </>
         }
       >
@@ -85,7 +85,7 @@ export function UnknownLanguage(props: { language: Language }) {
               inline
               className={`languages16x16 ${props.language.icon}`}
             />
-            <Box inline>{props.language.name}</Box>
+            <Box inline>{t(props.language.name)}</Box>
           </>
         }
       >
