@@ -183,7 +183,10 @@ type JobRowProps = {
 
 function JobRow(props: JobRowProps) {
   const { data, act } = useBackend<PreferencesMenuData>();
-  const { t, localizeAltJobTitle, localizeDataLabel, localizeJobName } =
+  const {
+    t,
+    localizeDataLabelById,
+  } =
     usePreferencesLocalization(data);
   const { className, job, name } = props;
 
@@ -212,7 +215,11 @@ function JobRow(props: JobRowProps) {
               {hoursNeeded}
               {t('jobs_hours_suffix')}
             </b>{' '}
-            {t('jobs_as')} {localizeDataLabel(experience_type)}
+            {t('jobs_as')}{' '}
+            {localizeDataLabelById(
+              `experience_type_${experience_type}`,
+              experience_type,
+            )}
           </Stack.Item>
         </Stack>
       );
@@ -266,7 +273,13 @@ function JobRow(props: JobRowProps) {
   return (
     <Stack.Item className={className} height="100%" mt={0}>
       <Stack fill align="center">
-        <Tooltip content={localizeDataLabel(job.description)} position="bottom-start">
+        <Tooltip
+          content={localizeDataLabelById(
+            `job_${name}_description`,
+            job.description,
+          )}
+          position="bottom-start"
+        >
           <Stack.Item
             className="job-name"
             width="50%"
@@ -275,14 +288,18 @@ function JobRow(props: JobRowProps) {
             }}
           >
             {!job.alt_titles ? (
-              localizeJobName(name)
+              localizeDataLabelById(`job_${name}_name`, name)
             ) : (
               <Dropdown
                 className="PreferencesMenu__Character__JobsDropdown"
                 width="100%"
                 options={job.alt_titles.map((title) => ({
                   value: title,
-                  displayText: localizeAltJobTitle(title),
+                  displayText:
+                    localizeDataLabelById(
+                      `job_${name}_alt_title_${title}`,
+                      title,
+                    ),
                 }))}
                 selected={altTitleSelected}
                 onSelected={(value) =>
@@ -349,9 +366,12 @@ function Department(props: DepartmentProps) {
 
 function JoblessRoleDropdown() {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { t, localizeJobName } = usePreferencesLocalization(data);
+  const { t, localizeDataLabelById } = usePreferencesLocalization(data);
   const selected = data.character_preferences.misc.joblessrole;
-  const overflowRoleName = localizeJobName(data.overflow_role);
+  const overflowRoleName = localizeDataLabelById(
+    `job_${data.overflow_role}_name`,
+    data.overflow_role,
+  );
 
   const options = [
     {

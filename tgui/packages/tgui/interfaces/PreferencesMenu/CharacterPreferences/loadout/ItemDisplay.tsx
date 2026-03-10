@@ -57,7 +57,7 @@ type DisplayProps = {
 
 export function ItemDisplay(props: DisplayProps) {
   const { act } = useBackend();
-  const { localizeDataLabel } = usePreferencesLocalization();
+  const { localizeDataLabelById } = usePreferencesLocalization();
   const { active, item, scale = 3 } = props;
 
   return (
@@ -66,7 +66,10 @@ export function ItemDisplay(props: DisplayProps) {
         imageSize={scale * 32}
         color={active ? 'green' : 'default'}
         style={{ textTransform: 'capitalize', zIndex: '1' }}
-        tooltip={localizeDataLabel(item.name)}
+        tooltip={localizeDataLabelById(
+          `loadout_item_${item.path}_name`,
+          item.name,
+        )}
         tooltipPosition={'bottom'}
         dmIcon={item.icon}
         dmIconState={item.icon_state}
@@ -89,7 +92,13 @@ export function ItemDisplay(props: DisplayProps) {
                 textColor={'darkgray'}
                 bold
               >
-                <Tooltip position="right" content={localizeDataLabel(info.tooltip)}>
+                <Tooltip
+                  position="right"
+                  content={localizeDataLabelById(
+                    `loadout_item_${item.path}_info_${info.icon}`,
+                    info.tooltip,
+                  )}
+                >
                   <Icon name={info.icon} />
                 </Tooltip>
               </Stack.Item>
@@ -130,7 +139,7 @@ function sortByGroup(items: LoadoutItem[]): LoadoutGroup[] {
 
 export function ItemListDisplay(props: ListProps) {
   const { data } = useBackend<LoadoutManagerData>();
-  const { localizeDataLabel } = usePreferencesLocalization(data);
+  const { localizeDataLabelById } = usePreferencesLocalization(data);
   const loadout_list = data.character_preferences.misc.loadout_lists.loadout; // NOVA EDIT CHANGE: Multiple loadout presets: ORIGINAL: const { loadout_list } = data.character_preferences.misc;
   const itemGroups = sortByGroup(props.items);
 
@@ -143,7 +152,12 @@ export function ItemListDisplay(props: ListProps) {
             {itemGroups.length > 1 && (
               <>
                 <Stack.Item mt={-1.5} mb={-0.8} ml={1.5}>
-                  <h3 color="grey">{localizeDataLabel(group.title)}</h3>
+                  <h3 color="grey">
+                    {localizeDataLabelById(
+                      `loadout_group_${group.title}`,
+                      group.title,
+                    )}
+                  </h3>
                 </Stack.Item>
                 <Stack.Divider />
               </>

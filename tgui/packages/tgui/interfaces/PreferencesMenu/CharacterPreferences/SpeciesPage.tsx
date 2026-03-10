@@ -182,8 +182,7 @@ type SpeciesPerkProps = {
 
 function SpeciesPerk(props: SpeciesPerkProps) {
   const { className, perk } = props;
-  const { localizeDataLabel, localizeDataLabelById } =
-    usePreferencesLocalization();
+  const { localizeDataLabelById } = usePreferencesLocalization();
 
   return (
     <Tooltip
@@ -193,14 +192,14 @@ function SpeciesPerk(props: SpeciesPerkProps) {
           <Box as="b">
             {localizeDataLabelById(
               `perk_${perk.ui_icon}_name`,
-              localizeDataLabel(perk.name),
+              perk.name,
             )}
           </Box>
           <Divider />
           <Box>
             {localizeDataLabelById(
               `perk_${perk.ui_icon}_description`,
-              localizeDataLabel(perk.description),
+              perk.description,
             )}
           </Box>
         </Box>
@@ -274,7 +273,7 @@ type SpeciesPageInnerProps = {
 
 function SpeciesPageInner(props: SpeciesPageInnerProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { t, localizeDataLabel, localizeDataLabelById } =
+  const { t, localizeDataLabelById } =
     usePreferencesLocalization(data);
   const setSpecies = createSetPreference(act, 'species');
 
@@ -332,7 +331,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                     }
                     tooltip={localizeDataLabelById(
                       `species_${speciesKey}_name`,
-                      localizeDataLabel(species.name),
+                      species.name,
                     )}
                     style={{
                       display: 'block',
@@ -350,7 +349,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                   const tooltipContent =
                     localizeDataLabelById(
                       `species_${speciesKey}_name`,
-                      localizeDataLabel(species.name),
+                      species.name,
                     ) +
                     ` - ${t('species_nova_only_tooltip')}`;
                   speciesPage = (
@@ -372,7 +371,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                       className="PreferencesMenu__Character__SpeciesInfo"
                       title={localizeDataLabelById(
                         `species_${data.character_preferences.misc.species}_name`,
-                        localizeDataLabel(currentSpecies.name),
+                        currentSpecies.name,
                       )}
                       buttons={
                         // NOHUNGER species have no diet (diet = null),
@@ -392,7 +391,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                         {/* NOVA EDIT CHANGE END */}
                         {localizeDataLabelById(
                           `species_${data.character_preferences.misc.species}_description`,
-                          localizeDataLabel(currentSpecies.desc),
+                          currentSpecies.desc,
                         )}
                       </Section>
 
@@ -428,7 +427,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                       <Box key={index} maxWidth="100%">
                         {localizeDataLabelById(
                           `species_${data.character_preferences.misc.species}_lore_${index}`,
-                          localizeDataLabel(text),
+                          text,
                         )}
                         {index !== currentSpecies.lore.length - 1 && (
                           <>

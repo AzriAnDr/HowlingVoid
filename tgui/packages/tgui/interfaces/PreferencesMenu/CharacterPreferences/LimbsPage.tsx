@@ -89,7 +89,7 @@ export const RotateCharacterButtons = (props) => {
 
 export const Markings = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
-  const { t, localizeDataLabel } = usePreferencesLocalization();
+  const { t, localizeDataLabelById } = usePreferencesLocalization();
   return (
     <Stack fill vertical>
       <Stack.Item>{t('limbs_markings_label')}</Stack.Item>
@@ -102,7 +102,10 @@ export const Markings = (props) => {
                 width="100%"
                 options={props.limb.markings.marking_choices.map((choice) => ({
                   value: choice,
-                  displayText: localizeDataLabel(choice),
+                  displayText: localizeDataLabelById(
+                    `limb_${props.limb.slot}_marking_choice_${choice}`,
+                    choice,
+                  ),
                 }))}
                 selected={marking.name}
                 onSelected={(shit) =>
@@ -173,13 +176,16 @@ export const Markings = (props) => {
 };
 
 export const LimbPage = (props) => {
-  const { localizeDataLabel } = usePreferencesLocalization();
+  const { localizeDataLabelById } = usePreferencesLocalization();
   return (
     <div>
       <Section
         className="PreferencesMenu__Augments__Card"
         fill
-        title={localizeDataLabel(props.limb.name)}
+        title={localizeDataLabelById(
+          `limb_${props.limb.slot}_name`,
+          props.limb.name,
+        )}
       >
         <Stack vertical fill>
           <Stack.Item>
@@ -194,7 +200,7 @@ export const LimbPage = (props) => {
 export const AugmentationPage = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
   const { data } = useBackend<PreferencesMenuData>();
-  const { t, localizeDataLabel } = usePreferencesLocalization(data);
+  const { t, localizeDataLabelById } = usePreferencesLocalization(data);
   const serverData = useServerPrefs();
   const balance = getAugmentsBudgetBalance(data, serverData);
   if (props.limb.can_augment) {
@@ -203,7 +209,10 @@ export const AugmentationPage = (props) => {
         <Section
           className="PreferencesMenu__Augments__Card"
           fill
-          title={localizeDataLabel(props.limb.name)}
+          title={localizeDataLabelById(
+            `limb_${props.limb.slot}_name`,
+            props.limb.name,
+          )}
         >
           <Stack fill vertical>
             <Stack.Item>
@@ -216,7 +225,10 @@ export const AugmentationPage = (props) => {
                     options={(Object.values(props.limb.aug_choices) as string[]).map(
                       (choice) => ({
                         value: choice,
-                        displayText: localizeDataLabel(choice),
+                        displayText: localizeDataLabelById(
+                          `limb_${props.limb.slot}_augmentation_${choice}`,
+                          choice,
+                        ),
                       }),
                     )}
                     selected={props.limb.chosen_aug}
@@ -247,7 +259,10 @@ export const AugmentationPage = (props) => {
                     width="100%"
                     options={props.data.robotic_styles.map((style) => ({
                       value: style,
-                      displayText: localizeDataLabel(style),
+                      displayText: localizeDataLabelById(
+                        `robotic_style_${style}`,
+                        style,
+                      ),
                     }))}
                     selected={props.limb.chosen_style}
                     onSelected={(value) =>
@@ -271,13 +286,16 @@ export const AugmentationPage = (props) => {
 export const OrganPage = (props) => {
   const { act } = useBackend<PreferencesMenuData>();
   const { data } = useBackend<PreferencesMenuData>();
-  const { localizeDataLabel } = usePreferencesLocalization(data);
+  const { localizeDataLabelById } = usePreferencesLocalization(data);
   const serverData = useServerPrefs();
   const balance = getAugmentsBudgetBalance(data, serverData);
   return (
     <Stack.Item>
       <Stack fill>
-        <Stack.Item>{`${localizeDataLabel(props.organ.name)}: `}</Stack.Item>
+        <Stack.Item>{`${localizeDataLabelById(
+          `organ_${props.organ.slot}_name`,
+          props.organ.name,
+        )}: `}</Stack.Item>
         <Stack.Item grow>
           <Dropdown
             className="PreferencesMenu__Augments__Dropdown"
@@ -285,7 +303,10 @@ export const OrganPage = (props) => {
             options={(Object.values(props.organ.organ_choices) as string[]).map(
               (choice) => ({
                 value: choice,
-                displayText: localizeDataLabel(choice),
+                displayText: localizeDataLabelById(
+                  `organ_${props.organ.slot}_choice_${choice}`,
+                  choice,
+                ),
               }),
             )}
             selected={props.organ.chosen_organ}

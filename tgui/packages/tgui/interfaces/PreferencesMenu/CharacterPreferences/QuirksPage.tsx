@@ -102,7 +102,7 @@ type QuirkDisplayProps = {
 function QuirkDisplay(props: QuirkDisplayProps) {
   const { quirk, quirkKey, handleClick, selected, quirkActionLocked } = props;
   const { icon, value, name, description, customizable, failTooltip } = quirk;
-  const { localizeDataLabel } = usePreferencesLocalization();
+  const { localizeDataLabelById } = usePreferencesLocalization();
 
   const [customizationExpanded, setCustomizationExpanded] = useState(false);
 
@@ -175,7 +175,9 @@ function QuirkDisplay(props: QuirkDisplayProps) {
                 }}
               >
                 <Stack.Item grow basis="content">
-                  <b>{localizeDataLabel(name)}</b>
+                  <b>
+                    {localizeDataLabelById(`quirk_${quirkKey}_name`, name)}
+                  </b>
                 </Stack.Item>
 
                 <Stack.Item>
@@ -192,7 +194,10 @@ function QuirkDisplay(props: QuirkDisplayProps) {
                 padding: '3px',
               }}
             >
-              {localizeDataLabel(description)}
+              {localizeDataLabelById(
+                `quirk_${quirkKey}_description`,
+                description,
+              )}
               {!!customizable && (
                 <QuirkPopper
                   {...props}
@@ -314,7 +319,7 @@ function StatDisplay(props) {
 
 function QuirkPage() {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { t } = usePreferencesLocalization(data);
+  const { t, localizeDataLabelById } = usePreferencesLocalization(data);
 
   // this is mainly just here to copy from MainPage.tsx
   const [randomToggleEnabled] = useRandomToggleState();
@@ -352,6 +357,9 @@ function QuirkPage() {
   } = server_data.quirks;
 
   const quirks = Object.entries(quirkInfo);
+  const quirkKeyByName = Object.fromEntries(
+    quirks.map(([quirkKey, quirk]) => [quirk.name, quirkKey]),
+  ) as Record<string, string>;
   quirks.sort(([_, quirkA], [__, quirkB]) => {
     if (quirkA.value === quirkB.value) {
       return quirkA.name > quirkB.name ? 1 : -1;
@@ -445,7 +453,10 @@ function QuirkPage() {
         ) {
           return t('quirks_incompatible_with').replace(
             '{quirk}',
-            incompatibleQuirk,
+            localizeDataLabelById(
+              `quirk_${quirkKeyByName[incompatibleQuirk]}_name`,
+              incompatibleQuirk,
+            ),
           );
         }
       }

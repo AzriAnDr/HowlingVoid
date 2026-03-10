@@ -40,7 +40,7 @@ type ButtonProps = {
 
 function LoadoutModifyButton(props: ButtonProps) {
   const { act, data } = useBackend<LoadoutManagerData>();
-  const { localizeDataLabel } = usePreferencesLocalization(data);
+  const { localizeDataLabelById } = usePreferencesLocalization(data);
   const loadout_list = data.character_preferences.misc.loadout_lists.loadout; // NOVA EDIT CHANGE - Multiple loadout presets - ORIGINAL: const { loadout_list } = data.character_preferences.misc;
   const { button, modifyItemDimmer } = props;
 
@@ -51,7 +51,12 @@ function LoadoutModifyButton(props: ButtonProps) {
     return (
       <Button.Checkbox
         tooltip={
-          button.tooltip_text ? localizeDataLabel(button.tooltip_text) : undefined
+          button.tooltip_text
+            ? localizeDataLabelById(
+                `loadout_button_${button.label}_tooltip`,
+                button.tooltip_text,
+              )
+            : undefined
         }
         checked={buttonIsActive}
         color={buttonIsActive ? 'green' : 'default'}
@@ -62,7 +67,8 @@ function LoadoutModifyButton(props: ButtonProps) {
           });
         }}
       >
-        {localizeDataLabel(
+        {localizeDataLabelById(
+          `loadout_button_${button.label}_${buttonIsActive ? 'active' : 'inactive'}_text`,
           buttonIsActive ? button.active_text : button.inactive_text,
         )}
       </Button.Checkbox>
@@ -73,7 +79,12 @@ function LoadoutModifyButton(props: ButtonProps) {
     <Button
       icon={button.button_icon}
       tooltip={
-        button.tooltip_text ? localizeDataLabel(button.tooltip_text) : undefined
+        button.tooltip_text
+          ? localizeDataLabelById(
+              `loadout_button_${button.label}_tooltip`,
+              button.tooltip_text,
+            )
+          : undefined
       }
       disabled={!button.act_key}
       color={buttonIsActive ? 'green' : 'default'}
@@ -84,7 +95,12 @@ function LoadoutModifyButton(props: ButtonProps) {
         });
       }}
     >
-      {button.button_text ? localizeDataLabel(button.button_text) : ''}
+      {button.button_text
+        ? localizeDataLabelById(
+            `loadout_button_${button.label}_text`,
+            button.button_text,
+          )
+        : ''}
     </Button>
   );
 }
@@ -95,7 +111,7 @@ type ButtonsProps = {
 
 function LoadoutModifyButtons(props: ButtonsProps) {
   const { act, data } = useBackend<LoadoutManagerData>();
-  const { t, localizeDataLabel } = usePreferencesLocalization(data);
+  const { t, localizeDataLabelById } = usePreferencesLocalization(data);
   const loadout_list = data.character_preferences.misc.loadout_lists.loadout; // NOVA EDIT CHANGE - Multiple loadout presets - ORIGINAL: const { loadout_list } = data.character_preferences.misc;
   const { modifyItemDimmer } = props;
 
@@ -117,7 +133,10 @@ function LoadoutModifyButtons(props: ButtonsProps) {
                 {modifyItemDimmer.reskins.map((reskin) => (
                   <Flex.Item key={reskin.tooltip} mr={1} mb={1}>
                     <Button
-                      tooltip={localizeDataLabel(reskin.tooltip)}
+                      tooltip={localizeDataLabelById(
+                        `loadout_reskin_${modifyItemDimmer.path}_${reskin.name}_tooltip`,
+                        reskin.tooltip,
+                      )}
                       color={
                         isActive(modifyItemDimmer, reskin) ? 'green' : 'default'
                       }
@@ -140,7 +159,12 @@ function LoadoutModifyButtons(props: ButtonsProps) {
                         />
                       ) : (
                         // Should never happen, hopefully
-                        <Box>{localizeDataLabel(reskin.name)}</Box>
+                        <Box>
+                          {localizeDataLabelById(
+                            `loadout_reskin_${modifyItemDimmer.path}_${reskin.name}`,
+                            reskin.name,
+                          )}
+                        </Box>
                       )}
                     </Button>
                   </Flex.Item>
@@ -151,7 +175,10 @@ function LoadoutModifyButtons(props: ButtonsProps) {
           {modifyItemDimmer.buttons.map((button) => (
             <LabeledList.Item
               key={button.label}
-              label={localizeDataLabel(button.label)}
+              label={localizeDataLabelById(
+                `loadout_button_${button.label}_label`,
+                button.label,
+              )}
             >
               <LoadoutModifyButton
                 button={button}
@@ -170,14 +197,17 @@ type ItemDisplayProps = {
 };
 
 function LoadoutModifyItemDisplay(props: ItemDisplayProps) {
-  const { localizeDataLabel } = usePreferencesLocalization();
+  const { localizeDataLabelById } = usePreferencesLocalization();
   const { modifyItemDimmer } = props;
 
   return (
     <Stack vertical justify="center">
       <Stack.Item>
         <Box bold width="80px" textAlign="center">
-          {localizeDataLabel(modifyItemDimmer.name)}
+          {localizeDataLabelById(
+            `loadout_item_${modifyItemDimmer.path}_name`,
+            modifyItemDimmer.name,
+          )}
         </Box>
       </Stack.Item>
       <Stack.Item ml={-0.5}>

@@ -54,7 +54,7 @@ type AntagSelectionProps = {
 
 function AntagSelection(props: AntagSelectionProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { t, localizeDataLabel } = usePreferencesLocalization(data);
+  const { t, localizeDataLabelById } = usePreferencesLocalization(data);
   const className = 'PreferencesMenu__Antags__antagSelection';
 
   const [predictedState, setPredictedState] = useState(
@@ -138,7 +138,10 @@ function AntagSelection(props: AntagSelectionProps) {
                     textAlign: 'center',
                   }}
                 >
-                  {localizeDataLabel(antagonist.name)}
+                  {localizeDataLabelById(
+                    `antag_${antagonist.key}_name`,
+                    antagonist.name,
+                  )}
                 </Stack.Item>
 
                 <Stack.Item align="center">
@@ -147,12 +150,18 @@ function AntagSelection(props: AntagSelectionProps) {
                       isBanned
                         ? t('antags_banned_tooltip').replace(
                             '{name}',
-                            localizeDataLabel(antagonist.name),
+                            localizeDataLabelById(
+                              `antag_${antagonist.key}_name`,
+                              antagonist.name,
+                            ),
                           )
                         : antagonist.description.map((text, index) => {
                             return (
                               <div key={antagonist.key + index}>
-                                {localizeDataLabel(text)}
+                                {localizeDataLabelById(
+                                  `antag_${antagonist.key}_description_${index}`,
+                                  text,
+                                )}
                                 {index !==
                                   antagonist.description.length - 1 && (
                                   <Divider />

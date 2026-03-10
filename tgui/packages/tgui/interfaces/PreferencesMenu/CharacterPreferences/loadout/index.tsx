@@ -50,7 +50,7 @@ export function LoadoutPage(props) {
   const [managingPreset, _setManagingPreset] = useState<string | null>(null);
   const { act, data } = useBackend<PreferencesMenuData>();
   const [input, setInput] = useState('');
-  const { t, localizeDataLabel } = usePreferencesLocalization(data);
+  const { t, localizeDataLabelById } = usePreferencesLocalization(data);
   const setManagingPreset = (value) => {
     _setManagingPreset(value);
     setInput('');
@@ -186,7 +186,10 @@ export function LoadoutPage(props) {
                         {curTab.category_icon && (
                           <Icon name={curTab.category_icon} mr={1} />
                         )}
-                        {localizeDataLabel(curTab.name)}
+                        {localizeDataLabelById(
+                          `loadout_tab_${curTab.name}`,
+                          curTab.name,
+                        )}
                       </Box>
                     </Tabs.Tab>
                   ))}
@@ -242,7 +245,7 @@ function LoadoutTabs(props: LoadoutTabsProps) {
   const searching = currentSearch.length > 1;
 
   const { act, data } = useBackend<PreferencesMenuData>(); // NOVA EDIT ADDITION: Multiple loadout presets
-  const { t, localizeDataLabel } = usePreferencesLocalization(data);
+  const { t, localizeDataLabelById } = usePreferencesLocalization(data);
   return (
     <Stack className="PreferencesMenu__Loadout__Body" fill>
       <Stack.Item align="center" width="250px" height="100%">
@@ -343,7 +346,10 @@ function LoadoutTabs(props: LoadoutTabsProps) {
                   {!!activeCategory?.category_info && (
                     <Stack.Item ml={1}>
                       <Box italic opacity={0.85}>
-                        {localizeDataLabel(activeCategory.category_info)}
+                        {localizeDataLabelById(
+                          `loadout_category_info_${activeCategory.name}`,
+                          activeCategory.category_info,
+                        )}
                       </Box>
                     </Stack.Item>
                   )}
@@ -401,7 +407,7 @@ type LoadoutSelectedItemProps = {
 function LoadoutSelectedItem(props: LoadoutSelectedItemProps) {
   const { all_tabs, path, modifyItemDimmer, setModifyItemDimmer } = props;
   const { act, data } = useBackend<LoadoutManagerData>();
-  const { localizeDataLabel } = usePreferencesLocalization(data);
+  const { localizeDataLabelById } = usePreferencesLocalization(data);
 
   const item = typepathToLoadoutItem(path, all_tabs);
   if (!item) {
@@ -413,7 +419,9 @@ function LoadoutSelectedItem(props: LoadoutSelectedItemProps) {
       <Stack.Item>
         <ItemIcon item={item} scale={1} />
       </Stack.Item>
-      <Stack.Item width="55%">{localizeDataLabel(item.name)}</Stack.Item>
+      <Stack.Item width="55%">
+        {localizeDataLabelById(`loadout_item_${path}_name`, item.name)}
+      </Stack.Item>
       {item.buttons.length ? (
         <Stack.Item>
           <Button
@@ -492,7 +500,7 @@ function LoadoutSelectedSection(props: LoadoutSelectedSectionProps) {
 
 function LoadoutPreviewSection() {
   const { act, data } = useBackend<LoadoutManagerData>();
-  const { t, localizeDataLabelById, localizeDataLabel } =
+  const { t, localizeDataLabelById } =
     usePreferencesLocalization(data);
 
   return (
@@ -535,7 +543,7 @@ function LoadoutPreviewSection() {
                         data.preview_option_ids[option],
                         option,
                       )
-                    : localizeDataLabel(option),
+                    : localizeDataLabelById(`preview_option_${option}`, option),
                 }))}
                 onSelected={(value) =>
                   act('update_preview', {

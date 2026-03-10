@@ -6,7 +6,7 @@ import { usePreferencesLocalization } from './localization';
 
 export function KnownLanguage(props: { language: Language }) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { t, localizeDataLabelById, localizeDataLabel } =
+  const { t, localizeDataLabelById } =
     usePreferencesLocalization(data);
 
   return (
@@ -21,23 +21,21 @@ export function KnownLanguage(props: { language: Language }) {
               className={`languages16x16 ${props.language.icon}`}
             />
             <Box inline>
-              {props.language.name_id
-                ? localizeDataLabelById(
-                    props.language.name_id,
-                    props.language.name,
-                  )
-                : localizeDataLabel(props.language.name)}
+              {localizeDataLabelById(
+                props.language.name_id ??
+                  `language_${props.language.icon}_name`,
+                props.language.name,
+              )}
             </Box>
           </>
         }
       >
         <BlockQuote>
-          {props.language.description_id
-            ? localizeDataLabelById(
-                props.language.description_id,
-                props.language.description,
-              )
-            : localizeDataLabel(props.language.description)}
+          {localizeDataLabelById(
+            props.language.description_id ??
+              `language_${props.language.icon}_description`,
+            props.language.description,
+          )}
         </BlockQuote>
         <Button
           className="PreferencesMenu__Languages__ActionButton"
@@ -86,7 +84,7 @@ export function KnownLanguage(props: { language: Language }) {
 
 export function UnknownLanguage(props: { language: Language }) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { t, localizeDataLabelById, localizeDataLabel } =
+  const { t, localizeDataLabelById } =
     usePreferencesLocalization(data);
   const noPoints =
     data.selected_languages.length === data.total_language_points;
@@ -103,23 +101,21 @@ export function UnknownLanguage(props: { language: Language }) {
               className={`languages16x16 ${props.language.icon}`}
             />
             <Box inline>
-              {props.language.name_id
-                ? localizeDataLabelById(
-                    props.language.name_id,
-                    props.language.name,
-                  )
-                : localizeDataLabel(props.language.name)}
+              {localizeDataLabelById(
+                props.language.name_id ??
+                  `language_${props.language.icon}_name`,
+                props.language.name,
+              )}
             </Box>
           </>
         }
       >
         <BlockQuote>
-          {props.language.description_id
-            ? localizeDataLabelById(
-                props.language.description_id,
-                props.language.description,
-              )
-            : localizeDataLabel(props.language.description)}
+          {localizeDataLabelById(
+            props.language.description_id ??
+              `language_${props.language.icon}_description`,
+            props.language.description,
+          )}
         </BlockQuote>
         <Button
           className="PreferencesMenu__Languages__ActionButton"
