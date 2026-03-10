@@ -161,6 +161,7 @@ const CHARACTER_FEATURE_ID_ALIASES: Record<string, string> = {
   paint_color: 'paint_color',
   socks_color: 'socks_color',
   undershirt_color: 'undershirt_color',
+  jumpsuit_style: 'jumpsuit',
   hairstyle_name: 'hairstyle',
   facial_style_name: 'facial_hairstyle',
   facial_hair: 'facial_hairstyle',
