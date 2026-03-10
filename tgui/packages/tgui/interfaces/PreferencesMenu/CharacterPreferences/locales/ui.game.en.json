@@ -1,8 +1,7 @@
 {
-    "search_placeholder":  "Search...",
-    "feature_change":  "Change",
-    "game_settings":  "Settings",
-    "game_keybindings":  "Keybindings",
-    "game_preference_not_filled_out":  "...is not filled out properly!!!",
-    "ghost_no_display_names_for_ghost_form":  "No display names for ghost_form!"
+	"game_keybindings": "Keybindings",
+	"game_preference_not_filled_out": "...is not filled out properly!!!",
+	"game_settings": "Settings",
+	"ghost_no_display_names_for_ghost_form": "No display names for ghost_form!",
+	"search_placeholder": "Search..."
 }
