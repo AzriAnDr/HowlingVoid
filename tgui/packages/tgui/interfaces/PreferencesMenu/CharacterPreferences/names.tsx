@@ -45,7 +45,9 @@ type MultiNameProps = {
 export function MultiNameInput(props: MultiNameProps) {
   const { handleUpdateName, handleRandomizeName } = props;
   const { data: backendData } = useBackend<PreferencesMenuData>();
-  const { t, localizeDataLabel } = usePreferencesLocalization(backendData);
+  const { t, localizeCharacterDataById } = usePreferencesLocalization(
+    backendData,
+  );
 
   const data = useServerPrefs();
   if (!data) return null;
@@ -69,10 +71,10 @@ export function MultiNameInput(props: MultiNameProps) {
           className="PreferencesMenu__Character__AltNamesModal"
           buttons={
             <Button color="red" onClick={props.handleClose}>
-              {t('close')}
+              {t('ui.character.close')}
             </Button>
           }
-          title={t('alternate_names')}
+          title={t('ui.character.alternate_names')}
         >
           <LabeledList>
             {sortNameWithKeyEntries(Object.entries(namesIntoGroups)).map(
@@ -91,7 +93,10 @@ export function MultiNameInput(props: MultiNameProps) {
                     return (
                       <LabeledList.Item
                         key={key}
-                        label={localizeDataLabel(name.explanation)}
+                        label={localizeCharacterDataById(
+                          `name_type_${key}`,
+                          name.explanation,
+                        )}
                       >
                         <Stack fill>
                           {/* NOVA EDIT REMOVAL START - DRONE NAMING (the removed part is integrated in the added block below)
@@ -170,7 +175,7 @@ export function MultiNameInput(props: MultiNameProps) {
                             <Stack.Item>
                                 <Button
                                   icon="dice"
-                                  tooltip={t('randomize')}
+                                  tooltip={t('ui.character.randomize')}
                                   tooltipPosition="right"
                                   onClick={() => handleRandomizeName(key)}
                                 />
@@ -267,7 +272,7 @@ export function NameInput(props: NameInputProps) {
           <Stack.Item>
             <Button
               as="span"
-              tooltip={t('alternate_names')}
+              tooltip={t('ui.character.alternate_names')}
               tooltipPosition="bottom"
               style={{
                 background: 'rgba(0, 0, 0, 0.7)',

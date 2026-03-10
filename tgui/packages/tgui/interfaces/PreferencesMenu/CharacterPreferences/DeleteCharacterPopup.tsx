@@ -28,12 +28,12 @@ export function DeleteCharacterPopup(props: Props) {
     <Modal>
       <Stack vertical textAlign="center" align="center">
         <Stack.Item>
-          <Box fontSize="3em">{t('delete_popup_wait')}</Box>
+          <Box fontSize="3em">{t('ui.character.delete_popup.wait')}</Box>
         </Stack.Item>
 
         <Stack.Item maxWidth="300px">
           <Box>
-            {t('delete_popup_confirm_text').replace(
+            {t('ui.character.delete_popup.confirm_text').replace(
               '{name}',
               data.character_preferences.names[data.name_to_use],
             )}
@@ -54,13 +54,13 @@ export function DeleteCharacterPopup(props: Props) {
                 }}
               >
                 {secondsLeft <= 0
-                  ? t('delete_popup_delete')
-                  : `${t('delete_popup_delete')} (${secondsLeft})`}
+                  ? t('ui.character.delete_popup.delete')
+                  : `${t('ui.character.delete_popup.delete')} (${secondsLeft})`}
               </Button>
             </Stack.Item>
 
             <Stack.Item>
-              <Button onClick={close}>{t('delete_popup_no_delete')}</Button>
+              <Button onClick={close}>{t('ui.character.delete_popup.no_delete')}</Button>
             </Stack.Item>
           </Stack>
         </Stack.Item>

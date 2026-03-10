@@ -147,7 +147,7 @@ function AntagSelection(props: AntagSelectionProps) {
                       isBanned
                         ? t('antags_banned_tooltip').replace(
                             '{name}',
-                            antagonist.name,
+                            localizeDataLabel(antagonist.name),
                           )
                         : antagonist.description.map((text, index) => {
                             return (

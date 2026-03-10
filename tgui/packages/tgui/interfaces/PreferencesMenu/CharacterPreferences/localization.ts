@@ -3,6 +3,10 @@ import { useBackend } from 'tgui/backend';
 
 import type { PreferencesMenuData } from '../types';
 import characterFeaturesRu from './locales/character_features.ru.json';
+import dataLabelsEn from './locales/data_labels.en.json';
+import dataLabelsRu from './locales/data_labels.ru.json';
+import featureLabelsEn from './locales/feature_labels.en.json';
+import featureLabelsRu from './locales/feature_labels.ru.json';
 import jobsRu from './locales/jobs.ru.json';
 import uiCharacterEn from './locales/ui.character.en.json';
 import uiCharacterRu from './locales/ui.character.ru.json';
@@ -39,6 +43,18 @@ const GENDER_TEXT_KEY_BY_ID: Record<string, string> = {
   neuter: 'gender_neuter_pronouns',
 };
 
+// Feature IDs can differ from the normalized label ID.
+// Keep explicit aliases for Character tab mismatches so ID lookup stays primary.
+const CHARACTER_FEATURE_ID_ALIASES: Record<string, string> = {
+  tts_voice: 'voice',
+  tts_voice_pitch: 'voice_pitch_adjustment',
+  fallback_to_blooper: 'vocal_bark_fallback',
+  blooper_speech: 'vocal_bark',
+  blooper_speech_speed: 'vocal_bark_speed',
+  blooper_speech_pitch: 'vocal_bark_pitch',
+  blooper_pitch_range: 'vocal_bark_range',
+};
+
 const RU_CHARACTER_FEATURE_NAMES_BY_EN = characterFeaturesRu as Record<
   string,
   string
@@ -50,6 +66,20 @@ const RU_JOBS = jobsRu as {
 };
 
 const RU_SERVER_LABELS_BY_EN = serverLabelsRu as Record<string, string>;
+const DATA_LABELS_EN = dataLabelsEn as Record<string, string>;
+const DATA_LABELS_RU = dataLabelsRu as Record<string, string>;
+const FEATURE_LABELS_EN = featureLabelsEn as Record<string, string>;
+const FEATURE_LABELS_RU = featureLabelsRu as Record<string, string>;
+
+const DATA_LABELS_BY_LANGUAGE: Record<InterfaceLanguage, Record<string, string>> = {
+  english: DATA_LABELS_EN,
+  russian: DATA_LABELS_RU,
+};
+
+const FEATURE_LABELS_BY_LANGUAGE: Record<InterfaceLanguage, Record<string, string>> = {
+  english: FEATURE_LABELS_EN,
+  russian: FEATURE_LABELS_RU,
+};
 
 function toDataId(value: string): string {
   const normalized = (value ?? '')
@@ -120,6 +150,30 @@ function resolveDataId(
     table.english[normalizedId] ??
     fallback ??
     normalizedId
+  );
+}
+
+function resolveCharacterFeatureId(featureId: string): string {
+  const normalizedId = toDataId(featureId);
+  return CHARACTER_FEATURE_ID_ALIASES[normalizedId] ?? normalizedId;
+}
+
+function toFeatureLocaleKey(featureId: string, suffix: 'name' | 'description') {
+  return `feature.${resolveCharacterFeatureId(featureId)}.${suffix}`;
+}
+
+function resolveFeatureKey(
+  language: InterfaceLanguage,
+  featureId: string,
+  suffix: 'name' | 'description',
+  fallback?: string,
+): string {
+  const key = toFeatureLocaleKey(featureId, suffix);
+  return (
+    FEATURE_LABELS_BY_LANGUAGE[language][key] ??
+    FEATURE_LABELS_BY_LANGUAGE.english[key] ??
+    fallback ??
+    key
   );
 }
 
@@ -211,22 +265,61 @@ export function localizeCharacterFeatureName(
   englishFeatureName: string,
   featureId?: string,
 ): string {
-  const byFeatureId = resolveDataId(
-    language,
-    CHARACTER_FEATURE_NAMES_BY_ID,
-    featureId ?? '',
-    '',
-  );
-  if (byFeatureId && byFeatureId !== 'unknown') {
-    return byFeatureId;
+  if (featureId) {
+    return resolveFeatureKey(
+      language,
+      featureId,
+      'name',
+      englishFeatureName,
+    );
   }
 
+  // Compatibility fallback for payloads without stable feature IDs.
   return resolveDataId(
     language,
     CHARACTER_FEATURE_NAMES_BY_ID,
     englishFeatureName,
     englishFeatureName,
   );
+}
+
+export function localizeCharacterFeatureDescription(
+  language: InterfaceLanguage,
+  englishFeatureDescription: string,
+  featureId?: string,
+): string {
+  if (featureId) {
+    return resolveFeatureKey(
+      language,
+      featureId,
+      'description',
+      englishFeatureDescription,
+    );
+  }
+
+  // Compatibility fallback for payloads without stable feature IDs.
+  return resolveDataId(
+    language,
+    SERVER_LABELS_BY_ID,
+    englishFeatureDescription,
+    englishFeatureDescription,
+  );
+}
+
+export function localizeCharacterFeatureNameById(
+  language: InterfaceLanguage,
+  featureId: string,
+  fallback?: string,
+): string {
+  return resolveFeatureKey(language, featureId, 'name', fallback);
+}
+
+export function localizeCharacterFeatureDescriptionById(
+  language: InterfaceLanguage,
+  featureId: string,
+  fallback?: string,
+): string {
+  return resolveFeatureKey(language, featureId, 'description', fallback);
 }
 
 export function localizeJobName(
@@ -260,6 +353,14 @@ export function localizeDataLabelById(
   id: string,
   fallback?: string,
 ): string {
+  const normalizedId = toDataId(id);
+  const idFirst =
+    DATA_LABELS_BY_LANGUAGE[language][normalizedId] ??
+    DATA_LABELS_BY_LANGUAGE.english[normalizedId];
+  if (idFirst) {
+    return idFirst;
+  }
+
   return resolveDataId(language, SERVER_LABELS_BY_ID, id, fallback);
 }
 
@@ -268,6 +369,20 @@ export function localizeDataLabel(
   text: string,
 ): string {
   return resolveDataId(language, SERVER_LABELS_BY_ID, text, text);
+}
+
+export function localizeCharacterDataLabelById(
+  language: InterfaceLanguage,
+  id: string,
+  fallback?: string,
+): string {
+  const normalizedId = toDataId(id);
+  return (
+    DATA_LABELS_BY_LANGUAGE[language][normalizedId] ??
+    DATA_LABELS_BY_LANGUAGE.english[normalizedId] ??
+    fallback ??
+    normalizedId
+  );
 }
 
 export function localizeGender(
@@ -292,6 +407,23 @@ export function getPreferencesLocalization(data: unknown) {
       englishFeatureName: string,
       featureId?: string,
     ) => localizeCharacterFeatureName(language, englishFeatureName, featureId),
+    localizeCharacterFeatureDescription: (
+      englishFeatureDescription: string,
+      featureId?: string,
+    ) =>
+      localizeCharacterFeatureDescription(
+        language,
+        englishFeatureDescription,
+        featureId,
+      ),
+    localizeCharacterFeatureNameById: (featureId: string, fallback?: string) =>
+      localizeCharacterFeatureNameById(language, featureId, fallback),
+    localizeCharacterFeatureDescriptionById: (
+      featureId: string,
+      fallback?: string,
+    ) => localizeCharacterFeatureDescriptionById(language, featureId, fallback),
+    localizeCharacterDataLabelById: (id: string, fallback?: string) =>
+      localizeCharacterDataLabelById(language, id, fallback),
     localizeGender: (genderId: string) => localizeGender(language, genderId),
     localizeDataLabel: (text: string) => localizeDataLabel(language, text),
     localizeDataLabelById: (id: string, fallback?: string) =>
@@ -324,6 +456,29 @@ export function usePreferencesLocalization(data?: unknown) {
       resolved.localizeCharacterFeatureName(englishFeatureName, featureId),
     [language],
   );
+  const localizeCharacterFeatureDescriptionForLanguage = useCallback(
+    (englishFeatureDescription: string, featureId?: string) =>
+      resolved.localizeCharacterFeatureDescription(
+        englishFeatureDescription,
+        featureId,
+      ),
+    [language],
+  );
+  const localizeCharacterFeatureNameByIdForLanguage = useCallback(
+    (featureId: string, fallback?: string) =>
+      resolved.localizeCharacterFeatureNameById(featureId, fallback),
+    [language],
+  );
+  const localizeCharacterFeatureDescriptionByIdForLanguage = useCallback(
+    (featureId: string, fallback?: string) =>
+      resolved.localizeCharacterFeatureDescriptionById(featureId, fallback),
+    [language],
+  );
+  const localizeCharacterDataLabelByIdForLanguage = useCallback(
+    (id: string, fallback?: string) =>
+      resolved.localizeCharacterDataLabelById(id, fallback),
+    [language],
+  );
   const localizeGenderForLanguage = useCallback(
     (genderId: string) => resolved.localizeGender(genderId),
     [language],
@@ -344,6 +499,17 @@ export function usePreferencesLocalization(data?: unknown) {
     localizeJobName: localizeJobNameForLanguage,
     localizeAltJobTitle: localizeAltJobTitleForLanguage,
     localizeCharacterFeatureName: localizeCharacterFeatureNameForLanguage,
+    localizeCharacterFeatureDescription:
+      localizeCharacterFeatureDescriptionForLanguage,
+    localizeCharacterFeatureNameById: localizeCharacterFeatureNameByIdForLanguage,
+    localizeCharacterFeatureDescriptionById:
+      localizeCharacterFeatureDescriptionByIdForLanguage,
+    localizeCharacterDataLabelById: localizeCharacterDataLabelByIdForLanguage,
+    // Character tab id-first aliases.
+    localizeFeatureById: localizeCharacterFeatureNameByIdForLanguage,
+    localizeFeatureDescriptionById:
+      localizeCharacterFeatureDescriptionByIdForLanguage,
+    localizeCharacterDataById: localizeCharacterDataLabelByIdForLanguage,
     localizeGender: localizeGenderForLanguage,
     localizeDataLabel: localizeDataLabelForLanguage,
     localizeDataLabelById: localizeDataLabelByIdForLanguage,

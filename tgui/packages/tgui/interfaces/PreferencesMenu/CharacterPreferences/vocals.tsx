@@ -22,18 +22,17 @@ type VocalsProps = {
 
 type VocalFeature = {
   id: string;
-  label: string;
 };
 
 const vocalFeatures: VocalFeature[] = [
-  { id: 'voice_type', label: 'Voice Type' },
-  { id: 'tts_voice', label: 'Voice' },
-  { id: 'tts_voice_pitch', label: 'Voice Pitch Adjustments' },
-  { id: 'fallback_to_blooper', label: 'Fallback to Blooper' },
-  { id: 'blooper_speech', label: 'Blooper Speech' },
-  { id: 'blooper_speech_speed', label: 'Blooper Speed' },
-  { id: 'blooper_speech_pitch', label: 'Blooper Pitch' },
-  { id: 'blooper_pitch_range', label: 'Blooper Range' },
+  { id: 'voice_type' },
+  { id: 'tts_voice' },
+  { id: 'tts_voice_pitch' },
+  { id: 'fallback_to_blooper' },
+  { id: 'blooper_speech' },
+  { id: 'blooper_speech_speed' },
+  { id: 'blooper_speech_pitch' },
+  { id: 'blooper_pitch_range' },
 ];
 
 type VocalFeatureInputProps = {
@@ -59,7 +58,7 @@ function VocalFeatureInput(props: VocalFeatureInputProps) {
 export function VocalsInput(props: VocalsProps) {
   const { data } = useBackend<PreferencesMenuData>();
   const { vocals, handleClose } = props;
-  const { t, localizeDataLabel } = usePreferencesLocalization(data);
+  const { t, localizeFeatureById } = usePreferencesLocalization(data);
 
   return (
     <Modal>
@@ -69,22 +68,26 @@ export function VocalsInput(props: VocalsProps) {
         }}
       >
         <Section
-          title={t('voice_settings')}
+          title={t('ui.character.voice_settings')}
           buttons={
             <Button color="red" onClick={handleClose}>
-              {t('close')}
+              {t('ui.character.close')}
             </Button>
           }
         >
           <LabeledList>
             {vocalFeatures.map((feature) => {
               const value = vocals[feature.id];
-              if (value === undefined) return null;
+              const registryFeature = features[feature.id];
+              if (value === undefined || !registryFeature) return null;
 
               return (
                 <LabeledList.Item
                   key={feature.id}
-                  label={localizeDataLabel(feature.label)}
+                  label={localizeFeatureById(
+                    feature.id,
+                    registryFeature.name,
+                  )}
                   verticalAlign="top"
                 >
                   <VocalFeatureInput featureId={feature.id} value={value} />
@@ -129,7 +132,7 @@ export function VoiceInput(props: VoiceInputProps) {
 
         <Stack.Item grow position="relative" mt={0.6}>
           <FitText maxFontSize={16} maxWidth={130}>
-            {t('character_voice')}
+            {t('ui.character.character_voice')}
           </FitText>
         </Stack.Item>
       </Stack>

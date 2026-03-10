@@ -66,7 +66,7 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={() => props.handleRotate(false)} // NOVA EDIT CHANGE - Original: onClick={props.handleRotate}
           fontSize="22px"
           icon="undo"
-          tooltip={props.t('main_rotate')}
+          tooltip={props.t('ui.character.rotate')}
           tooltipPosition="top"
         />
       </Stack.Item>
@@ -78,7 +78,7 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={() => props.handleRotate(true)}
           fontSize="22px"
           icon="redo"
-          tooltip={props.t('main_rotate')}
+          tooltip={props.t('ui.character.rotate')}
           tooltipPosition="top"
         />
       </Stack.Item>
@@ -90,7 +90,7 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={props.handleOpenSpecies}
           fontSize="22px"
           icon="paw"
-          tooltip={props.t('main_species')}
+          tooltip={props.t('ui.character.species')}
           tooltipPosition="top"
         />
       </Stack.Item>
@@ -110,7 +110,7 @@ function CharacterControls(props: CharacterControlsProps) {
           onClick={props.handleFood}
           fontSize="22px"
           icon="drumstick-bite"
-          tooltip={props.t('main_edit_food_preferences')}
+          tooltip={props.t('ui.character.edit_food_preferences')}
           tooltipPosition="top"
         />
         {/* NOVA EDIT ADDITION END */}
@@ -122,7 +122,7 @@ function CharacterControls(props: CharacterControlsProps) {
           fontSize="22px"
           icon="trash"
           color="red"
-          tooltip={props.t('main_delete_character')}
+          tooltip={props.t('ui.character.delete_character')}
           tooltipPosition="top"
           disabled={!props.canDeleteCharacter}
         />
@@ -132,6 +132,7 @@ function CharacterControls(props: CharacterControlsProps) {
 }
 
 type ChoicedSelectionProps = {
+  featureId: string;
   name: string;
   catalog: FeatureChoicedServerData;
   selected: string;
@@ -141,12 +142,16 @@ type ChoicedSelectionProps = {
 };
 
 function ChoicedSelection(props: ChoicedSelectionProps) {
-  const { t, localizeDataLabel } = usePreferencesLocalization();
+  const {
+    t,
+    localizeFeatureById,
+    localizeCharacterDataById,
+  } = usePreferencesLocalization();
   const { catalog, supplementalFeature, supplementalValue } = props;
   const [searchText, setSearchText] = useState('');
 
   if (!catalog.icons) {
-    return <Box color="red">{t('main_catalog_missing_icons')}</Box>;
+    return <Box color="red">{t('ui.character.catalog_missing_icons')}</Box>;
   }
 
   return (
@@ -163,9 +168,9 @@ function ChoicedSelection(props: ChoicedSelectionProps) {
         <Stack.Item>
           <Section
             fill
-            title={t('main_select_catalog_item').replace(
+            title={t('ui.character.select_catalog_item').replace(
               '{item}',
-              localizeDataLabel(props.name),
+              localizeFeatureById(props.featureId, props.name),
             )}
             buttons={
               supplementalFeature && (
@@ -181,7 +186,7 @@ function ChoicedSelection(props: ChoicedSelectionProps) {
             <Input
               autoFocus
               fluid
-              placeholder={t('search_placeholder')}
+              placeholder={t('ui.character.search_placeholder')}
               onChange={setSearchText}
             />
           </Section>
@@ -198,7 +203,10 @@ function ChoicedSelection(props: ChoicedSelectionProps) {
                         props.onSelect(name);
                       }}
                       selected={name === props.selected}
-                      tooltip={localizeDataLabel(name)}
+                      tooltip={localizeCharacterDataById(
+                        `${props.featureId}_choice_${name}`,
+                        name,
+                      )}
                       tooltipPosition="right"
                       style={{
                         height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
@@ -279,7 +287,7 @@ function GenderButton(props: GenderButtonProps) {
           className="PreferencesMenu__Character__IconButton"
           fontSize="22px"
           icon={GENDERS[props.gender].icon}
-          tooltip={t('main_gender')}
+          tooltip={t('ui.character.gender')}
           tooltipPosition="top"
         />
       </div>
@@ -293,6 +301,7 @@ type CatalogItem = {
 };
 
 type MainFeatureProps = {
+  featureId: string;
   catalog: FeatureChoicedServerData & CatalogItem;
   currentValue: string;
   handleSelect: (newClothing: string) => void;
@@ -303,6 +312,7 @@ type MainFeatureProps = {
 function MainFeature(props: MainFeatureProps) {
   const { data } = useBackend<PreferencesMenuData>();
   const {
+    featureId,
     catalog,
     currentValue,
     handleSelect,
@@ -318,6 +328,7 @@ function MainFeature(props: MainFeatureProps) {
       placement="right-start"
       content={
         <ChoicedSelection
+          featureId={featureId}
           name={catalog.name}
           catalog={catalog}
           selected={currentValue}
@@ -398,8 +409,11 @@ type PreferenceListProps = {
 };
 
 export function PreferenceList(props: PreferenceListProps) {
-  const { localizeCharacterFeatureName, localizeDataLabel, t } =
-    usePreferencesLocalization();
+  const {
+    localizeFeatureById,
+    localizeFeatureDescriptionById,
+    t,
+  } = usePreferencesLocalization();
   const { preferences, randomizations, maxHeight, children } = props;
 
   return (
@@ -424,7 +438,7 @@ export function PreferenceList(props: PreferenceListProps) {
               return (
                 <Stack.Item key={featureId}>
                   <b>
-                    {t('main_feature_not_recognized').replace(
+                    {t('ui.character.feature_not_recognized').replace(
                       '{feature}',
                       featureId,
                     )}
@@ -439,12 +453,15 @@ export function PreferenceList(props: PreferenceListProps) {
                 // NOVA EDIT CHANGE - ORIGINAL: label={feature.name}
                 label={
                   <Box mt={0.5}>
-                    {localizeCharacterFeatureName(feature.name, featureId)}
+                    {localizeFeatureById(featureId, feature.name)}
                   </Box>
                 } // replicate middle align
                 tooltip={
                   feature.description
-                    ? localizeDataLabel(feature.description)
+                    ? localizeFeatureDescriptionById(
+                        featureId,
+                        feature.description,
+                      )
                     : undefined
                 }
                 verticalAlign="top" // NOVA EDIT CHANGE - Original: middle
@@ -508,7 +525,7 @@ type MainPageProps = {
 
 export function MainPage(props: MainPageProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { t, localizeDataLabelById, localizeDataLabel } =
+  const { t, localizeCharacterDataById } =
     usePreferencesLocalization(data);
 
   const [deleteCharacterPopupOpen, setDeleteCharacterPopupOpen] =
@@ -604,7 +621,7 @@ export function MainPage(props: MainPageProps) {
             icon="file-import"
             onClick={() => act('import_preferences')}
           >
-            {t('main_import_preferences')}
+            {t('ui.character.import_preferences')}
           </Button>
         </Stack.Item>
         <Stack.Item grow>
@@ -615,7 +632,7 @@ export function MainPage(props: MainPageProps) {
             icon="file-export"
             onClick={() => act('export_preferences')}
           >
-            {t('main_export_preferences')}
+            {t('ui.character.export_preferences')}
           </Button>
         </Stack.Item>
       </Stack>
@@ -702,14 +719,28 @@ export function MainPage(props: MainPageProps) {
                 className="PreferencesMenu__Character__FieldDropdown"
                 width="100%"
                 selected={data.preview_selection}
+                displayText={
+                  data.preview_option_ids?.[data.preview_selection]
+                    ? localizeCharacterDataById(
+                        data.preview_option_ids[data.preview_selection],
+                        data.preview_selection,
+                      )
+                    : localizeCharacterDataById(
+                        `preview_option_${data.preview_selection}`,
+                        data.preview_selection,
+                      )
+                }
                 options={data.preview_options.map((option) => ({
                   value: option,
                   displayText: data.preview_option_ids?.[option]
-                    ? localizeDataLabelById(
+                    ? localizeCharacterDataById(
                         data.preview_option_ids[option],
                         option,
                       )
-                    : localizeDataLabel(option),
+                    : localizeCharacterDataById(
+                        `preview_option_${option}`,
+                        option,
+                      ),
                 }))}
                 onSelected={(value) =>
                   act('update_preview', {
@@ -724,19 +755,43 @@ export function MainPage(props: MainPageProps) {
                 className="PreferencesMenu__Character__FieldDropdown"
                 width="100%"
                 selected={data.character_preferences.misc.background_state}
+                displayText={
+                  (serverData?.background_state.choice_ids?.[
+                    data.character_preferences.misc.background_state
+                  ] ??
+                    serverData?.background_state_ids?.[
+                      data.character_preferences.misc.background_state
+                    ])
+                    ? localizeCharacterDataById(
+                        (serverData?.background_state.choice_ids?.[
+                          data.character_preferences.misc.background_state
+                        ] ??
+                          serverData?.background_state_ids?.[
+                            data.character_preferences.misc.background_state
+                          ])!,
+                        data.character_preferences.misc.background_state,
+                      )
+                    : localizeCharacterDataById(
+                        `background_state_${data.character_preferences.misc.background_state}`,
+                        data.character_preferences.misc.background_state,
+                      )
+                }
                 options={(serverData?.background_state.choices || []).map(
                   (option) => ({
                     value: option,
                     displayText:
                       (serverData?.background_state.choice_ids?.[option] ??
                       serverData?.background_state_ids?.[option])
-                        ? localizeDataLabelById(
+                        ? localizeCharacterDataById(
                             (serverData?.background_state.choice_ids?.[
                               option
                             ] ?? serverData?.background_state_ids?.[option])!,
                             option,
                           )
-                        : localizeDataLabel(option),
+                        : localizeCharacterDataById(
+                            `background_state_${option}`,
+                            option,
+                          ),
                   }),
                 )}
                 onSelected={(value) =>
@@ -785,6 +840,7 @@ export function MainPage(props: MainPageProps) {
                     <Button height={4} width={4} disabled />
                   ) : (
                     <MainFeature
+                      featureId={clothingKey}
                       catalog={catalog}
                       currentValue={clothing}
                       handleSelect={createSetPreference(act, clothingKey)}
@@ -837,7 +893,7 @@ export function MainPage(props: MainPageProps) {
                   page={PrefPage.Visual}
                   setPage={setCurrentPrefPage}
                 >
-                  {t('main_character_visuals')}
+                  {t('ui.character.character_visuals')}
                 </PageButton>
               </Stack.Item>
               <Stack.Item grow={2}>
@@ -847,7 +903,7 @@ export function MainPage(props: MainPageProps) {
                   page={PrefPage.Profile}
                   setPage={setCurrentPrefPage}
                 >
-                  {t('main_character_profile')}
+                  {t('ui.character.character_profile')}
                 </PageButton>
               </Stack.Item>
             </Stack>

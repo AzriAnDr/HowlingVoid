@@ -182,16 +182,27 @@ type SpeciesPerkProps = {
 
 function SpeciesPerk(props: SpeciesPerkProps) {
   const { className, perk } = props;
-  const { localizeDataLabel } = usePreferencesLocalization();
+  const { localizeDataLabel, localizeDataLabelById } =
+    usePreferencesLocalization();
 
   return (
     <Tooltip
       position="bottom-end"
       content={
         <Box>
-          <Box as="b">{localizeDataLabel(perk.name)}</Box>
+          <Box as="b">
+            {localizeDataLabelById(
+              `perk_${perk.ui_icon}_name`,
+              localizeDataLabel(perk.name),
+            )}
+          </Box>
           <Divider />
-          <Box>{localizeDataLabel(perk.description)}</Box>
+          <Box>
+            {localizeDataLabelById(
+              `perk_${perk.ui_icon}_description`,
+              localizeDataLabel(perk.description),
+            )}
+          </Box>
         </Box>
       }
     >
@@ -263,7 +274,8 @@ type SpeciesPageInnerProps = {
 
 function SpeciesPageInner(props: SpeciesPageInnerProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { t, localizeDataLabel } = usePreferencesLocalization(data);
+  const { t, localizeDataLabel, localizeDataLabelById } =
+    usePreferencesLocalization(data);
   const setSpecies = createSetPreference(act, 'species');
 
   const species: [string, Species][] = Object.entries(props.species).map(
@@ -318,7 +330,10 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                     selected={
                       data.character_preferences.misc.species === speciesKey
                     }
-                    tooltip={localizeDataLabel(species.name)}
+                    tooltip={localizeDataLabelById(
+                      `species_${speciesKey}_name`,
+                      localizeDataLabel(species.name),
+                    )}
                     style={{
                       display: 'block',
                       height: '64px',
@@ -333,7 +348,10 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                 );
                 if (species.nova_stars_only && !data.is_nova_star) {
                   const tooltipContent =
-                    localizeDataLabel(species.name) +
+                    localizeDataLabelById(
+                      `species_${speciesKey}_name`,
+                      localizeDataLabel(species.name),
+                    ) +
                     ` - ${t('species_nova_only_tooltip')}`;
                   speciesPage = (
                     <Tooltip content={tooltipContent}>{speciesPage}</Tooltip>
@@ -352,7 +370,10 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                   <Stack.Item width="70%">
                     <Section
                       className="PreferencesMenu__Character__SpeciesInfo"
-                      title={localizeDataLabel(currentSpecies.name)}
+                      title={localizeDataLabelById(
+                        `species_${data.character_preferences.misc.species}_name`,
+                        localizeDataLabel(currentSpecies.name),
+                      )}
                       buttons={
                         // NOHUNGER species have no diet (diet = null),
                         // so we have nothing to show
@@ -369,7 +390,10 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                         scrollable
                       >
                         {/* NOVA EDIT CHANGE END */}
-                        {localizeDataLabel(currentSpecies.desc)}
+                        {localizeDataLabelById(
+                          `species_${data.character_preferences.misc.species}_description`,
+                          localizeDataLabel(currentSpecies.desc),
+                        )}
                       </Section>
 
                       <Section
@@ -402,7 +426,10 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                   >
                     {currentSpecies.lore.map((text, index) => (
                       <Box key={index} maxWidth="100%">
-                        {localizeDataLabel(text)}
+                        {localizeDataLabelById(
+                          `species_${data.character_preferences.misc.species}_lore_${index}`,
+                          localizeDataLabel(text),
+                        )}
                         {index !== currentSpecies.lore.length - 1 && (
                           <>
                             <br />

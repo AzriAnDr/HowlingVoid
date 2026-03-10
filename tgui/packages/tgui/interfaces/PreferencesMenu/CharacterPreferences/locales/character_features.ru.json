@@ -155,5 +155,13 @@
 	"Records - Security": "Досье — Служба безопасности",
 	"Security department": "Отдел службы безопасности",
 	"Silicon and Synthetic Brain Type": "Тип мозга силикона и синтетика",
+	"Vocal Bark": "Голосовой лай",
+	"Vocal Bark Fallback": "Резервный голосовой лай",
+	"Vocal Bark Pitch": "Тон голосового лая",
+	"Vocal Bark Range": "Диапазон голосового лая",
+	"Vocal Bark Speed": "Скорость голосового лая",
+	"Voice": "Голос",
+	"Voice Pitch Adjustment": "Высота голоса",
+	"Voice Type": "Тип голоса",
 	"Uplink Spawn Location": "Место спавна аплинка"
 }

@@ -206,13 +206,16 @@ function JobRow(props: JobRowProps) {
     const hoursNeeded = Math.ceil(required_playtime / 60);
 
     rightSide = (
-      <Stack align="center" height="100%" pr={1}>
-        <Stack.Item grow textAlign="right">
-          <b>{hoursNeeded}h</b> {t('jobs_as')}{' '}
-          {localizeDataLabel(experience_type)}
-        </Stack.Item>
-      </Stack>
-    );
+        <Stack align="center" height="100%" pr={1}>
+          <Stack.Item grow textAlign="right">
+            <b>
+              {hoursNeeded}
+              {t('jobs_hours_suffix')}
+            </b>{' '}
+            {t('jobs_as')} {localizeDataLabel(experience_type)}
+          </Stack.Item>
+        </Stack>
+      );
   } else if (daysLeft > 0) {
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
