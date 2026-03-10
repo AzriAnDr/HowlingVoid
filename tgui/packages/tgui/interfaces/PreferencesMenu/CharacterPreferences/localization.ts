@@ -226,6 +226,30 @@ function extractLanguage(raw: unknown, depth = 0): InterfaceLanguage | null {
       return commonValue;
     }
 
+    // Some choiced payloads can carry selected value under alternative keys.
+    for (const selectedKey of [
+      'selected_value',
+      'selectedValue',
+      'selected_key',
+      'selectedKey',
+      'id',
+      'key',
+      'name',
+    ]) {
+      const selectedValue = normalizeLanguage(obj[selectedKey]);
+      if (selectedValue) {
+        return selectedValue;
+      }
+    }
+
+    // Handle payloads where selected index points into choices list.
+    if (Array.isArray(obj.choices) && typeof obj.selected === 'number') {
+      const selectedByIndex = normalizeLanguage(obj.choices[obj.selected]);
+      if (selectedByIndex) {
+        return selectedByIndex;
+      }
+    }
+
     for (const key of [
       'interface_language',
       'language',
@@ -243,11 +267,13 @@ function extractLanguage(raw: unknown, depth = 0): InterfaceLanguage | null {
 }
 
 export function getCharacterPreferencesLanguage(data: any): InterfaceLanguage {
+  // Prefer top-level interface language because it's player-wide and authoritative.
   const candidates = [
+    data?.interface_language,
+    data?.game_preferences?.interface_language,
+    data?.character_preferences?.interface_language,
     data?.character_preferences?.game_preferences?.interface_language,
     data?.character_preferences?.non_contextual?.interface_language,
-    data?.game_preferences?.interface_language,
-    data?.interface_language,
   ];
 
   for (const raw of candidates) {
