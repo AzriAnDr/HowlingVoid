@@ -25,7 +25,7 @@ export function DeleteCharacterPopup(props: Props) {
   }, []);
 
   return (
-    <Modal>
+    <Modal className="PreferencesMenu__Character__DeletePopup">
       <Stack vertical textAlign="center" align="center">
         <Stack.Item>
           <Box fontSize="3em">{t('ui.character.delete_popup.wait')}</Box>

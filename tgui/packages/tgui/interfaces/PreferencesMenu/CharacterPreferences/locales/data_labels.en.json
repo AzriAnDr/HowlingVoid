@@ -145,5 +145,8 @@
 	"white_tiles": "White Tiles",
 	"xerxian": "Xerxian",
 	"yangyu": "Yangyu",
-	"yip_yip": "Yip yip."
+	"yip_yip": "Yip yip.",
+	"name_type_real_name": "Name",
+	"name_type_human_name": "Backup human name",
+	"name_type_backup_human": "Backup human name"
 }

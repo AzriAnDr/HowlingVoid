@@ -88,7 +88,7 @@
 	"name_type_operative_alias": "Псевдоним оперативника",
 	"name_type_religion_name": "Название религии",
 	"neck": "Шея",
-	"neu_deutsch": "Ной-Дойч",
+	"neu_deutsch": "Neu-Deutsch",
 	"none": "Нет",
 	"operative_alias": "Псевдоним оперативника",
 	"other": "Прочее",
@@ -135,7 +135,7 @@
 	"undersuit": "Одежда",
 	"underwear": "Нижнее бельё",
 	"voice": "Голос",
-	"voice_pitch_adjustments": "Настройка высоты голоса",
+	"voice_pitch_adjustments": "Высота голоса",
 	"voice_type": "Тип голоса",
 	"voltaic": "Вольтаик",
 	"vox_standard": "Вокс Стандарт",
@@ -145,5 +145,8 @@
 	"white_tiles": "Белая плитка",
 	"xerxian": "Ксерксиан",
 	"yangyu": "Янъюй",
-	"yip_yip": "Йип-йип."
+	"yip_yip": "Йип-йип.",
+	"name_type_real_name": "Имя",
+	"name_type_human_name": "Запасное имя человека",
+	"name_type_backup_human": "Запасное имя человека"
 }
