@@ -7,7 +7,7 @@ import {
   GamePreferencesSelectedPage,
   type PreferencesMenuData,
 } from '../types';
-import { usePreferencesLocalization } from '../CharacterPreferences/localization';
+import { usePreferencesLocalization } from '../localization';
 import { GamePreferencesPage } from './GamePreferencesPage';
 import { KeybindingsPage } from './KeybindingsPage';
 

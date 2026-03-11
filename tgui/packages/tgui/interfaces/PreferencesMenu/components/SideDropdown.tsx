@@ -7,7 +7,7 @@ import { type Box, Button, Floating, Icon } from 'tgui-core/components';
 import { KEY } from 'tgui-core/keys';
 import { classes } from 'tgui-core/react';
 import { unit } from 'tgui-core/ui';
-import { usePreferencesLocalization } from '../CharacterPreferences/localization';
+import { usePreferencesLocalization } from '../localization';
 import type { PreferencesMenuData } from '../types';
 
 type SideDropdownEntry = {

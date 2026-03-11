@@ -1,6 +1,6 @@
 ﻿import { type ComponentProps, type ReactNode, useRef } from 'react';
 import { Button, type Flex, Input, Section, Stack } from 'tgui-core/components';
-import { usePreferencesLocalization } from '../CharacterPreferences/localization';
+import { usePreferencesLocalization } from '../localization';
 import categoriesRu from './locales/categories.ru.json';
 
 type TabbedMenuProps = {

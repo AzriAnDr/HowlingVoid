@@ -14,8 +14,8 @@ type KeybindingsRuJson = {
     resetToDefaults: string;
     resetAll: string;
   };
-  names_by_en: Record<string, string>;
-  descriptions_by_en: Record<string, string>;
+  names_by_id: Record<string, string>;
+  descriptions_by_id: Record<string, string>;
 };
 
 const RU = keybindingsRu as KeybindingsRuJson;
@@ -34,6 +34,7 @@ export function getKeybindingsUiText(language: InterfaceLanguage) {
 }
 
 export function localizeKeybinding(
+  keybindingId: string,
   keybinding: Keybinding,
   category: string,
   language: InterfaceLanguage,
@@ -42,10 +43,10 @@ export function localizeKeybinding(
     return keybinding;
   }
 
-  const name = RU.names_by_en[keybinding.name] || keybinding.name;
+  const name = RU.names_by_id[keybindingId] ?? keybinding.name;
   const description = keybinding.description?.trim();
   const localizedDescription = description
-    ? RU.descriptions_by_en[description] || description
+    ? RU.descriptions_by_id[keybindingId] ?? description
     : description;
 
   return {

@@ -3,7 +3,7 @@ import { type ComponentProps, type ReactNode, useEffect, useState } from 'react'
 import { Box, ColorBox, Dropdown, Stack } from 'tgui-core/components';
 import { capitalizeFirst } from 'tgui-core/string';
 
-import { usePreferencesLocalization } from '../../CharacterPreferences/localization';
+import { usePreferencesLocalization } from '../../localization';
 import type { Feature, FeatureChoicedServerData, FeatureValueProps } from './base';
 
 type ColorDropdownInputProps = FeatureValueProps<

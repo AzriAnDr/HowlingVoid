@@ -11,6 +11,7 @@ import uiCharacterEn from './locales/ui.character.en.json';
 import uiCharacterRu from './locales/ui.character.ru.json';
 import uiGameEn from './locales/ui.game.en.json';
 import uiGameRu from './locales/ui.game.ru.json';
+import gameFeaturesRu from '../GamePreferences/locales/features.ru.json';
 
 export type InterfaceLanguage = 'english' | 'russian';
 
@@ -182,6 +183,13 @@ const FEATURE_LABELS_BY_LANGUAGE: Record<InterfaceLanguage, Record<string, strin
   english: FEATURE_LABELS_EN,
   russian: FEATURE_LABELS_RU,
 };
+
+type GameFeaturesRuJson = {
+  feature_names_by_id?: Record<string, string>;
+  feature_descriptions_by_id?: Record<string, string>;
+};
+
+const GAME_FEATURES_RU = gameFeaturesRu as GameFeaturesRuJson;
 
 function toDataId(value: string): string {
   const normalized = (value ?? '')
@@ -488,6 +496,36 @@ export function localizeCharacterDataLabelById(
   return localizeDataLabelById(language, id, fallback);
 }
 
+export function localizeGameFeatureNameById(
+  language: InterfaceLanguage,
+  featureId: string,
+  fallback?: string,
+): string {
+  if (language === 'russian') {
+    const localized = GAME_FEATURES_RU.feature_names_by_id?.[featureId];
+    if (localized) {
+      return localized;
+    }
+  }
+
+  return fallback ?? featureId;
+}
+
+export function localizeGameFeatureDescriptionById(
+  language: InterfaceLanguage,
+  featureId: string,
+  fallback?: string,
+): string | undefined {
+  if (language === 'russian') {
+    const localized = GAME_FEATURES_RU.feature_descriptions_by_id?.[featureId];
+    if (localized) {
+      return localized;
+    }
+  }
+
+  return fallback;
+}
+
 export function localizeGender(
   language: InterfaceLanguage,
   genderId: string,
@@ -510,6 +548,12 @@ export function getPreferencesLocalization(data: unknown) {
     ) => localizeCharacterFeatureDescriptionById(language, featureId, fallback),
     localizeCharacterDataLabelById: (id: string, fallback?: string) =>
       localizeCharacterDataLabelById(language, id, fallback),
+    localizeGameFeatureNameById: (featureId: string, fallback?: string) =>
+      localizeGameFeatureNameById(language, featureId, fallback),
+    localizeGameFeatureDescriptionById: (
+      featureId: string,
+      fallback?: string,
+    ) => localizeGameFeatureDescriptionById(language, featureId, fallback),
     localizeGender: (genderId: string) => localizeGender(language, genderId),
     localizeDataLabelById: (id: string, fallback?: string) =>
       localizeDataLabelById(language, id, fallback),
@@ -541,6 +585,16 @@ export function usePreferencesLocalization(data?: unknown) {
       resolved.localizeCharacterDataLabelById(id, fallback),
     [language],
   );
+  const localizeGameFeatureNameByIdForLanguage = useCallback(
+    (featureId: string, fallback?: string) =>
+      resolved.localizeGameFeatureNameById(featureId, fallback),
+    [language],
+  );
+  const localizeGameFeatureDescriptionByIdForLanguage = useCallback(
+    (featureId: string, fallback?: string) =>
+      resolved.localizeGameFeatureDescriptionById(featureId, fallback),
+    [language],
+  );
   const localizeGenderForLanguage = useCallback(
     (genderId: string) => resolved.localizeGender(genderId),
     [language],
@@ -563,6 +617,9 @@ export function usePreferencesLocalization(data?: unknown) {
     localizeFeatureDescriptionById:
       localizeCharacterFeatureDescriptionByIdForLanguage,
     localizeCharacterDataById: localizeCharacterDataLabelByIdForLanguage,
+    localizeGameFeatureNameById: localizeGameFeatureNameByIdForLanguage,
+    localizeGameFeatureDescriptionById:
+      localizeGameFeatureDescriptionByIdForLanguage,
     localizeGender: localizeGenderForLanguage,
     localizeDataLabelById: localizeDataLabelByIdForLanguage,
   };

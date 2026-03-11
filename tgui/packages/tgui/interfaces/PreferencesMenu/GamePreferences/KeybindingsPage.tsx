@@ -19,7 +19,7 @@ import type { PreferencesMenuData } from '../types';
 import {
   getPreferencesLocalization,
   type InterfaceLanguage,
-} from '../CharacterPreferences/localization';
+} from '../localization';
 import {
   getKeybindingsUiText,
   localizeKeybinding,
@@ -235,6 +235,7 @@ function getKeybindingNodes(
   return sortKeybindings(Object.entries(input))
     .map(([keybindingId, keybinding]) => {
       const localizedKeybinding = localizeKeybinding(
+        keybindingId,
         keybinding,
         category,
         language,

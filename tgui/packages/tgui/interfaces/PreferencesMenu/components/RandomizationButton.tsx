@@ -2,7 +2,7 @@ import { useBackend } from 'tgui/backend';
 import { Dropdown } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
-import { usePreferencesLocalization } from '../CharacterPreferences/localization';
+import { usePreferencesLocalization } from '../localization';
 import { type PreferencesMenuData, RandomSetting } from '../types';
 
 type Props = {

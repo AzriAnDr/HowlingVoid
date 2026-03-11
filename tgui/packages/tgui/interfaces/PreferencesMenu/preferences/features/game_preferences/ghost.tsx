@@ -5,7 +5,7 @@ import { Box, Dropdown, Flex } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import type { PreferencesMenuData } from '../../../types';
-import { usePreferencesLocalization } from '../../../CharacterPreferences/localization';
+import { usePreferencesLocalization } from '../../../localization';
 import {
   CheckboxInput,
   type FeatureChoiced,

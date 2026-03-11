@@ -25,7 +25,7 @@ import {
   type PreferencesMenuData,
 } from '../../types';
 import { useServerPrefs } from '../../useServerPrefs';
-import { usePreferencesLocalization } from '../../CharacterPreferences/localization';
+import { usePreferencesLocalization } from '../../localization';
 
 export function sortChoices(array: [string, ReactNode][]) {
   return sortBy(array, [([name]) => name]);

@@ -8,7 +8,7 @@ import { Window } from '../../layouts';
 import { logger } from '../../logging';
 import { LoadingScreen } from '../common/LoadingScreen';
 import { CharacterPreferenceWindow } from './CharacterPreferences';
-import { usePreferencesLocalization } from './CharacterPreferences/localization';
+import { usePreferencesLocalization } from './localization';
 import { GamePreferenceWindow } from './GamePreferences';
 import {
   GamePreferencesSelectedPage,

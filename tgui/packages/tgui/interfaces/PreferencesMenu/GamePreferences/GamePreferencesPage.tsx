@@ -4,26 +4,16 @@ import { type ReactNode, useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Flex, Tooltip } from 'tgui-core/components';
 
-import { usePreferencesLocalization } from '../CharacterPreferences/localization';
+import { usePreferencesLocalization } from '../localization';
 import { features } from '../preferences/features';
 import { FeatureValueInput } from '../preferences/features/base';
 import type { PreferencesMenuData } from '../types';
-import featuresRu from './locales/features.ru.json';
 import { TabbedMenu } from './TabbedMenu';
 
 type PreferenceChild = {
   name: string;
   children: ReactNode;
 };
-
-type FeaturesRuJson = {
-  feature_names_by_id: Record<string, string>;
-  feature_names_by_en?: Record<string, string>;
-  feature_descriptions_by_id: Record<string, string>;
-  feature_descriptions_by_en?: Record<string, string>;
-};
-
-const RU_FEATURES = featuresRu as FeaturesRuJson;
 
 function binaryInsertPreference(
   collection: PreferenceChild[],
@@ -42,7 +32,12 @@ function sortByName(array: [string, PreferenceChild[]][]) {
 
 export function GamePreferencesPage(props) {
   const { data } = useBackend<PreferencesMenuData>();
-  const { language: interfaceLanguage, t } = usePreferencesLocalization(data);
+  const {
+    language: interfaceLanguage,
+    t,
+    localizeGameFeatureNameById,
+    localizeGameFeatureDescriptionById,
+  } = usePreferencesLocalization(data);
 
   const gamePreferences: Record<string, PreferenceChild[]> = {};
 
@@ -51,24 +46,15 @@ export function GamePreferencesPage(props) {
   )) {
     const feature = features[featureId];
 
-    const translatedName =
-      interfaceLanguage === 'russian'
-        ? RU_FEATURES.feature_names_by_id[featureId] ||
-          (feature?.name
-            ? RU_FEATURES.feature_names_by_en?.[feature.name]
-            : undefined) ||
-          feature?.name ||
-          featureId
-        : feature?.name || featureId;
+    const translatedName = localizeGameFeatureNameById(
+      featureId,
+      feature?.name || featureId,
+    );
 
-    const translatedDescription =
-      interfaceLanguage === 'russian'
-        ? RU_FEATURES.feature_descriptions_by_id[featureId] ||
-          (feature?.name
-            ? RU_FEATURES.feature_descriptions_by_en?.[feature.name]
-            : undefined) ||
-          feature?.description
-        : feature?.description;
+    const translatedDescription = localizeGameFeatureDescriptionById(
+      featureId,
+      feature?.description,
+    );
 
     let nameInner: ReactNode = translatedName;
 

@@ -2,7 +2,7 @@ import { useBackend } from 'tgui/backend';
 import { Box, Dropdown, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
-import { usePreferencesLocalization } from '../../../CharacterPreferences/localization';
+import { usePreferencesLocalization } from '../../../localization';
 import type { PreferencesMenuData } from '../../../types';
 import {
   type FeatureChoiced,

@@ -9,7 +9,7 @@ import { Box, Dropdown, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { capitalizeFirst } from 'tgui-core/string';
 import type { PreferencesMenuData } from '../../types';
-import { usePreferencesLocalization } from '../../CharacterPreferences/localization';
+import { usePreferencesLocalization } from '../../localization';
 import dropdownsRu from './locales/dropdowns.ru.json';
 
 import type {
