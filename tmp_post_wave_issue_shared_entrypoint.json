@@ -1,0 +1,2526 @@
+{
+  "generated_at": "2026-03-11T21:48:07.707Z",
+  "files_with_literals_missing_shared_entrypoint": 420,
+  "issues": [
+    {
+      "file": "ClockworkSlab.jsx",
+      "module": "ClockworkSlab",
+      "literal_count": 52,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosScipaper.jsx",
+      "module": "NtosScipaper",
+      "literal_count": 35,
+      "has_ui_t": false
+    },
+    {
+      "file": "Newscaster.jsx",
+      "module": "Newscaster",
+      "literal_count": 33,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosRobotact.jsx",
+      "module": "NtosRobotact",
+      "literal_count": 32,
+      "has_ui_t": false
+    },
+    {
+      "file": "InstrumentEditor.tsx",
+      "module": "InstrumentEditor",
+      "literal_count": 31,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosRoboControl.jsx",
+      "module": "NtosRoboControl",
+      "literal_count": 30,
+      "has_ui_t": false
+    },
+    {
+      "file": "MilkingMachine.jsx",
+      "module": "MilkingMachine",
+      "literal_count": 29,
+      "has_ui_t": false
+    },
+    {
+      "file": "MafiaPanel.tsx",
+      "module": "MafiaPanel",
+      "literal_count": 28,
+      "has_ui_t": false
+    },
+    {
+      "file": "CommunicationsConsole/Main.tsx",
+      "module": "CommunicationsConsole",
+      "literal_count": 25,
+      "has_ui_t": false
+    },
+    {
+      "file": "NovaCharacterDirectory.jsx",
+      "module": "NovaCharacterDirectory",
+      "literal_count": 24,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoVoidwalker.tsx",
+      "module": "AntagInfoVoidwalker",
+      "literal_count": 23,
+      "has_ui_t": false
+    },
+    {
+      "file": "MatMarket.tsx",
+      "module": "MatMarket",
+      "literal_count": 23,
+      "has_ui_t": false
+    },
+    {
+      "file": "OrionGame.jsx",
+      "module": "OrionGame",
+      "literal_count": 23,
+      "has_ui_t": false
+    },
+    {
+      "file": "Apc.jsx",
+      "module": "Apc",
+      "literal_count": 22,
+      "has_ui_t": false
+    },
+    {
+      "file": "TramController.tsx",
+      "module": "TramController",
+      "literal_count": 22,
+      "has_ui_t": false
+    },
+    {
+      "file": "EventPanel.jsx",
+      "module": "EventPanel",
+      "literal_count": 21,
+      "has_ui_t": false
+    },
+    {
+      "file": "GreyscaleModifyMenu.tsx",
+      "module": "GreyscaleModifyMenu",
+      "literal_count": 21,
+      "has_ui_t": false
+    },
+    {
+      "file": "NifPanel.jsx",
+      "module": "NifPanel",
+      "literal_count": 20,
+      "has_ui_t": false
+    },
+    {
+      "file": "Changelog.jsx",
+      "module": "Changelog",
+      "literal_count": 19,
+      "has_ui_t": false
+    },
+    {
+      "file": "DelamProcedure.tsx",
+      "module": "DelamProcedure",
+      "literal_count": 19,
+      "has_ui_t": false
+    },
+    {
+      "file": "GhostMenu.tsx",
+      "module": "GhostMenu",
+      "literal_count": 19,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoNightmare.tsx",
+      "module": "AntagInfoNightmare",
+      "literal_count": 18,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoWizard.tsx",
+      "module": "AntagInfoWizard",
+      "literal_count": 18,
+      "has_ui_t": false
+    },
+    {
+      "file": "ChemMaster.tsx",
+      "module": "ChemMaster",
+      "literal_count": 18,
+      "has_ui_t": false
+    },
+    {
+      "file": "PaiCard.tsx",
+      "module": "PaiCard",
+      "literal_count": 18,
+      "has_ui_t": false
+    },
+    {
+      "file": "Photocopier.tsx",
+      "module": "Photocopier",
+      "literal_count": 18,
+      "has_ui_t": false
+    },
+    {
+      "file": "SkillStation.jsx",
+      "module": "SkillStation",
+      "literal_count": 18,
+      "has_ui_t": false
+    },
+    {
+      "file": "SoulcatcherUser.jsx",
+      "module": "SoulcatcherUser",
+      "literal_count": 18,
+      "has_ui_t": false
+    },
+    {
+      "file": "Telecomms.jsx",
+      "module": "Telecomms",
+      "literal_count": 18,
+      "has_ui_t": false
+    },
+    {
+      "file": "AiAirlock.jsx",
+      "module": "AiAirlock",
+      "literal_count": 17,
+      "has_ui_t": false
+    },
+    {
+      "file": "BorgPanel.jsx",
+      "module": "BorgPanel",
+      "literal_count": 17,
+      "has_ui_t": false
+    },
+    {
+      "file": "GlassBlowing.tsx",
+      "module": "GlassBlowing",
+      "literal_count": 17,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosSpaceBetting.tsx",
+      "module": "NtosSpaceBetting",
+      "literal_count": 17,
+      "has_ui_t": false
+    },
+    {
+      "file": "RaptorDex.tsx",
+      "module": "RaptorDex",
+      "literal_count": 17,
+      "has_ui_t": false
+    },
+    {
+      "file": "ShuttleBlueprints.tsx",
+      "module": "ShuttleBlueprints",
+      "literal_count": 17,
+      "has_ui_t": false
+    },
+    {
+      "file": "ChemDispenser.tsx",
+      "module": "ChemDispenser",
+      "literal_count": 16,
+      "has_ui_t": false
+    },
+    {
+      "file": "HighLuminosityEyesMenu.tsx",
+      "module": "HighLuminosityEyesMenu",
+      "literal_count": 16,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosMessenger/ChatScreen.tsx",
+      "module": "NtosMessenger",
+      "literal_count": 16,
+      "has_ui_t": false
+    },
+    {
+      "file": "ServerMonitor.jsx",
+      "module": "ServerMonitor",
+      "literal_count": 16,
+      "has_ui_t": false
+    },
+    {
+      "file": "SyndContractor.jsx",
+      "module": "SyndContractor",
+      "literal_count": 16,
+      "has_ui_t": false
+    },
+    {
+      "file": "TankCompressor.tsx",
+      "module": "TankCompressor",
+      "literal_count": 16,
+      "has_ui_t": false
+    },
+    {
+      "file": "FishCatalog.tsx",
+      "module": "FishCatalog",
+      "literal_count": 15,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosMessenger/index.tsx",
+      "module": "NtosMessenger",
+      "literal_count": 15,
+      "has_ui_t": false
+    },
+    {
+      "file": "SimpleBot.tsx",
+      "module": "SimpleBot",
+      "literal_count": 15,
+      "has_ui_t": false
+    },
+    {
+      "file": "TelecommsMonitor.tsx",
+      "module": "TelecommsMonitor",
+      "literal_count": 15,
+      "has_ui_t": false
+    },
+    {
+      "file": "AmmoWorkbench.jsx",
+      "module": "AmmoWorkbench",
+      "literal_count": 14,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosShipping.tsx",
+      "module": "NtosShipping",
+      "literal_count": 14,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosVirtualPet.tsx",
+      "module": "NtosVirtualPet",
+      "literal_count": 14,
+      "has_ui_t": false
+    },
+    {
+      "file": "ShuttleManipulator.jsx",
+      "module": "ShuttleManipulator",
+      "literal_count": 14,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoAssaultops.tsx",
+      "module": "AntagInfoAssaultops",
+      "literal_count": 13,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoChangeling.tsx",
+      "module": "AntagInfoChangeling",
+      "literal_count": 13,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoGlitch.tsx",
+      "module": "AntagInfoGlitch",
+      "literal_count": 13,
+      "has_ui_t": false
+    },
+    {
+      "file": "BattleArcade.tsx",
+      "module": "BattleArcade",
+      "literal_count": 13,
+      "has_ui_t": false
+    },
+    {
+      "file": "Canister.tsx",
+      "module": "Canister",
+      "literal_count": 13,
+      "has_ui_t": false
+    },
+    {
+      "file": "DopplerArray.jsx",
+      "module": "DopplerArray",
+      "literal_count": 13,
+      "has_ui_t": false
+    },
+    {
+      "file": "Interview.tsx",
+      "module": "Interview",
+      "literal_count": 13,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosArcade.tsx",
+      "module": "NtosArcade",
+      "literal_count": 13,
+      "has_ui_t": false
+    },
+    {
+      "file": "QuantumConsole.tsx",
+      "module": "QuantumConsole",
+      "literal_count": 13,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoMalf.tsx",
+      "module": "AntagInfoMalf",
+      "literal_count": 12,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoSunwalker.tsx",
+      "module": "AntagInfoSunwalker",
+      "literal_count": 12,
+      "has_ui_t": false
+    },
+    {
+      "file": "ArmamentStation.jsx",
+      "module": "ArmamentStation",
+      "literal_count": 12,
+      "has_ui_t": false
+    },
+    {
+      "file": "IVDrip.tsx",
+      "module": "IVDrip",
+      "literal_count": 12,
+      "has_ui_t": false
+    },
+    {
+      "file": "PrisonerManagement.tsx",
+      "module": "PrisonerManagement",
+      "literal_count": 12,
+      "has_ui_t": false
+    },
+    {
+      "file": "StoryManager.tsx",
+      "module": "StoryManager",
+      "literal_count": 12,
+      "has_ui_t": false
+    },
+    {
+      "file": "ApcControl.tsx",
+      "module": "ApcControl",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "BluespaceArtilleryNova.tsx",
+      "module": "BluespaceArtilleryNova",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "CommandReport.tsx",
+      "module": "CommandReport",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "DestructiveAnalyzer.tsx",
+      "module": "DestructiveAnalyzer",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "Fax.tsx",
+      "module": "Fax",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "GhostPoolProtection.jsx",
+      "module": "GhostPoolProtection",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "Gps.jsx",
+      "module": "Gps",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "GulagTeleporterConsole.jsx",
+      "module": "GulagTeleporterConsole",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "Holopad.jsx",
+      "module": "Holopad",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "ImplantPad.tsx",
+      "module": "ImplantPad",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "NavBeacon.tsx",
+      "module": "NavBeacon",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosMain.tsx",
+      "module": "NtosMain",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosNetMonitor.jsx",
+      "module": "NtosNetMonitor",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "SolarControl.tsx",
+      "module": "SolarControl",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "SpaceHeater.jsx",
+      "module": "SpaceHeater",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "Supermatter.tsx",
+      "module": "Supermatter",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "SyndicateContractor.tsx",
+      "module": "SyndicateContractor",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "TransferValve.jsx",
+      "module": "TransferValve",
+      "literal_count": 11,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoTraitor.tsx",
+      "module": "AntagInfoTraitor",
+      "literal_count": 10,
+      "has_ui_t": false
+    },
+    {
+      "file": "CargoImportConsole.jsx",
+      "module": "CargoImportConsole",
+      "literal_count": 10,
+      "has_ui_t": false
+    },
+    {
+      "file": "EmotePanel.tsx",
+      "module": "EmotePanel",
+      "literal_count": 10,
+      "has_ui_t": false
+    },
+    {
+      "file": "ExperimentalCloner.tsx",
+      "module": "ExperimentalCloner",
+      "literal_count": 10,
+      "has_ui_t": false
+    },
+    {
+      "file": "LogViewer.tsx",
+      "module": "LogViewer",
+      "literal_count": 10,
+      "has_ui_t": false
+    },
+    {
+      "file": "Mule.tsx",
+      "module": "Mule",
+      "literal_count": 10,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosCyborgRemoteMonitor.jsx",
+      "module": "NtosCyborgRemoteMonitor",
+      "literal_count": 10,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosPay.tsx",
+      "module": "NtosPay",
+      "literal_count": 10,
+      "has_ui_t": false
+    },
+    {
+      "file": "RadioactiveMicrolaser.jsx",
+      "module": "RadioactiveMicrolaser",
+      "literal_count": 10,
+      "has_ui_t": false
+    },
+    {
+      "file": "RoboticsControlConsole.jsx",
+      "module": "RoboticsControlConsole",
+      "literal_count": 10,
+      "has_ui_t": false
+    },
+    {
+      "file": "ScannerGate.jsx",
+      "module": "ScannerGate",
+      "literal_count": 10,
+      "has_ui_t": false
+    },
+    {
+      "file": "SeedExtractor.tsx",
+      "module": "SeedExtractor",
+      "literal_count": 10,
+      "has_ui_t": false
+    },
+    {
+      "file": "ServerControl.tsx",
+      "module": "ServerControl",
+      "literal_count": 10,
+      "has_ui_t": false
+    },
+    {
+      "file": "WarrantConsole.tsx",
+      "module": "WarrantConsole",
+      "literal_count": 10,
+      "has_ui_t": false
+    },
+    {
+      "file": "ChemPress.jsx",
+      "module": "ChemPress",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "Cryo.tsx",
+      "module": "Cryo",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "Crystallizer.tsx",
+      "module": "Crystallizer",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "HoloPay.tsx",
+      "module": "HoloPay",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "HypnoChair.jsx",
+      "module": "HypnoChair",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "LaborClaimConsole.jsx",
+      "module": "LaborClaimConsole",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "MechBayPowerConsole.jsx",
+      "module": "MechBayPowerConsole",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "MineBot.tsx",
+      "module": "MineBot",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosNotepad.tsx",
+      "module": "NtosNotepad",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "PortableGenerator.jsx",
+      "module": "PortableGenerator",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "PortableTurret.jsx",
+      "module": "PortableTurret",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "ProbingConsole.jsx",
+      "module": "ProbingConsole",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "Roulette/BetTable.tsx",
+      "module": "Roulette",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "Smes.tsx",
+      "module": "Smes",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "StackingConsole.jsx",
+      "module": "StackingConsole",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "StationTraitsPanel.tsx",
+      "module": "StationTraitsPanel",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "ThermoMachine.jsx",
+      "module": "ThermoMachine",
+      "literal_count": 9,
+      "has_ui_t": false
+    },
+    {
+      "file": "AtmosControlConsole.tsx",
+      "module": "AtmosControlConsole",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "BountyBoard.tsx",
+      "module": "BountyBoard",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "ChemAcclimator.tsx",
+      "module": "ChemAcclimator",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "CircuitSignalHandler.tsx",
+      "module": "CircuitSignalHandler",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "CivCargoHoldTerminal.jsx",
+      "module": "CivCargoHoldTerminal",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "ColorPickerModal/ColorSetter.tsx",
+      "module": "ColorPickerModal",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "CyborgBootDebug.jsx",
+      "module": "CyborgBootDebug",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "ExosuitControlConsole.jsx",
+      "module": "ExosuitControlConsole",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "Jukebox.tsx",
+      "module": "Jukebox",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "KeycardAuth.jsx",
+      "module": "KeycardAuth",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "MassSpec.tsx",
+      "module": "MassSpec",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosSelfServe.tsx",
+      "module": "NtosSelfServe",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "Orbit/OrbitBlade.tsx",
+      "module": "Orbit",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "PersonalCrafting/content/RecipeContent.tsx",
+      "module": "PersonalCrafting",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "PipeScrubber.tsx",
+      "module": "PipeScrubber",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "SpawnSearch.tsx",
+      "module": "SpawnSearch",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "Spellbook/TableOfContents.tsx",
+      "module": "Spellbook",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "Trophycase.jsx",
+      "module": "Trophycase",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "TurbineComputer.tsx",
+      "module": "TurbineComputer",
+      "literal_count": 8,
+      "has_ui_t": false
+    },
+    {
+      "file": "AirAlarm/screens/Home.tsx",
+      "module": "AirAlarm",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "Aquarium.tsx",
+      "module": "Aquarium",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "BeakerPanel.tsx",
+      "module": "BeakerPanel",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "ChemHeater.tsx",
+      "module": "ChemHeater",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "ChemReactionChamber.tsx",
+      "module": "ChemReactionChamber",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "Crayon.tsx",
+      "module": "Crayon",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "Fabrication/DesignBrowser.tsx",
+      "module": "Fabrication",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "ImplantChair.jsx",
+      "module": "ImplantChair",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "InfuserBook.tsx",
+      "module": "InfuserBook",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "IntegratedCircuit/ComponentMenu.jsx",
+      "module": "IntegratedCircuit",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "MassDriverControl.jsx",
+      "module": "MassDriverControl",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "Microscope.tsx",
+      "module": "Microscope",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "ModularShieldGen.tsx",
+      "module": "ModularShieldGen",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "Newspaper.tsx",
+      "module": "Newspaper",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtnetRelay.tsx",
+      "module": "NtnetRelay",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosCivCargoHoldTerminal.jsx",
+      "module": "NtosCivCargoHoldTerminal",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosNetChat.jsx",
+      "module": "NtosNetChat",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "OreRedemptionMachine.tsx",
+      "module": "OreRedemptionMachine",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "OutfitManager.jsx",
+      "module": "OutfitManager",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "PaiSubmit.tsx",
+      "module": "PaiSubmit",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "PlayerTicketHistory.tsx",
+      "module": "PlayerTicketHistory",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "PortraitPicker.jsx",
+      "module": "PortraitPicker",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "ProcCallMenu.tsx",
+      "module": "ProcCallMenu",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "RapidPipeDispenser.tsx",
+      "module": "RapidPipeDispenser",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "SmartVend.tsx",
+      "module": "SmartVend",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "SparringContract.tsx",
+      "module": "SparringContract",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "SpawnersMenu.tsx",
+      "module": "SpawnersMenu",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "Teleporter.jsx",
+      "module": "Teleporter",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "TrackedPlaytime.jsx",
+      "module": "TrackedPlaytime",
+      "literal_count": 7,
+      "has_ui_t": false
+    },
+    {
+      "file": "AirlockElectronics.tsx",
+      "module": "AirlockElectronics",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "AiVoiceChanger.tsx",
+      "module": "AiVoiceChanger",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoBrainwashed.tsx",
+      "module": "AntagInfoBrainwashed",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "ChemPress.tsx",
+      "module": "ChemPress",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "CircuitModule.jsx",
+      "module": "CircuitModule",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "CodexGigas.tsx",
+      "module": "CodexGigas",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "CrewConsole.tsx",
+      "module": "CrewConsole",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "CrossingSignal.tsx",
+      "module": "CrossingSignal",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "CryopodConsole.jsx",
+      "module": "CryopodConsole",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "DisposalUnit.jsx",
+      "module": "DisposalUnit",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "DnaVault.tsx",
+      "module": "DnaVault",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "DynamicTester.tsx",
+      "module": "DynamicTester",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "ExaminePanel/index.tsx",
+      "module": "ExaminePanel",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "ExosuitFabricator.tsx",
+      "module": "ExosuitFabricator",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "Experimentator.tsx",
+      "module": "Experimentator",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "Filterrific.jsx",
+      "module": "Filterrific",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "FishAnalyzer.tsx",
+      "module": "FishAnalyzer",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "GravityGenerator.jsx",
+      "module": "GravityGenerator",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "Intellicard.jsx",
+      "module": "Intellicard",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "LightController.tsx",
+      "module": "LightController",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "Limbgrower.jsx",
+      "module": "Limbgrower",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosCard.tsx",
+      "module": "NtosCard",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "Orbit/OrbitTooltip.tsx",
+      "module": "Orbit",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "PaintingMachine.jsx",
+      "module": "PaintingMachine",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "PowerMonitor.tsx",
+      "module": "PowerMonitor",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "ProduceConsole.tsx",
+      "module": "ProduceConsole",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "Reagents/Lookup.tsx",
+      "module": "Reagents",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "RecordManifest.jsx",
+      "module": "RecordManifest",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "RemoteRobotControl.jsx",
+      "module": "RemoteRobotControl",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "RestockTracker.jsx",
+      "module": "RestockTracker",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "ShuttleConsole.jsx",
+      "module": "ShuttleConsole",
+      "literal_count": 6,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoDemon.tsx",
+      "module": "AntagInfoDemon",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoNinja.tsx",
+      "module": "AntagInfoNinja",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoSpy.tsx",
+      "module": "AntagInfoSpy",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "AtmosControlPanel.jsx",
+      "module": "AtmosControlPanel",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "AtmosMixer.tsx",
+      "module": "AtmosMixer",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "AtmosPump.tsx",
+      "module": "AtmosPump",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "Biogenerator.tsx",
+      "module": "Biogenerator",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "Blueprints.tsx",
+      "module": "Blueprints",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "BluespaceArtillery.tsx",
+      "module": "BluespaceArtillery",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "ChemSeparator.tsx",
+      "module": "ChemSeparator",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "Clipboard.tsx",
+      "module": "Clipboard",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "CommandReportConsole.jsx",
+      "module": "CommandReportConsole",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "DeathmatchPanel.tsx",
+      "module": "DeathmatchPanel",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "Electropack.jsx",
+      "module": "Electropack",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "EmergencyShuttleConsole.tsx",
+      "module": "EmergencyShuttleConsole",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "EngravedMessage.jsx",
+      "module": "EngravedMessage",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "ExperimentConfigure.tsx",
+      "module": "ExperimentConfigure",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "IntegratedCircuit/index.jsx",
+      "module": "IntegratedCircuit",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "IntensityCredits.tsx",
+      "module": "IntensityCredits",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "Lawpanel.tsx",
+      "module": "Lawpanel",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "LibraryAdmin/Modify.tsx",
+      "module": "LibraryAdmin",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "LibraryScanner.jsx",
+      "module": "LibraryScanner",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "MatrixMathTester.tsx",
+      "module": "MatrixMathTester",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "MinigamesMenu.tsx",
+      "module": "MinigamesMenu",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosCouponMaster.tsx",
+      "module": "NtosCouponMaster",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosNetDownloader.tsx",
+      "module": "NtosNetDownloader",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosPortraitPrinter.jsx",
+      "module": "NtosPortraitPrinter",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosSupermatter.tsx",
+      "module": "NtosSupermatter",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "Orbit/OrbitSearchBar.tsx",
+      "module": "Orbit",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "OreContainer.tsx",
+      "module": "OreContainer",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "OreSilo.tsx",
+      "module": "OreSilo",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "PersonalCrafting/index.tsx",
+      "module": "PersonalCrafting",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "ProcessingConsole.tsx",
+      "module": "ProcessingConsole",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "Radio.tsx",
+      "module": "Radio",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "RequestManager.tsx",
+      "module": "RequestManager",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "SentienceFunBalloon.jsx",
+      "module": "SentienceFunBalloon",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "Signaler.tsx",
+      "module": "Signaler",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "Signalvib.jsx",
+      "module": "Signalvib",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "SkillPanel.jsx",
+      "module": "SkillPanel",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "TimeClock.jsx",
+      "module": "TimeClock",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "TramPlaque.tsx",
+      "module": "TramPlaque",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "Uplink/index.tsx",
+      "module": "Uplink",
+      "literal_count": 5,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoSeparatist.tsx",
+      "module": "AntagInfoSeparatist",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "AtmosFilter.tsx",
+      "module": "AtmosFilter",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "Autolathe.tsx",
+      "module": "Autolathe",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "AutomatedAnnouncement.tsx",
+      "module": "AutomatedAnnouncement",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "BasketballPanel.tsx",
+      "module": "BasketballPanel",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "BluespaceLocator.tsx",
+      "module": "BluespaceLocator",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "BorerChem.jsx",
+      "module": "BorerChem",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "BorerEvolution.tsx",
+      "module": "BorerEvolution",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "BrigTimer.tsx",
+      "module": "BrigTimer",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "CargoHoldTerminal.tsx",
+      "module": "CargoHoldTerminal",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "ChemMixingChamber.tsx",
+      "module": "ChemMixingChamber",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "ColorPickerModal/Color.tsx",
+      "module": "ColorPickerModal",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "CommunicationsConsole/index.tsx",
+      "module": "CommunicationsConsole",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "CrewManifest.jsx",
+      "module": "CrewManifest",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "CTFPanel.tsx",
+      "module": "CTFPanel",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "DecalPainter.tsx",
+      "module": "DecalPainter",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "DSMBook.tsx",
+      "module": "DSMBook",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "ElevatorPanel.tsx",
+      "module": "ElevatorPanel",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "Flatpacker.tsx",
+      "module": "Flatpacker",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "ForensicScanner/index.tsx",
+      "module": "ForensicScanner",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "Gateway.jsx",
+      "module": "Gateway",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "LanguageMenu.tsx",
+      "module": "LanguageMenu",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "LaunchpadConsole.tsx",
+      "module": "LaunchpadConsole",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "LibraryVisitor.jsx",
+      "module": "LibraryVisitor",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "LightSpawn.tsx",
+      "module": "LightSpawn",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "ManufacturingSorter.tsx",
+      "module": "ManufacturingSorter",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "MechpadConsole.jsx",
+      "module": "MechpadConsole",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "MODpaint.jsx",
+      "module": "MODpaint",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "NetpodOutfits.tsx",
+      "module": "NetpodOutfits",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "NifSoulPoem.jsx",
+      "module": "NifSoulPoem",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosDeptOrder.tsx",
+      "module": "NtosDeptOrder",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosFileManager.jsx",
+      "module": "NtosFileManager",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosNifsoftCatalog.jsx",
+      "module": "NtosNifsoftCatalog",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosSpectreMeter.jsx",
+      "module": "NtosSpectreMeter",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "ParticleAccelerator.jsx",
+      "module": "ParticleAccelerator",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "PetBuilder.tsx",
+      "module": "PetBuilder",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "RapidConstructionDevice.tsx",
+      "module": "RapidConstructionDevice",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "SelectEquipment.jsx",
+      "module": "SelectEquipment",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "ServerControlPanel.jsx",
+      "module": "ServerControlPanel",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "TrainingMachine.tsx",
+      "module": "TrainingMachine",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "TramControl.tsx",
+      "module": "TramControl",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "Uplink/PrimaryObjectiveMenu.tsx",
+      "module": "Uplink",
+      "literal_count": 4,
+      "has_ui_t": false
+    },
+    {
+      "file": "Achievements.tsx",
+      "module": "Achievements",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "AnomalousWeatherTower.tsx",
+      "module": "AnomalousWeatherTower",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "AnomalyRefinery.jsx",
+      "module": "AnomalyRefinery",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoMorph.tsx",
+      "module": "AntagInfoMorph",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "AtmosTempGate.tsx",
+      "module": "AtmosTempGate",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "AtmosTempPump.tsx",
+      "module": "AtmosTempPump",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "AuxBaseConsole.tsx",
+      "module": "AuxBaseConsole",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "BlackMarketUplink.tsx",
+      "module": "BlackMarketUplink",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "BorgShaker.tsx",
+      "module": "BorgShaker",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "CameraConsole.tsx",
+      "module": "CameraConsole",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "Canvas.tsx",
+      "module": "Canvas",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "CargoExpress.tsx",
+      "module": "CargoExpress",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "ChemDebugSynthesizer.tsx",
+      "module": "ChemDebugSynthesizer",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "ChemFilter.tsx",
+      "module": "ChemFilter",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "ColorBlindTester.tsx",
+      "module": "ColorBlindTester",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "DetectiveBoard/index.tsx",
+      "module": "DetectiveBoard",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "Electrolyzer.tsx",
+      "module": "Electrolyzer",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "GulagItemReclaimer.tsx",
+      "module": "GulagItemReclaimer",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "Holodeck.jsx",
+      "module": "Holodeck",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "HotkeysHelp.tsx",
+      "module": "HotkeysHelp",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "JobSelection.tsx",
+      "module": "JobSelection",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "LaunchpadRemote.tsx",
+      "module": "LaunchpadRemote",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "LibraryAdmin/Search.tsx",
+      "module": "LibraryAdmin",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "LTSRBT.tsx",
+      "module": "LTSRBT",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "MemoryPanel.jsx",
+      "module": "MemoryPanel",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosJobManager.jsx",
+      "module": "NtosJobManager",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosSkillTracker.jsx",
+      "module": "NtosSkillTracker",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "OperatingComputer/index.tsx",
+      "module": "OperatingComputer",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "OreBox.tsx",
+      "module": "OreBox",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "OutfitEditor.jsx",
+      "module": "OutfitEditor",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "PaperSheet/PrimaryView.tsx",
+      "module": "PaperSheet",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "PortableChemMixer.tsx",
+      "module": "PortableChemMixer",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "PortablePump.jsx",
+      "module": "PortablePump",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "Portagrav.tsx",
+      "module": "Portagrav",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "ProximitySensor.jsx",
+      "module": "ProximitySensor",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "Reflector.tsx",
+      "module": "Reflector",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "RequestsConsole/RequestsConsoleMainScreen.tsx",
+      "module": "RequestsConsole",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "SlimeBodySwapper.jsx",
+      "module": "SlimeBodySwapper",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "SlotMachine.tsx",
+      "module": "SlotMachine",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "SmokeMachine.tsx",
+      "module": "SmokeMachine",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "TurretControl.tsx",
+      "module": "TurretControl",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "Vendatray.tsx",
+      "module": "Vendatray",
+      "literal_count": 3,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoShade.jsx",
+      "module": "AntagInfoShade",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "AvatarHelp.tsx",
+      "module": "AvatarHelp",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "BankMachine.tsx",
+      "module": "BankMachine",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "CheckboxInput.tsx",
+      "module": "CheckboxInput",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "ChemDisposer.tsx",
+      "module": "ChemDisposer",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "ChemSplitter.tsx",
+      "module": "ChemSplitter",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "ClockworkResearch.tsx",
+      "module": "ClockworkResearch",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "ColorMatrixEditor.tsx",
+      "module": "ColorMatrixEditor",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "common/SpriteEditor/Types/types.ts",
+      "module": "common",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "FishingCalculator.tsx",
+      "module": "FishingCalculator",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "ForceEvent.tsx",
+      "module": "ForceEvent",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "ForensicsSpoofer.tsx",
+      "module": "ForensicsSpoofer",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "InfraredEmitter.tsx",
+      "module": "InfraredEmitter",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "IntegratedCircuit/VariableMenu.jsx",
+      "module": "IntegratedCircuit",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "InteractionPanel/index.tsx",
+      "module": "InteractionPanel",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "InteractionPanel/InfoSection.tsx",
+      "module": "InteractionPanel",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "InterviewManager.jsx",
+      "module": "InterviewManager",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "LingMMITalk.tsx",
+      "module": "LingMMITalk",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "LootPanel/index.tsx",
+      "module": "LootPanel",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "ModularShieldConsole.tsx",
+      "module": "ModularShieldConsole",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosCamera.jsx",
+      "module": "NtosCamera",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosCrewManifest.jsx",
+      "module": "NtosCrewManifest",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosEmojipedia.tsx",
+      "module": "NtosEmojipedia",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosNetDos.jsx",
+      "module": "NtosNetDos",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosPhysScanner.jsx",
+      "module": "NtosPhysScanner",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosRadar.tsx",
+      "module": "NtosRadar",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosRecords.jsx",
+      "module": "NtosRecords",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosRevelation.tsx",
+      "module": "NtosRevelation",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "Policypanel.tsx",
+      "module": "Policypanel",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "Radio.test.tsx",
+      "module": "Radio.test",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "RapidPlumbingDevice.tsx",
+      "module": "RapidPlumbingDevice",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "Reagents/RecipeLibrary.tsx",
+      "module": "Reagents",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "ReligiousTool.jsx",
+      "module": "ReligiousTool",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "RepairBot.tsx",
+      "module": "RepairBot",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "RepairbotResources.tsx",
+      "module": "RepairbotResources",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "Safe.jsx",
+      "module": "Safe",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "SatelliteControl.tsx",
+      "module": "SatelliteControl",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "Sleeper.jsx",
+      "module": "Sleeper",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "Spellbook/CategoryDisplay.tsx",
+      "module": "Spellbook",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "Spellbook/index.tsx",
+      "module": "Spellbook",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "Spellbook/SearchSpells.tsx",
+      "module": "Spellbook",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "Spellbook/SpellResults.tsx",
+      "module": "Spellbook",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "StackCrafting.tsx",
+      "module": "StackCrafting",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "StationAlertConsole.jsx",
+      "module": "StationAlertConsole",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "Tank.jsx",
+      "module": "Tank",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "Techweb/LockedExperiment.tsx",
+      "module": "Techweb",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "Techweb/nodes/detail.tsx",
+      "module": "Techweb",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "TrophyAdminPanel.jsx",
+      "module": "TrophyAdminPanel",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "VaultController.tsx",
+      "module": "VaultController",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "Vending.tsx",
+      "module": "Vending",
+      "literal_count": 2,
+      "has_ui_t": false
+    },
+    {
+      "file": "AbandonedCrate.tsx",
+      "module": "AbandonedCrate",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "AirAlarm/screens/Modes.tsx",
+      "module": "AirAlarm",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "AirAlarm/screens/Scrubbers.tsx",
+      "module": "AirAlarm",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "AirAlarm/screens/Vents.tsx",
+      "module": "AirAlarm",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "AlertModal.tsx",
+      "module": "AlertModal",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoClock.tsx",
+      "module": "AntagInfoClock",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "AntagInfoSentient.jsx",
+      "module": "AntagInfoSentient",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "ApprenticeContract.tsx",
+      "module": "ApprenticeContract",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "BloodFilter.tsx",
+      "module": "BloodFilter",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "BorgHypo.tsx",
+      "module": "BorgHypo",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "BotAnnouncement.tsx",
+      "module": "BotAnnouncement",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "CellularEmporium.tsx",
+      "module": "CellularEmporium",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "CircuitAccessChecker.tsx",
+      "module": "CircuitAccessChecker",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "ColorPickerModal/index.tsx",
+      "module": "ColorPickerModal",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "common/SpriteEditor/helpers.ts",
+      "module": "common",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "common/SpriteEditor/index.tsx",
+      "module": "common",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "CommunicationsConsole/NoConnectionModal.tsx",
+      "module": "CommunicationsConsole",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "DestinationTagger.tsx",
+      "module": "DestinationTagger",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "DetectiveBoard/Evidence.tsx",
+      "module": "DetectiveBoard",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "Fabrication/MaterialAccessBar.tsx",
+      "module": "Fabrication",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "Fabricator.tsx",
+      "module": "Fabricator",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "Folder.tsx",
+      "module": "Folder",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "ForensicScanner/ForensicLogs.tsx",
+      "module": "ForensicScanner",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "HealthSensor.tsx",
+      "module": "HealthSensor",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "InteractionPanel/MainContent.tsx",
+      "module": "InteractionPanel",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "LibraryAdmin/BookListing.tsx",
+      "module": "LibraryAdmin",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "LibraryAdmin/index.tsx",
+      "module": "LibraryAdmin",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "ListInputWindow/ListInputModal.tsx",
+      "module": "ListInputWindow",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "LootPanel/RawContents.tsx",
+      "module": "LootPanel",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "MCDependencyDebug.tsx",
+      "module": "MCDependencyDebug",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "NoticeBoard.tsx",
+      "module": "NoticeBoard",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosCursor.tsx",
+      "module": "NtosCursor",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosMODsuit.jsx",
+      "module": "NtosMODsuit",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "NtosNewsArchive.jsx",
+      "module": "NtosNewsArchive",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "Orbit/index.tsx",
+      "module": "Orbit",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "Orbit/OrbitContent.tsx",
+      "module": "Orbit",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "PipeDispenser.tsx",
+      "module": "PipeDispenser",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "PortableScrubber.tsx",
+      "module": "PortableScrubber",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "Puzzgrid.tsx",
+      "module": "Puzzgrid",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "RapidTilingDevice.tsx",
+      "module": "RapidTilingDevice",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "Reagents/index.tsx",
+      "module": "Reagents",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "Spellbook/Loadouts.tsx",
+      "module": "Spellbook",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "Spellbook/Locked.tsx",
+      "module": "Spellbook",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "Spellbook/Randomize.tsx",
+      "module": "Spellbook",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "Spellbook/SpellTabDisplay.tsx",
+      "module": "Spellbook",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "SpyUplink.tsx",
+      "module": "SpyUplink",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "Terminal.tsx",
+      "module": "Terminal",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "TextInputModal.tsx",
+      "module": "TextInputModal",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "ThermoElectricGenerator.tsx",
+      "module": "ThermoElectricGenerator",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "Timer.tsx",
+      "module": "Timer",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "Uplink/GenericUplink.tsx",
+      "module": "Uplink",
+      "literal_count": 1,
+      "has_ui_t": false
+    },
+    {
+      "file": "Wires.tsx",
+      "module": "Wires",
+      "literal_count": 1,
+      "has_ui_t": false
+    }
+  ]
+}

@@ -1,0 +1,1611 @@
+{
+  "total_files_scanned": 836,
+  "files_with_real_visible_ui_literals": 415,
+  "total_real_visible_ui_literals": 2529,
+  "top_modules_by_literal_density": [
+    {
+      "module": "PlayerPanel",
+      "count": 45
+    },
+    {
+      "module": "NtosRoboControl",
+      "count": 31
+    },
+    {
+      "module": "NovaCharacterDirectory",
+      "count": 30
+    },
+    {
+      "module": "PaiCard",
+      "count": 24
+    },
+    {
+      "module": "ChemMaster",
+      "count": 23
+    },
+    {
+      "module": "Spellbook",
+      "count": 23
+    },
+    {
+      "module": "ChemDispenser",
+      "count": 22
+    },
+    {
+      "module": "Photocopier",
+      "count": 21
+    },
+    {
+      "module": "QuantumConsole",
+      "count": 21
+    },
+    {
+      "module": "MassSpec",
+      "count": 19
+    },
+    {
+      "module": "NtosVirtualPet",
+      "count": 19
+    },
+    {
+      "module": "SoulcatcherUser",
+      "count": 19
+    },
+    {
+      "module": "ApcControl",
+      "count": 18
+    },
+    {
+      "module": "Changelog",
+      "count": 18
+    },
+    {
+      "module": "Mule",
+      "count": 18
+    },
+    {
+      "module": "ServerMonitor",
+      "count": 18
+    },
+    {
+      "module": "SkillStation",
+      "count": 18
+    },
+    {
+      "module": "AiAirlock",
+      "count": 17
+    },
+    {
+      "module": "BorgPanel",
+      "count": 17
+    },
+    {
+      "module": "GhostMenu",
+      "count": 17
+    }
+  ],
+  "remaining_interfaces_requiring_migration": [
+    {
+      "module": "PlayerPanel",
+      "count": 45
+    },
+    {
+      "module": "NtosRoboControl",
+      "count": 31
+    },
+    {
+      "module": "NovaCharacterDirectory",
+      "count": 30
+    },
+    {
+      "module": "PaiCard",
+      "count": 24
+    },
+    {
+      "module": "ChemMaster",
+      "count": 23
+    },
+    {
+      "module": "Spellbook",
+      "count": 23
+    },
+    {
+      "module": "ChemDispenser",
+      "count": 22
+    },
+    {
+      "module": "Photocopier",
+      "count": 21
+    },
+    {
+      "module": "QuantumConsole",
+      "count": 21
+    },
+    {
+      "module": "MassSpec",
+      "count": 19
+    },
+    {
+      "module": "NtosVirtualPet",
+      "count": 19
+    },
+    {
+      "module": "SoulcatcherUser",
+      "count": 19
+    },
+    {
+      "module": "ApcControl",
+      "count": 18
+    },
+    {
+      "module": "Changelog",
+      "count": 18
+    },
+    {
+      "module": "Mule",
+      "count": 18
+    },
+    {
+      "module": "ServerMonitor",
+      "count": 18
+    },
+    {
+      "module": "SkillStation",
+      "count": 18
+    },
+    {
+      "module": "AiAirlock",
+      "count": 17
+    },
+    {
+      "module": "BorgPanel",
+      "count": 17
+    },
+    {
+      "module": "GhostMenu",
+      "count": 17
+    },
+    {
+      "module": "PersonalCrafting",
+      "count": 17
+    },
+    {
+      "module": "RaptorDex",
+      "count": 17
+    },
+    {
+      "module": "ShuttleManipulator",
+      "count": 17
+    },
+    {
+      "module": "AntagInfoGlitch",
+      "count": 16
+    },
+    {
+      "module": "GlassBlowing",
+      "count": 16
+    },
+    {
+      "module": "HighLuminosityEyesMenu",
+      "count": 16
+    },
+    {
+      "module": "NifPanel",
+      "count": 16
+    },
+    {
+      "module": "ShuttleBlueprints",
+      "count": 16
+    },
+    {
+      "module": "SyndContractor",
+      "count": 16
+    },
+    {
+      "module": "Telecomms",
+      "count": 16
+    },
+    {
+      "module": "LibraryAdmin",
+      "count": 15
+    },
+    {
+      "module": "Orbit",
+      "count": 15
+    },
+    {
+      "module": "AmmoWorkbench",
+      "count": 14
+    },
+    {
+      "module": "Canister",
+      "count": 14
+    },
+    {
+      "module": "ChemPress",
+      "count": 14
+    },
+    {
+      "module": "FishCatalog",
+      "count": 14
+    },
+    {
+      "module": "NtosShipping",
+      "count": 14
+    },
+    {
+      "module": "NtosSpaceBetting",
+      "count": 14
+    },
+    {
+      "module": "StoryManager",
+      "count": 14
+    },
+    {
+      "module": "TankCompressor",
+      "count": 14
+    },
+    {
+      "module": "Interview",
+      "count": 13
+    },
+    {
+      "module": "NtosArcade",
+      "count": 13
+    },
+    {
+      "module": "PowerMonitor",
+      "count": 13
+    },
+    {
+      "module": "SimpleBot",
+      "count": 13
+    },
+    {
+      "module": "AntagInfoChangeling",
+      "count": 12
+    },
+    {
+      "module": "Fax",
+      "count": 12
+    },
+    {
+      "module": "HoloPay",
+      "count": 12
+    },
+    {
+      "module": "IVDrip",
+      "count": 12
+    },
+    {
+      "module": "LogViewer",
+      "count": 12
+    },
+    {
+      "module": "NtosNotepad",
+      "count": 12
+    },
+    {
+      "module": "PortableGenerator",
+      "count": 12
+    },
+    {
+      "module": "PrisonerManagement",
+      "count": 12
+    },
+    {
+      "module": "Reagents",
+      "count": 12
+    },
+    {
+      "module": "SeedExtractor",
+      "count": 12
+    },
+    {
+      "module": "Supermatter",
+      "count": 12
+    },
+    {
+      "module": "SyndicateContractor",
+      "count": 12
+    },
+    {
+      "module": "AirAlarm",
+      "count": 11
+    },
+    {
+      "module": "AntagInfoWizard",
+      "count": 11
+    },
+    {
+      "module": "ArmamentStation",
+      "count": 11
+    },
+    {
+      "module": "ChemHeater",
+      "count": 11
+    },
+    {
+      "module": "ColorPickerModal",
+      "count": 11
+    },
+    {
+      "module": "DestructiveAnalyzer",
+      "count": 11
+    },
+    {
+      "module": "DopplerArray",
+      "count": 11
+    },
+    {
+      "module": "ExperimentalCloner",
+      "count": 11
+    },
+    {
+      "module": "GulagTeleporterConsole",
+      "count": 11
+    },
+    {
+      "module": "InteractionPanel",
+      "count": 11
+    },
+    {
+      "module": "NtosCyborgRemoteMonitor",
+      "count": 11
+    },
+    {
+      "module": "ServerControl",
+      "count": 11
+    },
+    {
+      "module": "SolarControl",
+      "count": 11
+    },
+    {
+      "module": "SpaceHeater",
+      "count": 11
+    },
+    {
+      "module": "SparringContract",
+      "count": 11
+    },
+    {
+      "module": "StationTraitsPanel",
+      "count": 11
+    },
+    {
+      "module": "TransferValve",
+      "count": 11
+    },
+    {
+      "module": "WarrantConsole",
+      "count": 11
+    },
+    {
+      "module": "AirlockElectronics",
+      "count": 10
+    },
+    {
+      "module": "AntagInfoAssaultops",
+      "count": 10
+    },
+    {
+      "module": "AntagInfoMalf",
+      "count": 10
+    },
+    {
+      "module": "BluespaceArtilleryNova",
+      "count": 10
+    },
+    {
+      "module": "Gps",
+      "count": 10
+    },
+    {
+      "module": "Holopad",
+      "count": 10
+    },
+    {
+      "module": "IntegratedCircuit",
+      "count": 10
+    },
+    {
+      "module": "LanguageMenu",
+      "count": 10
+    },
+    {
+      "module": "OreRedemptionMachine",
+      "count": 10
+    },
+    {
+      "module": "OreSilo",
+      "count": 10
+    },
+    {
+      "module": "RadioactiveMicrolaser",
+      "count": 10
+    },
+    {
+      "module": "RoboticsControlConsole",
+      "count": 10
+    },
+    {
+      "module": "ScannerGate",
+      "count": 10
+    },
+    {
+      "module": "TelecommsMonitor",
+      "count": 10
+    },
+    {
+      "module": "TramPlaque",
+      "count": 10
+    },
+    {
+      "module": "AccountingConsole",
+      "count": 9
+    },
+    {
+      "module": "AntagInfoNightmare",
+      "count": 9
+    },
+    {
+      "module": "AntagInfoTraitor",
+      "count": 9
+    },
+    {
+      "module": "AuxBaseConsole",
+      "count": 9
+    },
+    {
+      "module": "BattleArcade",
+      "count": 9
+    },
+    {
+      "module": "CargoImportConsole",
+      "count": 9
+    },
+    {
+      "module": "Cryo",
+      "count": 9
+    },
+    {
+      "module": "Crystallizer",
+      "count": 9
+    },
+    {
+      "module": "GhostPoolProtection",
+      "count": 9
+    },
+    {
+      "module": "ImplantPad",
+      "count": 9
+    },
+    {
+      "module": "MatrixMathTester",
+      "count": 9
+    },
+    {
+      "module": "MechBayPowerConsole",
+      "count": 9
+    },
+    {
+      "module": "MineBot",
+      "count": 9
+    },
+    {
+      "module": "NavBeacon",
+      "count": 9
+    },
+    {
+      "module": "NtosNetMonitor",
+      "count": 9
+    },
+    {
+      "module": "NtosPay",
+      "count": 9
+    },
+    {
+      "module": "PaiSubmit",
+      "count": 9
+    },
+    {
+      "module": "Roulette",
+      "count": 9
+    },
+    {
+      "module": "Smes",
+      "count": 9
+    },
+    {
+      "module": "StackingConsole",
+      "count": 9
+    },
+    {
+      "module": "Teleporter",
+      "count": 9
+    },
+    {
+      "module": "Aquarium",
+      "count": 8
+    },
+    {
+      "module": "AtmosControlPanel",
+      "count": 8
+    },
+    {
+      "module": "ChemAcclimator",
+      "count": 8
+    },
+    {
+      "module": "ChemSeparator",
+      "count": 8
+    },
+    {
+      "module": "CircuitSignalHandler",
+      "count": 8
+    },
+    {
+      "module": "CivCargoHoldTerminal",
+      "count": 8
+    },
+    {
+      "module": "CommandReport",
+      "count": 8
+    },
+    {
+      "module": "Crayon",
+      "count": 8
+    },
+    {
+      "module": "CrewConsole",
+      "count": 8
+    },
+    {
+      "module": "CyborgBootDebug",
+      "count": 8
+    },
+    {
+      "module": "DynamicTester",
+      "count": 8
+    },
+    {
+      "module": "ExodroneConsole",
+      "count": 8
+    },
+    {
+      "module": "ExosuitControlConsole",
+      "count": 8
+    },
+    {
+      "module": "GravityGenerator",
+      "count": 8
+    },
+    {
+      "module": "HypnoChair",
+      "count": 8
+    },
+    {
+      "module": "PipeScrubber",
+      "count": 8
+    },
+    {
+      "module": "PlayerTicketHistory",
+      "count": 8
+    },
+    {
+      "module": "ProbingConsole",
+      "count": 8
+    },
+    {
+      "module": "SpawnersMenu",
+      "count": 8
+    },
+    {
+      "module": "TurbineComputer",
+      "count": 8
+    },
+    {
+      "module": "AntagInfoBlob",
+      "count": 7
+    },
+    {
+      "module": "AntagInfoSunwalker",
+      "count": 7
+    },
+    {
+      "module": "AtmosControlConsole",
+      "count": 7
+    },
+    {
+      "module": "Blueprints",
+      "count": 7
+    },
+    {
+      "module": "ChemReactionChamber",
+      "count": 7
+    },
+    {
+      "module": "DelamProcedure",
+      "count": 7
+    },
+    {
+      "module": "FishingCalculator",
+      "count": 7
+    },
+    {
+      "module": "Gateway",
+      "count": 7
+    },
+    {
+      "module": "ImplantChair",
+      "count": 7
+    },
+    {
+      "module": "Jukebox",
+      "count": 7
+    },
+    {
+      "module": "KeycardAuth",
+      "count": 7
+    },
+    {
+      "module": "LaborClaimConsole",
+      "count": 7
+    },
+    {
+      "module": "LaunchpadConsole",
+      "count": 7
+    },
+    {
+      "module": "MassDriverControl",
+      "count": 7
+    },
+    {
+      "module": "ModularShieldGen",
+      "count": 7
+    },
+    {
+      "module": "Newspaper",
+      "count": 7
+    },
+    {
+      "module": "NtosCivCargoHoldTerminal",
+      "count": 7
+    },
+    {
+      "module": "NtosFileManager",
+      "count": 7
+    },
+    {
+      "module": "TrackedPlaytime",
+      "count": 7
+    },
+    {
+      "module": "Uplink",
+      "count": 7
+    },
+    {
+      "module": "AiVoiceChanger",
+      "count": 6
+    },
+    {
+      "module": "AntagInfoBrainwashed",
+      "count": 6
+    },
+    {
+      "module": "BeakerPanel",
+      "count": 6
+    },
+    {
+      "module": "Biogenerator",
+      "count": 6
+    },
+    {
+      "module": "CircuitModule",
+      "count": 6
+    },
+    {
+      "module": "CodexGigas",
+      "count": 6
+    },
+    {
+      "module": "CrossingSignal",
+      "count": 6
+    },
+    {
+      "module": "DeathmatchPanel",
+      "count": 6
+    },
+    {
+      "module": "DisposalUnit",
+      "count": 6
+    },
+    {
+      "module": "ExosuitFabricator",
+      "count": 6
+    },
+    {
+      "module": "Flatpacker",
+      "count": 6
+    },
+    {
+      "module": "Intellicard",
+      "count": 6
+    },
+    {
+      "module": "LibraryVisitor",
+      "count": 6
+    },
+    {
+      "module": "ManufacturingSorter",
+      "count": 6
+    },
+    {
+      "module": "Microscope",
+      "count": 6
+    },
+    {
+      "module": "NtosCard",
+      "count": 6
+    },
+    {
+      "module": "NtosMain",
+      "count": 6
+    },
+    {
+      "module": "PaintingMachine",
+      "count": 6
+    },
+    {
+      "module": "ParticleEdit",
+      "count": 6
+    },
+    {
+      "module": "ProcCallMenu",
+      "count": 6
+    },
+    {
+      "module": "Radio",
+      "count": 6
+    },
+    {
+      "module": "RecordManifest",
+      "count": 6
+    },
+    {
+      "module": "RemoteRobotControl",
+      "count": 6
+    },
+    {
+      "module": "RestockTracker",
+      "count": 6
+    },
+    {
+      "module": "SmartVend",
+      "count": 6
+    },
+    {
+      "module": "ThermoMachine",
+      "count": 6
+    },
+    {
+      "module": "TimeClock",
+      "count": 6
+    },
+    {
+      "module": "Trophycase",
+      "count": 6
+    },
+    {
+      "module": "Achievements",
+      "count": 5
+    },
+    {
+      "module": "AntagInfoSpy",
+      "count": 5
+    },
+    {
+      "module": "BountyBoard",
+      "count": 5
+    },
+    {
+      "module": "CargoHoldTerminal",
+      "count": 5
+    },
+    {
+      "module": "Clipboard",
+      "count": 5
+    },
+    {
+      "module": "CryopodConsole",
+      "count": 5
+    },
+    {
+      "module": "DnaVault",
+      "count": 5
+    },
+    {
+      "module": "Electropack",
+      "count": 5
+    },
+    {
+      "module": "ElevatorPanel",
+      "count": 5
+    },
+    {
+      "module": "EmergencyShuttleConsole",
+      "count": 5
+    },
+    {
+      "module": "EngravedMessage",
+      "count": 5
+    },
+    {
+      "module": "ExperimentConfigure",
+      "count": 5
+    },
+    {
+      "module": "Filterrific",
+      "count": 5
+    },
+    {
+      "module": "FishAnalyzer",
+      "count": 5
+    },
+    {
+      "module": "ForensicScanner",
+      "count": 5
+    },
+    {
+      "module": "HotkeysHelp",
+      "count": 5
+    },
+    {
+      "module": "InfuserBook",
+      "count": 5
+    },
+    {
+      "module": "IntensityCredits",
+      "count": 5
+    },
+    {
+      "module": "Lawpanel",
+      "count": 5
+    },
+    {
+      "module": "LibraryScanner",
+      "count": 5
+    },
+    {
+      "module": "MinigamesMenu",
+      "count": 5
+    },
+    {
+      "module": "ModularShieldConsole",
+      "count": 5
+    },
+    {
+      "module": "NtosCouponMaster",
+      "count": 5
+    },
+    {
+      "module": "NtosDeptOrder",
+      "count": 5
+    },
+    {
+      "module": "NtosJobManager",
+      "count": 5
+    },
+    {
+      "module": "NtosSupermatter",
+      "count": 5
+    },
+    {
+      "module": "OperatingComputer",
+      "count": 5
+    },
+    {
+      "module": "OreBox",
+      "count": 5
+    },
+    {
+      "module": "OutfitManager",
+      "count": 5
+    },
+    {
+      "module": "PortraitPicker",
+      "count": 5
+    },
+    {
+      "module": "ProcessingConsole",
+      "count": 5
+    },
+    {
+      "module": "ProduceConsole",
+      "count": 5
+    },
+    {
+      "module": "RapidPipeDispenser",
+      "count": 5
+    },
+    {
+      "module": "RequestManager",
+      "count": 5
+    },
+    {
+      "module": "SentienceFunBalloon",
+      "count": 5
+    },
+    {
+      "module": "ShuttleConsole",
+      "count": 5
+    },
+    {
+      "module": "Signalvib",
+      "count": 5
+    },
+    {
+      "module": "SkillPanel",
+      "count": 5
+    },
+    {
+      "module": "SpawnSearch",
+      "count": 5
+    },
+    {
+      "module": "AnomalousWeatherTower",
+      "count": 4
+    },
+    {
+      "module": "AntagInfoBloodWorm",
+      "count": 4
+    },
+    {
+      "module": "AtmosMixer",
+      "count": 4
+    },
+    {
+      "module": "Autolathe",
+      "count": 4
+    },
+    {
+      "module": "BasketballPanel",
+      "count": 4
+    },
+    {
+      "module": "BigManipulator",
+      "count": 4
+    },
+    {
+      "module": "BlackMarketUplink",
+      "count": 4
+    },
+    {
+      "module": "BluespaceArtillery",
+      "count": 4
+    },
+    {
+      "module": "BluespaceLocator",
+      "count": 4
+    },
+    {
+      "module": "BorerChem",
+      "count": 4
+    },
+    {
+      "module": "BorerEvolution",
+      "count": 4
+    },
+    {
+      "module": "BrigTimer",
+      "count": 4
+    },
+    {
+      "module": "Canvas",
+      "count": 4
+    },
+    {
+      "module": "ChemMixingChamber",
+      "count": 4
+    },
+    {
+      "module": "CommandReportConsole",
+      "count": 4
+    },
+    {
+      "module": "CrewManifest",
+      "count": 4
+    },
+    {
+      "module": "CTFPanel",
+      "count": 4
+    },
+    {
+      "module": "DecalPainter",
+      "count": 4
+    },
+    {
+      "module": "DetectiveBoard",
+      "count": 4
+    },
+    {
+      "module": "EmotePanel",
+      "count": 4
+    },
+    {
+      "module": "Experimentator",
+      "count": 4
+    },
+    {
+      "module": "Limbgrower",
+      "count": 4
+    },
+    {
+      "module": "MechpadConsole",
+      "count": 4
+    },
+    {
+      "module": "MODpaint",
+      "count": 4
+    },
+    {
+      "module": "NifSoulPoem",
+      "count": 4
+    },
+    {
+      "module": "NtosNetChat",
+      "count": 4
+    },
+    {
+      "module": "NtosPortraitPrinter",
+      "count": 4
+    },
+    {
+      "module": "NtosSelfServe",
+      "count": 4
+    },
+    {
+      "module": "NtosSkillTracker",
+      "count": 4
+    },
+    {
+      "module": "ParticleAccelerator",
+      "count": 4
+    },
+    {
+      "module": "PetBuilder",
+      "count": 4
+    },
+    {
+      "module": "ReligiousTool",
+      "count": 4
+    },
+    {
+      "module": "ServerControlPanel",
+      "count": 4
+    },
+    {
+      "module": "SlotMachine",
+      "count": 4
+    },
+    {
+      "module": "SmokeMachine",
+      "count": 4
+    },
+    {
+      "module": "TrainingMachine",
+      "count": 4
+    },
+    {
+      "module": "TramControl",
+      "count": 4
+    },
+    {
+      "module": "TrophyAdminPanel",
+      "count": 4
+    },
+    {
+      "module": "AntagInfoDemon",
+      "count": 3
+    },
+    {
+      "module": "AtmosFilter",
+      "count": 3
+    },
+    {
+      "module": "AtmosPump",
+      "count": 3
+    },
+    {
+      "module": "AutomatedAnnouncement",
+      "count": 3
+    },
+    {
+      "module": "CargoExpress",
+      "count": 3
+    },
+    {
+      "module": "ChemDebugSynthesizer",
+      "count": 3
+    },
+    {
+      "module": "ChemFilter",
+      "count": 3
+    },
+    {
+      "module": "ColorBlindTester",
+      "count": 3
+    },
+    {
+      "module": "Electrolyzer",
+      "count": 3
+    },
+    {
+      "module": "ExaminePanel",
+      "count": 3
+    },
+    {
+      "module": "GulagItemReclaimer",
+      "count": 3
+    },
+    {
+      "module": "Holodeck",
+      "count": 3
+    },
+    {
+      "module": "JobSelection",
+      "count": 3
+    },
+    {
+      "module": "LaunchpadRemote",
+      "count": 3
+    },
+    {
+      "module": "MCDependencyDebug",
+      "count": 3
+    },
+    {
+      "module": "MemoryPanel",
+      "count": 3
+    },
+    {
+      "module": "NetpodOutfits",
+      "count": 3
+    },
+    {
+      "module": "NtosNetDownloader",
+      "count": 3
+    },
+    {
+      "module": "NtosNifsoftCatalog",
+      "count": 3
+    },
+    {
+      "module": "NtosSpectreMeter",
+      "count": 3
+    },
+    {
+      "module": "OreContainer",
+      "count": 3
+    },
+    {
+      "module": "OutfitEditor",
+      "count": 3
+    },
+    {
+      "module": "PortablePump",
+      "count": 3
+    },
+    {
+      "module": "PortableTurret",
+      "count": 3
+    },
+    {
+      "module": "Portagrav",
+      "count": 3
+    },
+    {
+      "module": "ProximitySensor",
+      "count": 3
+    },
+    {
+      "module": "RapidConstructionDevice",
+      "count": 3
+    },
+    {
+      "module": "RepairbotResources",
+      "count": 3
+    },
+    {
+      "module": "RequestsConsole",
+      "count": 3
+    },
+    {
+      "module": "SelectEquipment",
+      "count": 3
+    },
+    {
+      "module": "SlimeBodySwapper",
+      "count": 3
+    },
+    {
+      "module": "Techweb",
+      "count": 3
+    },
+    {
+      "module": "TurretControl",
+      "count": 3
+    },
+    {
+      "module": "AbandonedCrate",
+      "count": 2
+    },
+    {
+      "module": "AnomalyRefinery",
+      "count": 2
+    },
+    {
+      "module": "AntagInfoNinja",
+      "count": 2
+    },
+    {
+      "module": "AntagInfoSeparatist",
+      "count": 2
+    },
+    {
+      "module": "AntagInfoShade",
+      "count": 2
+    },
+    {
+      "module": "AtmosTempGate",
+      "count": 2
+    },
+    {
+      "module": "AtmosTempPump",
+      "count": 2
+    },
+    {
+      "module": "BankMachine",
+      "count": 2
+    },
+    {
+      "module": "BotAnnouncement",
+      "count": 2
+    },
+    {
+      "module": "CameraConsole",
+      "count": 2
+    },
+    {
+      "module": "ChemDisposer",
+      "count": 2
+    },
+    {
+      "module": "ChemSplitter",
+      "count": 2
+    },
+    {
+      "module": "ClockworkResearch",
+      "count": 2
+    },
+    {
+      "module": "ColorMatrixEditor",
+      "count": 2
+    },
+    {
+      "module": "common",
+      "count": 2
+    },
+    {
+      "module": "DeathmatchLobby",
+      "count": 2
+    },
+    {
+      "module": "DSMBook",
+      "count": 2
+    },
+    {
+      "module": "Fabrication",
+      "count": 2
+    },
+    {
+      "module": "ForceEvent",
+      "count": 2
+    },
+    {
+      "module": "ForensicsSpoofer",
+      "count": 2
+    },
+    {
+      "module": "InfraredEmitter",
+      "count": 2
+    },
+    {
+      "module": "InterviewManager",
+      "count": 2
+    },
+    {
+      "module": "LightController",
+      "count": 2
+    },
+    {
+      "module": "LingMMITalk",
+      "count": 2
+    },
+    {
+      "module": "ListInputWindow",
+      "count": 2
+    },
+    {
+      "module": "LootPanel",
+      "count": 2
+    },
+    {
+      "module": "NtnetRelay",
+      "count": 2
+    },
+    {
+      "module": "NtosCamera",
+      "count": 2
+    },
+    {
+      "module": "NtosCrewManifest",
+      "count": 2
+    },
+    {
+      "module": "NtosNetDos",
+      "count": 2
+    },
+    {
+      "module": "NtosRadar",
+      "count": 2
+    },
+    {
+      "module": "NtosRecords",
+      "count": 2
+    },
+    {
+      "module": "OrionGame",
+      "count": 2
+    },
+    {
+      "module": "PaintingAdminPanel",
+      "count": 2
+    },
+    {
+      "module": "PaperSheet",
+      "count": 2
+    },
+    {
+      "module": "Policypanel",
+      "count": 2
+    },
+    {
+      "module": "PortableChemMixer",
+      "count": 2
+    },
+    {
+      "module": "Radio.test",
+      "count": 2
+    },
+    {
+      "module": "Reflector",
+      "count": 2
+    },
+    {
+      "module": "RepairBot",
+      "count": 2
+    },
+    {
+      "module": "Safe",
+      "count": 2
+    },
+    {
+      "module": "SatelliteControl",
+      "count": 2
+    },
+    {
+      "module": "Signaler",
+      "count": 2
+    },
+    {
+      "module": "Sleeper",
+      "count": 2
+    },
+    {
+      "module": "StackCrafting",
+      "count": 2
+    },
+    {
+      "module": "Tank",
+      "count": 2
+    },
+    {
+      "module": "VaultController",
+      "count": 2
+    },
+    {
+      "module": "Vendatray",
+      "count": 2
+    },
+    {
+      "module": "Vending",
+      "count": 2
+    },
+    {
+      "module": "AntagInfoClock",
+      "count": 1
+    },
+    {
+      "module": "AntagInfoMorph",
+      "count": 1
+    },
+    {
+      "module": "AntagInfoSentient",
+      "count": 1
+    },
+    {
+      "module": "ApprenticeContract",
+      "count": 1
+    },
+    {
+      "module": "AvatarHelp",
+      "count": 1
+    },
+    {
+      "module": "BloodFilter",
+      "count": 1
+    },
+    {
+      "module": "BorgHypo",
+      "count": 1
+    },
+    {
+      "module": "BorgShaker",
+      "count": 1
+    },
+    {
+      "module": "CheckboxInput",
+      "count": 1
+    },
+    {
+      "module": "CircuitAccessChecker",
+      "count": 1
+    },
+    {
+      "module": "ClockworkSlab",
+      "count": 1
+    },
+    {
+      "module": "DestinationTagger",
+      "count": 1
+    },
+    {
+      "module": "DnaConsole",
+      "count": 1
+    },
+    {
+      "module": "DynamicAdmin",
+      "count": 1
+    },
+    {
+      "module": "ExoscannerConsole",
+      "count": 1
+    },
+    {
+      "module": "Fabricator",
+      "count": 1
+    },
+    {
+      "module": "Folder",
+      "count": 1
+    },
+    {
+      "module": "GreyscaleModifyMenu",
+      "count": 1
+    },
+    {
+      "module": "HealthSensor",
+      "count": 1
+    },
+    {
+      "module": "Hypertorus",
+      "count": 1
+    },
+    {
+      "module": "LightSpawn",
+      "count": 1
+    },
+    {
+      "module": "LTSRBT",
+      "count": 1
+    },
+    {
+      "module": "MafiaPanel",
+      "count": 1
+    },
+    {
+      "module": "MedicalRecords",
+      "count": 1
+    },
+    {
+      "module": "MessageMonitor",
+      "count": 1
+    },
+    {
+      "module": "NoticeBoard",
+      "count": 1
+    },
+    {
+      "module": "NtosCursor",
+      "count": 1
+    },
+    {
+      "module": "NtosEmojipedia",
+      "count": 1
+    },
+    {
+      "module": "NtosNewsArchive",
+      "count": 1
+    },
+    {
+      "module": "NtosRevelation",
+      "count": 1
+    },
+    {
+      "module": "NtosRobotact",
+      "count": 1
+    },
+    {
+      "module": "PortableScrubber",
+      "count": 1
+    },
+    {
+      "module": "RapidPlumbingDevice",
+      "count": 1
+    },
+    {
+      "module": "SecurityRecords",
+      "count": 1
+    },
+    {
+      "module": "SpyUplink",
+      "count": 1
+    },
+    {
+      "module": "StationAlertConsole",
+      "count": 1
+    },
+    {
+      "module": "Terminal",
+      "count": 1
+    },
+    {
+      "module": "TextInputModal",
+      "count": 1
+    },
+    {
+      "module": "ThermoElectricGenerator",
+      "count": 1
+    },
+    {
+      "module": "Timer",
+      "count": 1
+    },
+    {
+      "module": "Wires",
+      "count": 1
+    }
+  ],
+  "en_ru_parity": {
+    "en_count": 2079,
+    "ru_count": 2079,
+    "en_only_count": 0,
+    "ru_only_count": 0
+  },
+  "typescript_status": {
+    "status": "passed",
+    "exitCode": 0
+  }
+}
