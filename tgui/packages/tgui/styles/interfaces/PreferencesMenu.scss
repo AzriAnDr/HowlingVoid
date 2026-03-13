@@ -2415,7 +2415,104 @@ $department_map: (
     0 0 10px hsla(38, 60%, 45%, 0.15) !important;
 }
 
-// Character tab uses the same visual language as Game Preferences.
+.PreferencesMenu
+  .PreferencesMenu__Character__ProfilePanel
+  .Button.PreferencesMenu__Toggle.PreferencesMenu__Toggle--checked,
+.PreferencesMenu
+  .PreferencesMenu__Character__ProfilePanel
+  .Button.PreferencesMenu__Toggle.Button--checked,
+.PreferencesMenu
+  .PreferencesMenu__Character__ProfilePanel
+  .Button.PreferencesMenu__Toggle[aria-checked='true'],
+.PreferencesMenu
+  .PreferencesMenu__Character__ProfilePanel
+  .Button.PreferencesMenu__Toggle[data-checked='true'],
+.PreferencesMenu
+  .PreferencesMenu__Character__VisualSlots
+  .Button.PreferencesMenu__Toggle.PreferencesMenu__Toggle--checked,
+.PreferencesMenu
+  .PreferencesMenu__Character__VisualSlots
+  .Button.PreferencesMenu__Toggle.Button--checked,
+.PreferencesMenu
+  .PreferencesMenu__Character__VisualSlots
+  .Button.PreferencesMenu__Toggle[aria-checked='true'],
+.PreferencesMenu
+  .PreferencesMenu__Character__VisualSlots
+  .Button.PreferencesMenu__Toggle[data-checked='true'] {
+  border-color: hsla(140, 52%, 56%, 0.9) !important;
+  color: hsla(132, 92%, 90%, 0.99) !important;
+  box-shadow:
+    inset 0 1px 0 hsla(0, 0%, 100%, 0.12),
+    0 0 8px hsla(140, 80%, 45%, 0.24) !important;
+}
+
+.PreferencesMenu
+  .PreferencesMenu__Character__ProfilePanel
+  .Button.PreferencesMenu__Toggle.PreferencesMenu__Toggle--checked
+  .Icon,
+.PreferencesMenu
+  .PreferencesMenu__Character__ProfilePanel
+  .Button.PreferencesMenu__Toggle.Button--checked
+  .Icon,
+.PreferencesMenu
+  .PreferencesMenu__Character__ProfilePanel
+  .Button.PreferencesMenu__Toggle[aria-checked='true']
+  .Icon,
+.PreferencesMenu
+  .PreferencesMenu__Character__ProfilePanel
+  .Button.PreferencesMenu__Toggle[data-checked='true']
+  .Icon,
+.PreferencesMenu
+  .PreferencesMenu__Character__VisualSlots
+  .Button.PreferencesMenu__Toggle.PreferencesMenu__Toggle--checked
+  .Icon,
+.PreferencesMenu
+  .PreferencesMenu__Character__VisualSlots
+  .Button.PreferencesMenu__Toggle.Button--checked
+  .Icon,
+.PreferencesMenu
+  .PreferencesMenu__Character__VisualSlots
+  .Button.PreferencesMenu__Toggle[aria-checked='true']
+  .Icon,
+.PreferencesMenu
+  .PreferencesMenu__Character__VisualSlots
+  .Button.PreferencesMenu__Toggle[data-checked='true']
+  .Icon,
+.PreferencesMenu
+  .PreferencesMenu__Character__ProfilePanel
+  .Button.PreferencesMenu__Toggle.PreferencesMenu__Toggle--checked
+  [class*='fa-'],
+.PreferencesMenu
+  .PreferencesMenu__Character__ProfilePanel
+  .Button.PreferencesMenu__Toggle.Button--checked
+  [class*='fa-'],
+.PreferencesMenu
+  .PreferencesMenu__Character__ProfilePanel
+  .Button.PreferencesMenu__Toggle[aria-checked='true']
+  [class*='fa-'],
+.PreferencesMenu
+  .PreferencesMenu__Character__ProfilePanel
+  .Button.PreferencesMenu__Toggle[data-checked='true']
+  [class*='fa-'],
+.PreferencesMenu
+  .PreferencesMenu__Character__VisualSlots
+  .Button.PreferencesMenu__Toggle.PreferencesMenu__Toggle--checked
+  [class*='fa-'],
+.PreferencesMenu
+  .PreferencesMenu__Character__VisualSlots
+  .Button.PreferencesMenu__Toggle.Button--checked
+  [class*='fa-'],
+.PreferencesMenu
+  .PreferencesMenu__Character__VisualSlots
+  .Button.PreferencesMenu__Toggle[aria-checked='true']
+  [class*='fa-'],
+.PreferencesMenu
+  .PreferencesMenu__Character__VisualSlots
+  .Button.PreferencesMenu__Toggle[data-checked='true']
+  [class*='fa-'] {
+  color: hsla(132, 92%, 90%, 0.99) !important;
+}
+
 .PreferencesMenu .PreferencesMenu__Character__TopTabs .Button,
 .PreferencesMenu .PreferencesMenu__Character__PrefTabs .Button {
   border: 1px solid hsla(210, 20%, 40%, 0.68) !important;
@@ -2799,4 +2896,67 @@ $department_map: (
   box-shadow:
     inset 0 1px 0 hsla(0, 0%, 100%, 0.1),
     0 0 8px hsla(0, 70%, 50%, 0.24) !important;
+}
+
+// Final checkbox override for Character Preferences.
+// Keeps checked state green even after later global button theme rules.
+.PreferencesMenu__Character .Button.PreferencesMenu__Toggle.Button--selected,
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle.PreferencesMenu__Toggle--checked,
+.PreferencesMenu__Character .Button.PreferencesMenu__Toggle.Button--checked,
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle[aria-checked='true'],
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle[data-checked='true'] {
+  border-color: hsla(140, 62%, 52%, 0.95) !important;
+  color: hsla(132, 95%, 88%, 1) !important;
+}
+
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle.Button--selected
+  .Button--icon,
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle.PreferencesMenu__Toggle--checked
+  .Button--icon,
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle.Button--checked
+  .Button--icon,
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle[aria-checked='true']
+  .Button--icon,
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle[data-checked='true']
+  .Button--icon,
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle.Button--selected
+  .Icon,
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle.PreferencesMenu__Toggle--checked
+  .Icon,
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle.Button--checked
+  .Icon,
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle[aria-checked='true']
+  .Icon,
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle[data-checked='true']
+  .Icon,
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle.Button--selected
+  [class*='fa-'],
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle.PreferencesMenu__Toggle--checked
+  [class*='fa-'],
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle.Button--checked
+  [class*='fa-'],
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle[aria-checked='true']
+  [class*='fa-'],
+.PreferencesMenu__Character
+  .Button.PreferencesMenu__Toggle[data-checked='true']
+  [class*='fa-'] {
+  color: hsla(132, 95%, 88%, 1) !important;
+  text-shadow: 0 0 6px hsla(140, 80%, 45%, 0.35) !important;
 }
