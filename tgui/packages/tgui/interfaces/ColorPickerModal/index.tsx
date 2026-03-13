@@ -9,6 +9,7 @@ import { type HsvaColor, hexToHsva } from 'tgui-core/color';
 import { Autofocus, Box, Section, Stack } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import { Loader } from '../common/Loader';
 import { ColorSelector } from './ColorSetter';
 
@@ -27,6 +28,7 @@ type ColorPickerModalProps = any;
 
 export const ColorPickerModal: React.FC<ColorPickerModalProps> = () => {
   const { data } = useBackend<ColorPickerData>();
+  const { t } = usePreferencesLocalization(data);
   const { timeout, message, autofocus, default_color = '#000000' } = data;
   let { title } = data;
 
@@ -39,7 +41,7 @@ export const ColorPickerModal: React.FC<ColorPickerModalProps> = () => {
   }, [default_color]);
 
   if (!title) {
-    title = 'Colour Editor';
+    title = t('ui.color_picker.title');
   }
 
   return (

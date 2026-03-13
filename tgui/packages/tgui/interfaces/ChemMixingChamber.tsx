@@ -12,6 +12,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export type Reagent = {
   name: string;
@@ -28,6 +29,7 @@ export type MixingData = {
 
 export const ChemMixingChamber = (props) => {
   const { act, data } = useBackend<MixingData>();
+  const { t } = usePreferencesLocalization(data);
 
   const [reagentQuantity, setReagentQuantity] = useState(1);
 
@@ -40,10 +42,10 @@ export const ChemMixingChamber = (props) => {
         <Stack vertical fill>
           <Stack.Item>
             <Section
-              title="Conditions"
+              title={t('ui.chemmixingchamber.conditions')}
               buttons={
                 <Stack>
-                  <Stack.Item mt={0.3}>{'Target:'}</Stack.Item>
+                  <Stack.Item mt={0.3}>{t('ui.common.target')}</Stack.Item>
                   <Stack.Item>
                     <NumberInput
                       tickWhileDragging
@@ -68,7 +70,7 @@ export const ChemMixingChamber = (props) => {
                 <Stack.Item>
                   <Stack fill>
                     <Stack.Item textColor="label">
-                      Current Temperature:
+                      {t('ui.chem_mixing_chamber.current_temperature')}:
                     </Stack.Item>
                     <Stack.Item grow>
                       <AnimatedNumber
@@ -83,13 +85,13 @@ export const ChemMixingChamber = (props) => {
           </Stack.Item>
           <Stack.Item grow>
             <Section
-              title="Settings"
+              title={t('ui.chemmixingchamber.settings')}
               fill
               scrollable
               buttons={
                 (isReacting && (
                   <Box inline bold color={'purple'}>
-                    {'Reacting'}
+                    {t('ui.chem_mixing_chamber.reacting')}
                   </Box>
                 )) || (
                   <Box
@@ -98,7 +100,9 @@ export const ChemMixingChamber = (props) => {
                     bold
                     color={emptying ? 'bad' : 'good'}
                   >
-                    {emptying ? 'Emptying' : 'Filling'}
+                    {emptying
+                      ? t('ui.chem_mixing_chamber.emptying')
+                      : t('ui.chem_mixing_chamber.filling')}
                   </Box>
                 )
               }
@@ -108,7 +112,7 @@ export const ChemMixingChamber = (props) => {
                   <Stack fill>
                     <Stack.Item grow>
                       <Button
-                        content="Add Reagent"
+                        content={t('ui.chemmixingchamber.add_reagent')}
                         color="good"
                         icon="plus"
                         onClick={() =>

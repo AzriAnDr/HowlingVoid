@@ -4,9 +4,11 @@ import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const NtosRecords = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const [searchTerm, setSearchTerm] = useState('');
   const { mode, records } = data;
 
@@ -20,7 +22,7 @@ export const NtosRecords = (props) => {
         </Section>
         <Section>
           <Input
-            placeholder="Filter results..."
+            placeholder={t('ui.ntos_records.filter_results')}
             value={searchTerm}
             fluid
             textAlign="center"

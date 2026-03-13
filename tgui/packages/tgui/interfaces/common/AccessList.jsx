@@ -2,8 +2,10 @@ import { sortBy } from 'es-toolkit';
 import { Button, Flex, Section, Stack, Tabs } from 'tgui-core/components';
 
 import { useSharedState } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 
 export const AccessList = (props) => {
+  const { t } = usePreferencesLocalization();
   const {
     accesses = [],
     wildcardSlots = {},
@@ -99,7 +101,7 @@ export const AccessList = (props) => {
   });
 
   return (
-    <Section title="Access" buttons={extraButtons}>
+    <Section title={t('ui.common.access')} buttons={extraButtons}>
       <Stack vertical width="100%">
         <Stack.Item>
           <FormatWildcards

@@ -14,11 +14,13 @@ import { clamp } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const coordsToVec = (coords) => map(coords.split(', '), parseFloat);
 
 export const Gps = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { currentArea, currentCoords, globalmode, power, tag, updating } = data;
   const signals = flow([
     (signals) =>
@@ -46,39 +48,39 @@ export const Gps = (props) => {
       ]),
   ])(data.signals || []);
   return (
-    <Window title="Global Positioning System" width={470} height={700}>
+    <Window title={t('ui.gps.global_positioning_system')} width={470} height={700}>
       <Window.Content scrollable>
         <Section
-          title="Control"
+          title={t('ui.common.controls')}
           buttons={
             <Button
               icon="power-off"
-              content={power ? 'On' : 'Off'}
+              content={power ? t('ui.common.on') : t('ui.common.off')}
               selected={power}
               onClick={() => act('power')}
             />
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Tag">
+            <LabeledList.Item label={t('ui.common.tag')}>
               <Button
                 icon="pencil-alt"
                 content={tag}
                 onClick={() => act('rename')}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Scan Mode">
+            <LabeledList.Item label={t('ui.gps.scan_mode')}>
               <Button
                 icon={updating ? 'unlock' : 'lock'}
-                content={updating ? 'AUTO' : 'MANUAL'}
+                content={updating ? t('ui.common.auto') : t('ui.common.manual')}
                 color={!updating && 'bad'}
                 onClick={() => act('updating')}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Range">
+            <LabeledList.Item label={t('ui.common.range')}>
               <Button
                 icon="sync"
-                content={globalmode ? 'MAXIMUM' : 'LOCAL'}
+                content={globalmode ? t('ui.gps.maximum') : t('ui.gps.local')}
                 selected={!globalmode}
                 onClick={() => act('globalmode')}
               />
@@ -87,17 +89,17 @@ export const Gps = (props) => {
         </Section>
         {!!power && (
           <>
-            <Section title="Current Location">
+            <Section title={t('ui.gps.current_location')}>
               <Box fontSize="18px">
                 {currentArea} ({currentCoords})
               </Box>
             </Section>
-            <Section title="Detected Signals">
+            <Section title={t('ui.gps.detected_signals')}>
               <Table>
                 <Table.Row bold>
-                  <Table.Cell content="Name" />
-                  <Table.Cell collapsing content="Direction" />
-                  <Table.Cell collapsing content="Coordinates" />
+                  <Table.Cell content={t('ui.common.name')} />
+                  <Table.Cell collapsing content={t('ui.common.direction')} />
+                  <Table.Cell collapsing content={t('ui.common.coordinates')} />
                 </Table.Row>
                 {signals.map((signal) => (
                   <Table.Row

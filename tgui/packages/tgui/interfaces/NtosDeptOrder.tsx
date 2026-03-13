@@ -15,6 +15,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 // 3.5x crate value, 10 minutes
 const COST_MODERATE_BOUND = 700;
@@ -46,6 +47,7 @@ type Info = {
 };
 
 const CooldownEstimate = (props) => {
+  const { t } = usePreferencesLocalization();
   const { cost } = props;
   const cooldownColor =
     (cost >= COST_VERY_LONG_BOUND && 'red') ||
@@ -53,19 +55,20 @@ const CooldownEstimate = (props) => {
     (cost >= COST_MODERATE_BOUND && 'yellow') ||
     'green';
   const cooldownText =
-    (cost >= COST_VERY_LONG_BOUND && 'very long') ||
-    (cost >= COST_LONG_BOUND && 'long') ||
-    (cost >= COST_MODERATE_BOUND && 'moderate') ||
-    'short';
+    (cost >= COST_VERY_LONG_BOUND && t('ui.ntos_dept_order.cooldown_very_long')) ||
+    (cost >= COST_LONG_BOUND && t('ui.ntos_dept_order.cooldown_long')) ||
+    (cost >= COST_MODERATE_BOUND && t('ui.ntos_dept_order.cooldown_moderate')) ||
+    t('ui.ntos_dept_order.cooldown_short');
   return (
     <Box as="span" textColor={cooldownColor}>
-      {cooldownText} cooldown.
+      {cooldownText} {t('ui.ntos_dept_order.cooldown_suffix')}
     </Box>
   );
 };
 
 export const DepartmentOrderContent = (props) => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { no_link, time_left } = data;
   if (!data) {
     return null;
@@ -84,11 +87,7 @@ export const DepartmentOrderContent = (props) => {
         <Stack fill vertical>
           <Stack.Item>
             <NoticeBox info>
-              As employees of Nanotrasen, the selection of orders here are
-              completely free of charge, only incurring a cooldown on the
-              service. Cheaper items will make you wait for less time before
-              Nanotrasen allows another purchase, to encourage tasteful
-              spending.
+              {t('ui.ntos_dept_order.free_orders_notice')}
             </NoticeBox>
           </Stack.Item>
           <Stack.Item grow>
@@ -101,8 +100,9 @@ export const DepartmentOrderContent = (props) => {
 };
 
 export const NtosDeptOrder = () => {
+  const { t } = usePreferencesLocalization();
   return (
-    <NtosWindow title="Department Orders" width={620} height={580}>
+    <NtosWindow title={t('ui.ntosdeptorder.department_orders')} width={620} height={580}>
       <NtosWindow.Content>
         <DepartmentOrderContent />
       </NtosWindow.Content>
@@ -112,6 +112,7 @@ export const NtosDeptOrder = () => {
 
 const CooldownDimmer = () => {
   const { act, data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { can_override, time_left } = data;
   return (
     <Dimmer>
@@ -120,7 +121,10 @@ const CooldownDimmer = () => {
           <Icon color="bug" name="route" size={20} />
         </Stack.Item>
         <Stack.Item fontSize="18px" color="orange">
-          Ready for another order in {time_left}...
+          {t('ui.ntos_dept_order.ready_for_order_in').replace(
+            '{time}',
+            time_left ?? '',
+          )}
         </Stack.Item>
         <Stack.Item textAlign="center" color="orange">
           <Button
@@ -128,15 +132,15 @@ const CooldownDimmer = () => {
             lineHeight={2}
             tooltip={
               (!!can_override &&
-                'This action requires Head of Staff access!') ||
-              'Crate already shipped! No cancelling now!'
+                t('ui.ntos_dept_order.override_requires_hos')) ||
+              t('ui.ntos_dept_order.crate_already_shipped')
             }
             fontSize="14px"
             color="red"
             disabled={!can_override}
             onClick={() => act('override_order')}
           >
-            <Box fontSize="22px">Override</Box>
+            <Box fontSize="22px">{t('ui.ntosdeptorder.override')}</Box>
           </Button>
         </Stack.Item>
       </Stack>
@@ -146,6 +150,7 @@ const CooldownDimmer = () => {
 
 const NoLinkDimmer = () => {
   const { act, data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { id_inside } = data;
   return (
     <Dimmer>
@@ -156,11 +161,11 @@ const NoLinkDimmer = () => {
           </Blink>
         </Stack.Item>
         <Stack.Item textAlign="center" fontSize="22px" color="red">
-          Unlinked!
+          {t('ui.ntos_dept_order.unlinked')}
         </Stack.Item>
         <Stack.Item textAlign="center" fontSize="14px" color="red">
           <Button disabled={!id_inside} onClick={() => act('link')}>
-            Please insert a silver Head of Staff ID and press to continue.
+            {t('ui.ntos_dept_order.insert_hos_id')}
           </Button>
         </Stack.Item>
       </Stack>
@@ -170,6 +175,7 @@ const NoLinkDimmer = () => {
 
 const DepartmentCatalog = () => {
   const { act, data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { supplies } = data;
   const [tabCategory, setTabCategory] = useState(supplies[0]);
 
@@ -216,7 +222,7 @@ const DepartmentCatalog = () => {
                         })
                       }
                     >
-                      Order
+                      {t('ui.ntos_dept_order.order')}
                     </Button>
                   </Stack.Item>
                 </Stack>

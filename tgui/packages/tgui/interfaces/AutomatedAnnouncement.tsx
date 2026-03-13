@@ -14,6 +14,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type AASConfigEntry = {
   name: string;
@@ -32,6 +33,7 @@ type Data = {
 
 export const AutomatedAnnouncement = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { config_entries = [], max_announcement_len } = data;
 
   const [search, setSearch] = useState('');
@@ -57,21 +59,25 @@ export const AutomatedAnnouncement = (props) => {
   };
 
   const errorMessage = !config_entries.length
-    ? 'No configurable options detected! Please report this to Nanotrasen.'
-    : 'No match. Refine your search.';
+    ? t('ui.automated_announcement.no_configurable_options')
+    : t('ui.automated_announcement.no_match_refine_search');
 
   const sorted = sortBy(
     filter(config_entries, (entry) => isEntryMatch(entry, search)),
     [(entry) => entry.name],
   );
   return (
-    <Window title="Automated Announcement System" width={500} height={280}>
+    <Window title={t('ui.automated_announcement.title')} width={500} height={280}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
             <LabeledList>
-              <LabeledList.Item label="Search">
-                <Input fluid placeholder="Name/Line/Var" onChange={setSearch} />
+              <LabeledList.Item label={t('ui.common.search')}>
+                <Input
+                  fluid
+                  placeholder={t('ui.automated_announcement.search_placeholder')}
+                  onChange={setSearch}
+                />
               </LabeledList.Item>
             </LabeledList>
           </Stack.Item>
@@ -106,15 +112,15 @@ export const AutomatedAnnouncement = (props) => {
                           selected={entry.enabled}
                           disabled={!entry.modifiable}
                           tooltip={
-                            !entry.modifiable
-                              ? 'Editing disabled by CentCom!'
+                              !entry.modifiable
+                              ? t('ui.automated_announcement.editing_disabled')
                               : undefined
                           }
                           onClick={() =>
                             act('Toggle', { entryRef: entry.entryRef })
                           }
                         >
-                          {entry.enabled ? 'On' : 'Off'}
+                          {entry.enabled ? t('ui.common.on') : t('ui.common.off')}
                         </Button>
                       </>
                     }

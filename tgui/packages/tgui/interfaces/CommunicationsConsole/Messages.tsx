@@ -3,10 +3,12 @@ import { Box, Button, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { sanitizeText } from '../../sanitize';
+import { usePreferencesLocalization } from '../localization';
 import { type CommsConsoleData, ShuttleState } from './types';
 
 export function PageMessages(props) {
   const { act, data } = useBackend<CommsConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { messages = [] } = data;
 
   const children: ReactNode[] = [];
@@ -17,7 +19,7 @@ export function PageMessages(props) {
         icon="chevron-left"
         onClick={() => act('setState', { state: ShuttleState.MAIN })}
       >
-        Back
+        {t('ui.common.back')}
       </Button>
     </Section>,
   );
@@ -69,7 +71,7 @@ export function PageMessages(props) {
               })
             }
           >
-            Delete
+            {t('ui.common.delete')}
           </Button.Confirm>
         }
       >

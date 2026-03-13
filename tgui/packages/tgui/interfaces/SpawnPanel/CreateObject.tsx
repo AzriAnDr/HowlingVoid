@@ -12,6 +12,7 @@ import {
 import { useFuzzySearch } from 'tgui-core/fuzzysearch';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { CreateObjectSettings } from './CreateObjectSettings';
 import { listNames, listTypes } from './constants';
 import type {
@@ -39,6 +40,7 @@ interface SpawnPreferences {
 
 export function CreateObject(props: CreateObjectProps) {
   const { act, data } = useBackend<SpawnPanelData>();
+  const { t } = usePreferencesLocalization(data);
   const { setAdvancedSettings, iconSettings, objList = { atoms: {} } } = props;
 
   const [tooltipIcon, setTooltipIcon] = useState(false);
@@ -302,7 +304,8 @@ export function CreateObject(props: CreateObjectProps) {
                     italic
                     style={{ color: 'rgba(200, 200, 200, 0.7)' }}
                   >
-                    {allObjects[selectedObj].description || 'no description'}
+                    {allObjects[selectedObj].description ||
+                      t('ui.spawn_panel.no_description')}
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
@@ -324,7 +327,7 @@ export function CreateObject(props: CreateObjectProps) {
                     const nextIndex = (currentIndex + 1) % types.length;
                     updateSortBy(types[nextIndex]);
                   }}
-                  tooltip={`Cycle the searching target (objects, mobs, turfs)`}
+                  tooltip={t('ui.spawn_panel.cycle_search_target')}
                 >
                   {
                     listNames[
@@ -341,9 +344,11 @@ export function CreateObject(props: CreateObjectProps) {
                   onClick={() => {
                     updateSearchBy(!searchBy);
                   }}
-                  tooltip={`Cycle the search method (by name, by type)`}
+                  tooltip={t('ui.spawn_panel.cycle_search_method')}
                 >
-                  {searchBy ? 'By type' : 'By name'}
+                  {searchBy
+                    ? t('ui.spawn_panel.by_type')
+                    : t('ui.spawn_panel.by_name')}
                 </Button>
               </Stack.Item>
               <Stack.Item>
@@ -353,9 +358,9 @@ export function CreateObject(props: CreateObjectProps) {
                   }}
                   color={!hideMapping && 'good'}
                   checked={!hideMapping}
-                  tooltip={`Toggle mapping objects visibility`}
+                  tooltip={t('ui.spawn_panel.toggle_mapping_objects_visibility')}
                 >
-                  Mapping
+                  {t('ui.spawn_panel.mapping')}
                 </Button.Checkbox>
               </Stack.Item>
               <Stack.Item>
@@ -365,9 +370,9 @@ export function CreateObject(props: CreateObjectProps) {
                   }}
                   color={showIcons && 'good'}
                   checked={showIcons}
-                  tooltip={`Toggle preview icons on hovering`}
+                  tooltip={t('ui.spawn_panel.toggle_preview_icons_on_hovering')}
                 >
-                  Icons
+                  {t('ui.spawn_panel.icons')}
                 </Button.Checkbox>
               </Stack.Item>
               <Stack.Item>
@@ -377,9 +382,9 @@ export function CreateObject(props: CreateObjectProps) {
                   }}
                   color={showPreview && 'good'}
                   checked={showPreview}
-                  tooltip={`Toggle the large object preview panel`}
+                  tooltip={t('ui.spawn_panel.toggle_large_object_preview_panel')}
                 >
-                  Preview
+                  {t('ui.spawn_panel.preview')}
                 </Button.Checkbox>
               </Stack.Item>
               <Stack.Item>
@@ -393,7 +398,7 @@ export function CreateObject(props: CreateObjectProps) {
             </Stack>
             <Stack.Item grow>
               <Input
-                placeholder="Search here..."
+                placeholder={t('ui.spawn_panel.search_here_placeholder')}
                 value={query}
                 onChange={(value) => updateSearchText(value)}
                 fluid
@@ -407,11 +412,11 @@ export function CreateObject(props: CreateObjectProps) {
         <Section fill scrollable={filteredResults.length !== 0}>
           {query === '' ? (
             <NoticeBox textAlign="center" color="blue" width="100%">
-              Begin typing to search...
+              {t('ui.spawn_panel.begin_typing_to_search')}
             </NoticeBox>
           ) : !filteredResults.length ? (
             <NoticeBox textAlign="center" color="blue" width="100%">
-              Nothing found
+              {t('ui.common.nothing_found')}
             </NoticeBox>
           ) : (
             <VirtualList>

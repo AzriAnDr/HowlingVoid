@@ -1,11 +1,13 @@
 import { Box, Button } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { useCompact } from './hooks';
 import type { PodLauncherData } from './types';
 
 export function PodLaunch(props) {
   const { act, data } = useBackend<PodLauncherData>();
+  const { t } = usePreferencesLocalization(data);
   const { giveLauncher } = data;
 
   const [compact] = useCompact();
@@ -16,9 +18,7 @@ export function PodLaunch(props) {
       onClick={() => act('giveLauncher')}
       selected={giveLauncher}
       textAlign="center"
-      tooltip={`
-        You should know what the
-        Codex Astartes says about this`}
+      tooltip={t('ui.centcom_pod_launcher.launch_tooltip')}
       tooltipPosition="top"
     >
       <Box bold fontSize="1.4em" lineHeight={compact ? 1.5 : 3}>

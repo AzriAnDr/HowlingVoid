@@ -8,6 +8,7 @@ import {
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const NtosNetDos = (props) => {
   return (
@@ -21,6 +22,7 @@ export const NtosNetDos = (props) => {
 
 export const NtosNetDosContent = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
 
   const { relays = [], focus, target, speed, overload, capacity, error } = data;
 
@@ -30,7 +32,7 @@ export const NtosNetDosContent = (props) => {
         <NoticeBox>{error}</NoticeBox>
         <Button
           fluid
-          content="Reset"
+          content={t('ui.ntosnetdos.reset')}
           textAlign="center"
           onClick={() => act('PRG_reset')}
         />
@@ -56,7 +58,7 @@ export const NtosNetDosContent = (props) => {
   if (target) {
     return (
       <Section fontFamily="monospace" textAlign="center">
-        <Box>CURRENT SPEED: {speed} GQ/s</Box>
+        <Box>{t('ui.ntos_net_dos.current_speed').replace('{speed}', speed)} GQ/s</Box>
         <Box>
           {/* I don't care anymore */}
           {generate10String(lineLength)}
@@ -72,7 +74,7 @@ export const NtosNetDosContent = (props) => {
   return (
     <Section>
       <LabeledList>
-        <LabeledList.Item label="Target">
+        <LabeledList.Item label={t('ui.ntosnetdos.target')}>
           {relays.map((relay) => (
             <Button
               key={relay.id}
@@ -90,7 +92,7 @@ export const NtosNetDosContent = (props) => {
       <Button
         fluid
         bold
-        content="EXECUTE"
+        content={t('ui.ntosnetdos.execute')}
         color="bad"
         textAlign="center"
         disabled={!focus}

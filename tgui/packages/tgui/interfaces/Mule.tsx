@@ -11,6 +11,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   powerStatus: BooleanLike;
@@ -34,6 +35,7 @@ type Data = {
 
 const MuleControls = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     load,
     autoReturn,
@@ -51,33 +53,33 @@ const MuleControls = (props) => {
   return (
     <>
       <Section
-        title="Controls"
+        title={t('ui.mule.controls')}
         buttons={
           <>
             {!!load && (
               <Button icon="eject" onClick={() => act('unload')}>
-                Unload
+                {t('ui.common.unload')}
               </Button>
             )}
             {!!paiInserted && (
               <Button icon="eject" onClick={() => act('eject_pai')}>
-                Eject PAI
+                {t('ui.mule.eject_pai')}
               </Button>
             )}
           </>
         }
       >
         <LabeledList>
-          <LabeledList.Item label="ID">
+          <LabeledList.Item label={t('ui.common.id')}>
             <Button onClick={() => act('setid')}>{botId}</Button>
           </LabeledList.Item>
-          <LabeledList.Item label="Home">
+          <LabeledList.Item label={t('ui.common.home')}>
             <Button onClick={() => act('sethome')}>{homeDestination}</Button>
           </LabeledList.Item>
-          <LabeledList.Item label="Destination">
+          <LabeledList.Item label={t('ui.common.destination')}>
             <Dropdown
               over
-              selected={destination || 'None'}
+              selected={destination || t('ui.common.none')}
               options={destinationsList}
               width="188px"
               onSelected={(value) => act('destination', { value })}
@@ -85,17 +87,17 @@ const MuleControls = (props) => {
           </LabeledList.Item>
         </LabeledList>
       </Section>
-      <Section title="Settings">
+      <Section title={t('ui.common.settings')}>
         <Button.Checkbox checked={autoReturn} onClick={() => act('autored')}>
-          Auto-Return
+          {t('ui.mule.auto_return')}
         </Button.Checkbox>
         <br />
         <Button.Checkbox checked={autoPickup} onClick={() => act('autopick')}>
-          Auto-Pickup
+          {t('ui.mule.auto_pickup')}
         </Button.Checkbox>
         <br />
         <Button.Checkbox checked={reportDelivery} onClick={() => act('report')}>
-          Report-Delivery
+          {t('ui.mule.report_delivery')}
         </Button.Checkbox>
         <br />
         {!!allowPossession && (
@@ -103,11 +105,11 @@ const MuleControls = (props) => {
             checked={possessionEnabled}
             onClick={() => act('toggle_personality')}
           >
-            Download Personality
+            {t('ui.mule.download_personality')}
           </Button.Checkbox>
         )}
       </Section>
-      <Section title="Actions">
+      <Section title={t('ui.common.actions')}>
         <Stack style={{ padding: '0px 30px' }}>
           <Stack.Item grow>
             <Button
@@ -116,7 +118,7 @@ const MuleControls = (props) => {
               color="bad"
               onClick={() => act('stop')}
             >
-              Stop
+              {t('ui.common.stop')}
             </Button>
           </Stack.Item>
           <Stack.Item grow>
@@ -126,12 +128,12 @@ const MuleControls = (props) => {
               color="average"
               onClick={() => act('go')}
             >
-              Go
+              {t('ui.common.go')}
             </Button>
           </Stack.Item>
           <Stack.Item>
             <Button width="60px" icon="home" onClick={() => act('home')}>
-              Home
+              {t('ui.common.home')}
             </Button>
           </Stack.Item>
         </Stack>
@@ -142,6 +144,7 @@ const MuleControls = (props) => {
 
 export const Mule = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     powerStatus,
     cellPercent,
@@ -159,11 +162,11 @@ export const Mule = (props) => {
       <Window.Content scrollable>
         <InterfaceLockNoticeBox />
         <Section
-          title="Status"
+          title={t('ui.common.status')}
           buttons={
             <>
               <Button icon="fa-poll-h" onClick={() => act('rename')}>
-                Rename
+                {t('ui.common.rename')}
               </Button>
               {!mulebotLocked && (
                 <Button
@@ -171,7 +174,7 @@ export const Mule = (props) => {
                   selected={powerStatus}
                   onClick={() => act('on')}
                 >
-                  {powerStatus ? 'On' : 'Off'}
+                  {powerStatus ? t('ui.common.on') : t('ui.common.off')}
                 </Button>
               )}
             </>
@@ -184,7 +187,7 @@ export const Mule = (props) => {
           <Stack mt={1}>
             <Stack.Item grow>
               <LabeledList>
-                <LabeledList.Item label="Mode" color={modeStatus}>
+                <LabeledList.Item label={t('ui.common.mode')} color={modeStatus}>
                   {mode}
                 </LabeledList.Item>
               </LabeledList>
@@ -192,10 +195,10 @@ export const Mule = (props) => {
             <Stack.Item grow ml="40%">
               <LabeledList>
                 <LabeledList.Item
-                  label="Load"
+                  label={t('ui.common.load')}
                   color={load ? 'good' : 'average'}
                 >
-                  {load || 'None'}
+                  {load || t('ui.common.none')}
                 </LabeledList.Item>
               </LabeledList>
             </Stack.Item>

@@ -7,6 +7,7 @@ import {
 import { Window } from 'tgui/layouts';
 import { Stack } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../localization';
 import { VIEWMODE } from './constants';
 import { OrbitBlade } from './OrbitBlade';
 import { OrbitContent } from './OrbitContent';
@@ -14,6 +15,7 @@ import { OrbitSearchBar } from './OrbitSearchBar';
 import type { ViewMode } from './types';
 
 export function Orbit(props) {
+  const { t } = usePreferencesLocalization();
   const [autoObserve, setAutoObserve] = useState(false);
   const [bladeOpen, setBladeOpen] = useState(false);
   const [realNameDisplay, setRealNameDisplay] = useState(false);
@@ -37,7 +39,7 @@ export function Orbit(props) {
         setViewMode,
       }}
     >
-      <Window title="Orbit" width={dynamicWidth} height={550}>
+      <Window title={t('ui.orbit.title')} width={dynamicWidth} height={550}>
         <Window.Content>
           <Stack fill>
             <Stack.Item grow>

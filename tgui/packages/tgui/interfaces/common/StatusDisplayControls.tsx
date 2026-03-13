@@ -1,6 +1,7 @@
 import { Button, Flex, Input, Section } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 
 type Data = {
   upperText: string;
@@ -10,6 +11,7 @@ type Data = {
 
 export function StatusDisplayControls(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     upperText: initialUpper,
     lowerText: initialLower,
@@ -33,55 +35,55 @@ export function StatusDisplayControls(props) {
           color="bad"
           onClick={() => act('setStatusPicture', { picture: 'blank' })}
         >
-          Off
+          {t('ui.common.off')}
         </Button>
         <Button
           icon="space-shuttle"
           color=""
           onClick={() => act('setStatusPicture', { picture: 'shuttle' })}
         >
-          Shuttle ETA / Off
+          {t('ui.status_display.shuttle_eta_off')}
         </Button>
       </Section>
 
-      <Section title="Graphics">
+      <Section title={t('ui.status_display.graphics')}>
         <Button
           icon="flag"
           onClick={() => act('setStatusPicture', { picture: 'default' })}
         >
-          Logo
+          {t('ui.status_display.logo')}
         </Button>
 
         <Button
           icon="exclamation"
           onClick={() => act('setStatusPicture', { picture: 'currentalert' })}
         >
-          Security Alert Level
+          {t('ui.status_display.security_alert_level')}
         </Button>
 
         <Button
           icon="exclamation-triangle"
           onClick={() => act('setStatusPicture', { picture: 'lockdown' })}
         >
-          Lockdown
+          {t('ui.status_display.lockdown')}
         </Button>
 
         <Button
           icon="biohazard"
           onClick={() => act('setStatusPicture', { picture: 'biohazard' })}
         >
-          Biohazard
+          {t('ui.status_display.biohazard')}
         </Button>
 
         <Button
           icon="radiation"
           onClick={() => act('setStatusPicture', { picture: 'radiation' })}
         >
-          Radiation
+          {t('ui.status_display.radiation')}
         </Button>
       </Section>
 
-      <Section title="Message">
+      <Section title={t('ui.common.message')}>
         <Flex direction="column" align="stretch">
           <Flex.Item mb={1}>
             <Input
@@ -106,7 +108,7 @@ export function StatusDisplayControls(props) {
               icon="comment-o"
               onClick={() => act('setStatusMessage', { upperText, lowerText })}
             >
-              Send
+              {t('ui.common.send')}
             </Button>
           </Flex.Item>
         </Flex>

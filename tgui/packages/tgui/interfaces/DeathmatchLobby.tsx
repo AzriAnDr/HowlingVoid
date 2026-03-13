@@ -16,6 +16,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Player = {
   host: number;
@@ -61,6 +62,7 @@ type Data = {
 
 export function DeathmatchLobby(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     admin,
     host,
@@ -78,7 +80,7 @@ export function DeathmatchLobby(props) {
   const isObserver = observers.find((observer) => observer.key === self);
 
   return (
-    <Window title="Deathmatch Lobby" width={560} height={480}>
+    <Window title={t('ui.deathmatch_lobby.title')} width={560} height={480}>
       {showMenu && <ModSelector />}
       <Window.Content>
         <Stack fill vertical>
@@ -102,23 +104,25 @@ export function DeathmatchLobby(props) {
                       color="caution"
                       onClick={() => act('admin', { func: 'Force start' })}
                     >
-                      Force Start
+                      {t('ui.deathmatch_lobby.force_start')}
                     </Button>
                   )}
                 </Stack.Item>
                 <Stack.Item>
                   <Button color="caution" onClick={() => act('observe')}>
-                    {isObserver ? 'Join' : 'Observe'}
+                    {isObserver
+                      ? t('ui.deathmatch_lobby.join')
+                      : t('ui.deathmatch_lobby.observe')}
                   </Button>
                   <Button color="bad" onClick={() => act('leave_game')}>
-                    Leave Game
+                    {t('ui.deathmatch_lobby.leave_game')}
                   </Button>
                   <Button
                     color="good"
                     disabled={!allReady}
                     onClick={() => act('start_game')}
                   >
-                    Start Game
+                    {t('ui.deathmatch_lobby.start_game')}
                   </Button>
                 </Stack.Item>
               </Stack>
@@ -132,6 +136,7 @@ export function DeathmatchLobby(props) {
 
 function PlayerColumn(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     admin,
     host,
@@ -150,11 +155,15 @@ function PlayerColumn(props) {
       <Table>
         <Table.Row header>
           <Table.Cell collapsing />
-          <Table.Cell>Name</Table.Cell>
-          <Table.Cell>Loadout</Table.Cell>
+          <Table.Cell>{t('ui.common.name')}</Table.Cell>
+          <Table.Cell>{t('ui.common.loadout')}</Table.Cell>
           <Table.Cell collapsing align="center">
             <Tooltip
-              content={!allReady ? 'Players are preparing' : 'Press start!'}
+              content={
+                !allReady
+                  ? t('ui.deathmatch_lobby.players_preparing')
+                  : t('ui.deathmatch_lobby.press_start')
+              }
             >
               <Icon
                 name={!allReady ? 'check' : 'check-circle'}
@@ -172,12 +181,12 @@ function PlayerColumn(props) {
             <Table.Row className="candystripe" key={player.key}>
               <Table.Cell align="center" collapsing verticalAlign="top">
                 {isHost && (
-                  <Tooltip content="Host">
+                  <Tooltip content={t('ui.common.host')}>
                     <Icon color="gold" name="star" pt={isSelf && 0.5} />
                   </Tooltip>
                 )}
                 {!host && isSelf && (
-                  <Tooltip content="You">
+                  <Tooltip content={t('ui.common.you')}>
                     <Icon color="green" name="arrow-right" pt={0.9} />
                   </Tooltip>
                 )}
@@ -247,7 +256,7 @@ function PlayerColumn(props) {
                 pt={fullAccess && '2px'}
               >
                 {isHost ? (
-                  <Tooltip content="host">
+                  <Tooltip content={t('ui.common.host')}>
                     <Icon name="star" />
                   </Tooltip>
                 ) : (
@@ -271,7 +280,9 @@ function PlayerColumn(props) {
                   />
                 )}
               </Table.Cell>
-              <Table.Cell color="label">Observing</Table.Cell>
+              <Table.Cell color="label">
+                {t('ui.deathmatch_lobby.observing')}
+              </Table.Cell>
             </Table.Row>
           );
         })}
@@ -282,6 +293,7 @@ function PlayerColumn(props) {
 
 function HostControls(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { active_mods = [], admin, host, loadoutdesc, playing } = data;
 
   const fullAccess = !!host || !!admin;
@@ -297,13 +309,13 @@ function HostControls(props) {
         <>
           <Divider />
           <Button textAlign="center" fluid onClick={() => act('open_mod_menu')}>
-            Toggle Modifiers
+            {t('ui.deathmatch_lobby.toggle_modifiers')}
           </Button>
         </>
       )}
       <Divider />
       <NoticeBox info align="center">
-        Loadout Description
+        {t('ui.deathmatch_lobby.loadout_description')}
       </NoticeBox>
 
       <Box textAlign="center">{loadoutdesc}</Box>
@@ -311,7 +323,7 @@ function HostControls(props) {
         <>
           <Divider />
           <Box textAlign="center">
-            The game is currently in progress, or loading.
+            {t('ui.deathmatch_lobby.game_in_progress_or_loading')}
           </Box>
         </>
       )}
@@ -321,12 +333,13 @@ function HostControls(props) {
 
 const ModSelector = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { modifiers = [] } = data;
 
   return (
     <Modal>
       <Button fluid color="bad" onClick={() => act('exit_mod_menu')}>
-        Go Back
+        {t('ui.common.go_back')}
       </Button>
       {modifiers.map((mod, index) => (
         <Button.Checkbox
@@ -351,10 +364,11 @@ const ModSelector = (props) => {
 
 function MapInfo(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { host, maps = [], map, players } = data;
 
   if (!host && !map?.name) {
-    return <NoticeBox align="center">No map selected</NoticeBox>;
+    return <NoticeBox align="center">{t('ui.deathmatch_lobby.no_map_selected')}</NoticeBox>;
   }
 
   return (
@@ -381,16 +395,16 @@ function MapInfo(props) {
       {map.desc}
       <Divider />
       <LabeledList>
-        <LabeledList.Item label="Max Play Time">
+        <LabeledList.Item label={t('ui.deathmatch_lobby.max_play_time')}>
           {`${map.time / 600}min`}
         </LabeledList.Item>
-        <LabeledList.Item label="Min Players">
+        <LabeledList.Item label={t('ui.deathmatch_lobby.min_players')}>
           {map.min_players}
         </LabeledList.Item>
-        <LabeledList.Item label="Max Players">
+        <LabeledList.Item label={t('ui.deathmatch_lobby.max_players')}>
           {map.max_players}
         </LabeledList.Item>
-        <LabeledList.Item label="Current Players">
+        <LabeledList.Item label={t('ui.deathmatch_lobby.current_players')}>
           {players.length}
         </LabeledList.Item>
       </LabeledList>

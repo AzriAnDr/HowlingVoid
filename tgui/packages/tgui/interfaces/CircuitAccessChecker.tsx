@@ -4,6 +4,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { AccessConfig, type Region } from './common/AccessConfig';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   oneAccess: BooleanLike;
@@ -13,13 +14,14 @@ type Data = {
 
 export const CircuitAccessChecker = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { oneAccess, regions = [], accesses = [] } = data;
 
   return (
     <Window width={420} height={360}>
       <Window.Content>
         <LabeledList>
-          <LabeledList.Item label="Access Required">
+          <LabeledList.Item label={t('ui.circuit_access_checker.access_required')}>
             <Button
               icon={oneAccess ? 'unlock' : 'lock'}
               content={oneAccess ? 'One' : 'All'}

@@ -12,6 +12,7 @@ import { formatMoney } from 'tgui-core/format';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   categories: string[];
@@ -47,6 +48,7 @@ type DeliveryMethod = {
 
 export const BlackMarketUplink = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     categories = [],
     markets = [],
@@ -60,7 +62,7 @@ export const BlackMarketUplink = (props) => {
       <ShipmentSelector />
       <Window.Content scrollable>
         <Section
-          title="Black Market Uplink"
+          title={t('ui.black_market_uplink.title')}
           buttons={
             <Box inline bold>
               <AnimatedNumber
@@ -126,12 +128,14 @@ export const BlackMarketUplink = (props) => {
                     </Stack>
                   </Stack.Item>
                   <Stack.Item color="label">
-                    {item.amount ? `${item.amount} in stock` : 'Out of stock'}
+                    {item.amount
+                      ? `${item.amount} ${t('ui.black_market_uplink.in_stock')}`
+                      : t('ui.black_market_uplink.out_of_stock')}
                   </Stack.Item>
                   <Stack.Item>{`${formatMoney(item.cost)} cr`}</Stack.Item>
                   <Stack.Item>
                     <Button
-                      content="Buy"
+                      content={t('ui.common.buy')}
                       disabled={!item.amount || item.cost > money}
                       onClick={() =>
                         act('select', {
@@ -153,6 +157,7 @@ export const BlackMarketUplink = (props) => {
 
 const ShipmentSelector = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { buying, ltsrbt_built, money } = data;
   if (!buying) {
     return null;
@@ -189,7 +194,7 @@ const ShipmentSelector = (props) => {
           );
         })}
       </Stack>
-      <Button content="Cancel" color="bad" onClick={() => act('cancel')} />
+      <Button content={t('ui.common.cancel')} color="bad" onClick={() => act('cancel')} />
     </Modal>
   );
 };

@@ -8,26 +8,28 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const HypnoChair = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   return (
     <Window width={375} height={480}>
       <Window.Content>
-        <Section title="Information" backgroundColor="#450F44">
-          The Enhanced Interrogation Chamber is designed to induce a deep-rooted
-          trance trigger into the subject. Once the procedure is complete, by
-          using the implanted trigger phrase, the authorities are able to ensure
-          immediate and complete obedience and truthfulness.
+        <Section
+          title={t('ui.hypno_chair.information')}
+          backgroundColor="#450F44"
+        >
+          {t('ui.hypno_chair.information_text')}
         </Section>
-        <Section title="Occupant Information" textAlign="center">
+        <Section title={t('ui.hypno_chair.occupant_information')} textAlign="center">
           <LabeledList>
-            <LabeledList.Item label="Name">
-              {data.occupant.name ? data.occupant.name : 'No Occupant'}
+            <LabeledList.Item label={t('ui.common.name')}>
+              {data.occupant.name ? data.occupant.name : t('ui.hypno_chair.no_occupant')}
             </LabeledList.Item>
             {!!data.occupied && (
               <LabeledList.Item
-                label="Status"
+                label={t('ui.common.status')}
                 color={
                   data.occupant.stat === 0
                     ? 'good'
@@ -37,25 +39,25 @@ export const HypnoChair = (props) => {
                 }
               >
                 {data.occupant.stat === 0
-                  ? 'Conscious'
+                  ? t('ui.common.conscious')
                   : data.occupant.stat === 1
-                    ? 'Unconscious'
-                    : 'Dead'}
+                    ? t('ui.common.unconscious')
+                    : t('ui.common.dead')}
               </LabeledList.Item>
             )}
           </LabeledList>
         </Section>
-        <Section title="Operations" textAlign="center">
+        <Section title={t('ui.common.operations')} textAlign="center">
           <LabeledList>
-            <LabeledList.Item label="Door">
+            <LabeledList.Item label={t('ui.common.door')}>
               <Button
                 icon={data.open ? 'unlock' : 'lock'}
                 color={data.open ? 'default' : 'red'}
-                content={data.open ? 'Open' : 'Closed'}
+                content={data.open ? t('ui.common.open') : t('ui.common.closed')}
                 onClick={() => act('door')}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Trigger Phrase">
+            <LabeledList.Item label={t('ui.hypno_chair.trigger_phrase')}>
               <Input
                 value={data.trigger}
                 onBlur={(value) =>
@@ -65,13 +67,13 @@ export const HypnoChair = (props) => {
                 }
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Interrogate Occupant">
+            <LabeledList.Item label={t('ui.hypno_chair.interrogate_occupant')}>
               <Button
                 icon="code-branch"
                 content={
                   data.interrogating
-                    ? 'Interrupt Interrogation'
-                    : 'Begin Enhanced Interrogation'
+                    ? t('ui.hypno_chair.interrupt_interrogation')
+                    : t('ui.hypno_chair.begin_enhanced_interrogation')
                 }
                 onClick={() => act('interrogate')}
               />

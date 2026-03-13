@@ -2,6 +2,7 @@ import { Button, Dimmer, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const STORY_VALUE_KEY = -1;
 const STORY_VALUE_SHIT = 0;
@@ -133,13 +134,14 @@ const MemoryQuality = (props) => {
 
 export const MemoryPanel = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const memories = data.memories || [];
   return (
-    <Window title="Memory Panel" width={400} height={500}>
+    <Window title={t('ui.memory_panel.title')} width={400} height={500}>
       <Window.Content>
         <Section
           maxHeight="32px"
-          title="Memories"
+          title={t('ui.memory_panel.memories')}
           buttons={
             <Button
               color="transparent"

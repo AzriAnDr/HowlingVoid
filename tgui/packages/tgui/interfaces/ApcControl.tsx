@@ -15,6 +15,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import { AreaCharge, powerRank } from './PowerMonitor';
 
 enum Screen {
@@ -51,10 +52,11 @@ type Data = {
 
 export function ApcControl(props) {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { authenticated } = data;
 
   return (
-    <Window title="APC Controller" width={550} height={500}>
+    <Window title={t('ui.apc_control.title')} width={550} height={500}>
       <Window.Content>
         {authenticated ? <ApcLoggedIn /> : <ApcLoggedOut />}
       </Window.Content>
@@ -64,8 +66,11 @@ export function ApcControl(props) {
 
 function ApcLoggedOut(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { emagged } = data;
-  const text = emagged ? 'Open' : 'Log In';
+  const text = emagged
+    ? t('ui.apc_control.open')
+    : t('ui.apc_control.log_in');
 
   return (
     <Section fill>
@@ -76,17 +81,12 @@ function ApcLoggedOut(props) {
               <Icon name="bolt-lightning" color="yellow" size={8} />
             </Stack.Item>
             <Stack.Item bold mt={5}>
-              Zeus™ Controller Version 0.19
+              {t('ui.apc_control.zeus_controller_version')}
             </Stack.Item>
-            <Stack.Item color="label">Copyright 2526 Nanotrasen</Stack.Item>
+            <Stack.Item color="label">{t('ui.apc_control.copyright')}</Stack.Item>
           </Stack>
         </Stack.Item>
-        <Stack.Item color="#2a2a2a">
-          Nanotrasen and its affiliates do not endorse this product. Risk of
-          serious bodily injury or death is inherent in the use of any device
-          that generates electricity. Nanotrasen is not responsible for any
-          damages caused by the use of this product.
-        </Stack.Item>
+        <Stack.Item color="#2a2a2a">{t('ui.apc_control.disclaimer')}</Stack.Item>
         <Stack.Item>
           <NoticeBox
             m={0}
@@ -97,7 +97,7 @@ function ApcLoggedOut(props) {
               alignItems: 'center',
             }}
           >
-            Authorized personnel only.
+            {t('ui.apc_control.authorized_personnel_only')}
             <Button
               icon="sign-in-alt"
               color={emagged ? '' : 'good'}
@@ -114,6 +114,7 @@ function ApcLoggedOut(props) {
 
 function ApcLoggedIn(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { restoring } = data;
 
   const [tabIndex, setTabIndex] = useState<Screen>(Screen.ControlPanel);
@@ -130,7 +131,7 @@ function ApcLoggedIn(props) {
               act('check-apcs');
             }}
           >
-            APC Control Panel
+            {t('ui.apc_control.control_panel')}
           </Tabs.Tab>
           <Tabs.Tab
             selected={tabIndex === Screen.LogView}
@@ -139,14 +140,14 @@ function ApcLoggedIn(props) {
               act('check-logs');
             }}
           >
-            Log View Panel
+            {t('ui.apc_control.log_view_panel')}
           </Tabs.Tab>
         </Tabs>
       </Stack.Item>
       {!!restoring && (
         <Dimmer fontSize="32px">
           <Icon name="cog" spin />
-          {' Resetting...'}
+          {` ${t('ui.apc_control.resetting')}`}
         </Dimmer>
       )}
       <Stack.Item grow>
@@ -183,6 +184,7 @@ type ControlProps = {
 
 function ControlPanel(props: ControlProps) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { emagged, logging } = data;
   const [sortByField, setSortByField] = props.sortByState;
 
@@ -190,25 +192,25 @@ function ControlPanel(props: ControlProps) {
     <Stack justify="space-between">
       <Stack.Item>
         <Box inline mr={2} color="label">
-          Sort by:
+          {t('ui.apc_control.sort_by')}
         </Box>
         <Button.Checkbox
           checked={sortByField === 'name'}
           onClick={() => setSortByField('name')}
         >
-          Name
+          {t('ui.apc_control.name')}
         </Button.Checkbox>
         <Button.Checkbox
           checked={sortByField === 'charge'}
           onClick={() => setSortByField('charge')}
         >
-          Charge
+          {t('ui.apc_control.charge')}
         </Button.Checkbox>
         <Button.Checkbox
           checked={sortByField === 'draw'}
           onClick={() => setSortByField('draw')}
         >
-          Draw
+          {t('ui.apc_control.draw')}
         </Button.Checkbox>
       </Stack.Item>
       <Stack.Item />
@@ -219,15 +221,17 @@ function ControlPanel(props: ControlProps) {
               color={logging ? 'bad' : 'good'}
               onClick={() => act('toggle-logs')}
             >
-              {logging ? 'Stop Logging' : 'Restore Logging'}
+              {logging
+                ? t('ui.apc_control.stop_logging')
+                : t('ui.apc_control.restore_logging')}
             </Button>
             <Button onClick={() => act('restore-console')}>
-              Reset Console
+              {t('ui.apc_control.reset_console')}
             </Button>
           </>
         )}
         <Button icon="sign-out-alt" color="bad" onClick={() => act('log-out')}>
-          Log Out
+          {t('ui.apc_control.log_out')}
         </Button>
       </Stack.Item>
     </Stack>
@@ -238,6 +242,7 @@ type WithIndex = APC & { id: string };
 
 function ApcControlScene(props) {
   const { data, act } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
 
   const [sortByField] = props.sortByState;
 
@@ -261,15 +266,15 @@ function ApcControlScene(props) {
   return (
     <Table>
       <Table.Row header>
-        <Table.Cell>On/Off</Table.Cell>
-        <Table.Cell>Area</Table.Cell>
-        <Table.Cell collapsing>Charge</Table.Cell>
+        <Table.Cell>{t('ui.apc_control.on_off')}</Table.Cell>
+        <Table.Cell>{t('ui.apc_control.area')}</Table.Cell>
+        <Table.Cell collapsing>{t('ui.apc_control.charge')}</Table.Cell>
         <Table.Cell collapsing textAlign="right">
-          Draw
+          {t('ui.apc_control.draw')}
         </Table.Cell>
-        <Table.Cell collapsing>Eqp</Table.Cell>
-        <Table.Cell collapsing>Lgt</Table.Cell>
-        <Table.Cell collapsing>Env</Table.Cell>
+        <Table.Cell collapsing>{t('ui.apc_control.eqp')}</Table.Cell>
+        <Table.Cell collapsing>{t('ui.apc_control.lgt')}</Table.Cell>
+        <Table.Cell collapsing>{t('ui.apc_control.env')}</Table.Cell>
       </Table.Row>
       {sorted.map((apc, i) => (
         <Table.Row key={apc.id} className="candystripe">

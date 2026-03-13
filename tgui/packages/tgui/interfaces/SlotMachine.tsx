@@ -2,6 +2,7 @@ import { Button, Icon, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type IconInfo = {
   value: number;
@@ -71,6 +72,7 @@ const SlotsTile = (props: SlotsTileProps) => {
 
 export const SlotMachine = (props) => {
   const { act, data } = useBackend<BackendData>();
+  const { t } = usePreferencesLocalization(data);
   // icons: The list of possible icons, including colour and name
   // backendState: the current state of the slots according to the backend
   const {
@@ -88,7 +90,7 @@ export const SlotMachine = (props) => {
   return (
     <Window>
       <Section
-        title="Slots!"
+        title={t('ui.slot_machine.title')}
         style={{ justifyContent: 'center', textAlign: 'center' }}
       >
         <Section style={{ textAlign: 'left' }}>

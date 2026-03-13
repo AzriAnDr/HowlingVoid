@@ -10,6 +10,7 @@ import {
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 // byond defines for the program state
 const CLIENT_ONLINE = 2;
@@ -17,6 +18,7 @@ const CLIENT_AWAY = 1;
 const CLIENT_OFFLINE = 0;
 
 const NoChannelDimmer = (props) => {
+  const { t } = usePreferencesLocalization();
   return (
     <Dimmer>
       <Stack align="baseline" vertical>
@@ -34,11 +36,10 @@ const NoChannelDimmer = (props) => {
           </Stack>
         </Stack.Item>
         <Stack.Item fontSize="18px">
-          Click a channel to start chatting!
+          {t('ui.ntos_net_chat.click_channel_to_start')}
         </Stack.Item>
         <Stack.Item fontSize="15px">
-          (If you&apos;re new, you may want to set your name in the bottom
-          left!)
+          {t('ui.ntos_net_chat.new_user_set_name_hint')}
         </Stack.Item>
       </Stack>
     </Dimmer>
@@ -47,6 +48,7 @@ const NoChannelDimmer = (props) => {
 
 export const NtosNetChat = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     title,
     can_admin,
@@ -96,7 +98,7 @@ export const NtosNetChat = (props) => {
                 <Stack.Item grow>
                   <Button.Input
                     fluid
-                    buttonText="New Channel..."
+                    buttonText={t('ui.ntos_net_chat.new_channel')}
                     onCommit={(value) =>
                       act('PRG_newchannel', {
                         new_channel_name: value,
@@ -119,7 +121,7 @@ export const NtosNetChat = (props) => {
                   ))}
                 </Stack.Item>
                 <Stack.Item>
-                  <Box>Username:</Box>
+                  <Box>{t('ui.ntos_net_chat.username')}:</Box>
                   <Button.Input
                     fluid
                     mt={1}
@@ -135,7 +137,7 @@ export const NtosNetChat = (props) => {
                     <Button
                       fluid
                       bold
-                      content={`ADMIN MODE: ${adminmode ? 'ON' : 'OFF'}`}
+                      content={`${t('ui.ntos_net_chat.admin_mode')}: ${adminmode ? t('ui.common.on') : t('ui.common.off')}`}
                       color={adminmode ? 'bad' : 'good'}
                       onClick={() => act('PRG_toggleadmin')}
                     />
@@ -162,9 +164,9 @@ export const NtosNetChat = (props) => {
                           fontSize="40px"
                         />
                         <Box mt={1} bold fontSize="18px">
-                          THIS CHANNEL IS PASSWORD PROTECTED
+                          {t('ui.ntos_net_chat.channel_password_protected')}
                         </Box>
-                        <Box mt={1}>INPUT PASSWORD TO ACCESS</Box>
+                        <Box mt={1}>{t('ui.ntos_net_chat.input_password_to_access')}</Box>
                       </Box>
                     ))) || <NoChannelDimmer />}
                 </Section>
@@ -174,8 +176,9 @@ export const NtosNetChat = (props) => {
                   backgroundColor={this_client?.muted && 'red'}
                   height="22px"
                   placeholder={
-                    (this_client?.muted && 'You are muted!') ||
-                    `Message ${title}`
+                    (this_client?.muted &&
+                      t('ui.ntos_net_chat.you_are_muted')) ||
+                    `${t('ui.ntos_net_chat.message')} ${title}`
                   }
                   fluid
                   disabled={this_client?.muted}
@@ -215,8 +218,9 @@ export const NtosNetChat = (props) => {
                                     compact
                                     icon="bullhorn"
                                     tooltip={
-                                      (!this_client?.muted && 'Ping') ||
-                                      'You are muted!'
+                                      (!this_client?.muted &&
+                                        t('ui.ntos_net_chat.ping')) ||
+                                      t('ui.ntos_net_chat.you_are_muted')
                                     }
                                     tooltipPosition="left"
                                     onClick={() =>
@@ -238,8 +242,9 @@ export const NtosNetChat = (props) => {
                                         (!client.muted && 'green') || 'red'
                                       }
                                       tooltip={
-                                        (!client.muted && 'Mute this User') ||
-                                        'Unmute this User'
+                                        (!client.muted &&
+                                          t('ui.ntos_net_chat.mute_user')) ||
+                                        t('ui.ntos_net_chat.unmute_user')
                                       }
                                       tooltipPosition="left"
                                       onClick={() =>
@@ -259,12 +264,14 @@ export const NtosNetChat = (props) => {
                   </Stack.Item>
                   <Section>
                     <Stack vertical g={0.5}>
-                      <Stack.Item>Settings for {title}:</Stack.Item>
+                      <Stack.Item>
+                        {t('ui.ntos_net_chat.settings_for')} {title}:
+                      </Stack.Item>
                       {!!(in_channel && authorized) && (
                         <>
                           <Button.Input
                             fluid
-                            buttonText="Save log as..."
+                            buttonText={t('ui.ntos_net_chat.save_log_as')}
                             onCommit={(value) =>
                               act('PRG_savelog', {
                                 log_name: value,
@@ -273,7 +280,7 @@ export const NtosNetChat = (props) => {
                           />
                           <Button.Confirm
                             fluid
-                            content="Leave Channel"
+                            content={t('ui.ntos_net_chat.leave_channel')}
                             onClick={() => act('PRG_leavechannel')}
                           />
                         </>
@@ -283,13 +290,13 @@ export const NtosNetChat = (props) => {
                           <Button.Confirm
                             fluid
                             disabled={strong}
-                            content="Delete Channel"
+                            content={t('ui.ntos_net_chat.delete_channel')}
                             onClick={() => act('PRG_deletechannel')}
                           />
                           <Button.Input
                             fluid
                             disabled={strong}
-                            buttonText="Rename Channel..."
+                            buttonText={t('ui.ntos_net_chat.rename_channel')}
                             onCommit={(value) =>
                               act('PRG_renamechannel', {
                                 new_name: value,
@@ -298,7 +305,7 @@ export const NtosNetChat = (props) => {
                           />
                           <Button.Input
                             fluid
-                            buttonText="Set Password..."
+                            buttonText={t('ui.ntos_net_chat.set_password')}
                             onCommit={(value) =>
                               act('PRG_setpassword', {
                                 new_password: value,

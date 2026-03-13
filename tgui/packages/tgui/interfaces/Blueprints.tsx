@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   area_notice: string;
@@ -100,6 +101,7 @@ const WireArea = () => {
 
 const MainMenu = () => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     area_notice,
     area_name,
@@ -178,7 +180,7 @@ const MainMenu = () => {
                   {...buttonProps}
                   p={0.75}
                   icon="refresh"
-                  tooltip="Refresh structural data"
+                  tooltip={t('ui.blueprints.refresh_structural_data')}
                   onClick={() => act('refresh')}
                 />
               </Stack.Item>

@@ -18,14 +18,16 @@ import { round } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const OpposingForcePanel = (props) => {
   const [tab, setTab] = useState(1);
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { admin_mode, creator_ckey, owner_antag, opt_in_enabled } = data;
   return (
     <Window
-      title={`Opposing Force: ${creator_ckey}`}
+      title={`${t('ui.opposing_force.title_prefix')}: ${creator_ckey}`}
       width={585}
       height={840}
       theme={owner_antag ? 'syndicate' : 'admin'}
@@ -41,14 +43,14 @@ export const OpposingForcePanel = (props) => {
                     selected={tab === 1}
                     onClick={() => setTab(1)}
                   >
-                    Admin Control
+                    {t('ui.opposing_force.admin_control')}
                   </Tabs.Tab>
                   <Tabs.Tab
                     width="100%"
                     selected={tab === 2}
                     onClick={() => setTab(2)}
                   >
-                    Admin Chat
+                    {t('ui.opposing_force.admin_chat')}
                   </Tabs.Tab>
                 </>
               ) : (
@@ -58,21 +60,21 @@ export const OpposingForcePanel = (props) => {
                     selected={tab === 1}
                     onClick={() => setTab(1)}
                   >
-                    Summary
+                    {t('ui.opposing_force.summary')}
                   </Tabs.Tab>
                   <Tabs.Tab
                     width="100%"
                     selected={tab === 2}
                     onClick={() => setTab(2)}
                   >
-                    Equipment
+                    {t('ui.opposing_force.equipment')}
                   </Tabs.Tab>
                   <Tabs.Tab
                     width="100%"
                     selected={tab === 3}
                     onClick={() => setTab(3)}
                   >
-                    Admin Chat
+                    {t('ui.opposing_force.admin_chat')}
                   </Tabs.Tab>
                   {!!opt_in_enabled && (
                     <Tabs.Tab
@@ -80,7 +82,7 @@ export const OpposingForcePanel = (props) => {
                       selected={tab === 4}
                       onClick={() => setTab(4)}
                     >
-                      Target List
+                      {t('ui.opposing_force.target_list')}
                     </Tabs.Tab>
                   )}
                 </>
@@ -108,6 +110,7 @@ export const OpposingForcePanel = (props) => {
 
 export const OpposingForceTab = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     creator_ckey,
     objectives = [],
@@ -128,8 +131,8 @@ export const OpposingForceTab = (props) => {
         <Section
           title={
             handling_admin
-              ? `Control - Handling Admin:  ${handling_admin}`
-              : 'Control'
+              ? `${t('ui.opposing_force.control')} - ${t('ui.opposing_force.handling_admin')}: ${handling_admin}`
+              : t('ui.opposing_force.control')
           }
         >
           <Stack>
@@ -138,11 +141,11 @@ export const OpposingForceTab = (props) => {
                 icon="check"
                 color="good"
                 tooltip={
-                  'Submit your application for review.' +
-                  (blocked ? ' (Blocked)' : '')
+                  t('ui.opposing_force.submit_application_tooltip') +
+                  (blocked ? ` (${t('ui.opposing_force.blocked')})` : '')
                 }
                 disabled={!can_submit || blocked}
-                content="Submit Application"
+                content={t('ui.opposing_force.submit_application')}
                 onClick={() => act('submit')}
               />
             </Stack.Item>
@@ -151,11 +154,13 @@ export const OpposingForceTab = (props) => {
                 icon="question"
                 color="orange"
                 tooltip={
-                  'Request an update from the admins.' +
-                  (request_updates_muted ? ' (Muted)' : '')
+                  t('ui.opposing_force.ask_for_update_tooltip') +
+                  (request_updates_muted
+                    ? ` (${t('ui.opposing_force.muted')})`
+                    : '')
                 }
                 disabled={!can_request_update || request_updates_muted}
-                content="Ask For Update"
+                content={t('ui.opposing_force.ask_for_update')}
                 onClick={() => act('request_update')}
               />
             </Stack.Item>
@@ -163,9 +168,9 @@ export const OpposingForceTab = (props) => {
               <Button
                 icon="wrench"
                 color="blue"
-                tooltip="Modify your application, this will reset all authorisations."
+                tooltip={t('ui.opposing_force.modify_request_tooltip')}
                 disabled={can_edit}
-                content="Modify Request"
+                content={t('ui.opposing_force.modify_request')}
                 onClick={() => act('modify_request')}
               />
             </Stack.Item>
@@ -173,9 +178,9 @@ export const OpposingForceTab = (props) => {
               <Button
                 icon="trash"
                 color="bad"
-                tooltip="Remove your application from the queue."
+                tooltip={t('ui.opposing_force.withdraw_application_tooltip')}
                 disabled={status === 'Not submitted'}
-                content="Withdraw Application"
+                content={t('ui.opposing_force.withdraw_application')}
                 onClick={() => act('close_application')}
               />
             </Stack.Item>
@@ -185,9 +190,9 @@ export const OpposingForceTab = (props) => {
               <Button
                 icon="file-import"
                 color="blue"
-                tooltip="Import an application from a .json file."
+                tooltip={t('ui.opposing_force.import_json_tooltip')}
                 disabled={status === 'Awaiting approval'}
-                content="Import JSON"
+                content={t('ui.opposing_force.import_json')}
                 onClick={() => act('import_json')}
               />
             </Stack.Item>
@@ -195,9 +200,9 @@ export const OpposingForceTab = (props) => {
               <Button
                 icon="file-export"
                 color="purple"
-                tooltip="Export an application as a .json file."
+                tooltip={t('ui.opposing_force.export_json_tooltip')}
                 disabled={status === 'Awaiting approval'}
-                content="Export JSON"
+                content={t('ui.opposing_force.export_json')}
                 onClick={() => act('export_json')}
               />
             </Stack.Item>
@@ -208,8 +213,8 @@ export const OpposingForceTab = (props) => {
                 <Button
                   icon="info"
                   color="orange"
-                  tooltip="Open a guide on how to improve your opfors."
-                  content="Opfor Guide"
+                  tooltip={t('ui.opposing_force.opfor_guide_tooltip')}
+                  content={t('ui.opposing_force.opfor_guide')}
                 />
               </a>
             </Stack.Item>
@@ -218,8 +223,8 @@ export const OpposingForceTab = (props) => {
                 <Button
                   icon="wrench"
                   color="red"
-                  tooltip="Open current Opfor standards."
-                  content="Opfor Policy"
+                  tooltip={t('ui.opposing_force.opfor_policy_tooltip')}
+                  content={t('ui.opposing_force.opfor_policy')}
                 />
               </a>
             </Stack.Item>
@@ -228,8 +233,8 @@ export const OpposingForceTab = (props) => {
                 <Button
                   icon="question"
                   color="yellow"
-                  tooltip="Open policy for Non-Antagonist criminal activity."
-                  content="Does this need an Opfor"
+                  tooltip={t('ui.opposing_force.needs_opfor_tooltip')}
+                  content={t('ui.opposing_force.needs_opfor')}
                 />
               </a>
             </Stack.Item>
@@ -243,14 +248,14 @@ export const OpposingForceTab = (props) => {
         </Section>
       </Stack.Item>
       <Stack.Item>
-        <Section title="Backstory">
+        <Section title={t('ui.opposing_force.backstory')}>
           <TextArea
             expensive
             disabled={!can_edit}
             height="100px"
             fluid
             value={backstory}
-            placeholder="Provide a description of why you want to do bad things. Include specifics such as what lead upto the events that made you want to do bad things, think of it as though you were your character, react appropriately. If you don't have any ideas, check the #player-shared-opfors channel for some. (2000 char limit)"
+            placeholder={t('ui.opposing_force.backstory_placeholder')}
             onChange={(value) =>
               act('set_backstory', {
                 backstory: value,
@@ -261,11 +266,11 @@ export const OpposingForceTab = (props) => {
       </Stack.Item>
       <Stack.Item>
         <Section
-          title="Objectives"
+          title={t('ui.opposing_force.objectives')}
           buttons={
             <Button
               icon="plus"
-              content="Add Objective"
+              content={t('ui.opposing_force.add_objective')}
               onClick={() => act('add_objective')}
             />
           }
@@ -279,6 +284,7 @@ export const OpposingForceTab = (props) => {
 
 export const OpposingForceObjectives = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { objectives = [], can_edit } = data;
 
   const [selectedObjectiveID, setSelectedObjective] = useState(
@@ -317,7 +323,9 @@ export const OpposingForceObjectives = (props) => {
               >
                 <Stack align="center">
                   <Stack.Item width="80%">
-                    {objective.title ? objective.title : 'Blank Objective'}
+                    {objective.title
+                      ? objective.title
+                      : t('ui.opposing_force.blank_objective')}
                   </Stack.Item>
                   <Stack.Item width="20%">
                     <Button
@@ -326,7 +334,7 @@ export const OpposingForceObjectives = (props) => {
                       icon="minus"
                       color="bad"
                       textAlign="center"
-                      tooltip="Remove objective"
+                      tooltip={t('ui.opposing_force.remove_objective')}
                       onClick={() =>
                         act('remove_objective', {
                           objective_ref: objective.ref,
@@ -346,12 +354,12 @@ export const OpposingForceObjectives = (props) => {
             <Stack.Item>
               <Stack.Item>
                 <Stack vertical>
-                  <Stack.Item>Title</Stack.Item>
+                  <Stack.Item>{t('ui.common.title')}</Stack.Item>
                   <Stack.Item>
                     <Input
                       disabled={!can_edit}
                       fluid
-                      placeholder="blank objective"
+                      placeholder={t('ui.opposing_force.blank_objective_placeholder')}
                       value={selectedObjective.title}
                       onChange={(value) =>
                         act('set_objective_title', {
@@ -366,7 +374,7 @@ export const OpposingForceObjectives = (props) => {
               <Stack.Item>
                 <Stack vertical mt={2}>
                   <Stack.Item>
-                    Intensity: {selectedObjective.text_intensity}
+                    {t('ui.opposing_force.intensity')}: {selectedObjective.text_intensity}
                   </Stack.Item>
                   <Stack.Item>
                     <Slider
@@ -456,10 +464,10 @@ export const OpposingForceObjectives = (props) => {
               <Stack.Item>
                 <Stack vertical mt={2}>
                   <Stack.Item>
-                    Description
+                    {t('ui.common.description')}
                     <Button
                       icon="info"
-                      tooltip="Input objective description here, be descriptive about what you want to do, such as 'Destroy the Death Star' or 'Destroy the Death Star and the Death Star Base' (1000 char limit)."
+                      tooltip={t('ui.opposing_force.objective_description_tooltip')}
                       color="light-gray"
                     />
                   </Stack.Item>
@@ -483,10 +491,10 @@ export const OpposingForceObjectives = (props) => {
               <Stack.Item>
                 <Stack vertical mt={2}>
                   <Stack.Item>
-                    Justification
+                    {t('ui.opposing_force.justification')}
                     <Button
                       icon="info"
-                      tooltip="Input justification for the objective here, make sure you have a good reason for the objective (1000 char limit)."
+                      tooltip={t('ui.opposing_force.justification_tooltip')}
                       color="light-gray"
                     />
                   </Stack.Item>
@@ -510,20 +518,20 @@ export const OpposingForceObjectives = (props) => {
               <Stack.Item mt={2}>
                 <NoticeBox color={selectedObjective.approved ? 'good' : 'bad'}>
                   {selectedObjective.status_text === 'Not Reviewed'
-                    ? 'Objective Not Reviewed'
+                    ? t('ui.opposing_force.objective_not_reviewed')
                     : selectedObjective.approved
-                      ? 'Objective Approved'
+                      ? t('ui.opposing_force.objective_approved')
                       : selectedObjective.denied_text
-                        ? 'Objective Denied - Reason: ' +
+                        ? `${t('ui.opposing_force.objective_denied_reason')}: ` +
                           selectedObjective.denied_text
-                        : 'Objective Denied'}
+                        : t('ui.opposing_force.objective_denied')}
                 </NoticeBox>
               </Stack.Item>
             </Stack.Item>
           </Stack>
         </Stack.Item>
       ) : (
-        <Stack.Item>No objectives selected.</Stack.Item>
+        <Stack.Item>{t('ui.opposing_force.no_objectives_selected')}</Stack.Item>
       )}
     </Stack>
   );
@@ -531,13 +539,14 @@ export const OpposingForceObjectives = (props) => {
 
 export const EquipmentTab = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { equipment_list = [], selected_equipment = [], can_edit } = data;
   return (
     <Stack vertical grow>
       <Stack.Item>
-        <Section title="Selected Equipment">
+        <Section title={t('ui.opposing_force.selected_equipment')}>
           {selected_equipment.length === 0 ? (
-            <Box color="bad">No equipment selected.</Box>
+            <Box color="bad">{t('ui.opposing_force.no_equipment_selected')}</Box>
           ) : (
             selected_equipment.map((equipment) => (
               <>
@@ -560,7 +569,7 @@ export const EquipmentTab = (props) => {
                         <Button
                           icon="times"
                           color="bad"
-                          content="Remove"
+                          content={t('ui.common.remove')}
                           onClick={() =>
                             act('remove_equipment', {
                               selected_equipment_ref: equipment.ref,
@@ -571,10 +580,10 @@ export const EquipmentTab = (props) => {
                     }
                     label={equipment.name}
                   />
-                  <LabeledList.Item label="Status">
+                  <LabeledList.Item label={t('ui.common.status')}>
                     {equipment.denied_reason
                       ? equipment.status +
-                        ' - Reason: ' +
+                        ` - ${t('ui.common.reason')}: ` +
                         equipment.denied_reason
                       : equipment.status}
                   </LabeledList.Item>
@@ -584,7 +593,7 @@ export const EquipmentTab = (props) => {
                   mb={1}
                   disabled={!can_edit}
                   width="100%"
-                  placeholder="Reason for item"
+                  placeholder={t('ui.opposing_force.reason_for_item')}
                   value={equipment.reason}
                   onChange={(value) =>
                     act('set_equipment_reason', {
@@ -597,7 +606,7 @@ export const EquipmentTab = (props) => {
             ))
           )}
         </Section>
-        <Section title="Available Equipment">
+        <Section title={t('ui.opposing_force.available_equipment')}>
           <Stack vertical fill>
             {equipment_list.map((equipment_category) => (
               <Stack.Item key={equipment_category.category}>
@@ -614,7 +623,7 @@ export const EquipmentTab = (props) => {
                           <Button
                             icon="check"
                             color="good"
-                            content="Select"
+                            content={t('ui.common.select')}
                             disabled={!can_edit}
                             onClick={() =>
                               act('select_equipment', {
@@ -625,7 +634,7 @@ export const EquipmentTab = (props) => {
                         }
                       >
                         <LabeledList>
-                          <LabeledList.Item label="Description">
+                          <LabeledList.Item label={t('ui.common.description')}>
                             {item.description}
                           </LabeledList.Item>
                         </LabeledList>
@@ -644,6 +653,7 @@ export const EquipmentTab = (props) => {
 
 export const AdminChatTab = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { messages = [] } = data;
   return (
     <Stack vertical fill>
@@ -659,7 +669,7 @@ export const AdminChatTab = (props) => {
           height="22px"
           fluid
           selfClear
-          placeholder="Send a message or command using '/'"
+          placeholder={t('ui.opposing_force.send_message_or_command')}
           mt={1}
           onEnter={(value) =>
             act('send_message', {
@@ -674,6 +684,7 @@ export const AdminChatTab = (props) => {
 
 export const AdminTab = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     request_updates_muted,
     approved,
@@ -690,24 +701,24 @@ export const AdminTab = (props) => {
   return (
     <Stack vertical grow>
       <Stack.Item>
-        <Section title="User Information">
+        <Section title={t('ui.opposing_force.user_information')}>
           <LabeledList>
-            <LabeledList.Item label="Name">{owner_mob}</LabeledList.Item>
-            <LabeledList.Item label="Role">{owner_role}</LabeledList.Item>
-            <LabeledList.Item label="Application Status">
+            <LabeledList.Item label={t('ui.common.name')}>{owner_mob}</LabeledList.Item>
+            <LabeledList.Item label={t('ui.common.role')}>{owner_role}</LabeledList.Item>
+            <LabeledList.Item label={t('ui.opposing_force.application_status')}>
               {raw_status}
             </LabeledList.Item>
           </LabeledList>
         </Section>
-        <Section title="Admin Control">
+        <Section title={t('ui.opposing_force.admin_control')}>
           <Stack mb={1}>
             <Stack.Item>
               <Button
                 icon="check"
                 color="good"
-                tooltip="Approve the application, and any approved objectives."
+                tooltip={t('ui.opposing_force.approve_tooltip')}
                 disabled={approved}
-                content="Approve"
+                content={t('ui.common.approve')}
                 onClick={() => act('approve')}
               />
             </Stack.Item>
@@ -715,9 +726,9 @@ export const AdminTab = (props) => {
               <Button
                 icon="check-double"
                 color="orange"
-                tooltip="Approve all objectives and equipment as well as the application. Make sure you have reviewed the application and objectives first!"
+                tooltip={t('ui.opposing_force.approve_all_tooltip')}
                 disabled={approved}
-                content="Approve All"
+                content={t('ui.common.approve_all')}
                 onClick={() => act('approve_all')}
               />
             </Stack.Item>
@@ -726,8 +737,8 @@ export const AdminTab = (props) => {
                 icon="universal-access"
                 color="purple"
                 disabled={!approved || equipment_issued}
-                tooltip="Issue the player with all approved equipment."
-                content="Issue Gear"
+                tooltip={t('ui.opposing_force.issue_gear_tooltip')}
+                content={t('ui.opposing_force.issue_gear')}
                 onClick={() => act('issue_gear')}
               />
             </Stack.Item>
@@ -736,7 +747,7 @@ export const AdminTab = (props) => {
                 icon="times"
                 color="red"
                 disabled={denied}
-                content="Deny"
+                content={t('ui.common.deny')}
                 onClick={() => act('deny')}
               />
             </Stack.Item>
@@ -745,16 +756,16 @@ export const AdminTab = (props) => {
                 <Button
                   icon="check-circle"
                   color="green"
-                  tooltip="Unblock the user from submitting applications."
-                  content="Unblock User"
+                  tooltip={t('ui.opposing_force.unblock_user_tooltip')}
+                  content={t('ui.opposing_force.unblock_user')}
                   onClick={() => act('toggle_block')}
                 />
               ) : (
                 <Button
                   icon="ban"
                   color="red"
-                  tooltip="Block the user from submitting applications."
-                  content="Block User"
+                  tooltip={t('ui.opposing_force.block_user_tooltip')}
+                  content={t('ui.opposing_force.block_user')}
                   onClick={() => act('toggle_block')}
                 />
               )}
@@ -763,8 +774,8 @@ export const AdminTab = (props) => {
               <Button
                 icon="suitcase"
                 color="blue"
-                tooltip="Assign yourself as the handling admin."
-                content="Handle"
+                tooltip={t('ui.opposing_force.handle_tooltip')}
+                content={t('ui.opposing_force.handle')}
                 onClick={() => act('handle')}
               />
             </Stack.Item>
@@ -775,14 +786,14 @@ export const AdminTab = (props) => {
                 <Button
                   icon="volume-up"
                   color="green"
-                  content="Unmute Help Requests"
+                  content={t('ui.opposing_force.unmute_help_requests')}
                   onClick={() => act('mute_request_updates')}
                 />
               ) : (
                 <Button
                   icon="volume-mute"
                   color="red"
-                  content="Mute Help Requests"
+                  content={t('ui.opposing_force.mute_help_requests')}
                   onClick={() => act('mute_request_updates')}
                 />
               )}
@@ -791,8 +802,8 @@ export const AdminTab = (props) => {
               <Button
                 icon="compress-arrows-alt"
                 color="teal"
-                tooltip="Follow User Mob"
-                content="Follow"
+                tooltip={t('ui.opposing_force.follow_user_tooltip')}
+                content={t('ui.common.follow')}
                 onClick={() => act('flw_user')}
               />
             </Stack.Item>
@@ -800,18 +811,18 @@ export const AdminTab = (props) => {
         </Section>
       </Stack.Item>
       <Stack.Item>
-        <Section title="Backstory">
+        <Section title={t('ui.opposing_force.backstory')}>
           {backstory.length === 0 ? (
-            <Box color="bad">No backstory set.</Box>
+            <Box color="bad">{t('ui.opposing_force.no_backstory_set')}</Box>
           ) : (
             <Box preserveWhitespace>{backstory}</Box>
           )}
         </Section>
       </Stack.Item>
       <Stack.Item>
-        <Section title="Objectives">
+        <Section title={t('ui.opposing_force.objectives')}>
           {objectives.length === 0 ? (
-            <Box color="bad">No objectives selected.</Box>
+            <Box color="bad">{t('ui.opposing_force.no_objectives_selected')}</Box>
           ) : (
             objectives.map((objective, index) => (
               <Section
@@ -821,27 +832,27 @@ export const AdminTab = (props) => {
                 <Stack vertical>
                   <Stack.Item>
                     <LabeledList key={objective.id}>
-                      <LabeledList.Item label="Description">
+                      <LabeledList.Item label={t('ui.common.description')}>
                         {objective.description}
                       </LabeledList.Item>
-                      <LabeledList.Item label="Justification">
+                      <LabeledList.Item label={t('ui.opposing_force.justification')}>
                         {objective.justification}
                       </LabeledList.Item>
-                      <LabeledList.Item label="Intensity">
+                      <LabeledList.Item label={t('ui.opposing_force.intensity')}>
                         {'(' +
                           objective.intensity +
                           ') ' +
                           objective.text_intensity}
                       </LabeledList.Item>
-                      <LabeledList.Item label="Status">
+                      <LabeledList.Item label={t('ui.common.status')}>
                         {objective.status_text === 'Not Reviewed'
-                          ? 'Objective Not Reviewed'
+                          ? t('ui.opposing_force.objective_not_reviewed')
                           : objective.approved
-                            ? 'Objective Approved'
+                            ? t('ui.opposing_force.objective_approved')
                             : objective.denied_text
-                              ? 'Objective Denied - Reason: ' +
+                              ? `${t('ui.opposing_force.objective_denied_reason')}: ` +
                                 objective.denied_text
-                              : 'Objective Denied'}
+                              : t('ui.opposing_force.objective_denied')}
                       </LabeledList.Item>
                     </LabeledList>
                   </Stack.Item>
@@ -855,7 +866,7 @@ export const AdminTab = (props) => {
                           objective.approved &&
                           objective.status_text !== 'Not Reviewed'
                         }
-                        content="Approve Objective"
+                        content={t('ui.opposing_force.approve_objective')}
                         onClick={() =>
                           act('approve_objective', {
                             objective_ref: objective.ref,
@@ -871,7 +882,7 @@ export const AdminTab = (props) => {
                           !objective.approved &&
                           objective.status_text !== 'Not Reviewed'
                         }
-                        content="Deny Objective"
+                        content={t('ui.opposing_force.deny_objective')}
                         onClick={() =>
                           act('deny_objective', {
                             objective_ref: objective.ref,
@@ -887,9 +898,9 @@ export const AdminTab = (props) => {
         </Section>
       </Stack.Item>
       <Stack.Item>
-        <Section title="Equipment">
+        <Section title={t('ui.opposing_force.equipment')}>
           {selected_equipment.length === 0 ? (
-            <Box color="bad">No equipment selected.</Box>
+            <Box color="bad">{t('ui.opposing_force.no_equipment_selected')}</Box>
           ) : (
             selected_equipment.map((equipment, index) => (
               <Section
@@ -904,7 +915,7 @@ export const AdminTab = (props) => {
                         equipment.approved &&
                         equipment.status !== 'Not Reviewed'
                       }
-                      content="Approve Equipment"
+                      content={t('ui.opposing_force.approve_equipment')}
                       onClick={() =>
                         act('approve_equipment', {
                           selected_equipment_ref: equipment.ref,
@@ -918,7 +929,7 @@ export const AdminTab = (props) => {
                         !equipment.approved &&
                         equipment.status !== 'Not Reviewed'
                       }
-                      content="Deny Equipment"
+                      content={t('ui.opposing_force.deny_equipment')}
                       onClick={() =>
                         act('deny_equipment', {
                           selected_equipment_ref: equipment.ref,
@@ -929,23 +940,23 @@ export const AdminTab = (props) => {
                 }
               >
                 <LabeledList key={equipment.ref}>
-                  <LabeledList.Item label="Description">
+                  <LabeledList.Item label={t('ui.common.description')}>
                     {equipment.description}
                   </LabeledList.Item>
-                  <LabeledList.Item label="Reason">
+                  <LabeledList.Item label={t('ui.common.reason')}>
                     {equipment.reason}
                   </LabeledList.Item>
-                  <LabeledList.Item label="Status">
+                  <LabeledList.Item label={t('ui.common.status')}>
                     {equipment.denied_reason
                       ? equipment.status +
-                        ' - Reason: ' +
+                        ` - ${t('ui.common.reason')}: ` +
                         equipment.denied_reason
                       : equipment.status}
                   </LabeledList.Item>
-                  <LabeledList.Item label="Amount">
+                  <LabeledList.Item label={t('ui.common.amount')}>
                     {equipment.count}
                   </LabeledList.Item>
-                  <LabeledList.Item label="Equipment Note">
+                  <LabeledList.Item label={t('ui.opposing_force.equipment_note')}>
                     {equipment.admin_note}
                   </LabeledList.Item>
                 </LabeledList>
@@ -960,17 +971,18 @@ export const AdminTab = (props) => {
 
 export const TargetTab = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { current_crew = [], opt_in_colors = { optin, color } } = data;
   return (
     <Stack vertical fill>
       <Stack.Item grow={10}>
-        <Section title="Currently active crew">
+        <Section title={t('ui.opposing_force.currently_active_crew')}>
           {current_crew.map((crew) => (
             <Stack vertical={false} key={crew.name} pb="10px">
               <Stack.Item>
                 <span style={{ textDecoration: 'underline' }}>{crew.name}</span>
                 {': '}
-                {crew.rank}, Current Opt-In status:{' '}
+                {crew.rank}, {t('ui.opposing_force.current_opt_in_status')}:{' '}
                 <span
                   style={{
                     fontWeight: 'bold',
@@ -979,7 +991,7 @@ export const TargetTab = (props) => {
                 >
                   {crew.opt_in_status}
                 </span>
-                , Ideal Opt-in status:{' '}
+                , {t('ui.opposing_force.ideal_opt_in_status')}:{' '}
                 <span
                   style={{ color: opt_in_colors[crew.ideal_opt_in_status] }}
                 >

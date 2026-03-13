@@ -11,6 +11,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   connected: BooleanLike;
@@ -57,6 +58,7 @@ const linkifyText = (text: string) => {
 };
 
 export const Interview = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const {
     connected,
@@ -81,12 +83,12 @@ export const Interview = (props) => {
     >
       <Window.Content scrollable>
         {(!read_only && (
-          <Section title="Welcome!">
+          <Section title={t('ui.interview.welcome')}>
             <p>{linkifyText(welcome_message)}</p>
           </Section>
         )) || <RenderedStatus status={status} queue_pos={queue_pos} />}
         <Section
-          title="Questionnaire"
+          title={t('ui.interview.questionnaire')}
           buttons={
             <span>
               <Button
@@ -95,34 +97,34 @@ export const Interview = (props) => {
                 icon="envelope"
                 tooltip={
                   !allAnswered &&
-                  `Please answer all questions.
+                  `${t('ui.interview.please_answer_all_questions')}
                      ${numAnswered} / ${questions.length}`
                 }
               >
-                {read_only ? 'Submitted' : 'Submit'}
+                {read_only ? t('ui.interview.submitted') : t('ui.common.submit')}
               </Button>
               {!!is_admin && status === 'interview_pending' && (
                 <span>
                   <Button disabled={!connected} onClick={() => act('adminpm')}>
-                    Admin PM
+                    {t('ui.interview.admin_pm')}
                   </Button>
                   <Button color="good" onClick={() => act('approve')}>
-                    Approve
+                    {t('ui.common.approve')}
                   </Button>
                   <Button color="bad" onClick={() => act('deny')}>
-                    Deny
+                    {t('ui.common.deny')}
                   </Button>
                   {!!centcom_connected && (
                     <Button
                       color={has_permabans ? 'bad' : 'average'}
                       tooltip={
                         has_permabans
-                          ? 'This user has permabans in their history!'
+                          ? t('ui.interview.user_has_permabans')
                           : ''
                       }
                       onClick={() => act('check_centcom')}
                     >
-                      Check Centcom
+                      {t('ui.interview.check_centcom')}
                     </Button>
                   )}
                 </span>
@@ -133,20 +135,19 @@ export const Interview = (props) => {
           {!read_only && (
             <>
               <Box as="p" color="label">
-                Please answer the following questions.
+                {t('ui.interview.please_answer_the_following_questions')}
                 <ul>
                   <li>
-                    You can press enter key or the save button to save an
-                    answer.
+                    {t('ui.interview.tip_press_enter_or_save')}
                   </li>
                   <li>
-                    You can edit your answers until you press the submit button.
+                    {t('ui.interview.tip_edit_until_submit')}
                   </li>
-                  <li>Press SUBMIT when you are done.</li>
+                  <li>{t('ui.interview.tip_press_submit_when_done')}</li>
                 </ul>
               </Box>
               <NoticeBox info align="center">
-                You will not be able to edit your answers after submitting.
+                {t('ui.interview.cannot_edit_after_submit')}
               </NoticeBox>
             </>
           )}
@@ -160,24 +161,26 @@ export const Interview = (props) => {
 };
 
 const RenderedStatus = (props: { status: string; queue_pos: number }) => {
+  const { t } = usePreferencesLocalization();
   const { status, queue_pos } = props;
 
   switch (status) {
     case STATUS.Approved:
-      return <NoticeBox success>This interview was approved.</NoticeBox>;
+      return <NoticeBox success>{t('ui.interview.interview_was_approved')}</NoticeBox>;
     case STATUS.Denied:
-      return <NoticeBox danger>This interview was denied.</NoticeBox>;
+      return <NoticeBox danger>{t('ui.interview.interview_was_denied')}</NoticeBox>;
     default:
       return (
         <NoticeBox info>
-          Your answers have been submitted. You are position {queue_pos} in
-          queue.
+          {t('ui.interview.answers_submitted_prefix')} {queue_pos}{' '}
+          {t('ui.interview.answers_submitted_suffix')}
         </NoticeBox>
       );
   }
 };
 
 const QuestionArea = (props: Question) => {
+  const { t } = usePreferencesLocalization();
   const { qidx, question, response } = props;
   const { act, data } = useBackend<Data>();
   const { is_admin, read_only } = data;
@@ -199,20 +202,20 @@ const QuestionArea = (props: Question) => {
 
   return (
     <Section
-      title={`Question ${qidx}`}
+      title={`${t('ui.interview.question')} ${qidx}`}
       buttons={
         <Button
           disabled={!saveAvailable}
           onClick={saveResponse}
           icon={isSaved ? 'check' : 'save'}
         >
-          {isSaved ? 'Saved' : 'Save'}
+          {isSaved ? t('ui.common.saved') : t('ui.common.save')}
         </Button>
       }
     >
       <p>{linkifyText(question)}</p>
       {read_only || is_admin ? (
-        <BlockQuote>{response || 'No response.'}</BlockQuote>
+        <BlockQuote>{response || t('ui.interview.no_response')}</BlockQuote>
       ) : (
         <TextArea
           fluid
@@ -220,7 +223,7 @@ const QuestionArea = (props: Question) => {
           maxLength={500}
           onChange={setUserInput}
           onEnter={saveResponse}
-          placeholder="Write your response here, max of 500 characters. Press enter to submit."
+          placeholder={t('ui.interview.write_response_placeholder')}
           value={response || undefined}
         />
       )}

@@ -2,9 +2,11 @@ import { Button, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const Holodeck = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { can_toggle_safety, emagged, program } = data;
   const default_programs = data.default_programs || [];
   const emag_programs = data.emag_programs || [];
@@ -12,11 +14,11 @@ export const Holodeck = (props) => {
     <Window width={400} height={500}>
       <Window.Content scrollable>
         <Section
-          title="Default Programs"
+          title={t('ui.holodeck.default_programs')}
           buttons={
             <Button
               icon={emagged ? 'unlock' : 'lock'}
-              content="Safeties"
+              content={t('ui.holodeck.safeties')}
               color="bad"
               disabled={!can_toggle_safety}
               selected={!emagged}
@@ -40,7 +42,7 @@ export const Holodeck = (props) => {
           ))}
         </Section>
         {!!emagged && (
-          <Section title="Dangerous Programs">
+          <Section title={t('ui.holodeck.dangerous_programs')}>
             {emag_programs.map((emag_program) => (
               <Button
                 fluid

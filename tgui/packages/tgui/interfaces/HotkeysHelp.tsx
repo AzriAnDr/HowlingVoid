@@ -2,6 +2,7 @@ import { Box, Section, Table, Tooltip } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type BindingInfo = {
   name: string;
@@ -91,11 +92,12 @@ const KeyBinding = (props: KeyBindingBoxProps) => (
 
 export const HotkeysHelp = (props) => {
   const { data } = useBackend<HotkeysHelpData>();
+  const { t } = usePreferencesLocalization(data);
 
   return (
-    <Window title="Hotkeys Help" width={500} height={800}>
+    <Window title={t('ui.hotkeys_help.title')} width={500} height={800}>
       <Window.Content scrollable>
-        <Section title="Sorted by Key">
+        <Section title={t('ui.hotkeys_help.sorted_by_key')}>
           <Table>
             <Table.Row header>
               <Table.Cell textAlign="center" m={1}>

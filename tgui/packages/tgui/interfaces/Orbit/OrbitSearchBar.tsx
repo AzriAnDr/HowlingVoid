@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { Button, Icon, Input, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { OrbitContext } from '.';
 import { VIEWMODE } from './constants';
 import { isJobCkeyOrNameMatch, sortByOrbiters } from './helpers';
@@ -9,6 +10,7 @@ import type { OrbitData } from './types';
 
 /** Search bar for the orbit ui. Has a few buttons to switch between view modes and auto-observe */
 export function OrbitSearchBar(props) {
+  const { t } = usePreferencesLocalization();
   const {
     autoObserve,
     bladeOpen,
@@ -58,7 +60,7 @@ export function OrbitSearchBar(props) {
 
   const viewModeTitle = Object.entries(VIEWMODE).find(
     ([_key, value]) => value === viewMode,
-  )?.[0];
+  )?.[0]?.toLowerCase();
 
   return (
     <Section>
@@ -72,7 +74,7 @@ export function OrbitSearchBar(props) {
             fluid
             onEnter={orbitMostRelevant}
             onChange={setSearchQuery}
-            placeholder="Search..."
+            placeholder={t('ui.common.search_placeholder')}
             value={searchQuery}
             expensive
           />
@@ -83,7 +85,9 @@ export function OrbitSearchBar(props) {
             color="transparent"
             icon={viewMode}
             onClick={swapViewMode}
-            tooltip={`Color scheme: ${viewModeTitle}`}
+            tooltip={`${t('ui.orbit.color_scheme')}: ${
+              viewModeTitle ? t(`ui.orbit.view_mode.${viewModeTitle}`) : ''
+            }`}
             tooltipPosition="bottom-start"
           />
         </Stack.Item>
@@ -93,8 +97,7 @@ export function OrbitSearchBar(props) {
               color={autoObserve ? 'good' : 'transparent'}
               icon={autoObserve ? 'toggle-on' : 'toggle-off'}
               onClick={() => setAutoObserve(!autoObserve)}
-              tooltip={`Toggle Auto-Observe. When active, you'll
-            see the UI / full inventory of whoever you're orbiting. Neat!`}
+              tooltip={t('ui.orbit.toggle_auto_observe')}
               tooltipPosition="bottom-start"
             />
           </Stack.Item>
@@ -104,7 +107,7 @@ export function OrbitSearchBar(props) {
             color="transparent"
             icon="sync-alt"
             onClick={() => act('refresh')}
-            tooltip="Refresh"
+            tooltip={t('ui.common.refresh')}
             tooltipPosition="bottom-start"
           />
         </Stack.Item>
@@ -114,8 +117,7 @@ export function OrbitSearchBar(props) {
             icon="passport"
             onClick={() => setRealNameDisplay(!realNameDisplay)}
             selected={realNameDisplay}
-            tooltip="Toggle real name display. When active, you'll see real
-            names instead of disguises in orbit menu."
+            tooltip={t('ui.orbit.toggle_real_name_display')}
             tooltipPosition="bottom-start"
           />
         </Stack.Item>
@@ -125,7 +127,7 @@ export function OrbitSearchBar(props) {
             icon="sliders-h"
             onClick={() => setBladeOpen(!bladeOpen)}
             selected={bladeOpen}
-            tooltip="Toggle settings blade"
+            tooltip={t('ui.orbit.toggle_settings_blade')}
             tooltipPosition="left-end"
           />
         </Stack.Item>

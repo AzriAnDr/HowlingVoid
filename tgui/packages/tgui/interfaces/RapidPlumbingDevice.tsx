@@ -12,6 +12,7 @@ import { capitalizeAll } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import { MatterItem, SiloItem } from './RapidConstructionDevice';
 import { ColorItem } from './RapidPipeDispenser';
 
@@ -89,9 +90,10 @@ const PlumbingTypeSection = (props) => {
 
 export const LayerSelect = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { piping_layer } = data;
   return (
-    <LabeledList.Item label="Layer">
+    <LabeledList.Item label={t('ui.common.layer')}>
       {[1, 2, 3, 4, 5].map((layer) => (
         <Button.Checkbox
           key={layer}

@@ -13,6 +13,7 @@ import { capitalizeAll } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { AirLockMainSection } from './AirlockElectronics';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   matterLeft: number;
@@ -38,21 +39,27 @@ type Design = {
 
 export const MatterItem = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { matterLeft } = data;
   return (
-    <LabeledList.Item label="Units Left">
-      &nbsp;{matterLeft} Units
+    <LabeledList.Item label={t('ui.rapidconstructiondevice.units_left')}>
+      &nbsp;{matterLeft} {t('ui.rapid_construction_device.units')}
     </LabeledList.Item>
   );
 };
 
 export const SiloItem = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { silo_enabled } = data;
   return (
-    <LabeledList.Item label="Silo Link">
+    <LabeledList.Item label={t('ui.rapidconstructiondevice.silo_link')}>
       <Button.Checkbox
-        content={silo_enabled ? 'Silo Online' : 'Silo Offline'}
+        content={
+          silo_enabled
+            ? t('ui.rapid_construction_device.silo_online')
+            : t('ui.rapid_construction_device.silo_offline')
+        }
         checked={silo_enabled}
         color="transparent"
         onClick={() => act('toggle_silo')}
@@ -63,9 +70,10 @@ export const SiloItem = (props) => {
 
 const CategoryItem = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { root_categories = [], selected_root } = data;
   return (
-    <LabeledList.Item label="Category">
+    <LabeledList.Item label={t('ui.rapidconstructiondevice.category')}>
       {root_categories.map((root) => (
         <Button
           key={root}

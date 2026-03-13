@@ -1,10 +1,11 @@
-// THIS IS A NOVA SECTOR UI FILE
+﻿// THIS IS A NOVA SECTOR UI FILE
 import { type ReactNode, useState } from 'react';
 import { Button, ByondUi, Section, Stack } from 'tgui-core/components';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import type { ExaminePanelData } from './data';
 
 function formatURLs(text: string) {
@@ -38,6 +39,7 @@ function formatURLs(text: string) {
 
 export function ExaminePanel(props) {
   const { data } = useBackend<ExaminePanelData>();
+  const { t } = usePreferencesLocalization();
   const {
     character_name,
     assigned_map,
@@ -61,7 +63,7 @@ export function ExaminePanel(props) {
         <Stack fill>
           <Stack.Item width="30%">
             {!headshot ? (
-              <Section fill title="Character Preview">
+              <Section fill title={t('ui.examine_panel.character_preview')}>
                 <ByondUi
                   height="100%"
                   width="100%"
@@ -74,7 +76,10 @@ export function ExaminePanel(props) {
               </Section>
             ) : (
               <>
-                <Section height="310px" title="Character Preview">
+                <Section
+                  height="310px"
+                  title={t('ui.examine_panel.character_preview')}
+                >
                   <ByondUi
                     height="260px"
                     width="100%"
@@ -85,7 +90,7 @@ export function ExaminePanel(props) {
                     }}
                   />
                 </Section>
-                <Section height="310px" title="Headshot">
+                <Section height="310px" title={t('ui.examine_panel.headshot')}>
                   <img
                     src={resolveAsset(headshot)}
                     height="250px"
@@ -102,7 +107,7 @@ export function ExaminePanel(props) {
                   scrollable
                   fill
                   preserveWhitespace
-                  title="Flavor Text"
+                  title={t('ui.examine_panel.flavor_text')}
                   buttons={
                     <>
                       <Button
@@ -137,7 +142,7 @@ export function ExaminePanel(props) {
                     <Section
                       scrollable
                       fill
-                      title="OOC Notes"
+                      title={t('ui.examine_panel.ooc_notes')}
                       preserveWhitespace
                       buttons={
                         <>
@@ -171,7 +176,7 @@ export function ExaminePanel(props) {
                               fontWeight: 'bold',
                             }}
                           >
-                            Nova Star! ⭐
+                            {t('ui.examine_panel.nova_star')}
                           </span>
                         </Stack.Item>
                       )}
@@ -179,7 +184,8 @@ export function ExaminePanel(props) {
                         <Stack.Item>
                           {ideal_antag_optin_status && (
                             <Stack.Item>
-                              Current Antag Opt-In Status:{' '}
+                              {t('ui.examine_panel.current_antag_opt_in_status')}
+                              :{' '}
                               <span
                                 style={{
                                   fontWeight: 'bold',
@@ -190,7 +196,10 @@ export function ExaminePanel(props) {
                                 {current_antag_optin_status}
                               </span>
                               {'\n'}
-                              Antag Opt-In Status {'(Preferences)'}:{' '}
+                              {t(
+                                'ui.examine_panel.antag_opt_in_status_preferences',
+                              )}
+                              :{' '}
                               <span
                                 style={{
                                   color:
@@ -215,13 +224,13 @@ export function ExaminePanel(props) {
                       preserveWhitespace
                       title={
                         custom_species
-                          ? `Species: ${custom_species}`
-                          : 'No Custom Species!'
+                          ? `${t('ui.examine_panel.species')}: ${custom_species}`
+                          : t('ui.examine_panel.no_custom_species')
                       }
                     >
                       {custom_species
                         ? formatURLs(custom_species_lore)
-                        : 'Just a normal space dweller.'}
+                        : t('ui.examine_panel.just_a_normal_space_dweller')}
                     </Section>
                   </Stack.Item>
                 </Stack>
@@ -233,3 +242,4 @@ export function ExaminePanel(props) {
     </Window>
   );
 }
+

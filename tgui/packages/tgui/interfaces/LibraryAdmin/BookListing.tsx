@@ -3,18 +3,19 @@ import { Box, NoticeBox, Stack } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { PageSelect } from '../LibraryConsole/components/PageSelect';
+import { usePreferencesLocalization } from '../localization';
 import { SearchAndDisplay } from './Search';
 import type { LibraryAdminData } from './types';
 
 export function BookListing(props) {
   const { act, data } = useBackend<LibraryAdminData>();
+  const { t } = usePreferencesLocalization(data);
   const { can_connect, can_db_request, our_page, page_count } = data;
 
   if (!can_connect) {
     return (
       <NoticeBox>
-        Unable to retrieve book listings. Please contact your system
-        administrator for assistance.
+        {t('ui.library_admin.unable_to_retrieve_book_listings')}
       </NoticeBox>
     );
   }

@@ -15,6 +15,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const lawtype_to_color = {
   inherent: 'white',
@@ -73,6 +74,7 @@ type Data = {
 };
 
 const SyncedBorgDimmer = (props: { master: string }) => {
+  const { t } = usePreferencesLocalization();
   return (
     <Dimmer>
       <Stack textAlign="center" vertical>
@@ -80,15 +82,16 @@ const SyncedBorgDimmer = (props: { master: string }) => {
           <Icon color="green" name="wifi" size={10} />
         </Stack.Item>
         <Stack.Item fontSize="18px">
-          This cyborg is linked to &quot;{props.master}&quot;.
+          {t('ui.lawpanel.cyborg_linked_to')} &quot;{props.master}&quot;.
         </Stack.Item>
-        <Stack.Item fontSize="14px">Modify their laws instead.</Stack.Item>
+        <Stack.Item fontSize="14px">{t('ui.lawpanel.modify_their_laws_instead')}</Stack.Item>
       </Stack>
     </Dimmer>
   );
 };
 
 export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
+  const { t } = usePreferencesLocalization();
   const { act } = useBackend<Law>();
   const { cyborg_ref, lawset } = props;
 
@@ -111,9 +114,7 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
                     icon="question"
                     tooltip={
                       lawtype_to_tooltip[law.lawtype] ||
-                      `This lawtype is unrecognized for some reason,
-                        that reason probably being "a bug".
-                        Make an issue report with this please.`
+                      t('ui.lawpanel.unrecognized_lawtype_tooltip')
                     }
                     color={lawtype_to_color[law.lawtype] || 'pink'}
                   />
@@ -137,7 +138,7 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
                   <Button
                     icon="pen-ruler"
                     color={'green'}
-                    tooltip={'Edit the text of the law.'}
+                    tooltip={t('ui.lawpanel.edit_law_text')}
                     onClick={() =>
                       act('edit_law_text', {
                         ref: cyborg_ref,
@@ -188,7 +189,7 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
                     <Button
                       icon="pen-to-square"
                       color={'green'}
-                      tooltip={'Edit the priority of the law.'}
+                      tooltip={t('ui.lawpanel.edit_law_priority')}
                       onClick={() =>
                         act('edit_law_prio', {
                           ref: cyborg_ref,
@@ -206,11 +207,11 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
           <LabeledList.Divider />
         </>
       ))}
-      <LabeledList.Item label="???">
+      <LabeledList.Item label={t('ui.common.unknown')}>
         <Button
           icon="plus"
           color={'green'}
-          content={'Add Law'}
+          content={t('ui.lawpanel.add_law')}
           onClick={() => act('add_law', { ref: cyborg_ref })}
         />
       </LabeledList.Item>
@@ -220,6 +221,7 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
 };
 
 export const SiliconReadout = (props: { cyborg: Silicon }) => {
+  const { t } = usePreferencesLocalization();
   const { data, act } = useBackend<Silicon>();
   const { cyborg } = props;
 
@@ -238,9 +240,7 @@ export const SiliconReadout = (props: { cyborg: Silicon }) => {
                     fluid
                     textAlign="center"
                     color="danger"
-                    content={`This silicon has a null law datum. This isn't
-                      supposed to ever happen! Issue report
-                      and then click this this give them one.`}
+                    content={t('ui.lawpanel.null_law_datum')}
                     onClick={() => act('give_law_datum', { ref: cyborg.ref })}
                   />
                 ) : (
@@ -252,9 +252,8 @@ export const SiliconReadout = (props: { cyborg: Silicon }) => {
                   <Stack.Item>
                     <Button
                       icon="bullhorn"
-                      content={'Force State Laws'}
-                      tooltip={`Forces the silicon to state laws.
-                        Only states inherent / core laws.`}
+                      content={t('ui.lawpanel.force_state_laws')}
+                      tooltip={t('ui.lawpanel.force_state_laws_tooltip')}
                       onClick={() =>
                         act('force_state_laws', { ref: cyborg.ref })
                       }
@@ -263,10 +262,8 @@ export const SiliconReadout = (props: { cyborg: Silicon }) => {
                   <Stack.Item>
                     <Button
                       icon="message"
-                      content={'Privately Announce Laws'}
-                      tooltip={`Displays all of the silicon's laws
-                        in their chat box. Also shows to all
-                        linked cyborgs for AIs.`}
+                      content={t('ui.lawpanel.privately_announce_laws')}
+                      tooltip={t('ui.lawpanel.privately_announce_laws_tooltip')}
                       onClick={() =>
                         act('announce_law_changes', { ref: cyborg.ref })
                       }
@@ -275,10 +272,8 @@ export const SiliconReadout = (props: { cyborg: Silicon }) => {
                   <Stack.Item>
                     <Button
                       icon="bell"
-                      content={'"Laws Updated" Alert'}
-                      tooltip={`Throws a screen alert to the silicon that their
-                        laws have been updated. Also displays the laws in chat
-                        and alerts deadchat.`}
+                      content={t('ui.lawpanel.laws_updated_alert')}
+                      tooltip={t('ui.lawpanel.laws_updated_alert_tooltip')}
                       onClick={() =>
                         act('laws_updated_alert', { ref: cyborg.ref })
                       }
@@ -295,20 +290,21 @@ export const SiliconReadout = (props: { cyborg: Silicon }) => {
 };
 
 export const Lawpanel = (props) => {
+  const { t } = usePreferencesLocalization();
   const { data, act } = useBackend<Data>();
   const { all_silicons } = data;
 
   return (
-    <Window title="Law Panel" theme="admin" width={800} height={600}>
+    <Window title={t('ui.lawpanel.title')} theme="admin" width={800} height={600}>
       <Window.Content>
         <Section
           fill
-          title="All Silicon Laws"
+          title={t('ui.lawpanel.all_silicon_laws')}
           scrollable
           buttons={
             <Button
               icon="robot"
-              content="Logs"
+              content={t('ui.common.logs')}
               onClick={() => act('lawchange_logs')}
             />
           }
@@ -322,7 +318,7 @@ export const Lawpanel = (props) => {
               ))
             ) : (
               <Stack.Item>
-                <NoticeBox>There are no silicons in existence.</NoticeBox>
+                <NoticeBox>{t('ui.lawpanel.no_silicons')}</NoticeBox>
               </Stack.Item>
             )}
           </Stack>

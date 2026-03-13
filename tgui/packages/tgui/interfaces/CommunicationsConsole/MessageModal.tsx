@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Flex, Modal, TextArea } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import type { CommsConsoleData } from './types';
 
 type Props = {
@@ -16,6 +17,7 @@ type Props = {
 
 export function MessageModal(props: Props) {
   const { data } = useBackend<CommsConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { maxMessageLength } = data;
   const { label, minLength, onBack, onSubmit, notice, buttonText, icon } =
     props;
@@ -48,7 +50,11 @@ export function MessageModal(props: Props) {
             icon={icon}
             color="good"
             disabled={!longEnough}
-            tooltip={!longEnough ? 'You need a longer reason.' : ''}
+            tooltip={
+              !longEnough
+                ? t('ui.communications_console.need_longer_reason')
+                : ''
+            }
             tooltipPosition="right"
             onClick={() => {
               if (longEnough) {
@@ -61,7 +67,7 @@ export function MessageModal(props: Props) {
           </Button>
 
           <Button icon="times" color="bad" onClick={onBack}>
-            Cancel
+            {t('ui.common.cancel')}
           </Button>
         </Flex.Item>
 

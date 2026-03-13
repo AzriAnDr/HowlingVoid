@@ -12,6 +12,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   silent: BooleanLike;
@@ -24,6 +25,7 @@ type Data = {
 };
 export const ForensicsSpoofer = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     silent,
     scanmode,
@@ -36,7 +38,7 @@ export const ForensicsSpoofer = (props) => {
   const [currentTab, setTab] = useState(0);
   return (
     <Window
-      title="Forensics Spoofing Device"
+      title={t('ui.forensics_spoofer.title')}
       width={460}
       height={340}
       theme="syndicate"
@@ -51,7 +53,7 @@ export const ForensicsSpoofer = (props) => {
                     width="100%"
                     icon={silent ? 'eye-slash' : 'eye'}
                     content={silent ? 'Silent Mode: On' : 'Silent Mode: Off'}
-                    tooltip="On Silent Mode this device will make the same sounds and sights as an actual Forensics Scanner."
+                    tooltip={t('ui.forensics_spoofer.silent_mode_tooltip')}
                     onClick={() => act('stealth')}
                   />
                 </Stack.Item>

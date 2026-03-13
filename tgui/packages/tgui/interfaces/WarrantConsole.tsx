@@ -14,6 +14,7 @@ import {
 
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   records: WarrantRecord[];
@@ -62,6 +63,7 @@ export const WarrantConsole = (props) => {
 /** Displays all valid records with warrants. */
 const RecordList = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { records = [] } = data;
   const sorted = sortBy(records, [(record) => record.crew_name]);
 
@@ -83,17 +85,17 @@ const RecordList = (props) => {
         <Button
           icon="sync"
           onClick={() => act('refresh')}
-          tooltip="Refresh"
+          tooltip={t('ui.common.refresh')}
           tooltipPosition="bottom-start"
         />
       }
       fill
       scrollable
-      title="Citations"
+      title={t('ui.warrant_console.citations')}
     >
       <Stack fill vertical>
         {!records?.length ? (
-          <NoticeBox>No citations issued.</NoticeBox>
+          <NoticeBox>{t('ui.warrant_console.no_citations_issued')}</NoticeBox>
         ) : (
           <Tabs vertical>
             {sorted.map((record, index) => (
@@ -138,7 +140,8 @@ const CitationManager = (props) => {
   const foundRecord = getCurrentRecord();
   if (!foundRecord) return;
 
-  const { act } = useBackend<Data>();
+  const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     citation: { author, details, fine, fine_ref, fine_name, paid, time },
   } = props;
@@ -158,22 +161,22 @@ const CitationManager = (props) => {
             act('print', { crew_ref: crew_ref, fine_ref: fine_ref })
           }
         >
-          Print
+          {t('ui.common.print')}
         </Button>
       }
       color={getFineColor(fine)}
       title={fine_name}
     >
       <LabeledList>
-        <LabeledList.Item label="Details">
+        <LabeledList.Item label={t('ui.common.details')}>
           <BlockQuote>{details}</BlockQuote>
         </LabeledList.Item>
-        <LabeledList.Item label="Author">{author}</LabeledList.Item>
-        <LabeledList.Item label="Time">{time}</LabeledList.Item>
-        <LabeledList.Item label="Fine">{fine}</LabeledList.Item>
-        <LabeledList.Item label="Paid">{paid}</LabeledList.Item>
+        <LabeledList.Item label={t('ui.common.author')}>{author}</LabeledList.Item>
+        <LabeledList.Item label={t('ui.common.time')}>{time}</LabeledList.Item>
+        <LabeledList.Item label={t('ui.warrant_console.fine')}>{fine}</LabeledList.Item>
+        <LabeledList.Item label={t('ui.warrant_console.paid')}>{paid}</LabeledList.Item>
         {fine > 0 && (
-          <LabeledList.Item label="Pay">
+          <LabeledList.Item label={t('ui.common.pay')}>
             <RestrictedInput
               maxValue={fine}
               minValue={5}
@@ -191,7 +194,7 @@ const CitationManager = (props) => {
                 })
               }
             >
-              Pay
+              {t('ui.common.pay')}
             </Button.Confirm>
           </LabeledList.Item>
         )}

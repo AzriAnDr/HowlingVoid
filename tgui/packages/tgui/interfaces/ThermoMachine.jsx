@@ -9,22 +9,24 @@ import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const ThermoMachine = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   return (
     <Window width={300} height={350}>
       <Window.Content>
-        <Section title="Status">
+        <Section title={t('ui.thermo_machine.status')}>
           <LabeledList>
-            <LabeledList.Item label="Temperature">
+            <LabeledList.Item label={t('ui.thermo_machine.temperature')}>
               <AnimatedNumber
                 value={data.temperature}
                 format={(value) => toFixed(value, 2)}
               />
               {' K'}
             </LabeledList.Item>
-            <LabeledList.Item label="Pressure">
+            <LabeledList.Item label={t('ui.thermo_machine.pressure')}>
               <AnimatedNumber
                 value={data.pressure}
                 format={(value) => toFixed(value, 2)}
@@ -34,18 +36,18 @@ export const ThermoMachine = (props) => {
           </LabeledList>
         </Section>
         <Section
-          title="Controls"
+          title={t('ui.thermo_machine.controls')}
           buttons={
             <Button
               icon={data.on ? 'power-off' : 'times'}
-              content={data.on ? 'On' : 'Off'}
+              content={data.on ? t('ui.thermo_machine.on') : t('ui.thermo_machine.off')}
               selected={data.on}
               onClick={() => act('power')}
             />
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Target Temperature">
+            <LabeledList.Item label={t('ui.thermo_machine.target_temperature')}>
               <NumberInput
                 animated
                 tickWhileDragging
@@ -63,11 +65,11 @@ export const ThermoMachine = (props) => {
                 }
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Presets">
+            <LabeledList.Item label={t('ui.thermo_machine.presets')}>
               <Button
                 icon="fast-backward"
                 disabled={data.target === data.min}
-                title="Minimum temperature"
+                title={t('ui.thermo_machine.minimum_temperature')}
                 onClick={() =>
                   act('target', {
                     target: data.min,
@@ -77,7 +79,7 @@ export const ThermoMachine = (props) => {
               <Button
                 icon="sync"
                 disabled={data.target === data.initial}
-                title="Room Temperature"
+                title={t('ui.thermo_machine.room_temperature')}
                 onClick={() =>
                   act('target', {
                     target: data.initial,
@@ -87,7 +89,7 @@ export const ThermoMachine = (props) => {
               <Button
                 icon="fast-forward"
                 disabled={data.target === data.max}
-                title="Maximum Temperature"
+                title={t('ui.thermo_machine.maximum_temperature')}
                 onClick={() =>
                   act('target', {
                     target: data.max,

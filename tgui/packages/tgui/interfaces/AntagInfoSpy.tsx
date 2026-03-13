@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import {
   type Objective,
   ObjectivePrintout,
@@ -28,8 +29,12 @@ type Data = {
 
 export const AntagInfoSpy = () => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { antag_name, uplink_location, objectives, can_change_objective } =
     data;
+  const antagName = antag_name || t('ui.antaginfospy.spy');
+  const disguisedAs = uplink_location || t('ui.antaginfospy.something');
+
   return (
     <Window width={380} height={450} theme="ntos_darkmode">
       <Window.Content
@@ -37,33 +42,43 @@ export const AntagInfoSpy = () => {
           backgroundImage: 'none',
         }}
       >
-        <Section title={`You are the ${antag_name || 'Spy'}.`}>
+        <Section
+          title={t('ui.antaginfospy.you_are_the').replace(
+            '{antag_name}',
+            antagName,
+          )}
+        >
           <Stack vertical fill ml={1} mr={1}>
             <Stack.Item fontSize={1.2}>
-              You have been equipped with a special uplink device disguised as{' '}
-              {uplink_location || 'something'} that will allow you to steal from
-              the station.
+              {t('ui.antaginfospy.equipped_with_uplink').replace(
+                '{uplink_location}',
+                disguisedAs,
+              )}
             </Stack.Item>
             <Stack.Item>
               <span style={greenText}>
-                <b>Use it in hand</b> to access your uplink, and{' '}
-                <b>right click</b> on bounty targets to steal them.
+                <b>{t('ui.antaginfospy.use_it_in_hand')}</b>{' '}
+                {t('ui.antaginfospy.to_access_uplink_and')}{' '}
+                <b>{t('ui.antaginfospy.right_click')}</b>{' '}
+                {t('ui.antaginfospy.on_bounty_targets')}
               </span>
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item>
-              You may not be alone: There may be other spies on the station.
+              {t('ui.antaginfospy.other_spies_may_exist')}
             </Stack.Item>
             <Stack.Item>
-              Work together or work against them: The choice is yours, but{' '}
+              {t('ui.antaginfospy.work_together_or_against_them')}{' '}
               <span style={redText}>
-                the same bounty cannot be claimed twice.
+                {t('ui.antaginfospy.same_bounty_not_twice')}
               </span>
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item>
               <ObjectivePrintout
-                titleMessage={'Your mission, should you choose to accept it'}
+                titleMessage={t(
+                  'ui.antaginfospy.your_mission_if_you_choose_to_accept_it',
+                )}
                 objectives={objectives}
               />
             </Stack.Item>
@@ -72,8 +87,8 @@ export const AntagInfoSpy = () => {
               {
                 <ReplaceObjectivesButton
                   can_change_objective={can_change_objective}
-                  button_title={'Make Your Own Plan'}
-                  button_colour={'green'}
+                  button_title={t('ui.antaginfospy.make_your_own_plan')}
+                  button_colour="green"
                 />
               }
             </Stack.Item>

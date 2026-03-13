@@ -4,6 +4,7 @@ import { type BooleanLike, classes } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
@@ -19,6 +20,7 @@ type ExosuitFabricatorData = FabricatorData & {
 };
 
 export const ExosuitFabricator = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<ExosuitFabricatorData>();
   const { materials, SHEET_MATERIAL_AMOUNT } = data;
 
@@ -29,7 +31,7 @@ export const ExosuitFabricator = (props) => {
   }
 
   return (
-    <Window title="Exosuit Fabricator" width={1100} height={600}>
+    <Window title={t('ui.exosuit_fabricator.title')} width={1100} height={600}>
       <Window.Content>
         <Stack fill>
           <Stack.Item grow>
@@ -54,7 +56,7 @@ export const ExosuitFabricator = (props) => {
                         });
                       }}
                     >
-                      Queue All
+                      {t('ui.exosuit_fabricator.queue_all')}
                     </Button>
                   )}
                 />
@@ -91,6 +93,7 @@ type RecipeProps = {
 };
 
 const Recipe = (props: RecipeProps) => {
+  const { t } = usePreferencesLocalization();
   const { act } = useBackend<ExosuitFabricatorData>();
   const { design, available, SHEET_MATERIAL_AMOUNT } = props;
 
@@ -143,7 +146,7 @@ const Recipe = (props: RecipeProps) => {
         </div>
       </Tooltip>
 
-      <Tooltip content={'Add to Queue'} position="right">
+      <Tooltip content={t('ui.exosuit_fabricator.add_to_queue')} position="right">
         <div
           className={classes([
             'FabricatorRecipe__Button',
@@ -157,7 +160,7 @@ const Recipe = (props: RecipeProps) => {
         </div>
       </Tooltip>
 
-      <Tooltip content={'Build Now'} position="right">
+      <Tooltip content={t('ui.exosuit_fabricator.build_now')} position="right">
         <div
           className={classes([
             'FabricatorRecipe__Button',
@@ -180,6 +183,7 @@ type QueueProps = {
 };
 
 const Queue = (props: QueueProps) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<ExosuitFabricatorData>();
   const { availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
   const { designs, processing } = data;
@@ -207,27 +211,27 @@ const Queue = (props: QueueProps) => {
         <Stack.Item>
           <Section
             fill
-            title="Queue"
+            title={t('ui.exosuit_fabricator.queue')}
             buttons={
               <>
                 <Button.Confirm
                   disabled={!queue.length}
                   color="bad"
                   icon="minus-circle"
-                  content="Clear Queue"
+                  content={t('ui.exosuit_fabricator.clear_queue')}
                   onClick={() => act('clear_queue')}
                 />
                 {(!!processing && (
                   <Button
                     disabled={!queue.length}
-                    content="Stop"
+                    content={t('ui.common.stop')}
                     icon="stop"
                     onClick={() => act('stop_queue')}
                   />
                 )) || (
                   <Button
                     disabled={!queue.length}
-                    content="Build Queue"
+                    content={t('ui.exosuit_fabricator.build_queue')}
                     icon="play"
                     onClick={() => act('build_queue')}
                   />
@@ -261,6 +265,7 @@ type QueueListProps = {
 };
 
 const QueueList = (props: QueueListProps) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<ExosuitFabricatorData>();
   const { availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
 
@@ -351,7 +356,7 @@ const QueueList = (props: QueueListProps) => {
                   });
                 }}
               >
-                <Tooltip content={'Remove from Queue'}>
+                <Tooltip content={t('ui.exosuit_fabricator.remove_from_queue')}>
                   <Icon name="minus-circle" />
                 </Tooltip>
               </div>

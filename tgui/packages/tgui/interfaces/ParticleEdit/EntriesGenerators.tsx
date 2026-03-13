@@ -9,6 +9,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { ParticleContext } from '.';
 import {
   type EntryGeneratorNumbersListProps,
@@ -23,6 +24,7 @@ import { isStringArray } from './helpers';
 
 export const FloatGenerator = (props: FloatGeneratorProps) => {
   const { act } = useBackend<ParticleUIData>();
+  const { t } = usePreferencesLocalization();
   const { setDesc } = useContext(ParticleContext);
   const { name, var_name, float } = props;
   return (
@@ -32,12 +34,12 @@ export const FloatGenerator = (props: FloatGeneratorProps) => {
           <Button
             icon={'question'}
             onClick={() => setDesc(var_name)}
-            tooltip={'View details'}
+            tooltip={t('ui.common.view_details')}
           />
         </Stack.Item>
         <Stack.Item>
           <Button
-            content="Generator"
+            content={t('ui.particle_editor.generator')}
             selected={Array.isArray(float)}
             onClick={() =>
               act('edit', {
@@ -77,6 +79,7 @@ export const FloatGenerator = (props: FloatGeneratorProps) => {
 
 export const FloatGeneratorColor = (props: FloatGeneratorColorProps) => {
   const { act } = useBackend<ParticleUIData>();
+  const { t } = usePreferencesLocalization();
   const { setDesc } = useContext(ParticleContext);
   const { name, var_name, float } = props;
   return (
@@ -86,12 +89,12 @@ export const FloatGeneratorColor = (props: FloatGeneratorColorProps) => {
           <Button
             icon={'question'}
             onClick={() => setDesc(var_name)}
-            tooltip={'View details'}
+            tooltip={t('ui.common.view_details')}
           />
         </Stack.Item>
         <Stack.Item>
           <Button
-            content="Generator"
+            content={t('ui.particle_editor.generator')}
             selected={Array.isArray(float)}
             onClick={() =>
               act('edit', {
@@ -133,6 +136,7 @@ export const EntryGeneratorNumbersList = (
   props: EntryGeneratorNumbersListProps,
 ) => {
   const { act } = useBackend<ParticleUIData>();
+  const { t } = usePreferencesLocalization();
   const { setDesc } = useContext(ParticleContext);
   const { name, var_name, allow_z, input } = props;
   return (
@@ -142,12 +146,12 @@ export const EntryGeneratorNumbersList = (
           <Button
             icon={'question'}
             onClick={() => setDesc(var_name)}
-            tooltip={'View details'}
+            tooltip={t('ui.common.view_details')}
           />
         </Stack.Item>
         <Stack.Item>
           <Button
-            content="Generator"
+            content={t('ui.particle_editor.generator')}
             selected={isStringArray(input)}
             onClick={() =>
               act('edit', {
@@ -163,7 +167,7 @@ export const EntryGeneratorNumbersList = (
         <Stack.Item>
           <Button
             icon="sync"
-            tooltip={'Toggle Array'}
+            tooltip={t('ui.particle_editor.toggle_array')}
             selected={Array.isArray(input)}
             onClick={() =>
               act('edit', {

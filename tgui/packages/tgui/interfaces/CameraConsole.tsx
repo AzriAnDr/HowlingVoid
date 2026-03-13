@@ -14,6 +14,7 @@ import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   activeCamera: Camera & { status: BooleanLike };
@@ -108,6 +109,7 @@ export const CameraContent = (props) => {
 
 const CameraSelector = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { searchText, setSearchText } = props;
   const { activeCamera } = data;
   const cameras = selectCameras(data.cameras, searchText);
@@ -119,7 +121,7 @@ const CameraSelector = (props) => {
           autoFocus
           fluid
           mt={1}
-          placeholder="Search for a camera"
+          placeholder={t('ui.cameraconsole.search_for_a_camera')}
           onChange={setSearchText}
           value={searchText}
         />
@@ -158,6 +160,7 @@ const CameraSelector = (props) => {
 
 const CameraControls = (props: { searchText: string }) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { activeCamera, can_spy, mapRef } = data;
   const { searchText } = props;
 
@@ -174,7 +177,7 @@ const CameraControls = (props: { searchText: string }) => {
               {activeCamera?.status ? (
                 <NoticeBox info>{activeCamera.name}</NoticeBox>
               ) : (
-                <NoticeBox danger>No input signal</NoticeBox>
+                <NoticeBox danger>{t('ui.cameraconsole.no_input_signal')}</NoticeBox>
               )}
             </Stack.Item>
 
@@ -182,7 +185,7 @@ const CameraControls = (props: { searchText: string }) => {
               {!!can_spy && (
                 <Button
                   icon="magnifying-glass"
-                  tooltip="Track Person"
+                  tooltip={t('ui.cameraconsole.track_person')}
                   onClick={() => act('start_tracking')}
                 />
               )}

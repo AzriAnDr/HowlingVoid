@@ -2,6 +2,7 @@ import { sortBy } from 'es-toolkit';
 import { Box, Button, Icon, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { EMAG_SHUTTLE_NOTICE } from './constants';
 import { type CommsConsoleData, type Shuttle, ShuttleState } from './types';
 
@@ -14,6 +15,7 @@ function sortShuttles(shuttles: CommsConsoleData['shuttles']) {
 
 export function PageBuyingShuttle(props) {
   const { act, data } = useBackend<CommsConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { budget, shuttles } = data;
 
   return (
@@ -24,7 +26,7 @@ export function PageBuyingShuttle(props) {
             icon="chevron-left"
             onClick={() => act('setState', { state: ShuttleState.MAIN })}
           >
-            Back
+            {t('ui.common.back')}
           </Button>
 
           <div>
@@ -51,6 +53,7 @@ function ShuttleCard(props: ShuttleCardProps) {
   const { shuttle } = props;
 
   const { act, data } = useBackend<CommsConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     budget,
     displayed_currency_name,
@@ -81,7 +84,11 @@ function ShuttleCard(props: ShuttleCardProps) {
           }
           tooltip={
             budget < shuttle.creditCost
-              ? `You need ${shuttle.creditCost - budget} more ${displayed_currency_full_name}.`
+              ? t(
+                  'ui.communications_console.need_more_currency_for_shuttle',
+                )
+                  .replace('{amount}', String(shuttle.creditCost - budget))
+                  .replace('{currency}', displayed_currency_full_name)
               : shuttle.emagOnly
                 ? EMAG_SHUTTLE_NOTICE
                 : undefined
@@ -89,17 +96,29 @@ function ShuttleCard(props: ShuttleCardProps) {
           tooltipPosition="left"
         >
           {shuttle.emagOnly && !emagged
-            ? 'Buy'
+            ? t('ui.communications_console.buy')
             : `${shuttle.creditCost} ${displayed_currency_name}`}
         </Button>
       }
     >
       <Box>{shuttle.description}</Box>
       <Box color="teal" fontSize="10px" italic>
-        Occupancy Limit: {shuttle.occupancy_limit}
+        {t('ui.communications_console.occupancy_limit').replace(
+          '{limit}',
+          String(shuttle.occupancy_limit),
+        )}
       </Box>
       <Box color="violet" fontSize="10px" bold>
-        {shuttle.prerequisites && <b>Prerequisites: {shuttle.prerequisites}</b>}
+        {shuttle.prerequisites && (
+          <b>
+            {t('ui.communications_console.prerequisites').replace(
+              '{prerequisites}',
+              Array.isArray(shuttle.prerequisites)
+                ? shuttle.prerequisites.join(', ')
+                : String(shuttle.prerequisites),
+            )}
+          </b>
+        )}
       </Box>
     </Section>
   );

@@ -13,9 +13,11 @@ import {
 
 import { useBackend, useSharedState } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const NtosNifsoftCatalog = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { product_list = [], rewards_points, current_balance } = data;
   const [tab, setTab] = useSharedState(
     'product_category',
@@ -34,7 +36,7 @@ export const NtosNifsoftCatalog = (props) => {
             <LabeledList.Item label={'Credits in account'}>
               {current_balance}
             </LabeledList.Item>
-            <LabeledList.Item label="Rewards Points">
+            <LabeledList.Item label={t('ui.ntos_nifsoft.rewards_points')}>
               <b>{rewards_points}</b>
             </LabeledList.Item>
           </LabeledList>
@@ -59,6 +61,7 @@ export const NtosNifsoftCatalog = (props) => {
 
 const ProductCategory = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { target_nif, paying_account, rewards_points, current_balance } = data;
   const { products } = props;
 
@@ -76,7 +79,7 @@ const ProductCategory = (props) => {
               }
               fill={false}
             >
-              <Collapsible title="Product Notes">
+              <Collapsible title={t('ui.ntos_nifsoft.product_notes')}>
                 <BlockQuote>{product.desc}</BlockQuote>
               </Collapsible>
               <Button

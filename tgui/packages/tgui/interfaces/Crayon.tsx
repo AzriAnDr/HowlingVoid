@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import { ColorItem } from './RapidPipeDispenser';
 
 type Data = {
@@ -22,6 +23,7 @@ type Drawable = {
 
 export const Crayon = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     has_cap,
     can_change_colour,
@@ -37,12 +39,12 @@ export const Crayon = (props) => {
     <Window width={600} height={600}>
       <Window.Content scrollable>
         {!!capOrChanges && (
-          <Section title="Basic">
+          <Section title={t('ui.crayon.basic')}>
             <LabeledList>
-              <LabeledList.Item label="Cap">
+              <LabeledList.Item label={t('ui.crayon.cap')}>
                 <Button
                   icon={is_capped ? 'power-off' : 'times'}
-                  content={is_capped ? 'On' : 'Off'}
+                  content={is_capped ? t('ui.common.on') : t('ui.common.off')}
                   selected={is_capped}
                   onClick={() => act('toggle_cap')}
                 />
@@ -50,14 +52,14 @@ export const Crayon = (props) => {
               <ColorItem />
               <LabeledList.Item>
                 <Button
-                  content="Custom color"
+                  content={t('ui.crayon.custom_color')}
                   onClick={() => act('custom_color')}
                 />
               </LabeledList.Item>
             </LabeledList>
           </Section>
         )}
-        <Section title="Stencil">
+        <Section title={t('ui.crayon.stencil')}>
           <LabeledList>
             {drawables.map((drawable) => {
               const items = drawable.items || [];
@@ -81,13 +83,16 @@ export const Crayon = (props) => {
           </LabeledList>
         </Section>
         {!!is_literate_user && (
-          <Section title="Text">
+          <Section title={t('ui.common.text')}>
             <LabeledList>
-              <LabeledList.Item label="Current Buffer">
+              <LabeledList.Item label={t('ui.crayon.current_buffer')}>
                 {text_buffer}
               </LabeledList.Item>
             </LabeledList>
-            <Button content="New Text" onClick={() => act('enter_text')} />
+            <Button
+              content={t('ui.crayon.new_text')}
+              onClick={() => act('enter_text')}
+            />
           </Section>
         )}
       </Window.Content>

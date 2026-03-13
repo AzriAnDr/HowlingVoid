@@ -13,6 +13,7 @@ import {
 } from 'tgui-core/color';
 import { Box, Button, Stack, Tooltip } from 'tgui-core/components';
 import { InputButtons } from '../common/InputButtons';
+import { usePreferencesLocalization } from '../localization';
 import {
   ColorPresets,
   Hue,
@@ -31,6 +32,7 @@ interface ColorSelectorProps {
 
 export const ColorSelector: React.FC<ColorSelectorProps> = React.memo(
   ({ color, setColor, defaultColor }) => {
+    const { t } = usePreferencesLocalization();
     const handleChange = useCallback(
       (params: Partial<HsvaColor>) => {
         setColor((current) => ({ ...current, ...params }));
@@ -58,10 +60,10 @@ export const ColorSelector: React.FC<ColorSelectorProps> = React.memo(
             </Stack.Item>
             <Stack.Item mt={3}>
               <Box inline width="100px" height="20px" textAlign="center">
-                New
+                {t('ui.common.new')}
               </Box>
               <Box inline width="100px" height="20px" textAlign="center">
-                Current
+                {t('ui.common.current')}
               </Box>
               <br />
               <Tooltip content={hexColor} position="bottom">
@@ -97,7 +99,7 @@ export const ColorSelector: React.FC<ColorSelectorProps> = React.memo(
               <Stack.Item mt={5.5}>
                 <Stack>
                   <Stack.Item>
-                    <Box textColor="label">Hex:</Box>
+                    <Box textColor="label">{t('ui.color_picker.hex')}:</Box>
                   </Stack.Item>
                   <Stack.Item grow>
                     <HexColorInput
@@ -114,19 +116,19 @@ export const ColorSelector: React.FC<ColorSelectorProps> = React.memo(
                       icon="chevron-down"
                       onClick={() => setShowPresets(true)}
                     >
-                      Skin Tones and Presets
+                      {t('ui.color_picker.skin_tones_and_presets')}
                     </Button>
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
               <Stack.Divider mt={2} mb={2} />
-              <HueRow color={color} handleChange={handleChange} />
-              <SaturationRow color={color} handleChange={handleChange} />
-              <ValueRow color={color} handleChange={handleChange} />
+              <HueRow color={color} handleChange={handleChange} t={t} />
+              <SaturationRow color={color} handleChange={handleChange} t={t} />
+              <ValueRow color={color} handleChange={handleChange} t={t} />
               <Stack.Divider mt={2} mb={2} />
-              <RedRow color={color} handleChange={handleChange} />
-              <GreenRow color={color} handleChange={handleChange} />
-              <BlueRow color={color} handleChange={handleChange} />
+              <RedRow color={color} handleChange={handleChange} t={t} />
+              <GreenRow color={color} handleChange={handleChange} t={t} />
+              <BlueRow color={color} handleChange={handleChange} t={t} />
             </Stack>
           )}
         </Stack.Item>
@@ -138,13 +140,14 @@ export const ColorSelector: React.FC<ColorSelectorProps> = React.memo(
 interface RowProps {
   color: HsvaColor;
   handleChange: (c: Partial<HsvaColor>) => void;
+  t: (key: string, fallback?: string) => string;
 }
 
-const HueRow: React.FC<RowProps> = React.memo(({ color, handleChange }) => (
+const HueRow: React.FC<RowProps> = React.memo(({ color, handleChange, t }) => (
   <Stack.Item>
     <Stack>
       <Stack.Item width="25px">
-        <Box textColor="label">H:</Box>
+        <Box textColor="label">{t('ui.color_picker.hue_short')}</Box>
       </Stack.Item>
       <Stack.Item grow>
         <Hue hue={color.h} onChange={handleChange} />
@@ -162,11 +165,11 @@ const HueRow: React.FC<RowProps> = React.memo(({ color, handleChange }) => (
 ));
 
 const SaturationRow: React.FC<RowProps> = React.memo(
-  ({ color, handleChange }) => (
+  ({ color, handleChange, t }) => (
     <Stack.Item>
       <Stack>
         <Stack.Item width="25px">
-          <Box textColor="label">S:</Box>
+          <Box textColor="label">{t('ui.color_picker.saturation_short')}</Box>
         </Stack.Item>
         <Stack.Item grow>
           <Saturation color={color} onChange={handleChange} />
@@ -183,11 +186,11 @@ const SaturationRow: React.FC<RowProps> = React.memo(
   ),
 );
 
-const ValueRow: React.FC<RowProps> = React.memo(({ color, handleChange }) => (
+const ValueRow: React.FC<RowProps> = React.memo(({ color, handleChange, t }) => (
   <Stack.Item>
     <Stack>
       <Stack.Item width="25px">
-        <Box textColor="label">V:</Box>
+        <Box textColor="label">{t('ui.color_picker.value_short')}</Box>
       </Stack.Item>
       <Stack.Item grow>
         <Value color={color} onChange={handleChange} />
@@ -206,15 +209,16 @@ const ValueRow: React.FC<RowProps> = React.memo(({ color, handleChange }) => (
 interface RGBRowProps {
   color: HsvaColor;
   handleChange: (c: HsvaColor) => void;
+  t: (key: string, fallback?: string) => string;
 }
 
-const RedRow: React.FC<RGBRowProps> = React.memo(({ color, handleChange }) => {
+const RedRow: React.FC<RGBRowProps> = React.memo(({ color, handleChange, t }) => {
   const rgb = hsvaToRgba(color);
   return (
     <Stack.Item>
       <Stack>
-        <Stack.Item width="25px">
-          <Box textColor="label">R:</Box>
+      <Stack.Item width="25px">
+          <Box textColor="label">{t('ui.color_picker.red_short')}</Box>
         </Stack.Item>
         <Stack.Item grow>
           <RGBSlider color={color} onChange={handleChange} target="r" />
@@ -234,13 +238,13 @@ const RedRow: React.FC<RGBRowProps> = React.memo(({ color, handleChange }) => {
 });
 
 const GreenRow: React.FC<RGBRowProps> = React.memo(
-  ({ color, handleChange }) => {
+  ({ color, handleChange, t }) => {
     const rgb = hsvaToRgba(color);
     return (
       <Stack.Item>
         <Stack>
           <Stack.Item width="25px">
-            <Box textColor="label">G:</Box>
+            <Box textColor="label">{t('ui.color_picker.green_short')}</Box>
           </Stack.Item>
           <Stack.Item grow>
             <RGBSlider color={color} onChange={handleChange} target="g" />
@@ -260,13 +264,13 @@ const GreenRow: React.FC<RGBRowProps> = React.memo(
   },
 );
 
-const BlueRow: React.FC<RGBRowProps> = React.memo(({ color, handleChange }) => {
+const BlueRow: React.FC<RGBRowProps> = React.memo(({ color, handleChange, t }) => {
   const rgb = hsvaToRgba(color);
   return (
     <Stack.Item>
       <Stack>
         <Stack.Item width="25px">
-          <Box textColor="label">B:</Box>
+          <Box textColor="label">{t('ui.color_picker.blue_short')}</Box>
         </Stack.Item>
         <Stack.Item grow>
           <RGBSlider color={color} onChange={handleChange} target="b" />

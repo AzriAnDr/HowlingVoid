@@ -11,6 +11,7 @@ import { type BooleanLike, classes } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   research_tiers: Array<Array<Research>>;
@@ -58,6 +59,7 @@ const MainData = () => {
 
 const SelectedSection = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   return (
     <Box>
       <div style={{ textAlign: 'center' }}>
@@ -76,7 +78,7 @@ const SelectedSection = (props) => {
         </div>
         <br />
         {data.focused_research.starting ? (
-          <Box>This does not need to be researched.</Box>
+          <Box>{t('ui.clockwork_research.this_does_not_need_to_be_researched')}</Box>
         ) : data.focused_research.researched ? (
           <Box>
             This ritual occurred in the{' '}
@@ -107,10 +109,11 @@ const SelectedSection = (props) => {
 
 const ResearchSection = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   return (
     <Stack vertical>
       <Stack.Item>
-        <Section fill title="Basic Research">
+        <Section fill title={t('ui.clockwork_research.basic_research')}>
           <div style={{ textAlign: 'center' }}>
             {ResearchNode(data.starting_research, act)}
           </div>

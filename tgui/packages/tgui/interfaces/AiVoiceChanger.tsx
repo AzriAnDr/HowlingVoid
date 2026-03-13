@@ -9,6 +9,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   loud: BooleanLike;
@@ -21,22 +22,23 @@ type Data = {
 
 export function AiVoiceChanger(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { loud, name, on, say_verb, voices, selected } = data;
 
   return (
-    <Window title="Voice changer settings" width={400} height={200}>
+    <Window title={t('ui.ai_voice_changer.title')} width={400} height={200}>
       <Section fill>
         <LabeledList>
-          <LabeledList.Item label="Power">
+          <LabeledList.Item label={t('ui.common.power')}>
             <Button
               icon={on ? 'power-off' : 'times'}
               selected={!!on}
               onClick={() => act('power')}
             >
-              {on ? 'On' : 'Off'}
+              {on ? t('ui.common.on') : t('ui.common.off')}
             </Button>
           </LabeledList.Item>
-          <LabeledList.Item label="Accent">
+          <LabeledList.Item label={t('ui.ai_voice_changer.accent')}>
             <Dropdown
               options={voices}
               onSelected={(value) => {
@@ -47,7 +49,7 @@ export function AiVoiceChanger(props) {
               selected={selected}
             />
           </LabeledList.Item>
-          <LabeledList.Item label="Verb">
+          <LabeledList.Item label={t('ui.ai_voice_changer.verb')}>
             <Input
               value={say_verb}
               onBlur={(value) =>
@@ -57,16 +59,18 @@ export function AiVoiceChanger(props) {
               }
             />
           </LabeledList.Item>
-          <LabeledList.Item label="Volume">
+          <LabeledList.Item label={t('ui.common.volume')}>
             <Button
               icon={loud ? 'power-off' : 'times'}
               selected={!!loud}
               onClick={() => act('loud')}
             >
-              {loud ? 'Loudmode on' : 'Loudmode Off'}
+              {loud
+                ? t('ui.ai_voice_changer.loudmode_on')
+                : t('ui.ai_voice_changer.loudmode_off')}
             </Button>
           </LabeledList.Item>
-          <LabeledList.Item label="Fake name">
+          <LabeledList.Item label={t('ui.ai_voice_changer.fake_name')}>
             <Input
               value={name}
               onBlur={(value) =>

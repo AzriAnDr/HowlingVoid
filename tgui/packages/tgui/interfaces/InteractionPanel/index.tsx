@@ -9,6 +9,7 @@ import {
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { BooleanLike } from 'tgui-core/react';
+import { usePreferencesLocalization } from '../localization';
 import { InfoSection } from './InfoSection';
 import { MainContent } from './MainContent';
 
@@ -20,6 +21,7 @@ type Interaction = {
 
 export function InteractionPanel () {
   const { act, data } = useBackend<Interaction>();
+  const { t } = usePreferencesLocalization(data);
   const {
     self,
     use_subtler,
@@ -46,7 +48,7 @@ export function InteractionPanel () {
                       use_subtler: !use_subtler,
                     })
                   }
-                  tooltip="Untick to make lewd interactions visible to all mobs in range able to perceive them."
+                  tooltip={t('ui.interaction_panel.subtler_tooltip')}
                 >
                   Use Subtler
                 </Button.Checkbox>

@@ -14,6 +14,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   faxes: string[];
@@ -29,6 +30,7 @@ const fromWhoOptions = ['Nanotrasen', 'Syndicate'] as const;
 
 export function AdminFax(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { faxes = [], stamps = [] } = data;
 
   const [fax, setFax] = useState('');
@@ -46,10 +48,15 @@ export function AdminFax(props) {
   }
 
   return (
-    <Window title="Admin Fax Panel" width={400} height={675} theme="admin">
+    <Window
+      title={t('ui.admin_fax.title')}
+      width={400}
+      height={675}
+      theme="admin"
+    >
       <Window.Content scrollable>
         <Section
-          title="Fax Menu"
+          title={t('ui.admin_fax.fax_menu')}
           buttons={
             <Button
               icon="arrow-up"
@@ -60,12 +67,12 @@ export function AdminFax(props) {
                 })
               }
             >
-              Follow
+              {t('ui.common.follow')}
             </Button>
           }
         >
           <Dropdown
-            placeholder="Choose fax machine..."
+            placeholder={t('ui.admin_fax.choose_fax_machine_placeholder')}
             fluid
             selected={fax}
             options={faxes}
@@ -73,7 +80,7 @@ export function AdminFax(props) {
           />
         </Section>
         <Section
-          title="Paper"
+          title={t('ui.common.paper')}
           buttons={
             <Button
               icon="eye"
@@ -84,14 +91,14 @@ export function AdminFax(props) {
                 })
               }
             >
-              Preview
+              {t('ui.common.preview')}
             </Button>
           }
         >
           <Stack fill vertical>
             <Stack.Item>
               <Input
-                placeholder="Paper name..."
+                placeholder={t('ui.admin_fax.paper_name_placeholder')}
                 value={paperName}
                 fluid
                 onChange={setPaperName}
@@ -101,13 +108,13 @@ export function AdminFax(props) {
               <SourceButtons
                 stateSetter={setPaperName}
                 options={paperNameOptions}
-                tooltip="What is written on the top of the fax paper?"
+                tooltip={t('ui.admin_fax.paper_header_tooltip')}
               />
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item>
               <Input
-                placeholder="From who..."
+                placeholder={t('ui.admin_fax.from_who_placeholder')}
                 value={fromWho}
                 fluid
                 onChange={setFromWho}
@@ -117,13 +124,13 @@ export function AdminFax(props) {
               <SourceButtons
                 stateSetter={setFromWho}
                 options={fromWhoOptions}
-                tooltip="What was written in fax log?"
+                tooltip={t('ui.admin_fax.fax_log_tooltip')}
               />
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item>
               <TextArea
-                placeholder="Your message here..."
+                placeholder={t('ui.admin_fax.message_placeholder')}
                 height="200px"
                 fluid
                 value={rawText}
@@ -150,7 +157,7 @@ export function AdminFax(props) {
               {stamp && (
                 <>
                   <h4>
-                    X Coordinate:{' '}
+                    {t('ui.admin_fax.x_coordinate')}:{' '}
                     <NumberInput
                       step={1}
                       width="45px"
@@ -162,7 +169,7 @@ export function AdminFax(props) {
                   </h4>
 
                   <h4>
-                    Y Coordinate:{' '}
+                    {t('ui.admin_fax.y_coordinate')}:{' '}
                     <NumberInput
                       step={1}
                       width="45px"
@@ -173,8 +180,8 @@ export function AdminFax(props) {
                     />
                   </h4>
 
-                  <Box textAlign="center">
-                    <h4>Rotation Angle</h4>
+                <Box textAlign="center">
+                    <h4>{t('ui.admin_fax.rotation_angle')}</h4>
                     <Knob
                       size={1.5}
                       value={stampAngle}
@@ -189,7 +196,7 @@ export function AdminFax(props) {
             </Stack.Item>
           </Stack>
         </Section>
-        <Section title="Actions">
+        <Section title={t('ui.common.actions')}>
           <Button
             disabled={!saved || !fax}
             icon="paper-plane"
@@ -199,7 +206,7 @@ export function AdminFax(props) {
               })
             }
           >
-            Send
+            {t('ui.common.send')}
           </Button>
           <Button
             icon="floppy-disk"
@@ -218,7 +225,7 @@ export function AdminFax(props) {
               });
             }}
           >
-            Save
+            {t('ui.common.save')}
           </Button>
           <Button
             disabled={!saved}
@@ -229,7 +236,7 @@ export function AdminFax(props) {
               })
             }
           >
-            Create paper
+            {t('ui.admin_fax.create_paper')}
           </Button>
         </Section>
       </Window.Content>
@@ -245,18 +252,19 @@ type SourceButtonsProps = {
 
 function SourceButtons(props: SourceButtonsProps) {
   const { stateSetter, options, tooltip } = props;
+  const { t } = usePreferencesLocalization();
 
   return (
     <Tooltip content={tooltip}>
       <Stack fill>
         <Stack.Item grow>
           <Button fluid icon="n" onClick={() => stateSetter(options[0])}>
-            Nanotrasen
+            {t('ui.admin_fax.nanotrasen')}
           </Button>
         </Stack.Item>
         <Stack.Item grow>
           <Button fluid icon="s" onClick={() => stateSetter(options[1])}>
-            Syndicate
+            {t('ui.admin_fax.syndicate')}
           </Button>
         </Stack.Item>
       </Stack>

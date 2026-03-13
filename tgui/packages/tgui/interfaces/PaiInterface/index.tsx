@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Window } from 'tgui/layouts';
 import { Stack, Tabs } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../localization';
 import { AvailableDisplay } from './Available';
 import { PAI_TAB } from './constants';
 import { DirectiveDisplay } from './Directives';
@@ -9,10 +10,11 @@ import { InstalledDisplay } from './Installed';
 import { SystemDisplay } from './System';
 
 export function PaiInterface(props) {
+  const { t } = usePreferencesLocalization();
   const [tab, setTab] = useState(PAI_TAB.System);
 
   return (
-    <Window title="pAI Software Interface v2.5" width={380} height={480}>
+    <Window title={t('ui.pai_interface.title')} width={380} height={480}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>
@@ -28,28 +30,28 @@ export function PaiInterface(props) {
                 onClick={() => setTab(PAI_TAB.System)}
                 selected={tab === PAI_TAB.System}
               >
-                System
+                {t('ui.pai_interface.system')}
               </Tabs.Tab>
               <Tabs.Tab
                 icon="list"
                 onClick={() => setTab(PAI_TAB.Directive)}
                 selected={tab === PAI_TAB.Directive}
               >
-                Directives
+                {t('ui.pai_interface.directives')}
               </Tabs.Tab>
               <Tabs.Tab
                 icon="list"
                 onClick={() => setTab(PAI_TAB.Installed)}
                 selected={tab === PAI_TAB.Installed}
               >
-                Installed
+                {t('ui.pai_interface.installed')}
               </Tabs.Tab>
               <Tabs.Tab
                 icon="list"
                 onClick={() => setTab(PAI_TAB.Available)}
                 selected={tab === PAI_TAB.Available}
               >
-                Download
+                {t('ui.pai_interface.download')}
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>

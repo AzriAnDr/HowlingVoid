@@ -10,6 +10,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type EyeColorData = {
   mode: BooleanLike;
@@ -32,19 +33,20 @@ enum ToUpdate {
 
 const LightColorDisplay = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { lightColor } = data;
   return (
-    <LabeledList.Item label="Color">
+    <LabeledList.Item label={t('ui.common.color')}>
       <ColorBox color={lightColor} />{' '}
       <Button
         icon="palette"
         onClick={() => act('pick_color', { to_update: ToUpdate.LightColor })}
-        tooltip="Brings up a color pick window to change the light color."
+        tooltip={t('ui.high_luminosity_eyes.pick_light_color')}
       />
       <Button
         icon="dice"
         onClick={() => act('random_color', { to_update: ToUpdate.LightColor })}
-        tooltip="Randomizes the light color."
+        tooltip={t('ui.high_luminosity_eyes.randomize_light_color')}
       />
       <Input
         value={lightColor}
@@ -63,18 +65,19 @@ const LightColorDisplay = (props) => {
 
 const RangeDisplay = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { range } = data;
   return (
-    <LabeledList.Item label="Range">
+    <LabeledList.Item label={t('ui.common.range')}>
       <Button
         icon="minus-square-o"
         onClick={() => act('set_range', { new_range: range - 1 })}
-        tooltip="Reduces the light range."
+        tooltip={t('ui.high_luminosity_eyes.reduce_range')}
       />
       <Button
         icon="plus-square-o"
         onClick={() => act('set_range', { new_range: range + 1 })}
-        tooltip="Increases the light range."
+        tooltip={t('ui.high_luminosity_eyes.increase_range')}
       />
       <NumberInput
         animated
@@ -97,31 +100,32 @@ const RangeDisplay = (props) => {
 
 const EyeColorDisplay = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { eyeColor } = data;
   return (
     <>
-      <LabeledList.Item label="Match Color">
+      <LabeledList.Item label={t('ui.high_luminosity_eyes.match_color')}>
         <Button.Checkbox
           checked={eyeColor.mode}
           onClick={() => act('toggle_eye_color')}
-          tooltip="Toggles whether eyecolor matches the color of the light."
+          tooltip={t('ui.high_luminosity_eyes.toggle_eye_match')}
         />
       </LabeledList.Item>
       {!eyeColor.mode && (
         <>
-          <LabeledList.Item label="Left Eye">
+          <LabeledList.Item label={t('ui.high_luminosity_eyes.left_eye')}>
             <ColorBox color={eyeColor.left} />{' '}
             <Button
               icon="palette"
               onClick={() => act('pick_color', { to_update: ToUpdate.LeftEye })}
-              tooltip="Brings up a color pick window to change the light color."
+              tooltip={t('ui.high_luminosity_eyes.pick_light_color')}
             />
             <Button
               icon="dice"
               onClick={() =>
                 act('random_color', { to_update: ToUpdate.LeftEye })
               }
-              tooltip="Randomizes the eye color."
+              tooltip={t('ui.high_luminosity_eyes.randomize_eye_color')}
             />
             <Input
               value={eyeColor.left}
@@ -135,21 +139,21 @@ const EyeColorDisplay = (props) => {
               }
             />
           </LabeledList.Item>
-          <LabeledList.Item label="Right Eye">
+          <LabeledList.Item label={t('ui.high_luminosity_eyes.right_eye')}>
             <ColorBox color={eyeColor.right} />{' '}
             <Button
               icon="palette"
               onClick={() =>
                 act('pick_color', { to_update: ToUpdate.RightEye })
               }
-              tooltip="Brings up a color pick window to change the light color."
+              tooltip={t('ui.high_luminosity_eyes.pick_light_color')}
             />
             <Button
               icon="dice"
               onClick={() =>
                 act('random_color', { to_update: ToUpdate.RightEye })
               }
-              tooltip="Randomizes the eye color."
+              tooltip={t('ui.high_luminosity_eyes.randomize_eye_color')}
             />
             <Input
               value={eyeColor.right}
@@ -170,16 +174,17 @@ const EyeColorDisplay = (props) => {
 };
 
 export const HighLuminosityEyesMenu = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { eyeColor } = data;
   return (
     <Window
-      title="High Luminosity Eyes"
+      title={t('ui.high_luminosity_eyes.title')}
       width={eyeColor.hasOwner ? 262 : 225}
       height={eyeColor.hasOwner ? (eyeColor.mode ? 170 : 220) : 135}
     >
       <Window.Content>
-        <Section fill title="Settings">
+        <Section fill title={t('ui.common.settings')}>
           <LabeledList>
             <LightColorDisplay />
             <RangeDisplay />

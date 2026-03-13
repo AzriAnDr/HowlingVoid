@@ -2,6 +2,7 @@ import { Box, Button, Floating, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { BlendColors, type Filter, type Plane, type Relay } from './types';
 import { usePlaneDebugContext } from './usePlaneDebug';
 
@@ -14,6 +15,7 @@ export type PortProps = {
 export function Port(props: PortProps) {
   const { connection, source, target_ref } = props;
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
   const { setConnectionHighlight, zoomToX, setZoomToX, zoomToY, setZoomToY } =
     usePlaneDebugContext();
   const sourcePlane: Plane = (
@@ -26,12 +28,18 @@ export function Port(props: PortProps) {
     <Floating
       content={
         <Stack fill vertical>
-          <Stack.Item>Connected to {connectedPlane.name}</Stack.Item>
+          <Stack.Item>
+            {t('ui.plane_master.connected_to')} {connectedPlane.name}
+          </Stack.Item>
           {!!(connection.blend_mode !== undefined) && (
-            <Stack.Item>Blend mode: {connection.blend_mode}</Stack.Item>
+            <Stack.Item>
+              {t('ui.plane_master.blend_mode')}: {connection.blend_mode}
+            </Stack.Item>
           )}
           {!!('type' in connection) && (
-            <Stack.Item>Filter type: {connection.type}</Stack.Item>
+            <Stack.Item>
+              {t('ui.plane_master.filter_type')}: {connection.type}
+            </Stack.Item>
           )}
           <Button
             color="bad"
@@ -50,7 +58,7 @@ export function Port(props: PortProps) {
               }
             }}
           >
-            Delete connection
+            {t('ui.plane_master.delete_connection')}
           </Button>
         </Stack>
       }

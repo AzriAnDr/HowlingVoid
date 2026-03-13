@@ -17,9 +17,11 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const NifPanel = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     linked_mob_name,
     loaded_nifsofts,
@@ -31,7 +33,7 @@ export const NifPanel = (props) => {
 
   return (
     <Window
-      title={'Nanite Implant Framework'}
+      title={t('ui.nif_panel.nanite_implant_framework')}
       width={500}
       height={400}
       resizable
@@ -39,11 +41,11 @@ export const NifPanel = (props) => {
     >
       <Window.Content>
         <Section
-          title={`Welcome to your NIF, ${linked_mob_name}`}
+          title={`${t('ui.nif_panel.welcome_to_your_nif')}, ${linked_mob_name}`}
           buttons={
             <Button
               icon="cogs"
-              tooltip="NIF Settings"
+              tooltip={t('ui.nif_panel.nif_settings')}
               tooltiptooltipPosition="bottom-end"
               selected={settingsOpen}
               onClick={() => setSettingsOpen(!settingsOpen)}
@@ -53,9 +55,9 @@ export const NifPanel = (props) => {
           {(settingsOpen && <NifSettings />) || <NifStats />}
           {(!settingsOpen && (
             <Section
-              title={`NIFSoft Programs (${
+              title={`${t('ui.nif_panel.nifsoft_programs')} (${
                 max_nifsofts - loaded_nifsofts.length
-              } Slots Remaining)`}
+              } ${t('ui.nif_panel.slots_remaining')})`}
               right
             >
               {(loaded_nifsofts.length && (
@@ -87,37 +89,37 @@ export const NifPanel = (props) => {
                               <Button
                                 icon="bolt"
                                 color="yellow"
-                                tooltip="What percent of the power is used when activating the NIFSoft"
+                                tooltip={t('ui.nif_panel.activation_power_tooltip')}
                               />
                               {nifsoft.activation_cost === 0
-                                ? ' No activation cost'
+                                ? ` ${t('ui.nif_panel.no_activation_cost')}`
                                 : ' ' +
                                   (nifsoft.activation_cost / max_power) * 100 +
-                                  '% per activation'}
+                                  `% ${t('ui.nif_panel.per_activation')}`}
                             </Table.Cell>
                             <Table.Cell>
                               <Button
                                 icon="battery-half"
                                 color="orange"
-                                tooltip="The power that the NIFSoft uses while active"
+                                tooltip={t('ui.nif_panel.active_drain_tooltip')}
                                 disabled={nifsoft.active_cost === 0}
                               />
                               {nifsoft.active_cost === 0
-                                ? ' No active drain'
+                                ? ` ${t('ui.nif_panel.no_active_drain')}`
                                 : ' ' +
                                   (nifsoft.active_cost / max_power) * 100 +
-                                  '% consumed while active'}
+                                  `% ${t('ui.nif_panel.consumed_while_active')}`}
                             </Table.Cell>
                             <Table.Cell>
                               <Button
                                 icon="exclamation"
                                 color={nifsoft.active ? 'green' : 'red'}
                                 disabled={!nifsoft.active_mode}
-                                tooltip="Shows whether or not a program is currently active or not"
+                                tooltip={t('ui.nif_panel.program_active_tooltip')}
                               />
                               {nifsoft.active
-                                ? ' The NIFSoft is active!'
-                                : ' The NIFSoft is inactive!'}
+                                ? ` ${t('ui.nif_panel.nifsoft_active')}`
+                                : ` ${t('ui.nif_panel.nifsoft_inactive')}`}
                             </Table.Cell>
                           </Table.Row>
                         </Table>
@@ -132,12 +134,12 @@ export const NifPanel = (props) => {
                               icon="floppy-disk"
                               content={
                                 nifsoft.keep_installed
-                                  ? 'The NIFSoft will stay saved'
-                                  : "The NIFSoft won't stay saved"
+                                  ? t('ui.nif_panel.nifsoft_will_stay_saved')
+                                  : t('ui.nif_panel.nifsoft_wont_stay_saved')
                               }
                               color={nifsoft.keep_installed ? 'green' : 'red'}
                               fluid
-                              tooltip="Toggle if the NIFSoft will stay saved between shifts"
+                              tooltip={t('ui.nif_panel.keep_saved_tooltip')}
                               onClick={() =>
                                 act('toggle_keeping_nifsoft', {
                                   nifsoft_to_keep: nifsoft.reference,
@@ -152,11 +154,11 @@ export const NifPanel = (props) => {
                           <br />
                           <Button.Confirm
                             icon="trash"
-                            content="Uninstall"
+                            content={t('ui.nif_panel.uninstall')}
                             color="red"
                             fluid
-                            tooltip="Uninstall the selected NIFSoft"
-                            confirmContent="Are you sure?"
+                            tooltip={t('ui.nif_panel.uninstall_tooltip')}
+                            confirmContent={t('ui.common.are_you_sure')}
                             confirmIcon="question"
                             onClick={() =>
                               act('uninstall_nifsoft', {
@@ -173,13 +175,13 @@ export const NifPanel = (props) => {
                 <Box>
                   {' '}
                   <center>
-                    <b>There are no NIFSofts currently installed</b>
+                    <b>{t('ui.nif_panel.no_nifsofts_installed')}</b>
                   </center>{' '}
                 </Box>
               )}
             </Section>
           )) || (
-            <Section title={'Product Info'}>
+            <Section title={t('ui.nif_panel.product_info')}>
               <NifProductNotes />
             </Section>
           )}
@@ -191,6 +193,7 @@ export const NifPanel = (props) => {
 
 const NifSettings = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     nutrition_drain,
     ui_themes,
@@ -203,7 +206,7 @@ const NifSettings = (props) => {
   } = data;
   return (
     <LabeledList>
-      <LabeledList.Item label="NIF Theme">
+      <LabeledList.Item label={t('ui.nif_panel.nif_theme')}>
         <Dropdown
           width="100%"
           selected={current_theme}
@@ -211,42 +214,44 @@ const NifSettings = (props) => {
           onSelected={(value) => act('change_theme', { target_theme: value })}
         />
       </LabeledList.Item>
-      <LabeledList.Item label="NIF Flavor Text">
+      <LabeledList.Item label={t('ui.nif_panel.nif_flavor_text')}>
         <Input
           onChange={(value) => act('change_examine_text', { new_text: value })}
           width="100%"
         />
       </LabeledList.Item>
-      <LabeledList.Item label="Nutrition Drain">
+      <LabeledList.Item label={t('ui.nif_panel.nutrition_drain')}>
         <Button
           fluid
           content={
             nutrition_drain === 0
-              ? 'Nutrition Drain Disabled'
-              : 'Nutrition Drain Enabled'
+              ? t('ui.nif_panel.nutrition_drain_disabled')
+              : t('ui.nif_panel.nutrition_drain_enabled')
           }
-          tooltip="Toggles the ability for the NIF to use your food as an energy source. Enabling this may result in increased hunger."
+          tooltip={t('ui.nif_panel.nutrition_drain_tooltip')}
           onClick={() => act('toggle_nutrition_drain')}
           disabled={nutrition_level < 26}
         />
       </LabeledList.Item>
-      <LabeledList.Item label="Blood Drain">
+      <LabeledList.Item label={t('ui.nif_panel.blood_drain')}>
         <Button
           fluid
           content={
-            blood_drain === 0 ? 'Blood Drain Disabled' : 'Blood Drain Enabled'
+            blood_drain === 0
+              ? t('ui.nif_panel.blood_drain_disabled')
+              : t('ui.nif_panel.blood_drain_enabled')
           }
-          tooltip="Toggles the ability for the NIF to drain blood from you. This will automatically shut off once you get close to an unsafe blood level"
+          tooltip={t('ui.nif_panel.blood_drain_tooltip')}
           onClick={() => act('toggle_blood_drain')}
           disabled={blood_level < minimum_blood_level}
         />
       </LabeledList.Item>
       <LabeledList.Item
-        label="Rewards Points"
+        label={t('ui.nif_panel.rewards_points')}
         buttons={
           <Button
             icon="info"
-            tooltip="Rewards points are an alternative currency gained by purchasing NIFSofts, rewards points carry between shifts."
+            tooltip={t('ui.nif_panel.rewards_points_tooltip')}
           />
         }
       >
@@ -264,6 +269,7 @@ const NifProductNotes = (props) => {
 
 const NifStats = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     max_power,
     power_level,
@@ -277,7 +283,7 @@ const NifStats = (props) => {
   return (
     <Box>
       <LabeledList>
-        <LabeledList.Item label="NIF Condition">
+        <LabeledList.Item label={t('ui.nif_panel.nif_condition')}>
           <ProgressBar
             value={durability}
             minValue={0}
@@ -290,7 +296,7 @@ const NifStats = (props) => {
             alertAfter={max_durability * 0.25}
           />
         </LabeledList.Item>
-        <LabeledList.Item label="NIF Power">
+        <LabeledList.Item label={t('ui.nif_panel.nif_power')}>
           <ProgressBar
             value={power_level}
             minValue={0}
@@ -306,16 +312,16 @@ const NifStats = (props) => {
               '%' +
               ' (' +
               (power_usage / max_power) * 100 +
-              '% Usage)'}
+              `% ${t('ui.nif_panel.usage')})`}
           </ProgressBar>
         </LabeledList.Item>
         {nutrition_drain === 1 && (
-          <LabeledList.Item label="User Nutrition">
+          <LabeledList.Item label={t('ui.nif_panel.user_nutrition')}>
             <NifNutritionBar />
           </LabeledList.Item>
         )}
         {blood_drain === 1 && (
-          <LabeledList.Item label="User Blood Level">
+          <LabeledList.Item label={t('ui.nif_panel.user_blood_level')}>
             <NifBloodBar />
           </LabeledList.Item>
         )}

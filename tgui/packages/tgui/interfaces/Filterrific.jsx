@@ -17,6 +17,7 @@ import { numberOfDecimalDigits, toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const FilterIntegerEntry = (props) => {
   const { value, name, filterName } = props;
@@ -476,7 +477,8 @@ const FilterEntry = (props) => {
 
 export const Filterrific = (props) => {
   const { act, data } = useBackend();
-  const name = data.target_name || 'Unknown Object';
+  const { t } = usePreferencesLocalization(data);
+  const name = data.target_name || t('ui.filterrific.unknown_object');
   const filters = data.target_filter_data || {};
   const hasFilters = Object.keys(filters).length !== 0;
   const filterDefaults = data.filter_info;
@@ -484,7 +486,7 @@ export const Filterrific = (props) => {
   const [hiddenSecret, setHiddenSecret] = useState(false);
 
   return (
-    <Window title="Filterrific" width={500} height={500}>
+    <Window title={t('ui.filterrific.filterrific')} width={500} height={500}>
       <Window.Content scrollable>
         <NoticeBox danger>
           DO NOT MESS WITH EXISTING FILTERS IF YOU DO NOT KNOW THE CONSEQUENCES.
@@ -503,8 +505,8 @@ export const Filterrific = (props) => {
                   onChange={setMassApplyPath}
                 />
                 <Button.Confirm
-                  content="Apply"
-                  confirmContent="ARE YOU SURE?"
+                  content={t('ui.filterrific.apply')}
+                  confirmContent={t('ui.common.are_you_sure')}
                   onClick={() => act('mass_apply', { path: massApplyPath })}
                 />
               </>
@@ -530,9 +532,7 @@ export const Filterrific = (props) => {
             />
           }
         >
-          {!hasFilters ? (
-            <Box>No filters</Box>
-          ) : (
+          {!hasFilters ? <Box>{t('ui.filterrific.no_filters')}</Box> : (
             map(filters, (entry, key) => (
               <FilterEntry
                 filterDataEntry={entry}

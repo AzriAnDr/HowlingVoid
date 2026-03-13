@@ -9,12 +9,16 @@ import {
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const NtosCivCargoHoldTerminal = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { status_report, id_inserted, id_bounty_info, picking } = data;
-  const in_text = 'Welcome valued employee.';
-  const out_text = 'To begin, insert your ID into the console.';
+  const in_text = t('ui.ntoscivcargoholdterminal.welcome_valued_employee');
+  const out_text = t(
+    'ui.ntoscivcargoholdterminal.to_begin_insert_your_id_into_the_console',
+  );
   return (
     <NtosWindow width={580} height={375}>
       <NtosWindow.Content scrollable>
@@ -24,19 +28,23 @@ export const NtosCivCargoHoldTerminal = (props) => {
               {id_inserted ? in_text : out_text}
             </NoticeBox>
             <Section
-              title="Bounty Choice"
+              title={t('ui.ntoscivcargoholdterminal.bounty_choice')}
               buttons={
                 <Button
                   icon={id_bounty_info ? 'recycle' : 'pen'}
                   color={id_bounty_info ? 'green' : 'default'}
-                  tooltip={id_bounty_info ? 'Replace Bounty' : 'New Bounty'}
+                  tooltip={
+                    id_bounty_info
+                      ? t('ui.ntoscivcargoholdterminal.replace_bounty')
+                      : t('ui.ntoscivcargoholdterminal.new_bounty')
+                  }
                   disabled={!id_inserted}
                   onClick={() => act('bounty')}
                 />
               }
             >
               <LabeledList>
-                <LabeledList.Item label="Cargo Report">
+                <LabeledList.Item label={t('ui.ntoscivcargoholdterminal.cargo_report')}>
                   {status_report}
                 </LabeledList.Item>
               </LabeledList>
@@ -51,19 +59,20 @@ export const NtosCivCargoHoldTerminal = (props) => {
 
 const BountyTextBox = (props) => {
   const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { id_bounty_info, id_bounty_value, id_bounty_num } = data;
-  const na_text = 'N/A, please add a new bounty.';
+  const na_text = t('ui.ntoscivcargoholdterminal.n_a_please_add_a_new_bounty');
   return (
-    <Section title="Bounty Info">
+    <Section title={t('ui.ntoscivcargoholdterminal.bounty_info')}>
       <LabeledList>
-        <LabeledList.Item label="Description">
+        <LabeledList.Item label={t('ui.ntoscivcargoholdterminal.description')}>
           {id_bounty_info ? id_bounty_info : na_text}
         </LabeledList.Item>
-        <LabeledList.Item label="Quantity">
-          {id_bounty_info ? id_bounty_num : 'N/A'}
+        <LabeledList.Item label={t('ui.ntoscivcargoholdterminal.quantity')}>
+          {id_bounty_info ? id_bounty_num : t('ui.common.not_available')}
         </LabeledList.Item>
-        <LabeledList.Item label="Value">
-          {id_bounty_info ? id_bounty_value : 'N/A'}
+        <LabeledList.Item label={t('ui.ntoscivcargoholdterminal.value')}>
+          {id_bounty_info ? id_bounty_value : t('ui.common.not_available')}
         </LabeledList.Item>
       </LabeledList>
     </Section>
@@ -72,9 +81,13 @@ const BountyTextBox = (props) => {
 
 const BountyPickBox = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { id_bounty_names, id_bounty_infos, id_bounty_values } = data;
   return (
-    <Section title="Please Select a Bounty:" textAlign="center">
+    <Section
+      title={t('ui.ntoscivcargoholdterminal.please_select_a_bounty')}
+      textAlign="center"
+    >
       <Flex width="100%" wrap>
         <Flex.Item shrink={0} grow={0.5}>
           <BountyPickButton
@@ -109,6 +122,8 @@ const BountyPickBox = (props) => {
 };
 
 const BountyPickButton = (props) => {
+  const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   return (
     <Button
       fluid
@@ -132,7 +147,10 @@ const BountyPickButton = (props) => {
       >
         {props.bounty_info}
       </Box>
-      <Box>Payout: {props.bounty_value} cr</Box>
+      <Box>
+        {t('ui.ntoscivcargoholdterminal.payout')}: {props.bounty_value} cr
+      </Box>
     </Button>
   );
 };
+

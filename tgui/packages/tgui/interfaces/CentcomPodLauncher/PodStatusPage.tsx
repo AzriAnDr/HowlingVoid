@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import { Box, Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { EFFECTS_ALL, POD_GREY } from './constants';
 import { useCompact } from './hooks';
 import type { PodEffect, PodLauncherData } from './types';
@@ -47,6 +48,7 @@ type EffectDisplayProps = {
 function EffectDisplay(props: EffectDisplayProps) {
   const { effect, hasMargin, index } = props;
   const { act, data } = useBackend<PodLauncherData>();
+  const { t } = usePreferencesLocalization(data);
   const { effectShrapnel, payload, shrapnelMagnitude, shrapnelType } = data;
 
   if (effect.divider || !('icon' in effect)) {
@@ -80,7 +82,9 @@ function EffectDisplay(props: EffectDisplayProps) {
             ? effect.title +
               '\n' +
               shrapnelType +
-              '\nMagnitude:' +
+              '\n' +
+              t('ui.centcom_pod_launcher.magnitude') +
+              ':' +
               shrapnelMagnitude
             : effect.title
           : effect.title
@@ -93,13 +97,14 @@ function EffectDisplay(props: EffectDisplayProps) {
 }
 
 function Extras(props) {
-  const { act } = useBackend();
+  const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const [compact, setCompact] = useCompact();
 
   return (
     <Stack.Item>
       <Box color="label" mb={1}>
-        <b>Extras:</b>
+        <b>{t('ui.centcom_pod_launcher.extras')}:</b>
       </Box>
       <Box>
         <Button
@@ -108,7 +113,7 @@ function Extras(props) {
           inline
           m={0}
           onClick={() => act('gamePanel')}
-          tooltip="Game Panel"
+          tooltip={t('ui.centcom_pod_launcher.game_panel')}
           tooltipPosition="top-start"
         />
         <Button
@@ -117,7 +122,7 @@ function Extras(props) {
           inline
           m={0}
           onClick={() => act('buildMode')}
-          tooltip="Build Mode"
+          tooltip={t('ui.centcom_pod_launcher.build_mode')}
           tooltipPosition="top-start"
         />
         <Button
@@ -129,7 +134,11 @@ function Extras(props) {
             setCompact(!compact);
             compact && act('refreshView');
           }}
-          tooltip={compact ? 'Expand mode' : 'Compact mode'}
+          tooltip={
+            compact
+              ? t('ui.centcom_pod_launcher.expand_mode')
+              : t('ui.centcom_pod_launcher.compact_mode')
+          }
           tooltipPosition="top-start"
         />
       </Box>

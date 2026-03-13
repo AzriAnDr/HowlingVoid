@@ -10,6 +10,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type LogViewerData = {
   round_id: number;
@@ -41,6 +42,7 @@ const CATEGORY_ALL = 'all';
 
 export const LogViewer = (_: any) => {
   const { data, act } = useBackend<LogViewerData>();
+  const { t } = usePreferencesLocalization(data);
 
   const [activeCategory, setActiveCategory] = useState('');
 
@@ -71,17 +73,19 @@ export const LogViewer = (_: any) => {
           <Button icon="sync" onClick={() => act('refresh')} />
         </Section>
         <CategoryBar
+          t={t}
           options={data.tree.enabled}
           active={activeCategory}
           setActive={setActiveCategory}
         />
-        <CategoryViewer activeCategory={activeCategory} data={viewerData} />
+        <CategoryViewer activeCategory={activeCategory} data={viewerData} t={t} />
       </Window.Content>
     </Window>
   );
 };
 
 type CategoryBarProps = {
+  t: (key: string, fallback?: string) => string;
   options: string[];
   active: string;
   setActive: (active: string) => void;
@@ -93,11 +97,11 @@ const CategoryBar = (props: CategoryBarProps) => {
 
   return (
     <Section
-      title="Categories"
+      title={props.t('ui.log_viewer.categories')}
       scrollableHorizontal
       buttons={
         <Input
-          placeholder="Search"
+          placeholder={props.t('ui.common.search')}
           value={categorySearch}
           onChange={setCategorySearch}
         />
@@ -109,14 +113,14 @@ const CategoryBar = (props: CategoryBarProps) => {
           selected={props.active === ''}
           onClick={() => props.setActive('')}
         >
-          None
+          {props.t('ui.common.none')}
         </Button>
         <Button
-          tooltip="This can be slow!"
+          tooltip={props.t('ui.log_viewer.this_can_be_slow')}
           selected={props.active === CATEGORY_ALL}
           onClick={() => props.setActive(CATEGORY_ALL)}
         >
-          All
+          {props.t('ui.common.all')}
         </Button>
         {sorted
           .filter((cat) =>
@@ -137,6 +141,7 @@ const CategoryBar = (props: CategoryBarProps) => {
 };
 
 type CategoryViewerProps = {
+  t: (key: string, fallback?: string) => string;
   activeCategory: string;
   data?: LogViewerCategoryData;
 };
@@ -168,26 +173,30 @@ const CategoryViewer = (props: CategoryViewerProps) => {
       title={`Category Viewer${
         props.activeCategory
           ? ` - ${props.activeCategory}[${props.data?.entry_count}]`
-          : ' - Select a category'
+          : ` - ${props.t('ui.log_viewer.select_category')}`
       }`}
       buttons={
         <>
-          <Input placeholder="Search" value={search} onChange={setSearch} />
+          <Input
+            placeholder={props.t('ui.common.search')}
+            value={search}
+            onChange={setSearch}
+          />
           <Button
             icon="code"
-            tooltip="RegEx Search"
+            tooltip={props.t('ui.log_viewer.regex_search')}
             selected={searchRegex}
             onClick={() => setSearchRegex(!searchRegex)}
           />
           <Button
             icon="font"
             selected={caseSensitive}
-            tooltip="Case Sensitive"
+            tooltip={props.t('ui.log_viewer.case_sensitive')}
             onClick={() => setCaseSensitive(!caseSensitive)}
           />
           <Button
             icon="trash"
-            tooltip="Clear Search"
+            tooltip={props.t('ui.log_viewer.clear_search')}
             color="bad"
             onClick={() => {
               setSearch('');
@@ -231,13 +240,19 @@ const CategoryViewer = (props: CategoryViewerProps) => {
                     <Stack.Item>
                       {entry.semver && (
                         <Stack.Item>
-                          <JsonViewer data={entry.semver} title="Semver" />
+                          <JsonViewer
+                            data={entry.semver}
+                            title={props.t('ui.log_viewer.semver')}
+                          />
                         </Stack.Item>
                       )}
                     </Stack.Item>
                     {entry.data && (
                       <Stack.Item>
-                        <JsonViewer data={entry.data} title="Data" />
+                        <JsonViewer
+                          data={entry.data}
+                          title={props.t('ui.common.data')}
+                        />
                       </Stack.Item>
                     )}
                   </Stack>
@@ -247,7 +262,8 @@ const CategoryViewer = (props: CategoryViewerProps) => {
           })
         ) : (
           <NoticeBox danger>
-            Invalid RegEx: {(regexValidation as SyntaxError).message}
+            {props.t('ui.log_viewer.invalid_regex')}:{' '}
+            {(regexValidation as SyntaxError).message}
           </NoticeBox>
         )}
       </Stack>

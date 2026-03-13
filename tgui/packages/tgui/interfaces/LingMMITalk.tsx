@@ -3,6 +3,7 @@ import { Button, ByondUi, Stack, TextArea } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   mmi_view: string;
@@ -10,10 +11,15 @@ type Data = {
 
 export const LingMMITalk = (props) => {
   const { data, act } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const [mmiMessage, setmmiMessage] = useState('');
 
   return (
-    <Window title="Decoy Brain MMI View" height={360} width={360}>
+    <Window
+      title={t('ui.ling_mmi_talk.decoy_brain_mmi_view')}
+      height={360}
+      width={360}
+    >
       <Window.Content>
         <Stack vertical>
           <Stack.Item align="center">
@@ -32,7 +38,7 @@ export const LingMMITalk = (props) => {
                 <TextArea
                   fluid
                   height="60px"
-                  placeholder="Send a message to have our decoy brain speak."
+                  placeholder={t('ui.ling_mmi_talk.send_message_placeholder')}
                   onChange={setmmiMessage}
                   value={mmiMessage}
                 />

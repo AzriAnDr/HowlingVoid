@@ -8,6 +8,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const damageTypes = [
   {
@@ -30,6 +31,7 @@ const damageTypes = [
 
 export const Sleeper = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { open, occupant = {}, occupied } = data;
   const preSortChems = data.chems || [];
   const chems = preSortChems.sort((a, b) => {
@@ -82,7 +84,7 @@ export const Sleeper = (props) => {
                   </LabeledList.Item>
                 ))}
                 <LabeledList.Item
-                  label="Brain"
+                  label={t('ui.sleeper.brain')}
                   color={occupant.brainLoss ? 'bad' : 'good'}
                 >
                   {occupant.brainLoss ? 'Abnormal' : 'Healthy'}
@@ -92,7 +94,7 @@ export const Sleeper = (props) => {
           )}
         </Section>
         <Section
-          title="Medicines"
+          title={t('ui.sleeper.medicines')}
           minHeight="205px"
           buttons={
             <Button

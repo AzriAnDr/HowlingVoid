@@ -10,13 +10,30 @@ import {
 } from 'tgui-core/components';
 
 import { SOFTWARE_DESC } from './constants';
+import { usePreferencesLocalization } from '../localization';
 import type { PaiData } from './types';
+
+const softwareDescriptionKey = (name: string) =>
+  `ui.pai_interface.software_desc_${name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '')}`;
+
+const getSoftwareDescription = (
+  t: (key: string, fallback?: string) => string,
+  name: string,
+) =>
+  t(
+    softwareDescriptionKey(name),
+    SOFTWARE_DESC[name as keyof typeof SOFTWARE_DESC] ?? name,
+  );
 
 /**
  * Renders a list of available software and the ram with which to download it
  */
 export function AvailableDisplay(props) {
   const { data } = useBackend<PaiData>();
+  const { t } = usePreferencesLocalization(data);
   const { available } = data;
 
   const entries = Object.entries(available);
@@ -29,7 +46,7 @@ export function AvailableDisplay(props) {
       buttons={<MemoryDisplay />}
       fill
       scrollable
-      title="Available Software"
+      title={t('ui.pai_interface.available_software')}
     >
       <Table>
         {entries?.map(([name, cost]) => {
@@ -43,10 +60,16 @@ export function AvailableDisplay(props) {
 /** Displays the remaining RAM left as a progressbar. */
 function MemoryDisplay(props) {
   const { data } = useBackend<PaiData>();
+  const { t } = usePreferencesLocalization(data);
   const { ram } = data;
 
   return (
-    <Tooltip content={`Available System Memory: ${ram}`}>
+    <Tooltip
+      content={t('ui.pai_interface.available_system_memory').replace(
+        '{ram}',
+        String(ram),
+      )}
+    >
       <Table>
         <Table.Row>
           <Table.Cell>
@@ -81,6 +104,7 @@ type ListItemProps = {
 /** A row for an individual software listing. */
 function ListItem(props: ListItemProps) {
   const { act, data } = useBackend<PaiData>();
+  const { t } = usePreferencesLocalization(data);
   const { installed, ram } = data;
   const { cost, name } = props;
 
@@ -88,7 +112,7 @@ function ListItem(props: ListItemProps) {
   const tooExpensive = ram < cost;
 
   return (
-    <Tooltip content={SOFTWARE_DESC[name]} position="bottom-start">
+    <Tooltip content={getSoftwareDescription(t, name)} position="bottom-start">
       <Table.Row className="candystripe">
         <Table.Cell>
           <Box color="label">{name}</Box>

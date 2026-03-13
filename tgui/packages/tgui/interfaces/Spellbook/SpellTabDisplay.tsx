@@ -6,6 +6,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { BUYWORD2ICON } from './constants';
 import {
   Buywords,
@@ -20,16 +21,16 @@ type Props = {
   pointOffset?: number;
 };
 
-function getTimeOrCat(entry: SpellEntry) {
+function getTimeOrCat(entry: SpellEntry, t: (key: string) => string) {
   if (entry.cat === SpellCategory.Rituals) {
     if (entry.times) {
-      return `Cast ${entry.times} times.`;
+      return `${t('ui.spellbook.cast')} ${entry.times} ${t('ui.spellbook.times')}.`;
     } else {
-      return 'Not cast yet.';
+      return t('ui.spellbook.not_cast_yet');
     }
   } else {
     if (entry.cooldown) {
-      return `${entry.cooldown}s Cooldown`;
+      return `${entry.cooldown}s ${t('ui.spellbook.cooldown')}`;
     } else {
       return '';
     }
@@ -38,6 +39,7 @@ function getTimeOrCat(entry: SpellEntry) {
 
 export function SpellTabDisplay(props: Props) {
   const { act, data } = useBackend<SpellbookData>();
+  const { t } = usePreferencesLocalization();
   const { points } = data;
   const { tabSpells, cooldownOffset, pointOffset } = props;
 
@@ -52,10 +54,10 @@ export function SpellTabDisplay(props: Props) {
             <Divider />
             <Stack mt={1.3} width="100%" position="absolute" textAlign="left">
               <Stack.Item width="120px" ml={cooldownOffset}>
-                {getTimeOrCat(entry)}
+                {getTimeOrCat(entry, t)}
               </Stack.Item>
               <Stack.Item width="60px" ml={pointOffset}>
-                {entry.cost} points
+                {entry.cost} {t('ui.spellbook.points')}
               </Stack.Item>
               {entry.buyword === Buywords.Learn && (
                 <Stack.Item>
@@ -66,8 +68,8 @@ export function SpellTabDisplay(props: Props) {
                     tooltipPosition="bottom-start"
                     tooltip={
                       entry.requires_wizard_garb
-                        ? 'Requires wizard garb.'
-                        : 'Can be cast without wizard garb.'
+                        ? t('ui.spellbook.requires_wizard_garb')
+                        : t('ui.spellbook.can_be_cast_without_wizard_garb')
                     }
                   />
                 </Stack.Item>
@@ -97,7 +99,7 @@ export function SpellTabDisplay(props: Props) {
                   </Button>
                   <br />
                   {!entry.refundable ? (
-                    <NoticeBox>No refunds.</NoticeBox>
+                    <NoticeBox>{t('ui.spellbook.no_refunds')}</NoticeBox>
                   ) : (
                     <Button
                       textAlign="center"
@@ -109,7 +111,7 @@ export function SpellTabDisplay(props: Props) {
                         })
                       }
                     >
-                      Refund
+                      {t('ui.common.refund')}
                     </Button>
                   )}
                 </Stack.Item>

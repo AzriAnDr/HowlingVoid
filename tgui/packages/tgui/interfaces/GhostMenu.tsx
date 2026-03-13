@@ -11,6 +11,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   can_boo: BooleanLike;
@@ -39,10 +40,11 @@ type NotificationData = {
 
 export const GhostMenu = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { has_fun, can_boo } = data;
   return (
     <Window
-      title="Ghost Menu"
+      title={t('ui.ghost_menu.title')}
       width={500}
       height={630}
       buttons={
@@ -50,13 +52,13 @@ export const GhostMenu = (props) => {
           <>
             <Button
               disabled={!can_boo}
-              tooltip="Haunts things near you, with a cooldown."
+              tooltip={t('ui.ghost_menu.tooltip_boo')}
               onClick={() => act('boo')}
             >
               Boo!
             </Button>
             <Button
-              tooltip="Allows you to possess any non-sentient mob."
+              tooltip={t('ui.ghost_menu.tooltip_possess')}
               onClick={() => act('possess')}
             >
               Possess
@@ -68,13 +70,13 @@ export const GhostMenu = (props) => {
       <Window.Content>
         <Stack fill>
           <Stack.Item width="40%">
-            <Section title="Player & Round Info">
+            <Section title={t('ui.ghost_menu.player_round_info')}>
               <RoundSection />
             </Section>
-            <Section title="HUDs">
+            <Section title={t('ui.ghost_menu.huds')}>
               <HudSection />
             </Section>
-            <Section title="Ghost Settings">
+            <Section title={t('ui.ghost_menu.settings')}>
               <GhostSettingsSection />
             </Section>
           </Stack.Item>
@@ -89,6 +91,7 @@ export const GhostMenu = (props) => {
 
 const RoundSection = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { body_name } = data;
   return (
     <>
@@ -97,13 +100,13 @@ const RoundSection = (props) => {
           fluid
           dmIcon="icons/mob/simple/mob.dmi"
           dmIconState="ghost"
-          tooltip="Click to re-enter your corpse."
+          tooltip={t('ui.ghost_menu.tooltip_reenter_body')}
           onClick={() => act('return_to_body')}
           fontSize="11px"
           buttons={
             <Button.Confirm
               icon="ghost"
-              tooltip="Become unable to be resusitated, permanently leaving your corpse behind."
+              tooltip={t('ui.ghost_menu.tooltip_dnr')}
               onClick={() => act('DNR')}
             />
           }
@@ -135,6 +138,7 @@ const RoundSection = (props) => {
 
 const HudSection = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { hud_info, lag_switch_on } = data;
   return (
     <Stack vertical>
@@ -155,7 +159,7 @@ const HudSection = (props) => {
       ))}
       {!lag_switch_on && (
         <Button
-          tooltip="Performs a t-ray scan where you are."
+          tooltip={t('ui.ghost_menu.tooltip_tray_scan')}
           onClick={() => act('tray_scan')}
         >
           T-ray Scan
@@ -168,6 +172,7 @@ const HudSection = (props) => {
 const GhostSettingsSection = (props) => {
   const [viewNumber, setviewNumber] = useState<number>(0);
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { current_darkness, darkness_levels, max_extra_view, lag_switch_on } =
     data;
   return (
@@ -186,7 +191,7 @@ const GhostSettingsSection = (props) => {
       <Stack.Item>
         <Button
           fluid
-          tooltip="Restores your ghost character's appearance and username to that in your character preferences."
+          tooltip={t('ui.ghost_menu.tooltip_restore_appearance')}
           onClick={() => act('restore_appearance')}
         >
           Restore Ghost Character
@@ -216,6 +221,7 @@ const GhostSettingsSection = (props) => {
 
 const NotificationPreferences = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { notification_data } = data;
   if (!notification_data) {
     return 'No notifications!';
@@ -237,19 +243,19 @@ const NotificationPreferences = (props) => {
     <Section
       scrollable
       fill
-      title="Ghost Role Notifications"
+      title={t('ui.ghost_menu.role_notifications')}
       buttons={
         <>
           <Button
             icon="check"
             color="good"
-            tooltip="Enable all notifications."
+            tooltip={t('ui.ghost_menu.tooltip_enable_all_notifications')}
             onClick={() => act('turn_all_on')}
           />
           <Button
             icon="times"
             color="bad"
-            tooltip="Disable all notifications."
+            tooltip={t('ui.ghost_menu.tooltip_disable_all_notifications')}
             onClick={() => act('turn_all_off')}
           />
         </>

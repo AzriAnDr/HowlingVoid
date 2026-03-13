@@ -11,9 +11,11 @@ import {
 
 import { useBackend, useSharedState } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const NtosNetMonitor = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const [tab_main, setTab_main] = useSharedState('tab_main', 1);
   const {
     ntnetrelays,
@@ -34,7 +36,7 @@ export const NtosNetMonitor = (props) => {
               selected={tab_main === 1}
               onClick={() => setTab_main(1)}
             >
-              NtNet
+              {t('ui.ntosnetmonitor.ntnet')}
             </Tabs.Tab>
             <Tabs.Tab
               icon="tablet"
@@ -42,7 +44,7 @@ export const NtosNetMonitor = (props) => {
               selected={tab_main === 2}
               onClick={() => setTab_main(2)}
             >
-              Tablets ({tablets.length})
+              {t('ui.ntosnetmonitor.tablets')} ({tablets.length})
             </Tabs.Tab>
           </Tabs>
         </Stack.Item>
@@ -69,14 +71,16 @@ export const NtosNetMonitor = (props) => {
 const MainPage = (props) => {
   const { ntnetrelays, idsalarm, idsstatus, ntnetlogs = [] } = props;
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
 
   return (
     <Section>
       <NoticeBox>
-        WARNING: Disabling wireless transmitters when using a wireless device
-        may prevent you from reenabling them!
+        {t(
+          'ui.ntosnetmonitor.warning_disabling_wireless_transmitters_when_using_a_wireless_device_may_prevent_you_from_reenabling_them',
+        )}
       </NoticeBox>
-      <Section title="Wireless Connectivity">
+      <Section title={t('ui.ntosnetmonitor.wireless_connectivity')}>
         {ntnetrelays.map((relay) => (
           <Section
             key={relay.ref}
@@ -84,7 +88,11 @@ const MainPage = (props) => {
             buttons={
               <Button.Confirm
                 color={relay.is_operational ? 'good' : 'bad'}
-                content={relay.is_operational ? 'ENABLED' : 'DISABLED'}
+                content={
+                  relay.is_operational
+                    ? t('ui.common.enabled_uppercase')
+                    : t('ui.common.disabled_uppercase')
+                }
                 onClick={() =>
                   act('toggle_relay', {
                     ref: relay.ref,
@@ -95,30 +103,35 @@ const MainPage = (props) => {
           />
         ))}
       </Section>
-      <Section title="Security Systems">
+      <Section title={t('ui.ntosnetmonitor.security_systems')}>
         {!!idsalarm && (
           <>
-            <NoticeBox>NETWORK INCURSION DETECTED</NoticeBox>
+            <NoticeBox>{t('ui.ntosnetmonitor.network_incursion_detected')}</NoticeBox>
             <Box italics>
-              Abnormal activity has been detected in the network. Check system
-              logs for more information
+              {t(
+                'ui.ntosnetmonitor.abnormal_activity_detected_check_system_logs_for_more_information',
+              )}
             </Box>
           </>
         )}
         <LabeledList>
           <LabeledList.Item
-            label="IDS Status"
+            label={t('ui.ntosnetmonitor.ids_status')}
             buttons={
               <>
                 <Button
                   icon={idsstatus ? 'power-off' : 'times'}
-                  content={idsstatus ? 'ENABLED' : 'DISABLED'}
+                  content={
+                    idsstatus
+                      ? t('ui.common.enabled_uppercase')
+                      : t('ui.common.disabled_uppercase')
+                  }
                   selected={idsstatus}
                   onClick={() => act('toggleIDS')}
                 />
                 <Button
                   icon="sync"
-                  content="Reset"
+                  content={t('ui.ntosnetmonitor.reset')}
                   color="bad"
                   onClick={() => act('resetIDS')}
                 />
@@ -127,11 +140,11 @@ const MainPage = (props) => {
           />
         </LabeledList>
         <Section
-          title="System Log"
+          title={t('ui.ntosnetmonitor.system_log')}
           buttons={
             <Button.Confirm
               icon="trash"
-              content="Clear Logs"
+              content={t('ui.ntosnetmonitor.clear_logs')}
               onClick={() => act('purgelogs')}
             />
           }
@@ -150,15 +163,16 @@ const MainPage = (props) => {
 const TabletPage = (props) => {
   const { tablets } = props;
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   if (!tablets.length) {
-    return <NoticeBox>No tablets detected.</NoticeBox>;
+    return <NoticeBox>{t('ui.ntosnetmonitor.no_tablets_detected')}</NoticeBox>;
   }
   return (
     <Section>
       <Stack vertical mt={1}>
         <Section fill textAlign="center">
           <Icon name="comment" mr={1} />
-          Active Tablets
+          {t('ui.ntosnetmonitor.active_tablets')}
         </Section>
       </Stack>
       <Stack vertical mt={1}>
@@ -174,8 +188,8 @@ const TabletPage = (props) => {
                     color={tablet.enabled_spam ? 'good' : 'default'}
                     content={
                       tablet.enabled_spam
-                        ? 'Restrict Mass PDA'
-                        : 'Allow Mass PDA'
+                        ? t('ui.ntosnetmonitor.restrict_mass_pda')
+                        : t('ui.ntosnetmonitor.allow_mass_pda')
                     }
                     onClick={() =>
                       act('toggle_mass_pda', {
@@ -192,3 +206,4 @@ const TabletPage = (props) => {
     </Section>
   );
 };
+

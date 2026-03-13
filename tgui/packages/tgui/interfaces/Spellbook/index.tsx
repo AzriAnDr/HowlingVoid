@@ -10,6 +10,7 @@ import {
 } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import { SearchSpells } from './SearchSpells';
 import { SpellResults } from './SpellResults';
 import { type SpellbookData, Tab } from './types';
@@ -35,6 +36,7 @@ const searchVerbs = [
 
 export function Spellbook(props) {
   const { data } = useBackend<SpellbookData>();
+  const { t } = usePreferencesLocalization();
   const { points } = data;
 
   const [selectedVerb, setSelectedVerb] = useState(searchVerbs[0]);
@@ -48,7 +50,7 @@ export function Spellbook(props) {
   }, [spellSearch]);
 
   return (
-    <Window title="Spellbook" theme="wizard" width={950} height={540}>
+    <Window title={t('ui.spellbook.title')} theme="wizard" width={950} height={540}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -65,7 +67,7 @@ export function Spellbook(props) {
                         icon="arrow-rotate-left"
                         onClick={() => setSpellSearch('')}
                       >
-                        Stop {selectedVerb}
+                        {t('ui.spellbook.stop')} {selectedVerb}
                       </Button>
                     }
                   >
@@ -82,13 +84,13 @@ export function Spellbook(props) {
               <Stack>
                 <Stack.Item grow>
                   <ProgressBar value={points / 10}>
-                    {`${points} points left to spend.`}
+                    {`${points} ${t('ui.spellbook.points_left_to_spend')}`}
                   </ProgressBar>
                 </Stack.Item>
                 <Stack.Item>
                   <Input
                     width={15}
-                    placeholder="Search for a spell..."
+                    placeholder={t('ui.spellbook.search_for_a_spell')}
                     onChange={setSpellSearch}
                   />
                 </Stack.Item>

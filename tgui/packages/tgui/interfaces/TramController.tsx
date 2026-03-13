@@ -13,6 +13,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   transportId: string;
@@ -42,6 +43,7 @@ type TramDestination = {
 
 export const TramController = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
 
   const {
     transportId,
@@ -66,34 +68,34 @@ export const TramController = (props) => {
   const [tripDestination, setTripDestination] = useState('');
 
   return (
-    <Window title="Tram Controller" width={778} height={327} theme="dark">
+    <Window title={t('ui.tram.controller')} width={778} height={327} theme="dark">
       <Window.Content>
         <Stack>
           <Stack.Item grow={4}>
-            <Section title="System Status">
+            <Section title={t('ui.tram.system_status')}>
               <LabeledList>
-                <LabeledList.Item label="System ID">
+                <LabeledList.Item label={t('ui.tram.system_id')}>
                   {transportId}
                 </LabeledList.Item>
                 <LabeledList.Item
-                  label="Controller Queue"
+                  label={t('ui.tram.controller_queue')}
                   color={controllerActive ? 'blue' : 'good'}
                 >
                   {controllerActive ? 'Processing' : 'Ready'}
                 </LabeledList.Item>
                 <LabeledList.Item
-                  label="Mechanical Status"
+                  label={t('ui.tram.mechanical_status')}
                   color={controllerOperational ? 'good' : 'bad'}
                 >
                   {controllerOperational ? 'Normal' : 'Fault'}
                 </LabeledList.Item>
                 <LabeledList.Item
-                  label="Processor Status"
+                  label={t('ui.tram.processor_status')}
                   color={recoveryMode ? 'average' : 'good'}
                 >
                   {recoveryMode ? 'Overload' : 'Normal'}
                 </LabeledList.Item>
-                <LabeledList.Item label="Processor Load">
+                <LabeledList.Item label={t('ui.tram.processor_load')}>
                   <ProgressBar
                     value={currentLoad}
                     minValue={0}
@@ -105,7 +107,7 @@ export const TramController = (props) => {
                     }}
                   />
                 </LabeledList.Item>
-                <LabeledList.Item label="Current Speed">
+                <LabeledList.Item label={t('ui.tram.current_speed')}>
                   <ProgressBar
                     value={currentSpeed}
                     minValue={0}
@@ -122,19 +124,19 @@ export const TramController = (props) => {
                 </LabeledList.Item>
               </LabeledList>
             </Section>
-            <Section title="Location Data">
+            <Section title={t('ui.tram.location_data')}>
               <LabeledList>
-                <LabeledList.Item label="Direction">
+                <LabeledList.Item label={t('ui.common.direction')}>
                   {travelDirection === 4 ? 'Outbound' : 'Inbound'}
                 </LabeledList.Item>
                 <LabeledList.Item
-                  label="Idle Platform"
+                  label={t('ui.tram.idle_platform')}
                   color={controllerActive ? '' : 'blue'}
                 >
                   {idlePlatform}
                 </LabeledList.Item>
                 <LabeledList.Item
-                  label="Destination Platform"
+                  label={t('ui.tram.destination_platform')}
                   color={controllerActive ? 'blue' : ''}
                 >
                   {destinationPlatform}
@@ -143,7 +145,7 @@ export const TramController = (props) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow={6}>
-            <Section title="Controls">
+            <Section title={t('ui.common.controls')}>
               <NoticeBox>
                 Nanotrasen is not responsible for any injuries or fatalities
                 caused by usage of the tram.
@@ -193,7 +195,7 @@ export const TramController = (props) => {
                 width="98.5%"
                 options={destinations.map((id) => id.name)}
                 selected={tripDestination}
-                placeholder="Pick a Destination"
+                placeholder={t('ui.tram.pick_destination')}
                 onSelected={(value) => setTripDestination(value)}
               />
               <Button
@@ -233,7 +235,7 @@ export const TramController = (props) => {
                 Bypass Door Sensors
               </Button>
             </Section>
-            <Section title="Operational">
+            <Section title={t('ui.tram.operational')}>
               <Button
                 color={statusES ? 'red' : 'transparent'}
                 my={1}

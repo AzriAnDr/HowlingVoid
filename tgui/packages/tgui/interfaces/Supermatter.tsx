@@ -15,6 +15,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { getGasFromPath } from '../constants';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const logScale = (value) => Math.log2(16 + Math.max(0, value)) - 4;
 
@@ -99,6 +100,7 @@ const SupermatterEntry = (props: SupermatterEntryProps) => {
   );
 };
 export const SupermatterContent = (props: SupermatterProps) => {
+  const { t } = usePreferencesLocalization();
   const {
     sectionButton,
     uid,
@@ -143,7 +145,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
         >
           <Stack vertical>
             <SupermatterEntry
-              title="Integrity"
+              title={t('ui.supermatter.integrity')}
               alwaysShowChevron
               content={
                 <ProgressBar
@@ -176,7 +178,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
               }
             />
             <SupermatterEntry
-              title="Internal Energy"
+              title={t('ui.supermatter.internal_energy')}
               alwaysShowChevron
               content={
                 <ProgressBar
@@ -212,7 +214,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
               }
             />
             <SupermatterEntry
-              title="Zap Power Transmission"
+              title={t('ui.supermatter.zap_power_transmission')}
               alwaysShowChevron
               content={
                 <ProgressBar
@@ -245,7 +247,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
               }
             />
             <SupermatterEntry
-              title="Absorbed Moles"
+              title={t('ui.supermatter.absorbed_moles')}
               content={
                 <ProgressBar
                   value={gas_total_moles}
@@ -262,7 +264,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
               }
             />
             <SupermatterEntry
-              title="Temperature"
+              title={t('ui.common.temperature')}
               content={
                 <ProgressBar
                   value={logScale(gas_temperature)}
@@ -280,7 +282,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
               }
             />
             <SupermatterEntry
-              title="Temperature Limit"
+              title={t('ui.supermatter.temperature_limit')}
               alwaysShowChevron
               content={`${temp_limit} K`}
               detail={
@@ -298,7 +300,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
               }
             />
             <SupermatterEntry
-              title="Waste Multiplier"
+              title={t('ui.supermatter.waste_multiplier')}
               alwaysShowChevron
               content={
                 <ProgressBar
@@ -329,7 +331,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
               }
             />
             <SupermatterEntry
-              title="Absorption Ratio"
+              title={t('ui.supermatter.absorption_ratio')}
               content={`${absorbed_ratio * 100}%`}
             />
           </Stack>
@@ -339,13 +341,15 @@ export const SupermatterContent = (props: SupermatterProps) => {
         <Section
           fill
           scrollable
-          title="Gases"
+          title={t('ui.common.gases')}
           buttons={
             <Button
               icon={allGasActive ? 'times' : 'book-open'}
               onClick={() => setAllGasActive(!allGasActive)}
             >
-              {allGasActive ? 'Hide Gases' : 'Show All Gases'}
+              {allGasActive
+                ? t('ui.supermatter.hide_gases')
+                : t('ui.supermatter.show_all_gases')}
             </Button>
           }
         >
@@ -353,7 +357,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
             {gas_composition.map(([gas_path, amount]) => (
               <SupermatterEntry
                 key={gas_path}
-                title={getGasFromPath(gas_path)?.label || 'Unknown'}
+                title={getGasFromPath(gas_path)?.label || t('ui.common.unknown')}
                 content={
                   <ProgressBar
                     color={getGasFromPath(gas_path)?.color}
@@ -371,7 +375,9 @@ export const SupermatterContent = (props: SupermatterProps) => {
                       {gas_metadata[gas_path].numeric_data.length ? (
                         <>
                           <Box mb={1}>
-                            At <b>100% Composition</b> gives:
+                            {t('ui.supermatter.at_composition_gives_prefix')}{' '}
+                            <b>{t('ui.supermatter.hundred_percent_composition')}</b>{' '}
+                            {t('ui.supermatter.at_composition_gives_suffix')}
                           </Box>
                           <LabeledList>
                             {gas_metadata[gas_path].numeric_data.map(
@@ -399,11 +405,11 @@ export const SupermatterContent = (props: SupermatterProps) => {
                           </LabeledList>
                         </>
                       ) : (
-                        'Has no composition effects'
+                        t('ui.supermatter.has_no_composition_effects')
                       )}
                     </>
                   ) : (
-                    'Has no effects'
+                    t('ui.supermatter.has_no_effects')
                   )
                 }
               />

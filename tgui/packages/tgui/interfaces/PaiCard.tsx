@@ -12,6 +12,7 @@ import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   candidates: ReadonlyArray<Candidate>;
@@ -43,10 +44,11 @@ type Pai = {
 
 export const PaiCard = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { pai } = data;
 
   return (
-    <Window width={400} height={400} title="pAI Options Menu">
+    <Window width={400} height={400} title={t('ui.pai_card.options_menu')}>
       <Window.Content scrollable>
         {!pai ? <PaiDownload /> : <PaiOptions />}
       </Window.Content>
@@ -57,6 +59,7 @@ export const PaiCard = (props) => {
 /** Gives a list of candidates as cards */
 const PaiDownload = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { candidates = [] } = data;
 
   return (
@@ -65,16 +68,16 @@ const PaiDownload = (props) => {
         <NoticeBox info>
           <Stack fill>
             <Stack.Item grow fontSize="16px">
-              pAI Candidates
+              {t('ui.pai_card.candidates')}
             </Stack.Item>
             <Stack.Item>
               <Button
                 color="good"
                 icon="bell"
                 onClick={() => act('request')}
-                tooltip="Request more candidates from beyond."
+                tooltip={t('ui.pai_card.request_more_candidates')}
               >
-                Request
+                {t('ui.pai_card.request')}
               </Button>
             </Stack.Item>
           </Stack>
@@ -95,7 +98,8 @@ const PaiDownload = (props) => {
  * Renders a custom section that displays a candidate.
  */
 const CandidateDisplay = (props: { candidate: Candidate; index: number }) => {
-  const { act } = useBackend<Data>();
+  const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     candidate: { comments, ckey, description, name },
     index,
@@ -105,29 +109,29 @@ const CandidateDisplay = (props: { candidate: Candidate; index: number }) => {
     <Section
       buttons={
         <Button icon="save" onClick={() => act('download', { ckey })}>
-          Download
+          {t('ui.common.download')}
         </Button>
       }
       overflow="hidden"
-      title={`Candidate ${index}`}
+      title={`${t('ui.pai_card.candidate')} ${index}`}
     >
       <Stack vertical>
         <Stack.Item>
-          <Box color="label" mb={1}>
-            Name:
-          </Box>
-          {name ? (
-            <Box color="green">{name}</Box>
-          ) : (
-            'None provided - name will be randomized.'
-          )}
+            <Box color="label" mb={1}>
+              {t('ui.common.name')}:
+            </Box>
+            {name ? (
+              <Box color="green">{name}</Box>
+            ) : (
+              t('ui.pai_card.none_provided_name_randomized')
+            )}
         </Stack.Item>
         {!!description && (
           <>
             <Stack.Divider />
             <Stack.Item>
               <Box color="label" mb={1}>
-                IC Description:
+                {t('ui.pai_card.ic_description')}:
               </Box>
               {description}
             </Stack.Item>
@@ -138,7 +142,7 @@ const CandidateDisplay = (props: { candidate: Candidate; index: number }) => {
             <Stack.Divider />
             <Stack.Item>
               <Box color="label" mb={1}>
-                OOC Notes:
+                {t('ui.pai_card.ooc_notes')}:
               </Box>
               {comments}
             </Stack.Item>
@@ -152,6 +156,7 @@ const CandidateDisplay = (props: { candidate: Candidate; index: number }) => {
 /** Once a pAI has been loaded, you can alter its settings here */
 const PaiOptions = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     range_max,
     range_min,
@@ -169,45 +174,51 @@ const PaiOptions = (props) => {
       leash_enabled /* NOVA EDIT ADDITION */,
     },
   } = data;
-  const suppliedLaws = laws[0] ? decodeHtmlEntities(laws[0]) : 'None';
+  const suppliedLaws = laws[0]
+    ? decodeHtmlEntities(laws[0])
+    : t('ui.common.none');
 
   return (
-    <Section fill scrollable title={`Settings: ${name.toUpperCase()}`}>
+    <Section
+      fill
+      scrollable
+      title={`${t('ui.pai_card.settings')}: ${name.toUpperCase()}`}
+    >
       <LabeledList>
-        <LabeledList.Item label="Master">
+        <LabeledList.Item label={t('ui.pai_card.master')}>
           {master || (
             <Button icon="dna" onClick={() => act('set_dna')}>
-              Imprint
+              {t('ui.pai_card.imprint')}
             </Button>
           )}
         </LabeledList.Item>
         {!!master && (
-          <LabeledList.Item color="red" label="DNA">
+          <LabeledList.Item color="red" label={t('ui.pai_card.dna')}>
             {dna}
           </LabeledList.Item>
         )}
-        <LabeledList.Item label="Laws">
+        <LabeledList.Item label={t('ui.pai_card.laws')}>
           <BlockQuote>{suppliedLaws}</BlockQuote>
         </LabeledList.Item>
-        <LabeledList.Item label="Holoform">
+        <LabeledList.Item label={t('ui.pai_card.holoform')}>
           <Button
             icon={can_holo ? 'toggle-on' : 'toggle-off'}
             onClick={() => act('toggle_holo')}
             selected={can_holo}
           >
-            Toggle
+            {t('ui.common.toggle')}
           </Button>
         </LabeledList.Item>
-        <LabeledList.Item label="Leash">
+        <LabeledList.Item label={t('ui.pai_card.leash')}>
           <Button
             icon={leashed ? 'toggle-on' : 'toggle-off'}
             onClick={() => act('toggle_leash')}
             selected={leashed}
           >
-            {leashed ? 'Unleash' : 'Leash'}
+            {leashed ? t('ui.pai_card.unleash') : t('ui.pai_card.leash')}
           </Button>
         </LabeledList.Item>
-        <LabeledList.Item label="Holoform Range">
+        <LabeledList.Item label={t('ui.pai_card.holoform_range')}>
           <Stack>
             <Stack.Item>
               <Button
@@ -228,35 +239,35 @@ const PaiOptions = (props) => {
             </Stack.Item>
           </Stack>
         </LabeledList.Item>
-        <LabeledList.Item label="Transmit">
+        <LabeledList.Item label={t('ui.pai_card.transmit')}>
           <Button
             icon={transmit ? 'toggle-on' : 'toggle-off'}
             onClick={() => act('toggle_radio', { option: 'transmit' })}
             selected={transmit}
           >
-            Toggle
+            {t('ui.common.toggle')}
           </Button>
         </LabeledList.Item>
-        <LabeledList.Item label="Receive">
+        <LabeledList.Item label={t('ui.pai_card.receive')}>
           <Button
             icon={receive ? 'toggle-on' : 'toggle-off'}
             onClick={() => act('toggle_radio', { option: 'receive' })}
             selected={receive}
           >
-            Toggle
+            {t('ui.common.toggle')}
           </Button>
         </LabeledList.Item>
-        <LabeledList.Item label="Troubleshoot">
+        <LabeledList.Item label={t('ui.pai_card.troubleshoot')}>
           <Button icon="comment" onClick={() => act('fix_speech')}>
-            Fix Speech
+            {t('ui.pai_card.fix_speech')}
           </Button>
           <Button icon="edit" onClick={() => act('set_laws')}>
-            Set Laws
+            {t('ui.pai_card.set_laws')}
           </Button>
         </LabeledList.Item>
-        <LabeledList.Item label="Personality">
+        <LabeledList.Item label={t('ui.pai_card.personality')}>
           <Button icon="trash" onClick={() => act('wipe_pai')}>
-            Erase
+            {t('ui.common.erase')}
           </Button>
         </LabeledList.Item>
       </LabeledList>
@@ -267,7 +278,7 @@ const PaiOptions = (props) => {
           mt={1}
           onClick={() => act('reset_software')}
         >
-          Reset Software
+          {t('ui.pai_card.reset_software')}
         </Button>
       )}
     </Section>

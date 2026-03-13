@@ -9,6 +9,7 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 
 import { Experiment } from '../../ExperimentConfigure';
+import { usePreferencesLocalization } from '../../localization';
 import { useRemappedBackend } from '../helpers';
 import { useTechWebRoute } from '../hooks';
 import { LockedExperiment } from '../LockedExperiment';
@@ -23,6 +24,7 @@ type Props = {
 
 export function TechNode(props: Props) {
   const { act, data } = useRemappedBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     node_cache,
     design_cache,
@@ -64,7 +66,7 @@ export function TechNode(props: Props) {
       }}
       value={expcompl / required_experiments.length}
     >
-      Experiments ({expcompl}/{required_experiments.length})
+      {t('ui.techweb.experiments')} ({expcompl}/{required_experiments.length})
     </ProgressBar>
   );
 
@@ -80,7 +82,7 @@ export function TechNode(props: Props) {
       }}
       value={techcompl / prereq_ids.length}
     >
-      Tech ({techcompl}/{prereq_ids.length})
+      {t('ui.techweb.tech')} ({techcompl}/{prereq_ids.length})
     </ProgressBar>
   );
 
@@ -199,7 +201,7 @@ export function TechNode(props: Props) {
       {required_experiments.length > 0 && (
         <Collapsible
           className="Techweb__NodeExperimentsRequired"
-          title="Required Experiments"
+          title={t('ui.techweb.required_experiments')}
         >
           {required_experiments.map((k, index) => {
             const thisExp = experiments[k];
@@ -213,7 +215,7 @@ export function TechNode(props: Props) {
       {Object.keys(discount_experiments).length > 0 && (
         <Collapsible
           className="TechwebNodeExperimentsRequired"
-          title="Discount-Eligible Experiments"
+          title={t('ui.techweb.discount_eligible_experiments')}
         >
           {Object.keys(discount_experiments).map((k, index) => {
             const thisExp = experiments[k];

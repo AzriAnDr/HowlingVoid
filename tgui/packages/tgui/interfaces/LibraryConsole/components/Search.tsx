@@ -8,6 +8,7 @@ import {
   Table,
 } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../../localization';
 import type { LibraryConsoleData } from '../types';
 
 export function SearchAndDisplay(props) {
@@ -25,6 +26,7 @@ export function SearchAndDisplay(props) {
 
 function SearchTabs(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     author,
     book_id,
@@ -43,7 +45,7 @@ function SearchTabs(props) {
             <Stack.Item>
               <Input
                 value={book_id}
-                placeholder={book_id === null ? 'ID' : book_id}
+                placeholder={book_id === null ? t('ui.common.id') : book_id}
                 mt={0.5}
                 width="70px"
                 onBlur={(value) =>
@@ -68,7 +70,7 @@ function SearchTabs(props) {
             <Stack.Item>
               <Input
                 value={title}
-                placeholder={title || 'Title'}
+                placeholder={title || t('ui.common.title')}
                 mt={0.5}
                 onBlur={(value) =>
                   act('set_search_title', {
@@ -80,7 +82,7 @@ function SearchTabs(props) {
             <Stack.Item>
               <Input
                 value={author}
-                placeholder={author || 'Author'}
+                placeholder={author || t('ui.common.author')}
                 mt={0.5}
                 onBlur={(value) =>
                   act('set_search_author', {
@@ -99,7 +101,7 @@ function SearchTabs(props) {
             color={params_changed ? 'good' : ''}
             icon="book"
           >
-            Search
+            {t('ui.common.search')}
           </Button>
           <Button
             disabled={!can_db_request}
@@ -108,7 +110,7 @@ function SearchTabs(props) {
             color="bad"
             icon="fire"
           >
-            Reset Search
+            {t('ui.common.reset_search')}
           </Button>
         </Stack.Item>
       </Stack>
@@ -118,6 +120,7 @@ function SearchTabs(props) {
 
 function SearchResults(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { pages } = data;
 
   const sorted = pages
@@ -133,9 +136,9 @@ function SearchResults(props) {
       <Table>
         <Table.Row className="candystripe">
           <Table.Cell fontSize={1.5}>#</Table.Cell>
-          <Table.Cell fontSize={1.5}>Category</Table.Cell>
-          <Table.Cell fontSize={1.5}>Title</Table.Cell>
-          <Table.Cell fontSize={1.5}>Author</Table.Cell>
+          <Table.Cell fontSize={1.5}>{t('ui.common.category')}</Table.Cell>
+          <Table.Cell fontSize={1.5}>{t('ui.common.title')}</Table.Cell>
+          <Table.Cell fontSize={1.5}>{t('ui.common.author')}</Table.Cell>
         </Table.Row>
         {sorted.map((record) => (
           <Table.Row key={record.key} className="candystripe">

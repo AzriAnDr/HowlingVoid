@@ -12,9 +12,11 @@ import {
 
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const MedicalKiosk = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const [scanIndex] = useSharedState('scanIndex');
   const { active_status_1, active_status_2, active_status_3, active_status_4 } =
     data;
@@ -27,36 +29,34 @@ export const MedicalKiosk = (props) => {
               <MedicalKioskScanButton
                 index={1}
                 icon="procedures"
-                name="General Health Scan"
-                description={`
-                  Reads back exact values of your general health scan.
-                `}
+                name={t('ui.medical_kiosk.general_health_scan')}
+                description={t(
+                  'ui.medical_kiosk.general_health_scan_description',
+                )}
               />
               <MedicalKioskScanButton
                 index={2}
                 icon="heartbeat"
-                name="Symptom Based Checkup"
-                description={`
-                  Provides information based on various non-obvious symptoms,
-                  like blood levels or disease status.
-                `}
+                name={t('ui.medical_kiosk.symptom_based_checkup')}
+                description={t(
+                  'ui.medical_kiosk.symptom_based_checkup_description',
+                )}
               />
               <MedicalKioskScanButton
                 index={3}
                 icon="radiation-alt"
-                name="Neurological/Radiological Scan"
-                description={`
-                  Provides information about brain trauma and radiation.
-                `}
+                name={t('ui.medical_kiosk.neurological_radiological_scan')}
+                description={t(
+                  'ui.medical_kiosk.neurological_radiological_scan_description',
+                )}
               />
               <MedicalKioskScanButton
                 index={4}
                 icon="mortar-pestle"
-                name="Chemical and Psychoactive Scan"
-                description={`
-                  Provides a list of consumed chemicals, as well as potential
-                  side effects.
-                `}
+                name={t('ui.medical_kiosk.chemical_and_psychoactive_scan')}
+                description={t(
+                  'ui.medical_kiosk.chemical_and_psychoactive_scan_description',
+                )}
               />
             </Section>
           </Flex.Item>
@@ -76,6 +76,7 @@ export const MedicalKiosk = (props) => {
 const MedicalKioskScanButton = (props) => {
   const { index, name, description, icon } = props;
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const [scanIndex, setScanIndex] = useSharedState('scanIndex');
   const paid = data[`active_status_${index}`];
   return (
@@ -84,6 +85,7 @@ const MedicalKioskScanButton = (props) => {
         <Icon
           name={paid ? 'check' : 'dollar-sign'}
           color={paid ? 'green' : 'grey'}
+          tooltip={paid ? t('ui.common.paid') : t('ui.common.unpaid')}
         />
       </Stack.Item>
       <Stack.Item grow basis="content">
@@ -108,28 +110,30 @@ const MedicalKioskScanButton = (props) => {
 
 const MedicalKioskInstructions = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { kiosk_cost, patient_name } = data;
   return (
     <Section minHeight="100%">
       <Box italic>
-        Greetings Valued Employee! Please select a desired automatic health
-        check procedure. Diagnosis costs <b>{kiosk_cost} credits.</b>
+        {t('ui.medical_kiosk.greeting_and_instruction_prefix')}{' '}
+        <b>
+          {kiosk_cost} {t('ui.common.credits')}
+        </b>
+        .
       </Box>
       <Box mt={1}>
         <Box inline color="label" mr={1}>
-          Patient:
+          {t('ui.medical_kiosk.patient')}:
         </Box>
         {patient_name}
       </Box>
       <Button
         mt={1}
-        tooltip={`
-          Resets the current scanning target, cancelling current scans.
-        `}
+        tooltip={t('ui.medical_kiosk.reset_scanner_tooltip')}
         icon="sync"
         color="average"
         onClick={() => act('clearTarget')}
-        content="Reset Scanner"
+        content={t('ui.medical_kiosk.reset_scanner')}
       />
     </Section>
   );
@@ -137,6 +141,7 @@ const MedicalKioskInstructions = (props) => {
 
 const MedicalKioskScanResults1 = (props) => {
   const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     patient_health,
     brute_health,
@@ -145,30 +150,30 @@ const MedicalKioskScanResults1 = (props) => {
     toxin_health,
   } = data;
   return (
-    <Section title="Patient Health">
+    <Section title={t('ui.medical_kiosk.patient_health')}>
       <LabeledList>
-        <LabeledList.Item label="Total Health">
+        <LabeledList.Item label={t('ui.medical_kiosk.total_health')}>
           <ProgressBar value={patient_health / 100}>
             <AnimatedNumber value={patient_health} />%
           </ProgressBar>
         </LabeledList.Item>
         <LabeledList.Divider />
-        <LabeledList.Item label="Brute Damage">
+        <LabeledList.Item label={t('ui.medical_kiosk.brute_damage')}>
           <ProgressBar value={brute_health / 100} color="bad">
             <AnimatedNumber value={brute_health} />
           </ProgressBar>
         </LabeledList.Item>
-        <LabeledList.Item label="Burn Damage">
+        <LabeledList.Item label={t('ui.medical_kiosk.burn_damage')}>
           <ProgressBar value={burn_health / 100} color="bad">
             <AnimatedNumber value={burn_health} />
           </ProgressBar>
         </LabeledList.Item>
-        <LabeledList.Item label="Oxygen Damage">
+        <LabeledList.Item label={t('ui.medical_kiosk.oxygen_damage')}>
           <ProgressBar value={suffocation_health / 100} color="bad">
             <AnimatedNumber value={suffocation_health} />
           </ProgressBar>
         </LabeledList.Item>
-        <LabeledList.Item label="Toxin Damage">
+        <LabeledList.Item label={t('ui.medical_kiosk.toxin_damage')}>
           <ProgressBar value={toxin_health / 100} color="bad">
             <AnimatedNumber value={toxin_health} />
           </ProgressBar>
@@ -180,6 +185,7 @@ const MedicalKioskScanResults1 = (props) => {
 
 const MedicalKioskScanResults2 = (props) => {
   const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     patient_status,
     patient_illness,
@@ -190,20 +196,20 @@ const MedicalKioskScanResults2 = (props) => {
     blood_status,
   } = data;
   return (
-    <Section title="Symptom Based Checkup">
+    <Section title={t('ui.medical_kiosk.symptom_based_checkup')}>
       <LabeledList>
-        <LabeledList.Item label="Patient Status" color="good">
+        <LabeledList.Item label={t('ui.medical_kiosk.patient_status')} color="good">
           {patient_status}
         </LabeledList.Item>
         <LabeledList.Divider />
-        <LabeledList.Item label="Disease Status">
+        <LabeledList.Item label={t('ui.medical_kiosk.disease_status')}>
           {patient_illness}
         </LabeledList.Item>
-        <LabeledList.Item label="Disease information">
+        <LabeledList.Item label={t('ui.medical_kiosk.disease_information')}>
           {illness_info}
         </LabeledList.Item>
         <LabeledList.Divider />
-        <LabeledList.Item label={`${blood_name} Levels`}>
+        <LabeledList.Item label={`${blood_name} ${t('ui.medical_kiosk.levels')}`}>
           <ProgressBar value={blood_levels / 100} color="bad">
             <AnimatedNumber value={blood_levels} />
           </ProgressBar>
@@ -211,7 +217,7 @@ const MedicalKioskScanResults2 = (props) => {
             {bleed_status}
           </Box>
         </LabeledList.Item>
-        <LabeledList.Item label={`${blood_name} Information`}>
+        <LabeledList.Item label={`${blood_name} ${t('ui.common.information')}`}>
           {blood_status}
         </LabeledList.Item>
       </LabeledList>
@@ -221,19 +227,20 @@ const MedicalKioskScanResults2 = (props) => {
 
 const MedicalKioskScanResults3 = (props) => {
   const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { brain_damage, brain_health, trauma_status } = data;
   return (
-    <Section title="Patient Neurological Health">
+    <Section title={t('ui.medical_kiosk.patient_neurological_health')}>
       <LabeledList>
-        <LabeledList.Item label="Brain Damage">
+        <LabeledList.Item label={t('ui.medical_kiosk.brain_damage')}>
           <ProgressBar value={brain_damage / 100} color="good">
             <AnimatedNumber value={brain_damage} />
           </ProgressBar>
         </LabeledList.Item>
-        <LabeledList.Item label="Brain Status" color="health-0">
+        <LabeledList.Item label={t('ui.medical_kiosk.brain_status')} color="health-0">
           {brain_health}
         </LabeledList.Item>
-        <LabeledList.Item label="Brain Trauma Status">
+        <LabeledList.Item label={t('ui.medical_kiosk.brain_trauma_status')}>
           {trauma_status}
         </LabeledList.Item>
       </LabeledList>
@@ -243,6 +250,7 @@ const MedicalKioskScanResults3 = (props) => {
 
 const MedicalKioskScanResults4 = (props) => {
   const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     chemical_list = [],
     overdose_list = [],
@@ -251,38 +259,42 @@ const MedicalKioskScanResults4 = (props) => {
     blood_alcohol,
   } = data;
   return (
-    <Section title="Chemical and Psychoactive Analysis">
+    <Section title={t('ui.medical_kiosk.chemical_and_psychoactive_analysis')}>
       <LabeledList>
-        <LabeledList.Item label="Chemical Contents">
+        <LabeledList.Item label={t('ui.medical_kiosk.chemical_contents')}>
           {chemical_list.length === 0 && (
-            <Box color="average">No reagents detected.</Box>
+            <Box color="average">{t('ui.medical_kiosk.no_reagents_detected')}</Box>
           )}
           {chemical_list.map((chem) => (
             <Box key={chem.id} color="good">
-              {chem.volume} units of {chem.name}
+              {chem.volume} {t('ui.medical_kiosk.units_of')} {chem.name}
             </Box>
           ))}
         </LabeledList.Item>
-        <LabeledList.Item label="Overdose Status" color="bad">
+        <LabeledList.Item label={t('ui.medical_kiosk.overdose_status')} color="bad">
           {overdose_list.length === 0 && (
-            <Box color="good">Patient is not overdosing.</Box>
+            <Box color="good">{t('ui.medical_kiosk.patient_not_overdosing')}</Box>
           )}
           {overdose_list.map((chem) => (
-            <Box key={chem.id}>Overdosing on {chem.name}</Box>
+            <Box key={chem.id}>
+              {t('ui.medical_kiosk.overdosing_on')} {chem.name}
+            </Box>
           ))}
         </LabeledList.Item>
-        <LabeledList.Item label="Addiction Status" color="bad">
+        <LabeledList.Item label={t('ui.medical_kiosk.addiction_status')} color="bad">
           {addict_list.length === 0 && (
-            <Box color="good">Patient has no addictions.</Box>
+            <Box color="good">{t('ui.medical_kiosk.patient_no_addictions')}</Box>
           )}
           {addict_list.map((chem) => (
-            <Box key={chem.id}>Addicted to {chem.name}</Box>
+            <Box key={chem.id}>
+              {t('ui.medical_kiosk.addicted_to')} {chem.name}
+            </Box>
           ))}
         </LabeledList.Item>
-        <LabeledList.Item label="Psychoactive Status">
+        <LabeledList.Item label={t('ui.medical_kiosk.psychoactive_status')}>
           {hallucinating_status}
         </LabeledList.Item>
-        <LabeledList.Item label="Blood Alcohol Content">
+        <LabeledList.Item label={t('ui.medical_kiosk.blood_alcohol_content')}>
           <ProgressBar
             value={blood_alcohol}
             minValue={0}

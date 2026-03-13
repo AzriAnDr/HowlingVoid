@@ -10,6 +10,7 @@ import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import { useModifyState } from './hooks';
 import { type LibraryAdminData, ModifyTypes } from './types';
 
@@ -26,6 +27,7 @@ function getActionColor(reason: string) {
 
 export function ModifyPage(props) {
   const { act, data } = useBackend<LibraryAdminData>();
+  const { t } = usePreferencesLocalization(data);
 
   const { can_db_request, view_raw, history } = data;
   const { modifyMethodState, modifyTargetState } = useModifyState();
@@ -41,17 +43,15 @@ export function ModifyPage(props) {
   return (
     <Window.Content scrollable>
       <NoticeBox>
-        Heads Up! We do not allow you to fully delete books in game
+        {t('ui.library_admin.heads_up_no_full_delete')}
         <br />
-        What you&apos;re doing here is a &quot;don&apos;t show this to
-        anyone&quot; button
+        {t('ui.library_admin.dont_show_to_anyone')}
         <br />
-        If you for whatever reason need to fully wipe a book, please speak to
-        your database administrator
+        {t('ui.library_admin.speak_to_database_administrator')}
       </NoticeBox>
       <Stack>
         <Stack.Item fontSize="25px" pb={2}>
-          Why do you want to {modifyMethod} this book?
+          {`${t('ui.library_admin.why_modify_book_prefix')} ${modifyMethod} ${t('ui.library_admin.why_modify_book_suffix')}`}
         </Stack.Item>
         <Stack.Item fontSize="17px">
           <Button
@@ -62,7 +62,7 @@ export function ModifyPage(props) {
             }
             icon="book-reader"
           >
-            View
+            {t('ui.library_admin.view')}
           </Button>
         </Stack.Item>
         <Stack.Item fontSize="17px">
@@ -72,7 +72,9 @@ export function ModifyPage(props) {
             color={view_raw ? 'purple' : 'blue'}
             icon={view_raw ? 'theater-masks' : 'glasses'}
           >
-            {view_raw ? 'Raw' : 'Normal'}
+            {view_raw
+              ? t('ui.library_admin.raw')
+              : t('ui.library_admin.normal')}
           </Button>
         </Stack.Item>
       </Stack>
@@ -125,20 +127,26 @@ export function ModifyPage(props) {
             }}
             lineHeight={2}
           >
-            Return
+            {t('ui.library_admin.return')}
           </Button>
         </Stack.Item>
       </Stack>
       <Table>
         <Table.Row backgroundColor="rgba(0,0,0, 0.4)" header>
-          <Table.Cell className="LibraryAdmin_RecordHeader">ID</Table.Cell>
-          <Table.Cell className="LibraryAdmin_RecordHeader">Action</Table.Cell>
-          <Table.Cell className="LibraryAdmin_RecordHeader">Reason</Table.Cell>
           <Table.Cell className="LibraryAdmin_RecordHeader">
-            Admin Key
+            {t('ui.library_admin.id')}
           </Table.Cell>
           <Table.Cell className="LibraryAdmin_RecordHeader">
-            Datetime
+            {t('ui.library_admin.action')}
+          </Table.Cell>
+          <Table.Cell className="LibraryAdmin_RecordHeader">
+            {t('ui.library_admin.reason')}
+          </Table.Cell>
+          <Table.Cell className="LibraryAdmin_RecordHeader">
+            {t('ui.library_admin.admin_key')}
+          </Table.Cell>
+          <Table.Cell className="LibraryAdmin_RecordHeader">
+            {t('ui.library_admin.datetime')}
           </Table.Cell>
         </Table.Row>
         {entries.map((entry) => (

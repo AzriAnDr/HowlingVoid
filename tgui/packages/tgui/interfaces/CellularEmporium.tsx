@@ -15,6 +15,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 // ==========
 // Types
@@ -54,6 +55,7 @@ const nameToIconState = (name: string): string => {
 // ==========
 export const CellularEmporium = (props) => {
   const { act, data } = useBackend<CellularEmporiumContext>();
+  const { t } = usePreferencesLocalization(data);
   const {
     abilities,
     can_readapt,
@@ -137,7 +139,7 @@ export const CellularEmporium = (props) => {
                   <Input
                     autoFocus
                     value={searchText}
-                    placeholder="Search..."
+                    placeholder={t('ui.common.search_placeholder')}
                     onChange={setSearchText}
                     fluid
                   />

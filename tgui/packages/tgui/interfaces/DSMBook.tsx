@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Section, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import deforest_logo from '../styles/assets/bg-deforest.svg';
 
 type Trauma = {
@@ -338,6 +339,7 @@ const FakePages = (props: FakePagesProps) => {
 
 export const DSMBook = () => {
   const { data } = useBackend<TraumaData>();
+  const { t } = usePreferencesLocalization(data);
   const { traumas } = data;
 
   // abc it up
@@ -386,7 +388,7 @@ export const DSMBook = () => {
     <Window
       height={windowheight}
       width={765}
-      title="SDSM-35"
+      title={t('ui.dsmbook.title')}
       theme="ntos_lightmode"
     >
       <Window.Content

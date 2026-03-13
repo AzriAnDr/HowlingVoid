@@ -12,6 +12,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { getGasColor } from '../constants';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   on: BooleanLike;
@@ -51,20 +52,21 @@ export const Crystallizer = (props) => {
 
 const Controls = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { gas_input, on, selected, selected_recipes = [] } = data;
 
   return (
-    <Section title="Controls">
+    <Section title={t('ui.common.controls')}>
       <LabeledList>
-        <LabeledList.Item label="Power">
+        <LabeledList.Item label={t('ui.common.power')}>
           <Button
             icon={on ? 'power-off' : 'times'}
-            content={on ? 'On' : 'Off'}
+            content={on ? t('ui.common.on') : t('ui.common.off')}
             selected={on}
             onClick={() => act('power')}
           />
         </LabeledList.Item>
-        <LabeledList.Item label="Recipe">
+        <LabeledList.Item label={t('ui.common.recipe')}>
           {selected_recipes.map(({ id, name }) => (
             <Button
               key={id}
@@ -78,7 +80,7 @@ const Controls = (props) => {
             />
           ))}
         </LabeledList.Item>
-        <LabeledList.Item label="Gas Input">
+        <LabeledList.Item label={t('ui.crystallizer.gas_input')}>
           <NumberInput
             animated
             tickWhileDragging
@@ -102,12 +104,13 @@ const Controls = (props) => {
 
 const Requirements = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { requirements, internal_temperature, progress_bar } = data;
 
   return (
-    <Section title="Requirements and progress">
+    <Section title={t('ui.crystallizer.requirements_and_progress')}>
       <LabeledList>
-        <LabeledList.Item label="Progress">
+        <LabeledList.Item label={t('ui.common.progress')}>
           <ProgressBar
             value={progress_bar / 100}
             ranges={{
@@ -117,12 +120,12 @@ const Requirements = (props) => {
             }}
           />
         </LabeledList.Item>
-        <LabeledList.Item label="Recipe">
+        <LabeledList.Item label={t('ui.common.recipe')}>
           <Box m={1} preserveWhitespace>
             {requirements}
           </Box>
         </LabeledList.Item>
-        <LabeledList.Item label="Temperature">
+        <LabeledList.Item label={t('ui.common.temperature')}>
           <ProgressBar
             value={logScale(internal_temperature)}
             minValue={0}
@@ -144,10 +147,11 @@ const Requirements = (props) => {
 
 const Gases = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { internal_gas_data = [] } = data;
 
   return (
-    <Section title="Gases">
+    <Section title={t('ui.common.gases')}>
       <LabeledList>
         {internal_gas_data.map(({ id, name, amount }) => (
           <LabeledList.Item key={name} label={name}>

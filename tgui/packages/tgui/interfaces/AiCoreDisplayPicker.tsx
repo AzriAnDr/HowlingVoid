@@ -10,6 +10,7 @@ import {
 } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type CoreDisplayOption = {
   name: string;
@@ -29,8 +30,9 @@ type Data = {
 };
 
 export const AiCoreDisplayPicker = () => {
+  const { t } = usePreferencesLocalization();
   return (
-    <Window width={500} height={600} title="AI Core Display Options">
+    <Window width={500} height={600} title={t('ui.ai_core_display.title')}>
       <Window.Content scrollable>
         <AiCoreDisplayPickerContent />
       </Window.Content>
@@ -39,6 +41,7 @@ export const AiCoreDisplayPicker = () => {
 };
 
 const AiCoreDisplayPickerContent = () => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const { current_display, current_icon, options = [] } = data;
 
@@ -53,7 +56,7 @@ const AiCoreDisplayPickerContent = () => {
   return (
     <Stack fill vertical>
       <Stack.Item>
-        <Section title="Current AI Core Display">
+        <Section title={t('ui.ai_core_display.current_display')}>
           <Flex align="center" justify="center" direction="column">
             {current_icon && (
               <Flex.Item mb={2}>
@@ -85,7 +88,7 @@ const AiCoreDisplayPickerContent = () => {
 
       <Stack.Item>
         <Input
-          placeholder="Search display options..."
+          placeholder={t('ui.ai_core_display.search_placeholder')}
           value={searchTerm}
           onChange={(value) => setSearchTerm(value)}
           fluid
@@ -95,7 +98,7 @@ const AiCoreDisplayPickerContent = () => {
       <Stack.Item grow>
         <Stack fill vertical>
           <Stack.Item>
-            <Section title="AI Core Display Options">
+            <Section title={t('ui.ai_core_display.options')}>
               <OptionsList options={filteredOptions} />
             </Section>
           </Stack.Item>
@@ -103,7 +106,7 @@ const AiCoreDisplayPickerContent = () => {
           {filteredOptions.length === 0 && (
             <Stack.Item>
               <Box textAlign="center" color="average" mt={4}>
-                No options found matching "{searchTerm}"
+                {t('ui.ai_core_display.no_options_found_matching')} "{searchTerm}"
               </Box>
             </Stack.Item>
           )}

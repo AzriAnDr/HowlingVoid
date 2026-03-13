@@ -10,6 +10,7 @@ import {
 import { capitalizeFirst, toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { OrbitContext } from '.';
 import { HEALTH, VIEWMODE } from './constants';
 import { getDepartmentByJob, getDisplayName } from './helpers';
@@ -20,6 +21,7 @@ import type { OrbitData } from './types';
 export function OrbitBlade(props) {
   const { data } = useBackend<OrbitData>();
   const { orbiting } = data;
+  const { t } = usePreferencesLocalization(data);
 
   const { setBladeOpen, realNameDisplay, setRealNameDisplay } =
     useContext(OrbitContext);
@@ -36,10 +38,9 @@ export function OrbitBlade(props) {
             />
           }
           color="label"
-          title="Orbit Settings"
+          title={t('ui.orbit.settings')}
         >
-          Keep in mind: Orbit does not update automatically. You will need to
-          click the &quot;Refresh&quot; button to see the latest data.
+          {t('ui.orbit.keep_in_mind_refresh')}
         </Section>
       </Stack.Item>
       <Stack.Item>
@@ -56,11 +57,9 @@ export function OrbitBlade(props) {
             />
           }
           color="label"
-          title="Real Name Display"
+          title={t('ui.orbit.real_name_display')}
         >
-          Real Name mode will display actual character names and their
-          roundstart jobs insteas of being based on their worn ID. If the person
-          lacks a roundstart job, it will still display their ID job icon.
+          {t('ui.orbit.real_name_display_desc')}
         </Section>
       </Stack.Item>
       {!!orbiting && (
@@ -74,12 +73,13 @@ export function OrbitBlade(props) {
 
 function ViewModeSelector(props) {
   const { viewMode, setViewMode } = useContext(OrbitContext);
+  const { t } = usePreferencesLocalization();
 
   return (
-    <Section title="View Mode">
+    <Section title={t('ui.orbit.view_mode')}>
       <Stack fill vertical>
         <Stack.Item color="label">
-          Change the color and sorting scheme of observable items.
+          {t('ui.orbit.change_color_sorting_scheme')}
         </Stack.Item>
 
         {Object.entries(VIEWMODE).map(([key, value]) => (
@@ -92,7 +92,7 @@ function ViewModeSelector(props) {
             onClick={() => setViewMode(value)}
             selected={value === viewMode}
           >
-            {key}
+            {t(`ui.orbit.view_mode.${key.toLowerCase()}`)}
           </Button>
         ))}
       </Stack>
@@ -102,6 +102,7 @@ function ViewModeSelector(props) {
 
 function OrbitInfo(props) {
   const { data } = useBackend<OrbitData>();
+  const { t } = usePreferencesLocalization(data);
 
   const { orbiting } = data;
   if (!orbiting) return;
@@ -119,12 +120,12 @@ function OrbitInfo(props) {
   }
 
   return (
-    <Section title="Orbiting">
+    <Section title={t('ui.orbit.orbiting')}>
       <Stack fill vertical>
         <Stack.Item>
           {toTitleCase(getDisplayName(full_name, name))}
           {showAFK && (
-            <Tooltip content="Away from keyboard" position="bottom-start">
+            <Tooltip content={t('ui.orbit.away_from_keyboard')} position="bottom-start">
               <Icon ml={1} color="grey" name="bed" />
             </Tooltip>
           )}
@@ -161,24 +162,25 @@ function OrbitInfo(props) {
 
 function HealthDisplay(props: { health: number }) {
   const { health } = props;
+  const { t } = usePreferencesLocalization();
 
   let icon = 'heart';
   let howDead;
   switch (true) {
     case health <= HEALTH.Ruined:
-      howDead = `Very Dead: ${health}`;
+      howDead = `${t('ui.orbit.very_dead')}: ${health}`;
       icon = 'skull';
       break;
     case health <= HEALTH.Dead:
-      howDead = `Dead: ${health}`;
+      howDead = `${t('ui.orbit.dead')}: ${health}`;
       icon = 'heart-broken';
       break;
     case health <= HEALTH.Crit:
-      howDead = `Health critical: ${health}`;
+      howDead = `${t('ui.orbit.health_critical')}: ${health}`;
       icon = 'tired';
       break;
     case health <= HEALTH.Bad:
-      howDead = `Bad: ${health}`;
+      howDead = `${t('ui.orbit.bad')}: ${health}`;
       icon = 'heartbeat';
       break;
   }

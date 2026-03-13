@@ -2,6 +2,7 @@ import { Box, Button, LabeledList, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const statusMap = {
   Dead: 'bad',
@@ -9,14 +10,19 @@ const statusMap = {
   Conscious: 'good',
 };
 
-const occupiedMap = {
-  owner: 'You Are Here',
-  stranger: 'Occupied',
-  available: 'Swap',
-};
-
 export const BodyEntry = (props) => {
   const { body, swapFunc } = props;
+  const { t } = usePreferencesLocalization();
+  const occupiedMap = {
+    owner: t('ui.slime_body_swapper.you_are_here'),
+    stranger: t('ui.slime_body_swapper.occupied'),
+    available: t('ui.slime_body_swapper.swap'),
+  };
+  const statusTextMap = {
+    Dead: t('ui.common.dead'),
+    Unconscious: t('ui.slime_body_swapper.unconscious'),
+    Conscious: t('ui.slime_body_swapper.conscious'),
+  };
   return (
     <Section
       title={
@@ -35,11 +41,19 @@ export const BodyEntry = (props) => {
       }
     >
       <LabeledList>
-        <LabeledList.Item label="Status" bold color={statusMap[body.status]}>
-          {body.status}
+        <LabeledList.Item
+          label={t('ui.slimebodyswapper.status')}
+          bold
+          color={statusMap[body.status]}
+        >
+          {statusTextMap[body.status] || body.status}
         </LabeledList.Item>
-        <LabeledList.Item label="Jelly">{body.exoticblood}</LabeledList.Item>
-        <LabeledList.Item label="Location">{body.area}</LabeledList.Item>
+        <LabeledList.Item label={t('ui.slimebodyswapper.jelly')}>
+          {body.exoticblood}
+        </LabeledList.Item>
+        <LabeledList.Item label={t('ui.slimebodyswapper.location')}>
+          {body.area}
+        </LabeledList.Item>
       </LabeledList>
     </Section>
   );

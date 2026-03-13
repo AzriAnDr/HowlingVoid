@@ -20,6 +20,7 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import type { Material } from './Fabrication/Types';
+import { usePreferencesLocalization } from './localization';
 
 type Machine = {
   name: string;
@@ -76,12 +77,13 @@ const actionToColor = {
 
 export const OreSilo = (props: Data) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { SHEET_MATERIAL_AMOUNT, machines, logs } = data;
 
   const [currentTab, setCurrentTab] = useState<Tab>(Tab.Logs);
 
   return (
-    <Window title="Ore Silo" width={620} height={600}>
+    <Window title={t('ui.ore_silo.title')} width={620} height={600}>
       <Window.Content className="OreSilo">
         <Stack vertical fill>
           <Stack.Item>
@@ -91,14 +93,14 @@ export const OreSilo = (props: Data) => {
                 selected={currentTab === Tab.Machines}
                 onClick={() => setCurrentTab(Tab.Machines)}
               >
-                Connections
+                {t('ui.ore_silo.connections')}
               </Tabs.Tab>
               <Tabs.Tab
                 icon="book-bookmark"
                 selected={currentTab === Tab.Logs}
                 onClick={() => setCurrentTab(Tab.Logs)}
               >
-                Logs
+                {t('ui.common.logs')}
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>
@@ -137,6 +139,7 @@ type MachineListProps = {
 
 const MachineList = (props: MachineListProps) => {
   const { machines, onPause, onRemove } = props;
+  const { t } = usePreferencesLocalization({});
 
   return machines.length > 0 ? (
     <Section fill scrollable>
@@ -150,7 +153,7 @@ const MachineList = (props: MachineListProps) => {
       ))}
     </Section>
   ) : (
-    <NoticeBox>No machines connected!</NoticeBox>
+    <NoticeBox>{t('ui.ore_silo.no_machines_connected')}</NoticeBox>
   );
 };
 
@@ -162,6 +165,7 @@ type MachineProps = {
 
 const MachineDisplay = (props: MachineProps) => {
   const { machine, onPause, onRemove } = props;
+  const { t } = usePreferencesLocalization({});
 
   let machineName = machine.name;
   const index = machineName.indexOf('('); // some techfabs have their location attached to their name
@@ -195,8 +199,8 @@ const MachineDisplay = (props: MachineProps) => {
       <Tooltip
         content={
           machine.on_hold
-            ? `Resume ${machine.name} usage.`
-            : `Put ${machine.name} on hold.`
+            ? `${t('ui.ore_silo.resume')} ${machine.name} ${t('ui.ore_silo.usage')}`
+            : `${t('ui.ore_silo.put')} ${machine.name} ${t('ui.ore_silo.on_hold')}`
         }
       >
         <Box
@@ -211,7 +215,7 @@ const MachineDisplay = (props: MachineProps) => {
           <Icon name={machine.on_hold ? 'circle-play' : 'circle-pause'} />
         </Box>
       </Tooltip>
-      <Tooltip content={`Disconnect ${machine.name}.`}>
+      <Tooltip content={`${t('ui.ore_silo.disconnect')} ${machine.name}.`}>
         <Box
           className={classes([
             'FabricatorRecipe__Button',
@@ -234,6 +238,7 @@ type LogsListProps = {
 
 const RestrictButton = () => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { ID_required } = data;
   return (
     <Box align="center">
@@ -247,7 +252,9 @@ const RestrictButton = () => {
           right: 0,
         }}
       >
-        {ID_required ? 'Disable ID Requirement' : 'Enable ID Requirement'}
+        {ID_required
+          ? t('ui.ore_silo.disable_id_requirement')
+          : t('ui.ore_silo.enable_id_requirement')}
       </Button>
     </Box>
   );
@@ -255,6 +262,7 @@ const RestrictButton = () => {
 
 const LogsList = (props: LogsListProps) => {
   const { logs } = props;
+  const { t } = usePreferencesLocalization({});
 
   const searchableLogs = logs.map((log, index) => ({
     id: index,
@@ -281,14 +289,14 @@ const LogsList = (props: LogsListProps) => {
   return (
     <Stack vertical fill>
       <Stack.Item>
-        <Section title="Action Logs" buttons={<RestrictButton />}>
+        <Section title={t('ui.ore_silo.action_logs')} buttons={<RestrictButton />}>
           <Stack>
             <Stack.Item grow>
               <Input
                 fluid
                 height={1.7}
                 autoFocus
-                placeholder="Search for names, locations and resources..."
+                placeholder={t('ui.ore_silo.search_logs_placeholder')}
                 value={query}
                 onChange={(value) => setQuery(value)}
               />
@@ -314,8 +322,8 @@ const LogsList = (props: LogsListProps) => {
           ) : (
             <NoticeBox textAlign="center">
               {query
-                ? 'No logs seem to match your request.'
-                : 'Nothing here...'}
+                ? t('ui.ore_silo.no_logs_match')
+                : t('ui.ore_silo.nothing_here')}
             </NoticeBox>
           )}
         </Section>
@@ -338,6 +346,7 @@ const UserItem = (props: UserData) => {
     id_read_failure,
   } = props;
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { banned_users } = data;
   return (
     <Stack align="center">
@@ -350,8 +359,10 @@ const UserItem = (props: UserData) => {
             onClick={() => act('toggle_ban', { user_data: props })}
             lineHeight={1.6}
           >
-            {banned_users.includes(account_id) ? 'Unrestrict' : 'Restrict'}{' '}
-            access
+            {banned_users.includes(account_id)
+              ? t('ui.ore_silo.unrestrict')
+              : t('ui.ore_silo.restrict')}{' '}
+            {t('ui.ore_silo.access')}
           </Button>
         </Stack.Item>
       )}
@@ -381,6 +392,7 @@ const LogEntry = (props: Log) => {
     user_data,
   } = props;
   const [expanded, setExpanded] = useState(false);
+  const { t } = usePreferencesLocalization({});
 
   return (
     <Box>
@@ -425,25 +437,25 @@ const LogEntry = (props: Log) => {
         <Box mt={0.5}>
           <Table>
             <Table.Row className="candystripe" lineHeight={2}>
-              <Table.Cell pl={1}>Time</Table.Cell>
+              <Table.Cell pl={1}>{t('ui.common.time')}</Table.Cell>
               <Table.Cell>{time}</Table.Cell>
             </Table.Row>
             <Table.Row className="candystripe" lineHeight={2}>
-              <Table.Cell pl={1}>Machine</Table.Cell>
+              <Table.Cell pl={1}>{t('ui.ore_silo.machine')}</Table.Cell>
               <Table.Cell>{capitalize(machine_name)}</Table.Cell>
             </Table.Row>
             <Table.Row className="candystripe" lineHeight={2}>
-              <Table.Cell pl={1}>Location</Table.Cell>
+              <Table.Cell pl={1}>{t('ui.common.location')}</Table.Cell>
               <Table.Cell>{area_name}</Table.Cell>
             </Table.Row>
             <Table.Row className="candystripe" lineHeight={2}>
-              <Table.Cell pl={1}>Materials</Table.Cell>
+              <Table.Cell pl={1}>{t('ui.common.materials')}</Table.Cell>
               <Table.Cell color={amount > 0 ? 'good' : 'bad'}>
                 {raw_materials}
               </Table.Cell>
             </Table.Row>
             <Table.Row className="candystripe" lineHeight={2}>
-              <Table.Cell pl={1}>User</Table.Cell>
+              <Table.Cell pl={1}>{t('ui.common.user')}</Table.Cell>
               <Table.Cell>
                 <UserItem {...user_data} />
               </Table.Cell>

@@ -14,6 +14,7 @@ import {
 import { createSearch } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 // here's an important mental define:
 // custom outfits give a ref keyword instead of path
@@ -23,6 +24,7 @@ function getOutfitKey(outfit) {
 
 export function SelectEquipment(props) {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { name, icon64, current_outfit, favorites } = data;
 
   const outfits = map([...data.outfits, ...data.custom_outfits], (entry) => ({
@@ -69,7 +71,7 @@ export function SelectEquipment(props) {
                 <Input
                   fluid
                   autoFocus
-                  placeholder="Search"
+                  placeholder={t('ui.common.search')}
                   value={searchText}
                   onChange={setSearchText}
                 />
@@ -173,6 +175,7 @@ function OutfitDisplay(props) {
 
 function CurrentlySelectedDisplay(props) {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { current_outfit } = data;
   const { entry } = props;
 
@@ -194,7 +197,7 @@ function CurrentlySelectedDisplay(props) {
         </Stack.Item>
       )}
       <Stack.Item grow basis={0}>
-        <Box color="label">Currently selected:</Box>
+        <Box color="label">{t('ui.select_equipment.currently_selected')}</Box>
         <Box
           title={entry?.path}
           style={{

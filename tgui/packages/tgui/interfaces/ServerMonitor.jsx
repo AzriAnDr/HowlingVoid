@@ -13,9 +13,11 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const PacketInfo = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { packet } = props;
 
   return (
@@ -31,13 +33,13 @@ const PacketInfo = (props) => {
         </Flex.Item>
       </Flex>
       <LabeledList>
-        <LabeledList.Item label="Data Type">{packet.type}</LabeledList.Item>
-        <LabeledList.Item label="Source">
+        <LabeledList.Item label={t('ui.server_monitor.data_type')}>{packet.type}</LabeledList.Item>
+        <LabeledList.Item label={t('ui.common.source')}>
           {packet.source + (packet.job ? ` (${packet.job})` : '')}
         </LabeledList.Item>
-        <LabeledList.Item label="Class">{packet.race}</LabeledList.Item>
-        <LabeledList.Item label="Contents">{packet.message}</LabeledList.Item>
-        <LabeledList.Item label="Language">{packet.language}</LabeledList.Item>
+        <LabeledList.Item label={t('ui.common.class')}>{packet.race}</LabeledList.Item>
+        <LabeledList.Item label={t('ui.common.contents')}>{packet.message}</LabeledList.Item>
+        <LabeledList.Item label={t('ui.common.language')}>{packet.language}</LabeledList.Item>
       </LabeledList>
       <Divider />
     </Stack.Item>
@@ -46,24 +48,25 @@ const PacketInfo = (props) => {
 
 const ServerScreen = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { network, server } = data;
   return (
     <Stack fill vertical>
       <Stack.Item>
         <Section
-          title="Server Information"
+          title={t('ui.server_monitor.server_information')}
           buttons={
             <Button
-              content="Main Menu"
+              content={t('ui.common.main_menu')}
               icon="home"
               onClick={() => act('return_home')}
             />
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Network">{network}</LabeledList.Item>
-            <LabeledList.Item label="Server">{server.name}</LabeledList.Item>
-            <LabeledList.Item label="Total Recorded Traffic">
+            <LabeledList.Item label={t('ui.common.network')}>{network}</LabeledList.Item>
+            <LabeledList.Item label={t('ui.common.server')}>{server.name}</LabeledList.Item>
+            <LabeledList.Item label={t('ui.server_monitor.total_recorded_traffic')}>
               {server.traffic >= 1024
                 ? `${server.traffic / 1024} TB`
                 : `${server.traffic} GB`}
@@ -72,7 +75,7 @@ const ServerScreen = (props) => {
         </Section>
       </Stack.Item>
       <Stack.Item grow>
-        <Section fill scrollable title="Stored Packets">
+        <Section fill scrollable title={t('ui.server_monitor.stored_packets')}>
           <Stack vertical>
             {server.packets?.map((p) => (
               <PacketInfo key={p.ref} packet={p} />
@@ -86,6 +89,7 @@ const ServerScreen = (props) => {
 
 const MainScreen = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { servers, network } = data;
   const [networkId, setNetworkId] = useState(network);
 
@@ -96,11 +100,11 @@ const MainScreen = (props) => {
           <Input
             value={networkId}
             onChange={setNetworkId}
-            placeholder="Network ID"
+            placeholder={t('ui.server_monitor.network_id')}
             onEnter={() => act('scan_network', { network_id: networkId })}
           />
           <Button
-            content="Scan"
+            content={t('ui.common.scan')}
             onClick={() => act('scan_network', { network_id: networkId })}
           />
         </Section>
@@ -109,10 +113,10 @@ const MainScreen = (props) => {
         <Section
           fill
           scrollable
-          title="Detected Telecommunication Servers"
+          title={t('ui.server_monitor.detected_telecommunication_servers')}
           buttons={
             <Button
-              content="Clear Buffer"
+              content={t('ui.common.clear_buffer')}
               icon="trash"
               color="red"
               disabled={servers.length === 0}
@@ -122,9 +126,9 @@ const MainScreen = (props) => {
         >
           <Table>
             <Table.Row header>
-              <Table.Cell>Address</Table.Cell>
-              <Table.Cell>Identification String</Table.Cell>
-              <Table.Cell>Name</Table.Cell>
+              <Table.Cell>{t('ui.common.address')}</Table.Cell>
+              <Table.Cell>{t('ui.server_monitor.identification_string')}</Table.Cell>
+              <Table.Cell>{t('ui.common.name')}</Table.Cell>
             </Table.Row>
             {servers?.map((s) => (
               <Table.Row key={s.ref}>

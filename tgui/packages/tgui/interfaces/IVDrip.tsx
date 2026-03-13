@@ -12,6 +12,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type IVDripData = {
   hasInternalStorage: BooleanLike;
@@ -39,6 +40,7 @@ enum MODE {
 
 export const IVDrip = (props) => {
   const { act, data } = useBackend<IVDripData>();
+  const { t } = usePreferencesLocalization();
   const {
     hasContainer,
     canRemoveContainer,
@@ -61,7 +63,7 @@ export const IVDrip = (props) => {
         <Section fill>
           <LabeledList>
             <LabeledList.Item
-              label="Flow Rate"
+              label={t('ui.iv_drip.flow_rate')}
               buttons={
                 <Box>
                   <Button
@@ -95,7 +97,7 @@ export const IVDrip = (props) => {
                 value={transferRate}
                 minValue={minTransferRate}
                 maxValue={maxTransferRate}
-                unit="units/sec."
+                unit={t('ui.iv_drip.units_per_sec')}
                 onChange={(e, value) =>
                   act('changeRate', {
                     rate: value,
@@ -104,7 +106,7 @@ export const IVDrip = (props) => {
               />
             </LabeledList.Item>
             <LabeledList.Item
-              label="Direction"
+              label={t('ui.common.direction')}
               color={!mode ? 'bad' : ''}
               buttons={
                 <Button
@@ -114,7 +116,11 @@ export const IVDrip = (props) => {
                   align="center"
                   disabled={!canDraw}
                   color={!mode && 'bad'}
-                  content={mode ? 'Injecting' : 'Draining'}
+                  content={
+                    mode
+                      ? t('ui.iv_drip.injecting')
+                      : t('ui.iv_drip.draining')
+                  }
                   icon={mode ? 'syringe' : 'droplet'}
                   onClick={() => act('changeMode')}
                 />
@@ -122,13 +128,13 @@ export const IVDrip = (props) => {
             >
               {mode
                 ? hasInternalStorage
-                  ? 'Reagents from network'
-                  : 'Reagents from container'
-                : 'Blood into container'}
+                  ? t('ui.iv_drip.reagents_from_network')
+                  : t('ui.iv_drip.reagents_from_container')
+                : t('ui.iv_drip.blood_into_container')}
             </LabeledList.Item>
             {hasContainer || hasInternalStorage ? (
               <LabeledList.Item
-                label="Container"
+                label={t('ui.common.container')}
                 buttons={
                   !hasInternalStorage &&
                   !!canRemoveContainer && (
@@ -138,7 +144,7 @@ export const IVDrip = (props) => {
                       lineHeight={2}
                       align="center"
                       icon="eject"
-                      content="Eject"
+                      content={t('ui.common.eject')}
                       onClick={() => act('eject')}
                     />
                   )
@@ -155,20 +161,26 @@ export const IVDrip = (props) => {
                       textShadow: '1px 1px 0 black',
                     }}
                   >
-                    {`${containerCurrentVolume} of ${containerMaxVolume} units`}
+                    {`${containerCurrentVolume} ${t('ui.common.of')} ${containerMaxVolume} ${t('ui.iv_drip.units')}`}
                   </span>
                 </ProgressBar>
               </LabeledList.Item>
             ) : (
-              <LabeledList.Item label="Container">
-                <Tooltip content="Click the drip with a container in hand to attach.">
-                  <NoticeBox my={0.7}>No container attached.</NoticeBox>
+              <LabeledList.Item label={t('ui.common.container')}>
+                <Tooltip
+                  content={t(
+                    'ui.iv_drip.click_the_drip_with_a_container_in_hand_to_attach',
+                  )}
+                >
+                  <NoticeBox my={0.7}>
+                    {t('ui.iv_drip.no_container_attached')}
+                  </NoticeBox>
                 </Tooltip>
               </LabeledList.Item>
             )}
             {hasObjectAttached ? (
               <LabeledList.Item
-                label="Object"
+                label={t('ui.common.object')}
                 buttons={
                   <Button
                     disabled={!hasObjectAttached}
@@ -177,7 +189,7 @@ export const IVDrip = (props) => {
                     lineHeight={2}
                     align="center"
                     icon="ban"
-                    content="Disconnect"
+                    content={t('ui.common.disconnect')}
                     onClick={() => act('detach')}
                   />
                 }
@@ -187,9 +199,15 @@ export const IVDrip = (props) => {
                 </Box>
               </LabeledList.Item>
             ) : (
-              <LabeledList.Item label="Object">
-                <Tooltip content="Drag the cursor from the drip and drop it on an object to connect.">
-                  <NoticeBox my={0.7}>No object attached.</NoticeBox>
+              <LabeledList.Item label={t('ui.common.object')}>
+                <Tooltip
+                  content={t(
+                    'ui.iv_drip.drag_the_cursor_from_the_drip_and_drop_it_on_an_object_to_connect',
+                  )}
+                >
+                  <NoticeBox my={0.7}>
+                    {t('ui.iv_drip.no_object_attached')}
+                  </NoticeBox>
                 </Tooltip>
               </LabeledList.Item>
             )}

@@ -3,6 +3,7 @@ import { Button, NumberInput, Section } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { type Beaker, BeakerDisplay } from './common/BeakerDisplay';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   amount: number;
@@ -13,13 +14,14 @@ type Data = {
 
 export const ChemDebugSynthesizer = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { amount, temp, purity, beaker } = data;
 
   return (
     <Window width={390} height={330}>
       <Window.Content scrollable>
         <Section
-          title="Recipient"
+          title={t('ui.chemdebugsynthesizer.recipient')}
           buttons={
             beaker ? (
               <>
@@ -64,14 +66,14 @@ export const ChemDebugSynthesizer = (props) => {
                 />
                 <Button
                   icon="plus"
-                  content="Input"
+                  content={t('ui.chemdebugsynthesizer.input')}
                   onClick={() => act('input')}
                 />
               </>
             ) : (
               <Button
                 icon="plus"
-                content="Create Beaker"
+                content={t('ui.chemdebugsynthesizer.create_beaker')}
                 onClick={() => act('makecup')}
               />
             )

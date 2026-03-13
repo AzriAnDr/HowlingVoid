@@ -1,4 +1,4 @@
-// THIS IS A NOVA SECTOR UI FILE
+﻿// THIS IS A NOVA SECTOR UI FILE
 import {
   Box,
   Button,
@@ -11,42 +11,52 @@ import {
 
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const ArmamentStation = (props) => {
   const [category, setCategory] = useLocalState('category', '');
   const [weapon, setArmament] = useLocalState('weapon');
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization();
   const { armaments_list = [], card_inserted, card_points, card_name } = data;
   return (
-    <Window theme="armament" title="Armament Station" width={1000} height={600}>
+    <Window
+      theme="armament"
+      title={t('ui.armament_station.title')}
+      width={1000}
+      height={600}
+    >
       <Window.Content>
-        <Section height="100%" title="Armaments Station">
+        <Section height="100%" title={t('ui.armament_station.title')}>
           {card_inserted ? (
             <Stack>
               <Stack.Item grow fill>
                 <Box>
-                  <b>Inserted Card:</b> {card_name}
+                  <b>{t('ui.armament_station.inserted_card')}:</b> {card_name}
                 </Box>
                 <Box>
-                  <b>Remaining Points:</b> {card_points}
+                  <b>{t('ui.armament_station.remaining_points')}:</b>{' '}
+                  {card_points}
                 </Box>
               </Stack.Item>
               <Stack.Item>
                 <Button
                   icon="eject"
                   fontSize="20px"
-                  content="Eject Card"
+                  content={t('ui.armament_station.eject_card')}
                   onClick={() => act('eject_card')}
                 />
               </Stack.Item>
             </Stack>
           ) : (
-            <NoticeBox color="bad">No card inserted.</NoticeBox>
+            <NoticeBox color="bad">
+              {t('ui.armament_station.no_card_inserted')}
+            </NoticeBox>
           )}
           <Divider />
           <Stack fill grow>
             <Stack.Item mr={1}>
-              <Section title="Categories">
+              <Section title={t('ui.armament_station.categories')}>
                 <Stack vertical>
                   {armaments_list.map((armament_category) => (
                     <Stack.Item key={armament_category.category}>
@@ -54,7 +64,7 @@ export const ArmamentStation = (props) => {
                         width="100%"
                         content={
                           armament_category.category +
-                          ' (Pick ' +
+                          ` (${t('ui.armament_station.pick')} ` +
                           armament_category.category_limit +
                           ')'
                         }
@@ -112,7 +122,7 @@ export const ArmamentStation = (props) => {
             </Stack.Item>
             <Divider vertical />
             <Stack.Item width="20%">
-              <Section title="Selected Armament">
+              <Section title={t('ui.armament_station.selected_armament')}>
                 {armaments_list.map((armament_category) =>
                   armament_category.subcategories.map((subcat) =>
                     subcat.items.map(
@@ -138,7 +148,7 @@ export const ArmamentStation = (props) => {
                                   : 'green'
                               }
                             >
-                              {`Quantity Remaining:
+                              {`${t('ui.armament_station.quantity_remaining')}:
                                  ${item.quantity - item.purchased}`}
                             </Stack.Item>
                             <Stack.Item
@@ -148,7 +158,7 @@ export const ArmamentStation = (props) => {
                                   : 'green'
                               }
                             >
-                              {`Cost: ${item.cost}`}
+                              {`${t('ui.common.cost')}: ${item.cost}`}
                             </Stack.Item>
                             {!!item.buyable_ammo && (
                               <Stack.Item
@@ -159,12 +169,12 @@ export const ArmamentStation = (props) => {
                                     : 'green'
                                 }
                               >
-                                {`Ammo Cost: ${item.magazine_cost}`}
+                                {`${t('ui.armament_station.ammo_cost')}: ${item.magazine_cost}`}
                               </Stack.Item>
                             )}
                             <Stack.Item>
                               <Button
-                                content="Buy"
+                                content={t('ui.common.buy')}
                                 textAlign="center"
                                 width="100%"
                                 disabled={
@@ -181,7 +191,7 @@ export const ArmamentStation = (props) => {
                             {!!item.buyable_ammo && (
                               <Stack.Item>
                                 <Button
-                                  content="Buy Ammo"
+                                  content={t('ui.armament_station.buy_ammo')}
                                   textAlign="center"
                                   width="100%"
                                   disabled={item.magazine_cost > card_points}
@@ -206,3 +216,4 @@ export const ArmamentStation = (props) => {
     </Window>
   );
 };
+

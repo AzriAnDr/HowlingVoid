@@ -13,9 +13,11 @@ import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const InsertedSkillchip = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
 
   const {
     skillchip_ready,
@@ -32,12 +34,12 @@ export const InsertedSkillchip = (props) => {
   } = data;
 
   if (!skillchip_ready) {
-    return !working && <NoticeBox info>Please insert a skillchip.</NoticeBox>;
+    return !working && <NoticeBox info>{t('ui.skill_station.please_insert_skillchip')}</NoticeBox>;
   }
 
   return (
     <Section
-      title="Inserted Skillchip"
+      title={t('ui.skill_station.inserted_skillchip')}
       buttons={
         <>
           <Button
@@ -45,14 +47,14 @@ export const InsertedSkillchip = (props) => {
             disabled={!implantable || !!working}
             color={implantable ? 'good' : 'default'}
             onClick={() => act('implant')}
-            content="Implant"
+            content={t('ui.skill_station.implant')}
             tooltip={implantable_reason}
           />
           <Button
             icon="eject"
             disabled={!!working}
             onClick={() => act('eject')}
-            content="Eject"
+            content={t('ui.common.eject')}
           />
         </>
       }
@@ -63,23 +65,23 @@ export const InsertedSkillchip = (props) => {
         </Stack.Item>
         <Stack.Item grow basis={0}>
           <LabeledList>
-            <LabeledList.Item label="Skillchip">
+            <LabeledList.Item label={t('ui.skill_station.skillchip')}>
               <Box bold>{skill_name}</Box>
             </LabeledList.Item>
-            <LabeledList.Item label="Description">
+            <LabeledList.Item label={t('ui.common.description')}>
               <Box italic>{skill_desc}</Box>
             </LabeledList.Item>
-            <LabeledList.Item label="Complexity">
+            <LabeledList.Item label={t('ui.common.complexity')}>
               <Icon name="brain" width="15px" textAlign="center" /> {complexity}
             </LabeledList.Item>
-            <LabeledList.Item label="Slot Size">
+            <LabeledList.Item label={t('ui.common.slot_size')}>
               <Box color={slots_used + slot_use > slots_max && 'red'}>
                 <Icon name="save" width="15px" textAlign="center" /> {slot_use}
               </Box>
             </LabeledList.Item>
             {!!implantable_reason && (
               <LabeledList.Item
-                label="Error"
+                label={t('ui.common.error')}
                 color={implantable ? 'good' : 'bad'}
               >
                 {implantable_reason}
@@ -94,6 +96,7 @@ export const InsertedSkillchip = (props) => {
 
 export const ImplantedSkillchips = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
 
   const { slots_used, slots_max, complexity_used, complexity_max, working } =
     data;
@@ -101,17 +104,17 @@ export const ImplantedSkillchips = (props) => {
   const current = data.current || [];
 
   return (
-    <Section title="Implanted Skillchips">
+    <Section title={t('ui.skill_station.implanted_skillchips')}>
       {!current.length && 'No skillchips detected.'}
       {!!current.length && (
         <Table>
           <Table.Row header>
-            <Table.Cell>Chip</Table.Cell>
+            <Table.Cell>{t('ui.skill_station.chip')}</Table.Cell>
             <Table.Cell textAlign="center">
               <Button
                 color="transparent"
                 icon="brain"
-                tooltip="Complexity"
+                tooltip={t('ui.common.complexity')}
                 tooltipPosition="top"
                 content={`${complexity_used}/${complexity_max}`}
               />
@@ -120,7 +123,7 @@ export const ImplantedSkillchips = (props) => {
               <Button
                 color="transparent"
                 icon="save"
-                tooltip="Slot Size"
+                tooltip={t('ui.common.slot_size')}
                 tooltipPosition="top"
                 content={`${slots_used}/${slots_max}`}
               />
@@ -129,7 +132,7 @@ export const ImplantedSkillchips = (props) => {
               <Button
                 color="transparent"
                 icon="check"
-                tooltip="Is Active"
+                tooltip={t('ui.skill_station.is_active')}
                 tooltipPosition="top"
               />
             </Table.Cell>
@@ -137,7 +140,7 @@ export const ImplantedSkillchips = (props) => {
               <Button
                 color="transparent"
                 icon="hourglass-half"
-                tooltip="Cooldown"
+                tooltip={t('ui.common.cooldown')}
                 tooltipPosition="top"
               />
             </Table.Cell>
@@ -145,7 +148,7 @@ export const ImplantedSkillchips = (props) => {
               <Button
                 color="transparent"
                 icon="tasks"
-                tooltip="Actions"
+                tooltip={t('ui.common.actions')}
                 tooltipPosition="top"
               />
             </Table.Cell>
@@ -241,9 +244,10 @@ export const TimeFormat = (props) => {
 
 export const SkillStation = (props) => {
   const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { working, timeleft, error } = data;
   return (
-    <Window title="Skillsoft Station" width={500} height={500}>
+    <Window title={t('ui.skill_station.skillsoft_station')} width={500} height={500}>
       <Window.Content>
         {!!error && <NoticeBox>{error}</NoticeBox>}
         {!!working && (

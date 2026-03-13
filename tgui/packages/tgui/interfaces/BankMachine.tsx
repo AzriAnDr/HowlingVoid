@@ -10,6 +10,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   current_balance: number;
@@ -19,16 +20,17 @@ type Data = {
 
 export const BankMachine = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { current_balance, siphoning, station_name } = data;
 
   return (
     <Window width={350} height={155}>
       <Window.Content>
-        <NoticeBox danger>Authorized personnel only</NoticeBox>
+        <NoticeBox danger>{t('ui.bank_machine.authorized_personnel_only')}</NoticeBox>
         <Section title={`${station_name} Vault`}>
           <LabeledList>
             <LabeledList.Item
-              label="Current Balance"
+              label={t('ui.bank_machine.current_balance')}
               buttons={
                 <Button
                   icon={siphoning ? 'times' : 'sync'}

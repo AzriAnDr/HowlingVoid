@@ -13,6 +13,7 @@ import { type BooleanLike, classes } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 enum Direction {
   North = 1,
@@ -53,6 +54,7 @@ type Data = {
 
 export const LightController = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     light_info,
     templates = [],
@@ -66,7 +68,7 @@ export const LightController = (props) => {
   const category_keys = category_ids ? Object.keys(category_ids) : [];
 
   return (
-    <Window title={`${light_info.name}: Lighting`} width={600} height={400}>
+    <Window title={`${light_info.name}: ${t('ui.light_controller.lighting')}`} width={600} height={400}>
       <Window.Content scrollable>
         <Stack fill>
           <Stack.Item>
@@ -122,6 +124,7 @@ type LightControlProps = {
 
 const LightControl = (props: LightControlProps) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { on } = data;
   const { info } = props;
   return (
@@ -138,7 +141,7 @@ const LightControl = (props: LightControlProps) => {
               <Button
                 fontSize="16px"
                 icon="brush"
-                tooltip="Change light color"
+                tooltip={t('ui.light_controller.change_light_color')}
                 textColor={info.color}
                 onClick={() => act('change_color')}
               >
@@ -148,7 +151,7 @@ const LightControl = (props: LightControlProps) => {
                 fontSize="16px"
                 color={on ? 'good' : 'bad'}
                 icon="power-off"
-                tooltip="Enable/Disable the light"
+                tooltip={t('ui.light_controller.toggle_light')}
                 onClick={() =>
                   act('set_on', {
                     value: !on,
@@ -159,7 +162,7 @@ const LightControl = (props: LightControlProps) => {
                 fontSize="16px"
                 color="purple"
                 icon="handcuffs"
-                tooltip="Isolate this light for a bit"
+                tooltip={t('ui.light_controller.isolate_light')}
                 onClick={() => act('isolate')}
               />
             </Stack.Item>
@@ -168,12 +171,12 @@ const LightControl = (props: LightControlProps) => {
         <Stack.Item>
           <Stack justify="space-around">
             <Stack.Item>
-              <Section title="Direction" textAlign="center" fontSize="11px">
+              <Section title={t('ui.common.direction')} textAlign="center" fontSize="11px">
                 <DirectionSelect />
               </Section>
             </Stack.Item>
             <Stack.Item>
-              <Section title="Angle" textAlign="center" fontSize="11px">
+              <Section title={t('ui.common.angle')} textAlign="center" fontSize="11px">
                 <AngleSelect />
               </Section>
             </Stack.Item>
@@ -221,6 +224,7 @@ type LightInfoProps = {
 
 const LightInfo = (props: LightInfoProps) => {
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
   const { light } = props;
   const { light_info } = light;
   return (
@@ -230,7 +234,7 @@ const LightInfo = (props: LightInfoProps) => {
           <Stack justify="space-between">
             <Stack.Item>
               <Box fontSize="16px" mt={0.5}>
-                Template: {light_info.name}
+                {t('ui.light_controller.template')}: {light_info.name}
               </Box>
               <Box fontSize="12px" ml={1} color="#aaaaaa">
                 {light.description}
@@ -243,7 +247,7 @@ const LightInfo = (props: LightInfoProps) => {
               <Button
                 fontSize="16px"
                 icon="upload"
-                tooltip="Use template"
+                tooltip={t('ui.light_controller.use_template')}
                 onClick={() =>
                   act('mirror_template', {
                     id: light.id,

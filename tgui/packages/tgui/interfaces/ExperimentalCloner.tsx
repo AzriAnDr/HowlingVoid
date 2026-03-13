@@ -9,6 +9,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   linked_scanner: BooleanLike;
@@ -26,6 +27,7 @@ type Data = {
 
 export const ExperimentalCloner = (props: any) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     linked_scanner,
     linked_pod,
@@ -41,49 +43,63 @@ export const ExperimentalCloner = (props: any) => {
   } = data;
 
   return (
-    <Window title="Experimental Cloner" width={500} height={300} theme="ntOS95">
+    <Window
+      title={t('ui.experimental_cloner.title')}
+      width={500}
+      height={300}
+      theme="ntOS95"
+    >
       <Window.Content>
         <Section
-          title="Stored Subject"
+          title={t('ui.experimental_cloner.stored_subject')}
           buttons={
             <Button
               icon="x"
               color="bad"
-              tooltip={`
-            Clear the currently stored cloning record.`}
+              tooltip={t('ui.experimental_cloner.clear_stored_record')}
               onClick={() => act('clear_record')}
               disabled={!record_name}
               tooltipPosition="bottom-start"
             >
-              Clear
+              {t('ui.common.clear')}
             </Button>
           }
         >
           {record_name ? (
             <Stack.Item>
-              {record_name} ({record_species ?? 'Unknown'})
+              {record_name} ({record_species ?? t('ui.common.unknown')})
             </Stack.Item>
           ) : (
-            'No stored DNA on record.'
+            t('ui.experimental_cloner.no_stored_dna')
           )}
         </Section>
         <Stack fill>
           <Stack.Item width="50%" mb={13}>
-            <Section fill title="Scanner">
+            <Section fill title={t('ui.experimental_cloner.scanner')}>
               {linked_scanner ? (
                 <Stack.Item textAlign="center">
                   <Stack vertical>
-                    <Stack.Item bold>Current Occupant:</Stack.Item>
-                    <Stack.Item>{scanner_occupant ?? 'None'}</Stack.Item>
+                    <Stack.Item bold>
+                      {t('ui.experimental_cloner.current_occupant')}:
+                    </Stack.Item>
+                    <Stack.Item>{scanner_occupant ?? t('ui.common.none')}</Stack.Item>
                     {scanner_occupant && (
                       <Stack vertical>
-                        <Stack.Item bold>Occupant Species:</Stack.Item>
-                        <Stack.Item>{scanner_species ?? 'Unknown'}</Stack.Item>
+                        <Stack.Item bold>
+                          {t('ui.experimental_cloner.occupant_species')}:
+                        </Stack.Item>
+                        <Stack.Item>
+                          {scanner_species ?? t('ui.common.unknown')}
+                        </Stack.Item>
                         <Divider />
                         <Button
                           color="good"
                           onClick={() => act('start_scan')}
-                          content={is_scanning ? 'Scanning...' : 'Scan Now'}
+                          content={
+                            is_scanning
+                              ? t('ui.experimental_cloner.scanning')
+                              : t('ui.experimental_cloner.scan_now')
+                          }
                           disabled={is_scanning}
                         />
                       </Stack>
@@ -92,20 +108,22 @@ export const ExperimentalCloner = (props: any) => {
                 </Stack.Item>
               ) : (
                 <Stack.Item textAlign="center">
-                  No scanner connected.
+                  {t('ui.experimental_cloner.no_scanner_connected')}
                 </Stack.Item>
               )}
             </Section>
           </Stack.Item>
           <Stack.Item width="50%" mb={13}>
-            <Section fill title="Cloning Pod">
+            <Section fill title={t('ui.experimental_cloner.cloning_pod')}>
               {linked_pod ? (
                 <Stack.Item textAlign="center">
                   {is_cloning ? (
                     <Stack vertical>
-                      <Stack.Item bold>Currently Cloning:</Stack.Item>
+                      <Stack.Item bold>
+                        {t('ui.experimental_cloner.currently_cloning')}:
+                      </Stack.Item>
                       <Stack.Item>
-                        {cloning_name} ({cloning_species ?? 'Unknown'})
+                        {cloning_name} ({cloning_species ?? t('ui.common.unknown')})
                       </Stack.Item>
                       <Stack.Item>
                         <ProgressBar
@@ -116,7 +134,9 @@ export const ExperimentalCloner = (props: any) => {
                         />
                       </Stack.Item>
                       {cloning_progress === 100 && (
-                        <Stack.Item>Beginning neural kickstart...</Stack.Item>
+                        <Stack.Item>
+                          {t('ui.experimental_cloner.beginning_neural_kickstart')}
+                        </Stack.Item>
                       )}
                     </Stack>
                   ) : (
@@ -124,15 +144,21 @@ export const ExperimentalCloner = (props: any) => {
                       <Button
                         color="good"
                         onClick={() => act('start_clone')}
-                        content={is_cloning ? 'Cloning...' : 'Begin Cloning'}
+                        content={
+                          is_cloning
+                            ? t('ui.experimental_cloner.cloning')
+                            : t('ui.experimental_cloner.begin_cloning')
+                        }
                         disabled={is_cloning || !record_name}
-                        tooltip={!record_name && 'No DNA on record.'}
+                        tooltip={!record_name && t('ui.experimental_cloner.no_dna_on_record')}
                       />
                     </Stack>
                   )}
                 </Stack.Item>
               ) : (
-                <Stack.Item textAlign="center">No pod connected.</Stack.Item>
+                <Stack.Item textAlign="center">
+                  {t('ui.experimental_cloner.no_pod_connected')}
+                </Stack.Item>
               )}
             </Section>
           </Stack.Item>

@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import { Icon, Input, Stack } from 'tgui-core/components';
+import { usePreferencesLocalization } from '../localization';
 
 type RequiredProps = {
   /** The state variable. */
@@ -28,12 +29,13 @@ type Props = RequiredProps & OptionalProps;
  * This component does not accept box props - just recreate it if needed
  */
 export function SearchBar(props: Props) {
+  const { t } = usePreferencesLocalization();
   const {
     autoFocus,
     expensive,
     noIcon = false,
     onSearch,
-    placeholder = 'Search...',
+    placeholder = t('ui.common.search_placeholder'),
     query = '',
     style,
   } = props;

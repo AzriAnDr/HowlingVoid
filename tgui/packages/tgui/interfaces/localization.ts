@@ -1,2 +1,4 @@
-export { usePreferencesLocalization } from './PreferencesMenu/localization';
-
+export {
+  getPreferencesLocalization,
+  usePreferencesLocalization,
+} from './PreferencesMenu/localization';

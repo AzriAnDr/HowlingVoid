@@ -12,6 +12,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Language = {
   name: string;
@@ -61,10 +62,11 @@ const LangSpeakIcon = (props: LanguagePropsPassRest) => {
 };
 
 const LangUnderstandIcon = (props: LanguageProps) => {
+  const { t } = usePreferencesLocalization();
   const { language } = props;
   if (!language.can_understand && language.partial_understanding > 0) {
     return (
-      <Tooltip content={`You can only partially understand ${language.name}.`}>
+      <Tooltip content={`${t('ui.language_menu.partially_understand')} ${language.name}.`}>
         <Box
           inline
           style={{
@@ -98,6 +100,7 @@ const LanguageNameAndDesc = (props: LanguageProps) => {
 };
 
 const LanguageRow = (props: LanguageProps) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const { is_living, admin_mode } = data;
   const { language } = props;
@@ -123,12 +126,8 @@ const LanguageRow = (props: LanguageProps) => {
           <Tooltip
             content={
               language.can_speak
-                ? `Despite knowing how to speak ${language.name},
-              you are unable due to physical limitations
-              (usually, your tongue).`
-                : `Even if you were to learn how to speak ${language.name},
-              you would be unable due to physical limitations
-              (usually, your tongue).`
+                ? `${t('ui.language_menu.unable_to_speak_despite_knowing')} ${language.name}, ${t('ui.language_menu.physical_limitations')}`
+                : `${t('ui.language_menu.unable_to_speak_even_if_learned')} ${language.name}, ${t('ui.language_menu.physical_limitations')}`
             }
           >
             <LangSpeakIcon
@@ -176,7 +175,7 @@ const LanguageRow = (props: LanguageProps) => {
               })
             }
           >
-            Grant
+            {t('ui.common.grant')}
           </Button>
           <Button
             disabled={!language.can_speak && !language.can_understand}
@@ -186,7 +185,7 @@ const LanguageRow = (props: LanguageProps) => {
               })
             }
           >
-            Remove
+            {t('ui.common.remove')}
           </Button>
         </Table.Cell>
       )}
@@ -195,21 +194,22 @@ const LanguageRow = (props: LanguageProps) => {
 };
 
 const OmnitongueToggle = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const { omnitongue } = data;
   return (
     <Button
-      tooltip={`If enabled, the mob's tongue will no longer prevent them
-        from speaking languages they are physically incapable of speaking.`}
+      tooltip={t('ui.language_menu.omnitongue_tooltip')}
       selected={omnitongue}
       onClick={() => act('toggle_omnitongue')}
     >
-      {`Omnitongue ${omnitongue ? 'Enabled' : 'Disabled'}`}
+      {`${t('ui.language_menu.omnitongue')} ${omnitongue ? t('ui.common.enabled') : t('ui.common.disabled')}`}
     </Button>
   );
 };
 
 export const LanguageMenu = (props) => {
+  const { t } = usePreferencesLocalization();
   const { data } = useBackend<Data>();
   const { admin_mode, is_living, languages } = data;
 
@@ -231,7 +231,7 @@ export const LanguageMenu = (props) => {
 
   return (
     <Window
-      title="Language Menu"
+      title={t('ui.language_menu.title')}
       width={admin_mode ? 700 : 500}
       height={Math.min(
         shown_languages.length * 25 + (admin_mode ? 100 : 70),
@@ -241,35 +241,33 @@ export const LanguageMenu = (props) => {
       <Window.Content>
         <Section
           scrollable
-          title={admin_mode ? <i>- Admin Mode -</i> : null}
+          title={admin_mode ? <i>{t('ui.language_menu.admin_mode')}</i> : null}
           buttons={admin_mode ? <OmnitongueToggle /> : null}
           fill
         >
           <Table>
             <Table.Row header>
-              <Table.Cell>Name</Table.Cell>
-              <Table.Cell>Speak</Table.Cell>
-              <Table.Cell>Understand</Table.Cell>
+              <Table.Cell>{t('ui.common.name')}</Table.Cell>
+              <Table.Cell>{t('ui.language_menu.speak')}</Table.Cell>
+              <Table.Cell>{t('ui.language_menu.understand')}</Table.Cell>
               <Table.Cell>
                 <Tooltip
-                  content="Use this key in your message
-                  to speak in this language."
+                  content={t('ui.language_menu.key_help')}
                 >
                   <Box
                     inline
                     style={{
                       borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
                     }}
-                  >
-                    Key
+                    >
+                    {t('ui.language_menu.key')}
                   </Box>
                 </Tooltip>
               </Table.Cell>
               {!!is_living && (
                 <Table.Cell>
                   <Tooltip
-                    content="Determines which language you speak
-                    naturally, without using the 'key'."
+                    content={t('ui.language_menu.default_help')}
                   >
                     <Box
                       inline
@@ -277,7 +275,7 @@ export const LanguageMenu = (props) => {
                         borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
                       }}
                     >
-                      Default
+                      {t('ui.common.default')}
                     </Box>
                   </Tooltip>
                 </Table.Cell>

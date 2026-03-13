@@ -19,6 +19,7 @@ import { capitalize, createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type OrderDatum = {
   cat: string;
@@ -80,6 +81,7 @@ function findAmount(item_amts: Item[], name: string): number {
 
 function ShoppingTab(props) {
   const { data, act } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { credit_type, order_categories, order_datums, item_amts } = data;
 
   const [shopCategory, setShopCategory] = useState(order_categories[0]);
@@ -120,7 +122,7 @@ function ShoppingTab(props) {
                 autoFocus
                 mt={0.5}
                 width="150px"
-                placeholder="Search item..."
+                placeholder={t('ui.produce_console.search_item_placeholder')}
                 value={searchItem}
                 onChange={setSearchItem}
               />

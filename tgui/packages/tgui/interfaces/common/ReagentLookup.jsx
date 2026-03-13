@@ -1,59 +1,61 @@
 import { Box, Button, Icon, LabeledList } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 
 export const ReagentLookup = (props) => {
   const { reagent } = props;
-  const { act } = useBackend();
+  const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   if (!reagent) {
-    return <Box>No reagent selected!</Box>;
+    return <Box>{t('ui.chem.no_reagent_selected')}</Box>;
   }
 
   return (
     <LabeledList>
-      <LabeledList.Item label="Reagent">
+      <LabeledList.Item label={t('ui.chem.reagent')}>
         <Icon name="circle" mr={1} color={reagent.reagentCol} />
         {reagent.name}
         <Button
           ml={1}
           icon="wifi"
           color="teal"
-          tooltip="Open the associated wikipage for this reagent."
+          tooltip={t('ui.chem.open_reagent_wiki')}
           tooltipPosition="left"
           onClick={() => {
             Byond.command(`wiki Guide_to_chemistry#${reagent.name}`);
           }}
         />
       </LabeledList.Item>
-      <LabeledList.Item label="Description">{reagent.desc}</LabeledList.Item>
-      <LabeledList.Item label="pH">
+      <LabeledList.Item label={t('ui.common.description')}>{reagent.desc}</LabeledList.Item>
+      <LabeledList.Item label={t('ui.chem.ph')}>
         <Icon name="circle" mr={1} color={reagent.pHCol} />
         {reagent.pH}
       </LabeledList.Item>
-      <LabeledList.Item label="Properties">
+      <LabeledList.Item label={t('ui.chem.properties')}>
         <LabeledList>
           {!!reagent.OD && (
-            <LabeledList.Item label="Overdose">{reagent.OD}u</LabeledList.Item>
+            <LabeledList.Item label={t('ui.chem.overdose')}>{reagent.OD}u</LabeledList.Item>
           )}
           {reagent.addictions[0] && (
-            <LabeledList.Item label="Addiction">
+            <LabeledList.Item label={t('ui.chem.addiction')}>
               {reagent.addictions.map((addiction) => (
                 <Box key={addiction}>{addiction}</Box>
               ))}
             </LabeledList.Item>
           )}
-          <LabeledList.Item label="Metabolization rate">
+          <LabeledList.Item label={t('ui.chem.metabolization_rate')}>
             {reagent.metaRate}u/s
           </LabeledList.Item>
         </LabeledList>
       </LabeledList.Item>
-      <LabeledList.Item label="Impurities">
+      <LabeledList.Item label={t('ui.chem.impurities')}>
         <LabeledList>
           {reagent.impureReagent && (
-            <LabeledList.Item label="Impure reagent">
+            <LabeledList.Item label={t('ui.chem.impure_reagent')}>
               <Button
                 icon="vial"
-                tooltip="This reagent will partially convert into this when the purity is above the Inverse purity on consumption."
+                tooltip={t('ui.chem.impure_reagent_tooltip')}
                 tooltipPosition="left"
                 content={reagent.impureReagent}
                 onClick={() =>
@@ -65,11 +67,11 @@ export const ReagentLookup = (props) => {
             </LabeledList.Item>
           )}
           {reagent.inverseReagent && (
-            <LabeledList.Item label="Inverse reagent">
+            <LabeledList.Item label={t('ui.chem.inverse_reagent')}>
               <Button
                 icon="vial"
                 content={reagent.inverseReagent}
-                tooltip="This reagent will convert into this when the purity is below the Inverse purity on consumption."
+                tooltip={t('ui.chem.inverse_reagent_tooltip')}
                 tooltipPosition="left"
                 onClick={() =>
                   act('reagent_click', {
@@ -80,10 +82,10 @@ export const ReagentLookup = (props) => {
             </LabeledList.Item>
           )}
           {reagent.failedReagent && (
-            <LabeledList.Item label="Failed reagent">
+            <LabeledList.Item label={t('ui.chem.failed_reagent')}>
               <Button
                 icon="vial"
-                tooltip="This reagent will turn into this if the purity of the reaction is below the minimum purity on completion."
+                tooltip={t('ui.chem.failed_reagent_tooltip')}
                 tooltipPosition="left"
                 content={reagent.failedReagent}
                 onClick={() =>
@@ -95,19 +97,19 @@ export const ReagentLookup = (props) => {
             </LabeledList.Item>
           )}
         </LabeledList>
-        {reagent.isImpure && <Box>This reagent is created by impurity.</Box>}
-        {reagent.deadProcess && <Box>This reagent works on the dead.</Box>}
+        {reagent.isImpure && <Box>{t('ui.chem.reagent_created_by_impurity')}</Box>}
+        {reagent.deadProcess && <Box>{t('ui.chem.reagent_works_on_dead')}</Box>}
         {!reagent.failedReagent &&
           !reagent.inverseReagent &&
           !reagent.impureReagent && (
-            <Box>This reagent has no impure reagents.</Box>
+            <Box>{t('ui.chem.reagent_has_no_impure')}</Box>
           )}
       </LabeledList.Item>
       <LabeledList.Item>
         <Button
           icon="flask"
           mt={2}
-          content={'Find associated reaction'}
+          content={t('ui.chem.find_associated_reaction')}
           color="purple"
           onClick={() =>
             act('find_reagent_reaction', {

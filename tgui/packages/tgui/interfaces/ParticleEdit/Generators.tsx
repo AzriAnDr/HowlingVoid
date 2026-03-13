@@ -1,6 +1,7 @@
 import { Dropdown, NumberInput, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import {
   type GeneratorProps,
   GeneratorTypes,
@@ -13,6 +14,7 @@ import {
 
 export const GeneratorListEntry = (props: GeneratorProps) => {
   const { act, data } = useBackend<ParticleUIData>();
+  const { t } = usePreferencesLocalization(data);
   const { var_name, generator, allow_vectors } = props;
   // omits generators that are not allowed with certain vars
   const allowed_generators = allow_vectors
@@ -62,7 +64,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
         />
       </Stack.Item>
       <Stack.Item>
-        A:
+        {t('ui.particle_editor.a')}:
         {typeof A === 'number' ? (
           <NumberInput
             animated
@@ -135,7 +137,7 @@ export const GeneratorListEntry = (props: GeneratorProps) => {
         )}
       </Stack.Item>
       <Stack.Item>
-        B:
+        {t('ui.particle_editor.b')}:
         {typeof B === 'number' ? (
           <NumberInput
             animated

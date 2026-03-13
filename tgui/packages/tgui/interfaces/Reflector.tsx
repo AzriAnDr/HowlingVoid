@@ -11,6 +11,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   reflector_name: string;
@@ -18,13 +19,14 @@ type Data = {
 };
 export const Reflector = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { reflector_name, rotation_angle } = data;
   return (
     <Window title={reflector_name} height={200} width={219}>
       <Window.Content>
         <Stack>
           <Stack.Item>
-            <Section title="Presets" textAlign="center" fill>
+            <Section title={t('ui.reflector.presets')} textAlign="center" fill>
               <Table mt={3.5}>
                 <Table.Cell>
                   <Table.Row>
@@ -138,9 +140,9 @@ export const Reflector = (props) => {
             </Section>
           </Stack.Item>
           <Stack>
-            <Section title="Angle" textAlign="center" fill>
+            <Section title={t('ui.reflector.angle')} textAlign="center" fill>
               <LabeledControls>
-                <LabeledControls.Item ml={0.5} label="Set rotation">
+                <LabeledControls.Item ml={0.5} label={t('ui.reflector.set_rotation')}>
                   <NumberInput
                     tickWhileDragging
                     value={rotation_angle}

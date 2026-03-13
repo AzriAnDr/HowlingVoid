@@ -9,6 +9,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   stacks: Stacks[];
@@ -27,13 +28,19 @@ type Stacks = {
 
 export const RepairbotResources = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { stacks, repairbot_icon, repairbot_icon_state } = data;
   return (
-    <Window title="Resource Management" width={405} height={260} theme="ntos">
+    <Window
+      title={t('ui.repairbotresources.resource_management')}
+      width={405}
+      height={260}
+      theme="ntos"
+    >
       <Window.Content>
         <Section
           fill
-          title="Resource Management"
+          title={t('ui.repairbotresources.resource_management')}
           textAlign="center"
           scrollable
           buttons={

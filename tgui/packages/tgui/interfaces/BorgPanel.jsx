@@ -8,9 +8,11 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const BorgPanel = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const borg = data.borg || {};
   const cell = data.cell || {};
   const cellPercent = cell.charge / cell.maxcharge;
@@ -20,66 +22,66 @@ export const BorgPanel = (props) => {
   const ais = data.ais || [];
   const laws = data.laws || [];
   return (
-    <Window title="Borg Panel" theme="admin" width={700} height={700}>
+    <Window title={t('ui.borg_panel.title')} theme="admin" width={700} height={700}>
       <Window.Content scrollable>
         <Section
           title={borg.name}
           buttons={
             <Button
               icon="pencil-alt"
-              content="Rename"
+              content={t('ui.common.rename')}
               onClick={() => act('rename')}
             />
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Status">
+            <LabeledList.Item label={t('ui.common.status')}>
               <Button
                 icon={borg.emagged ? 'check-square-o' : 'square-o'}
-                content="Emagged"
+                content={t('ui.borg_panel.emagged')}
                 selected={borg.emagged}
                 onClick={() => act('toggle_emagged')}
               />
               <Button
                 icon={borg.lockdown ? 'check-square-o' : 'square-o'}
-                content="Locked Down"
+                content={t('ui.borg_panel.locked_down')}
                 selected={borg.lockdown}
                 onClick={() => act('toggle_lockdown')}
               />
               <Button
                 icon={borg.scrambledcodes ? 'check-square-o' : 'square-o'}
-                content="Scrambled Codes"
+                content={t('ui.borg_panel.scrambled_codes')}
                 selected={borg.scrambledcodes}
                 onClick={() => act('toggle_scrambledcodes')}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Charge">
+            <LabeledList.Item label={t('ui.borg_panel.charge')}>
               {!cell.missing ? (
                 <ProgressBar value={cellPercent}>
                   {`${cell.charge} / ${cell.maxcharge}`}
                 </ProgressBar>
               ) : (
-                <span className="color-bad">No cell installed</span>
+                <span className="color-bad">{t('ui.borg_panel.no_cell_installed')}</span>
               )}
               <br />
               <Button
                 icon="pencil-alt"
-                content="Set"
+                content={t('ui.common.set')}
                 onClick={() => act('set_charge')}
               />
               <Button
                 icon="eject"
-                content="Change"
+                content={t('ui.common.change')}
                 onClick={() => act('change_cell')}
               />
               <Button
                 icon="trash"
-                content="Remove"
+                content={t('ui.common.remove')}
                 color="bad"
                 onClick={() => act('remove_cell')}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Radio Channels">
+            <LabeledList.Item label={t('ui.borg_panel.radio_channels')}>
               {channels.map((channel) => (
                 <Button
                   key={channel.name}
@@ -94,7 +96,7 @@ export const BorgPanel = (props) => {
                 />
               ))}
             </LabeledList.Item>
-            <LabeledList.Item label="Model">
+            <LabeledList.Item label={t('ui.common.model')}>
               {modules.map((module) => (
                 <Button
                   key={module.type}
@@ -113,7 +115,7 @@ export const BorgPanel = (props) => {
                 />
               ))}
             </LabeledList.Item>
-            <LabeledList.Item label="Upgrades">
+            <LabeledList.Item label={t('ui.common.upgrades')}>
               {upgrades.map((upgrade) => (
                 <Button
                   key={upgrade.type}
@@ -128,7 +130,7 @@ export const BorgPanel = (props) => {
                 />
               ))}
             </LabeledList.Item>
-            <LabeledList.Item label="Master AI">
+            <LabeledList.Item label={t('ui.borg_panel.master_ai')}>
               {ais.map((ai) => (
                 <Button
                   key={ai.ref}
@@ -146,11 +148,11 @@ export const BorgPanel = (props) => {
           </LabeledList>
         </Section>
         <Section
-          title="Laws"
+          title={t('ui.common.laws')}
           buttons={
             <Button
               icon={borg.lawupdate ? 'check-square-o' : 'square-o'}
-              content="Lawsync"
+              content={t('ui.borg_panel.lawsync')}
               selected={borg.lawupdate}
               onClick={() => act('toggle_lawupdate')}
             />

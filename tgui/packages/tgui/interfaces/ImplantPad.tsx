@@ -9,6 +9,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   has_case: BooleanLike;
@@ -21,6 +22,7 @@ type Data = {
 
 export const ImplantPad = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     has_case,
     has_implant,
@@ -80,7 +82,7 @@ export const ImplantPad = (props) => {
           </Stack.Item>
         </Stack>
         <Divider />
-        <Collapsible open={true} title="Implant Information">
+        <Collapsible open={true} title={t('ui.implant_pad.implant_information')}>
           {!has_case && (
             <Section>
               No implant case detected. Please insert one to see its contents.
@@ -94,7 +96,9 @@ export const ImplantPad = (props) => {
           )}
           {!!has_case && !!has_implant && <Section>{case_information}</Section>}
         </Collapsible>
-        <Collapsible title="Implant Extended Information">
+        <Collapsible
+          title={t('ui.implant_pad.implant_extended_information')}
+        >
           {!has_case && (
             <Section>
               No implant case detected. Please insert one to see its contents.

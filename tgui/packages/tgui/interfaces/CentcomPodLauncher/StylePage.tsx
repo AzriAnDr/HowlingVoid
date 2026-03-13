@@ -2,10 +2,12 @@ import { Box, Button, Section } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import type { PodLauncherData } from './types';
 
 export function StylePage(props) {
   const { act, data } = useBackend<PodLauncherData>();
+  const { t } = usePreferencesLocalization(data);
   const { effectName, styleChoice, podStyles } = data;
 
   return (
@@ -16,17 +18,15 @@ export function StylePage(props) {
           icon="edit"
           onClick={() => act('effectName')}
           selected={effectName}
-          tooltip={`
-            Edit pod's
-            .id/desc.`}
+          tooltip={t('ui.centcom_pod_launcher.edit_pod_id_desc')}
           tooltipPosition="bottom-start"
         >
-          Name
+          {t('ui.common.name')}
         </Button>
       }
       fill
       scrollable
-      title="Style"
+      title={t('ui.centcom_pod_launcher.style')}
     >
       {podStyles.map((page, i) => (
         <Button

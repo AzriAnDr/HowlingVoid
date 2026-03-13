@@ -1,10 +1,12 @@
 import { Button, LabeledList, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import type { ControllerData } from './types';
 
 export function OverviewSection(props) {
   const { act, data } = useBackend<ControllerData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     fast_update,
     rolling_length,
@@ -23,21 +25,24 @@ export function OverviewSection(props) {
   return (
     <Section
       fill
-      title="Master Overview"
+      title={t('ui.controller_overview.master_overview')}
       buttons={
         <>
           <Button
-            tooltip="Fast Update"
+            tooltip={t('ui.controller_overview.fast_update')}
             icon={fast_update ? 'check-square-o' : 'square-o'}
             color={fast_update && 'average'}
             onClick={() => {
               act('toggle_fast_update');
             }}
           >
-            Fast
+            {t('ui.controller_overview.fast')}
           </Button>
           <Button.Input
-            buttonText={`Average: ${(rolling_length / 10).toFixed(2)} Second(s)`}
+            buttonText={t('ui.controller_overview.average_seconds').replace(
+              '{seconds}',
+              (rolling_length / 10).toFixed(2),
+            )}
             value={(rolling_length / 10).toString()}
             onCommit={(value) => {
               act('set_rolling_length', {
@@ -51,20 +56,24 @@ export function OverviewSection(props) {
       <Stack fill>
         <Stack.Item grow>
           <LabeledList>
-            <LabeledList.Item label="World Time">
+            <LabeledList.Item label={t('ui.controller_overview.world_time')}>
               {world_time.toFixed(1)}
             </LabeledList.Item>
-            <LabeledList.Item label="Map CPU">
+            <LabeledList.Item label={t('ui.controller_overview.map_cpu')}>
               {map_cpu.toFixed(2)}%
             </LabeledList.Item>
           </LabeledList>
         </Stack.Item>
         <Stack.Item grow>
           <LabeledList>
-            <LabeledList.Item label="Overall Avg Usage">
+            <LabeledList.Item
+              label={t('ui.controller_overview.overall_avg_usage')}
+            >
               {avgUsage.toFixed(2)}%
             </LabeledList.Item>
-            <LabeledList.Item label="Overall Overrun">
+            <LabeledList.Item
+              label={t('ui.controller_overview.overall_overrun')}
+            >
               {overallOverrun.toFixed(2)}%
             </LabeledList.Item>
           </LabeledList>

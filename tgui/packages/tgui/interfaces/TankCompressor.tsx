@@ -16,6 +16,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   // Dynamic
@@ -51,8 +52,10 @@ const formatPressure = (value) => {
 };
 
 export const TankCompressor = (props) => {
+  const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   return (
-    <Window title="Tank Compressor" width={440} height={440}>
+    <Window title={t('ui.tank_compressor.title')} width={440} height={440}>
       <Window.Content>
         <TankCompressorContent />
       </Window.Content>
@@ -62,6 +65,7 @@ export const TankCompressor = (props) => {
 
 const TankCompressorContent = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { disk, storage } = data;
 
   return (
@@ -74,14 +78,14 @@ const TankCompressorContent = (props) => {
           style={{
             textTransform: 'capitalize',
           }}
-          title={disk ? `${disk} (${storage})` : 'No Disk Inserted'}
+          title={disk ? `${disk} (${storage})` : t('ui.tank_compressor.no_disk_inserted')}
           buttons={
             <Button
               icon="eject"
               disabled={!disk}
               onClick={() => act('eject_disk')}
             >
-              Eject Disk
+              {t('ui.common.eject_disk')}
             </Button>
           }
         >
@@ -94,6 +98,7 @@ const TankCompressorContent = (props) => {
 
 const TankCompressorControls = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     tankPresent,
     leaking,
@@ -133,7 +138,7 @@ const TankCompressorControls = (props) => {
   return (
     <Stack.Item>
       <Section
-        title="Tank"
+        title={t('ui.common.tank')}
         buttons={
           <Button
             icon="eject"
@@ -146,7 +151,7 @@ const TankCompressorControls = (props) => {
       >
         <NoticeBox color={notice_color}>{notice_text}</NoticeBox>
         <LabeledControls p={2}>
-          <LabeledControls.Item label="Pressure">
+          <LabeledControls.Item label={t('ui.common.pressure')}>
             <RoundGauge
               size={2.5}
               value={pressure}
@@ -161,7 +166,7 @@ const TankCompressorControls = (props) => {
               format={formatPressure}
             />
           </LabeledControls.Item>
-          <LabeledControls.Item label="Flow rate">
+          <LabeledControls.Item label={t('ui.tank_compressor.flow_rate')}>
             <Box position="relative">
               <Knob
                 size={2}
@@ -205,7 +210,7 @@ const TankCompressorControls = (props) => {
               />
             </Box>
           </LabeledControls.Item>
-          <LabeledControls.Item label="Compressor">
+          <LabeledControls.Item label={t('ui.tank_compressor.compressor')}>
             <Button
               my={0.5}
               lineHeight={2}
@@ -226,6 +231,7 @@ const TankCompressorControls = (props) => {
 
 const TankCompressorRecords = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { records = [], disk } = data;
   const [activeRecordRef, setActiveRecordRef] = useSharedState(
     'recordRef',
@@ -237,7 +243,7 @@ const TankCompressorRecords = (props) => {
   if (records.length === 0) {
     return (
       <Stack.Item grow>
-        <NoticeBox>No Records</NoticeBox>
+        <NoticeBox>{t('ui.tank_compressor.no_records')}</NoticeBox>
       </Stack.Item>
     );
   }
@@ -262,16 +268,16 @@ const TankCompressorRecords = (props) => {
         {activeRecord ? (
           <Stack.Item grow>
             <LabeledList>
-              <LabeledList.Item label="Title">
+              <LabeledList.Item label={t('ui.common.title')}>
                 {activeRecord.name}
               </LabeledList.Item>
-              <LabeledList.Item label="Time">
+              <LabeledList.Item label={t('ui.common.time')}>
                 {activeRecord.timestamp}
               </LabeledList.Item>
-              <LabeledList.Item label="Source">
+              <LabeledList.Item label={t('ui.common.source')}>
                 {activeRecord.source}
               </LabeledList.Item>
-              <LabeledList.Item label="Gases">
+              <LabeledList.Item label={t('ui.common.gases')}>
                 <LabeledList>
                   {Object.keys(activeRecord.gases).map((gas_name) => (
                     <LabeledList.Item label={gas_name} key={gas_name}>
@@ -284,12 +290,12 @@ const TankCompressorRecords = (props) => {
                   ))}
                 </LabeledList>
               </LabeledList.Item>
-              <LabeledList.Item label="Actions">
+              <LabeledList.Item label={t('ui.common.actions')}>
                 <Button
                   icon="floppy-disk"
-                  content="Save to Disk"
+                  content={t('ui.common.save_to_disk')}
                   disabled={!disk}
-                  tooltip="Save the record selected to an inserted data disk."
+                  tooltip={t('ui.tank_compressor.tooltip_save_record_to_disk')}
                   tooltipPosition="bottom"
                   onClick={() => {
                     act('save_record', {
@@ -311,7 +317,7 @@ const TankCompressorRecords = (props) => {
           </Stack.Item>
         ) : (
           <Stack.Item grow={1} basis={0}>
-            <NoticeBox>No Record Selected</NoticeBox>
+            <NoticeBox>{t('ui.tank_compressor.no_record_selected')}</NoticeBox>
           </Stack.Item>
         )}
       </Stack>

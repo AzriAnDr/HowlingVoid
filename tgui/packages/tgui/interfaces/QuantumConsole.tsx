@@ -13,6 +13,7 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import { LoadingScreen } from './common/LoadingScreen';
 
 type Data =
@@ -92,9 +93,10 @@ function getColor(difficulty: number) {
 
 export function QuantumConsole(props) {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization();
 
   return (
-    <Window title="Quantum Console" width={500} height={500}>
+    <Window title={t('ui.quantum_console.title')} width={500} height={500}>
       <Window.Content>
         {!!data.connected && !data.ready && <LoadingScreen />}
         <AccessView />
@@ -105,10 +107,11 @@ export function QuantumConsole(props) {
 
 function AccessView(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization();
   const [tab, setTab] = useSharedState('tab', 0);
 
   if (!isConnected(data)) {
-    return <NoticeBox danger>No server connected!</NoticeBox>;
+    return <NoticeBox danger>{t('ui.quantum_console.no_server_connected')}</NoticeBox>;
   }
 
   const {
@@ -134,7 +137,7 @@ function AccessView(props) {
       ? '???'
       : sorted.find(({ id }) => id === generated_domain)?.name;
   } else {
-    selected = 'Nothing loaded';
+    selected = t('ui.quantum_console.nothing_loaded');
   }
 
   return (
@@ -144,20 +147,20 @@ function AccessView(props) {
           buttons={
             <Stack fill>
               <Tooltip
-                content="Toggles whether you broadcast your
-                  bitrun to station Entertainment Monitors."
+                content={t(
+                  'ui.quantum_console.broadcast_to_entertainment_monitors',
+                )}
               >
                 <Button.Checkbox
                   checked={broadcasting}
                   disabled={broadcasting_on_cd}
                   onClick={() => act('broadcast')}
                 >
-                  Broadcast
+                  {t('ui.quantum_console.broadcast')}
                 </Button.Checkbox>
               </Tooltip>
               <Tooltip
-                content="Get a random domain for more rewards.
-                  Weighted towards your current points. Minimum: 1 point."
+                content={t('ui.quantum_console.random_domain_tooltip')}
               >
                 <Button
                   disabled={
@@ -167,10 +170,12 @@ function AccessView(props) {
                   onClick={() => act('random_domain')}
                   mr={1}
                 >
-                  Randomize
+                  {t('ui.common.randomize')}
                 </Button>
               </Tooltip>
-              <Tooltip content="Accrued points for purchasing domains.">
+              <Tooltip
+                content={t('ui.quantum_console.accrued_points_for_purchasing_domains')}
+              >
                 <Icon color="pink" name="star" mr={1} />
                 {points}
               </Tooltip>
@@ -178,7 +183,7 @@ function AccessView(props) {
           }
           fill
           scrollable
-          title="Virtual Domains"
+          title={t('ui.quantum_console.virtual_domains')}
         >
           <Tabs fluid>
             <Tabs.Tab
@@ -188,7 +193,7 @@ function AccessView(props) {
               onClick={() => setTab(0)}
               icon="chevron-down"
             >
-              Peaceful
+              {t('ui.quantum_console.peaceful')}
             </Tabs.Tab>
             <Tabs.Tab
               backgroundColor={getColor(Difficulty.Low)}
@@ -197,7 +202,7 @@ function AccessView(props) {
               onClick={() => setTab(1)}
               icon="chevron-down"
             >
-              Easy
+              {t('ui.common.easy')}
             </Tabs.Tab>
             <Tabs.Tab
               backgroundColor={getColor(Difficulty.Medium)}
@@ -206,7 +211,7 @@ function AccessView(props) {
               onClick={() => setTab(2)}
               icon="chevron-down"
             >
-              Medium
+              {t('ui.common.medium')}
             </Tabs.Tab>
             <Tabs.Tab
               backgroundColor={getColor(Difficulty.High)}
@@ -215,7 +220,7 @@ function AccessView(props) {
               onClick={() => setTab(3)}
               icon="chevron-down"
             >
-              Hard <Icon name="skull" ml={1} />{' '}
+              {t('ui.common.hard')} <Icon name="skull" ml={1} />{' '}
             </Tabs.Tab>
           </Tabs>
           {filtered.map((domain) => (
@@ -233,12 +238,12 @@ function AccessView(props) {
               <NoticeBox info={!!generated_domain}>{selected}</NoticeBox>
             </Stack.Item>
             <Stack.Item>
-              <Tooltip content="Begins shutdown. Will notify anyone connected.">
+              <Tooltip content={t('ui.quantum_console.stop_domain_tooltip')}>
                 <Button.Confirm
                   disabled={!ready || !generated_domain}
                   onClick={() => act('stop_domain')}
                 >
-                  Stop Domain
+                  {t('ui.quantum_console.stop_domain')}
                 </Button.Confirm>
               </Tooltip>
             </Stack.Item>
@@ -250,6 +255,7 @@ function AccessView(props) {
 }
 
 function DomainEntry(props: DomainEntryProps) {
+  const { t } = usePreferencesLocalization();
   const {
     domain: {
       announce_ghosts,
@@ -278,10 +284,10 @@ function DomainEntry(props: DomainEntryProps) {
     buttonName = '???';
   } else if (current) {
     buttonIcon = 'download';
-    buttonName = 'Deployed';
+    buttonName = t('ui.quantum_console.deployed');
   } else {
     buttonIcon = 'coins';
-    buttonName = 'Deploy';
+    buttonName = t('ui.quantum_console.deploy');
   }
 
   const canView = name !== '???';
@@ -289,7 +295,11 @@ function DomainEntry(props: DomainEntryProps) {
   return (
     <Collapsible
       buttons={
-        <Tooltip content={!!generated_domain && 'Stop current domain first.'}>
+        <Tooltip
+          content={
+            !!generated_domain ? t('ui.quantum_console.stop_current_domain_first') : ''
+          }
+        >
           <Button
             disabled={!!generated_domain || !ready || occupied || points < cost}
             icon={buttonIcon}
@@ -312,20 +322,21 @@ function DomainEntry(props: DomainEntryProps) {
       <Stack height={5}>
         <Stack.Item color="label" grow={4}>
           {desc}
-          {!!is_modular && ' (Modular)'}
-          {!!has_secondary_objectives && ' (Secondary Objective Available)'}
-          {!!announce_ghosts && ' (Ghost Interaction)'}
+          {!!is_modular && ` (${t('ui.quantum_console.modular')})`}
+          {!!has_secondary_objectives &&
+            ` (${t('ui.quantum_console.secondary_objective_available')})`}
+          {!!announce_ghosts && ` (${t('ui.quantum_console.ghost_interaction')})`}
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow>
           <Table>
             <Table.Row>
-              <Tooltip content="Points cost for deploying domain.">
+              <Tooltip content={t('ui.quantum_console.points_cost_for_deploying_domain')}>
                 <DisplayDetails amount={cost} color="pink" icon="star" />
               </Tooltip>
             </Table.Row>
             <Table.Row>
-              <Tooltip content="Reward for competing domain.">
+              <Tooltip content={t('ui.quantum_console.reward_for_completing_domain')}>
                 <DisplayDetails amount={reward} color="gold" icon="coins" />
               </Tooltip>
             </Table.Row>
@@ -338,6 +349,7 @@ function DomainEntry(props: DomainEntryProps) {
 
 const AvatarDisplay = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization();
   if (!isConnected(data)) {
     return null;
   }
@@ -346,12 +358,14 @@ const AvatarDisplay = (props) => {
 
   return (
     <Section
-      title="Connected Clients"
+      title={t('ui.quantum_console.connected_clients')}
       buttons={
         <Stack align="center">
           {!!generated_domain && (
             <Stack.Item>
-              <Tooltip content="Available bandwidth for new connections.">
+              <Tooltip
+                content={t('ui.quantum_console.available_bandwidth_for_new_connections')}
+              >
                 <DisplayDetails
                   color="green"
                   icon="broadcast-tower"
@@ -361,9 +375,9 @@ const AvatarDisplay = (props) => {
             </Stack.Item>
           )}
           <Stack.Item>
-            <Tooltip content="Refresh avatar data.">
+            <Tooltip content={t('ui.quantum_console.refresh_avatar_data')}>
               <Button icon="sync" onClick={() => act('refresh')}>
-                Refresh
+                {t('ui.common.refresh')}
               </Button>
             </Tooltip>
           </Stack.Item>
@@ -374,7 +388,7 @@ const AvatarDisplay = (props) => {
         {avatars.map(({ health, name, pilot, brute, burn, tox, oxy }) => (
           <Table.Row key={name}>
             <Table.Cell color="label">
-              {pilot} as{' '}
+              {pilot} {t('ui.quantum_console.as')}{' '}
               <span style={{ color: 'white' }}>&quot;{name}&quot;</span>
             </Table.Cell>
             <Table.Cell collapsing>
@@ -421,10 +435,11 @@ const AvatarDisplay = (props) => {
 };
 
 const DisplayDetails = (props: DisplayDetailsProps) => {
+  const { t } = usePreferencesLocalization();
   const { amount = 0, color, icon = 'star' } = props;
 
   if (amount === 0) {
-    return <Table.Cell color="label">None</Table.Cell>;
+    return <Table.Cell color="label">{t('ui.common.none')}</Table.Cell>;
   }
 
   if (typeof amount === 'string') {

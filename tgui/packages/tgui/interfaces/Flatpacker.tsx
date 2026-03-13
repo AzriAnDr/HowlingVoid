@@ -17,6 +17,7 @@ import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { MaterialIcon } from './Fabrication/MaterialIcon';
 import type { Material } from './Fabrication/Types';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   SHEET_MATERIAL_AMOUNT: number;
@@ -34,10 +35,11 @@ type Design = {
 
 export const Flatpacker = (props: any) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { SHEET_MATERIAL_AMOUNT, materials, design, busy } = data;
 
   return (
-    <Window width={670} height={400} title="Flatpacker">
+    <Window width={670} height={400} title={t('ui.flatpacker.title')}>
       <Window.Content>
         {!!busy && (
           <Dimmer
@@ -47,7 +49,7 @@ export const Flatpacker = (props: any) => {
             }}
           >
             <Icon name="cog" spin />
-            {' Flatpacking...'}
+            {` ${t('ui.flatpacker.flatpacking')}`}
           </Dimmer>
         )}
         <Stack fill vertical align="stretch">
@@ -62,13 +64,13 @@ export const Flatpacker = (props: any) => {
                       fontSize: '18px',
                     }}
                   >
-                    {design ? toTitleCase(design.name) : 'No Board!'}
+                    {design ? toTitleCase(design.name) : t('ui.flatpacker.no_board')}
                   </Box>
                 </Section>
               </Stack.Item>
               <Stack.Item>
                 <Button
-                  tooltip="Eject Board"
+                  tooltip={t('ui.flatpacker.eject_board')}
                   tooltipPosition="left"
                   height="37px"
                   width="37px"
@@ -94,7 +96,7 @@ export const Flatpacker = (props: any) => {
                 </Stack.Item>
               </Stack>
             ) : (
-              <NoticeBox>No circuit present!</NoticeBox>
+              <NoticeBox>{t('ui.flatpacker.no_circuit_present')}</NoticeBox>
             )}
           </Stack.Item>
           <Stack.Item>
@@ -121,6 +123,7 @@ type BoardPreviewProps = {
 
 const BoardPreview = (props: BoardPreviewProps) => {
   const { design, onPrint } = props;
+  const { t } = usePreferencesLocalization();
 
   return (
     <Section fill>
@@ -149,7 +152,7 @@ const BoardPreview = (props: BoardPreviewProps) => {
             tooltipPosition="bottom"
             onClick={() => onPrint()}
           >
-            Print
+            {t('ui.common.print')}
           </Button>
         </Stack.Item>
       </Stack>
@@ -164,6 +167,7 @@ type CostPreviewProps = {
 
 const CostPreview = (props: CostPreviewProps) => {
   const { materials, SHEET_MATERIAL_AMOUNT } = props;
+  const { t } = usePreferencesLocalization();
 
   return (
     <Section fill scrollable>
@@ -193,7 +197,7 @@ const CostPreview = (props: CostPreviewProps) => {
           ))}
         </Table>
       ) : (
-        <NoticeBox>No materials required!</NoticeBox>
+        <NoticeBox>{t('ui.flatpacker.no_materials_required')}</NoticeBox>
       )}
     </Section>
   );

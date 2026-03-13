@@ -14,6 +14,7 @@ import {
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   name: string;
@@ -40,13 +41,13 @@ export const NtosPay = (props) => {
 
 export const NtosPayContent = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { name } = data;
 
   if (!name) {
     return (
       <NoticeBox>
-        You need to insert your ID card into the card slot in order to use this
-        application.
+        {t('ui.ntos_pay.insert_id_card_notice')}
       </NoticeBox>
     );
   }
@@ -69,14 +70,20 @@ export const NtosPayContent = (props) => {
 /** Displays the user's name and balance. */
 const Introduction = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { name, owner_token, money } = data;
   return (
     <Section textAlign="center">
       <Table>
-        <Table.Row>Hi, {name}.</Table.Row>
-        <Table.Row>Your pay token is {owner_token}.</Table.Row>
         <Table.Row>
-          Account balance: {money} credit{money === 1 ? '' : 's'}
+          {t('ui.ntos_pay.hi')}, {name}.
+        </Table.Row>
+        <Table.Row>
+          {t('ui.ntos_pay.your_pay_token_is')} {owner_token}.
+        </Table.Row>
+        <Table.Row>
+          {t('ui.ntos_pay.account_balance')}: {money}{' '}
+          {money === 1 ? t('ui.ntos_pay.credit') : t('ui.ntos_pay.credits')}
         </Table.Row>
       </Table>
     </Section>
@@ -86,6 +93,7 @@ const Introduction = (props) => {
 /** Displays the transfer section. */
 const TransferSection = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { money, wanted_token } = data;
 
   const [token, setToken] = useState('');
@@ -96,21 +104,21 @@ const TransferSection = (props) => {
   return (
     <Stack>
       <Stack.Item>
-        <Section title="Transfer Money">
+        <Section title={t('ui.ntos_pay.transfer_money')}>
           <Box>
             <Tooltip
-              content="Enter the pay token of the account you want to transfer credits to."
+              content={t('ui.ntos_pay.enter_pay_token_tooltip')}
               position="top"
             >
               <Input
-                placeholder="Pay Token"
+                placeholder={t('ui.ntos_pay.pay_token')}
                 width="190px"
                 onChange={setToken}
               />
             </Tooltip>
           </Box>
           <Tooltip
-            content="Enter amount of credits to transfer."
+            content={t('ui.ntos_pay.enter_amount_tooltip')}
             position="top"
           >
             <RestrictedInput
@@ -131,15 +139,15 @@ const TransferSection = (props) => {
               })
             }
           >
-            Send credits
+            {t('ui.ntos_pay.send_credits')}
           </Button>
         </Section>
       </Stack.Item>
       <Stack.Item>
-        <Section title="Get Token" width="270px" height="98px">
+        <Section title={t('ui.ntos_pay.get_token')} width="270px" height="98px">
           <Box>
             <Input
-              placeholder="Full name of account."
+              placeholder={t('ui.ntos_pay.full_name_of_account')}
               width="190px"
               onChange={setNameToToken}
             />
@@ -150,7 +158,7 @@ const TransferSection = (props) => {
                 })
               }
             >
-              Get it
+              {t('ui.ntos_pay.get_it')}
             </Button>
           </Box>
           <Divider hidden />
@@ -164,10 +172,11 @@ const TransferSection = (props) => {
 /** Displays the transaction history. */
 const TransactionHistory = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { transaction_list = [] } = data;
 
   return (
-    <Section fill title="Transaction History">
+    <Section fill title={t('ui.ntos_pay.transaction_history')}>
       <Section fill scrollable title={<TableHeaders />}>
         <Table>
           {transaction_list.map((log, index) => (
@@ -191,14 +200,15 @@ const TransactionHistory = (props) => {
 
 /** Renders a set of sticky headers */
 const TableHeaders = (props) => {
+  const { t } = usePreferencesLocalization();
   return (
     <Table>
       <Table.Row>
         <Table.Cell color="label" width="100px">
-          Amount
+          {t('ui.ntos_pay.amount')}
         </Table.Cell>
         <Table.Cell color="label" textAlign="center">
-          Reason
+          {t('ui.ntos_pay.reason')}
         </Table.Cell>
       </Table.Row>
     </Table>

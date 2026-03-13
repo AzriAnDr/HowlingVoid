@@ -8,6 +8,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   on: BooleanLike;
@@ -18,6 +19,7 @@ type Data = {
 };
 
 export const AtmosPump = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const { on, max_rate, max_pressure, rate, pressure } = data;
 
@@ -26,16 +28,16 @@ export const AtmosPump = (props) => {
       <Window.Content>
         <Section>
           <LabeledList>
-            <LabeledList.Item label="Power">
+            <LabeledList.Item label={t('ui.common.power')}>
               <Button
                 icon={on ? 'power-off' : 'times'}
-                content={on ? 'On' : 'Off'}
+                content={on ? t('ui.common.on') : t('ui.common.off')}
                 selected={on}
                 onClick={() => act('power')}
               />
             </LabeledList.Item>
             {max_rate ? (
-              <LabeledList.Item label="Transfer Rate">
+              <LabeledList.Item label={t('ui.atmos_pump.transfer_rate')}>
                 <NumberInput
                   animated
                   value={rate}
@@ -53,7 +55,7 @@ export const AtmosPump = (props) => {
                 <Button
                   ml={1}
                   icon="plus"
-                  content="Max"
+                  content={t('ui.atmos_pump.max')}
                   disabled={rate === max_rate}
                   onClick={() =>
                     act('rate', {
@@ -63,7 +65,7 @@ export const AtmosPump = (props) => {
                 />
               </LabeledList.Item>
             ) : (
-              <LabeledList.Item label="Output Pressure">
+              <LabeledList.Item label={t('ui.atmos_pump.output_pressure')}>
                 <NumberInput
                   animated
                   value={pressure}
@@ -81,7 +83,7 @@ export const AtmosPump = (props) => {
                 <Button
                   ml={1}
                   icon="plus"
-                  content="Max"
+                  content={t('ui.atmos_pump.max')}
                   disabled={pressure === max_pressure}
                   onClick={() =>
                     act('pressure', {

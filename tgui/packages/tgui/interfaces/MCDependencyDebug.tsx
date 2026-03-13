@@ -5,6 +5,7 @@ import { classes } from 'tgui-core/react';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import {
   type Connection,
   Connections,
@@ -170,6 +171,7 @@ function evaluateSubsystemLayer(
 
 export function MCDependencyDebug(props) {
   const { data } = useBackend<DependencyData>();
+  const { t } = usePreferencesLocalization(data);
   const { subsystems } = data;
   const connectionDom = useRef<ConnectionRef>({});
   const [connectionData, setConnectionData] = useState<ConnectionData>({});
@@ -247,7 +249,11 @@ export function MCDependencyDebug(props) {
   }
 
   return (
-    <Window width={1200} height={800} title="Subsystem Dependency Graph">
+    <Window
+      width={1200}
+      height={800}
+      title={t('ui.mc_dependency_debug.subsystem_dependency_graph')}
+    >
       <Window.Content
         style={{
           backgroundImage: 'none',

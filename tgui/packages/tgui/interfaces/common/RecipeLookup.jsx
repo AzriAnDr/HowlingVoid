@@ -9,12 +9,14 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 
 export const RecipeLookup = (props) => {
   const { recipe, bookmarkedReactions } = props;
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   if (!recipe) {
-    return <Box>No reaction selected!</Box>;
+    return <Box>{t('ui.recipe_lookup.no_reaction_selected')}</Box>;
   }
 
   const getReaction = (id) => {
@@ -27,7 +29,7 @@ export const RecipeLookup = (props) => {
 
   return (
     <LabeledList>
-      <LabeledList.Item bold label="Recipe">
+      <LabeledList.Item bold label={t('ui.common.recipe')}>
         <Icon name="circle" mr={1} color={recipe.reagentCol} />
         {recipe.name}
         <Button
@@ -62,7 +64,7 @@ export const RecipeLookup = (props) => {
         )}
       </LabeledList.Item>
       {recipe.products && (
-        <LabeledList.Item bold label="Products">
+        <LabeledList.Item bold label={t('ui.common.products')}>
           {recipe.products.map((product) => (
             <Button
               key={product.name}
@@ -78,7 +80,7 @@ export const RecipeLookup = (props) => {
           ))}
         </LabeledList.Item>
       )}
-      <LabeledList.Item bold label="Reactants">
+      <LabeledList.Item bold label={t('ui.common.reactants')}>
         {recipe.reactants.map((reactant) => (
           <Box key={reactant.id}>
             <Button
@@ -108,7 +110,7 @@ export const RecipeLookup = (props) => {
         ))}
       </LabeledList.Item>
       {recipe.catalysts && (
-        <LabeledList.Item bold label="Catalysts">
+        <LabeledList.Item bold label={t('ui.common.catalysts')}>
           {recipe.catalysts.map((catalyst) => (
             <Box key={catalyst.id}>
               {(catalyst.tooltipBool && (
@@ -141,38 +143,38 @@ export const RecipeLookup = (props) => {
         </LabeledList.Item>
       )}
       {recipe.reqContainer && (
-        <LabeledList.Item bold label="Container">
+        <LabeledList.Item bold label={t('ui.common.container')}>
           <Button
             color="transparent"
             textColor="white"
             tooltipPosition="right"
             content={recipe.reqContainer}
-            tooltip="The required container for this reaction to occur in."
+            tooltip={t('ui.recipe_lookup.required_container_tooltip')}
           />
         </LabeledList.Item>
       )}
-      <LabeledList.Item bold label="Purity">
+      <LabeledList.Item bold label={t('ui.common.purity')}>
         <LabeledList>
-          <LabeledList.Item label="Optimal pH range">
+          <LabeledList.Item label={t('ui.recipe_lookup.optimal_ph_range')}>
             <Box position="relative">
-              <Tooltip content="If your reaction is kept within these bounds then the purity of your product will be 100%">
+              <Tooltip content={t('ui.recipe_lookup.tooltip_optimal_ph_range')}>
                 {`${recipe.lowerpH}-${recipe.upperpH}`}
               </Tooltip>
             </Box>
           </LabeledList.Item>
           {!!recipe.inversePurity && (
-            <LabeledList.Item label="Inverse purity">
+            <LabeledList.Item label={t('ui.recipe_lookup.inverse_purity')}>
               <Box position="relative">
-                <Tooltip content="If your purity is below this it will 100% convert into the product's associated Inverse reagent on consumption.">
+                <Tooltip content={t('ui.recipe_lookup.tooltip_inverse_purity')}>
                   {`<${recipe.inversePurity * 100}%`}
                 </Tooltip>
               </Box>
             </LabeledList.Item>
           )}
           {!!recipe.minPurity && (
-            <LabeledList.Item label="Minimum purity">
+            <LabeledList.Item label={t('ui.recipe_lookup.minimum_purity')}>
               <Box position="relative">
-                <Tooltip content="If your purity is below this at any point during the reaction, it will cause negative effects, and if it remains below this value on completion it will convert into the product's associated Failed reagent.">
+                <Tooltip content={t('ui.recipe_lookup.tooltip_minimum_purity')}>
                   {`<${recipe.minPurity * 100}%`}
                 </Tooltip>
               </Box>
@@ -180,7 +182,7 @@ export const RecipeLookup = (props) => {
           )}
         </LabeledList>
       </LabeledList.Item>
-      <LabeledList.Item bold label="Rate profile" width="10px">
+      <LabeledList.Item bold label={t('ui.recipe_lookup.rate_profile')} width="10px">
         <Box
           height="50px"
           position="relative"
@@ -246,15 +248,15 @@ export const RecipeLookup = (props) => {
           )}
         </Flex>
       </LabeledList.Item>
-      <LabeledList.Item bold label="Dynamics">
+      <LabeledList.Item bold label={t('ui.recipe_lookup.dynamics')}>
         <LabeledList>
-          <LabeledList.Item label="Optimal rate">
-            <Tooltip content="The fastest rate the reaction can go, in units per second. This is the plateu region shown in the rate profile above.">
+          <LabeledList.Item label={t('ui.recipe_lookup.optimal_rate')}>
+            <Tooltip content={t('ui.recipe_lookup.tooltip_optimal_rate')}>
               <Box position="relative">{`${recipe.thermoUpper}u/s`}</Box>
             </Tooltip>
           </LabeledList.Item>
         </LabeledList>
-        <Tooltip content="The heat generated by a reaction - exothermic produces heat, endothermic consumes heat.">
+        <Tooltip content={t('ui.recipe_lookup.tooltip_thermics')}>
           <Box position="relative">{recipe.thermics}</Box>
         </Tooltip>
       </LabeledList.Item>

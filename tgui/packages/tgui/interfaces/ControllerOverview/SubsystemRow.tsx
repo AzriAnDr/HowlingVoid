@@ -9,6 +9,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { SORTING_TYPES } from './contants';
 import { SortType, type SubsystemData } from './types';
 
@@ -22,6 +23,7 @@ type Props = {
 
 export function SubsystemRow(props: Props) {
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
   const { max, setSelected, showBars, sortType, subsystem } = props;
   const { can_fire, doesnt_fire, initialized, name, ref } = subsystem;
 
@@ -30,19 +32,19 @@ export function SubsystemRow(props: Props) {
 
   let icon = 'play';
   let color = 'good';
-  let tooltip = 'Operational';
+  let tooltip = t('ui.controller_overview.operational');
   if (!initialized) {
     icon = 'circle-exclamation';
     color = 'darkgreen';
-    tooltip = 'Not initialized';
+    tooltip = t('ui.controller_overview.not_initialized');
   } else if (doesnt_fire) {
     icon = 'check';
     color = 'grey';
-    tooltip = 'Does not fire';
+    tooltip = t('ui.controller_overview.does_not_fire');
   } else if (!can_fire) {
     icon = 'pause';
     color = 'grey';
-    tooltip = 'Paused';
+    tooltip = t('ui.controller_overview.paused');
   }
 
   let valueDisplay = '';
@@ -96,7 +98,7 @@ export function SubsystemRow(props: Props) {
       <Table.Cell collapsing verticalAlign="top">
         <Button
           icon="wrench"
-          tooltip="View Variables"
+          tooltip={t('ui.common.view_variables')}
           onClick={() => {
             act('view_variables', { ref: ref });
           }}

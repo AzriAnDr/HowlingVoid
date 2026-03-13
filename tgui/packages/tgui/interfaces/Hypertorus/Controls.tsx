@@ -13,6 +13,7 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 
 import type { HypertorusFilter } from '.';
+import { usePreferencesLocalization } from '../localization';
 import { HelpDummy, HoverHelp } from './helpers';
 
 type ComboProps = {
@@ -130,6 +131,7 @@ const ComboKnob = (props: ComboProps) => {
 
 export const HypertorusSecondaryControls = (props) => {
   const { data } = useBackend<ControlsData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     cooling_volume,
     current_damper,
@@ -139,9 +141,9 @@ export const HypertorusSecondaryControls = (props) => {
   } = data;
 
   return (
-    <Section title="Reactor Control">
+    <Section title={t('ui.hypertorus.reactor_control')}>
       <LabeledControls justify="space-around" wrap>
-        <LabeledControls.Item label="Heating Conductor">
+        <LabeledControls.Item label={t('ui.hypertorus.heating_conductor')}>
           <ComboKnob
             color={heating_conductor > 50 && heat_output > 0 && 'yellow'}
             value={heating_conductor}
@@ -151,10 +153,10 @@ export const HypertorusSecondaryControls = (props) => {
             maxValue={500}
             parameter="heating_conductor"
             icon="fire"
-            help="Adjusts the rate the fusion reaction heats or cools. Higher heating values improve production at the risk of a runaway reaction."
+            help={t('ui.hypertorus.help_heating_conductor')}
           />
         </LabeledControls.Item>
-        <LabeledControls.Item label="Cooling Volume">
+        <LabeledControls.Item label={t('ui.hypertorus.cooling_volume')}>
           <ComboKnob
             value={cooling_volume}
             unit="L"
@@ -164,10 +166,10 @@ export const HypertorusSecondaryControls = (props) => {
             parameter="cooling_volume"
             step={25}
             icon="snowflake-o"
-            help="Adjusts the HFR core's internal cooling space. A smaller space will provide less cooling internally, but will move most of the coolant outside of the HFR core, where it can be rapidly cooled when not needed."
+            help={t('ui.hypertorus.help_cooling_volume')}
           />
         </LabeledControls.Item>
-        <LabeledControls.Item label="Magnetic Constrictor">
+        <LabeledControls.Item label={t('ui.hypertorus.magnetic_constrictor')}>
           <ComboKnob
             value={magnetic_constrictor}
             unit="m³/T"
@@ -177,10 +179,10 @@ export const HypertorusSecondaryControls = (props) => {
             parameter="magnetic_constrictor"
             icon="magnet"
             flipIcon
-            help="Adjusts the density of the fusion reaction. Denser reactions expose more energy, but may destabilize the reaction if too much mass is involved."
+            help={t('ui.hypertorus.help_magnetic_constrictor')}
           />
         </LabeledControls.Item>
-        <LabeledControls.Item label="Current Damper">
+        <LabeledControls.Item label={t('ui.hypertorus.current_damper')}>
           <ComboKnob
             color={current_damper && 'yellow'}
             value={current_damper}
@@ -190,7 +192,7 @@ export const HypertorusSecondaryControls = (props) => {
             maxValue={1000}
             parameter="current_damper"
             icon="sun-o"
-            help="Destabilizes the reaction. A sufficiently destabilized reaction will halt production and become endothermic, cooling the Fusion Mix instead of heating it. Reactions with more iron are harder to destabilize."
+            help={t('ui.hypertorus.help_current_damper')}
           />
         </LabeledControls.Item>
       </LabeledControls>
@@ -200,27 +202,27 @@ export const HypertorusSecondaryControls = (props) => {
 
 export const HypertorusWasteRemove = (props) => {
   const { act, data } = useBackend<WasteData>();
+  const { t } = usePreferencesLocalization(data);
   const { filter_types = [], waste_remove, mod_filtering_rate } = data;
 
   return (
-    <Section title="Output Control">
+    <Section title={t('ui.hypertorus.output_control')}>
       <LabeledList>
         <LabeledList.Item
           label={
             <>
               <HoverHelp
                 content={
-                  'Remove waste gases from Fusion,' +
-                  ' and any selected gases from the Moderator.'
+                  t('ui.hypertorus.help_waste_remove')
                 }
               />
-              Waste remove:
+              {t('ui.hypertorus.waste_remove')}:
             </>
           }
         >
           <Button
             icon={waste_remove ? 'power-off' : 'times'}
-            content={waste_remove ? 'On' : 'Off'}
+            content={waste_remove ? t('ui.common.on') : t('ui.common.off')}
             selected={waste_remove}
             onClick={() => act('waste_remove')}
           />
@@ -229,7 +231,7 @@ export const HypertorusWasteRemove = (props) => {
           label={
             <>
               <HelpDummy />
-              Moderator filtering rate:
+              {t('ui.hypertorus.moderator_filtering_rate')}:
             </>
           }
         >
@@ -252,7 +254,7 @@ export const HypertorusWasteRemove = (props) => {
           label={
             <>
               <HelpDummy />
-              Filter from moderator mix:
+              {t('ui.hypertorus.filter_from_moderator_mix')}:
             </>
           }
         >

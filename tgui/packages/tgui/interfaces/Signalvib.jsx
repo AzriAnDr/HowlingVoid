@@ -9,8 +9,10 @@ import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const Signalvib = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend();
   const { toystate, code, frequency, minFrequency, maxFrequency } = data;
   return (
@@ -18,20 +20,20 @@ export const Signalvib = (props) => {
       <Window.Content>
         <Section>
           <LabeledList>
-            <LabeledList.Item label="Power">
+            <LabeledList.Item label={t('ui.common.power')}>
               <Button
                 icon={toystate ? 'power-off' : 'times'}
-                content={toystate ? 'On' : 'Off'}
+                content={toystate ? t('ui.common.on') : t('ui.common.off')}
                 selected={toystate}
                 onClick={() => act('toystate')}
               />
             </LabeledList.Item>
             <LabeledList.Item
-              label="Frequency"
+              label={t('ui.electropack.frequency')}
               buttons={
                 <Button
                   icon="sync"
-                  content="Reset"
+                  content={t('ui.common.reset')}
                   onClick={() =>
                     act('reset', {
                       reset: 'freq',
@@ -58,11 +60,11 @@ export const Signalvib = (props) => {
               />
             </LabeledList.Item>
             <LabeledList.Item
-              label="Code"
+              label={t('ui.common.code')}
               buttons={
                 <Button
                   icon="sync"
-                  content="Reset"
+                  content={t('ui.common.reset')}
                   onClick={() =>
                     act('reset', {
                       reset: 'code',

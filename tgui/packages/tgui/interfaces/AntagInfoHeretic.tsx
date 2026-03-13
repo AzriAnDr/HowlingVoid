@@ -14,6 +14,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { logger } from '../logging';
+import { usePreferencesLocalization } from './localization';
 import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
 import {
   type Objective,
@@ -113,12 +114,13 @@ type Info = {
 
 const IntroductionSection = (props) => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { objectives, ascended, can_change_objective } = data;
 
   return (
     <Stack justify="space-evenly" height="100%" width="100%">
       <Stack.Item grow>
-        <Section title="You are the Heretic!" fill fontSize="14px">
+        <Section title={t('ui.heretic.you_are_the_heretic')} fill fontSize="14px">
           <Stack vertical>
             <FlavorSection />
             <Stack.Divider />
@@ -139,17 +141,17 @@ const IntroductionSection = (props) => {
                   fill
                   titleMessage={
                     can_change_objective
-                      ? 'Your OPFOR objectives are your primary ones, but in order to ascend, you have these tasks to fulfill' /* NOVA EDIT CHANGE - opfor objectives */
-                      : 'Your OPFOR objectives are your primary ones. Use your dark knowledge to fulfill your personal goal' /* NOVA EDIT CHANGE - opfor objectives  */
+                      ? t('ui.heretic.objectives_primary_with_ascend_tasks') /* NOVA EDIT CHANGE - opfor objectives */
+                      : t('ui.heretic.objectives_primary_with_personal_goal') /* NOVA EDIT CHANGE - opfor objectives  */
                   }
                   objectives={objectives}
                   objectiveFollowup={
                     <ReplaceObjectivesButton
                       can_change_objective={can_change_objective}
-                      button_title={'Reject Ascension'}
+                      button_title={t('ui.heretic.reject_ascension')}
                       button_colour={'red'}
                       button_tooltip={
-                        'Turn your back on the Mansus to accomplish a task of your choosing. Selecting this option will prevent you from ascending!'
+                        t('ui.heretic.reject_ascension_tooltip')
                       }
                     />
                   }
@@ -164,23 +166,24 @@ const IntroductionSection = (props) => {
 };
 
 const FlavorSection = () => {
+  const { t } = usePreferencesLocalization();
   return (
     <Stack.Item>
       <Stack vertical textAlign="center" fontSize="14px">
         <Stack.Item>
           <i>
-            Another day at a meaningless job. You feel a&nbsp;
-            <span style={hereticBlue}>shimmer</span>
-            &nbsp;around you, as a realization of something&nbsp;
-            <span style={hereticRed}>strange</span>
-            &nbsp;in the air unfolds. You look inwards and discover something
-            that will change your life.
+            {t('ui.heretic.flavor_intro_start')}&nbsp;
+            <span style={hereticBlue}>{t('ui.heretic.shimmer')}</span>
+            &nbsp;{t('ui.heretic.flavor_intro_middle')}&nbsp;
+            <span style={hereticRed}>{t('ui.heretic.strange')}</span>
+            &nbsp;{t('ui.heretic.flavor_intro_end')}
           </i>
         </Stack.Item>
         <Stack.Item>
           <b>
-            The <span style={hereticPurple}>Gates of Mansus</span>
-            &nbsp;open up to your mind.
+            {t('ui.heretic.the')}{' '}
+            <span style={hereticPurple}>{t('ui.heretic.gates_of_mansus')}</span>
+            &nbsp;{t('ui.heretic.on_them_for')}
           </b>
         </Stack.Item>
       </Stack>
@@ -190,71 +193,72 @@ const FlavorSection = () => {
 
 const GuideSection = () => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { points_to_aura } = data;
   return (
     <Stack.Item>
       <Stack vertical fontSize="12px">
         <Stack.Item>
-          - Find reality smashing&nbsp;
-          <span style={hereticPurple}>influences</span>
-          &nbsp;around the station invisible to the normal eye and&nbsp;
-          <b>right click</b> on them to harvest them for&nbsp;
-          <span style={hereticBlue}>knowledge points</span>. Tapping them makes
-          them visible to all after a short time. Dreaming of Mansus may help to
-          find them.
+          - {t('ui.heretic.guide_find_reality_smashing')}&nbsp;
+          <span style={hereticPurple}>{t('ui.heretic.influences')}</span>
+          &nbsp;{t('ui.heretic.around_you')}&nbsp;
+          <b>{t('ui.heretic.right_click')}</b> {t('ui.heretic.on_them_for')}&nbsp;
+          <span style={hereticBlue}>{t('ui.heretic.knowledge_points')}</span>.{' '}
+          {t('ui.heretic.guide_tapping_visibility')}
         </Stack.Item>
         <Stack.Item>
-          - Use your&nbsp;
-          <span style={hereticRed}>Living Heart action</span>
-          &nbsp;to track down&nbsp;
-          <span style={hereticRed}>sacrifice targets</span>, but be careful:
-          Pulsing it will produce a heartbeat sound that nearby people may hear.
-          This action is tied to your <b>heart</b> - if you lose it, you must
-          complete a ritual to regain it.
+          - {t('ui.heretic.you_have')}&nbsp;
+          <span style={hereticRed}>{t('ui.heretic.living_heart_action')}</span>
+          &nbsp;{t('ui.heretic.to_find')}&nbsp;
+          <span style={hereticRed}>{t('ui.heretic.sacrifice_targets')}</span>,{' '}
+          {t('ui.heretic.but_be_careful')}: {t('ui.heretic.guide_pulsing_warning')}{' '}
+          {t('ui.heretic.guide_heart_tied')} <b>{t('ui.heretic.heart')}</b> -{' '}
+          {t('ui.heretic.guide_regain_heart')}
         </Stack.Item>
         <Stack.Item>
-          - Draw a&nbsp;
-          <span style={hereticGreen}>transmutation rune</span> by using a
-          drawing tool (a pen or crayon) on the floor while having&nbsp;
-          <span style={hereticGreen}>Mansus Grasp</span>
-          &nbsp;active in your other hand. This rune allows you to complete
-          rituals and sacrifices.
+          - {t('ui.heretic.draw_a')}&nbsp;
+          <span style={hereticGreen}>{t('ui.heretic.transmutation_rune')}</span>{' '}
+          {t('ui.heretic.guide_by_using_drawing_tool')}&nbsp;
+          <span style={hereticGreen}>{t('ui.heretic.mansus_grasp')}</span>
+          &nbsp;{t('ui.heretic.guide_active_in_other_hand')} {t('ui.heretic.guide_rune_allows_rituals')}
         </Stack.Item>
         <Stack.Item>
-          - Follow your <span style={hereticRed}>Living Heart</span> to find
-          your targets. Bring them back to a&nbsp;
-          <span style={hereticGreen}>transmutation rune</span> in critical or
-          worse condition to&nbsp;
-          <span style={hereticRed}>sacrifice</span> them for&nbsp;
-          <span style={hereticBlue}>knowledge points</span>. The Mansus{' '}
-          <b>ONLY</b> accepts targets pointed to by the&nbsp;
-          <span style={hereticRed}>Living Heart</span>.
+          - {t('ui.heretic.follow_your')}{' '}
+          <span style={hereticRed}>{t('ui.heretic.living_heart')}</span>{' '}
+          {t('ui.heretic.to_find')} your targets. Bring them back to a&nbsp;
+          <span style={hereticGreen}>{t('ui.heretic.transmutation_rune')}</span>{' '}
+          {t('ui.heretic.in_critical')}&nbsp;
+          <span style={hereticRed}>{t('ui.heretic.sacrifice')}</span>{' '}
+          {t('ui.heretic.them_for')}&nbsp;
+          <span style={hereticBlue}>{t('ui.heretic.knowledge_points')}</span>.{' '}
+          {t('ui.heretic.the_mansus')} <b>{t('ui.heretic.only')}</b>{' '}
+          {t('ui.heretic.accepts_targets')}&nbsp;
+          <span style={hereticRed}>{t('ui.heretic.living_heart')}</span>.
         </Stack.Item>
         <Stack.Item>
-          - Make yourself a <span style={hereticYellow}>focus</span> to be able
-          to cast various advanced spells to assist you in acquiring harder and
-          harder sacrifices.
+          - {t('ui.heretic.make_yourself_a')}{' '}
+          <span style={hereticYellow}>{t('ui.heretic.focus')}</span>{' '}
+          {t('ui.heretic.guide_focus_spells')}
         </Stack.Item>
         <Stack.Item>
-          - Accomplish all of your objectives to be able to learn the{' '}
-          <span style={hereticYellow}>final ritual</span>. Complete the ritual
-          to become all powerful!
+          - {t('ui.heretic.guide_accomplish_objectives')}{' '}
+          <span style={hereticYellow}>{t('ui.heretic.final_ritual')}</span>.{' '}
+          {t('ui.heretic.guide_become_all_powerful')}
         </Stack.Item>
         <Stack.Item>
-          <span style={hereticRed}>WARNING!</span>
-          <br /> Accumulating a total of <b>{points_to_aura}</b>&nbsp;
-          <span style={hereticBlue}>knowledge points</span>
-          &nbsp;to manifest a visible aura of&nbsp;
-          <span style={hereticPurple}>Mansus energy</span> around you. Simply
-          gaining the points is sufficent, spending them will not trigger it.
+          <span style={hereticRed}>{t('ui.heretic.warning')}!</span>
+          <br /> {t('ui.heretic.accumulating_total')} <b>{points_to_aura}</b>&nbsp;
+          <span style={hereticBlue}>{t('ui.heretic.knowledge_points')}</span>
+          &nbsp;{t('ui.heretic.to_manifest_aura')}&nbsp;
+          <span style={hereticPurple}>{t('ui.heretic.mansus_energy')}</span> {t('ui.heretic.around_you')}.{' '}
+          {t('ui.heretic.guide_gaining_points_sufficient')}
           <br />
-          This aura will be visible to all those around you and will mark you as
-          a heretic. Consider the risks before accumulating too much knowledge!
+          {t('ui.heretic.guide_aura_visible_warning')}
           <br />
-          Keep in mind that using a&nbsp;
-          <span style={hereticPurple}>Codex Cicatrix</span> will also make you
-          very obvious as a heretic when draining&nbsp;
-          <span style={hereticYellow}>influences</span>
+          {t('ui.heretic.keep_in_mind')}&nbsp;
+          <span style={hereticPurple}>{t('ui.heretic.codex_cicatrix')}</span>{' '}
+          {t('ui.heretic.will_also_make')}&nbsp;
+          <span style={hereticYellow}>{t('ui.heretic.influences')}</span>
         </Stack.Item>
       </Stack>
     </Stack.Item>
@@ -263,6 +267,7 @@ const GuideSection = () => {
 
 const InformationSection = () => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { charges, total_sacrifices, ascended } = data;
   return (
     <Stack.Item>
@@ -270,10 +275,10 @@ const InformationSection = () => {
         {!!ascended && (
           <Stack.Item>
             <Stack align="center">
-              <Stack.Item>You have</Stack.Item>
+              <Stack.Item>{t('ui.heretic.you_have')}</Stack.Item>
               <Stack.Item fontSize="24px">
                 <Box inline color="yellow">
-                  ASCENDED
+                  {t('ui.heretic.ascended')}
                 </Box>
                 !
               </Stack.Item>
@@ -281,16 +286,17 @@ const InformationSection = () => {
           </Stack.Item>
         )}
         <Stack.Item>
-          You have <b>{charges || 0}</b>&nbsp;
+          {t('ui.heretic.you_have')} <b>{charges || 0}</b>&nbsp;
           <span style={hereticBlue}>
-            knowledge point{charges !== 1 ? 's' : ''}
+            {t('ui.heretic.knowledge_point')}
+            {charges !== 1 ? 's' : ''}
           </span>
           .
         </Stack.Item>
         <Stack.Item>
-          You have made a total of&nbsp;
+          {t('ui.heretic.you_have_made_total')}&nbsp;
           <b>{total_sacrifices || 0}</b>&nbsp;
-          <span style={hereticRed}>sacrifices</span>.
+          <span style={hereticRed}>{t('ui.heretic.sacrifices')}</span>.
         </Stack.Item>
       </Stack>
     </Stack.Item>
@@ -299,18 +305,19 @@ const InformationSection = () => {
 
 const KnowledgeTree = () => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { knowledge_tiers } = data;
 
   const nodesToShow = knowledge_tiers.filter((tier) => tier.nodes.length > 0);
 
   return (
-    <Section title="Research Tree" fill scrollable>
+    <Section title={t('ui.heretic.research_tree')} fill scrollable>
       <Box textAlign="center" fontSize="32px">
-        <span style={hereticYellow}>DAWN</span>
+        <span style={hereticYellow}>{t('ui.heretic.dawn')}</span>
       </Box>
       <Stack vertical>
         {nodesToShow.length === 0
-          ? 'None!'
+          ? t('ui.common.none')
           : nodesToShow.map((tier, i) => (
               <Stack.Item key={i}>
                 <Stack
@@ -345,6 +352,7 @@ type KnowledgeNodeProps = {
 const KnowledgeNode = (props: KnowledgeNodeProps) => {
   const { node, can_buy = true, purchaseCategory } = props;
   const { data, act } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { charges } = data;
 
   const isBuyable = can_buy && !node.done && !node.disabled;
@@ -414,12 +422,12 @@ const KnowledgeNode = (props: KnowledgeNodeProps) => {
           bold
           style={{ margin: '2px', borderRadius: '100%' }}
         >
-          {isBuyable && (node.cost > 0 ? node.cost : 'FREE')}
+          {isBuyable && (node.cost > 0 ? node.cost : t('ui.common.free'))}
         </Box>
       </Button>
       {!!node.ascension && (
         <Box textAlign="center" fontSize="32px">
-          <span style={hereticPurple}>DUSK</span>
+          <span style={hereticPurple}>{t('ui.heretic.dusk')}</span>
         </Box>
       )}
     </Stack.Item>
@@ -428,6 +436,7 @@ const KnowledgeNode = (props: KnowledgeNodeProps) => {
 
 const KnowledgeShop = () => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { knowledge_shop } = data;
 
   if (!knowledge_shop || knowledge_shop.length === 0) {
@@ -435,7 +444,7 @@ const KnowledgeShop = () => {
   }
 
   return (
-    <Section title="Knowledge Shop" fill scrollable>
+    <Section title={t('ui.heretic.knowledge_shop')} fill scrollable>
       <Stack vertical fill>
         <Knowledges />
       </Stack>
@@ -455,7 +464,7 @@ const KnowledgeShop = () => {
 
     return tiers?.map((tier, index) => (
       <Stack.Item key={`tier-${index}`}>
-        Tier {index + 1}
+        {t('ui.common.tier')} {index + 1}
         <Stack fill scrollable wrap="wrap">
           {tier.map((knowledge) => (
             <Stack.Item key={`knowledge-${knowledge.path}`}>
@@ -474,16 +483,18 @@ const KnowledgeShop = () => {
 
 const ResearchInfo = () => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { charges, knowledge_shop } = data;
 
   return (
     <>
       <Stack.Item mb={1.5} fontSize="20px" textAlign="center">
-        You have <b>{charges || 0}</b>&nbsp;
+        {t('ui.heretic.you_have')} <b>{charges || 0}</b>&nbsp;
         <span style={hereticBlue}>
-          knowledge point{charges !== 1 ? 's' : ''}
+          {t('ui.heretic.knowledge_point')}
+          {charges !== 1 ? 's' : ''}
         </span>{' '}
-        to spend.
+        {t('ui.heretic.to_spend')}
       </Stack.Item>
       <Stack fill>
         <Stack.Item grow>
@@ -501,6 +512,7 @@ const ResearchInfo = () => {
 
 const PathInfo = ({ currentPath }: { currentPath?: HereticPath }) => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { paths } = data;
 
   const pathBoughtIndex = paths.findIndex(
@@ -544,6 +556,7 @@ const PathContent = ({
   isPathSelected: boolean;
 }) => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { passive_level } = data;
   const { name, description } = path.passive;
   return (
@@ -556,14 +569,14 @@ const PathContent = ({
       <Stack vertical>
         {!isPathSelected && (
           <Stack.Item verticalAlign="center" textAlign="center">
-            <h1>Choose Path:</h1>{' '}
+            <h1>{t('ui.heretic.choose_path')}:</h1>{' '}
             <KnowledgeNode
               node={path.starting_knowledge}
               purchaseCategory={ShopCategory.Start}
             />
             <div>
               <h3>
-                Complexity:{' '}
+                {t('ui.heretic.complexity')}:{' '}
                 <span style={{ color: path.complexity_color }}>
                   {path.complexity}
                 </span>
@@ -573,20 +586,20 @@ const PathContent = ({
         )}
 
         <Stack.Item>
-          <b>Description:</b>{' '}
+          <b>{t('ui.heretic.description')}:</b>{' '}
           {path.description.map((line, index) => (
             <div key={index}>{line}</div>
           ))}
         </Stack.Item>
         {(!isPathSelected && (
           <Stack.Item style={{ justifyItems: 'center' }}>
-            <b>Passive: {name}</b>
+            <b>{t('ui.heretic.passive')}: {name}</b>
             <p className="Passive">{description[0]}</p>
           </Stack.Item>
         )) || (
           <Stack.Item>
             <b>
-              Passive: {name}, level: {passive_level}
+              {t('ui.heretic.passive')}: {name}, {t('ui.common.level')}: {passive_level}
             </b>
             <Stack>
               {description.map((line, index) => (
@@ -594,7 +607,7 @@ const PathContent = ({
                   key={index}
                   className={`Passive ${passive_level >= index + 1 ? 'Passive--Active' : ''}`}
                 >
-                  Level {index + 1}
+                  {t('ui.common.level')} {index + 1}
                   <br />
                   {line}
                 </Stack.Item>
@@ -605,7 +618,7 @@ const PathContent = ({
         <Stack.Item>
           {!isPathSelected && (
             <>
-              <b>Guaranteed Abilities:</b>
+              <b>{t('ui.heretic.guaranteed_abilities')}:</b>
               <Stack wrap="wrap" justify="center">
                 {path.preview_abilities.map((ability) => (
                   <Stack.Item key={`guaranteed_${ability.name}`} m={1}>
@@ -619,7 +632,7 @@ const PathContent = ({
         {!isPathSelected && (
           <>
             <Stack.Item>
-              <b>Pros:</b>
+              <b>{t('ui.heretic.pros')}:</b>
               <div>
                 {path.pros.map((pro, index) => (
                   <p key={index}>{pro}</p>
@@ -627,7 +640,7 @@ const PathContent = ({
               </div>
             </Stack.Item>
             <Stack.Item>
-              <b>Cons:</b>
+              <b>{t('ui.heretic.cons')}:</b>
               <div>
                 {path.cons.map((con, index) => (
                   <p key={index}>{con}</p>
@@ -639,7 +652,7 @@ const PathContent = ({
 
         {isPathSelected && (
           <Stack.Item textAlign="left" mt={2} mb={1}>
-            <b>Tips:</b>
+            <b>{t('ui.heretic.tips')}:</b>
             <ul>
               {path.tips.map((tip, index) => (
                 <li key={index}>{tip}</li>
@@ -654,6 +667,7 @@ const PathContent = ({
 
 export const AntagInfoHeretic = () => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { ascended, knowledge_tiers, paths } = data;
 
   const [currentTab, setTab] = useState(1);
@@ -667,13 +681,17 @@ export const AntagInfoHeretic = () => {
   );
 
   const tabs = [
-    { label: 'Information', icon: 'info', content: <IntroductionSection /> },
     {
-      label: 'Path Info',
+      label: t('ui.heretic.tab_information'),
+      icon: 'info',
+      content: <IntroductionSection />,
+    },
+    {
+      label: t('ui.heretic.tab_path_info'),
       icon: 'info',
       content: <PathInfo currentPath={currentPath} />,
     },
-    { label: 'Research', icon: 'book', content: <ResearchInfo /> },
+    { label: t('ui.heretic.tab_research'), icon: 'book', content: <ResearchInfo /> },
   ];
 
   const currentTheme = () => {

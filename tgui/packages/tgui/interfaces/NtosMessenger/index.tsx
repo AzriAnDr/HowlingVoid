@@ -17,6 +17,7 @@ import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { NtosWindow } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import { ChatScreen } from './ChatScreen';
 import type { NtChat, NtMessenger, NtPicture } from './types';
 
@@ -41,6 +42,7 @@ type NtosMessengerData = {
 
 export const NtosMessenger = (props) => {
   const { data } = useBackend<NtosMessengerData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     is_silicon,
     remote_silicon,
@@ -54,13 +56,13 @@ export const NtosMessenger = (props) => {
 
   let content: React.JSX.Element;
   if (remote_silicon) {
-    content = <AccessDeniedScreen />;
+    content = <AccessDeniedScreen t={t} />;
   } else if (open_chat !== null) {
     const openChat = saved_chats[open_chat];
     const temporaryRecipient = messengers[open_chat];
 
     if (!openChat && !temporaryRecipient) {
-      content = <ContactsScreen />;
+      content = <ContactsScreen t={t} />;
     } else {
       content = (
         <ChatScreen
@@ -73,11 +75,12 @@ export const NtosMessenger = (props) => {
           recipient={openChat ? openChat.recipient : temporaryRecipient}
           unreads={openChat ? openChat.unread_messages : 0}
           chatRef={openChat?.ref}
+          t={t}
         />
       );
     }
   } else {
-    content = <ContactsScreen />;
+    content = <ContactsScreen t={t} />;
   }
 
   return (
@@ -88,6 +91,7 @@ export const NtosMessenger = (props) => {
 };
 
 const AccessDeniedScreen = (props: any) => {
+  const { t } = props;
   const { act, data } = useBackend<NtosMessengerData>();
 
   return (
@@ -97,7 +101,7 @@ const AccessDeniedScreen = (props: any) => {
           <Stack vertical textAlign="center">
             <Box bold>
               <Icon name="address-card" />
-              SpaceMessenger V6.5.3
+              {t('ui.ntos_messenger.app_title')}
             </Box>
           </Stack>
         </Section>
@@ -109,13 +113,13 @@ const AccessDeniedScreen = (props: any) => {
         fontSize="30px"
         textAlign="center"
       >
-        ERROR: CONNECTION REFUSED
+        {t('ui.ntos_messenger.error_connection_refused')}
       </NoticeBox>
       <Stack vertical position="relative" top="35%" textAlign="left">
         <Section>
-          <Box>Message from host:</Box>
-          <Box>- Remote access of this application has been restricted.</Box>
-          <Box>- Contact your Administrator for further assistance.</Box>
+          <Box>{t('ui.ntos_messenger.message_from_host')}</Box>
+          <Box>- {t('ui.ntos_messenger.remote_access_restricted')}</Box>
+          <Box>- {t('ui.ntos_messenger.contact_admin_assistance')}</Box>
         </Section>
       </Stack>
     </Stack>
@@ -123,6 +127,7 @@ const AccessDeniedScreen = (props: any) => {
 };
 
 const ContactsScreen = (props: any) => {
+  const { t } = props;
   const { act, data } = useBackend<NtosMessengerData>();
   const {
     owner,
@@ -201,10 +206,10 @@ const ContactsScreen = (props: any) => {
           <Stack vertical textAlign="center">
             <Box bold>
               <Icon name="address-card" mr={1} />
-              SpaceMessenger V6.5.3
+              {t('ui.ntos_messenger.app_title')}
             </Box>
             <Box italic opacity={0.3} mt={1}>
-              Bringing you spy-proof communications since 2467.
+              {t('ui.ntos_messenger.tagline')}
             </Box>
             <Divider hidden />
             <Box>
@@ -212,7 +217,9 @@ const ContactsScreen = (props: any) => {
                 icon="bell"
                 disabled={!alert_able}
                 content={
-                  alert_able && !alert_silenced ? 'Ringer: On' : 'Ringer: Off'
+                  alert_able && !alert_silenced
+                    ? t('ui.ntos_messenger.ringer_on')
+                    : t('ui.ntos_messenger.ringer_off')
                 }
                 onClick={() => act('PDA_toggleAlerts')}
               />
@@ -220,26 +227,30 @@ const ContactsScreen = (props: any) => {
                 icon="address-card"
                 content={
                   sending_and_receiving
-                    ? 'Send / Receive: On'
-                    : 'Send / Receive: Off'
+                    ? t('ui.ntos_messenger.send_receive_on')
+                    : t('ui.ntos_messenger.send_receive_off')
                 }
                 onClick={() => act('PDA_toggleSendingAndReceiving')}
               />
               <Button
                 icon="bell"
-                content="Set Ringtone"
+                content={t('ui.ntos_messenger.set_ringtone')}
                 onClick={() => act('PDA_ringSet')}
               />
               <Button
                 icon="sort"
-                content={`Sort by: ${sort_by_job ? 'Job' : 'Name'}`}
+                content={`${t('ui.ntos_messenger.sort_by')}: ${
+                  sort_by_job ? t('ui.ntos_messenger.job') : t('ui.common.name')
+                }`}
                 onClick={() => act('PDA_changeSortStyle')}
               />
               {!!virus_attach && (
                 <Button
                   icon="bug"
                   color="bad"
-                  content={`Attach Virus: ${sending_virus ? 'Yes' : 'No'}`}
+                  content={`${t('ui.ntos_messenger.attach_virus')}: ${
+                    sending_virus ? t('ui.common.yes') : t('ui.common.no')
+                  }`}
                   onClick={() => act('PDA_toggleVirus')}
                 />
               )}
@@ -249,11 +260,11 @@ const ContactsScreen = (props: any) => {
           <Stack justify="space-between">
             <Box m={0.5}>
               <Icon name="magnifying-glass" mr={1} />
-              Search For User
+              {t('ui.ntos_messenger.search_for_user')}
             </Box>
             <Input
               width="220px"
-              placeholder="Search by name or job..."
+              placeholder={t('ui.ntos_messenger.search_by_name_or_job')}
               value={searchUser}
               onChange={setSearchUser}
             />
@@ -265,7 +276,7 @@ const ContactsScreen = (props: any) => {
           <Stack vertical fill>
             <Section>
               <Icon name="comments" mr={1} />
-              Previous Messages
+              {t('ui.ntos_messenger.previous_messages')}
             </Section>
             <Section fill scrollable>
               <Stack vertical>{filteredChatButtons}</Stack>
@@ -279,7 +290,7 @@ const ContactsScreen = (props: any) => {
             <Stack>
               <Box m={0.5}>
                 <Icon name="address-card" mr={1} />
-                Detected Messengers
+                {t('ui.ntos_messenger.detected_messengers')}
               </Box>
             </Stack>
           </Section>
@@ -289,7 +300,7 @@ const ContactsScreen = (props: any) => {
                 <Stack align="center" justify="center" fill pl={4}>
                   <Icon color="gray" name="user-slash" size={2} />
                   <Stack.Item fontSize={1.5} ml={3}>
-                    No users found.
+                    {t('ui.ntos_messenger.no_users_found')}
                   </Stack.Item>
                 </Stack>
               )}
@@ -300,10 +311,10 @@ const ContactsScreen = (props: any) => {
       </Stack.Item>
       {!!can_spam && (
         <Stack.Item>
-          <SendToAllSection />
+          <SendToAllSection t={t} />
         </Stack.Item>
       )}
-      {noId && <NoIDDimmer />}
+      {noId && <NoIDDimmer t={t} />}
     </Stack>
   );
 };
@@ -315,6 +326,7 @@ type ChatButtonProps = {
 };
 
 const ChatButton = (props: ChatButtonProps) => {
+  const { t } = usePreferencesLocalization();
   const { act } = useBackend();
   const unreadMessages = props.unreads;
   const hasUnreads = unreadMessages > 0;
@@ -328,15 +340,16 @@ const ChatButton = (props: ChatButtonProps) => {
       }}
     >
       {hasUnreads &&
-        `[${unreadMessages <= 9 ? unreadMessages : '9+'} unread message${
-          unreadMessages !== 1 ? 's' : ''
-        }]`}{' '}
+        `[${unreadMessages <= 9 ? unreadMessages : '9+'} ${t(
+          'ui.ntos_messenger.unread_messages_count',
+        )}]`}{' '}
       {props.name}
     </Button>
   );
 };
 
 const SendToAllSection = (props) => {
+  const { t } = props;
   const { data, act } = useBackend<NtosMessengerData>();
   const { on_spam_cooldown } = data;
 
@@ -348,19 +361,22 @@ const SendToAllSection = (props) => {
         <Stack justify="space-between">
           <Stack.Item align="center">
             <Icon name="satellite-dish" mr={1} ml={0.5} />
-            Send To All
+            {t('ui.ntos_messenger.send_to_all')}
           </Stack.Item>
           <Stack.Item>
             <Button
               icon="arrow-right"
               disabled={on_spam_cooldown || message === ''}
-              tooltip={on_spam_cooldown && 'Wait before sending more messages!'}
+              tooltip={
+                on_spam_cooldown &&
+                t('ui.ntos_messenger.wait_before_sending_more_messages')
+              }
               onClick={() => {
                 act('PDA_sendEveryone', { message: message });
                 setMessage('');
               }}
             >
-              Send
+              {t('ui.common.send')}
             </Button>
           </Stack.Item>
         </Stack>
@@ -369,7 +385,7 @@ const SendToAllSection = (props) => {
         <TextArea
           height={6}
           value={message}
-          placeholder="Send message to everyone..."
+          placeholder={t('ui.ntos_messenger.send_message_to_everyone')}
           onChange={setMessage}
           selfClear
           onEnter={() => {
@@ -381,7 +397,8 @@ const SendToAllSection = (props) => {
   );
 };
 
-const NoIDDimmer = () => {
+const NoIDDimmer = (props) => {
+  const { t } = props;
   return (
     <Dimmer>
       <Stack align="baseline" vertical>
@@ -389,7 +406,7 @@ const NoIDDimmer = () => {
           <Icon color="red" name="address-card" size={10} />
         </Stack>
         <Stack.Item fontSize="18px">
-          Please imprint an ID to continue.
+          {t('ui.ntos_messenger.please_imprint_id')}
         </Stack.Item>
       </Stack>
     </Dimmer>

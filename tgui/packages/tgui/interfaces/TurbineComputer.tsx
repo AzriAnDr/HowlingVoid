@@ -13,6 +13,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type TurbineInfo = {
   connected: BooleanLike;
@@ -28,10 +29,11 @@ type TurbineInfo = {
 
 const TurbineDisplay = (props) => {
   const { act, data } = useBackend<TurbineInfo>();
+  const { t } = usePreferencesLocalization(data);
 
   return (
     <Section
-      title="Status"
+      title={t('ui.turbine_computer.status')}
       buttons={
         <Button
           icon={data.active ? 'power-off' : 'times'}
@@ -39,12 +41,14 @@ const TurbineDisplay = (props) => {
           disabled={!!(data.rpm >= 1000)}
           onClick={() => act('toggle_power')}
         >
-          {data.active ? 'Online' : 'Offline'}
+          {data.active
+            ? t('ui.turbine_computer.online')
+            : t('ui.turbine_computer.offline')}
         </Button>
       }
     >
       <LabeledList>
-        <LabeledList.Item label="Intake Regulator">
+        <LabeledList.Item label={t('ui.turbine_computer.intake_regulator')}>
           <NumberInput
             animated
             tickWhileDragging
@@ -60,7 +64,7 @@ const TurbineDisplay = (props) => {
             }
           />
         </LabeledList.Item>
-        <LabeledList.Item label="Turbine Integrity">
+        <LabeledList.Item label={t('ui.turbine_computer.turbine_integrity')}>
           <ProgressBar
             value={data.integrity}
             minValue={0}
@@ -72,19 +76,21 @@ const TurbineDisplay = (props) => {
             }}
           />
         </LabeledList.Item>
-        <LabeledList.Item label="Turbine Speed">
+        <LabeledList.Item label={t('ui.turbine_computer.turbine_speed')}>
           {data.rpm} RPM
         </LabeledList.Item>
-        <LabeledList.Item label="Max Turbine Speed">
+        <LabeledList.Item
+          label={t('ui.turbine_computer.max_turbine_speed')}
+        >
           {data.max_rpm} RPM
         </LabeledList.Item>
-        <LabeledList.Item label="Input Temperature">
+        <LabeledList.Item label={t('ui.turbine_computer.input_temperature')}>
           {data.temp} K
         </LabeledList.Item>
-        <LabeledList.Item label="Max Temperature">
+        <LabeledList.Item label={t('ui.turbine_computer.max_temperature')}>
           {data.max_temperature} K
         </LabeledList.Item>
-        <LabeledList.Item label="Generated Power">
+        <LabeledList.Item label={t('ui.turbine_computer.generated_power')}>
           {formatPower(data.power)}
         </LabeledList.Item>
       </LabeledList>
@@ -93,14 +99,15 @@ const TurbineDisplay = (props) => {
 };
 
 const OutOfService = (props) => {
+  const { data } = useBackend<TurbineInfo>();
+  const { t } = usePreferencesLocalization(data);
+
   return (
     <Modal>
       <Stack fill vertical>
         <Stack.Item textAlign="center">
           <Box style={{ margin: 'auto' }} textAlign="center" width="300px">
-            {
-              'Parts not connected, close all mantainence panels/use a multitool on the rotor before trying again'
-            }
+            {t('ui.turbine_computer.out_of_service_message')}
           </Box>
         </Stack.Item>
       </Stack>

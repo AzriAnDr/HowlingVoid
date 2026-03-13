@@ -3,6 +3,7 @@ import { Button, ColorBox, Section, Stack, Table } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 import type { NTOSData } from '../layouts/NtosWindow';
+import { usePreferencesLocalization } from './localization';
 
 export enum alert_relevancies {
   ALERT_RELEVANCY_SAFE,
@@ -12,6 +13,7 @@ export enum alert_relevancies {
 
 export const NtosMain = (props) => {
   const { act, data } = useBackend<NTOSData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     alert_style,
     alert_color,
@@ -34,8 +36,9 @@ export const NtosMain = (props) => {
   return (
     <NtosWindow
       title={
-        (PC_device_theme === 'syndicate' && 'Syndix Main Menu') ||
-        'NtOS Main Menu'
+        (PC_device_theme === 'syndicate' &&
+          t('ui.ntosmain.syndix_main_menu')) ||
+        t('ui.ntosmain.ntos_main_menu')
       }
       width={400}
       height={500}
@@ -78,7 +81,9 @@ export const NtosMain = (props) => {
                       ? '#0000000'
                       : alert_color
                   }
-                  tooltip="The current alert level. Indicator becomes more intense when there is a threat, moreso if your department is responsible for handling it."
+                  tooltip={t(
+                    'ui.ntosmain.the_current_alert_level_indicator_becomes_more_intense_when_ther',
+                  )}
                 >
                   {alert_name}
                 </Button>
@@ -100,7 +105,7 @@ export const NtosMain = (props) => {
           </Section>
         )}
         <Section
-          title="Details"
+          title={t('ui.ntosmain.details')}
           buttons={
             <>
               {!!has_light && (
@@ -118,14 +123,14 @@ export const NtosMain = (props) => {
               )}
               <Button
                 icon="eject"
-                content="Eject ID"
+                content={t('ui.ntosmain.eject_id')}
                 disabled={!proposed_login.IDInserted}
                 onClick={() => act('PC_Eject_Disk', { name: 'ID' })}
               />
               {!!show_imprint && (
                 <Button
                   icon="dna"
-                  content="Imprint ID"
+                  content={t('ui.ntosmain.imprint_id')}
                   disabled={
                     !proposed_login.IDName ||
                     (proposed_login.IDName === login.IDName &&
@@ -139,7 +144,7 @@ export const NtosMain = (props) => {
         >
           <Table>
             <Table.Row>
-              ID Name:{' '}
+              {t('ui.ntosmain.id_name')}{' '}
               {show_imprint
                 ? login.IDName +
                   ' ' +
@@ -147,7 +152,7 @@ export const NtosMain = (props) => {
                 : (proposed_login.IDName ?? '')}
             </Table.Row>
             <Table.Row>
-              Assignment:{' '}
+              {t('ui.ntoscard.assignment')}{' '}
               {show_imprint
                 ? login.IDJob +
                   ' ' +
@@ -157,7 +162,7 @@ export const NtosMain = (props) => {
           </Table>
         </Section>
         {!!pai && (
-          <Section title="pAI">
+          <Section title={t('ui.ntosmain.pai')}>
             <Table>
               <Table.Row>
                 <Table.Cell>
@@ -165,7 +170,7 @@ export const NtosMain = (props) => {
                     fluid
                     icon="eject"
                     color="transparent"
-                    content="Eject pAI"
+                    content={t('ui.ntosmain.eject_pai')}
                     onClick={() =>
                       act('PC_Pai_Interact', {
                         option: 'eject',
@@ -180,7 +185,7 @@ export const NtosMain = (props) => {
                     fluid
                     icon="cat"
                     color="transparent"
-                    content="Configure pAI"
+                    content={t('ui.ntosmain.configure_pai')}
                     onClick={() =>
                       act('PC_Pai_Interact', {
                         option: 'interact',
@@ -200,6 +205,7 @@ export const NtosMain = (props) => {
 
 const ProgramsTable = (props) => {
   const { act, data } = useBackend<NTOSData>();
+  const { t } = usePreferencesLocalization(data);
   const { programs = [] } = data;
   // add the program filename to this list to have it excluded from the main menu program list table
   const filtered_programs = programs.filter(
@@ -207,7 +213,7 @@ const ProgramsTable = (props) => {
   );
 
   return (
-    <Section title="Programs">
+    <Section title={t('ui.ntosmain.programs')}>
       <Table>
         {filtered_programs.map((program) => (
           <Table.Row key={program.name}>
@@ -229,7 +235,7 @@ const ProgramsTable = (props) => {
                 <Button
                   color="transparent"
                   icon="times"
-                  tooltip="Close program"
+                  tooltip={t('ui.ntosmain.close_program')}
                   tooltipPosition="left"
                   onClick={() =>
                     act('PC_killprogram', {
@@ -245,3 +251,4 @@ const ProgramsTable = (props) => {
     </Section>
   );
 };
+

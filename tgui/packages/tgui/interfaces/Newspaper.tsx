@@ -4,6 +4,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { processedText } from '../process';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   current_page: number;
@@ -83,6 +84,7 @@ export const Newspaper = (props) => {
 
 const NewspaperIntro = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { channels = [], wanted_criminal = [] } = data;
 
   return (
@@ -93,14 +95,16 @@ const NewspaperIntro = (props) => {
       <Box bold fontSize="15px">
         For use on Space Facilities only!
       </Box>
-      <Box fontSize="12px">Table of Contents:</Box>
+      <Box fontSize="12px">{t('ui.newspaper.table_of_contents')}</Box>
       {channels.map((channel) => (
         <Box key={channel.page_number}>
           Page {channel.page_number || 0}: {channel.name}
         </Box>
       ))}
       {!!wanted_criminal && (
-        <Box bold>Last Page: Important Security Announcement</Box>
+        <Box bold>
+          {t('ui.newspaper.last_page_important_security_announcement')}
+        </Box>
       )}
     </Section>
   );

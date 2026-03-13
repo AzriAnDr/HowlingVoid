@@ -10,6 +10,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import {
   STORAGE_CONS_SUBMODE_CHROMOSOMES,
   STORAGE_CONS_SUBMODE_MUTATIONS,
@@ -24,12 +25,13 @@ import { MutationInfo } from './MutationInfo';
 
 export const DnaConsoleStorage = (props) => {
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { storageMode, storageConsSubMode, storageDiskSubMode } = data.view;
   const { diskMakeupBuffer, diskHasMakeup } = data;
   const mutations = data.storage[storageMode];
 
   return (
-    <Section fill title="Storage" buttons={<StorageButtons />}>
+    <Section fill title={t('ui.common.storage')} buttons={<StorageButtons />}>
       {storageMode === STORAGE_MODE_CONSOLE &&
         storageConsSubMode === STORAGE_CONS_SUBMODE_MUTATIONS && (
           <StorageMutations mutations={mutations} />
@@ -62,11 +64,12 @@ export const DnaConsoleStorage = (props) => {
 
 const DnaConsoleAdvancedInjectors = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { maxAdvInjectors, isInjectorReady } = data;
   const advInjectors = data.storage.injector ?? [];
 
   return (
-    <Section fill title="Advanced Injectors">
+    <Section fill title={t('ui.dna.advanced_injectors')}>
       {advInjectors.map((injector) => (
         <Collapsible
           key={injector.name}
@@ -76,7 +79,7 @@ const DnaConsoleAdvancedInjectors = (props) => {
               <Button
                 icon="syringe"
                 disabled={!isInjectorReady}
-                content="Print"
+                content={t('ui.common.print')}
                 onClick={() =>
                   act('print_adv_inj', {
                     name: injector.name,
@@ -122,6 +125,7 @@ const DnaConsoleAdvancedInjectors = (props) => {
 
 const StorageButtons = (props) => {
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { hasDisk } = data;
   const { storageMode, storageConsSubMode, storageDiskSubMode } = data.view;
 
@@ -131,7 +135,7 @@ const StorageButtons = (props) => {
         <>
           <Button
             selected={storageConsSubMode === STORAGE_CONS_SUBMODE_MUTATIONS}
-            content="Mutations"
+            content={t('ui.dna.mutations')}
             onClick={() =>
               act('set_view', {
                 storageConsSubMode: STORAGE_CONS_SUBMODE_MUTATIONS,
@@ -140,7 +144,7 @@ const StorageButtons = (props) => {
           />
           <Button
             selected={storageConsSubMode === STORAGE_CONS_SUBMODE_CHROMOSOMES}
-            content="Chromosomes"
+            content={t('ui.dna.chromosomes')}
             onClick={() =>
               act('set_view', {
                 storageConsSubMode: STORAGE_CONS_SUBMODE_CHROMOSOMES,
@@ -153,7 +157,7 @@ const StorageButtons = (props) => {
         <>
           <Button
             selected={storageDiskSubMode === STORAGE_CONS_SUBMODE_MUTATIONS}
-            content="Mutations"
+            content={t('ui.dna.mutations')}
             onClick={() =>
               act('set_view', {
                 storageDiskSubMode: STORAGE_CONS_SUBMODE_MUTATIONS,
@@ -162,7 +166,7 @@ const StorageButtons = (props) => {
           />
           <Button
             selected={storageDiskSubMode === STORAGE_DISK_SUBMODE_ENZYMES}
-            content="Enzymes"
+            content={t('ui.dna.enzymes')}
             onClick={() =>
               act('set_view', {
                 storageDiskSubMode: STORAGE_DISK_SUBMODE_ENZYMES,
@@ -173,7 +177,7 @@ const StorageButtons = (props) => {
       )}
       <Box inline mr={1} />
       <Button
-        content="Console"
+        content={t('ui.dna.console')}
         selected={storageMode === STORAGE_MODE_CONSOLE}
         onClick={() =>
           act('set_view', {
@@ -184,7 +188,7 @@ const StorageButtons = (props) => {
         }
       />
       <Button
-        content="Disk"
+        content={t('ui.common.disk')}
         disabled={!hasDisk}
         selected={storageMode === STORAGE_MODE_DISK}
         onClick={() =>
@@ -196,7 +200,7 @@ const StorageButtons = (props) => {
         }
       />
       <Button
-        content="Adv. Injector"
+        content={t('ui.dna.adv_injector')}
         selected={storageMode === STORAGE_MODE_ADVINJ}
         onClick={() =>
           act('set_view', {
@@ -210,6 +214,7 @@ const StorageButtons = (props) => {
 
 const StorageChromosomes = (props) => {
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const chromos = data.chromoStorage ?? [];
   const uniqueChromos = uniqBy(chromos, (chromo) => chromo.Name);
   const chromoName = data.view.storageChromoName;
@@ -241,15 +246,15 @@ const StorageChromosomes = (props) => {
         <Stack.Divider />
       </Stack.Item>
       <Stack.Item grow>
-        <Section title="Chromosome Info">
-          {(!chromo && <Box color="label">Nothing to show.</Box>) || (
+        <Section title={t('ui.dna.chromosome_info')}>
+          {(!chromo && <Box color="label">{t('ui.common.nothing_to_show')}</Box>) || (
             <>
               <LabeledList>
-                <LabeledList.Item label="Name">{chromo.Name}</LabeledList.Item>
-                <LabeledList.Item label="Description">
+                <LabeledList.Item label={t('ui.common.name')}>{chromo.Name}</LabeledList.Item>
+                <LabeledList.Item label={t('ui.common.description')}>
                   {chromo.Description}
                 </LabeledList.Item>
-                <LabeledList.Item label="Amount">
+                <LabeledList.Item label={t('ui.common.amount')}>
                   {chromos.filter((x) => x.Name === chromo.Name).length}
                 </LabeledList.Item>
               </LabeledList>
@@ -274,6 +279,7 @@ const StorageChromosomes = (props) => {
 const StorageMutations = (props) => {
   const { customMode = '' } = props;
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const mutations = props.mutations || [];
   const mode = data.view.storageMode + customMode;
   let mutationRef = data.view[`storage${mode}MutationRef`];
@@ -313,7 +319,7 @@ const StorageMutations = (props) => {
         <Stack.Divider />
       </Stack.Item>
       <Stack.Item grow>
-        <Section title="Mutation Info">
+        <Section title={t('ui.dna.mutation_info')}>
           <MutationInfo mutation={mutation} />
         </Section>
       </Stack.Item>

@@ -9,6 +9,7 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { useModifyState } from './hooks';
 import { type Book, type LibraryAdminData, ModifyTypes } from './types';
 
@@ -23,6 +24,7 @@ type DisplayAdminBook = AdminBook & {
 
 export function SearchAndDisplay(props) {
   const { act, data } = useBackend<LibraryAdminData>();
+  const { t } = usePreferencesLocalization(data);
 
   const { modifyMethodState, modifyTargetState } = useModifyState();
   const [modifyMethod, setModifyMethod] = modifyMethodState;
@@ -58,7 +60,9 @@ export function SearchAndDisplay(props) {
             <Stack.Item>
               <Input
                 value={book_id?.toString()}
-                placeholder={book_id === null ? 'ID' : String(book_id)}
+                placeholder={
+                  book_id === null ? t('ui.library_admin.id') : String(book_id)
+                }
                 width="70px"
                 onBlur={(value) =>
                   act('set_search_id', {
@@ -81,7 +85,7 @@ export function SearchAndDisplay(props) {
             <Stack.Item>
               <Input
                 value={title}
-                placeholder={title || 'Title'}
+                placeholder={title || t('ui.library_admin.title_col')}
                 mt={0.5}
                 onBlur={(value) =>
                   act('set_search_title', {
@@ -93,7 +97,7 @@ export function SearchAndDisplay(props) {
             <Stack.Item>
               <Input
                 value={author}
-                placeholder={author || 'Author'}
+                placeholder={author || t('ui.library_admin.author')}
                 mt={0.5}
                 onBlur={(value) =>
                   act('set_search_author', {
@@ -105,7 +109,7 @@ export function SearchAndDisplay(props) {
             <Stack.Item>
               <Input
                 value={author_ckey}
-                placeholder={author_ckey || 'Ckey'}
+                placeholder={author_ckey || t('ui.library_admin.ckey')}
                 mt={0.5}
                 onBlur={(value) =>
                   act('set_search_ckey', {
@@ -126,7 +130,7 @@ export function SearchAndDisplay(props) {
                 color={params_changed ? 'good' : ''}
                 icon="rotate-right"
               >
-                Refresh
+                {t('ui.library_admin.refresh')}
               </Button>
               <Button
                 disabled={!can_db_request}
@@ -135,7 +139,7 @@ export function SearchAndDisplay(props) {
                 color="bad"
                 icon="fire"
               >
-                Reset Search
+                {t('ui.library_admin.reset_search')}
               </Button>
             </Stack.Item>
             <Stack.Item>
@@ -145,7 +149,9 @@ export function SearchAndDisplay(props) {
                 color={view_raw ? 'purple' : 'blue'}
                 icon={view_raw ? 'theater-masks' : 'glasses'}
               >
-                {view_raw ? 'Raw' : 'Normal'}
+                {view_raw
+                  ? t('ui.library_admin.raw')
+                  : t('ui.library_admin.normal')}
               </Button>
               <Button
                 textAlign="right"
@@ -153,7 +159,9 @@ export function SearchAndDisplay(props) {
                 color={show_deleted ? 'purple' : 'green'}
                 icon={show_deleted ? 'trash' : 'mountain-sun'}
               >
-                {show_deleted ? 'All' : 'Undeleted'}
+                {show_deleted
+                  ? t('ui.library_admin.all')
+                  : t('ui.library_admin.undeleted')}
               </Button>
             </Stack.Item>
           </Stack>
@@ -162,11 +170,11 @@ export function SearchAndDisplay(props) {
       <Table>
         <Table.Row>
           <Table.Cell fontSize={1.5}>#</Table.Cell>
-          <Table.Cell fontSize={1.5}>Category</Table.Cell>
-          <Table.Cell fontSize={1.5}>Title</Table.Cell>
-          <Table.Cell fontSize={1.5}>Author</Table.Cell>
-          <Table.Cell fontSize={1.5}>C-Key</Table.Cell>
-          <Table.Cell fontSize={1.5}>Un/Delete</Table.Cell>
+          <Table.Cell fontSize={1.5}>{t('ui.library_admin.category')}</Table.Cell>
+          <Table.Cell fontSize={1.5}>{t('ui.library_admin.title_col')}</Table.Cell>
+          <Table.Cell fontSize={1.5}>{t('ui.library_admin.author')}</Table.Cell>
+          <Table.Cell fontSize={1.5}>{t('ui.library_admin.c_key')}</Table.Cell>
+          <Table.Cell fontSize={1.5}>{t('ui.library_admin.un_delete')}</Table.Cell>
         </Table.Row>
         {books.map((book) => (
           <Table.Row key={book.key}>
@@ -199,7 +207,7 @@ export function SearchAndDisplay(props) {
                   icon="undo"
                   color="blue"
                 >
-                  Restore
+                  {t('ui.library_admin.restore')}
                 </Button>
               ) : (
                 <Button
@@ -213,7 +221,7 @@ export function SearchAndDisplay(props) {
                   icon="hammer"
                   color="violet"
                 >
-                  Delete
+                  {t('ui.library_admin.delete')}
                 </Button>
               )}
             </Table.Cell>

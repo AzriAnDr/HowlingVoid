@@ -15,6 +15,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 
 import type { InteractionPoint, ManipulatorData } from './types';
 
@@ -37,9 +38,12 @@ const buttonNumberToIcon = {
   8: 'arrow-down',
   9: '',
 };
+const PICKUP_POINTS_TITLE = 'Pickup Points';
+const DROPOFF_POINTS_TITLE = 'Dropoff Points';
 
 const MasterControls = () => {
   const { act, data } = useBackend<ManipulatorData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     delay_step,
     speed_multiplier,
@@ -89,19 +93,19 @@ const MasterControls = () => {
       <Stack.Item>
         <Button
           icon="eject"
-          tooltip="Disengage the claws, dropping the held item"
+          tooltip={t('ui.manipulator.tooltip_drop_held')}
           onClick={() => act('drop_held_atom')}
         >
-          Drop
+          {t('ui.manipulator.drop')}
         </Button>
       </Stack.Item>
       <Stack.Item>
         <Button
           icon="eject"
-          tooltip="Unbuckle the worker"
+          tooltip={t('ui.manipulator.tooltip_unbuckle')}
           onClick={() => act('unbuckle')}
         >
-          Unbuckle
+          {t('ui.manipulator.unbuckle')}
         </Button>
       </Stack.Item>
     </Stack>
@@ -154,6 +158,7 @@ const PointSection = (props: {
   act: (action: string, params?: Record<string, any>) => void;
 }) => {
   const { data } = useBackend<ManipulatorData>();
+  const { t } = usePreferencesLocalization(data);
   const { title, points, onAdd, act } = props;
   const [editingPoint, setEditingPoint] = useState<InteractionPoint | null>(
     null,
@@ -165,6 +170,9 @@ const PointSection = (props: {
   const isPickup = title === 'Pickup Points';
   const currentTasking = isPickup ? data.pickup_tasking : data.dropoff_tasking;
   const currentIcon = taskingScheduleIcons[currentTasking] || 'clipboard-list';
+  const displayTitle = isPickup
+    ? t('ui.manipulator.pickup_points')
+    : t('ui.manipulator.dropoff_points');
 
   const cycleTaskingSchedule = () => {
     const currentIndex = taskingSchedules.indexOf(currentTasking);
@@ -241,13 +249,13 @@ const PointSection = (props: {
   const getFilteringModeText = (mode: number) => {
     switch (mode) {
       case 1:
-        return 'ITEMS';
+        return t('ui.manipulator.filter_items');
       case 2:
-        return 'CLOSETS';
+        return t('ui.manipulator.filter_closets');
       case 3:
-        return 'HUMANS';
+        return t('ui.manipulator.filter_humans');
       default:
-        return 'UNKNOWN';
+        return t('ui.common.unknown');
     }
   };
 
@@ -256,29 +264,33 @@ const PointSection = (props: {
     if (filters.length <= 2) return filters.join(', ');
     const shown = filters.slice(0, 2).join(', ');
     const remaining = filters.length - 2;
-    return `${shown} and ${remaining} more...`;
+    return `${shown} ${t('ui.common.and')} ${remaining} ${t('ui.common.more')}...`;
   };
 
   return (
     <>
       <Section
-        title={title}
+        title={displayTitle}
         buttons={
           <>
             <Button
-              tooltip="Cycle tasking schedule"
+              tooltip={t('ui.manipulator.tooltip_cycle_tasking')}
               onClick={cycleTaskingSchedule}
               icon={currentIcon}
               color="transparent"
             >
-              {currentTasking}
+              {currentTasking === 'Round Robin'
+                ? t('ui.manipulator.tasking_round_robin')
+                : currentTasking === 'Strict Robin'
+                  ? t('ui.manipulator.tasking_strict_robin')
+                  : t('ui.manipulator.tasking_prefer_first')}
             </Button>
             <Button
               icon="arrows-spin"
               color="transparent"
               onClick={() => act(`reset_tasking_${title}`)}
             >
-              Reset
+              {t('ui.common.reset')}
             </Button>
             <Button icon="plus" color="transparent" onClick={onAdd} />
           </>
@@ -330,7 +342,9 @@ const PointSection = (props: {
                           </>
                         )}
                       </Box>
-                      <Box color="label">Mode: {point.mode.toUpperCase()}</Box>
+                      <Box color="label">
+                        {t('ui.common.mode')}: {point.mode.toUpperCase()}
+                      </Box>
                       <Box
                         color="label"
                         style={{
@@ -341,7 +355,7 @@ const PointSection = (props: {
                           display: 'block',
                         }}
                       >
-                        Filters: {formatFilters(point.item_filters)}
+                        {t('ui.manipulator.filters')}: {formatFilters(point.item_filters)}
                       </Box>
                     </Box>
                   </Stack.Item>
@@ -383,7 +397,7 @@ const PointSection = (props: {
           }}
         >
           <Section
-            title="Point Properties"
+            title={t('ui.manipulator.point_properties')}
             buttons={
               <Button
                 icon="xmark"
@@ -436,26 +450,30 @@ const PointSection = (props: {
               <Stack.Item grow>
                 <Table>
                   <ConfigRow
-                    label="Object Type"
+                    label={t('ui.manipulator.object_type')}
                     content={getFilteringModeText(editingPoint.filtering_mode)}
                     onClick={() =>
                       adjustPoint(editingPoint.id, 'cycle_pickup_point_type')
                     }
-                    tooltip="Cycle the pickup type"
+                    tooltip={t('ui.manipulator.tooltip_cycle_pickup_type')}
                   />
                   {title === 'Pickup Points' ? (
                     <ConfigRow
-                      label="Use Item Filters"
-                      content={editingPoint.filters_status ? 'TRUE' : 'FALSE'}
+                      label={t('ui.manipulator.use_item_filters')}
+                      content={
+                        editingPoint.filters_status
+                          ? t('ui.common.true')
+                          : t('ui.common.false')
+                      }
                       onClick={() =>
                         adjustPoint(editingPoint.id, 'toggle_filter_skip')
                       }
-                      tooltip="Toggle filter usage"
+                      tooltip={t('ui.manipulator.tooltip_toggle_filter_usage')}
                     />
                   ) : (
                     <>
                       <ConfigRow
-                        label="Mode"
+                        label={t('ui.common.mode')}
                         content={editingPoint.mode.toUpperCase()}
                         onClick={() =>
                           adjustPoint(
@@ -463,50 +481,58 @@ const PointSection = (props: {
                             'cycle_dropoff_point_interaction',
                           )
                         }
-                        tooltip="Change dropoff mode"
+                        tooltip={t('ui.manipulator.tooltip_change_dropoff_mode')}
                       />
                       <ConfigRow
-                        label="Overflow"
+                        label={t('ui.manipulator.overflow')}
                         content={editingPoint.overflow_status}
                         onClick={() =>
                           adjustPoint(editingPoint.id, 'cycle_overflow_status')
                         }
-                        tooltip="Cycle overflow status"
+                        tooltip={t('ui.manipulator.tooltip_cycle_overflow')}
                       />
                       <ConfigRow
-                        label="Use Item Filters"
-                        content={editingPoint.filters_status ? 'TRUE' : 'FALSE'}
+                        label={t('ui.manipulator.use_item_filters')}
+                        content={
+                          editingPoint.filters_status
+                            ? t('ui.common.true')
+                            : t('ui.common.false')
+                        }
                         onClick={() =>
                           adjustPoint(editingPoint.id, 'toggle_filter_skip')
                         }
-                        tooltip="Toggle filter usage"
+                        tooltip={t('ui.manipulator.tooltip_toggle_filter_usage')}
                       />
                       {editingPoint.mode.toUpperCase() === 'THROW' && (
                         <ConfigRow
-                          label="Throw Range"
-                          content={`${editingPoint.throw_range} TILES`}
+                          label={t('ui.manipulator.throw_range')}
+                          content={`${editingPoint.throw_range} ${t('ui.common.tiles').toUpperCase()}`}
                           onClick={() =>
                             adjustPoint(editingPoint.id, 'cycle_throw_range')
                           }
-                          tooltip="Cycle throwing range"
+                          tooltip={t('ui.manipulator.tooltip_cycle_throw_range')}
                         />
                       )}
                       {editingPoint.mode.toUpperCase() === 'USE' && (
                         <>
                           <ConfigRow
-                            label="Alt Worker Action"
+                            label={t('ui.manipulator.alt_worker_action')}
                             content={
-                              editingPoint.worker_use_rmb ? 'TRUE' : 'FALSE'
+                              editingPoint.worker_use_rmb
+                                ? t('ui.common.true')
+                                : t('ui.common.false')
                             }
                             onClick={() =>
                               adjustPoint(editingPoint.id, 'toggle_worker_rmb')
                             }
-                            tooltip="Toggle RMB-like attack"
+                            tooltip={t('ui.manipulator.tooltip_toggle_rmb')}
                           />
                           <ConfigRow
-                            label="Combat Stance"
+                            label={t('ui.manipulator.combat_stance')}
                             content={
-                              editingPoint.worker_combat_mode ? 'TRUE' : 'FALSE'
+                              editingPoint.worker_combat_mode
+                                ? t('ui.common.true')
+                                : t('ui.common.false')
                             }
                             onClick={() =>
                               adjustPoint(
@@ -514,10 +540,10 @@ const PointSection = (props: {
                                 'toggle_worker_combat',
                               )
                             }
-                            tooltip="Toggle using Combat Mode for interactions"
+                            tooltip={t('ui.manipulator.tooltip_toggle_combat_mode')}
                           />
                           <ConfigRow
-                            label="Alt Worker Action"
+                            label={t('ui.manipulator.alt_worker_action')}
                             content={editingPoint.worker_interaction}
                             onClick={() =>
                               adjustPoint(
@@ -525,10 +551,10 @@ const PointSection = (props: {
                                 'cycle_worker_interaction',
                               )
                             }
-                            tooltip="Cycle interaction type"
+                            tooltip={t('ui.manipulator.tooltip_cycle_interaction_type')}
                           />
                           <ConfigRow
-                            label="No Uses Left"
+                            label={t('ui.manipulator.no_uses_left')}
                             content={editingPoint.use_post_interaction}
                             onClick={() =>
                               adjustPoint(
@@ -536,7 +562,7 @@ const PointSection = (props: {
                                 'cycle_post_interaction',
                               )
                             }
-                            tooltip="Cycle what to do when no interaction is avaliable"
+                            tooltip={t('ui.manipulator.tooltip_cycle_no_uses_left')}
                           />
                         </>
                       )}
@@ -547,7 +573,7 @@ const PointSection = (props: {
             </Stack>
           </Section>
           <Section
-            title="Item Filters"
+            title={t('ui.manipulator.item_filters')}
             buttons={
               <>
                 <Button
@@ -556,13 +582,13 @@ const PointSection = (props: {
                     adjustPoint(editingPoint.id, 'add_atom_filter_from_held')
                   }
                 >
-                  Add held
+                  {t('ui.manipulator.add_held')}
                 </Button>
                 <Button.Confirm
                   onClick={() =>
                     adjustPoint(editingPoint.id, 'reset_atom_filters')
                   }
-                  confirmContent="Reset?"
+                  confirmContent={t('ui.common.reset_question')}
                   icon="trash"
                 />
               </>
@@ -589,7 +615,7 @@ const PointSection = (props: {
               })}
             </Stack>
           </Section>
-          <Section title="Interaction Priorities">
+          <Section title={t('ui.manipulator.interaction_priorities')}>
             <Table>
               {editingPoint.settings_list.map((setting, index) => (
                 <Table.Row className="candystripe" key={setting.name}>
@@ -629,6 +655,7 @@ const PointSection = (props: {
 
 export const BigManipulator = () => {
   const { data, act } = useBackend<ManipulatorData>();
+  const { t } = usePreferencesLocalization(data);
   const { current_task, current_task_duration, pickup_points, dropoff_points } =
     data;
 
@@ -652,7 +679,7 @@ export const BigManipulator = () => {
   }, [current_task, current_task_duration]);
 
   return (
-    <Window title="Manipulator Interface" width={420} height={610}>
+    <Window title={t('ui.manipulator.window_title')} width={420} height={610}>
       <Window.Content overflowY="auto">
         <Box
           style={{
@@ -663,7 +690,7 @@ export const BigManipulator = () => {
           }}
         >
           <Section
-            title="Action Panel"
+            title={t('ui.manipulator.action_panel')}
             buttons={
               <Button
                 icon={
@@ -683,10 +710,10 @@ export const BigManipulator = () => {
                 onClick={() => act('run_cycle')}
               >
                 {current_task === 'NO TASK'
-                  ? 'Run'
+                  ? t('ui.manipulator.run')
                   : current_task === 'STOPPING'
-                    ? 'Stopping'
-                    : 'Stop'}
+                    ? t('ui.manipulator.stopping')
+                    : t('ui.common.stop')}
               </Button>
             }
           >
@@ -736,50 +763,22 @@ export const BigManipulator = () => {
                 }}
               >
                 <Box style={{ marginRight: '8px', marginLeft: '-2px' }}>
-                  Current task:
+                  {t('ui.manipulator.current_task')}:
                 </Box>
                 <Box style={{ flexGrow: 1 }}>{current_task.toUpperCase()}</Box>
               </Box>
             </Box>
           </Section>
 
-          {/* <Section>
-            <Stack>
-              <Stack.Item lineHeight="1.8" grow>
-                <Box
-                  style={{
-                    padding: '2px',
-                    backgroundColor: '#444444',
-                  }}
-                >
-                  <Button fluid icon="eject">
-                    data disk
-                  </Button>
-                  <BlockQuote>No storage detected.</BlockQuote>
-                </Box>
-              </Stack.Item>
-              <Stack.Item style={{ alignContent: 'center' }}>
-                <Button lineHeight="2" icon="floppy-disk">
-                  Read
-                </Button>
-              </Stack.Item>
-              <Stack.Item style={{ alignContent: 'center' }}>
-                <Button lineHeight="2" icon="circle">
-                  Write
-                </Button>
-              </Stack.Item>
-            </Stack>
-          </Section> */}
-
           <PointSection
-            title="Pickup Points"
+            title={PICKUP_POINTS_TITLE}
             points={pickup_points}
             onAdd={() => act('create_pickup_point')}
             act={act}
           />
 
           <PointSection
-            title="Dropoff Points"
+            title={DROPOFF_POINTS_TITLE}
             points={dropoff_points}
             onAdd={() => act('create_dropoff_point')}
             act={act}

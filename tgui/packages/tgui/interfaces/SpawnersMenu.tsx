@@ -3,6 +3,7 @@ import { Window } from 'tgui/layouts';
 import { Button, LabeledList, Section, Stack } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 import { capitalizeAll } from 'tgui-core/string';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   spawners: Spawner[];
@@ -21,10 +22,11 @@ type Spawner = {
 
 export const SpawnersMenu = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { spawners = [] } = data;
 
   return (
-    <Window title="Spawners Menu" width={700} height={525}>
+    <Window title={t('ui.spawners_menu.title')} width={700} height={525}>
       <Window.Content scrollable>
         <Stack vertical>
           {spawners.map((spawner) => (
@@ -37,16 +39,16 @@ export const SpawnersMenu = (props) => {
                   <Stack>
                     {spawner.infinite ? (
                       <Stack.Item fontSize="14px" color="green">
-                        Infinite
+                        {t('ui.common.infinite')}
                       </Stack.Item>
                     ) : (
                       <Stack.Item fontSize="14px" color="green">
-                        {spawner.amount_left} left
+                        {spawner.amount_left} {t('ui.common.left')}
                       </Stack.Item>
                     )}
                     <Stack.Item>
                       <Button
-                        content="Jump"
+                        content={t('ui.common.jump')}
                         onClick={() =>
                           act('jump', {
                             name: spawner.name,
@@ -54,7 +56,7 @@ export const SpawnersMenu = (props) => {
                         }
                       />
                       <Button
-                        content="Spawn"
+                        content={t('ui.common.spawn')}
                         onClick={() =>
                           act('spawn', {
                             name: spawner.name,
@@ -67,19 +69,19 @@ export const SpawnersMenu = (props) => {
               >
                 <LabeledList>
                   {spawner.desc ? (
-                    <LabeledList.Item label="Description">
+                    <LabeledList.Item label={t('ui.common.description')}>
                       {spawner.desc}
                     </LabeledList.Item>
                   ) : (
                     <div>
-                      <LabeledList.Item label="Origin">
-                        {spawner.you_are_text || 'Unknown'}
+                      <LabeledList.Item label={t('ui.spawners_menu.origin')}>
+                        {spawner.you_are_text || t('ui.common.unknown')}
                       </LabeledList.Item>
-                      <LabeledList.Item label="Directives">
-                        {spawner.flavor_text || 'None'}
+                      <LabeledList.Item label={t('ui.spawners_menu.directives')}>
+                        {spawner.flavor_text || t('ui.common.none')}
                       </LabeledList.Item>
-                      <LabeledList.Item color="bad" label="Conditions">
-                        {spawner.important_text || 'None'}
+                      <LabeledList.Item color="bad" label={t('ui.spawners_menu.conditions')}>
+                        {spawner.important_text || t('ui.common.none')}
                       </LabeledList.Item>
                     </div>
                   )}

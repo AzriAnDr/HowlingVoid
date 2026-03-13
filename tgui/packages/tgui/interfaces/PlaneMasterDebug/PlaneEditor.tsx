@@ -8,11 +8,13 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import type { Plane } from './types';
 import { usePlaneDebugContext } from './usePlaneDebug';
 
 export function PlaneEditor() {
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
   const { activePlane, planesProcessed, setPlaneOpen } = usePlaneDebugContext();
 
   const currentPlane: Plane = planesProcessed[activePlane as number];
@@ -29,67 +31,67 @@ export function PlaneEditor() {
       top="0px"
       right="0px"
       backgroundColor="#121212"
-      title={`Plane Master: ${currentPlane.name}`}
+      title={`${t('ui.plane_master.plane_master')}: ${currentPlane.name}`}
       buttons={
         <Button
           icon="times"
-          tooltip="Close"
+          tooltip={t('ui.common.close')}
           onClick={() => setPlaneOpen(false)}
         />
       }
     >
-      <Section title="Information">
+      <Section title={t('ui.common.information')}>
         <Box dangerouslySetInnerHTML={doc_html} />
         <br />
         <LabeledList>
           <LabeledList.Divider />
           <Tooltip
-            content="Any atoms in the world with the same plane will be drawn to this plane master"
+            content={t('ui.plane_master.tooltip_plane')}
             position="right"
           >
-            <LabeledList.Item label="Plane">
+            <LabeledList.Item label={t('ui.plane_master.plane')}>
               {currentPlane.plane}
             </LabeledList.Item>
           </Tooltip>
           <Tooltip
-            content="You can think of this as the 'layer' this plane is on. We make duplicates of each plane for each layer, so we can make multiz work"
+            content={t('ui.plane_master.tooltip_offset')}
             position="right"
           >
-            <LabeledList.Item label="Offset">
+            <LabeledList.Item label={t('ui.plane_master.offset')}>
               {currentPlane.offset}
             </LabeledList.Item>
           </Tooltip>
           <Tooltip
-            content="Render targets can be used to either reference or draw existing drawn items on the map. For plane masters, we use these for either relays (the blue lines), or filters (the pink ones)"
+            content={t('ui.plane_master.tooltip_render_target')}
             position="right"
           >
-            <LabeledList.Item label="Render Target">
+            <LabeledList.Item label={t('ui.plane_master.render_target')}>
               {currentPlane.render_target
                 ? `"${currentPlane.render_target}"`
-                : 'None'}
+                : t('ui.common.none')}
             </LabeledList.Item>
           </Tooltip>
           <Tooltip
-            content="Defines how this plane draws to the things it is relay'd onto. Check the byond ref for more details"
+            content={t('ui.plane_master.tooltip_blend_mode')}
             position="right"
           >
-            <LabeledList.Item label="Blend Mode">
+            <LabeledList.Item label={t('ui.plane_master.blend_mode')}>
               {currentPlane.blend_mode}
             </LabeledList.Item>
           </Tooltip>
           <Tooltip
-            content="If this is 1, the plane master is being forced to hide from its mob. This is most often done as an optimization tactic, since some planes only rarely need to be used"
+            content={t('ui.plane_master.tooltip_forced_hidden')}
             position="right"
           >
-            <LabeledList.Item label="Forced Hidden">
-              {currentPlane.force_hidden ? 'True' : 'False'}
+            <LabeledList.Item label={t('ui.plane_master.forced_hidden')}>
+              {currentPlane.force_hidden ? t('ui.common.true') : t('ui.common.false')}
             </LabeledList.Item>
           </Tooltip>
         </LabeledList>
         <br />
-        <Section title="Visuals">
+        <Section title={t('ui.common.visuals')}>
           <Button
-            tooltip="Open this plane's VV menu"
+            tooltip={t('ui.plane_master.tooltip_view_variables')}
             mr="5px"
             mb="5px"
             onClick={() =>
@@ -98,10 +100,10 @@ export function PlaneEditor() {
               })
             }
           >
-            View Variables
+            {t('ui.plane_master.view_variables')}
           </Button>
           <Button
-            tooltip="Apply and edit effects over the whole plane"
+            tooltip={t('ui.plane_master.tooltip_edit_filters')}
             mr="5px"
             mb="5px"
             onClick={() =>
@@ -110,10 +112,10 @@ export function PlaneEditor() {
               })
             }
           >
-            Edit Filters
+            {t('ui.plane_master.edit_filters')}
           </Button>
           <Button
-            tooltip="Modify how different color components map to the final plane"
+            tooltip={t('ui.plane_master.tooltip_edit_color_matrix')}
             mr="5px"
             mb="5px"
             onClick={() =>
@@ -122,7 +124,7 @@ export function PlaneEditor() {
               })
             }
           >
-            Edit Color Matrix
+            {t('ui.plane_master.edit_color_matrix')}
           </Button>
           <Slider
             value={currentPlane.alpha}
@@ -134,7 +136,7 @@ export function PlaneEditor() {
               act('set_alpha', { edit: currentPlane.plane, alpha: value })
             }
           >
-            Alpha ({currentPlane.alpha})
+            {t('ui.plane_master.alpha')} ({currentPlane.alpha})
           </Slider>
         </Section>
       </Section>

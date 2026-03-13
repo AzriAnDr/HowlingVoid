@@ -16,9 +16,11 @@ import { PageSelect } from '../components/PageSelect';
 import { ScrollableSection } from '../components/ScrollableSection';
 import type { LibraryConsoleData } from '../types';
 import { useLibraryContext } from '../useLibraryContext';
+import { usePreferencesLocalization } from '../../localization';
 
 export function Checkout(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { checkout_page, checkout_page_count } = data;
 
   const { checkoutBookState } = useLibraryContext();
@@ -30,7 +32,7 @@ export function Checkout(props) {
         <Stack vertical height="100%">
           <Stack.Item grow>
             <ScrollableSection
-              header="Checked Out Books"
+              header={t('ui.library.checked_out_books')}
               contents={<CheckoutEntries />}
             />
           </Stack.Item>
@@ -55,7 +57,7 @@ export function Checkout(props) {
           fontSize="20px"
           onClick={() => setCheckoutBook(true)}
         >
-          Check-Out Book
+          {t('ui.library.checkout_book')}
         </Button>
       </Stack.Item>
       {!!checkoutBook && <CheckoutModal />}
@@ -65,6 +67,7 @@ export function Checkout(props) {
 
 function CheckoutModal(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
+  const { t } = usePreferencesLocalization(data);
 
   const inventory = data.inventory
     .map((book, i) => ({
@@ -77,15 +80,15 @@ function CheckoutModal(props) {
   const { checkoutBookState } = useLibraryContext();
   const [checkoutBook, setCheckoutBook] = checkoutBookState;
 
-  const [bookName, setBookName] = useState('Insert Book name...');
-  const [checkoutee, setCheckoutee] = useState('Recipient');
+  const [bookName, setBookName] = useState(t('ui.library.insert_book_name'));
+  const [checkoutee, setCheckoutee] = useState(t('ui.library.recipient'));
   const [checkoutPeriod, setCheckoutPeriod] = useState(5);
 
   return (
     <Modal width="500px" py={4}>
       <Stack fill vertical>
         <Stack.Item fontSize="20px">
-          Are you sure you want to loan out this book?
+          {t('ui.library.confirm_loan_book')}
         </Stack.Item>
         <Stack.Item>
           <Dropdown
@@ -98,17 +101,17 @@ function CheckoutModal(props) {
         </Stack.Item>
         <Stack.Item>
           <LabeledList>
-            <LabeledList.Item label="Loan To">
+            <LabeledList.Item label={t('ui.library.loan_to')}>
               <Input
                 width="160px"
                 value={checkoutee}
                 onChange={setCheckoutee}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Loan Period">
+            <LabeledList.Item label={t('ui.library.loan_period')}>
               <NumberInput
                 value={checkoutPeriod}
-                unit=" Minutes"
+                unit={` ${t('ui.library.minutes')}`}
                 minValue={1}
                 maxValue={1440}
                 step={1}
@@ -135,7 +138,7 @@ function CheckoutModal(props) {
                 }}
                 lineHeight={2}
               >
-                Loan Out
+                {t('ui.library.loan_out')}
               </Button>
             </Stack.Item>
             <Stack.Item>
@@ -146,7 +149,7 @@ function CheckoutModal(props) {
                 onClick={() => setCheckoutBook(false)}
                 lineHeight={2}
               >
-                Return
+                {t('ui.common.return')}
               </Button>
             </Stack.Item>
           </Stack>
@@ -158,21 +161,22 @@ function CheckoutModal(props) {
 
 export function CheckoutEntries(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { checkouts = [] } = data;
 
   return (
     <Table>
       <Table.Row header className="candystripe">
-        <Table.Cell>Title</Table.Cell>
-        <Table.Cell>Author</Table.Cell>
-        <Table.Cell>Borrower</Table.Cell>
-        <Table.Cell>Time Left</Table.Cell>
-        <Table.Cell>Check-In</Table.Cell>
+        <Table.Cell>{t('ui.common.title')}</Table.Cell>
+        <Table.Cell>{t('ui.common.author')}</Table.Cell>
+        <Table.Cell>{t('ui.library.borrower')}</Table.Cell>
+        <Table.Cell>{t('ui.library.time_left')}</Table.Cell>
+        <Table.Cell>{t('ui.library.check_in')}</Table.Cell>
       </Table.Row>
       {checkouts.length === 0 ? (
         <Table.Row>
           <Table.Cell textAlign="center" colSpan={5}>
-            <NoticeBox>No books checked out.</NoticeBox>
+            <NoticeBox>{t('ui.library.no_books_checked_out')}</NoticeBox>
           </Table.Cell>
         </Table.Row>
       ) : (
@@ -182,7 +186,9 @@ export function CheckoutEntries(props) {
             <Table.Cell>{entry.author}</Table.Cell>
             <Table.Cell>{entry.borrower}</Table.Cell>
             <Table.Cell backgroundColor={entry.overdue ? 'bad' : 'good'}>
-              {entry.overdue ? 'Overdue' : `${entry.due_in_minutes} Minutes`}
+              {entry.overdue
+                ? t('ui.library.overdue')
+                : `${entry.due_in_minutes} ${t('ui.library.minutes')}`}
             </Table.Cell>
             <Table.Cell width="70px" textAlign="center">
               <Button

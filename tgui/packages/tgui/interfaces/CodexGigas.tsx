@@ -2,6 +2,7 @@ import { Button, LabeledList, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   name: string;
@@ -56,6 +57,7 @@ const SUFFIXES = [
 
 export const CodexGigas = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { name, currentSection } = data;
 
   return (
@@ -68,9 +70,9 @@ export const CodexGigas = (props) => {
             <Titles />
             <Names />
             <Suffixes />
-            <LabeledList.Item label="Submit">
+            <LabeledList.Item label={t('ui.common.submit')}>
               <Button
-                content="Search"
+                content={t('ui.common.search')}
                 disabled={currentSection < 4}
                 onClick={() => act('search')}
               />
@@ -84,10 +86,11 @@ export const CodexGigas = (props) => {
 
 const Prefixes = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { currentSection } = data;
 
   return (
-    <LabeledList.Item label="Prefix">
+    <LabeledList.Item label={t('ui.codex_gigas.prefix')}>
       {PREFIXES.map((prefix) => (
         <Button
           key={prefix.toLowerCase()}
@@ -102,10 +105,11 @@ const Prefixes = (props) => {
 
 const Titles = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { currentSection } = data;
 
   return (
-    <LabeledList.Item label="Title">
+    <LabeledList.Item label={t('ui.common.title')}>
       {TITLES.map((title) => (
         <Button
           key={title.toLowerCase()}
@@ -120,10 +124,11 @@ const Titles = (props) => {
 
 const Names = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { currentSection } = data;
 
   return (
-    <LabeledList.Item label="Name">
+    <LabeledList.Item label={t('ui.common.name')}>
       {NAMES.map((name) => (
         <Button
           key={name.toLowerCase()}
@@ -138,10 +143,11 @@ const Names = (props) => {
 
 const Suffixes = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { currentSection } = data;
 
   return (
-    <LabeledList.Item label="Suffix">
+    <LabeledList.Item label={t('ui.codex_gigas.suffix')}>
       {SUFFIXES.map((suffix) => (
         <Button
           key={suffix.toLowerCase()}

@@ -8,20 +8,22 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const MassDriverControl = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { connected, minutes, seconds, timing, power, poddoor } = data;
   return (
     <Window width={300} height={connected ? 215 : 107}>
       <Window.Content>
         {!!connected && (
           <Section
-            title="Auto Launch"
+            title={t('ui.mass_driver.auto_launch')}
             buttons={
               <Button
                 icon={'clock-o'}
-                content={timing ? 'Stop' : 'Start'}
+                content={timing ? t('ui.common.stop') : t('ui.common.start')}
                 selected={timing}
                 onClick={() => act('time')}
               />
@@ -52,11 +54,11 @@ export const MassDriverControl = (props) => {
           </Section>
         )}
         <Section
-          title="Controls"
+          title={t('ui.common.controls')}
           buttons={
             <Button
               icon={'toggle-on'}
-              content="Toggle Outer Door"
+              content={t('ui.mass_driver.toggle_outer_door')}
               disabled={timing || !poddoor}
               onClick={() => act('door')}
             />
@@ -66,11 +68,11 @@ export const MassDriverControl = (props) => {
             <>
               <LabeledList>
                 <LabeledList.Item
-                  label="Power Level"
+                  label={t('ui.mass_driver.power_level')}
                   buttons={
                     <Button
                       icon={'bomb'}
-                      content="Test Fire"
+                      content={t('ui.mass_driver.test_fire')}
                       disabled={timing}
                       onClick={() => act('driver_test')}
                     />
@@ -92,7 +94,7 @@ export const MassDriverControl = (props) => {
               </LabeledList>
               <Button
                 fluid
-                content="Launch"
+                content={t('ui.mass_driver.launch')}
                 disabled={timing}
                 mt={1.5}
                 icon="arrow-up"
@@ -100,7 +102,7 @@ export const MassDriverControl = (props) => {
                 onClick={() => act('launch')}
               />
             </>
-          )) || <Box color="bad">No connected mass driver</Box>}
+          )) || <Box color="bad">{t('ui.mass_driver.no_connected_mass_driver')}</Box>}
         </Section>
       </Window.Content>
     </Window>

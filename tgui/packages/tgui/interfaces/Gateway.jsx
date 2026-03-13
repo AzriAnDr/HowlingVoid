@@ -9,6 +9,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const Gateway = () => {
   return (
@@ -22,6 +23,7 @@ export const Gateway = () => {
 
 const GatewayContent = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     gateway_present = false,
     gateway_status = false,
@@ -32,9 +34,9 @@ const GatewayContent = (props) => {
   if (!gateway_present) {
     return (
       <Section>
-        <NoticeBox>No linked gateway</NoticeBox>
+        <NoticeBox>{t('ui.gateway.no_linked_gateway')}</NoticeBox>
         <Button fluid onClick={() => act('linkup')}>
-          Linkup
+          {t('ui.gateway.linkup')}
         </Button>
       </Section>
     );
@@ -55,17 +57,17 @@ const GatewayContent = (props) => {
           fluid
           onClick={() => act('deactivate')}
         >
-          Deactivate
+          {t('ui.common.deactivate')}
         </Button>
       </Section>
     );
   }
   if (!destinations.length) {
-    return <Section>No gateway nodes detected.</Section>;
+    return <Section>{t('ui.gateway.no_gateway_nodes_detected')}</Section>;
   }
   return (
     <>
-      {!gateway_status && <NoticeBox>Gateway Unpowered</NoticeBox>}
+      {!gateway_status && <NoticeBox>{t('ui.gateway.gateway_unpowered')}</NoticeBox>}
       {destinations.map((dest) => (
         <Section key={dest.ref} title={dest.name}>
           {(dest.available && (
@@ -77,7 +79,7 @@ const GatewayContent = (props) => {
                 })
               }
             >
-              Activate
+              {t('ui.common.activate')}
             </Button>
           )) || (
             <>
@@ -85,7 +87,9 @@ const GatewayContent = (props) => {
                 {dest.reason}
               </Box>
               {!!dest.timeout && (
-                <ProgressBar value={dest.timeout}>Calibrating...</ProgressBar>
+                <ProgressBar value={dest.timeout}>
+                  {t('ui.gateway.calibrating')}
+                </ProgressBar>
               )}
             </>
           )}

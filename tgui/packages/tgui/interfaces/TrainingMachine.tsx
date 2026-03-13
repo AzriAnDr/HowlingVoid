@@ -11,6 +11,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   movespeed: number;
@@ -19,10 +20,11 @@ type Data = {
 };
 
 export const TrainingMachine = () => {
+  const { t } = usePreferencesLocalization();
   return (
-    <Window width={230} height={150} title="AURUMILL">
+    <Window width={230} height={150} title={t('ui.training_machine.aurumill')}>
       <Window.Content>
-        <Section fill title="Training Machine">
+        <Section fill title={t('ui.training_machine.title')}>
           <TrainingControls />
         </Section>
       </Window.Content>
@@ -33,11 +35,12 @@ export const TrainingMachine = () => {
 /** Creates a labeledlist of controls */
 const TrainingControls = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { movespeed, range, moving } = data;
 
   return (
     <LabeledControls m={1}>
-      <LabeledControls.Item label="Speed">
+      <LabeledControls.Item label={t('ui.training_machine.speed')}>
         <Knob
           inline
           size={1.2}
@@ -49,7 +52,7 @@ const TrainingControls = (props) => {
           onChange={(_, value) => act('movespeed', { movespeed: value })}
         />
       </LabeledControls.Item>
-      <LabeledControls.Item label="Range">
+      <LabeledControls.Item label={t('ui.common.range')}>
         <Knob
           inline
           size={1.2}
@@ -67,7 +70,9 @@ const TrainingControls = (props) => {
       <Stack.Item>
         <Button fluid selected={moving} onClick={() => act('toggle')}>
           <Box bold fontSize="1.4em" lineHeight={3}>
-            {moving ? 'END' : 'BEGIN'}
+            {moving
+              ? t('ui.training_machine.end')
+              : t('ui.training_machine.begin')}
           </Box>
         </Button>
       </Stack.Item>

@@ -9,6 +9,7 @@ import {
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   dmi: {
@@ -19,6 +20,7 @@ type Data = {
 
 export const NtosCursor = () => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
 
   const { dmi } = data;
 
@@ -40,7 +42,7 @@ export const NtosCursor = () => {
   return (
     <NtosWindow width={350} height={300}>
       <NtosWindow.Content scrollable>
-        <Section title="Select Cursor">
+        <Section title={t('ui.ntos_cursor.select_cursor')}>
           <Stack vertical>
             <Stack.Item align={'center'}>
               <Button

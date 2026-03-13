@@ -1,21 +1,22 @@
 import { Box, Button, Modal, NumberInput, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import type { AirAlarmData, EditingModalProps } from './types';
 
 export function AlarmEditingModal(props: EditingModalProps) {
-  const { act } = useBackend<AirAlarmData>();
+  const { act, data } = useBackend<AirAlarmData>();
+  const { t } = usePreferencesLocalization(data);
   const { id, name, type, typeName, unit, oldValue, finish, typeVar } = props;
 
   return (
     <Modal>
       <Section
-        title="Threshold Value Editor"
+        title={t('ui.air_alarm.threshold_value_editor')}
         buttons={<Button onClick={() => finish()} icon="times" color="red" />}
       >
         <Box mb={1.5}>
-          Editing the {typeName.toLowerCase()} value for {name.toLowerCase()}
-          ...
+          {`${t('ui.air_alarm.editing_threshold_value_for')} ${typeName.toLowerCase()} (${name.toLowerCase()})...`}
         </Box>
         {oldValue === -1 ? (
           <Button
@@ -27,7 +28,7 @@ export function AlarmEditingModal(props: EditingModalProps) {
               })
             }
           >
-            Enable
+            {t('ui.common.enable')}
           </Button>
         ) : (
           <>
@@ -54,7 +55,7 @@ export function AlarmEditingModal(props: EditingModalProps) {
                 })
               }
             >
-              Disable
+              {t('ui.common.disable')}
             </Button>
           </>
         )}

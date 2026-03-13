@@ -8,6 +8,7 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 
 export type BeakerReagent = {
   name: string;
@@ -32,17 +33,18 @@ type BeakerProps = {
 
 export const BeakerDisplay = (props: BeakerProps) => {
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
   const { beaker, replace_contents, title_label, showpH } = props;
   const beakerContents = replace_contents || beaker?.contents || [];
 
   return (
     <LabeledList>
       <LabeledList.Item
-        label="Beaker"
+        label={t('ui.common.beaker')}
         buttons={
           !!beaker && (
             <Button icon="eject" onClick={() => act('eject')}>
-              Eject
+              {t('ui.common.eject')}
             </Button>
           )
         }
@@ -51,20 +53,20 @@ export const BeakerDisplay = (props: BeakerProps) => {
           (!!beaker && (
             <>
               <AnimatedNumber initial={0} value={beaker.currentVolume} />/
-              {beaker.maxVolume} units
+              {beaker.maxVolume} {t('ui.common.units')}
             </>
           )) ||
-          'No beaker'}
+          t('ui.common.no_beaker')}
       </LabeledList.Item>
-      <LabeledList.Item label="Contents">
+      <LabeledList.Item label={t('ui.common.contents')}>
         <Box color="label">
-          {(!title_label && !beaker && 'N/A') ||
-            (beakerContents.length === 0 && 'Nothing')}
+          {(!title_label && !beaker && t('ui.common.not_available_short')) ||
+            (beakerContents.length === 0 && t('ui.common.nothing'))}
         </Box>
         {beakerContents.map((chemical) => (
           <Box key={chemical.name} color="label">
-            <AnimatedNumber initial={0} value={chemical.volume} /> units of{' '}
-            {chemical.name}
+            <AnimatedNumber initial={0} value={chemical.volume} />{' '}
+            {t('ui.common.units')} {t('ui.common.of')} {chemical.name}
           </Box>
         ))}
         {beakerContents.length > 0 && !!showpH && (
@@ -80,6 +82,7 @@ export const BeakerDisplay = (props: BeakerProps) => {
 
 export const BeakerSectionDisplay = (props: BeakerProps) => {
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
   const {
     beaker,
     replace_contents,
@@ -94,15 +97,15 @@ export const BeakerSectionDisplay = (props: BeakerProps) => {
 
   return (
     <Section
-      title={title_label || 'Beaker'}
+      title={title_label || t('ui.common.beaker')}
       buttons={
         isBeakerLoaded ? (
           <>
             <Box inline color="label" mr={2}>
-              {beaker.currentVolume} / {beaker.maxVolume} units
+              {beaker.currentVolume} / {beaker.maxVolume} {t('ui.common.units')}
             </Box>
             <Button icon="eject" onClick={() => act('eject')}>
-              Eject
+              {t('ui.common.eject')}
             </Button>
           </>
         ) : (
@@ -114,24 +117,24 @@ export const BeakerSectionDisplay = (props: BeakerProps) => {
                 opacity: hasBeakerInHand ? 1 : 0.5,
               }}
               tooltip={
-                !hasBeakerInHand && 'You need to hold a container in your hand'
+                !hasBeakerInHand && t('ui.common.hold_container_in_hand')
               }
               tooltipPosition="bottom-start"
             >
-              Insert
+              {t('ui.common.insert')}
             </Button>
           )
         )
       }
     >
       <Box color="label">
-        {(!beaker && 'No beaker loaded') ||
-          (beakerContents.length === 0 && 'Nothing')}
+        {(!beaker && t('ui.common.no_beaker_loaded')) ||
+          (beakerContents.length === 0 && t('ui.common.nothing'))}
       </Box>
       {beakerContents.map((chemical) => (
         <Box key={chemical.name} color="label">
-          <AnimatedNumber initial={0} value={chemical.volume} /> units of{' '}
-          {chemical.name}
+          <AnimatedNumber initial={0} value={chemical.volume} />{' '}
+          {t('ui.common.units')} {t('ui.common.of')} {chemical.name}
         </Box>
       ))}
       {beakerContents.length > 0 && !!showpH && (

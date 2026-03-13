@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   percentage: number;
@@ -16,6 +17,7 @@ type Data = {
 
 export const Portagrav = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { percentage, on, range, gravity, wiremode, maxrange, draw } = data;
 
   return (
@@ -29,8 +31,8 @@ export const Portagrav = (props) => {
           {!wiremode && percentage !== undefined
             ? `${percentage}%`
             : wiremode
-              ? 'WIRE POWERED'
-              : 'NO CELL'}
+              ? t('ui.portagrav.wire_powered')
+              : t('ui.portagrav.no_cell')}
           {` - ${gravity}G`}
         </Box>
         <Box
@@ -38,14 +40,14 @@ export const Portagrav = (props) => {
           className="NuclearBomb__displayBox"
           textAlign="center"
         >
-          {on ? draw : 'OFF'} / Rng: {range}/{maxrange}
+          {on ? draw : t('ui.common.off')} / {t('ui.portagrav.rng')}: {range}/{maxrange}
         </Box>
         <Section height="65%">
           <Stack>
             <Stack.Item width="30%">
               <Stack vertical ml="1rem">
                 <Stack.Item>
-                  <Box>Power</Box>
+                  <Box>{t('ui.portagrav.power')}</Box>
                 </Stack.Item>
                 <Stack.Divider />
                 <Stack.Item>
@@ -53,7 +55,7 @@ export const Portagrav = (props) => {
                     width="64px"
                     height="64px"
                     className="NuclearBomb__Button NuclearBomb__Button--keypad"
-                    tooltip="Toggles if to take power from cable."
+                    tooltip={t('ui.portagrav.toggles_if_to_take_power_from_cable')}
                     onClick={() => act('toggle_wire')}
                   >
                     <Icon name="plug" size={3} mt="0.5rem" ml="0.1rem" />
@@ -73,7 +75,7 @@ export const Portagrav = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Stack vertical>
-                <Box textAlign="center">Gravity Control</Box>
+                <Box textAlign="center">{t('ui.portagrav.gravity_control')}</Box>
                 <Stack.Divider />
                 <Stack.Item>
                   <Button
@@ -101,7 +103,7 @@ export const Portagrav = (props) => {
             <Stack.Divider />
             <Stack.Item>
               <Stack vertical>
-                <Box textAlign="center">Range Control</Box>
+                <Box textAlign="center">{t('ui.portagrav.range_control')}</Box>
                 <Stack.Divider />
                 <Stack.Item>
                   <Button

@@ -2,29 +2,31 @@ import { Box, Button, Icon, ProgressBar, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const NtosSpectreMeter = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { auto_mode, spook_value, on_cooldown } = data;
   return (
     <NtosWindow width={400} height={180}>
       <NtosWindow.Content>
-        <Section title="Spectre-Meter">
+        <Section title={t('ui.ntos_spectre_meter.title')}>
           <Box>
             <Button
               inline
               icon="cog"
-              content={auto_mode ? 'Auto' : 'Manual'}
+              content={auto_mode ? t('ui.common.auto') : t('ui.common.manual')}
               onClick={() => act('toggle_mode')}
               selected={auto_mode}
-              tooltip="Toggle automatic scanning. Can be noisy"
+              tooltip={t('ui.ntos_spectre_meter.toggle_automatic_scanning')}
             />
             <Button
               inline
               icon="magnifying-glass"
-              content="Scan"
+              content={t('ui.common.scan')}
               disabled={auto_mode || on_cooldown}
-              tooltip="Has cooldown of about 2 seconds"
+              tooltip={t('ui.ntos_spectre_meter.has_cooldown_about_2_seconds')}
               onClick={() => act('manual_scan')}
             />
           </Box>
@@ -46,7 +48,7 @@ export const NtosSpectreMeter = (props) => {
               fluid
             >
               <Icon spin name="ghost" />
-              {` Spookiness: ${spook_value}% `}
+              {` ${t('ui.ntos_spectre_meter.spookiness')}: ${spook_value}% `}
               <Icon spin name="ghost" />
             </Box>
           </ProgressBar>

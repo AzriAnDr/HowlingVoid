@@ -3,6 +3,7 @@ import { Button, Section, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 // NOVA EDIT BEGIN - ALTERNATIVE_JOB_TITLES
 //
@@ -12,16 +13,17 @@ import { NtosWindow } from '../layouts';
 //  - Original: entry.rank
 export const NtosCrewManifest = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { manifest = {} } = data;
   return (
     <NtosWindow width={500} height={480}>
       <NtosWindow.Content scrollable>
         <Section
-          title="Crew Manifest"
+          title={t('ui.ntoscrewmanifest.crew_manifest')}
           buttons={
             <Button
               icon="print"
-              content="Print"
+              content={t('ui.ntoscrewmanifest.print')}
               onClick={() => act('PRG_print')}
             />
           }

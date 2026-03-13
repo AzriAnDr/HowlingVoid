@@ -3,6 +3,7 @@ import { getGasColor, getGasLabel } from 'tgui/constants';
 import { Box, Button, Icon, Table, Tooltip } from 'tgui-core/components';
 
 import type { HypertorusData } from '.';
+import { usePreferencesLocalization } from '../localization';
 
 type Recipe = {
   param: string;
@@ -137,6 +138,7 @@ const GasCellItem = (props: GasCellProps) => {
 export const HypertorusRecipes = (props: RecipeProps) => {
   const { enableRecipeSelection, onRecipe, ...rest } = props;
   const { data } = useBackend<HypertorusData>();
+  const { t } = usePreferencesLocalization(data);
   const { selectable_fuel, selected } = data;
 
   return (
@@ -144,22 +146,22 @@ export const HypertorusRecipes = (props: RecipeProps) => {
       <Table>
         <MemoRow header>
           <Table.Cell />
-          <Table.Cell colSpan={2}>Fuel</Table.Cell>
-          <Table.Cell colSpan={2}>Fusion Byproducts</Table.Cell>
-          <Table.Cell colSpan={6}>Produced gases</Table.Cell>
-          <Table.Cell colSpan={6}>Effects</Table.Cell>
+          <Table.Cell colSpan={2}>{t('ui.hypertorus.fuel')}</Table.Cell>
+          <Table.Cell colSpan={2}>{t('ui.hypertorus.fusion_byproducts')}</Table.Cell>
+          <Table.Cell colSpan={6}>{t('ui.hypertorus.produced_gases')}</Table.Cell>
+          <Table.Cell colSpan={6}>{t('ui.hypertorus.effects')}</Table.Cell>
         </MemoRow>
         <MemoRow header>
           <Table.Cell />
-          <Table.Cell>Primary</Table.Cell>
-          <Table.Cell>Secondary</Table.Cell>
+          <Table.Cell>{t('ui.common.primary')}</Table.Cell>
+          <Table.Cell>{t('ui.common.secondary')}</Table.Cell>
           <Table.Cell colSpan={2} />
-          <Table.Cell>Tier 1</Table.Cell>
-          <Table.Cell>Tier 2</Table.Cell>
-          <Table.Cell>Tier 3</Table.Cell>
-          <Table.Cell>Tier 4</Table.Cell>
-          <Table.Cell>Tier 5</Table.Cell>
-          <Table.Cell>Tier 6</Table.Cell>
+          <Table.Cell>{t('ui.hypertorus.tier_1')}</Table.Cell>
+          <Table.Cell>{t('ui.hypertorus.tier_2')}</Table.Cell>
+          <Table.Cell>{t('ui.hypertorus.tier_3')}</Table.Cell>
+          <Table.Cell>{t('ui.hypertorus.tier_4')}</Table.Cell>
+          <Table.Cell>{t('ui.hypertorus.tier_5')}</Table.Cell>
+          <Table.Cell>{t('ui.hypertorus.tier_6')}</Table.Cell>
           {
             // Lay out our pictographic headers for effects.
             recipe_effect_structure.map(({ param, label, icon }) => (

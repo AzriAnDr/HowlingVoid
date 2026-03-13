@@ -2,6 +2,7 @@ import { Box, Button, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { getWindowPosition, setWindowPosition } from '../../drag';
+import { usePreferencesLocalization } from '../localization';
 import { Port } from './Port';
 import type { Filter, Plane, PlaneConnectorsMap, Relay } from './types';
 import { usePlaneDebugContext } from './usePlaneDebug';
@@ -12,6 +13,7 @@ export type PlaneMasterProps = {
 };
 
 export function PlaneMaster(props: PlaneMasterProps) {
+  const { t } = usePreferencesLocalization();
   const { plane, connectionData } = props;
   const {
     connectionHighlight,
@@ -82,7 +84,7 @@ export function PlaneMaster(props: PlaneMasterProps) {
             <Button
               icon="pager"
               compact
-              tooltip="Inspect and edit this plane"
+              tooltip={t('ui.plane_master.inspect_edit_plane')}
               onClick={() => {
                 setActivePlane(plane.plane);
                 if (planeOpen) {
@@ -150,7 +152,7 @@ export function PlaneMaster(props: PlaneMasterProps) {
                     setActivePlane(plane.plane);
                     setConnectionOpen(true);
                   }}
-                  tooltip="Connect to another plane"
+                  tooltip={t('ui.plane_master.connect_to_another_plane')}
                 />
               </Stack.Item>
             </Stack>

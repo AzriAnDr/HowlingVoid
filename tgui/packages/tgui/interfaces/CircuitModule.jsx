@@ -2,9 +2,11 @@ import { Button, Dropdown, Input, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const CircuitModule = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { input_ports, output_ports, global_port_types } = data;
   return (
     <Window width={600} height={300}>
@@ -12,7 +14,7 @@ export const CircuitModule = (props) => {
         <Stack vertical>
           <Stack.Item>
             <Button
-              content="View Internal Circuit"
+              content={t('ui.circuit_module.view_internal_circuit')}
               textAlign="center"
               fluid
               onClick={() => act('open_internal_circuit')}
@@ -21,7 +23,7 @@ export const CircuitModule = (props) => {
           <Stack.Item>
             <Stack width="100%">
               <Stack.Item basis="50%">
-                <Section title="Input Ports">
+                <Section title={t('ui.circuit_module.input_ports')}>
                   <Stack vertical>
                     {input_ports.map((val, index) => (
                       <PortEntry
@@ -53,7 +55,7 @@ export const CircuitModule = (props) => {
                     <Stack.Item>
                       <Button
                         fluid
-                        content="Add Input Port"
+                        content={t('ui.circuit_module.add_input_port')}
                         color="good"
                         icon="plus"
                         onClick={() => act('add_input_port')}
@@ -63,7 +65,7 @@ export const CircuitModule = (props) => {
                 </Section>
               </Stack.Item>
               <Stack.Item basis="50%">
-                <Section title="Output Ports">
+                <Section title={t('ui.circuit_module.output_ports')}>
                   <Stack vertical>
                     {output_ports.map((val, index) => (
                       <PortEntry
@@ -95,7 +97,7 @@ export const CircuitModule = (props) => {
                     <Stack.Item>
                       <Button
                         fluid
-                        content="Add Output Port"
+                        content={t('ui.circuit_module.add_output_port')}
                         color="good"
                         icon="plus"
                         onClick={() => act('add_output_port')}
@@ -113,6 +115,7 @@ export const CircuitModule = (props) => {
 };
 
 const PortEntry = (props) => {
+  const { t } = usePreferencesLocalization();
   const {
     onRemove,
     onEnter,
@@ -127,7 +130,12 @@ const PortEntry = (props) => {
     <Stack.Item {...rest}>
       <Stack>
         <Stack.Item grow>
-          <Input placeholder="Name" value={name} onChange={onEnter} fluid />
+          <Input
+            placeholder={t('ui.common.name')}
+            value={name}
+            onChange={onEnter}
+            fluid
+          />
         </Stack.Item>
         <Stack.Item>
           <Dropdown

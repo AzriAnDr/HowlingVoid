@@ -10,10 +10,15 @@ import {
 
 import { useBackend } from '../../backend';
 import { logger } from '../../logging';
+import { usePreferencesLocalization } from '../localization';
 import { ListMapper } from './ListMapper';
 import type { LuaEditorData, LuaEditorModal } from './types';
 
-const parsePanic = (name, panic_json) => {
+const parsePanic = (
+  name,
+  panic_json,
+  t: (key: string, fallback?: string) => string,
+) => {
   const panic_info = JSON.parse(panic_json);
   const {
     message,
@@ -23,9 +28,9 @@ const parsePanic = (name, panic_json) => {
   return (
     <>
       <Box textColor="red">
-        <b>{name}</b> panicked at {file}:{line}: {message}
+        <b>{name}</b> {t('ui.lua_editor.panicked_at')} {file}:{line}: {message}
       </Box>
-      <Collapsible title="Backtrace">
+      <Collapsible title={t('ui.lua_editor.backtrace')}>
         <Stack vertical>
           {backtrace
             ?.filter(
@@ -36,8 +41,10 @@ const parsePanic = (name, panic_json) => {
                 {i > 0 && <Divider />}
                 <Stack.Item key={i}>
                   <LabeledList>
-                    <LabeledList.Item label="function">{name}</LabeledList.Item>
-                    <LabeledList.Item label="location">
+                    <LabeledList.Item label={t('ui.lua_editor.function')}>
+                      {name}
+                    </LabeledList.Item>
+                    <LabeledList.Item label={t('ui.lua_editor.location')}>
                       {file}:{line}
                     </LabeledList.Item>
                   </LabeledList>
@@ -57,6 +64,7 @@ type LogProps = {
 
 export const Log = (props: LogProps) => {
   const { act, data } = useBackend<LuaEditorData>();
+  const { t } = usePreferencesLocalization(data);
   const { stateLog } = data;
   const { setViewedChunk, setModal } = props;
 
@@ -71,7 +79,7 @@ export const Log = (props: LogProps) => {
           messageColor = 'blue';
           output = (
             <>
-              <b>{name}</b> slept.
+              <b>{name}</b> {t('ui.lua_editor.slept')}.
             </>
           );
         }
@@ -81,10 +89,12 @@ export const Log = (props: LogProps) => {
         const { name, return_values, variants } = element;
         output = (
           <>
-            <b>{name}</b> yielded
+            <b>{name}</b> {t('ui.lua_editor.yielded')}
             {return_values.length
-              ? ` ${return_values.length} value${
-                  return_values.length > 1 ? 's' : ''
+              ? ` ${return_values.length} ${
+                  return_values.length > 1
+                    ? t('ui.lua_editor.values')
+                    : t('ui.lua_editor.value')
                 }`
               : ''}
             .
@@ -93,7 +103,7 @@ export const Log = (props: LogProps) => {
                 list={return_values}
                 variants={variants}
                 skipNulls
-                name="Return Values"
+                name={t('ui.lua_editor.return_values')}
                 collapsible
                 vvAct={(path) =>
                   act('vvReturnValue', {
@@ -114,10 +124,12 @@ export const Log = (props: LogProps) => {
         const { name, return_values, variants } = element;
         output = (
           <>
-            <b>{name}</b> returned
+            <b>{name}</b> {t('ui.lua_editor.returned')}
             {return_values.length
-              ? ` ${return_values.length} value${
-                  return_values.length > 1 ? 's' : ''
+              ? ` ${return_values.length} ${
+                  return_values.length > 1
+                    ? t('ui.lua_editor.values')
+                    : t('ui.lua_editor.value')
                 }`
               : ''}
             .
@@ -127,7 +139,7 @@ export const Log = (props: LogProps) => {
                   list={return_values}
                   variants={variants}
                   skipNulls
-                  name="Return Values"
+                  name={t('ui.lua_editor.return_values')}
                   collapsible
                   vvAct={(path) =>
                     act('vvReturnValue', {
@@ -153,19 +165,19 @@ export const Log = (props: LogProps) => {
       }
       case 'panic': {
         const { name, message } = element;
-        output = parsePanic(name, message);
+        output = parsePanic(name, message, t);
         break;
       }
       case 'runtime': {
         const { file, line, message, stack } = element;
         output = (
           <>
-            Runtime at {file}:{line}: {message}
+            {t('ui.lua_editor.runtime_at')} {file}:{line}: {message}
             <ListMapper
               list={stack.map((frame) => {
                 return { key: null, value: frame };
               })}
-              name="Stack Trace"
+              name={t('ui.lua_editor.stack_trace')}
               collapsible
             />
           </>
@@ -195,7 +207,7 @@ export const Log = (props: LogProps) => {
               setModal('viewChunk');
             }}
           >
-            View Source
+            {t('ui.lua_editor.view_source')}
           </Button>
         </>
       );

@@ -17,6 +17,7 @@ import {
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import { CharacterPreview } from './common/CharacterPreview';
 
 const formatURLs = (text) => {
@@ -72,6 +73,7 @@ const erpTagColor = {
 
 export const NovaCharacterDirectory = (props) => {
   const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
 
   const {
     personalVisibility,
@@ -129,29 +131,31 @@ export const NovaCharacterDirectory = (props) => {
           />
         )) || (
           <>
-            <Section title="Your Preferences">
+            <Section title={t('ui.character_directory.your_preferences')}>
               <LabeledList>
-                <LabeledList.Item label="Visibility">
+                <LabeledList.Item label={t('ui.character_directory.visibility')}>
                   <Button fluid>
-                    {personalVisibility ? 'Shown' : 'Not Shown'}
+                    {personalVisibility
+                      ? t('ui.character_directory.shown')
+                      : t('ui.character_directory.not_shown')}
                   </Button>
                 </LabeledList.Item>
-                <LabeledList.Item label="Attraction">
+                <LabeledList.Item label={t('ui.character_directory.attraction')}>
                   <Button fluid>{personalAttraction}</Button>
                 </LabeledList.Item>
-                <LabeledList.Item label="Gender">
+                <LabeledList.Item label={t('ui.character_directory.gender')}>
                   <Button fluid>{personalGender}</Button>
                 </LabeledList.Item>
-                <LabeledList.Item label="ERP">
+                <LabeledList.Item label={t('ui.character_directory.erp')}>
                   <Button fluid>{personalErpTag}</Button>
                 </LabeledList.Item>
-                <LabeledList.Item label="Vore">
+                <LabeledList.Item label={t('ui.character_directory.vore')}>
                   <Button fluid>{personalVoreTag}</Button>
                 </LabeledList.Item>
-                <LabeledList.Item label="Hypnosis">
+                <LabeledList.Item label={t('ui.character_directory.hypnosis')}>
                   <Button fluid>{personalHypnoTag}</Button>
                 </LabeledList.Item>
-                <LabeledList.Item label="Noncon">
+                <LabeledList.Item label={t('ui.character_directory.noncon')}>
                   <Button fluid>{personalNonconTag}</Button>
                 </LabeledList.Item>
               </LabeledList>
@@ -178,6 +182,7 @@ export const NovaCharacterDirectory = (props) => {
 
 const ViewCharacter = (props) => {
   const { overlay, updateOverlay, assignedView } = props;
+  const { t } = usePreferencesLocalization();
   const [oocNotesIndex, setOocNotesIndex] = useState('SFW');
   const [flavorTextIndex, setFlavorTextIndex] = useState('SFW');
 
@@ -187,7 +192,7 @@ const ViewCharacter = (props) => {
         <Section height="375px" width="262px" title={overlay.name}>
           <CharacterPreview height="330px" width="250px" id={assignedView} />
         </Section>
-        <Section title="Headshot">
+        <Section title={t('ui.character_directory.headshot')}>
           <img
             src={resolveAsset(overlay.headshot)}
             height="250px"
@@ -202,7 +207,7 @@ const ViewCharacter = (props) => {
               minHeight="375px"
               scrollable
               fill
-              title="Flavor Text:"
+              title={t('ui.character_directory.flavor_text')}
               preserveWhitespace
               buttons={
                 <>
@@ -240,7 +245,7 @@ const ViewCharacter = (props) => {
                   maxHeight="299px"
                   fill
                   scrollable
-                  title="OOC Notes"
+                  title={t('ui.character_directory.ooc_notes')}
                   preserveWhitespace
                   buttons={
                     <>
@@ -276,29 +281,29 @@ const ViewCharacter = (props) => {
                           fontWeight: 'bold',
                         }}
                       >
-                        Player is a Veteran.
+                        {t('ui.character_directory.player_is_veteran')}
                       </span>
                     </Stack.Item>
                   )}
                   {oocNotesIndex === 'NSFW' && (
                     <>
                       <LabeledList>
-                        <LabeledList.Item label="Attraction">
+                        <LabeledList.Item label={t('ui.character_directory.attraction')}>
                           {overlay.attraction}
                         </LabeledList.Item>
-                        <LabeledList.Item label="Gender">
+                        <LabeledList.Item label={t('ui.character_directory.gender')}>
                           {overlay.gender}
                         </LabeledList.Item>
-                        <LabeledList.Item label="ERP">
+                        <LabeledList.Item label={t('ui.character_directory.erp')}>
                           {overlay.erp}
                         </LabeledList.Item>
-                        <LabeledList.Item label="Vore">
+                        <LabeledList.Item label={t('ui.character_directory.vore')}>
                           {overlay.vore}
                         </LabeledList.Item>
-                        <LabeledList.Item label="Hypnosis">
+                        <LabeledList.Item label={t('ui.character_directory.hypnosis')}>
                           {overlay.hypno}
                         </LabeledList.Item>
-                        <LabeledList.Item label="Noncon">
+                        <LabeledList.Item label={t('ui.character_directory.noncon')}>
                           {overlay.noncon}
                         </LabeledList.Item>
                       </LabeledList>
@@ -316,7 +321,7 @@ const ViewCharacter = (props) => {
                   maxHeight="299px"
                   fill
                   scrollable
-                  title="Character Advert"
+                  title={t('ui.character_directory.character_advert')}
                 >
                   {overlay.character_ad}
                 </Section>
@@ -327,7 +332,7 @@ const ViewCharacter = (props) => {
                     icon="arrow-left"
                     onClick={() => updateOverlay(null)}
                   >
-                    Back
+                    {t('ui.common.back')}
                   </Button>
                 </NoticeBox>
               </Stack.Item>
@@ -341,6 +346,7 @@ const ViewCharacter = (props) => {
 
 const CharacterDirectoryList = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     viewCreated,
     setViewCreated,
@@ -399,15 +405,15 @@ const CharacterDirectoryList = (props) => {
 
   return (
     <Section
-      title="Directory"
+      title={t('ui.character_directory.directory')}
       buttons={
         <>
           <Button icon="sync" onClick={() => act('refresh')}>
-            Refresh
+            {t('ui.common.refresh')}
           </Button>
-          <Tooltip content="Display a random player's advert. Click if you dare.">
+          <Tooltip content={t('ui.character_directory.random_advert_tooltip')}>
             <Button icon="random" onClick={handleRandomView}>
-              I Feel Lucky
+              {t('ui.character_directory.i_feel_lucky')}
             </Button>
           </Tooltip>
         </>
@@ -416,7 +422,7 @@ const CharacterDirectoryList = (props) => {
       <Stack mb={-2}>
         <Stack.Item>
           <Input
-            placeholder="Search name..."
+            placeholder={t('ui.character_directory.search_name_placeholder')}
             onChange={updateSearchTerm}
             expensive
             value={searchTerm}
@@ -430,9 +436,9 @@ const CharacterDirectoryList = (props) => {
             onClick={(e) => {
               updateColorCodeEnabled(!colorCodeEnabled);
             }}
-            tooltip="Toggles the color coding for ERP Status."
+            tooltip={t('ui.character_directory.erp_status_colors_tooltip')}
           >
-            ERP Status Colors
+            {t('ui.character_directory.erp_status_colors')}
           </Button.Checkbox>
         </Stack.Item>
       </Stack>
@@ -445,7 +451,7 @@ const CharacterDirectoryList = (props) => {
             sortOrder={sortOrder}
             onClick={handleSort}
           >
-            Name
+            {t('ui.common.name')}
           </SortButton>
           <SortButton
             id="species"
@@ -453,7 +459,7 @@ const CharacterDirectoryList = (props) => {
             sortOrder={sortOrder}
             onClick={handleSort}
           >
-            Species
+            {t('ui.common.species')}
           </SortButton>
           <SortButton
             id="attraction"
@@ -461,7 +467,7 @@ const CharacterDirectoryList = (props) => {
             sortOrder={sortOrder}
             onClick={handleSort}
           >
-            Attraction
+            {t('ui.character_directory.attraction')}
           </SortButton>
           <SortButton
             id="gender"
@@ -469,7 +475,7 @@ const CharacterDirectoryList = (props) => {
             sortOrder={sortOrder}
             onClick={handleSort}
           >
-            Gender
+            {t('ui.character_directory.gender')}
           </SortButton>
           <SortButton
             id="erp"
@@ -477,7 +483,7 @@ const CharacterDirectoryList = (props) => {
             sortOrder={sortOrder}
             onClick={handleSort}
           >
-            ERP
+            {t('ui.character_directory.erp')}
           </SortButton>
           <SortButton
             id="vore"
@@ -485,7 +491,7 @@ const CharacterDirectoryList = (props) => {
             sortOrder={sortOrder}
             onClick={handleSort}
           >
-            Vore
+            {t('ui.character_directory.vore')}
           </SortButton>
           <SortButton
             id="hypno"
@@ -493,7 +499,7 @@ const CharacterDirectoryList = (props) => {
             sortOrder={sortOrder}
             onClick={handleSort}
           >
-            Hypno
+            {t('ui.character_directory.hypnosis')}
           </SortButton>
           <SortButton
             id="noncon"
@@ -501,10 +507,10 @@ const CharacterDirectoryList = (props) => {
             sortOrder={sortOrder}
             onClick={handleSort}
           >
-            Noncon
+            {t('ui.character_directory.noncon')}
           </SortButton>
           <Table.Cell collapsing textAlign="right">
-            Advert
+            {t('ui.character_directory.advert')}
           </Table.Cell>
         </Table.Row>
         {sortedDirectory.map((character, i) => (
@@ -519,7 +525,7 @@ const CharacterDirectoryList = (props) => {
                 <Button
                   color={erpTagColor[character.erp]}
                   icon="ghost"
-                  tooltip="Orbit"
+                  tooltip={t('ui.common.orbit')}
                   onClick={() => act('orbit', { ref: character.ref })}
                 >
                   {character.name}
@@ -558,7 +564,7 @@ const CharacterDirectoryList = (props) => {
                 icon="sticky-note"
                 mr={1}
               >
-                View
+                {t('ui.common.view')}
               </Button>
             </Table.Cell>
           </Table.Row>

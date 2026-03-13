@@ -5,6 +5,7 @@ import type { BooleanStyleMap, StringStyleMap } from 'tgui-core/ui';
 
 import { colorsAreEqual, colorToCssString } from '../colorSpaces';
 import type { EditorColor } from '../Types/types';
+import { usePreferencesLocalization } from '../../../localization';
 
 export type PaletteProps = {
   colors: EditorColor[];
@@ -19,6 +20,7 @@ export type PaletteProps = {
 } & Parameters<typeof Stack>[0];
 
 export const Palette = (props: PaletteProps) => {
+  const { t } = usePreferencesLocalization();
   const {
     colors,
     selectedColor,
@@ -31,7 +33,7 @@ export const Palette = (props: PaletteProps) => {
     ...rest
   } = props;
   return (
-    <Section title="Palette">
+    <Section title={t('ui.sprite_editor.palette')}>
       <Stack {...rest} style={{ ...style, flexWrap: 'wrap', gap: '0.5rem' }}>
         {colors.map((color, i) => (
           <Stack.Item key={i} m={0}>

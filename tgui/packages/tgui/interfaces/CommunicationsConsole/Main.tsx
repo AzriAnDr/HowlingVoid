@@ -3,12 +3,14 @@ import { Box, Button, Flex, Modal, Section } from 'tgui-core/components';
 import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { AlertButton } from './AlertButton';
 import { MessageModal } from './MessageModal';
 import { type CommsConsoleData, ShuttleState } from './types';
 
 export function PageMain(props) {
   const { act, data } = useBackend<CommsConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     alertLevel,
     callShuttleReasonMinLength,
@@ -45,7 +47,7 @@ export function PageMain(props) {
   return (
     <Box>
       {!syndicate && (
-        <Section title="Emergency Shuttle">
+        <Section title={t('ui.communications_console.emergency_shuttle')}>
           {shuttleCalled ? (
             <Button.Confirm
               icon="space-shuttle"
@@ -54,13 +56,17 @@ export function PageMain(props) {
               tooltip={
                 (canRecallShuttles &&
                   !shuttleRecallable &&
-                  "It's too late for the emergency shuttle to be recalled.") ||
-                'You do not have permission to recall the emergency shuttle.'
+                  t(
+                    'ui.communications_console.too_late_to_recall_emergency_shuttle',
+                  )) ||
+                t(
+                  'ui.communications_console.no_permission_recall_emergency_shuttle',
+                )
               }
               tooltipPosition="top"
               onClick={() => act('recallShuttle')}
             >
-              Recall Emergency Shuttle
+              {t('ui.communications_console.recall_emergency_shuttle')}
             </Button.Confirm>
           ) : (
             <Button
@@ -74,27 +80,34 @@ export function PageMain(props) {
               tooltipPosition="top"
               onClick={() => setCallingShuttle(true)}
             >
-              Call Emergency Shuttle
+              {t('ui.communications_console.call_emergency_shuttle')}
             </Button>
           )}
           {!!shuttleCalledPreviously &&
             (shuttleLastCalled ? (
               <Box>
-                Most recent shuttle call/recall traced to:{' '}
+                {t('ui.communications_console.most_recent_shuttle_trace')}{' '}
                 <b>{shuttleLastCalled}</b>
               </Box>
             ) : (
-              <Box>Unable to trace most recent shuttle/recall signal.</Box>
+              <Box>
+                {t(
+                  'ui.communications_console.unable_to_trace_shuttle_recall_signal',
+                )}
+              </Box>
             ))}
         </Section>
       )}
 
       {!!canSetAlertLevel && (
-        <Section title="Alert Level">
+        <Section title={t('ui.communications_console.alert_level')}>
           <Flex justify="space-between">
             <Flex.Item>
               <Box>
-                Currently on <b>{capitalize(alertLevel)}</b> Alert
+                {t('ui.communications_console.currently_on_alert_level').replace(
+                  '{level}',
+                  capitalize(alertLevel),
+                )}
               </Box>
             </Flex.Item>
 
@@ -129,14 +142,14 @@ export function PageMain(props) {
         </Section>
       )}
 
-      <Section title="Functions">
+      <Section title={t('ui.communications_console.functions')}>
         <Flex direction="column">
           {!!canMakeAnnouncement && (
             <Button
               icon="bullhorn"
               onClick={() => act('makePriorityAnnouncement')}
             >
-              Make Priority Announcement
+              {t('ui.communications_console.make_priority_announcement')}
             </Button>
           )}
 
@@ -147,8 +160,11 @@ export function PageMain(props) {
               color={emergencyAccess ? 'bad' : undefined}
               onClick={() => act('toggleEmergencyAccess')}
             >
-              {emergencyAccess ? 'Disable' : 'Enable'} Emergency Maintenance
-              Access
+              {(emergencyAccess
+                ? t('ui.common.disable')
+                : t('ui.common.enable')) +
+                ' ' +
+                t('ui.communications_console.emergency_maintenance_access')}
             </Button.Confirm>
           )}
           {/* NOVA EDIT ADDITION START - Engineering Override */}
@@ -159,8 +175,11 @@ export function PageMain(props) {
               color={engineeringOverride ? 'bad' : undefined}
               onClick={() => act('toggleEngOverride')}
             >
-              {engineeringOverride ? 'Disable' : 'Enable'} Engineering Override
-              Access
+              {(engineeringOverride
+                ? t('ui.common.disable')
+                : t('ui.common.enable')) +
+                ' ' +
+                t('ui.communications_console.engineering_override_access')}
             </Button.Confirm>
           )}
           {/* NOVA EDIT ADDITION END */}
@@ -171,7 +190,7 @@ export function PageMain(props) {
                 act('setState', { state: ShuttleState.CHANGING_STATUS })
               }
             >
-              Set Status Display
+              {t('ui.communications_console.set_status_display')}
             </Button>
           )}
 
@@ -179,7 +198,7 @@ export function PageMain(props) {
             icon="envelope-o"
             onClick={() => act('setState', { state: ShuttleState.MESSAGES })}
           >
-            Message List
+            {t('ui.communications_console.message_list')}
           </Button>
 
           {canBuyShuttles !== 0 && (
@@ -194,7 +213,7 @@ export function PageMain(props) {
                 act('setState', { state: ShuttleState.BUYING_SHUTTLE })
               }
             >
-              Purchase Shuttle
+              {t('ui.communications_console.purchase_shuttle')}
             </Button>
           )}
 
@@ -204,7 +223,12 @@ export function PageMain(props) {
               disabled={!importantActionReady}
               onClick={() => setMessagingAssociates(true)}
             >
-              Send message to {emagged ? '[UNKNOWN]' : 'CentCom'}
+              {t('ui.communications_console.send_message_to').replace(
+                '{target}',
+                emagged
+                  ? t('ui.communications_console.unknown_target')
+                  : t('ui.communications_console.centcom'),
+              )}
             </Button>
           )}
 
@@ -214,13 +238,15 @@ export function PageMain(props) {
               disabled={!importantActionReady}
               onClick={() => setRequestingNukeCodes(true)}
             >
-              Request Nuclear Authentication Codes
+              {t(
+                'ui.communications_console.request_nuclear_authentication_codes',
+              )}
             </Button>
           )}
 
           {!!emagged && !syndicate && (
             <Button icon="undo" onClick={() => act('restoreBackupRoutingData')}>
-              Restore Backup Routing Data
+              {t('ui.communications_console.restore_backup_routing_data')}
             </Button>
           )}
           {/* NOVA EDIT ADDITION START */}
@@ -231,27 +257,35 @@ export function PageMain(props) {
               disabled={!importantActionReady}
               onClick={() => act('messagethefeds')}
             >
-              Send message to the Sol Federation Regional Command
+              {t(
+                'ui.communications_console.send_message_sol_federation_regional_command',
+              )}
             </Button>
           )}
           {!!canMakeAnnouncement && (
             <Button icon="bullhorn" onClick={() => act('callThePolice')}>
-              Call Sol Federation 911: Marshals Response
+              {t(
+                'ui.communications_console.call_sol_federation_911_marshals_response',
+              )}
             </Button>
           )}
           {!!canMakeAnnouncement && (
             <Button icon="bullhorn" onClick={() => act('callTheCatmos')}>
-              Call Sol Federation 811: Advanced Atmospherics Response
+              {t(
+                'ui.communications_console.call_sol_federation_811_advanced_atmospherics_response',
+              )}
             </Button>
           )}
           {!!canMakeAnnouncement && (
             <Button icon="bullhorn" onClick={() => act('callTheParameds')}>
-              Call Sol Federation 911: Medical Response
+              {t(
+                'ui.communications_console.call_sol_federation_911_medical_response',
+              )}
             </Button>
           )}
           {!!emagged && (
             <Button icon="bullhorn" onClick={() => act('callThePizza')}>
-              Place an Order with Dogginos Pizza
+              {t('ui.communications_console.place_order_with_dogginos_pizza')}
             </Button>
           )}
           {/* NOVA EDIT ADDITION END */}
@@ -260,12 +294,17 @@ export function PageMain(props) {
 
       {!!canMessageAssociates && messagingAssociates && (
         <MessageModal
-          label={`Message to transmit to ${
-            emagged ? '[ABNORMAL ROUTING COORDINATES]' : 'CentCom'
-          } via quantum entanglement`}
-          notice="Please be aware that this process is very expensive, and abuse will lead to...termination. Transmission does not guarantee a response."
+          label={t(
+            'ui.communications_console.message_to_transmit_via_quantum_entanglement',
+          ).replace(
+            '{target}',
+            emagged
+              ? t('ui.communications_console.abnormal_routing_coordinates')
+              : t('ui.communications_console.centcom'),
+          )}
+          notice={t('ui.communications_console.message_associates_notice')}
           icon="bullhorn"
-          buttonText="Send"
+          buttonText={t('ui.common.send')}
           onBack={() => setMessagingAssociates(false)}
           onSubmit={(message) => {
             setMessagingAssociates(false);
@@ -278,10 +317,12 @@ export function PageMain(props) {
 
       {!!canRequestNuke && requestingNukeCodes && (
         <MessageModal
-          label="Reason for requesting nuclear self-destruct codes"
-          notice="Misuse of the nuclear request system will not be tolerated under any circumstances. Transmission does not guarantee a response."
+          label={t(
+            'ui.communications_console.reason_for_requesting_nuclear_self_destruct_codes',
+          )}
+          notice={t('ui.communications_console.nuclear_request_system_notice')}
           icon="bomb"
-          buttonText="Request Codes"
+          buttonText={t('ui.communications_console.request_codes')}
           onBack={() => setRequestingNukeCodes(false)}
           onSubmit={(reason) => {
             setRequestingNukeCodes(false);
@@ -294,9 +335,9 @@ export function PageMain(props) {
 
       {!!callingShuttle && (
         <MessageModal
-          label="Nature of emergency"
+          label={t('ui.communications_console.nature_of_emergency')}
           icon="space-shuttle"
-          buttonText="Call Shuttle"
+          buttonText={t('ui.communications_console.call_shuttle')}
           minLength={callShuttleReasonMinLength}
           onBack={() => setCallingShuttle(false)}
           onSubmit={(reason) => {
@@ -312,7 +353,7 @@ export function PageMain(props) {
         <Modal>
           <Flex direction="column" textAlign="center" width="300px">
             <Flex.Item fontSize="16px" mb={2}>
-              Swipe ID to confirm change
+              {t('ui.communications_console.swipe_id_to_confirm_change')}
             </Flex.Item>
 
             <Flex.Item mr={2} mb={1}>
@@ -327,7 +368,7 @@ export function PageMain(props) {
                   setNewAlertLevel('');
                 }}
               >
-                Swipe ID
+                {t('ui.communications_console.swipe_id')}
               </Button>
 
               <Button
@@ -336,7 +377,7 @@ export function PageMain(props) {
                 fontSize="16px"
                 onClick={() => setNewAlertLevel('')}
               >
-                Cancel
+                {t('ui.common.cancel')}
               </Button>
             </Flex.Item>
           </Flex>
@@ -344,7 +385,7 @@ export function PageMain(props) {
       )}
 
       {!!canSendToSectors && sectors.length > 0 && (
-        <Section title="Allied Sectors">
+        <Section title={t('ui.communications_console.allied_sectors')}>
           <Flex direction="column">
             {sectors.map((sectorName) => (
               <Flex.Item key={sectorName}>
@@ -352,7 +393,9 @@ export function PageMain(props) {
                   disabled={!importantActionReady}
                   onClick={() => setMessagingSector(sectorName)}
                 >
-                  Send a message to station in {sectorName} sector
+                  {t(
+                    'ui.communications_console.send_message_to_station_in_sector',
+                  ).replace('{sector}', sectorName)}
                 </Button>
               </Flex.Item>
             ))}
@@ -363,7 +406,9 @@ export function PageMain(props) {
                   disabled={!importantActionReady}
                   onClick={() => setMessagingSector('all')}
                 >
-                  Send a message to all allied station
+                  {t(
+                    'ui.communications_console.send_message_to_all_allied_stations',
+                  )}
                 </Button>
               </Flex.Item>
             )}
@@ -373,10 +418,10 @@ export function PageMain(props) {
 
       {!!canSendToSectors && sectors.length > 0 && messagingSector && (
         <MessageModal
-          label="Message to send to allied station"
-          notice="Please be aware that this process is very expensive, and abuse will lead to...termination."
+          label={t('ui.communications_console.message_to_send_to_allied_station')}
+          notice={t('ui.communications_console.send_to_allied_station_notice')}
           icon="bullhorn"
-          buttonText="Send"
+          buttonText={t('ui.common.send')}
           onBack={() => setMessagingSector('')}
           onSubmit={(message) => {
             act('sendToOtherSector', {

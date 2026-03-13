@@ -25,6 +25,7 @@ type ChatScreenProps = {
   sendingVirus: BooleanLike;
   storedPhotos?: NtPicture[];
   unreads: number;
+  t: (key: string) => string;
 };
 
 type ChatScreenState = {
@@ -183,6 +184,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
       storedPhotos,
       sendingVirus,
       unreads,
+      t,
     } = this.props;
     // NOVA EDIT CHANGE - ORIGINAL: const { message, canSend, previewingImage, selectingPhoto } = this.state;
     const { message, canSend, previewingImage, selectingPhoto, subtleMode } =
@@ -198,7 +200,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
       // this code shouldn't be reached if there's no chat
       if (index === messages.length - unreads) {
-        filteredMessages.push(<ChatDivider mt={isSwitch ? 3 : 1} />);
+        filteredMessages.push(<ChatDivider mt={isSwitch ? 3 : 1} t={t} />);
       }
 
       filteredMessages.push(
@@ -210,6 +212,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             photoPath={message.photo_path}
             timestamp={message.timestamp}
             subtle={message.subtle} // NOVA EDIT ADDITION
+            t={t}
             onPreviewImage={
               message.photo_path
                 ? () => this.setState({ previewingImage: message.photo_path! })
@@ -226,7 +229,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
       sendingBar = (
         <Section fill>
           <Box width="100%" italic color="gray" ml={1}>
-            You cannot reply to this user.
+            {t('ui.ntos_messenger.cannot_reply_to_this_user')}
           </Box>
         </Section>
       );
@@ -250,7 +253,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
         <Section fill>
           <Button
             icon="arrow-left"
-            content="Back"
+            content={t('ui.common.back')}
             onClick={() => this.setState({ selectingPhoto: false })}
           />
           {photos.length > 0 ? (
@@ -259,7 +262,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             </Section>
           ) : (
             <Box as="span" ml={1}>
-              No photos found
+              {t('ui.ntos_messenger.no_photos_found')}
             </Box>
           )}
         </Section>
@@ -267,13 +270,13 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     } else {
       const attachmentButton = sendingVirus ? (
         <Button
-          tooltip="ERROR: File signature is unverified. Please contact an NT support intern."
+          tooltip={t('ui.ntos_messenger.file_signature_unverified')}
           icon="triangle-exclamation"
           color="red"
         />
       ) : (
         <Button
-          tooltip="Add attachment"
+          tooltip={t('ui.ntos_messenger.add_attachment')}
           icon="image"
           onClick={this.handleSelectPicture}
         />
@@ -285,7 +288,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
           {/* NOVA EDIT ADDITION BEGIN */}
           <Stack.Item>
             <Button
-              tooltip="Toggle subtle mode; messages sent will be hidden from prying ghosts."
+              tooltip={t('ui.ntos_messenger.toggle_subtle_mode')}
               icon={subtleMode ? 'fa-ear-deaf' : 'fa-ear-listen'}
               backgroundColor={subtleMode ? `hsl(281, 39%, 59%)` : ''}
               onClick={this.handleToggleSubtle}
@@ -294,7 +297,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
           {/* NOVA EDIT ADDITION END */}
           <Stack.Item>
             <Button
-              tooltip="Send"
+              tooltip={t('ui.common.send')}
               icon="arrow-right"
               onClick={this.handleSendMessage}
               disabled={!canSend}
@@ -313,7 +316,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
                 <Button
                   pt={1}
                   onClick={() => act('PDA_clearPhoto')}
-                  tooltip="Remove attachment"
+                  tooltip={t('ui.ntos_messenger.remove_attachment')}
                 >
                   <Image src={selectedPhoto} />
                 </Button>
@@ -323,7 +326,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
               <Stack fill align="center">
                 <Stack.Item grow>
                   <Input
-                    placeholder={`Send message to ${recipient.name}...`}
+                    placeholder={`${t('ui.ntos_messenger.send_message_to')} ${recipient.name}...`}
                     fluid
                     autoFocus
                     value={message}
@@ -346,19 +349,19 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
         <Section>
           <Button
             icon="arrow-left"
-            content="Back"
+            content={t('ui.common.back')}
             onClick={() => act('PDA_viewMessages', { ref: null })}
           />
           {chatRef && (
             <>
               <Button
                 icon="box-archive"
-                content="Close chat"
+                content={t('ui.ntos_messenger.close_chat')}
                 onClick={() => act('PDA_closeMessages', { ref: chatRef })}
               />
               <Button.Confirm
                 icon="trash-can"
-                content="Delete chat"
+                content={t('ui.ntos_messenger.delete_chat')}
                 onClick={() => act('PDA_clearMessages', { ref: chatRef })}
               />
             </>
@@ -377,7 +380,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
               {!!(messages.length > 0 && canReply) && (
                 <>
                   <Stack.Item textAlign="center" fontSize={1}>
-                    This is the beginning of your chat with {recipient.name}.
+                    {t('ui.ntos_messenger.chat_beginning_with')} {recipient.name}.
                   </Stack.Item>
                   <Stack.Divider />
                 </>
@@ -392,11 +395,11 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
         {previewingImage && (
           <Modal className="NtosChatLog__ImagePreview">
             <Section
-              title="Photo Preview"
+              title={t('ui.ntos_messenger.photo_preview')}
               buttons={
                 <Button
                   icon="arrow-left"
-                  content="Back"
+                  content={t('ui.common.back')}
                   tooltipPosition="left"
                   onClick={() => this.setState({ previewingImage: undefined })}
                 />
@@ -419,6 +422,7 @@ type ChatMessageProps = {
   photoPath?: string;
   onPreviewImage?: () => void;
   subtle: BooleanLike; // NOVA EDIT ADDITION
+  t: (key: string) => string;
 };
 
 const ChatMessage = (props: ChatMessageProps) => {
@@ -432,6 +436,7 @@ const ChatMessage = (props: ChatMessageProps) => {
     timestamp,
     onPreviewImage,
     subtle,
+    t,
   } = props;
   // NOVA EDIT CHANGE END
 
@@ -464,11 +469,13 @@ const ChatMessage = (props: ChatMessageProps) => {
         </Tooltip>
       </Box>
       {!!everyone && (
-        <Box className="NtosChatMessage__everyone">Sent to everyone</Box>
+        <Box className="NtosChatMessage__everyone">
+          {t('ui.ntos_messenger.sent_to_everyone')}
+        </Box>
       )}
       {!!photoPath && (
         <Button
-          tooltip="View image"
+          tooltip={t('ui.ntos_messenger.view_image')}
           className="NtosChatMessage__image"
           color="transparent"
           onClick={onPreviewImage}
@@ -480,11 +487,11 @@ const ChatMessage = (props: ChatMessageProps) => {
   );
 };
 
-const ChatDivider = (props: { mt: number }) => {
+const ChatDivider = (props: { mt: number; t: (key: string) => string }) => {
   return (
     <Box className="UnreadDivider" m={0} mt={props.mt}>
       <div />
-      <span>Unread Messages</span>
+      <span>{props.t('ui.ntos_messenger.unread_messages')}</span>
       <div />
     </Box>
   );

@@ -3,6 +3,7 @@ import { toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Material = {
   name: string;
@@ -15,13 +16,14 @@ type Data = {
 
 export const OreBox = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { materials } = data;
 
   return (
     <Window width={335} height={415}>
       <Window.Content scrollable>
         <Section
-          title="Ores & Boulders"
+          title={t('ui.ore_box.ores_and_boulders')}
           buttons={
             <Button
               disabled={materials.length === 0}
@@ -33,7 +35,7 @@ export const OreBox = (props) => {
         >
           <Table>
             <Table.Row header>
-              <Table.Cell>Item</Table.Cell>
+              <Table.Cell>{t('ui.common.item')}</Table.Cell>
               <Table.Cell collapsing textAlign="right">
                 Amount
               </Table.Cell>

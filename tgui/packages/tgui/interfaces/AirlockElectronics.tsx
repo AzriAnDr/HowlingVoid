@@ -10,6 +10,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { AccessConfig, type Region } from './common/AccessConfig';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   accesses: string[];
@@ -22,8 +23,10 @@ type Data = {
 };
 
 export function AirlockElectronics(props) {
+  const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   return (
-    <Window width={420} height={485}>
+    <Window title={t('ui.airlock_electronics.title')} width={420} height={485}>
       <Window.Content>
         <AirLockMainSection />
       </Window.Content>
@@ -33,6 +36,7 @@ export function AirlockElectronics(props) {
 
 export function AirLockMainSection(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     accesses = [],
     oneAccess,
@@ -48,26 +52,28 @@ export function AirLockMainSection(props) {
       <Stack.Item>
         <Section fill>
           <LabeledList>
-            <LabeledList.Item label="Integrated Circuit Shell">
+            <LabeledList.Item label={t('ui.airlock_electronics.integrated_circuit_shell')}>
               <Button.Checkbox
                 checked={shell}
                 onClick={() => {
                   act('set_shell', { on: !shell });
                 }}
-                tooltip="Whether this airlock can have an integrated circuit placed inside of it or not."
+                tooltip={t('ui.airlock_electronics.shell_tooltip')}
               >
-                Shell
+                {t('ui.airlock_electronics.shell')}
               </Button.Checkbox>
             </LabeledList.Item>
-            <LabeledList.Item label="Access Required">
+            <LabeledList.Item label={t('ui.airlock_electronics.access_required')}>
               <Button
                 icon={oneAccess ? 'unlock' : 'lock'}
                 onClick={() => act('one_access')}
               >
-                {oneAccess ? 'One' : 'All'}
+                {oneAccess
+                  ? t('ui.airlock_electronics.one')
+                  : t('ui.airlock_electronics.all')}
               </Button>
             </LabeledList.Item>
-            <LabeledList.Item label="Unrestricted Access">
+            <LabeledList.Item label={t('ui.airlock_electronics.unrestricted_access')}>
               <Button
                 icon={unres_direction & 1 ? 'check-square-o' : 'square-o'}
                 selected={unres_direction & 1}
@@ -77,7 +83,7 @@ export function AirLockMainSection(props) {
                   })
                 }
               >
-                North
+                {t('ui.common.direction_north')}
               </Button>
               <Button
                 icon={unres_direction & 2 ? 'check-square-o' : 'square-o'}
@@ -88,7 +94,7 @@ export function AirLockMainSection(props) {
                   })
                 }
               >
-                South
+                {t('ui.common.direction_south')}
               </Button>
               <Button
                 icon={unres_direction & 4 ? 'check-square-o' : 'square-o'}
@@ -99,7 +105,7 @@ export function AirLockMainSection(props) {
                   })
                 }
               >
-                East
+                {t('ui.common.direction_east')}
               </Button>
               <Button
                 icon={unres_direction & 8 ? 'check-square-o' : 'square-o'}
@@ -110,10 +116,10 @@ export function AirLockMainSection(props) {
                   })
                 }
               >
-                West
+                {t('ui.common.direction_west')}
               </Button>
             </LabeledList.Item>
-            <LabeledList.Item label="Airlock Name">
+            <LabeledList.Item label={t('ui.airlock_electronics.airlock_name')}>
               <Input
                 fluid
                 maxLength={30}
@@ -125,7 +131,7 @@ export function AirLockMainSection(props) {
                 }
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Cycling Id">
+            <LabeledList.Item label={t('ui.airlock_electronics.cycling_id')}>
               <Input
                 fluid
                 maxLength={30}

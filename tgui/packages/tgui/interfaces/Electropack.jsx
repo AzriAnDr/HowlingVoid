@@ -8,8 +8,10 @@ import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const Electropack = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend();
   const { power, code, frequency, minFrequency, maxFrequency } = data;
   return (
@@ -17,20 +19,20 @@ export const Electropack = (props) => {
       <Window.Content>
         <Section>
           <LabeledList>
-            <LabeledList.Item label="Power">
+            <LabeledList.Item label={t('ui.common.power')}>
               <Button
                 icon={power ? 'power-off' : 'times'}
-                content={power ? 'On' : 'Off'}
+                content={power ? t('ui.common.on') : t('ui.common.off')}
                 selected={power}
                 onClick={() => act('power')}
               />
             </LabeledList.Item>
             <LabeledList.Item
-              label="Frequency"
+              label={t('ui.electropack.frequency')}
               buttons={
                 <Button
                   icon="sync"
-                  content="Reset"
+                  content={t('ui.common.reset')}
                   onClick={() =>
                     act('reset', {
                       reset: 'freq',
@@ -58,11 +60,11 @@ export const Electropack = (props) => {
               />
             </LabeledList.Item>
             <LabeledList.Item
-              label="Code"
+              label={t('ui.common.code')}
               buttons={
                 <Button
                   icon="sync"
-                  content="Reset"
+                  content={t('ui.common.reset')}
                   onClick={() =>
                     act('reset', {
                       reset: 'code',

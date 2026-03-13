@@ -7,10 +7,10 @@ import {
   Slider,
   Stack,
 } from 'tgui-core/components';
-import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const colorToMatrix = (param) => {
   switch (param) {
@@ -44,19 +44,9 @@ const colorToMatrix = (param) => {
   }
 };
 
-const displayText = (param) => {
-  switch (param) {
-    case 'r':
-      return 'Red';
-    case 'g':
-      return 'Green';
-    case 'b':
-      return 'Blue';
-  }
-};
-
 export const MODpaint = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { mapRef, currentColor } = data;
   const presets = ['red', 'yellow', 'green', 'teal', 'blue', 'purple'];
   const prefixes = ['r', 'g', 'b'];
@@ -68,13 +58,13 @@ export const MODpaint = (props) => {
             {[0, 1, 2].map((row) => (
               <Section
                 key={row}
-                title={`${displayText(prefixes[row])} turns to:`}
+                title={`${t(`ui.modpaint.${prefixes[row]}_turns_to`)}`}
               >
                 {[0, 1, 2].map((col) => (
                   <Flex key={col}>
                     <Flex.Item align="left" width="30%">
                       <Box inline textColor="label">
-                        {`${displayText(prefixes[col])}:`}
+                        {`${t(`ui.modpaint.${prefixes[col]}`)}:`}
                       </Box>
                     </Flex.Item>
                     <Flex.Item align="right" width="70%">
@@ -100,7 +90,7 @@ export const MODpaint = (props) => {
             ))}
           </Stack.Item>
           <Stack.Item width="25%">
-            <Section height="70%" title="Presets">
+            <Section height="70%" title={t('ui.modpaint.presets')}>
               <Box textAlign="center">
                 {presets.map((preset) => (
                   <Button
@@ -124,7 +114,9 @@ export const MODpaint = (props) => {
                 icon="question"
                 color="average"
                 tooltipPosition="top"
-                tooltip="This is a color matrix. Think of it as editing the image in 3 layers, red, green, and blue, rather than editing the final image like with RGB."
+                tooltip={t(
+                  'ui.modpaint.this_is_a_color_matrix_think_of_it_as_editing_the_image_in_3_lay',
+                )}
               />
               <Button
                 height="50px"
@@ -132,13 +124,13 @@ export const MODpaint = (props) => {
                 icon="check"
                 color="good"
                 tooltipPosition="top"
-                tooltip="Confirm changes!"
+                tooltip={t('ui.modpaint.confirm_changes')}
                 onClick={() => act('confirm')}
               />
             </Section>
           </Stack.Item>
           <Stack.Item width="45%">
-            <Section fill title="Preview">
+            <Section fill title={t('ui.modpaint.preview')}>
               <ByondUi
                 height="230px"
                 params={{

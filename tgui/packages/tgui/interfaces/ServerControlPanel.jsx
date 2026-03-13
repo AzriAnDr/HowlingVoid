@@ -3,15 +3,17 @@ import { Button, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const MicrofusionGunControl = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { current_players, servers = [] } = data;
   return (
-    <Window title="Server Control Panel" width={500} height={700}>
+    <Window title={t('ui.server_control_panel.title')} width={500} height={700}>
       <Window.Content>
         {servers.len === 0 ? (
-          <NoticeBox>No server is currently online.</NoticeBox>
+          <NoticeBox>{t('ui.server_control_panel.no_server_online')}</NoticeBox>
         ) : (
           servers.map((server) => (
             <Section
@@ -20,7 +22,7 @@ export const MicrofusionGunControl = (props) => {
               buttons={
                 <Button
                   icon="connect"
-                  content="Connect"
+                  content={t('ui.server_control_panel.connect')}
                   onClick={() =>
                     act('connect', {
                       server_ref: server.name,
@@ -30,7 +32,7 @@ export const MicrofusionGunControl = (props) => {
               }
             >
               <LabeledList>
-                <LabeledList.Item label="Players">
+                <LabeledList.Item label={t('ui.common.players')}>
                   {server.players}/{server.max_players}
                 </LabeledList.Item>
               </LabeledList>

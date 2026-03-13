@@ -12,6 +12,7 @@ import { createSearch, toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Ores = {
   id: string;
@@ -27,6 +28,7 @@ type Data = {
 
 export const OreContainer = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { ores = [] } = data;
   const [searchItem, setSearchItem] = useState('');
   const search = createSearch(searchItem, (ore: Ores) => ore.name);
@@ -34,7 +36,7 @@ export const OreContainer = (props) => {
     searchItem.length > 0 ? ores.filter((ore) => search(ore)) : ores;
 
   return (
-    <Window title="Ore Container" width={550} height={400}>
+    <Window title={t('ui.ore_container.title')} width={550} height={400}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
@@ -45,7 +47,7 @@ export const OreContainer = (props) => {
                 mt={0.5}
                 bottom="5%"
                 height="20px"
-                placeholder="Search Ore..."
+                placeholder={t('ui.ore_container.search_ore_placeholder')}
                 value={searchItem}
                 onChange={setSearchItem}
                 fluid
@@ -53,7 +55,7 @@ export const OreContainer = (props) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow>
-            <Section title="Stock" fill scrollable>
+            <Section title={t('ui.ore_container.stock')} fill scrollable>
               <Stack wrap>
                 {ores_filtered.map((ore) => (
                   <Flex.Item key={ore.id}>
@@ -70,10 +72,12 @@ export const OreContainer = (props) => {
                       <Flex.Item>
                         <Orename ore_name={toTitleCase(ore.name)} />
                       </Flex.Item>
-                      <Flex.Item>Amount: {ore.amount}</Flex.Item>
+                      <Flex.Item>
+                        {t('ui.common.amount')}: {ore.amount}
+                      </Flex.Item>
                       <Flex.Item>
                         <Button
-                          content="Withdraw"
+                          content={t('ui.ore_container.withdraw')}
                           color="transparent"
                           onClick={() =>
                             act('withdraw', {

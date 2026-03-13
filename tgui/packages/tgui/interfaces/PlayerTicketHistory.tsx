@@ -12,6 +12,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   db_connected: boolean;
@@ -41,6 +42,7 @@ enum Pages {
 
 export const PlayerTicketHistory = (props: any) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
 
   const [page, setPage] = useState(
     data.target_ckey ? Pages.TicketHistory : Pages.Cache,
@@ -51,9 +53,9 @@ export const PlayerTicketHistory = (props: any) => {
 
   if (!data.db_connected) {
     return (
-      <Window title="Player Ticket History" width={300} height={300}>
+      <Window title={t('ui.player_ticket_history.title')} width={300} height={300}>
         <Window.Content>
-          <NoticeBox>The database is not connected.</NoticeBox>
+          <NoticeBox>{t('ui.player_ticket_history.database_not_connected')}</NoticeBox>
         </Window.Content>
       </Window>
     );
@@ -63,7 +65,7 @@ export const PlayerTicketHistory = (props: any) => {
     <Window
       width={300}
       height={300}
-      title={`Player Ticket History${
+      title={`${t('ui.player_ticket_history.title')}${
         data.target_ckey ? ` - ${data.target_ckey}` : ''
       }`}
     >
@@ -74,14 +76,14 @@ export const PlayerTicketHistory = (props: any) => {
             selected={page === Pages.Cache}
             onClick={() => setPage(Pages.Cache)}
           >
-            Cache
+            {t('ui.player_ticket_history.cache')}
           </Tabs.Tab>
           <Tabs.Tab
             key={Pages.TicketHistory}
             selected={page === Pages.TicketHistory}
             onClick={() => setPage(Pages.TicketHistory)}
           >
-            Ticket History
+            {t('ui.player_ticket_history.ticket_history')}
           </Tabs.Tab>
         </Tabs>
         {page === Pages.TicketHistory && <TicketHistory />}
@@ -100,11 +102,12 @@ export const PlayerTicketHistory = (props: any) => {
 
 const TicketHistory = (props: any) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
 
   if (data.ticket_cache === undefined) {
     return (
       <Section>
-        <NoticeBox>No player selected.</NoticeBox>
+        <NoticeBox>{t('ui.player_ticket_history.no_player_selected')}</NoticeBox>
       </Section>
     );
   }
@@ -121,7 +124,7 @@ const TicketHistory = (props: any) => {
 
   return (
     <Section>
-      Tickets in order of most recent to oldest:
+      {t('ui.player_ticket_history.tickets_order_most_recent_to_oldest')}:
       <hr />
       <Section scrollableHorizontal>
         <Stack>
@@ -146,7 +149,7 @@ const TicketHistory = (props: any) => {
       </Section>
       <hr />
       {activeTicket === undefined ? (
-        <NoticeBox>No ticket selected.</NoticeBox>
+        <NoticeBox>{t('ui.player_ticket_history.no_ticket_selected')}</NoticeBox>
       ) : (
         <TicketView ticket={activeTicket} />
       )}
@@ -163,11 +166,12 @@ type CacheProps = {
 
 const Cache = (props: CacheProps) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
 
   return (
     <Section>
       <div>
-        Query and cache:&nbsp;
+        {t('ui.player_ticket_history.query_and_cache')}:&nbsp;
         <Input
           value={props.cacheInput}
           onBlur={(value) => props.setCacheInput(value.toLowerCase())}

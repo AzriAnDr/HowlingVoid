@@ -12,6 +12,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const CATEGORY_PAGE_ITEMS = 4;
 const EVENT_PAGE_ITEMS = 2;
@@ -75,6 +76,7 @@ type ForceEventData = {
 
 export function ForceEvent(props) {
   const { data } = useBackend<ForceEventData>();
+  const { t } = usePreferencesLocalization(data);
   const { categories } = data;
 
   const announceState = useState(true);
@@ -82,7 +84,12 @@ export function ForceEvent(props) {
   const searchQueryState = useState('');
 
   return (
-    <Window theme="admin" title="Force Event" width={450} height={450}>
+    <Window
+      theme="admin"
+      title={t('ui.force_event.title')}
+      width={450}
+      height={450}
+    >
       <Window.Content>
         <ForceEventContext.Provider
           value={{ announceState, categoryState, searchQueryState }}
@@ -103,6 +110,7 @@ export function ForceEvent(props) {
 
 function PanelOptions(props) {
   const { searchQueryState, announceState } = useForceEventContext();
+  const { t } = usePreferencesLocalization();
 
   const [searchQuery, setSearchQuery] = searchQueryState;
 
@@ -118,7 +126,7 @@ function PanelOptions(props) {
           autoFocus
           fluid
           onChange={setSearchQuery}
-          placeholder="Search..."
+          placeholder={t('ui.common.search_placeholder')}
           value={searchQuery}
         />
       </Stack.Item>

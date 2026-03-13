@@ -10,6 +10,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   pen: string;
@@ -22,16 +23,17 @@ type Data = {
 
 export const Clipboard = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { pen, integrated_pen, top_paper, top_paper_ref, paper, paper_ref } =
     data;
   return (
-    <Window title="Clipboard" width={400} height={500}>
+    <Window title={t('ui.clipboard.clipboard')} width={400} height={500}>
       <Window.Content backgroundColor="#704D25" scrollable>
         <Section>
           {pen ? (
             <LabeledList>
               <LabeledList.Item
-                label="Pen"
+                label={t('ui.clipboard.pen')}
                 buttons={
                   <Button icon="eject" onClick={() => act('remove_pen')} />
                 }

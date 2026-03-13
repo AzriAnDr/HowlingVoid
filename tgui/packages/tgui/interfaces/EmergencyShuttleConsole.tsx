@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   authorizations_remaining: number;
@@ -20,6 +21,7 @@ type Authorization = {
 
 export function EmergencyShuttleConsole(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     authorizations = [],
     authorizations_remaining,
@@ -45,7 +47,7 @@ export function EmergencyShuttleConsole(props) {
             </Box>
           </Box>
           <Section
-            title="Early Launch Authorization"
+            title={t('ui.emergency_shuttle_console.early_launch_authorization')}
             buttons={
               <Button
                 color="bad"
@@ -81,7 +83,7 @@ export function EmergencyShuttleConsole(props) {
               </Stack.Item>
             </Stack>
             <Section
-              title="Authorizations"
+              title={t('ui.emergency_shuttle_console.authorizations')}
               minHeight="150px"
               buttons={
                 <Box inline bold color={emagged ? 'bad' : 'good'}>

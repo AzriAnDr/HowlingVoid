@@ -4,6 +4,7 @@ import { round } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type FishCalculatorEntry = {
   result: string;
@@ -22,6 +23,7 @@ type FishingCalculatorData = {
 
 export const FishingCalculator = (props) => {
   const { act, data } = useBackend<FishingCalculatorData>();
+  const { t } = usePreferencesLocalization(data);
 
   const [bait, setBait] = useState('/obj/item/food/bait/worm');
   const [spot, setSpot] = useState(data.spot_types[0]);
@@ -60,7 +62,12 @@ export const FishingCalculator = (props) => {
               onSelected={(e) => setLine(e)}
               width="100%"
             />
-            <Input value={bait} placeholder="Bait" onChange={setBait} fluid />
+            <Input
+              value={bait}
+              placeholder={t('ui.fishing_calculator.bait')}
+              onChange={setBait}
+              fluid
+            />
             <Button
               onClick={() =>
                 act('recalc', {
@@ -72,17 +79,17 @@ export const FishingCalculator = (props) => {
                 })
               }
             >
-              Calculate
+              {t('ui.common.calculate')}
             </Button>
           </Stack.Item>
           <Stack.Item>
             <Table>
               <Table.Row header>
-                <Table.Cell>Outcome</Table.Cell>
-                <Table.Cell>Weight</Table.Cell>
-                <Table.Cell>Probabilty</Table.Cell>
-                <Table.Cell>Difficulty</Table.Cell>
-                <Table.Cell>Count</Table.Cell>
+                <Table.Cell>{t('ui.fishing_calculator.outcome')}</Table.Cell>
+                <Table.Cell>{t('ui.dynamic_tester.weight')}</Table.Cell>
+                <Table.Cell>{t('ui.fishing_calculator.probability')}</Table.Cell>
+                <Table.Cell>{t('ui.fishing_calculator.difficulty')}</Table.Cell>
+                <Table.Cell>{t('ui.fishing_calculator.count')}</Table.Cell>
               </Table.Row>
               {data.info?.map((result) => (
                 <Table.Row key={result.result}>

@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type DecalInfo = {
   name: string;
@@ -49,6 +50,7 @@ const filterBoxColor = (color: string) => {
 
 export const DecalPainter = (props) => {
   const { act, data } = useBackend<DecalPainterData>();
+  const { t } = usePreferencesLocalization(data);
 
   const {
     categories,
@@ -78,7 +80,7 @@ export const DecalPainter = (props) => {
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
-            <Section title="Category">
+            <Section title={t('ui.decalpainter.category')}>
               {categories.map((category) => (
                 <Button
                   align="center"
@@ -97,7 +99,7 @@ export const DecalPainter = (props) => {
           </Stack.Item>
           {color_list.length > 1 && (
             <Stack.Item>
-              <Section title="Color">
+              <Section title={t('ui.decalpainter.color')}>
                 {color_list.map((color) => {
                   if (color.color === 'custom') {
                     return (
@@ -107,7 +109,7 @@ export const DecalPainter = (props) => {
                         onClick={() => act('pick_custom_color')}
                       >
                         <ColorBox color={current_custom_color} mr={0.5} />
-                        Custom
+                        {t('ui.common.custom')}
                       </Button>
                     );
                   }
@@ -130,7 +132,7 @@ export const DecalPainter = (props) => {
             </Stack.Item>
           )}
           <Stack.Item grow>
-            <Section title="Style" fill scrollable>
+            <Section title={t('ui.decalpainter.style')} fill scrollable>
               <Flex wrap="wrap">
                 {decal_list.map((decal) => {
                   const nondirectional = decal.directional === 0;

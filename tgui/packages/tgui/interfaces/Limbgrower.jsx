@@ -10,8 +10,10 @@ import {
 
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const Limbgrower = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend();
   const {
     reagents = [],
@@ -25,17 +27,17 @@ export const Limbgrower = (props) => {
     categories.find((category) => category.name === tab)?.designs || [];
 
   return (
-    <Window title="Limb Grower" width={500} height={550}>
+    <Window title={t('ui.limbgrower.title')} width={500} height={550}>
       {!!busy && (
         <Dimmer fontSize="32px">
           <Icon name="cog" spin={1} />
-          {' Building...'}
+          {` ${t('ui.limbgrower.building')}`}
         </Dimmer>
       )}
       <Window.Content scrollable>
-        <Section title="Reagents">
+        <Section title={t('ui.common.reagents')}>
           <Box mb={1}>
-            {total_reagents} / {max_reagents} reagent capacity used.
+            {total_reagents} / {max_reagents} {t('ui.limbgrower.reagent_capacity_used')}
           </Box>
           <LabeledList>
             {reagents.map((reagent) => (
@@ -46,7 +48,7 @@ export const Limbgrower = (props) => {
                   <Button.Confirm
                     textAlign="center"
                     width="120px"
-                    content="Remove Reagent"
+                    content={t('ui.limbgrower.remove_reagent')}
                     color="bad"
                     onClick={() =>
                       act('empty_reagent', {
@@ -61,7 +63,7 @@ export const Limbgrower = (props) => {
             ))}
           </LabeledList>
         </Section>
-        <Section title="Designs">
+        <Section title={t('ui.common.designs')}>
           <Tabs>
             {categories.map((category) => (
               <Tabs.Tab
@@ -81,7 +83,7 @@ export const Limbgrower = (props) => {
                 label={design.name}
                 buttons={
                   <Button
-                    content="Make"
+                    content={t('ui.common.make')}
                     color="good"
                     onClick={() =>
                       act('make_limb', {

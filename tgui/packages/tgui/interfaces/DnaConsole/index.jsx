@@ -10,6 +10,7 @@ import {
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import {
   CONSOLE_MODE_ENZYMES,
   CONSOLE_MODE_FEATURES,
@@ -24,11 +25,12 @@ import { DnaScanner } from './DnaScanner';
 
 export const DnaConsole = (props) => {
   const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { isPulsing, timeToPulse, subjectUNI, subjectUF } = data;
   const { consoleMode } = data.view;
 
   return (
-    <Window title="DNA Console" width={539} height={710}>
+    <Window title={t('ui.dna.console')} width={539} height={710}>
       {!!isPulsing && (
         <Dimmer fontSize="14px" textAlign="center">
           <Icon mr={1} name="spinner" spin />
@@ -52,14 +54,14 @@ export const DnaConsole = (props) => {
               <DnaConsoleEnzymes
                 subjectBlock={subjectUNI}
                 type="ui"
-                name="Enzymes"
+                name={t('ui.dna.enzymes')}
               />
             )}
             {consoleMode === CONSOLE_MODE_FEATURES && (
               <DnaConsoleEnzymes
                 subjectBlock={subjectUF}
                 type="uf"
-                name="Features"
+                name={t('ui.dna.features')}
               />
             )}
           </Stack.Item>
@@ -71,12 +73,13 @@ export const DnaConsole = (props) => {
 
 const DnaConsoleCommands = (props) => {
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { hasDisk, isInjectorReady, injectorSeconds } = data;
   const { consoleMode } = data.view;
 
   return (
     <Section
-      title="DNA Console"
+      title={t('ui.dna.console')}
       buttons={
         !isInjectorReady && (
           <Box lineHeight="20px" color="label">
@@ -86,9 +89,9 @@ const DnaConsoleCommands = (props) => {
       }
     >
       <LabeledList>
-        <LabeledList.Item label="Mode">
+        <LabeledList.Item label={t('ui.common.mode')}>
           <Button
-            content="Storage"
+            content={t('ui.common.storage')}
             selected={consoleMode === CONSOLE_MODE_STORAGE}
             onClick={() =>
               act('set_view', {
@@ -97,7 +100,7 @@ const DnaConsoleCommands = (props) => {
             }
           />
           <Button
-            content="Sequencer"
+            content={t('ui.dna.sequencer')}
             disabled={!data.isViableSubject}
             selected={consoleMode === CONSOLE_MODE_SEQUENCER}
             onClick={() =>
@@ -107,7 +110,7 @@ const DnaConsoleCommands = (props) => {
             }
           />
           <Button
-            content="Enzymes"
+            content={t('ui.dna.enzymes')}
             selected={consoleMode === CONSOLE_MODE_ENZYMES}
             onClick={() =>
               act('set_view', {
@@ -116,7 +119,7 @@ const DnaConsoleCommands = (props) => {
             }
           />
           <Button
-            content="Features"
+            content={t('ui.dna.features')}
             selected={consoleMode === CONSOLE_MODE_FEATURES}
             onClick={() =>
               act('set_view', {
@@ -126,10 +129,10 @@ const DnaConsoleCommands = (props) => {
           />
         </LabeledList.Item>
         {!!hasDisk && (
-          <LabeledList.Item label="Disk">
+          <LabeledList.Item label={t('ui.common.disk')}>
             <Button
               icon="eject"
-              content="Eject"
+              content={t('ui.common.eject')}
               onClick={() => {
                 act('eject_disk');
                 act('set_view', {

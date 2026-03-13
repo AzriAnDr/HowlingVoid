@@ -10,9 +10,11 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const ChemPress = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     current_volume,
     product_name,
@@ -29,9 +31,9 @@ export const ChemPress = (props) => {
       <Window.Content>
         <Section>
           <LabeledList>
-            <LabeledList.Item label="Product">
+            <LabeledList.Item label={t('ui.chem_press.product')}>
               <Button.Checkbox
-                content="Pills"
+                content={t('ui.chem_press.pills')}
                 checked={product === 'pill'}
                 onClick={() =>
                   act('change_product', {
@@ -40,7 +42,7 @@ export const ChemPress = (props) => {
                 }
               />
               <Button.Checkbox
-                content="Patches"
+                content={t('ui.chem_press.patches')}
                 checked={product === 'patch'}
                 onClick={() =>
                   act('change_product', {
@@ -49,7 +51,7 @@ export const ChemPress = (props) => {
                 }
               />
               <Button.Checkbox
-                content="Bottles"
+                content={t('ui.chem_press.bottles')}
                 checked={product === 'bottle'}
                 onClick={() =>
                   act('change_product', {
@@ -58,7 +60,7 @@ export const ChemPress = (props) => {
                 }
               />
               <Button.Checkbox
-                content="Vials"
+                content={t('ui.chem_press.vials')}
                 checked={product === 'vial'}
                 onClick={() =>
                   act('change_product', {
@@ -67,7 +69,7 @@ export const ChemPress = (props) => {
                 }
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Volume">
+            <LabeledList.Item label={t('ui.common.volume')}>
               <NumberInput
                 value={current_volume}
                 unit="u"
@@ -83,7 +85,7 @@ export const ChemPress = (props) => {
                 }
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Name">
+            <LabeledList.Item label={t('ui.common.name')}>
               <Input
                 value={product_name}
                 placeholder={product_name}
@@ -96,7 +98,7 @@ export const ChemPress = (props) => {
               <Box as="span">{product}</Box>
             </LabeledList.Item>
             {product === 'pill' && (
-              <LabeledList.Item label="Style">
+              <LabeledList.Item label={t('ui.common.style')}>
                 {pill_styles.map((pill) => (
                   <Button
                     key={pill.id}
@@ -116,7 +118,7 @@ export const ChemPress = (props) => {
               </LabeledList.Item>
             )}
             {product === 'patch' && (
-              <LabeledList.Item label="Style">
+              <LabeledList.Item label={t('ui.common.style')}>
                 {patch_styles.map((patch) => (
                   <Button
                     key={patch.style}

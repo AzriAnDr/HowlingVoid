@@ -3,9 +3,11 @@ import { Box, Button, LabeledList, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const ParticleAccelerator = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { assembled, power, strength } = data;
   return (
     <Window width={350} height={185}>
@@ -13,35 +15,35 @@ export const ParticleAccelerator = (props) => {
         <Section>
           <LabeledList>
             <LabeledList.Item
-              label="Status"
+              label={t('ui.common.status')}
               buttons={
                 <Button
                   icon={'sync'}
-                  content={'Run Scan'}
+                  content={t('ui.particle_accelerator.run_scan')}
                   onClick={() => act('scan')}
                 />
               }
             >
               <Box color={assembled ? 'good' : 'bad'}>
                 {assembled
-                  ? 'Ready - All parts in place'
-                  : 'Unable to detect all parts'}
+                  ? t('ui.particle_accelerator.ready_all_parts_in_place')
+                  : t('ui.particle_accelerator.unable_to_detect_all_parts')}
               </Box>
             </LabeledList.Item>
           </LabeledList>
         </Section>
-        <Section title="Particle Accelerator Controls">
+        <Section title={t('ui.particle_accelerator.controls')}>
           <LabeledList>
-            <LabeledList.Item label="Power">
+            <LabeledList.Item label={t('ui.common.power')}>
               <Button
                 icon={power ? 'power-off' : 'times'}
-                content={power ? 'On' : 'Off'}
+                content={power ? t('ui.common.on') : t('ui.common.off')}
                 selected={power}
                 disabled={!assembled}
                 onClick={() => act('power')}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Particle Strength">
+            <LabeledList.Item label={t('ui.particle_accelerator.particle_strength')}>
               <Button
                 icon="backward"
                 disabled={!assembled}

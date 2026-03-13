@@ -9,6 +9,7 @@ import {
 } from 'tgui-core/components';
 import { capitalizeFirst, decodeHtmlEntities } from 'tgui-core/string';
 
+import { usePreferencesLocalization } from '../localization';
 import { getColor } from './helpers';
 import type { Data } from './types';
 
@@ -39,16 +40,17 @@ export const VirusDisplay = (props) => {
 /** Displays the description, name and other info for the virus. */
 const Info = (props) => {
   const { act } = useBackend<Data>();
+  const { t } = usePreferencesLocalization();
   const {
     virus: { agent, can_rename, description, index, name, spread },
   } = props;
 
   return (
     <LabeledList>
-      <LabeledList.Item label="Name">
+      <LabeledList.Item label={t('ui.common.name')}>
         {can_rename ? (
           <Input
-            placeholder="Input a name"
+            placeholder={t('ui.pandemic.input_name')}
             value={name === 'Unknown' ? '' : name}
             onBlur={(value) =>
               act('rename_disease', {
@@ -61,11 +63,11 @@ const Info = (props) => {
           <Box color="bad">{decodeHtmlEntities(name)}</Box>
         )}
       </LabeledList.Item>
-      <LabeledList.Item label="Description">{description}</LabeledList.Item>
-      <LabeledList.Item label="Agent">
+      <LabeledList.Item label={t('ui.common.description')}>{description}</LabeledList.Item>
+      <LabeledList.Item label={t('ui.pandemic.agent')}>
         {capitalizeFirst(agent)}
       </LabeledList.Item>
-      <LabeledList.Item label="Spread">{spread}</LabeledList.Item>
+      <LabeledList.Item label={t('ui.common.spread')}>{spread}</LabeledList.Item>
     </LabeledList>
   );
 };
@@ -76,40 +78,41 @@ const Info = (props) => {
  * I would rather hard code it here.
  */
 const Traits = (props) => {
+  const { t } = usePreferencesLocalization();
   const {
     virus: { resistance, stage_speed, stealth, transmission, severity },
   } = props;
 
   return (
-    <Section title="Statistics">
+    <Section title={t('ui.common.statistics')}>
       <LabeledList>
-        <Tooltip content="Protection from cures and natural recovery.">
-          <LabeledList.Item color={getColor(resistance)} label="Resistance">
+        <Tooltip content={t('ui.pandemic.tooltip_resistance')}>
+          <LabeledList.Item color={getColor(resistance)} label={t('ui.pandemic.resistance')}>
             {resistance}
           </LabeledList.Item>
         </Tooltip>
-        <Tooltip content="Symptomic progression.">
-          <LabeledList.Item color={getColor(stage_speed)} label="Stage speed">
+        <Tooltip content={t('ui.pandemic.tooltip_stage_speed')}>
+          <LabeledList.Item color={getColor(stage_speed)} label={t('ui.pandemic.stage_speed')}>
             {stage_speed}
           </LabeledList.Item>
         </Tooltip>
-        <Tooltip content="Detection difficulty from medical equipment.">
-          <LabeledList.Item color={getColor(stealth)} label="Stealth">
+        <Tooltip content={t('ui.pandemic.tooltip_stealth')}>
+          <LabeledList.Item color={getColor(stealth)} label={t('ui.pandemic.stealth')}>
             {stealth}
           </LabeledList.Item>
         </Tooltip>
-        <Tooltip content="Decides the spread type.">
+        <Tooltip content={t('ui.pandemic.tooltip_transmission')}>
           <LabeledList.Item
             color={getColor(transmission)}
-            label="Transmissibility"
+            label={t('ui.pandemic.transmissibility')}
           >
             {transmission}
           </LabeledList.Item>
         </Tooltip>
-        <Tooltip content="Overall danger posed by the disease.">
+        <Tooltip content={t('ui.pandemic.tooltip_severity')}>
           <LabeledList.Item
             color={getColor(severity)}
-            label="Severity"
+            label={t('ui.pandemic.severity')}
           >
             {severity}
           </LabeledList.Item>

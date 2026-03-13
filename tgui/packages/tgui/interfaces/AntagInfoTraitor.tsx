@@ -4,6 +4,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
+import { usePreferencesLocalization } from './localization';
 import { type Objective, ObjectivePrintout } from './common/Objectives';
 
 const allystyle = {
@@ -40,9 +41,10 @@ type Info = {
 
 const IntroductionSection = (props) => {
   const { act, data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { intro, objectives } = data;
   return (
-    <Section fill title="Intro" scrollable>
+    <Section fill title={t('ui.antaginfotraitor.intro')} scrollable>
       <Stack vertical fill>
         <Stack.Item fontSize="25px">{intro}</Stack.Item>
         <Stack.Item grow>
@@ -62,11 +64,12 @@ const IntroductionSection = (props) => {
 
 const EmployerSection = (props) => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { allies, goal } = data;
   return (
     <Section
       fill
-      title="Employer"
+      title={t('ui.antaginfotraitor.employer')}
       scrollable
       buttons={
         <Button
@@ -108,10 +111,11 @@ const EmployerSection = (props) => {
 
 const UplinkSection = (props) => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { has_uplink, uplink_intro, uplink_unlock_info, code, failsafe_code } =
     data;
   return (
-    <Section title="Uplink" mb={!has_uplink && -1}>
+    <Section title={t('ui.antaginfotraitor.uplink')} mb={!has_uplink && -1}>
       <Stack fill>
         {
           <>
@@ -145,9 +149,10 @@ const UplinkSection = (props) => {
 
 const CodewordsSection = (props) => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { has_codewords, phrases, responses } = data;
   return (
-    <Section title="Codewords" mb={!has_codewords && -1}>
+    <Section title={t('ui.antaginfotraitor.codewords')} mb={!has_codewords && -1}>
       <Stack fill>
         {(!has_codewords && (
           <BlockQuote>
@@ -172,11 +177,11 @@ const CodewordsSection = (props) => {
             <Stack.Divider mr={1} />
             <Stack.Item grow basis={0}>
               <Stack vertical>
-                <Stack.Item>Code Phrases:</Stack.Item>
+                <Stack.Item>{t('ui.antaginfotraitor.code_phrases')}</Stack.Item>
                 <Stack.Item bold textColor="blue">
                   {phrases}
                 </Stack.Item>
-                <Stack.Item>Code Responses:</Stack.Item>
+                <Stack.Item>{t('ui.antaginfotraitor.code_responses')}</Stack.Item>
                 <Stack.Item bold textColor="red">
                   {responses}
                 </Stack.Item>

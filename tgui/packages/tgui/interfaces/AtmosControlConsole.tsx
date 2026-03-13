@@ -11,6 +11,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import {
   AtmosHandbookContent,
   atmosHandbookHooks,
@@ -33,6 +34,7 @@ export const AtmosControlConsole = (props) => {
     reconnecting: boolean;
     control: boolean;
   }>();
+  const { t } = usePreferencesLocalization(data);
   const chambers = data.chambers || [];
   const [chamberId, setChamberId] = useState(chambers[0]?.id);
   const selectedChamber =
@@ -44,7 +46,7 @@ export const AtmosControlConsole = (props) => {
     <Window width={550} height={350}>
       <Window.Content scrollable>
         {chambers.length > 1 && (
-          <Section title="Chamber Selection">
+          <Section title={t('ui.atmos_control_console.chamber_selection')}>
             <Dropdown
               width="100%"
               options={chambers.map((chamber) => chamber.name)}
@@ -59,12 +61,16 @@ export const AtmosControlConsole = (props) => {
           </Section>
         )}
         <Section
-          title={selectedChamber ? selectedChamber.name : 'Chamber Reading'}
+          title={
+            selectedChamber
+              ? selectedChamber.name
+              : t('ui.atmos_control_console.chamber_reading')
+          }
           buttons={
             !!data.reconnecting && (
               <Button
                 icon="undo"
-                content="Reconnect"
+                content={t('ui.atmos_control_console.reconnect')}
                 onClick={() => act('reconnect')}
               />
             )
@@ -77,16 +83,18 @@ export const AtmosControlConsole = (props) => {
               reactionOnClick={setActiveReactionId}
             />
           ) : (
-            <Box italic> {'No Sensors Detected!'}</Box>
+            <Box italic>{t('ui.atmos_control_console.no_sensors_detected')}</Box>
           )}
         </Section>
         {!!selectedChamber && !!data.control && (
-          <Section title="Chamber Controls">
+          <Section title={t('ui.atmos_control_console.chamber_controls')}>
             <Stack>
               <Stack.Item grow>
                 {selectedChamber.input_info ? (
                   <LabeledList>
-                    <LabeledList.Item label="Input Injector">
+                    <LabeledList.Item
+                      label={t('ui.atmos_control_console.input_injector')}
+                    >
                       <Button
                         icon={
                           selectedChamber.input_info.active
@@ -95,8 +103,8 @@ export const AtmosControlConsole = (props) => {
                         }
                         content={
                           selectedChamber.input_info.active
-                            ? 'Injecting'
-                            : 'Off'
+                            ? t('ui.atmos_control_console.injecting')
+                            : t('ui.common.off')
                         }
                         selected={selectedChamber.input_info.active}
                         onClick={() =>
@@ -106,7 +114,9 @@ export const AtmosControlConsole = (props) => {
                         }
                       />
                     </LabeledList.Item>
-                    <LabeledList.Item label="Input Rate">
+                    <LabeledList.Item
+                      label={t('ui.atmos_control_console.input_rate')}
+                    >
                       <NumberInput
                         step={1}
                         value={Number(selectedChamber.input_info.amount)}
@@ -124,13 +134,17 @@ export const AtmosControlConsole = (props) => {
                     </LabeledList.Item>
                   </LabeledList>
                 ) : (
-                  <Box italic> {'No Input Device Detected!'}</Box>
+                  <Box italic>
+                    {t('ui.atmos_control_console.no_input_device_detected')}
+                  </Box>
                 )}
               </Stack.Item>
               <Stack.Item grow>
                 {selectedChamber.output_info ? (
                   <LabeledList>
-                    <LabeledList.Item label="Output Regulator">
+                    <LabeledList.Item
+                      label={t('ui.atmos_control_console.output_regulator')}
+                    >
                       <Button
                         icon={
                           selectedChamber.output_info.active
@@ -138,7 +152,9 @@ export const AtmosControlConsole = (props) => {
                             : 'times'
                         }
                         content={
-                          selectedChamber.output_info.active ? 'Open' : 'Closed'
+                          selectedChamber.output_info.active
+                            ? t('ui.common.open')
+                            : t('ui.common.closed')
                         }
                         selected={selectedChamber.output_info.active}
                         onClick={() =>
@@ -148,7 +164,9 @@ export const AtmosControlConsole = (props) => {
                         }
                       />
                     </LabeledList.Item>
-                    <LabeledList.Item label="Output Pressure">
+                    <LabeledList.Item
+                      label={t('ui.atmos_control_console.output_pressure')}
+                    >
                       <NumberInput
                         value={Number(selectedChamber.output_info.amount)}
                         unit="kPa"
@@ -166,7 +184,9 @@ export const AtmosControlConsole = (props) => {
                     </LabeledList.Item>
                   </LabeledList>
                 ) : (
-                  <Box italic> {'No Output Device Detected !'} </Box>
+                  <Box italic>
+                    {t('ui.atmos_control_console.no_output_device_detected')}
+                  </Box>
                 )}
               </Stack.Item>
             </Stack>

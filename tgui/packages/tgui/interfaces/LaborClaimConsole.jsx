@@ -2,29 +2,35 @@ import { Button, LabeledList, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const LaborClaimConsole = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { can_go_home, id_points, ores, status_info, unclaimed_points } = data;
   return (
     <Window width={315} height={440}>
       <Window.Content>
         <Section>
           <LabeledList>
-            <LabeledList.Item label="Status">{status_info}</LabeledList.Item>
-            <LabeledList.Item label="Shuttle controls">
+            <LabeledList.Item label={t('ui.common.status')}>
+              {status_info}
+            </LabeledList.Item>
+            <LabeledList.Item label={t('ui.labor_claim_console.shuttle_controls')}>
               <Button
-                content="Move shuttle"
+                content={t('ui.labor_claim_console.move_shuttle')}
                 disabled={!can_go_home}
                 onClick={() => act('move_shuttle')}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Points">{id_points}</LabeledList.Item>
+            <LabeledList.Item label={t('ui.labor_claim_console.points')}>
+              {id_points}
+            </LabeledList.Item>
             <LabeledList.Item
-              label="Unclaimed points"
+              label={t('ui.labor_claim_console.unclaimed_points')}
               buttons={
                 <Button
-                  content="Claim points"
+                  content={t('ui.labor_claim_console.claim_points')}
                   disabled={!unclaimed_points}
                   onClick={() => act('claim_points')}
                 />
@@ -34,14 +40,10 @@ export const LaborClaimConsole = (props) => {
             </LabeledList.Item>
           </LabeledList>
         </Section>
-        <Section title="Directions">
-          The nearby stacking machine will unload crates and collect smelted
-          materials, points will be calculated based on volume of delivered
-          materials.
+        <Section title={t('ui.labor_claim_console.directions')}>
+          {t('ui.labor_claim_console.directions_line_1')}
           <br />
-          Please note that only sheets printed with our manufacturer&apos;s seal
-          of quality, such as those produced from the work camp furnace, will be
-          accepted as proof of labour.
+          {t('ui.labor_claim_console.directions_line_2')}
         </Section>
       </Window.Content>
     </Window>

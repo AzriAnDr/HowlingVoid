@@ -13,9 +13,11 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const Soulcatcher = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     require_approval,
     current_rooms = [],
@@ -38,31 +40,31 @@ export const Soulcatcher = (props) => {
               <>
                 <Button
                   icon="palette"
-                  tooltip="Change the color of the room"
+                  tooltip={t('ui.soulcatcher.change_room_color_tooltip')}
                   onClick={() =>
                     act('change_room_color', { room_ref: room.reference })
                   }
                 >
-                  Recolor
+                  {t('ui.soulcatcher.recolor')}
                 </Button>
                 <Button
                   icon="pen"
-                  tooltip="Change the name of the room"
+                  tooltip={t('ui.soulcatcher.change_room_name_tooltip')}
                   onClick={() =>
                     act('rename_room', { room_ref: room.reference })
                   }
                 >
-                  Rename
+                  {t('ui.common.rename')}
                 </Button>
                 <Button
                   icon="trash"
-                  tooltip="Delete the room"
+                  tooltip={t('ui.soulcatcher.delete_room_tooltip')}
                   color="red"
                   onClick={() =>
                     act('delete_room', { room_ref: room.reference })
                   }
                 >
-                  Delete
+                  {t('ui.common.delete')}
                 </Button>
               </>
             }
@@ -71,7 +73,7 @@ export const Soulcatcher = (props) => {
             <Box>
               <Button
                 icon="scroll"
-                tooltip="Performs an emote, without sending a name."
+                tooltip={t('ui.soulcatcher.narrate_tooltip')}
                 onClick={() =>
                   act('send_message', {
                     room_ref: room.reference,
@@ -80,12 +82,12 @@ export const Soulcatcher = (props) => {
                   })
                 }
               >
-                Narrate
+                {t('ui.soulcatcher.narrate')}
               </Button>
 
               <Button
                 icon="comment"
-                tooltip="Speak inside of the room."
+                tooltip={t('ui.soulcatcher.say_tooltip')}
                 onClick={() =>
                   act('send_message', {
                     room_ref: room.reference,
@@ -93,12 +95,12 @@ export const Soulcatcher = (props) => {
                   })
                 }
               >
-                Say
+                {t('ui.common.say')}
               </Button>
 
               <Button
                 icon="face-smile"
-                tooltip="Do an emote inside of the room."
+                tooltip={t('ui.soulcatcher.emote_tooltip')}
                 onClick={() =>
                   act('send_message', {
                     room_ref: room.reference,
@@ -106,28 +108,28 @@ export const Soulcatcher = (props) => {
                   })
                 }
               >
-                Emote
+                {t('ui.common.emote')}
               </Button>
 
               <Button
                 icon="user-gear"
-                tooltip="Edits the name that is sent when emoting and saying."
+                tooltip={t('ui.soulcatcher.edit_name_tooltip')}
                 onClick={() =>
                   act('modify_name', {
                     room_ref: room.reference,
                   })
                 }
               >
-                Edit Name
+                {t('ui.soulcatcher.edit_name')}
               </Button>
               <Button
                 icon="book"
-                tooltip="Changes the description of the room"
+                tooltip={t('ui.soulcatcher.redecorate_tooltip')}
                 onClick={() =>
                   act('redescribe_room', { room_ref: room.reference })
                 }
               >
-                Redecorate
+                {t('ui.soulcatcher.redecorate')}
               </Button>
               <Button
                 color={room.joinable ? 'green' : 'red'}
@@ -136,24 +138,28 @@ export const Soulcatcher = (props) => {
                   act('toggle_joinable_room', { room_ref: room.reference })
                 }
               >
-                {room.joinable ? 'Room joinable' : 'Room unjoinable'}
+                {room.joinable
+                  ? t('ui.soulcatcher.room_joinable')
+                  : t('ui.soulcatcher.room_unjoinable')}
               </Button>
               <Button
                 icon={room.currently_targeted ? 'check' : 'xmark'}
-                tooltip="Choose where messages using the soulcatcher verbs are sent."
+                tooltip={t('ui.soulcatcher.targeted_room_tooltip')}
                 color={room.currently_targeted ? 'green' : 'red'}
                 onClick={() =>
                   act('change_targeted_room', { room_ref: room.reference })
                 }
               >
-                {room.currently_targeted ? 'Targeted' : 'Untargeted'}
+                {room.currently_targeted
+                  ? t('ui.soulcatcher.targeted')
+                  : t('ui.soulcatcher.untargeted')}
               </Button>
             </Box>
             {room.souls ? (
               <>
                 <br />
                 <Box textAlign="center" fontSize="15px" opacity={0.8}>
-                  <b>Current Souls</b>
+                  <b>{t('ui.soulcatcher.current_souls')}</b>
                 </Box>
                 <Divider />
                 <Flex direction="column">
@@ -170,7 +176,7 @@ export const Soulcatcher = (props) => {
                                 <Button
                                   color="green"
                                   icon="pen"
-                                  tooltip="Change the soul's name."
+                                  tooltip={t('ui.soulcatcher.change_soul_name_tooltip')}
                                   onClick={() =>
                                     act('change_name', {
                                       target_soul: soul.reference,
@@ -181,7 +187,7 @@ export const Soulcatcher = (props) => {
                                 <Button
                                   color="red"
                                   icon="arrow-rotate-left"
-                                  tooltip="Reset the soul's name."
+                                  tooltip={t('ui.soulcatcher.reset_soul_name_tooltip')}
                                   onClick={() =>
                                     act('reset_name', {
                                       target_soul: soul.reference,
@@ -193,7 +199,7 @@ export const Soulcatcher = (props) => {
                             )}
                             <Button
                               icon="paper-plane"
-                              tooltip="Transfer a soul to another room"
+                              tooltip={t('ui.soulcatcher.transfer_soul_tooltip')}
                               onClick={() =>
                                 act('transfer_soul', {
                                   room_ref: room.reference,
@@ -205,7 +211,7 @@ export const Soulcatcher = (props) => {
                         }
                       >
                         <Box textAlign="center" fontSize="13px" opacity={0.8}>
-                          <b>Flavor Text</b>
+                          <b>{t('ui.soulcatcher.flavor_text')}</b>
                         </Box>
                         <Divider />
                         <BlockQuote preserveWhitespace>
@@ -213,7 +219,7 @@ export const Soulcatcher = (props) => {
                         </BlockQuote>
                         <br />
                         <Box textAlign="center" fontSize="13px" opacity={0.8}>
-                          <b>OOC Notes</b>
+                          <b>{t('ui.soulcatcher.ooc_notes')}</b>
                         </Box>
                         <Divider />
                         <BlockQuote preserveWhitespace>
@@ -221,11 +227,11 @@ export const Soulcatcher = (props) => {
                         </BlockQuote>
                         <br />
                         <LabeledList>
-                          <LabeledList.Item label="Outside Hearing">
+                          <LabeledList.Item label={t('ui.soulcatcher.outside_hearing')}>
                             <Button
                               color={soul.outside_hearing ? 'green' : 'red'}
                               fluid
-                              tooltip="Is the soul able to hear the outside world?"
+                              tooltip={t('ui.soulcatcher.outside_hearing_tooltip')}
                               onClick={() =>
                                 act('toggle_soul_outside_sense', {
                                   target_soul: soul.reference,
@@ -234,14 +240,16 @@ export const Soulcatcher = (props) => {
                                 })
                               }
                             >
-                              {soul.outside_hearing ? 'Enabled' : 'Disabled'}
+                              {soul.outside_hearing
+                                ? t('ui.common.enabled')
+                                : t('ui.common.disabled')}
                             </Button>
                           </LabeledList.Item>
-                          <LabeledList.Item label="Outside Sight">
+                          <LabeledList.Item label={t('ui.soulcatcher.outside_sight')}>
                             <Button
                               color={soul.outside_sight ? 'green' : 'red'}
                               fluid
-                              tooltip="Is the soul able to see the outside world?"
+                              tooltip={t('ui.soulcatcher.outside_sight_tooltip')}
                               onClick={() =>
                                 act('toggle_soul_outside_sense', {
                                   target_soul: soul.reference,
@@ -250,14 +258,16 @@ export const Soulcatcher = (props) => {
                                 })
                               }
                             >
-                              {soul.outside_sight ? 'Enabled' : 'Disabled'}
+                              {soul.outside_sight
+                                ? t('ui.common.enabled')
+                                : t('ui.common.disabled')}
                             </Button>
                           </LabeledList.Item>
-                          <LabeledList.Item label="Hearing">
+                          <LabeledList.Item label={t('ui.soulcatcher.hearing')}>
                             <Button
                               color={soul.internal_hearing ? 'green' : 'red'}
                               fluid
-                              tooltip="Is the soul able to hear inside the room?"
+                              tooltip={t('ui.soulcatcher.hearing_tooltip')}
                               onClick={() =>
                                 act('toggle_soul_sense', {
                                   target_soul: soul.reference,
@@ -266,14 +276,16 @@ export const Soulcatcher = (props) => {
                                 })
                               }
                             >
-                              {soul.internal_hearing ? 'Enabled' : 'Disabled'}
+                              {soul.internal_hearing
+                                ? t('ui.common.enabled')
+                                : t('ui.common.disabled')}
                             </Button>
                           </LabeledList.Item>
-                          <LabeledList.Item label="Sight">
+                          <LabeledList.Item label={t('ui.soulcatcher.sight')}>
                             <Button
                               color={soul.internal_sight ? 'green' : 'red'}
                               fluid
-                              tooltip="Is the soul able to see inside the room?"
+                              tooltip={t('ui.soulcatcher.sight_tooltip')}
                               onClick={() =>
                                 act('toggle_soul_sense', {
                                   target_soul: soul.reference,
@@ -282,14 +294,16 @@ export const Soulcatcher = (props) => {
                                 })
                               }
                             >
-                              {soul.internal_sight ? 'Enabled' : 'Disabled'}
+                              {soul.internal_sight
+                                ? t('ui.common.enabled')
+                                : t('ui.common.disabled')}
                             </Button>
                           </LabeledList.Item>
-                          <LabeledList.Item label="Speech">
+                          <LabeledList.Item label={t('ui.soulcatcher.speech')}>
                             <Button
                               color={soul.able_to_speak ? 'green' : 'red'}
                               fluid
-                              tooltip="Is the soul able to speak?"
+                              tooltip={t('ui.soulcatcher.speech_tooltip')}
                               onClick={() =>
                                 act('toggle_soul_communication', {
                                   target_soul: soul.reference,
@@ -298,14 +312,16 @@ export const Soulcatcher = (props) => {
                                 })
                               }
                             >
-                              {soul.able_to_speak ? 'Enabled' : 'Disabled'}
+                              {soul.able_to_speak
+                                ? t('ui.common.enabled')
+                                : t('ui.common.disabled')}
                             </Button>
                           </LabeledList.Item>
-                          <LabeledList.Item label="Emote">
+                          <LabeledList.Item label={t('ui.common.emote')}>
                             <Button
                               color={soul.able_to_emote ? 'green' : 'red'}
                               fluid
-                              tooltip="Is the soul able to emote?"
+                              tooltip={t('ui.soulcatcher.emote_enabled_tooltip')}
                               onClick={() =>
                                 act('toggle_soul_communication', {
                                   target_soul: soul.reference,
@@ -314,12 +330,14 @@ export const Soulcatcher = (props) => {
                                 })
                               }
                             >
-                              {soul.able_to_emote ? 'Enabled' : 'Disabled'}
+                              {soul.able_to_emote
+                                ? t('ui.common.enabled')
+                                : t('ui.common.disabled')}
                             </Button>
                           </LabeledList.Item>
                           {communicate_as_parent ? (
                             <>
-                              <LabeledList.Item label="External Speech">
+                              <LabeledList.Item label={t('ui.soulcatcher.external_speech')}>
                                 <Button
                                   color={
                                     soul.able_to_speak_as_container
@@ -327,7 +345,7 @@ export const Soulcatcher = (props) => {
                                       : 'red'
                                   }
                                   fluid
-                                  tooltip="Is the soul able to speak the container?"
+                                  tooltip={t('ui.soulcatcher.external_speech_tooltip')}
                                   onClick={() =>
                                     act('toggle_soul_external_communication', {
                                       target_soul: soul.reference,
@@ -337,11 +355,11 @@ export const Soulcatcher = (props) => {
                                   }
                                 >
                                   {soul.able_to_speak_as_container
-                                    ? 'Enabled'
-                                    : 'Disabled'}
+                                    ? t('ui.common.enabled')
+                                    : t('ui.common.disabled')}
                                 </Button>
                               </LabeledList.Item>
-                              <LabeledList.Item label="External Emote">
+                              <LabeledList.Item label={t('ui.soulcatcher.external_emote')}>
                                 <Button
                                   color={
                                     soul.able_to_emote_as_container
@@ -349,7 +367,7 @@ export const Soulcatcher = (props) => {
                                       : 'red'
                                   }
                                   fluid
-                                  tooltip="Is the soul able to emote as the container?"
+                                  tooltip={t('ui.soulcatcher.external_emote_tooltip')}
                                   onClick={() =>
                                     act('toggle_soul_external_communication', {
                                       target_soul: soul.reference,
@@ -359,19 +377,19 @@ export const Soulcatcher = (props) => {
                                   }
                                 >
                                   {soul.able_to_emote_as_container
-                                    ? 'Enabled'
-                                    : 'Disabled'}
+                                    ? t('ui.common.enabled')
+                                    : t('ui.common.disabled')}
                                 </Button>
                               </LabeledList.Item>
                             </>
                           ) : (
                             null
                           )}
-                          <LabeledList.Item label="Rename">
+                          <LabeledList.Item label={t('ui.common.rename')}>
                             <Button
                               color={soul.able_to_rename ? 'green' : 'red'}
                               fluid
-                              tooltip="Is the soul able to rename themselves?"
+                              tooltip={t('ui.soulcatcher.rename_self_tooltip')}
                               onClick={() =>
                                 act('toggle_soul_renaming', {
                                   target_soul: soul.reference,
@@ -379,7 +397,9 @@ export const Soulcatcher = (props) => {
                                 })
                               }
                             >
-                              {soul.able_to_rename ? 'Enabled' : 'Disabled'}
+                              {soul.able_to_rename
+                                ? t('ui.common.enabled')
+                                : t('ui.common.disabled')}
                             </Button>
                           </LabeledList.Item>
                         </LabeledList>
@@ -395,7 +415,7 @@ export const Soulcatcher = (props) => {
                             })
                           }
                         >
-                          Remove Soul
+                          {t('ui.soulcatcher.remove_soul')}
                         </Button>
                       </Collapsible>
                     </Flex.Item>
@@ -416,7 +436,7 @@ export const Soulcatcher = (props) => {
               maxValue={max_souls}
               value={max_souls - current_soul_count}
             >
-              Remaining soul capacity: {max_souls - current_soul_count}
+              {t('ui.soulcatcher.remaining_soul_capacity')}: {max_souls - current_soul_count}
             </ProgressBar>
           </Section>
         ) : (
@@ -428,7 +448,7 @@ export const Soulcatcher = (props) => {
           icon="plus"
           onClick={() => act('create_room', {})}
         >
-          Create new room
+          {t('ui.soulcatcher.create_new_room')}
         </Button>
         <Button
           fluid
@@ -436,7 +456,10 @@ export const Soulcatcher = (props) => {
           icon={ghost_joinable ? 'door-open' : 'door-closed'}
           onClick={() => act('toggle_joinable', {})}
         >
-          {ghost_joinable ? 'Opened' : 'Closed'} to ghosts
+          {ghost_joinable
+            ? t('ui.soulcatcher.opened')
+            : t('ui.soulcatcher.closed')}{' '}
+          {t('ui.soulcatcher.to_ghosts')}
         </Button>
         <Button
           fluid
@@ -444,7 +467,8 @@ export const Soulcatcher = (props) => {
           icon={require_approval ? 'lock' : 'lock-open'}
           onClick={() => act('toggle_approval', {})}
         >
-          Approval is {require_approval ? '' : 'not'} required to join
+          {t('ui.soulcatcher.approval_is')} {require_approval ? '' : t('ui.soulcatcher.not')}{' '}
+          {t('ui.soulcatcher.required_to_join')}
         </Button>
         {removable ? (
           <Button
@@ -454,7 +478,7 @@ export const Soulcatcher = (props) => {
             icon="eject"
             onClick={() => act('delete_self', {})}
           >
-            Remove soulcatcher from parent object
+            {t('ui.soulcatcher.remove_from_parent')}
           </Button>
         ) : (
           null

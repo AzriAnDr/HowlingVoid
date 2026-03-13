@@ -11,6 +11,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { ParticleContext } from '.';
 import {
   type EntryCoordProps,
@@ -35,6 +36,7 @@ import {
 
 export const EntryFloat = (props: EntryFloatProps) => {
   const { act } = useBackend<ParticleUIData>();
+  const { t } = usePreferencesLocalization();
   const { setDesc } = useContext(ParticleContext);
   const { name, var_name, float } = props;
   return (
@@ -42,7 +44,7 @@ export const EntryFloat = (props: EntryFloatProps) => {
       <Button
         icon={'question'}
         onClick={() => setDesc(var_name)}
-        tooltip={'View details'}
+        tooltip={t('ui.common.view_details')}
       />
       <NumberInput
         animated
@@ -64,6 +66,7 @@ export const EntryFloat = (props: EntryFloatProps) => {
 
 export const EntryCoord = (props: EntryCoordProps) => {
   const { act } = useBackend<ParticleUIData>();
+  const { t } = usePreferencesLocalization();
   const { setDesc } = useContext(ParticleContext);
   const { name, var_name, coord } = props;
   return (
@@ -71,7 +74,7 @@ export const EntryCoord = (props: EntryCoordProps) => {
       <Button
         icon={'question'}
         onClick={() => setDesc(var_name)}
-        tooltip={'View details'}
+        tooltip={t('ui.common.view_details')}
       />
       <NumberInput
         animated
@@ -121,6 +124,7 @@ export const EntryCoord = (props: EntryCoordProps) => {
 
 export const EntryGradient = (props: EntryGradientProps) => {
   const { act } = useBackend<ParticleUIData>();
+  const { t } = usePreferencesLocalization();
   const { setDesc } = useContext(ParticleContext);
   const { name, var_name, gradient } = props;
 
@@ -145,12 +149,12 @@ export const EntryGradient = (props: EntryGradientProps) => {
           <Button
             icon={'question'}
             onClick={() => setDesc(var_name)}
-            tooltip={'View details'}
+            tooltip={t('ui.common.view_details')}
           />
         </Stack.Item>
         <Stack.Item>
           <Button
-            tooltip={'Loop'}
+            tooltip={t('ui.particle_editor.loop')}
             icon={'sync'}
             selected={!!isLooping}
             onClick={() =>
@@ -200,7 +204,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
                 />
                 <Button
                   icon="minus"
-                  tooltip="Remove entry"
+                  tooltip={t('ui.common.remove_entry')}
                   onClick={() =>
                     act('edit', {
                       var: var_name,
@@ -215,7 +219,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
         <Stack.Item>
           <Button
             icon={'add'}
-            tooltip={'Add new entry'}
+            tooltip={t('ui.common.add_new_entry')}
             onClick={() =>
               act('edit', {
                 var: var_name,
@@ -231,6 +235,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
 
 export const EntryTransform = (props: EntryTransformProps) => {
   const { act } = useBackend<ParticleUIData>();
+  const { t } = usePreferencesLocalization();
   const { setDesc } = useContext(ParticleContext);
   const len = props.transform?.length ? props.transform.length : 0;
   const selected =
@@ -247,7 +252,7 @@ export const EntryTransform = (props: EntryTransformProps) => {
           <Button
             icon={'question'}
             onClick={() => setDesc(var_name)}
-            tooltip={'View details'}
+            tooltip={t('ui.common.view_details')}
           />
         </Stack.Item>
         <Stack.Item>
@@ -286,6 +291,7 @@ export const EntryTransform = (props: EntryTransformProps) => {
 
 export const EntryIcon = (props: EntryIconStateProps) => {
   const { act } = useBackend<ParticleUIData>();
+  const { t } = usePreferencesLocalization();
   const { setDesc } = useContext(ParticleContext);
   const { name, var_name, icon_state } = props;
   return (
@@ -295,7 +301,7 @@ export const EntryIcon = (props: EntryIconStateProps) => {
           <Button
             icon={'question'}
             onClick={() => setDesc(var_name)}
-            tooltip={'View details'}
+            tooltip={t('ui.common.view_details')}
           />
         </Stack.Item>
         {typeof icon_state === 'object' && icon_state !== null ? (
@@ -361,6 +367,7 @@ export const EntryIcon = (props: EntryIconStateProps) => {
 
 export const EntryIconState = (props: EntryIconStateProps) => {
   const { act } = useBackend<ParticleUIData>();
+  const { t } = usePreferencesLocalization();
   const { setDesc } = useContext(ParticleContext);
   const { name, var_name, icon_state } = props;
   const newValue =
@@ -374,7 +381,7 @@ export const EntryIconState = (props: EntryIconStateProps) => {
           <Button
             icon={'question'}
             onClick={() => setDesc(var_name)}
-            tooltip={'View details'}
+            tooltip={t('ui.common.view_details')}
           />
         </Stack.Item>
         {typeof icon_state === 'object' && icon_state !== null ? (

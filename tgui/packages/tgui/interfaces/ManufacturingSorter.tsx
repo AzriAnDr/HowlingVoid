@@ -10,6 +10,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   filters: Filter[];
@@ -40,15 +41,16 @@ type Filter = {
 
 export function ManufacturingSorter(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { filters, unmet_dir } = data;
 
   return (
-    <Window width={450} height={350} title="Manufacturing Sorter">
+    <Window width={450} height={350} title={t('ui.manufacturingsorter.manufacturing_sorter')}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item height="90%">
             <Section
-              title="Filters"
+              title={t('ui.manufacturingsorter.filters')}
               height="100%"
               overflowY="auto"
               buttons={
@@ -57,7 +59,7 @@ export function ManufacturingSorter(props) {
                   icon="plus"
                   onClick={() => act('new_filter')}
                 >
-                  New filter
+                  {t('ui.manufacturing_sorter.new_filter')}
                 </Button>
               }
             >
@@ -71,7 +73,7 @@ export function ManufacturingSorter(props) {
                       icon={dir2icon(filter.dir)}
                       onClick={() => act('rotate', { ref: filter.ref })}
                     >
-                      Output
+                      {t('ui.common.output')}
                     </Button>
                     <Button onClick={() => act('edit', { ref: filter.ref })}>
                       <Icon ml="0.2rem" name="pencil" />
@@ -104,7 +106,7 @@ export function ManufacturingSorter(props) {
           <Stack.Item>
             <Stack>
               <Stack.Item>
-                <Box>If no criteria is met, outputting to:</Box>
+                <Box>{t('ui.manufacturingsorter.if_no_criteria_is_met_outputting_to')}</Box>
               </Stack.Item>
               <Stack.Item>
                 <Button onClick={() => act('rotate_unmet')}>

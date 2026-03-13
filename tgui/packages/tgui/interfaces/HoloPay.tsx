@@ -16,6 +16,7 @@ import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type HoloPayData = {
   available_logos: string[];
@@ -31,6 +32,7 @@ type HoloPayData = {
 
 export const HoloPay = (props) => {
   const { data } = useBackend<HoloPayData>();
+  const { t } = usePreferencesLocalization(data);
   const { owner } = data;
   const [setupMode, setSetupMode] = useState(false);
   // User clicked the "Setup" or "Done" button.
@@ -39,10 +41,10 @@ export const HoloPay = (props) => {
   };
 
   return (
-    <Window height={300} width={250} title="Holo Pay">
+    <Window height={300} width={250} title={t('ui.holo_pay.title')}>
       <Window.Content>
         {!owner ? (
-          <NoticeBox>Error! Swipe an ID first.</NoticeBox>
+          <NoticeBox>{t('ui.holo_pay.error_swipe_id_first')}</NoticeBox>
         ) : (
           <Stack fill vertical>
             <Stack.Item>
@@ -67,9 +69,10 @@ export const HoloPay = (props) => {
  */
 const AccountDisplay = (props) => {
   const { data } = useBackend<HoloPayData>();
+  const { t } = usePreferencesLocalization(data);
   const { user } = data;
   if (!user) {
-    return <NoticeBox>Error! No account detected.</NoticeBox>;
+    return <NoticeBox>{t('ui.holo_pay.error_no_account_detected')}</NoticeBox>;
   }
 
   return (
@@ -99,6 +102,7 @@ const AccountDisplay = (props) => {
  */
 const TerminalDisplay = (props) => {
   const { act, data } = useBackend<HoloPayData>();
+  const { t } = usePreferencesLocalization(data);
   const { description, force_fee, name, owner, user, shop_logo } = data;
   const { onClick } = props;
   const is_owner = owner === user?.name;
@@ -110,12 +114,12 @@ const TerminalDisplay = (props) => {
       buttons={
         is_owner && (
           <Button icon="edit" onClick={onClick}>
-            Setup
+            {t('ui.common.setup')}
           </Button>
         )
       }
       fill
-      title="Terminal"
+      title={t('ui.holo_pay.terminal')}
     >
       <Stack fill vertical>
         <Stack.Item align="center" mt={3}>
@@ -134,7 +138,7 @@ const TerminalDisplay = (props) => {
               content={
                 <>
                   <Icon name="coins" />
-                  Pay {`${force_fee} cr`}
+                  {t('ui.common.pay')} {`${force_fee} cr`}
                 </>
               }
               disabled={cannot_pay}
@@ -149,7 +153,7 @@ const TerminalDisplay = (props) => {
               content={
                 <>
                   <Icon name="coins" />
-                  Pay
+                  {t('ui.common.pay')}
                 </>
               }
               disabled={cannot_pay}
@@ -171,6 +175,7 @@ const TerminalDisplay = (props) => {
  */
 const SetupDisplay = (props) => {
   const { act, data } = useBackend<HoloPayData>();
+  const { t } = usePreferencesLocalization(data);
   const { available_logos = [], force_fee, max_fee, name, shop_logo } = data;
   const { onClick } = props;
 
@@ -186,17 +191,17 @@ const SetupDisplay = (props) => {
             onClick();
           }}
         >
-          Done
+          {t('ui.common.done')}
         </Button>
       }
       fill
       scrollable
-      title="Settings"
+      title={t('ui.common.settings')}
     >
       <Stack fill vertical>
         <Stack.Item>
           <Box bold color="label">
-            Shop Logo
+            {t('ui.holo_pay.shop_logo')}
           </Box>
           <Dropdown
             onSelected={(value) => act('logo', { logo: value })}
@@ -207,7 +212,7 @@ const SetupDisplay = (props) => {
         </Stack.Item>
         <Stack.Item>
           <Box bold color="label">
-            Name (3 - 42 chars)
+            {t('ui.holo_pay.name_chars')}
           </Box>
           <TextArea
             fluid
@@ -220,9 +225,9 @@ const SetupDisplay = (props) => {
           />
         </Stack.Item>
         <Stack.Item>
-          <Tooltip content="Set a forced fee rather than pay what you want.">
+          <Tooltip content={t('ui.holo_pay.forced_fee_tooltip')}>
             <Box bold color="label">
-              Forced Fee
+              {t('ui.holo_pay.forced_fee')}
             </Box>
             <RestrictedInput
               fluid

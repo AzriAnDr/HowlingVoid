@@ -5,6 +5,7 @@ import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   emoji_list: Emoji[];
@@ -16,6 +17,7 @@ type Emoji = {
 
 export const NtosEmojipedia = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { emoji_list = [] } = data;
   const [filter, setFilter] = useState('');
 
@@ -31,12 +33,12 @@ export const NtosEmojipedia = (props) => {
           buttons={
             <>
               <Input
-                placeholder="Search by name"
+                placeholder={t('ui.ntos_emojipedia.search_by_name')}
                 value={filter}
                 onChange={setFilter}
               />
               <Button
-                tooltip={'Click on an emoji to copy its tag!'}
+                tooltip={t('ui.ntos_emojipedia.copy_emoji_tooltip')}
                 tooltipPosition="bottom"
                 icon="circle-question"
               />

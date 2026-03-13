@@ -9,13 +9,15 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const CivCargoHoldTerminal = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization();
   const { pad, sending, status_report, id_inserted, id_bounty_info, picking } =
     data;
-  const in_text = 'Welcome valued employee.';
-  const out_text = 'To begin, insert your ID into the console.';
+  const in_text = t('ui.civ_cargo_hold.welcome_employee');
+  const out_text = t('ui.civ_cargo_hold.insert_id_prompt');
   return (
     <Window width={580} height={375}>
       <Window.Content scrollable>
@@ -25,18 +27,22 @@ export const CivCargoHoldTerminal = (props) => {
               {id_inserted ? in_text : out_text}
             </NoticeBox>
             <Section
-              title="Cargo Pad"
+              title={t('ui.civ_cargo_hold.cargo_pad')}
               buttons={
                 <>
                   <Button
                     icon={'sync'}
-                    tooltip={'Check Contents'}
+                    tooltip={t('ui.civ_cargo_hold.check_contents')}
                     disabled={!pad || !id_inserted}
                     onClick={() => act('recalc')}
                   />
                   <Button
                     icon={sending ? 'times' : 'arrow-up'}
-                    tooltip={sending ? 'Stop Sending' : 'Send Goods'}
+                    tooltip={
+                      sending
+                        ? t('ui.civ_cargo_hold.stop_sending')
+                        : t('ui.civ_cargo_hold.send_goods')
+                    }
                     selected={sending}
                     disabled={!pad || !id_inserted}
                     onClick={() => act(sending ? 'stop' : 'send')}
@@ -44,13 +50,17 @@ export const CivCargoHoldTerminal = (props) => {
                   <Button
                     icon={id_bounty_info ? 'recycle' : 'pen'}
                     color={id_bounty_info ? 'green' : 'default'}
-                    tooltip={id_bounty_info ? 'Replace Bounty' : 'New Bounty'}
+                    tooltip={
+                      id_bounty_info
+                        ? t('ui.civ_cargo_hold.replace_bounty')
+                        : t('ui.civ_cargo_hold.new_bounty')
+                    }
                     disabled={!id_inserted}
                     onClick={() => act('bounty')}
                   />
                   <Button
                     icon={'download'}
-                    content={'Eject ID'}
+                    content={t('ui.civ_cargo_hold.eject_id')}
                     disabled={!id_inserted}
                     onClick={() => act('eject')}
                   />
@@ -58,10 +68,13 @@ export const CivCargoHoldTerminal = (props) => {
               }
             >
               <LabeledList>
-                <LabeledList.Item label="Status" color={pad ? 'good' : 'bad'}>
-                  {pad ? 'Online' : 'Not Found'}
+                <LabeledList.Item
+                  label={t('ui.common.status')}
+                  color={pad ? 'good' : 'bad'}
+                >
+                  {pad ? t('ui.common.online') : t('ui.common.not_found')}
                 </LabeledList.Item>
-                <LabeledList.Item label="Cargo Report">
+                <LabeledList.Item label={t('ui.civ_cargo_hold.cargo_report')}>
                   {status_report}
                 </LabeledList.Item>
               </LabeledList>
@@ -76,19 +89,20 @@ export const CivCargoHoldTerminal = (props) => {
 
 const BountyTextBox = (props) => {
   const { data } = useBackend();
+  const { t } = usePreferencesLocalization();
   const { id_bounty_info, id_bounty_value, id_bounty_num } = data;
-  const na_text = 'N/A, please add a new bounty.';
+  const na_text = t('ui.civ_cargo_hold.na_add_new_bounty');
   return (
-    <Section title="Bounty Info">
+    <Section title={t('ui.civ_cargo_hold.bounty_info')}>
       <LabeledList>
-        <LabeledList.Item label="Description">
+        <LabeledList.Item label={t('ui.common.description')}>
           {id_bounty_info ? id_bounty_info : na_text}
         </LabeledList.Item>
-        <LabeledList.Item label="Quantity">
-          {id_bounty_info ? id_bounty_num : 'N/A'}
+        <LabeledList.Item label={t('ui.common.quantity')}>
+          {id_bounty_info ? id_bounty_num : t('ui.common.not_applicable')}
         </LabeledList.Item>
-        <LabeledList.Item label="Value">
-          {id_bounty_info ? id_bounty_value : 'N/A'}
+        <LabeledList.Item label={t('ui.common.value')}>
+          {id_bounty_info ? id_bounty_value : t('ui.common.not_applicable')}
         </LabeledList.Item>
       </LabeledList>
     </Section>
@@ -97,9 +111,10 @@ const BountyTextBox = (props) => {
 
 const BountyPickBox = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization();
   const { id_bounty_names, id_bounty_infos, id_bounty_values } = data;
   return (
-    <Section title="Please Select a Bounty:" textAlign="center">
+    <Section title={t('ui.civ_cargo_hold.select_bounty')} textAlign="center">
       <Flex width="100%" wrap>
         <Flex.Item shrink={0} grow={0.5}>
           <BountyPickButton
@@ -134,6 +149,7 @@ const BountyPickBox = (props) => {
 };
 
 const BountyPickButton = (props) => {
+  const { t } = usePreferencesLocalization();
   return (
     <Button
       fluid
@@ -157,7 +173,9 @@ const BountyPickButton = (props) => {
       >
         {props.bounty_info}
       </Box>
-      <Box>Payout: {props.bounty_value} cr</Box>
+      <Box>
+        {t('ui.civ_cargo_hold.payout')}: {props.bounty_value} cr
+      </Box>
     </Button>
   );
 };

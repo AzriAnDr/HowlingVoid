@@ -14,6 +14,7 @@ import { round, toFixed } from 'tgui-core/math';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import type { MixingData, Reagent } from './ChemMixingChamber';
+import { usePreferencesLocalization } from './localization';
 
 type ReactingData = MixingData & {
   ph: number;
@@ -24,6 +25,7 @@ type ReactingData = MixingData & {
 
 export const ChemReactionChamber = (props) => {
   const { act, data } = useBackend<ReactingData>();
+  const { t } = usePreferencesLocalization(data);
 
   const [reagentQuantity, setReagentQuantity] = useState(1);
 
@@ -44,10 +46,10 @@ export const ChemReactionChamber = (props) => {
         <Stack vertical fill>
           <Stack.Item>
             <Section
-              title="Conditions"
+              title={t('ui.chem_reaction_chamber.conditions')}
               buttons={
                 <Stack>
-                  <Stack.Item mt={0.3}>{'Target:'}</Stack.Item>
+                  <Stack.Item mt={0.3}>{t('ui.common.target')}</Stack.Item>
                   <Stack.Item>
                     <NumberInput
                       tickWhileDragging
@@ -72,7 +74,7 @@ export const ChemReactionChamber = (props) => {
                 <Stack.Item>
                   <Stack fill>
                     <Stack.Item textColor="label">
-                      Current Temperature:
+                      {t('ui.chem_reaction_chamber.current_temperature')}
                     </Stack.Item>
                     <Stack.Item grow>
                       <AnimatedNumber
@@ -108,7 +110,7 @@ export const ChemReactionChamber = (props) => {
                 </Stack.Item>
                 <Stack.Item>
                   <Stack fill>
-                    <Stack.Item textColor="label">{'ph:'}</Stack.Item>
+                    <Stack.Item textColor="label">{t('ui.chem_master.ph')}</Stack.Item>
                     <Stack.Item grow={15}>{ph}</Stack.Item>
                     <Stack.Item grow mt={1} mb={-0.5}>
                       <Button
@@ -132,13 +134,13 @@ export const ChemReactionChamber = (props) => {
           </Stack.Item>
           <Stack.Item grow>
             <Section
-              title="Settings"
+              title={t('ui.chem_reaction_chamber.settings')}
               fill
               scrollable
               buttons={
                 (isReacting && (
                   <Box inline bold color={'purple'}>
-                    {'Reacting'}
+                    {t('ui.chem_reaction_chamber.reacting')}
                   </Box>
                 )) || (
                   <Box
@@ -147,7 +149,9 @@ export const ChemReactionChamber = (props) => {
                     bold
                     color={emptying ? 'bad' : 'good'}
                   >
-                    {emptying ? 'Emptying' : 'Filling'}
+                    {emptying
+                      ? t('ui.chem_acclimator.emptying')
+                      : t('ui.chem_acclimator.filling')}
                   </Box>
                 )
               }
@@ -155,7 +159,7 @@ export const ChemReactionChamber = (props) => {
               <Stack vertical fill>
                 <Stack.Item>
                   <LabeledList>
-                    <LabeledList.Item label="Acidic pH limit">
+                    <LabeledList.Item label={t('ui.chem_reaction_chamber.acidic_ph_limit')}>
                       <NumberInput
                         tickWhileDragging
                         value={reagentAcidic}
@@ -171,7 +175,7 @@ export const ChemReactionChamber = (props) => {
                         }
                       />
                     </LabeledList.Item>
-                    <LabeledList.Item label="Alkaline pH limit">
+                    <LabeledList.Item label={t('ui.chem_reaction_chamber.alkaline_ph_limit')}>
                       <NumberInput
                         tickWhileDragging
                         value={reagentAlkaline}
@@ -202,7 +206,7 @@ export const ChemReactionChamber = (props) => {
                           })
                         }
                       >
-                        Add Reagent
+                        {t('ui.chem_filter.add_reagent')}
                       </Button>
                     </Stack.Item>
                     <Stack.Item>
@@ -269,7 +273,7 @@ export const ChemReactionChamber = (props) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow={0.7}>
-            <Section title="Catalysts" fill scrollable>
+            <Section title={t('ui.common.catalysts')} fill scrollable>
               <Stack.Item>
                 <Stack vertical fill>
                   {catalysts.map((reagent) => (

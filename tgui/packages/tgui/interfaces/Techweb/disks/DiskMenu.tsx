@@ -1,5 +1,6 @@
 import { Button, Flex, Tabs } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../../localization';
 import { useRemappedBackend } from '../helpers';
 import { useTechWebRoute } from '../hooks';
 import { TechwebDesignDisk, TechwebTechDisk } from './disks';
@@ -10,6 +11,7 @@ type Props = {
 
 export function TechwebDiskMenu(props: Props) {
   const { act, data } = useRemappedBackend();
+  const { t } = usePreferencesLocalization(data);
   const { diskType } = props;
   const { t_disk, d_disk } = data;
   const [techwebRoute, setTechwebRoute] = useTechWebRoute();
@@ -31,7 +33,7 @@ export function TechwebDiskMenu(props: Props) {
           </Flex.Item>
           <Flex.Item grow>
             <Tabs>
-              <Tabs.Tab selected>Stored Data</Tabs.Tab>
+              <Tabs.Tab selected>{t('ui.techweb.stored_data')}</Tabs.Tab>
             </Tabs>
           </Flex.Item>
           <Flex.Item align="center">
@@ -53,10 +55,10 @@ export function TechwebDiskMenu(props: Props) {
                 setTechwebRoute({ route: '' });
               }}
             >
-              Eject
+              {t('ui.common.eject')}
             </Button>
             <Button icon="home" onClick={() => setTechwebRoute({ route: '' })}>
-              Home
+              {t('ui.common.home')}
             </Button>
           </Flex.Item>
         </Flex>

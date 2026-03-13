@@ -13,6 +13,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { CargoCatalog } from './Cargo/CargoCatalog';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   locked: BooleanLike;
@@ -62,6 +63,7 @@ export function CargoExpress(props) {
 
 function CargoExpressContent(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     hasBeacon,
     points,
@@ -76,7 +78,7 @@ function CargoExpressContent(props) {
     <Stack fill vertical g={0}>
       <Stack.Item>
         <Section
-          title="Cargo Express"
+          title={t('ui.cargo_express.title')}
           buttons={
             <Box inline bold verticalAlign={'middle'}>
               <AnimatedNumber value={Math.round(points)} />
@@ -85,7 +87,7 @@ function CargoExpressContent(props) {
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Landing Location">
+            <LabeledList.Item label={t('ui.cargo_express.landing_location')}>
               <Button selected={!using_beacon} onClick={() => act('LZCargo')}>
                 Cargo Bay
               </Button>

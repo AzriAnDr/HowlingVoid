@@ -7,6 +7,7 @@ import {
 } from 'tgui-core/components';
 import { formatSiUnit } from 'tgui-core/format';
 import { toFixed } from 'tgui-core/math';
+import { usePreferencesLocalization } from '../localization';
 
 type Data = {
   apc_energy: number;
@@ -32,6 +33,7 @@ type Data = {
  */
 export const HypertorusParameters = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     apc_energy,
     energy_level,
@@ -55,11 +57,11 @@ export const HypertorusParameters = (props) => {
   }
 
   return (
-    <Section title="Reactor Status">
+    <Section title={t('ui.hypertorus.reactor_status')}>
       <Flex className="hypertorus-parameters" justify="space-between" wrap>
         <Flex.Item grow="360" minWidth="120px">
           <LabeledControls justify="space-around" wrap>
-            <LabeledControls.Item label="Reactor Integrity">
+            <LabeledControls.Item label={t('ui.hypertorus.reactor_integrity')}>
               <RoundGauge
                 size={1.75}
                 value={integrity}
@@ -74,7 +76,7 @@ export const HypertorusParameters = (props) => {
                 }}
               />
             </LabeledControls.Item>
-            <LabeledControls.Item label="Iron Content">
+            <LabeledControls.Item label={t('ui.hypertorus.iron_content')}>
               <RoundGauge
                 size={1.75}
                 value={iron_content}
@@ -89,7 +91,7 @@ export const HypertorusParameters = (props) => {
                 }}
               />
             </LabeledControls.Item>
-            <LabeledControls.Item label="Area Power">
+            <LabeledControls.Item label={t('ui.hypertorus.area_power')}>
               <RoundGauge
                 size={1.75}
                 value={apc_energy}
@@ -109,7 +111,7 @@ export const HypertorusParameters = (props) => {
         </Flex.Item>
         <Flex.Item grow="140" minWidth="140px" align="center">
           <LabeledControls justify="space-around">
-            <LabeledControls.Item label="Fusion Level">
+            <LabeledControls.Item label={t('ui.hypertorus.fusion_level')}>
               <RoundGauge
                 size={3}
                 minValue={0}
@@ -128,7 +130,7 @@ export const HypertorusParameters = (props) => {
         </Flex.Item>
         <Flex.Item grow="360" minWidth="120px">
           <LabeledControls justify="space-around" wrap>
-            <LabeledControls.Item label="Energy">
+            <LabeledControls.Item label={t('ui.common.energy')}>
               <RoundGauge
                 size={1.75}
                 value={Math.max(0, Math.log10(energy_level))}
@@ -145,7 +147,7 @@ export const HypertorusParameters = (props) => {
                 }}
               />
             </LabeledControls.Item>
-            <LabeledControls.Item label="Reaction activity">
+            <LabeledControls.Item label={t('ui.hypertorus.reaction_activity')}>
               <RoundGauge
                 size={1.75}
                 value={activity * 100}
@@ -159,7 +161,7 @@ export const HypertorusParameters = (props) => {
                 }}
               />
             </LabeledControls.Item>
-            <LabeledControls.Item label="Instability">
+            <LabeledControls.Item label={t('ui.hypertorus.instability')}>
               <RoundGauge
                 size={1.75}
                 value={Math.max(instability, 0)}

@@ -15,6 +15,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { getPreferencesLocalization } from '../localization';
 import {
   calculateDangerLevel,
   calculateProgression,
@@ -170,6 +171,7 @@ export class Uplink extends Component<any, UplinkState> {
 
   render() {
     const { data, act } = useBackend<UplinkData>();
+    const { t } = getPreferencesLocalization(data);
     const {
       telecrystals,
       progression_points,
@@ -275,7 +277,8 @@ export class Uplink extends Component<any, UplinkState> {
                         content={
                           <Box>
                             <Box>
-                              <Box>Your current level of threat.</Box> Threat
+                              <Box>{t('ui.uplink.current_level_of_threat')}</Box>{' '}
+                              {t('ui.uplink.threat')}
                               determines what items you can purchase.&nbsp;
                               <Box mt={0.5}>
                                 {/* A minute in deciseconds */}
@@ -310,7 +313,7 @@ export class Uplink extends Component<any, UplinkState> {
                             selected={currentTab === 0}
                             onClick={() => this.setState({ currentTab: 0 })}
                           >
-                            Primary Objectives
+                            {t('ui.uplink.primary_objectives')}
                           </Tabs.Tab>
                         )}
                         <Tabs.Tab
@@ -323,7 +326,7 @@ export class Uplink extends Component<any, UplinkState> {
                           selected={currentTab === 2}
                           onClick={() => this.setState({ currentTab: 2 })}
                         >
-                          Market
+                          {t('ui.uplink.market')}
                         </Tabs.Tab>
                       </Tabs>
                     </Stack.Item>
@@ -339,7 +342,7 @@ export class Uplink extends Component<any, UplinkState> {
                         px={2}
                         onClick={() => act('lock')}
                       >
-                        Lock
+                        {t('ui.common.lock')}
                       </Button>
                     </Stack.Item>
                   )}
@@ -375,7 +378,7 @@ export class Uplink extends Component<any, UplinkState> {
                         align={'top'}
                         as="span"
                       >
-                        SHOP LOCKED
+                        {t('ui.uplink.shop_locked')}
                       </Box>
                     </Dimmer>
                   )) ||

@@ -1,6 +1,7 @@
 import { Section, Stack } from 'tgui-core/components';
 
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import { useCompact } from './hooks';
 import { PodBays } from './PodBays';
 import { PodLaunch } from './PodLaunch';
@@ -14,11 +15,12 @@ import { ViewTabHolder } from './ViewTabHolder';
 
 export function CentcomPodLauncher(props) {
   const [compact] = useCompact();
+  const { t } = usePreferencesLocalization();
 
   return (
     <Window
       height={compact ? 360 : 440}
-      title="Supply Pod Menu (Use against Helen Weinstein)"
+      title={t('ui.centcom_pod_launcher.window_title')}
       width={compact ? 460 : 730}
     >
       <Window.Content>

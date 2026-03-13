@@ -10,6 +10,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Bounty = {
   name: string;
@@ -94,6 +95,7 @@ const format_deciseconds = (deciseconds: number) => {
 
 export const SpyUplink = () => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { bounties, time_left } = data;
 
   return (
@@ -105,7 +107,7 @@ export const SpyUplink = () => {
       >
         <Section
           fill
-          title="Spy Bounties"
+          title={t('ui.spy_uplink.spy_bounties')}
           scrollable
           buttons={
             <Box mt={0.4}>

@@ -2,6 +2,7 @@ import { useBackend } from 'tgui/backend';
 import { Box, Flex, Icon, Section, Stack, Tooltip } from 'tgui-core/components';
 
 import type { HypertorusFuel } from '.';
+import { usePreferencesLocalization } from '../localization';
 import { to_exponential_if_big } from './helpers';
 
 type Data = {
@@ -47,23 +48,28 @@ const VerticalBar = (props) => {
 
 const BarLabel = (props) => {
   const { label, delta, value } = props;
+  const { t } = usePreferencesLocalization();
 
   return (
     <>
       <Box align="center">{label}</Box>
       {value > 0 ? (
         <>
-          <Box align="center">{`${to_exponential_if_big(value)} K`}</Box>
+          <Box align="center">
+            {`${to_exponential_if_big(value)} ${t('ui.hypertorus.kelvin_unit')}`}
+          </Box>
           <Box align="center">
             {delta === 0
               ? '-'
-              : `${delta < 0 ? '' : '+'}${to_exponential_if_big(delta)} K/s`}
+              : `${delta < 0 ? '' : '+'}${to_exponential_if_big(delta)} ${t(
+                  'ui.hypertorus.kelvin_per_second',
+                )}`}
           </Box>
         </>
       ) : (
         <>
           <Box align="center" color="red">
-            Empty
+            {t('ui.common.empty')}
           </Box>
           <Box className="hypertorus__unselectable">&nbsp;</Box>
         </>
@@ -74,6 +80,7 @@ const BarLabel = (props) => {
 
 export const HypertorusTemperatures = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
 
   const {
     base_max_temperature,
@@ -158,7 +165,7 @@ export const HypertorusTemperatures = (props) => {
             name={icon}
           />
         )}
-        {`${to_exponential_if_big(value)} K`}
+        {`${to_exponential_if_big(value)} ${t('ui.hypertorus.kelvin_unit')}`}
       </Box>
     );
     return (
@@ -205,7 +212,7 @@ export const HypertorusTemperatures = (props) => {
   const show_max = label_legible(next_power_level_temperature, maxTemperature);
 
   return (
-    <Section title="Gas Monitoring">
+    <Section title={t('ui.hypertorus.gas_monitoring')}>
       <Box className="hypertorus-temperatures__container">
         <Box className="hypertorus-temperatures__y-axis-marks">
           {show_min && (
@@ -214,13 +221,13 @@ export const HypertorusTemperatures = (props) => {
           <TemperatureLabel
             key="prev_fusion_temp"
             icon="chevron-down"
-            tooltip="Previous Fusion Level"
+            tooltip={t('ui.hypertorus.previous_fusion_level')}
             value={prev_power_level_temperature}
           />
           <TemperatureLabel
             key="next_fusion_temp"
             icon="chevron-up"
-            tooltip="Next Fusion Level"
+            tooltip={t('ui.hypertorus.next_fusion_level')}
             value={next_power_level_temperature}
           />
           {show_max && (
@@ -236,25 +243,25 @@ export const HypertorusTemperatures = (props) => {
           justify="space-around"
         >
           <TemperatureBar
-            label="Fusion"
+            label={t('ui.hypertorus.fusion')}
             value={internal_fusion_temperature}
             delta={internal_fusion_temperature_delta}
             color="#f2711c"
           />
           <TemperatureBar
-            label="Moderator"
+            label={t('ui.hypertorus.moderator')}
             value={moderator_internal_temperature}
             delta={moderator_internal_temperature_delta}
             color="#e03997"
           />
           <TemperatureBar
-            label="Coolant"
+            label={t('ui.hypertorus.coolant')}
             value={internal_coolant_temperature}
             delta={internal_coolant_temperature_delta}
             color="aliceblue"
           />
           <TemperatureBar
-            label="Output"
+            label={t('ui.common.output')}
             value={internal_output_temperature}
             delta={internal_output_temperature_delta}
             color="#20b142"

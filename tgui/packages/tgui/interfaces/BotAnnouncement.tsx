@@ -14,6 +14,7 @@ import { createSearch } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type ButtonData = {
   name: string;
@@ -44,6 +45,7 @@ enum TAB {
 
 export const BotAnnouncement = (props) => {
   const { act, data } = useBackend<BotAnnouncementData>();
+  const { t } = usePreferencesLocalization(data);
   const { channels, lines, button_data, cooldown_left } = data;
 
   const [tab, setTab] = useState(TAB.Announcements);
@@ -171,7 +173,7 @@ export const BotAnnouncement = (props) => {
                 onChange={setSearch}
                 fluid
                 autoFocus
-                placeholder="Search..."
+                placeholder={t('ui.common.search_placeholder')}
               />
             </Stack.Item>
             <Stack.Item>

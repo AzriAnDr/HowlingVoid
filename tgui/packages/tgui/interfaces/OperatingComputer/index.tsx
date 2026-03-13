@@ -4,6 +4,7 @@ import { Section, Stack, Tabs } from 'tgui-core/components';
 import { useFuzzySearch } from 'tgui-core/fuzzysearch';
 import { useBackend, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import { ExperimentView } from './ExperimentView';
 import { PatientStateView } from './PatientStateView';
 import { SurgeryProceduresView } from './SurgeryProceduresView';
@@ -16,6 +17,7 @@ import {
 export const OperatingComputer = () => {
   const [tab, setTab] = useSharedState('tab', 1);
   const { data } = useBackend<OperatingComputerData>();
+  const { t } = usePreferencesLocalization(data);
   const { surgeries } = data;
 
   const { query, setQuery, results } = useFuzzySearch({
@@ -43,19 +45,19 @@ export const OperatingComputer = () => {
                 selected={tab === ComputerTabs.PatientState}
                 onClick={() => setTab(1)}
               >
-                Patient State
+                {t('ui.operating_computer.patient_state')}
               </Tabs.Tab>
               <Tabs.Tab
                 selected={tab === ComputerTabs.OperationCatalog}
                 onClick={() => setTab(2)}
               >
-                Operation Catalog
+                {t('ui.operating_computer.operation_catalog')}
               </Tabs.Tab>
               <Tabs.Tab
                 selected={tab === ComputerTabs.Experiments}
                 onClick={() => setTab(3)}
               >
-                Experiments
+                {t('ui.operating_computer.experiments')}
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>
@@ -81,8 +83,7 @@ export const OperatingComputer = () => {
           </Stack.Item>
           <Stack.Item textAlign="right" color="label" fontSize="0.7em">
             <Section>
-              DefOS 1.0 &copy; Nanotrasen-Deforest Corporation. All rights
-              reserved.
+              {t('ui.operating_computer.copyright')}
             </Section>
           </Stack.Item>
         </Stack>

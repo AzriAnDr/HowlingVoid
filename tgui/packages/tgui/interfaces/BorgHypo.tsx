@@ -9,6 +9,7 @@ import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type BorgHypoContext = {
   maxVolume: number;
@@ -46,9 +47,10 @@ export const BorgHypo = (props) => {
 
 const ReagentDisplay = (props) => {
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
   const { reagents, selected, maxVolume } = props;
   if (reagents.length === 0) {
-    return <NoticeBox>No reagents available!</NoticeBox>;
+    return <NoticeBox>{t('ui.borg_hypo.no_reagents_available')}</NoticeBox>;
   }
   return reagents.map((reagent) => (
     <Flex key={reagent.name} m={0.5}>

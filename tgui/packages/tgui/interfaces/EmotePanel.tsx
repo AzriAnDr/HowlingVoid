@@ -6,6 +6,7 @@ import { capitalizeFirst } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { SearchBar } from './common/SearchBar';
+import { usePreferencesLocalization } from './localization';
 
 type Emote = {
   key: string;
@@ -23,6 +24,7 @@ type EmotePanelData = {
 
 export const EmotePanelContent = (props) => {
   const { act, data } = useBackend<EmotePanelData>();
+  const { t } = usePreferencesLocalization(data);
   const { emotes } = data;
 
   const [filterVisible, toggleVisualFilter] = useState(false);
@@ -46,7 +48,7 @@ export const EmotePanelContent = (props) => {
   return (
     <Section>
       <Section
-        title="Filters"
+        title={t('ui.emote_panel.filters')}
         buttons={
           <Flex>
             <Button
@@ -54,7 +56,7 @@ export const EmotePanelContent = (props) => {
               width="100%"
               height="100%"
               align="center"
-              tooltip="Visible"
+              tooltip={t('ui.emote_panel.visible')}
               selected={filterVisible}
               onClick={() => toggleVisualFilter(!filterVisible)}
             />
@@ -63,7 +65,7 @@ export const EmotePanelContent = (props) => {
               width="100%"
               height="100%"
               align="center"
-              tooltip="Audible"
+              tooltip={t('ui.emote_panel.audible')}
               selected={filterAudible}
               onClick={() => toggleAudibleFilter(!filterAudible)}
             />
@@ -72,7 +74,7 @@ export const EmotePanelContent = (props) => {
               width="100%"
               height="100%"
               align="center"
-              tooltip="Sound"
+              tooltip={t('ui.emote_panel.sound')}
               selected={filterSound}
               onClick={() => toggleSoundFilter(!filterSound)}
             />
@@ -81,7 +83,7 @@ export const EmotePanelContent = (props) => {
               width="100%"
               height="100%"
               align="center"
-              tooltip="Hands"
+              tooltip={t('ui.emote_panel.hands')}
               selected={filterHands}
               onClick={() => toggleHandsFilter(!filterHands)}
             />
@@ -90,7 +92,7 @@ export const EmotePanelContent = (props) => {
               width="100%"
               height="100%"
               align="center"
-              tooltip="Params"
+              tooltip={t('ui.emote_panel.params')}
               selected={filterUseParams}
               onClick={() => toggleUseParamsFilter(!filterUseParams)}
             />
@@ -100,26 +102,28 @@ export const EmotePanelContent = (props) => {
         <SearchBar
           query={searchText}
           onSearch={setSearchText}
-          placeholder="Search all emotes..."
+          placeholder={t('ui.emote_panel.search_all_emotes')}
         />
       </Section>
       <Section
         title={
           searchText.length > 0
-            ? `Search results of "${searchText}"`
-            : `All Emotes`
+            ? `${t('ui.emote_panel.search_results_of')} "${searchText}"`
+            : t('ui.emote_panel.all_emotes')
         }
         buttons={
           <Flex>
             <Flex.Item>
               <Button onClick={() => toggleShowNames(!showNames)}>
-                {showNames ? 'Show Names' : 'Show Keys'}
+                {showNames
+                  ? t('ui.emote_panel.show_names')
+                  : t('ui.emote_panel.show_keys')}
               </Button>
               <Button
                 selected={showIcons}
                 onClick={() => toggleShowIcons(!showIcons)}
               >
-                Show Icons
+                {t('ui.emote_panel.show_icons')}
               </Button>
             </Flex.Item>
             <Flex.Item>
@@ -128,7 +132,7 @@ export const EmotePanelContent = (props) => {
                 selected={useParams}
                 onClick={() => toggleUseParams(!useParams)}
               >
-                Use Params
+                {t('ui.emote_panel.use_params')}
               </Button>
             </Flex.Item>
           </Flex>

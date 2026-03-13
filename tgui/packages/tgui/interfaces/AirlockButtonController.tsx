@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   interior_door: string;
@@ -14,13 +15,14 @@ type Data = {
 
 export const AirlockButtonController = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { interior_door, exterior_door } = data;
   return (
     <Window width={500} height={130}>
       <Window.Content>
-        <Section title="Airlock Controller" textAlign="center">
+        <Section title={t('ui.airlock_button_controller.title')} textAlign="center">
           {!interior_door && !exterior_door ? (
-            <NoticeBox danger>No doors detected</NoticeBox>
+            <NoticeBox danger>{t('ui.airlock_button_controller.no_doors_detected')}</NoticeBox>
           ) : (
             <Stack>
               {interior_door && (

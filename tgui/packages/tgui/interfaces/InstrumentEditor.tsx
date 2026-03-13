@@ -14,6 +14,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   id: string;
@@ -57,15 +58,16 @@ type LineData = {
 
 export const InstrumentEditor = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
 
   return (
     <Window width={750} height={500}>
       <Window.Content scrollable>
         <InstrumentSettings />
-        <Collapsible open title="Music Editor" icon="pencil">
+        <Collapsible open title={t('ui.instrument_editor.music_editor')} icon="pencil">
           <EditingSettings />
         </Collapsible>
-        <Collapsible title="Help Section" icon="question">
+        <Collapsible title={t('ui.instrument_editor.help_section')} icon="question">
           <HelpSection />
         </Collapsible>
       </Window.Content>
@@ -75,6 +77,7 @@ export const InstrumentEditor = (props) => {
 
 const InstrumentSettings = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     id,
     playing,
@@ -108,7 +111,7 @@ const InstrumentSettings = (props) => {
   };
 
   return (
-    <Section title="Settings">
+    <Section title={t('ui.instrument_editor.settings')}>
       {lines.length > 0 && (
         <Box fontSize="16px" mb={1}>
           <Button onClick={() => act('play_music')}>
@@ -156,7 +159,7 @@ const InstrumentSettings = (props) => {
       <Box>
         {!!can_switch_instrument && (
           <Stack fill>
-            <Stack.Item mt={0.5}>Instrument Using</Stack.Item>
+            <Stack.Item mt={0.5}>{t('ui.instrument_editor.instrument_using')}</Stack.Item>
             <Stack.Item grow>
               <Dropdown
                 width="40%"
@@ -193,7 +196,7 @@ const InstrumentSettings = (props) => {
             keys / {octaves} octaves
           </Box>
           <Stack>
-            <Stack.Item mt={0.5}>Mode:</Stack.Item>
+            <Stack.Item mt={0.5}>{t('ui.instrument_editor.mode')}</Stack.Item>
             <Stack.Item grow>
               <Dropdown
                 width="100%"
@@ -228,7 +231,7 @@ const InstrumentSettings = (props) => {
           <Box>
             Status:
             {instrument_ready ? (
-              <span style={{ color: '#5EFB6E' }}> Ready</span>
+              <span style={{ color: '#5EFB6E' }}> {t('ui.common.ready')}</span>
             ) : (
               <span style={{ color: '#FF0000' }}>
                 {' '}
@@ -279,13 +282,14 @@ const InstrumentSettings = (props) => {
 
 const EditingSettings = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { bpm, lines } = data;
 
   return (
     <Section>
       <Box>
-        <Button onClick={() => act('start_new_song')}>Start a New Song</Button>
-        <Button onClick={() => act('import_song')}>Import a Song</Button>
+        <Button onClick={() => act('start_new_song')}>{t('ui.instrument_editor.start_new_song')}</Button>
+        <Button onClick={() => act('import_song')}>{t('ui.instrument_editor.import_song')}</Button>
       </Box>
       <Box>
         Tempo:{' '}
@@ -324,7 +328,7 @@ const EditingSettings = (props) => {
         ))}
       </Box>
       <Box>
-        <Button onClick={() => act('add_new_line')}>Add Line</Button>
+        <Button onClick={() => act('add_new_line')}>{t('ui.instrument_editor.add_line')}</Button>
       </Box>
     </Section>
   );
@@ -332,6 +336,7 @@ const EditingSettings = (props) => {
 
 const HelpSection = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { max_line_chars, max_lines } = data;
 
   return (
@@ -348,21 +353,22 @@ const HelpSection = (props) => {
         By default, every note is natural and in octave 3. Defining otherwise is
         remembered for each note.
         <br />
-        Example: <i>C,D,E,F,G,A,B</i> will play a C major scale.
+        {t('ui.instrument_editor.example')}: <i>{t('ui.instrument_editor.example_scale')}</i> {t('ui.instrument_editor.will_play_c_major_scale')}
         <br />
-        After a note has an accidental placed, it will be remembered:{' '}
-        <i>C,C4,C,C3</i> is <i>C3,C4,C4,C3</i>
+        {t('ui.instrument_editor.accidental_remembered')}{' '}
+        <i>{t('ui.instrument_editor.example_accidental_input')}</i> {t('ui.instrument_editor.is')}{' '}
+        <i>{t('ui.instrument_editor.example_accidental_output')}</i>
         <br />
-        Chords can be played simply by seperating each note with a hyphon:{' '}
-        <i>A-C#,Cn-E,E-G#,Gn-B</i>
-        <br />A pause may be denoted by an empty chord: <i>C,E,,C,G</i>
+        {t('ui.instrument_editor.chords_by_hyphen')}{' '}
+        <i>{t('ui.instrument_editor.example_chords')}</i>
+        <br />{t('ui.instrument_editor.pause_empty_chord')} <i>{t('ui.instrument_editor.example_pause')}</i>
         <br />
         To make a chord be a different time, end it with /x, where the chord
         length will be length
-        <br />
-        defined by tempo / x: <i>C,G/2,E/4</i>
-        <br />
-        Combined, an example is: <i>E-E4/4,F#/2,G#/8,B/8,E3-E4/4</i>
+        <br />{t('ui.instrument_editor.defined_by_tempo')}{' '}
+        <i>{t('ui.instrument_editor.example_tempo')}</i>
+        <br />{t('ui.instrument_editor.combined_example')}{' '}
+        <i>{t('ui.instrument_editor.example_combined')}</i>
         <br />
         Lines may be up to {max_line_chars} characters.
         <br />A song may only contain up to {max_lines} lines.

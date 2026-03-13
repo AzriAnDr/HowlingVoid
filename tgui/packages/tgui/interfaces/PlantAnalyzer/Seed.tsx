@@ -16,11 +16,13 @@ import {
 import { capitalizeFirst } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { Fallback } from './Fallback';
 import type { PlantAnalyzerData, ReagentData, SeedData } from './types';
 
 export function PlantAnalyzerSeedStats(props) {
   const { data } = useBackend<PlantAnalyzerData>();
+  const { t } = usePreferencesLocalization(data);
   const { seed_data, tray_data, cycle_seconds, trait_db } = data;
 
   if (!seed_data) {
@@ -67,17 +69,20 @@ export function PlantAnalyzerSeedStats(props) {
                 color="teal"
                 ellipsis
                 tooltip={
-                  'Using secateurs on the plant will produce a graft \
-                  containing the listed gene.'
+                  t('ui.plant_analyzer.graft_gene_tooltip')
                 }
               >
                 {getTraitInfo(seed_data.graft_gene, trait_db)?.name ||
-                  'No graft gene'}
+                  t('ui.plant_analyzer.no_graft_gene')}
               </Button>
             </Stack.Item>
             {seed_data.mutatelist.length > 0 && (
               <Stack.Item width="100%">
-                <Collapsible title="Mutations:" color="olive" textColor="black">
+                <Collapsible
+                  title={t('ui.plant_analyzer.mutations')}
+                  color="olive"
+                  textColor="black"
+                >
                   <Stack vertical>
                     {seed_data.mutatelist.map((mutation) => (
                       <Stack.Item key={`preview_${mutation}`} width="100%">
@@ -89,8 +94,7 @@ export function PlantAnalyzerSeedStats(props) {
                           color="olive"
                           textColor="black"
                           tooltip={
-                            'Once sufficiently unstable the plant may mutate \
-                    into the listed plant.'
+                            t('ui.plant_analyzer.mutation_tooltip')
                           }
                         >
                           {mutation}
@@ -106,7 +110,7 @@ export function PlantAnalyzerSeedStats(props) {
         <Stack.Item width="100%">
           <LabeledList>
             {tray_data && (
-              <LabeledList.Item label="Health">
+              <LabeledList.Item label={t('ui.plant_analyzer.health')}>
                 <ProgressBar
                   value={tray_data.plant_health / seed_data.endurance}
                   ranges={{
@@ -121,8 +125,8 @@ export function PlantAnalyzerSeedStats(props) {
             )}
 
             <LabeledList.Item
-              label="Endurance"
-              tooltip="The health pool of the plant that delays withering. Improves quality of resulting food & drinks."
+              label={t('ui.plant_analyzer.endurance')}
+              tooltip={t('ui.plant_analyzer.endurance_tooltip')}
             >
               <ProgressBar
                 value={seed_data.endurance / 100}
@@ -137,11 +141,11 @@ export function PlantAnalyzerSeedStats(props) {
             </LabeledList.Item>
 
             {tray_data && (
-              <LabeledList.Item label="Age">
+              <LabeledList.Item label={t('ui.plant_analyzer.age')}>
                 {tray_data.is_dead ? (
                   <NoticeBox color="red" align="center">
                     <Icon name="skull" mr={1} />
-                    Dead
+                    {t('ui.common.dead')}
                   </NoticeBox>
                 ) : (
                   <ProgressBar
@@ -161,29 +165,29 @@ export function PlantAnalyzerSeedStats(props) {
             )}
 
             <LabeledList.Item
-              label="Maturation"
-              tooltip="The age at which the plant starts growing products."
+              label={t('ui.plant_analyzer.maturation')}
+              tooltip={t('ui.plant_analyzer.maturation_tooltip')}
             >
               {formatPerSecond(seed_data.maturation, cycle_seconds)}
             </LabeledList.Item>
 
             <LabeledList.Item
-              label="Production"
-              tooltip="The time needed for a mature plant to (re)grow a product."
+              label={t('ui.plant_analyzer.production')}
+              tooltip={t('ui.plant_analyzer.production_tooltip')}
             >
               {formatPerSecond(seed_data.production, cycle_seconds)}
             </LabeledList.Item>
 
             <LabeledList.Item
-              label="Lifespan"
-              tooltip={`The age at which the plant starts withering. Improves quality of resulting food & drinks.`}
+              label={t('ui.plant_analyzer.lifespan')}
+              tooltip={t('ui.plant_analyzer.lifespan_tooltip')}
             >
               {formatPerSecond(seed_data.lifespan, cycle_seconds)}
             </LabeledList.Item>
 
             <LabeledList.Item
-              label="Yield"
-              tooltip="The number of products gathered in a single harvest."
+              label={t('ui.plant_analyzer.yield')}
+              tooltip={t('ui.plant_analyzer.yield_tooltip')}
             >
               <ProgressBar
                 value={seed_data.yield / 10}
@@ -198,8 +202,8 @@ export function PlantAnalyzerSeedStats(props) {
             </LabeledList.Item>
 
             <LabeledList.Item
-              label="Potency"
-              tooltip="Determines product mass, reagent volume and strength of effects."
+              label={t('ui.plant_analyzer.potency')}
+              tooltip={t('ui.plant_analyzer.potency_tooltip')}
             >
               <ProgressBar
                 value={seed_data.potency / 100}
@@ -214,8 +218,8 @@ export function PlantAnalyzerSeedStats(props) {
             </LabeledList.Item>
 
             <LabeledList.Item
-              label="Instability"
-              tooltip="The likelihood of the plant to randomize stats or mutate. Affects quality of resulting food & drinks."
+              label={t('ui.plant_analyzer.instability')}
+              tooltip={t('ui.plant_analyzer.instability_tooltip')}
             >
               <ProgressBar
                 value={seed_data.instability}
@@ -230,7 +234,7 @@ export function PlantAnalyzerSeedStats(props) {
               </ProgressBar>
             </LabeledList.Item>
 
-            <LabeledList.Item label="Weeds">
+            <LabeledList.Item label={t('ui.plant_analyzer.weeds')}>
               {`${seed_data.weed_chance}% chance to grow by
                 ${seed_data.weed_rate} every ${cycle_seconds} seconds`}
             </LabeledList.Item>
@@ -240,7 +244,13 @@ export function PlantAnalyzerSeedStats(props) {
               </LabeledList.Item>
             ))}
           </LabeledList>
-          <Collapsible title="Traits:" open color="brown" width="100%" mt={1}>
+          <Collapsible
+            title={t('ui.plant_analyzer.traits')}
+            open
+            color="brown"
+            width="100%"
+            mt={1}
+          >
             <Stack vertical>
               {all_traits.map((trait) => {
                 const traitInfo = getTraitInfo(trait, trait_db);
@@ -258,7 +268,7 @@ export function PlantAnalyzerSeedStats(props) {
                       tooltip={traitInfo?.description}
                       icon={traitInfo?.icon}
                     >
-                      {traitInfo?.name || 'Unknown Trait'}
+                      {traitInfo?.name || t('ui.plant_analyzer.unknown_trait')}
                     </Button>
                   </Stack.Item>
                 );
@@ -300,6 +310,7 @@ export function PlantAnalyzerSeedStats(props) {
 
 export function PlantAnalyzerSeedChems(props) {
   const { data } = useBackend<PlantAnalyzerData>();
+  const { t } = usePreferencesLocalization(data);
   const { seed_data } = data;
 
   if (!seed_data) {
@@ -324,20 +335,16 @@ export function PlantAnalyzerSeedChems(props) {
         <Stack.Item width="100%">
           {seed_data.reagents.length === 0 ? (
             <NoticeBox color="green" align="center">
-              No reagent genes
+              {t('ui.plant_analyzer.no_reagent_genes')}
             </NoticeBox>
           ) : (
             <Table>
               <Table.Row header>
-                <Table.Cell>Reagent</Table.Cell>
-                <Table.Cell>Percentage</Table.Cell>
+                <Table.Cell>{t('ui.plant_analyzer.reagent')}</Table.Cell>
+                <Table.Cell>{t('ui.plant_analyzer.percentage')}</Table.Cell>
                 <Table.Cell>
                   <Tooltip
-                    content={
-                      'Assuming the plant does not exceed its maximum capacity, \
-                        this is what you can expect to obtain from consuming \
-                        or grinding the product of the seed.'
-                    }
+                    content={t('ui.plant_analyzer.expected_volume_tooltip')}
                   >
                     <Box
                       inline
@@ -345,7 +352,7 @@ export function PlantAnalyzerSeedChems(props) {
                         borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
                       }}
                     >
-                      Expected Volume
+                      {t('ui.plant_analyzer.expected_volume')}
                     </Box>
                   </Tooltip>
                 </Table.Cell>
@@ -366,7 +373,7 @@ export function PlantAnalyzerSeedChems(props) {
                 style={{ borderTop: '2px dotted gray' }}
               >
                 <Table.Cell py={1} pl={1}>
-                  Total
+                  {t('ui.common.total')}
                 </Table.Cell>
                 <Table.Cell>
                   {totalPercentage}%
@@ -377,8 +384,7 @@ export function PlantAnalyzerSeedChems(props) {
                         ml={1}
                         disabled={1}
                         color="transparent"
-                        tooltip="Exceeds 100% - each reagent
-                        will be proportionally reduced in the product."
+                        tooltip={t('ui.plant_analyzer.exceeds_100_tooltip')}
                       />
                     </Blink>
                   )}
@@ -390,7 +396,7 @@ export function PlantAnalyzerSeedChems(props) {
                 style={{ borderTop: '2px dotted gray' }}
               >
                 <Table.Cell py={1} pl={1}>
-                  Cap
+                  {t('ui.plant_analyzer.cap')}
                 </Table.Cell>
                 <Table.Cell>100%</Table.Cell>
                 <Table.Cell>
@@ -403,7 +409,7 @@ export function PlantAnalyzerSeedChems(props) {
                   style={{ borderTop: '2px dotted gray' }}
                 >
                   <Table.Cell py={0.5} pl={1} colSpan={2}>
-                    <i>Grinds nutriments into:</i>
+                    <i>{t('ui.plant_analyzer.grinds_nutriments_into')}</i>
                   </Table.Cell>
                   <Table.Cell>{seed_data.grind_results.join(', ')}</Table.Cell>
                 </Table.Row>
@@ -414,7 +420,7 @@ export function PlantAnalyzerSeedChems(props) {
                   style={{ borderTop: '2px dotted gray' }}
                 >
                   <Table.Cell py={0.5} pl={1} colSpan={2}>
-                    <i>Juices into:</i>
+                    <i>{t('ui.plant_analyzer.juices_into')}</i>
                   </Table.Cell>
                   <Table.Cell>{seed_data.juice_name}</Table.Cell>
                 </Table.Row>
@@ -425,7 +431,7 @@ export function PlantAnalyzerSeedChems(props) {
                   style={{ borderTop: '2px dotted gray' }}
                 >
                   <Table.Cell py={0.5} pl={1} colSpan={2}>
-                    <i>Distills into:</i>
+                    <i>{t('ui.plant_analyzer.distills_into')}</i>
                   </Table.Cell>
                   <Table.Cell>{seed_data.distill_reagent}</Table.Cell>
                 </Table.Row>
@@ -440,6 +446,7 @@ export function PlantAnalyzerSeedChems(props) {
 
 export function PlantAnalyzerPlantChems(props) {
   const { data } = useBackend<PlantAnalyzerData>();
+  const { t } = usePreferencesLocalization(data);
   const { seed_data, plant_data } = data;
 
   if (!seed_data || !plant_data) {
@@ -453,13 +460,13 @@ export function PlantAnalyzerPlantChems(props) {
         <Stack.Item width="100%">
           {plant_data.reagents.length === 0 ? (
             <NoticeBox color="green" align="center">
-              No reagent genes
+              {t('ui.plant_analyzer.no_reagent_genes')}
             </NoticeBox>
           ) : (
             <Table>
               <Table.Row header>
-                <Table.Cell colSpan={2}>Reagent</Table.Cell>
-                <Table.Cell>Volume</Table.Cell>
+                <Table.Cell colSpan={2}>{t('ui.plant_analyzer.reagent')}</Table.Cell>
+                <Table.Cell>{t('ui.plant_analyzer.volume')}</Table.Cell>
               </Table.Row>
               {plant_data.reagents.map((reagent) => (
                 <Table.Row key={reagent.name} className="candystripe">
@@ -474,7 +481,7 @@ export function PlantAnalyzerPlantChems(props) {
                 style={{ borderTop: '2px dotted gray' }}
               >
                 <Table.Cell py={1} pl={1} colSpan={2}>
-                  Total
+                  {t('ui.common.total')}
                 </Table.Cell>
                 <Table.Cell>
                   {plant_data.reagents.reduce(

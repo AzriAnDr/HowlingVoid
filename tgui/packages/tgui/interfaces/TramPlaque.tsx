@@ -2,6 +2,7 @@ import { LabeledList, NoticeBox, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   currentTram: Tram[];
@@ -17,49 +18,50 @@ type Tram = {
 
 export const TramPlaque = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { currentTram = [], previousTrams = [] } = data;
 
   return (
     <Window
-      title="Tram Information Plaque"
+      title={t('ui.tram_plaque.title')}
       width={600}
       height={360}
       theme="dark"
     >
       <Window.Content>
-        <NoticeBox info>SkyyTram Mk VI by Nakamura Engineering</NoticeBox>
+        <NoticeBox info>{t('ui.tram_plaque.model_notice')}</NoticeBox>
         <Section
           title={
             currentTram.map((serialNumber) => serialNumber.serialNumber) +
-            ' - Constructed ' +
+            ` - ${t('ui.tram_plaque.constructed')} ` +
             currentTram.map((serialNumber) => serialNumber.mfgDate)
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Distance Travelled">
+            <LabeledList.Item label={t('ui.tram_plaque.distance_travelled')}>
               {currentTram.map(
                 (serialNumber) => serialNumber.distanceTravelled / 1000,
               )}{' '}
               km
             </LabeledList.Item>
-            <LabeledList.Item label="Collisions">
+            <LabeledList.Item label={t('ui.tram_plaque.collisions')}>
               {currentTram.map((serialNumber) => serialNumber.tramCollisions)}
             </LabeledList.Item>
           </LabeledList>
         </Section>
-        <Section title="Tram History">
+        <Section title={t('ui.tram_plaque.tram_history')}>
           <Stack fill g={0}>
             <Stack.Item m={1} grow>
-              <b>Serial</b>
+              <b>{t('ui.tram_plaque.serial')}</b>
             </Stack.Item>
             <Stack.Item m={1} grow>
-              <b>Constructed</b>
+              <b>{t('ui.tram_plaque.constructed')}</b>
             </Stack.Item>
             <Stack.Item m={1} grow>
-              <b>Distance</b>
+              <b>{t('ui.tram_plaque.distance')}</b>
             </Stack.Item>
             <Stack.Item m={1} grow>
-              <b>Collisions</b>
+              <b>{t('ui.tram_plaque.collisions')}</b>
             </Stack.Item>
           </Stack>
           <Stack vertical fill>

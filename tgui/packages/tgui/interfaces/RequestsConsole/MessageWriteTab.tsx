@@ -9,10 +9,12 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend, useLocalState } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { RequestPriority, type RequestsData, RequestType } from './types';
 
 export const MessageWriteTab = (props) => {
   const { act, data } = useBackend<RequestsData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     authentication_data,
     hack_state,
@@ -84,7 +86,7 @@ export const MessageWriteTab = (props) => {
             width="100%"
             options={sorted_assistance}
             selected={recipient}
-            placeholder="Pick a Recipient"
+            placeholder={t('ui.requests_console.pick_recipient')}
             onSelected={(value) => setRecipient(value)}
           />
         )}
@@ -93,7 +95,7 @@ export const MessageWriteTab = (props) => {
             width="100%"
             options={sorted_supply}
             selected={recipient}
-            placeholder="Pick a Recipient"
+            placeholder={t('ui.requests_console.pick_recipient')}
             onSelected={(value) => setRecipient(value)}
           />
         )}
@@ -102,7 +104,7 @@ export const MessageWriteTab = (props) => {
             width="100%"
             options={sorted_information}
             selected={recipient}
-            placeholder="Pick a Recipient"
+            placeholder={t('ui.requests_console.pick_recipient')}
             onSelected={(value) => setRecipient(value)}
           />
         )}
@@ -111,7 +113,7 @@ export const MessageWriteTab = (props) => {
         <Stack.Item grow>
           <Button
             icon="envelope"
-            content="Normal Priority"
+            content={t('ui.requests_console.normal_priority')}
             key={RequestPriority.NORMAL}
             fluid
             selected={priority === RequestPriority.NORMAL}
@@ -121,7 +123,7 @@ export const MessageWriteTab = (props) => {
         <Stack.Item grow>
           <Button
             icon="exclamation"
-            content="High Priority"
+            content={t('ui.requests_console.high_priority')}
             key={RequestPriority.HIGH}
             fluid
             selected={priority === RequestPriority.HIGH}
@@ -132,7 +134,7 @@ export const MessageWriteTab = (props) => {
           <Stack.Item grow>
             <Button
               icon="burst"
-              content="EXTREME PRIORITY"
+              content={t('ui.requests_console.extreme_priority_uppercase')}
               key={RequestPriority.EXTREME}
               fluid
               selected={priority === RequestPriority.EXTREME}
@@ -147,7 +149,7 @@ export const MessageWriteTab = (props) => {
         maxLength={1025}
         value={messageText}
         onChange={setMessageText}
-        placeholder="Type your message..."
+        placeholder={t('ui.requests_console.type_message_placeholder')}
       />
       <Section>
         <Stack fill justify="space-between">
@@ -169,15 +171,17 @@ export const MessageWriteTab = (props) => {
                 resetMessage();
               }}
             >
-              Send message
+              {t('ui.requests_console.send_message')}
             </Button>
           </Stack.Item>
           <Stack.Item>
             <Button icon="id-card" onClick={() => act('verify_id')}>
-              {authentication_data.message_verified_by || 'Not verified'}
+              {authentication_data.message_verified_by ||
+                t('ui.requests_console.not_verified')}
             </Button>
             <Button icon="stamp" onClick={() => act('stamp')}>
-              {authentication_data.message_stamped_by || 'Not stamped'}
+              {authentication_data.message_stamped_by ||
+                t('ui.requests_console.not_stamped')}
             </Button>
           </Stack.Item>
         </Stack>
@@ -188,7 +192,7 @@ export const MessageWriteTab = (props) => {
             resetMessage();
           }}
         >
-          Discard message
+          {t('ui.requests_console.discard_message')}
         </Button>
       </Section>
     </Section>

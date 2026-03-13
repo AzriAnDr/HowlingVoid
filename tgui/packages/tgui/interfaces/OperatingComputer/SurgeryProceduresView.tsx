@@ -8,6 +8,7 @@ import {
 } from 'tgui-core/components';
 import { capitalizeAll, capitalizeFirst } from 'tgui-core/string';
 import { useBackend, useSharedState } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { extractRequirementMap, extractSurgeryName } from './helpers';
 import type { OperatingComputerData, OperationData } from './types';
 
@@ -47,6 +48,7 @@ type SurgeryProceduresViewProps = {
 
 export const SurgeryProceduresView = (props: SurgeryProceduresViewProps) => {
   const { data } = useBackend<OperatingComputerData>();
+  const { t } = usePreferencesLocalization(data);
   const { surgeries } = data;
   const {
     searchedSurgeries,
@@ -107,33 +109,35 @@ export const SurgeryProceduresView = (props: SurgeryProceduresViewProps) => {
         <>
           <Input
             width="215px"
-            placeholder="Search..."
+            placeholder={t('ui.common.search_placeholder')}
             value={searchText}
             onChange={setSearchText}
           />
           <Button
             icon="filter"
-            tooltip="Filter out robotic surgeries."
+            tooltip={t('ui.operating_computer.filter_out_robotic_surgeries')}
             onClick={() => setFilterRobotic(!filterRobotic)}
             selected={filterRobotic}
           >
-            Hide Mechanic
+            {t('ui.operating_computer.hide_mechanic')}
           </Button>
           <Button
             width="75px"
             icon="sort"
-            tooltip="Cycle between sorting methods."
+            tooltip={t('ui.operating_computer.cycle_sorting_methods')}
             onClick={() =>
               setSortType(
                 sortType === 'default'
                   ? 'name'
                   : sortType === 'name'
                     ? 'tool'
-                    : 'default',
+                  : 'default',
               )
             }
           >
-            {capitalizeFirst(sortType)}
+            {sortType === 'default'
+              ? t('ui.common.default')
+              : capitalizeFirst(sortType)}
           </Button>
         </>
       }
@@ -199,7 +203,7 @@ export const SurgeryProceduresView = (props: SurgeryProceduresViewProps) => {
                   <Stack.Item bold>{surgery.desc}</Stack.Item>
                   <Stack.Item>
                     <Collapsible
-                      title="Requirements"
+                      title={t('ui.operating_computer.requirements')}
                       open={pinnedOperations.includes(surgery.name)}
                     >
                       <Stack

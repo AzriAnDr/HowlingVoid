@@ -2,6 +2,7 @@ import { Box, Icon, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import { type Objective, ObjectivePrintout } from './common/Objectives';
 
 type Data = {
@@ -10,6 +11,7 @@ type Data = {
 
 export const AntagInfoBrainwashed = (porps) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
 
   return (
     <Window width={400} height={400} theme="abductor">
@@ -27,7 +29,9 @@ export const AntagInfoBrainwashed = (porps) => {
             <Stack.Item fontFamily="Wingdings">
               Hey, no! Stop translating this!
             </Stack.Item>
-            <Stack.Item fontSize="20px">Your mind reels...</Stack.Item>
+            <Stack.Item fontSize="20px">
+              {t('ui.antag_info_brainwashed.your_mind_reels')}
+            </Stack.Item>
             <Stack.Item fontSize="20px">
               It is focusing on a single purpose...
             </Stack.Item>

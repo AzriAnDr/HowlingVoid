@@ -13,6 +13,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type CurrentStationTrait = {
   can_revert: BooleanLike;
@@ -39,6 +40,7 @@ enum Tab {
 
 const FutureStationTraitsPage = (props) => {
   const { act, data } = useBackend<StationTraitsData>();
+  const { t } = usePreferencesLocalization(data);
   const { future_station_traits } = data;
 
   const [selectedTrait, setSelectedTrait] = useState<string>('');
@@ -59,7 +61,7 @@ const FutureStationTraitsPage = (props) => {
           <Dropdown
             onSelected={setSelectedTrait}
             options={traitNames}
-            placeholder="Select trait to add..."
+            placeholder={t('ui.station_traits.select_trait_to_add')}
             selected={selectedTrait}
             width="100%"
           />
@@ -96,7 +98,7 @@ const FutureStationTraitsPage = (props) => {
               });
             }}
           >
-            Add
+            {t('ui.common.add')}
           </Button>
         </Stack.Item>
       </Stack>
@@ -124,7 +126,7 @@ const FutureStationTraitsPage = (props) => {
                         });
                       }}
                     >
-                      Delete
+                      {t('ui.common.delete')}
                     </Button>
                   </Stack.Item>
                 </Stack>
@@ -133,23 +135,23 @@ const FutureStationTraitsPage = (props) => {
           </Stack>
         ) : (
           <>
-            <Box>No station traits will run next round.</Box>
+            <Box>{t('ui.station_traits.none_next_round')}</Box>
 
             <Box>
               <Button
                 color="red"
                 icon="times"
-                tooltip="The next round will roll station traits randomly, just like normal"
+                tooltip={t('ui.station_traits.run_normally_tooltip')}
                 onClick={() => act('clear_future_traits')}
               >
-                Run Station Traits Normally
+                {t('ui.station_traits.run_normally')}
               </Button>
             </Box>
           </>
         )
       ) : (
         <>
-          <Box>No future station traits are planned.</Box>
+          <Box>{t('ui.station_traits.none_future_planned')}</Box>
 
           <Box>
             <Button
@@ -161,7 +163,7 @@ const FutureStationTraitsPage = (props) => {
                 })
               }
             >
-              Prevent station traits from running next round
+              {t('ui.station_traits.prevent_next_round')}
             </Button>
           </Box>
         </>
@@ -172,6 +174,7 @@ const FutureStationTraitsPage = (props) => {
 
 const ViewStationTraitsPage = (props) => {
   const { act, data } = useBackend<StationTraitsData>();
+  const { t } = usePreferencesLocalization(data);
 
   return data.current_traits.length > 0 ? (
     <Stack vertical fill>
@@ -182,14 +185,14 @@ const ViewStationTraitsPage = (props) => {
 
             <Stack.Item>
               <Button.Confirm
-                content="Revert"
+                content={t('ui.common.revert')}
                 color="red"
                 disabled={data.too_late_to_revert || !stationTrait.can_revert}
                 tooltip={
                   (!stationTrait.can_revert &&
-                    'This trait is not revertable.') ||
+                    t('ui.station_traits.not_revertable')) ||
                   (data.too_late_to_revert &&
-                    "It's too late to revert station traits, the round has already started.")
+                    t('ui.station_traits.too_late_to_revert'))
                 }
                 icon="times"
                 onClick={() =>
@@ -204,11 +207,12 @@ const ViewStationTraitsPage = (props) => {
       ))}
     </Stack>
   ) : (
-    <Box>There are no active station traits.</Box>
+    <Box>{t('ui.station_traits.no_active_traits')}</Box>
   );
 };
 
 export const StationTraitsPanel = (props) => {
+  const { t } = usePreferencesLocalization();
   const [currentTab, setCurrentTab] = useState(Tab.ViewStationTraits);
 
   let currentPage;
@@ -225,7 +229,7 @@ export const StationTraitsPanel = (props) => {
   }
 
   return (
-    <Window title="Modify Station Traits" height={500} width={500}>
+    <Window title={t('ui.station_traits.modify_station_traits')} height={500} width={500}>
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab
@@ -233,7 +237,7 @@ export const StationTraitsPanel = (props) => {
             selected={currentTab === Tab.ViewStationTraits}
             onClick={() => setCurrentTab(Tab.ViewStationTraits)}
           >
-            View
+            {t('ui.common.view')}
           </Tabs.Tab>
 
           <Tabs.Tab
@@ -241,7 +245,7 @@ export const StationTraitsPanel = (props) => {
             selected={currentTab === Tab.SetupFutureStationTraits}
             onClick={() => setCurrentTab(Tab.SetupFutureStationTraits)}
           >
-            Edit
+            {t('ui.common.edit')}
           </Tabs.Tab>
         </Tabs>
 

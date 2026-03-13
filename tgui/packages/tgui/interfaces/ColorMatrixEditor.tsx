@@ -10,6 +10,7 @@ import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   mapRef: string;
@@ -20,10 +21,11 @@ const PREFIXES = ['r', 'g', 'b', 'a', 'c'] as const;
 
 export const ColorMatrixEditor = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { mapRef, currentColor } = data;
 
   return (
-    <Window title="Color Matrix Editor" width={600} height={220}>
+    <Window title={t('ui.color_matrix_editor.title')} width={600} height={220}>
       <Window.Content>
         <Stack fill>
           <Stack.Item align="center">

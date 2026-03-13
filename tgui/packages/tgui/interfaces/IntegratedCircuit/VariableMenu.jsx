@@ -10,6 +10,8 @@ import {
 } from 'tgui-core/components';
 import { shallowDiffers } from 'tgui-core/react';
 
+import { useBackend } from '../../backend';
+import { getPreferencesLocalization } from '../localization';
 import {
   VARIABLE_ASSOC_LIST,
   VARIABLE_LIST,
@@ -54,10 +56,12 @@ export class VariableMenu extends Component {
       ...rest
     } = this.props;
     const { variable_name, variable_type } = this.state;
+    const { data } = useBackend();
+    const { t } = getPreferencesLocalization(data);
 
     return (
       <Section
-        title="Variable Options"
+        title={t('ui.integrated_circuit.variable_options')}
         {...rest}
         fill
         buttons={
@@ -97,8 +101,7 @@ export class VariableMenu extends Component {
                             color={val.color}
                             disabled={!!val.is_list}
                             tooltip={`
-                            Drag me onto the circuit's grid
-                            to make a setter for this variable`}
+                            ${t('ui.integrated_circuit.drag_setter_tooltip')}`}
                             icon="pen"
                           />
                         </Stack.Item>
@@ -106,8 +109,7 @@ export class VariableMenu extends Component {
                           <Button
                             fluid
                             tooltip={`
-                            Drag me onto the circuit's grid
-                            to make a getter for this variable`}
+                            ${t('ui.integrated_circuit.drag_getter_tooltip')}`}
                             color={val.color}
                             onMouseDown={(e) => handleMouseDownGetter(e, val)}
                             icon="book-open"
@@ -132,7 +134,7 @@ export class VariableMenu extends Component {
               <Stack vertical fill>
                 <Stack.Item>
                   <Input
-                    placeholder="Name"
+                    placeholder={t('ui.common.name')}
                     fluid
                     onChange={(val) =>
                       this.setState({

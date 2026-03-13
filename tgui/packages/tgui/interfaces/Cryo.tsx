@@ -10,6 +10,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import { type Beaker, BeakerSectionDisplay } from './common/BeakerDisplay';
 
 const damageTypes = [
@@ -61,32 +62,33 @@ type Data = {
 
 export const Cryo = () => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { occupant, isOperating, isOpen } = data;
 
   return (
     <Window width={400} height={550}>
       <Window.Content scrollable>
-        <Section title="Occupant">
+        <Section title={t('ui.common.occupant')}>
           <LabeledList>
-            <LabeledList.Item label="Occupant">
-              {occupant?.name || 'No Occupant'}
+            <LabeledList.Item label={t('ui.common.occupant')}>
+              {occupant?.name || t('ui.cryo.no_occupant')}
             </LabeledList.Item>
             {!!occupant && (
               <>
                 <LabeledList.Item
-                  label="State"
+                  label={t('ui.common.state')}
                   color={stat_to_color[occupant.stat]}
                 >
                   {occupant.stat}
                 </LabeledList.Item>
                 <LabeledList.Item
-                  label="Temperature"
+                  label={t('ui.common.temperature')}
                   color={occupant.bodyTemperature < data.T0C ? 'good' : 'bad'} // Green if the mob can actually be healed by cryoxadone.
                 >
                   <AnimatedNumber value={round(occupant.bodyTemperature, 0)} />
                   {' K'}
                 </LabeledList.Item>
-                <LabeledList.Item label="Health">
+                <LabeledList.Item label={t('ui.common.health')}>
                   <ProgressBar
                     value={round(occupant.health / occupant.maxHealth, 2)}
                     color={occupant.health > 0 ? 'good' : 'average'}
@@ -112,33 +114,33 @@ export const Cryo = () => {
             )}
           </LabeledList>
         </Section>
-        <Section title="Cell">
+        <Section title={t('ui.cryo.cell')}>
           <LabeledList>
-            <LabeledList.Item label="Power">
+            <LabeledList.Item label={t('ui.common.power')}>
               <Button
                 icon={isOperating ? 'power-off' : 'times'}
                 disabled={isOpen}
                 onClick={() => act('power')}
                 color={isOperating && 'green'}
               >
-                {isOperating ? 'On' : 'Off'}
+                {isOperating ? t('ui.common.on') : t('ui.common.off')}
               </Button>
             </LabeledList.Item>
-            <LabeledList.Item label="Temperature">
+            <LabeledList.Item label={t('ui.common.temperature')}>
               <AnimatedNumber value={round(data.cellTemperature, 0)} /> K
             </LabeledList.Item>
-            <LabeledList.Item label="Door">
+            <LabeledList.Item label={t('ui.common.door')}>
               <Button
                 icon={isOpen ? 'unlock' : 'lock'}
                 onClick={() => act('door')}
               >
-                {isOpen ? 'Open' : 'Closed'}
+                {isOpen ? t('ui.common.open') : t('ui.common.closed')}
               </Button>
               <Button
                 icon={data.autoEject ? 'sign-out-alt' : 'sign-in-alt'}
                 onClick={() => act('autoeject')}
               >
-                {data.autoEject ? 'Auto' : 'Manual'}
+                {data.autoEject ? t('ui.common.auto') : t('ui.common.manual')}
               </Button>
             </LabeledList.Item>
           </LabeledList>

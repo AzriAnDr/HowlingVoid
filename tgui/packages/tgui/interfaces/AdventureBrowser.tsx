@@ -3,6 +3,7 @@ import { formatTime } from 'tgui-core/format';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import { type AdventureDataProvider, AdventureScreen } from './ExodroneConsole';
 
 type Adventure = {
@@ -26,14 +27,15 @@ type AdventureBrowserData = AdventureDataProvider & {
 
 const AdventureList = (props) => {
   const { data, act } = useBackend<AdventureBrowserData>();
+  const { t } = usePreferencesLocalization(data);
 
   return (
     <Table>
       <Table.Row>
-        <Table.Cell color="label">Filename</Table.Cell>
-        <Table.Cell color="label">Title</Table.Cell>
-        <Table.Cell color="label">Author</Table.Cell>
-        <Table.Cell color="label">Playtest</Table.Cell>
+        <Table.Cell color="label">{t('ui.adventure_browser.filename')}</Table.Cell>
+        <Table.Cell color="label">{t('ui.common.title')}</Table.Cell>
+        <Table.Cell color="label">{t('ui.common.author')}</Table.Cell>
+        <Table.Cell color="label">{t('ui.adventure_browser.playtest')}</Table.Cell>
       </Table.Row>
       {data.adventures.map((adventure) => (
         <Table.Row key={adventure.ref} className="candystripe">
@@ -44,7 +46,7 @@ const AdventureList = (props) => {
             <Button
               color="good"
               onClick={() => act('play', { ref: adventure.ref })}
-              content="Play"
+              content={t('ui.common.play')}
             />
           </Table.Cell>
         </Table.Row>
@@ -55,14 +57,20 @@ const AdventureList = (props) => {
 
 const DebugPlayer = (props) => {
   const { data, act } = useBackend<AdventureBrowserData>();
+  const { t } = usePreferencesLocalization(data);
   return (
     <Section
-      title="Playtest"
-      buttons={<Button onClick={() => act('end_play')}>End Playtest</Button>}
+      title={t('ui.adventure_browser.playtest')}
+      buttons={
+        <Button onClick={() => act('end_play')}>
+          {t('ui.adventure_browser.end_playtest')}
+        </Button>
+      }
     >
       {data.delay_time > 0 ? (
         <Box>
-          DELAY {formatTime(data.delay_time)} / {data.delay_message}
+          {t('ui.adventure_browser.delay')} {formatTime(data.delay_time)} /{' '}
+          {data.delay_message}
         </Box>
       ) : (
         <AdventureScreen
@@ -78,9 +86,14 @@ const DebugPlayer = (props) => {
 
 export const AdventureBrowser = (props) => {
   const { data } = useBackend<AdventureBrowserData>();
+  const { t } = usePreferencesLocalization(data);
 
   return (
-    <Window width={600} height={400} title="Adventure Overview">
+    <Window
+      width={600}
+      height={400}
+      title={t('ui.adventure_browser.adventure_overview')}
+    >
       <Window.Content>
         {!!data.feedback_message && (
           <NoticeBox>{data.feedback_message}</NoticeBox>

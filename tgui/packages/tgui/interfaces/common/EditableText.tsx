@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Input, Stack } from 'tgui-core/components';
+import { usePreferencesLocalization } from '../localization';
 
 type Props = {
   color?: string;
@@ -21,6 +22,7 @@ type Props = {
  *
  */
 export const EditableText = (props: Props) => {
+  const { t } = usePreferencesLocalization();
   const { color, field, target_ref, text } = props;
   if (!field) return;
 
@@ -65,7 +67,7 @@ export const EditableText = (props: Props) => {
           onClick={() =>
             act('edit_field', { field: field, ref: target_ref, value: '' })
           }
-          tooltip="Clear"
+          tooltip={t('ui.common.clear')}
           tooltipPosition="bottom"
         />
       </Stack.Item>

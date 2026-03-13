@@ -11,6 +11,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Entry = {
   name: string;
@@ -78,6 +79,7 @@ const TIER2TIERDATA: TierData[] = [
 
 export const InfuserBook = (props) => {
   const { data, act } = useBackend<DnaInfuserData>();
+  const { t } = usePreferencesLocalization(data);
   const { entries } = data;
 
   const [bookPosition, setBookPosition] = useState({
@@ -124,11 +126,11 @@ export const InfuserBook = (props) => {
   };
 
   const tabs = [
-    'Introduction',
-    'Tier 0 - Lesser Mutants',
-    'Tier 1 - Regular Mutants',
-    'Tier 2 - Greater Mutants',
-    'Tier 3 - Abberations - RESTRICTED',
+    t('ui.infuser_book.introduction'),
+    t('ui.infuser_book.tier_0_lesser_mutants'),
+    t('ui.infuser_book.tier_1_regular_mutants'),
+    t('ui.infuser_book.tier_2_greater_mutants'),
+    t('ui.infuser_book.tier_3_abberations_restricted'),
   ];
 
   const paginatedTabs = chunk(tabs, 3);
@@ -136,7 +138,7 @@ export const InfuserBook = (props) => {
   const restrictedNext = chapter === 3 && pageInChapter === 0;
 
   return (
-    <Window title="DNA Infusion Manual" width={620} height={500}>
+    <Window title={t('ui.infuser_book.manual_title')} width={620} height={500}>
       <Window.Content>
         <Stack vertical>
           <Stack.Item mb={-1}>
@@ -176,12 +178,12 @@ export const InfuserBook = (props) => {
             <Stack fontSize="18px" fill>
               <Stack.Item grow={2}>
                 <Button onClick={() => setPage(pageInChapter - 1)} fluid>
-                  Last Page
+                  {t('ui.infuser_book.last_page')}
                 </Button>
               </Stack.Item>
               <Stack.Item grow={1}>
                 <Section fitted fill pt="3px">
-                  Page {pageInChapter + 1}/
+                  {t('ui.infuser_book.page')} {pageInChapter + 1}/
                   {paginatedEntries[chapter].length + (chapter === 0 ? 1 : 0)}
                 </Section>
               </Stack.Item>
@@ -191,7 +193,9 @@ export const InfuserBook = (props) => {
                   onClick={() => setPage(pageInChapter + 1)}
                   fluid
                 >
-                  {restrictedNext ? 'RESTRICTED' : 'Next Page'}
+                  {restrictedNext
+                    ? t('ui.infuser_book.restricted')
+                    : t('ui.infuser_book.next_page')}
                 </Button>
               </Stack.Item>
             </Stack>
@@ -203,10 +207,13 @@ export const InfuserBook = (props) => {
 };
 
 export const InfuserInstructions = (props) => {
+  const { t } = usePreferencesLocalization();
   return (
-    <Section title="DNA Infusion Guide" height={PAGE_HEIGHT}>
+    <Section title={t('ui.infuser_book.infusion_guide')} height={PAGE_HEIGHT}>
       <Stack vertical>
-        <Stack.Item fontSize="16px">What does it do?</Stack.Item>
+        <Stack.Item fontSize="16px">
+          {t('ui.infuser_book.what_does_it_do')}
+        </Stack.Item>
         <Stack.Item color="label">
           DNA Infusion is the practice of integrating dead creature DNA into
           yourself, mutating one of your organs into a genetic slurry that sits
@@ -219,7 +226,9 @@ export const InfuserInstructions = (props) => {
             bonuses.
           </b>
         </Stack.Item>
-        <Stack.Item fontSize="16px">I&apos;m sold! How do I do it?</Stack.Item>
+        <Stack.Item fontSize="16px">
+          {t('ui.infuser_book.how_do_i_do_it')}
+        </Stack.Item>
         <Stack.Item color="label">
           1. Load a dead creature into the machine. This is what you&apos;re
           infusing from.
@@ -243,13 +252,14 @@ type InfuserEntryProps = {
 
 const InfuserEntry = (props: InfuserEntryProps) => {
   const { entry } = props;
+  const { t } = usePreferencesLocalization();
 
   const tierData = TIER2TIERDATA[entry.tier];
 
   return (
     <Section
       fill
-      title={`${entry.name} Mutant`}
+      title={`${entry.name} ${t('ui.infuser_book.mutant')}`}
       height={PAGE_HEIGHT}
       buttons={
         <Button tooltip={tierData.desc} icon={tierData.icon}>

@@ -12,6 +12,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   has_dish: BooleanLike;
@@ -33,6 +34,7 @@ type CellLine = {
 };
 
 export const Microscope = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const { has_dish, cell_lines = [] } = data;
 
@@ -40,7 +42,7 @@ export const Microscope = (props) => {
     <Window width={620} height={620}>
       <Window.Content scrollable>
         <Section
-          title={has_dish ? 'Petri Dish Sample' : 'No Petri Dish'}
+          title={has_dish ? t('ui.microscope.petri_dish_sample') : t('ui.microscope.no_petri_dish')}
           buttons={
             !!has_dish && (
               <Button
@@ -48,7 +50,7 @@ export const Microscope = (props) => {
                 disabled={!has_dish}
                 onClick={() => act('eject_petridish')}
               >
-                Take Dish
+                {t('ui.microscope.take_dish')}
               </Button>
             )
           }
@@ -61,12 +63,13 @@ export const Microscope = (props) => {
 };
 
 const CellList = (props) => {
+  const { t } = usePreferencesLocalization();
   const { cell_lines } = props;
   const fallback = (
     <Icon name="spinner" size={5} height="64px" width="64px" spin />
   );
   if (!cell_lines.length) {
-    return <NoticeBox>No micro-organisms found</NoticeBox>;
+    return <NoticeBox>{t('ui.microscope.no_micro_organisms_found')}</NoticeBox>;
   }
 
   return cell_lines.map((cell_line) => {
@@ -88,23 +91,22 @@ const CellList = (props) => {
               <Button
                 color="transparent"
                 icon="circle-question"
-                tooltip="Put the sample into a Growing Vat and pour the required reagents."
+                tooltip={t('ui.microscope.growing_vat_tooltip')}
               />
             }
           >
             <Box my={1}>
-              Consume {cell_line.consumption_rate} units of every nutrient per
-              second to grow by {cell_line.growth_rate}%.
+              {t('ui.microscope.consume_prefix')} {cell_line.consumption_rate} {t('ui.microscope.consume_middle')}
+              {cell_line.growth_rate}%.
             </Box>
             {cell_line.suspectibility > 0 && (
               <Box my={1}>
-                Reduced by {cell_line.suspectibility}% when infected with
-                viruses.
+                {t('ui.microscope.reduced_by')} {cell_line.suspectibility}% {t('ui.microscope.when_infected_with_viruses')}
               </Box>
             )}
             <Stack fill>
               <Stack.Item grow>
-                <GroupTitle title="Required Reagents" />
+                <GroupTitle title={t('ui.microscope.required_reagents')} />
                 {Object.keys(cell_line.requireds).map((reagent) => (
                   <Button fluid key={reagent}>
                     {reagent}
@@ -112,26 +114,26 @@ const CellList = (props) => {
                 ))}
               </Stack.Item>
               <Stack.Item grow>
-                <GroupTitle title="Supplements" />
+                <GroupTitle title={t('ui.microscope.supplements')} />
                 {Object.keys(cell_line.supplementaries).map((reagent) => (
                   <Button
                     fluid
                     color="good"
                     key={reagent}
-                    tooltip={`+${cell_line.supplementaries[reagent]}% growth/sec.`}
+                    tooltip={`+${cell_line.supplementaries[reagent]}% ${t('ui.microscope.growth_per_sec')}`}
                   >
                     {reagent}
                   </Button>
                 ))}
               </Stack.Item>
               <Stack.Item grow>
-                <GroupTitle title="Supressives" />
+                <GroupTitle title={t('ui.microscope.supressives')} />
                 {Object.keys(cell_line.suppressives).map((reagent) => (
                   <Button
                     fluid
                     color="bad"
                     key={reagent}
-                    tooltip={`${cell_line.suppressives[reagent]}% growth/sec.`}
+                    tooltip={`${cell_line.suppressives[reagent]}% ${t('ui.microscope.growth_per_sec')}`}
                   >
                     {reagent}
                   </Button>
@@ -149,8 +151,7 @@ const CellList = (props) => {
         <Stack.Item grow pl={1}>
           <Section title={cell_line.desc}>
             <Box my={1}>
-              Reduces growth of other cell lines when not suppressed by
-              Spaceacillin.
+              {t('ui.microscope.virus_reduces_growth')}
             </Box>
           </Section>
         </Stack.Item>

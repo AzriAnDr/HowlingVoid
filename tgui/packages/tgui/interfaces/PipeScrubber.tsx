@@ -14,6 +14,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { getGasLabel } from '../constants';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   on: BooleanLike;
@@ -45,6 +46,7 @@ const formatPressure = (value) => {
 
 export const PipeScrubber = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     on,
     connected,
@@ -62,7 +64,7 @@ export const PipeScrubber = (props) => {
     <Window width={400} height={350}>
       <Window.Content>
         <Section
-          title="Status"
+          title={t('ui.pipe_scrubber.status')}
           buttons={
             !!hasHypernobCrystal && (
               <Button
@@ -71,18 +73,22 @@ export const PipeScrubber = (props) => {
                 onClick={() => act('reaction_suppression')}
               >
                 {reactionSuppressionEnabled
-                  ? 'Reaction Suppression Enabled'
-                  : 'Reaction Suppression Disabled'}
+                  ? t('ui.pipe_scrubber.reaction_suppression_enabled')
+                  : t('ui.pipe_scrubber.reaction_suppression_disabled')}
               </Button>
             )
           }
         >
           <LabeledControls p={1}>
-            <LabeledControls.Item label="Buffer Port">
+            <LabeledControls.Item label={t('ui.pipe_scrubber.buffer_port')}>
               <Box position="relative">
                 <Tooltip
                   position="top"
-                  content={connected ? 'Connected' : 'Disconnected'}
+                  content={
+                    connected
+                      ? t('ui.pipe_scrubber.connected')
+                      : t('ui.pipe_scrubber.disconnected')
+                  }
                 >
                   <Icon
                     size={2}
@@ -92,7 +98,7 @@ export const PipeScrubber = (props) => {
                 </Tooltip>
               </Box>
             </LabeledControls.Item>
-            <LabeledControls.Item label="Buffer">
+            <LabeledControls.Item label={t('ui.pipe_scrubber.buffer')}>
               <RoundGauge
                 size={1.75}
                 value={pressurePump}
@@ -107,7 +113,7 @@ export const PipeScrubber = (props) => {
                 format={formatPressure}
               />
             </LabeledControls.Item>
-            <LabeledControls.Item label="Tank">
+            <LabeledControls.Item label={t('ui.pipe_scrubber.tank')}>
               <RoundGauge
                 size={1.75}
                 value={pressureTank}
@@ -122,7 +128,7 @@ export const PipeScrubber = (props) => {
                 format={formatPressure}
               />
             </LabeledControls.Item>
-            <LabeledControls.Item label="Pump">
+            <LabeledControls.Item label={t('ui.pipe_scrubber.pump')}>
               <Button
                 my={0.5}
                 width={6}
@@ -132,22 +138,24 @@ export const PipeScrubber = (props) => {
                 selected={on}
                 onClick={() => act('power')}
               >
-                {on ? 'On' : 'Off'}
+                {on ? t('ui.common.on') : t('ui.common.off')}
               </Button>
             </LabeledControls.Item>
           </LabeledControls>
         </Section>
         <Section
-          title="Direction"
+          title={t('ui.pipe_scrubber.direction')}
           buttons={
             <Button onClick={() => act('direction')}>
-              {direction ? 'Buffer → Tank' : 'Tank → Buffer'}
+              {direction
+                ? t('ui.pipe_scrubber.buffer_to_tank')
+                : t('ui.pipe_scrubber.tank_to_buffer')}
             </Button>
           }
         >
           {!!direction && (
             <>
-              <Box>Filtering gases from the buffer into the internal tank.</Box>
+              <Box>{t('ui.pipe_scrubber.filtering_gases')}</Box>
               <Section>
                 {filterTypes.map((filter) => (
                   <Button
@@ -165,9 +173,7 @@ export const PipeScrubber = (props) => {
               </Section>
             </>
           )}
-          {!direction && (
-            <Box>Dumping internal tank gases into the buffer.</Box>
-          )}
+          {!direction && <Box>{t('ui.pipe_scrubber.dumping_gases')}</Box>}
         </Section>
       </Window.Content>
     </Window>

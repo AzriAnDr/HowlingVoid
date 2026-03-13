@@ -14,6 +14,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Direction } from '../constants';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type AreaData = { name: string; ref: string };
 
@@ -125,16 +126,15 @@ const DirectionPad = (props: DirectionPadProps) => {
 };
 
 const VisualizationToggle = (props: VisualizationToggleProps) => {
+  const { t } = usePreferencesLocalization();
   const { visualizing } = props;
   const { act } = useBackend<ShuttleBlueprintsData>();
   return (
     <Tooltip
-      content="Toggle a visualization of shuttle frames you can use to construct a shuttle.
-                Red tiles indicate frame parts built in invalid areas,
-                or parts of suitable areas that need frame parts built on them."
+      content={t('ui.shuttle_blueprints.visualization_tooltip')}
     >
       <Box inline>
-        Visualization:
+        {t('ui.shuttle_blueprints.visualization')}:
         <Button
           color="transparent"
           icon={visualizing ? 'toggle-on' : 'toggle-off'}
@@ -169,6 +169,7 @@ const ProblemsTooltip = (props: ProblemsTooltipProps) => {
 };
 
 const ShuttleConstruction = () => {
+  const { t } = usePreferencesLocalization();
   const [shuttleDirection, setShuttleDirection] = useState<Direction>(
     Direction.NORTH,
   );
@@ -190,8 +191,8 @@ const ShuttleConstruction = () => {
     <Stack justify="space-around">
       <Stack.Item grow>
         <DirectionPad
-          title="Shuttle Direction"
-          tooltip="This specifies the direction that the shuttle being built is facing."
+          title={t('ui.shuttle_blueprints.shuttle_direction')}
+          tooltip={t('ui.shuttle_blueprints.shuttle_direction_tooltip')}
           enabledDirections={Direction.ALL}
           selectedDirection={shuttleDirection}
           onSelect={(dir) => setShuttleDirection(dir)}
@@ -227,7 +228,7 @@ const ShuttleConstruction = () => {
                     act('tryBuildShuttle', { dir: shuttleDirection })
                   }
                 >
-                  Build New Shuttle
+                  {t('ui.shuttle_blueprints.build_new_shuttle')}
                 </Button.Confirm>
               </Stack.Item>
               {onShuttleFrame ? (
@@ -254,14 +255,13 @@ const ShuttleConstruction = () => {
               tooltip={
                 onCustomShuttle
                   ? masterExists
-                    ? 'The master blueprint for this shuttle still exists. \
-                          Whoever has it can copy it to this set of blueprints.'
+                    ? t('ui.shuttle_blueprints.master_blueprint_exists')
                     : null
-                  : 'You must be on a custom shuttle to do this.'
+                  : t('ui.shuttle_blueprints.must_be_on_custom_shuttle')
               }
               onClick={() => act('tryLinkShuttle')}
             >
-              Connect To Existing Shuttle
+              {t('ui.shuttle_blueprints.connect_to_existing_shuttle')}
             </Button.Confirm>
           </Stack.Item>
         </Stack>
@@ -271,6 +271,7 @@ const ShuttleConstruction = () => {
 };
 
 const ShuttleConfiguration = () => {
+  const { t } = usePreferencesLocalization();
   const [name, setName] = useState('');
   const [mergeArea = { name: '', ref: '' }, setMergeArea] =
     useState<AreaData>();
@@ -302,17 +303,17 @@ const ShuttleConfiguration = () => {
   return (
     <Stack fill vertical align="center" justify="space-around">
       <Stack.Item textAlign="center">
-        <h2>Current Area:</h2>
+        <h2>{t('ui.shuttle_blueprints.current_area')}:</h2>
         <h3>
           {onShuttle
             ? inDefaultArea
-              ? 'Default Area'
+              ? t('ui.shuttle_blueprints.default_area')
               : currentAreaName
-            : 'Not on Shuttle'}
+            : t('ui.shuttle_blueprints.not_on_shuttle')}
         </h3>
       </Stack.Item>
       <Stack.Item>
-        <Input fluid placeholder="New Area Name" onChange={setName} />
+        <Input fluid placeholder={t('ui.shuttle_blueprints.new_area_name')} onChange={setName} />
         <Stack>
           <Stack.Item>
             <Button.Confirm
@@ -326,7 +327,7 @@ const ShuttleConfiguration = () => {
               }
               onClick={() => act('createNewArea', { name: name })}
             >
-              Designate New Area
+              {t('ui.shuttle_blueprints.designate_new_area')}
             </Button.Confirm>
           </Stack.Item>
           <Stack.Item>
@@ -341,7 +342,7 @@ const ShuttleConfiguration = () => {
               }
               onClick={() => act('renameArea', { name: name })}
             >
-              Rename Current Area
+              {t('ui.shuttle_blueprints.rename_current_area')}
             </Button.Confirm>
           </Stack.Item>
         </Stack>
@@ -350,7 +351,7 @@ const ShuttleConfiguration = () => {
         <Stack fill justify="center">
           <Stack.Item>
             <Dropdown
-              placeholder="Select Area"
+              placeholder={t('ui.shuttle_blueprints.select_area')}
               options={Object.entries(neighboringAreas).map(([ref, name]) => {
                 return {
                   displayText: name,
@@ -382,7 +383,7 @@ const ShuttleConfiguration = () => {
               }
               onClick={() => act('mergeIntoArea', { area: mergeAreaRef })}
             >
-              Expand Area
+              {t('ui.shuttle_blueprints.expand_area')}
             </Button.Confirm>
           </Stack.Item>
         </Stack>
@@ -412,7 +413,7 @@ const ShuttleConfiguration = () => {
                   }
                   onClick={() => act('expandWithFrame')}
                 >
-                  Expand Shuttle With Connected Frame
+                  {t('ui.shuttle_blueprints.expand_shuttle_with_connected_frame')}
                 </Button.Confirm>
               </Stack.Item>
               <Stack.Item>
@@ -455,7 +456,7 @@ const ShuttleConfiguration = () => {
           }
           onClick={() => act('releaseArea')}
         >
-          Undesignate Area
+          {t('ui.shuttle_blueprints.undesignate_area')}
         </Button.Confirm>
       </Stack.Item>
       <Stack.Item>
@@ -471,7 +472,7 @@ const ShuttleConfiguration = () => {
           }`}
           onClick={() => act('cleanupEmptyTurfs')}
         >
-          Clean Up Empty Space
+          {t('ui.shuttle_blueprints.clean_up_empty_space')}
         </Button.Confirm>
       </Stack.Item>
     </Stack>
@@ -479,6 +480,7 @@ const ShuttleConfiguration = () => {
 };
 
 export const ShuttleBlueprints = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<ShuttleBlueprintsData>();
   const { linkedShuttle, shuttles, masterExists, isMaster } = data;
   return (
@@ -491,14 +493,14 @@ export const ShuttleBlueprints = (props) => {
               {shuttles && (
                 <Dropdown
                   options={[
-                    { displayText: 'None', value: 0 },
+                    { displayText: t('ui.common.none'), value: 0 },
                     ...Object.entries(shuttles).map(
                       ([ref, name]: [string, string]) => {
                         return { displayText: name, value: ref };
                       },
                     ),
                   ]}
-                  selected={linkedShuttle ? shuttles[linkedShuttle] : 'None'}
+                  selected={linkedShuttle ? shuttles[linkedShuttle] : t('ui.common.none')}
                   onSelected={(value) => {
                     if (value === 0) {
                       act('unsetShuttle');
@@ -510,7 +512,7 @@ export const ShuttleBlueprints = (props) => {
               )}
               {!!linkedShuttle && !masterExists && !isMaster && (
                 <Button.Confirm onClick={() => act('promoteToMaster')}>
-                  Promote To Master Blueprint
+                  {t('ui.shuttle_blueprints.promote_to_master_blueprint')}
                 </Button.Confirm>
               )}
             </>

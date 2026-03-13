@@ -2,24 +2,30 @@ import { Button, LabeledList, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const ProximitySensor = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { minutes, seconds, timing, scanning, sensitivity } = data;
   return (
     <Window width={250} height={185}>
       <Window.Content>
         <Section>
           <LabeledList>
-            <LabeledList.Item label="Status">
+            <LabeledList.Item label={t('ui.proximitysensor.status')}>
               <Button
                 icon={scanning ? 'lock' : 'unlock'}
-                content={scanning ? 'Armed' : 'Not Armed'}
+                content={
+                  scanning
+                    ? t('ui.proximity_sensor.armed')
+                    : t('ui.proximity_sensor.not_armed')
+                }
                 selected={scanning}
                 onClick={() => act('scanning')}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Detection Range">
+            <LabeledList.Item label={t('ui.proximitysensor.detection_range')}>
               <Button
                 icon="backward"
                 disabled={scanning}
@@ -35,11 +41,15 @@ export const ProximitySensor = (props) => {
           </LabeledList>
         </Section>
         <Section
-          title="Auto Arm"
+          title={t('ui.proximitysensor.auto_arm')}
           buttons={
             <Button
               icon={'clock-o'}
-              content={timing ? 'Stop' : 'Start'}
+              content={
+                timing
+                  ? t('ui.proximity_sensor.stop')
+                  : t('ui.proximity_sensor.start')
+              }
               selected={timing}
               disabled={scanning}
               onClick={() => act('time')}

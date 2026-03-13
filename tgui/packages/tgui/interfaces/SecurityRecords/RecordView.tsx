@@ -10,6 +10,7 @@ import {
   Stack,
   Table,
 } from 'tgui-core/components';
+import { usePreferencesLocalization } from '../localization';
 
 import { CharacterPreview } from '../common/CharacterPreview';
 import { EditableText } from '../common/EditableText';
@@ -22,9 +23,10 @@ import type { SecurityRecordsData } from './types';
 /** Views a selected record. */
 export const SecurityRecordView = (props) => {
   const foundRecord = getSecurityRecord();
-  if (!foundRecord) return <NoticeBox>Nothing selected.</NoticeBox>;
-
   const { data } = useBackend<SecurityRecordsData>();
+  const { t } = usePreferencesLocalization(data);
+  if (!foundRecord) return <NoticeBox>{t('ui.common.nothing_selected')}</NoticeBox>;
+
   const { assigned_view } = data;
 
   const [open] = useLocalState<boolean>('printOpen', false);
@@ -48,9 +50,10 @@ export const SecurityRecordView = (props) => {
 
 const RecordInfo = (props) => {
   const foundRecord = getSecurityRecord();
-  if (!foundRecord) return <NoticeBox>Nothing selected.</NoticeBox>;
-
   const { act, data } = useBackend<SecurityRecordsData>();
+  const { t } = usePreferencesLocalization(data);
+  if (!foundRecord) return <NoticeBox>{t('ui.common.nothing_selected')}</NoticeBox>;
+
   const { available_statuses } = data;
   const [open, setOpen] = useLocalState<boolean>('printOpen', false);
 
@@ -91,18 +94,18 @@ const RecordInfo = (props) => {
                   height="1.7rem"
                   icon="print"
                   onClick={() => setOpen(true)}
-                  tooltip="Print a rapsheet or poster."
+                  tooltip={t('ui.security_records.print_rapsheet_or_poster')}
                 >
-                  Print
+                  {t('ui.common.print')}
                 </Button>
               </Stack.Item>
               <Stack.Item>
                 <Button.Confirm
                   icon="trash"
                   onClick={() => act('delete_record', { crew_ref: crew_ref })}
-                  tooltip="Delete record data."
+                  tooltip={t('ui.security_records.delete_record_data')}
                 >
-                  Delete
+                  {t('ui.common.delete')}
                 </Button.Confirm>
               </Stack.Item>
             </Stack>
@@ -138,7 +141,7 @@ const RecordInfo = (props) => {
                   </Button>
                 );
               })}
-              label="Status"
+              label={t('ui.common.status')}
             >
               <Box color={CRIMESTATUS2COLOR[wanted_status]}>
                 {wanted_status}
@@ -150,15 +153,15 @@ const RecordInfo = (props) => {
       <Stack.Item grow={2}>
         <Section fill scrollable>
           <LabeledList>
-            <LabeledList.Item label="Name">
+            <LabeledList.Item label={t('ui.common.name')}>
               <EditableText field="name" target_ref={crew_ref} text={name} />
             </LabeledList.Item>
-            <LabeledList.Item label="Job">
+            <LabeledList.Item label={t('ui.common.job')}>
               <EditableText field="rank" target_ref={crew_ref} text={rank} />
             </LabeledList.Item>
-            {/* <LabeledList.Item label="Age"> // ORIGINAL */}
+            {/* ORIGINAL AGE FIELD */}
             {/* NOVA EDIT CHANGE BEGIN - Chronological age */}
-            <LabeledList.Item label="Physical Age">
+            <LabeledList.Item label={t('ui.common.physical_age')}>
               {/* NOVA EDIT CHANGE END */}
               <RestrictedInput
                 minValue={min_age}
@@ -176,7 +179,7 @@ const RecordInfo = (props) => {
               />
             </LabeledList.Item>
             {/* NOVA EDIT ADDITION BEGIN - Chronological age */}
-            <LabeledList.Item label="Chronological Age">
+            <LabeledList.Item label={t('ui.common.chronological_age')}>
               <RestrictedInput
                 minValue={min_age}
                 maxValue={max_chrono_age}
@@ -191,21 +194,21 @@ const RecordInfo = (props) => {
               />
             </LabeledList.Item>
             {/* NOVA EDIT ADDITION END */}
-            <LabeledList.Item label="Species">
+            <LabeledList.Item label={t('ui.common.species')}>
               <EditableText
                 field="species"
                 target_ref={crew_ref}
                 text={species}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Gender">
+            <LabeledList.Item label={t('ui.common.gender')}>
               <EditableText
                 field="gender"
                 target_ref={crew_ref}
                 text={gender}
               />
             </LabeledList.Item>
-            <LabeledList.Item color="good" label="Fingerprint">
+            <LabeledList.Item color="good" label={t('ui.security_records.fingerprint')}>
               <EditableText
                 color="good"
                 field="fingerprint"
@@ -213,10 +216,10 @@ const RecordInfo = (props) => {
                 text={fingerprint}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Voice">
+            <LabeledList.Item label={t('ui.common.voice')}>
               <EditableText field="voice" target_ref={crew_ref} text={voice} />
             </LabeledList.Item>
-            <LabeledList.Item label="Note">
+            <LabeledList.Item label={t('ui.common.note')}>
               <EditableText
                 field="security_note"
                 target_ref={crew_ref}
@@ -224,12 +227,12 @@ const RecordInfo = (props) => {
               />
             </LabeledList.Item>
             {/* NOVA EDIT START - RP Records (Not pretty but it's there) */}
-            <LabeledList.Item label="General Records">
+            <LabeledList.Item label={t('ui.common.general_records')}>
               <Box maxWidth="100%" preserveWhitespace>
                 {past_general_records || 'N/A'}
               </Box>
             </LabeledList.Item>
-            <LabeledList.Item label="Past Security Records">
+            <LabeledList.Item label={t('ui.security_records.past_security_records')}>
               <Box maxWidth="100%" preserveWhitespace>
                 {past_security_records || 'N/A'}
               </Box>

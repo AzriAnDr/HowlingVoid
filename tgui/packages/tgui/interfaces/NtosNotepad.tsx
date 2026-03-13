@@ -11,10 +11,9 @@ import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 import type { NTOSData } from '../layouts/NtosWindow';
 import { createLogger } from '../logging';
+import { usePreferencesLocalization } from './localization';
 
 const logger = createLogger('NtosNotepad');
-
-const DEFAULT_DOCUMENT_NAME = 'Untitled';
 
 type PartiallyUnderlinedProps = {
   str: string;
@@ -58,6 +57,7 @@ type MenuBarProps = {
 };
 
 const NtosNotepadMenuBar = (props: MenuBarProps) => {
+  const { t } = usePreferencesLocalization();
   const {
     onSave,
     onExit,
@@ -131,55 +131,55 @@ const NtosNotepadMenuBar = (props: MenuBarProps) => {
       <MenuBar.Dropdown
         entry="file"
         openWidth="22rem"
-        display={<PartiallyUnderlined str="File" indexStart={0} />}
+        display={<PartiallyUnderlined str={t('ui.ntos_notepad.file')} indexStart={0} />}
         {...itemProps}
       >
-        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('new', 'New')} />
-        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('save', 'Save')} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('new', t('ui.common.new'))} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('save', t('ui.common.save'))} />
         <MenuBar.Dropdown.Separator key="firstSep" />
-        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('exit', 'Exit...')} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('exit', t('ui.common.exit_ellipsis'))} />
       </MenuBar.Dropdown>
       <MenuBar.Dropdown
         entry="edit"
         openWidth="22rem"
-        display={<PartiallyUnderlined str="Edit" indexStart={0} />}
+        display={<PartiallyUnderlined str={t('ui.common.edit')} indexStart={0} />}
         {...itemProps}
       >
-        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('cut', 'Cut')} />
-        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('copy', 'Copy')} />
-        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('paste', 'Paste')} />
-        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('delete', 'Delete')} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('cut', t('ui.common.cut'))} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('copy', t('ui.common.copy'))} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('paste', t('ui.common.paste'))} />
+        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('delete', t('ui.common.delete'))} />
       </MenuBar.Dropdown>
       <MenuBar.Dropdown
         entry="format"
         openWidth="15rem"
-        display={<PartiallyUnderlined str="Format" indexStart={1} />}
+        display={<PartiallyUnderlined str={t('ui.common.format')} indexStart={1} />}
         {...itemProps}
       >
         <MenuBar.Dropdown.MenuItemToggle
           checked={wordWrap}
-          {...getMenuItemProps('wordWrap', 'Word Wrap')}
+          {...getMenuItemProps('wordWrap', t('ui.ntos_notepad.word_wrap'))}
         />
       </MenuBar.Dropdown>
       <MenuBar.Dropdown
         entry="view"
         openWidth="15rem"
-        display={<PartiallyUnderlined str="View" indexStart={0} />}
+        display={<PartiallyUnderlined str={t('ui.ntos_notepad.view')} indexStart={0} />}
         {...itemProps}
       >
         <MenuBar.Dropdown.MenuItemToggle
           checked={showStatusBar}
-          {...getMenuItemProps('statusBar', 'Status Bar')}
+          {...getMenuItemProps('statusBar', t('ui.ntos_notepad.status_bar'))}
         />
       </MenuBar.Dropdown>
       <MenuBar.Dropdown
         entry="help"
         openWidth="17rem"
-        display={<PartiallyUnderlined str="Help" indexStart={0} />}
+        display={<PartiallyUnderlined str={t('ui.common.help')} indexStart={0} />}
         {...itemProps}
       >
         <MenuBar.Dropdown.MenuItem
-          {...getMenuItemProps('aboutNotepad', 'About Notepad')}
+          {...getMenuItemProps('aboutNotepad', t('ui.ntos_notepad.about_notepad'))}
         />
       </MenuBar.Dropdown>
     </MenuBar>
@@ -191,14 +191,16 @@ interface StatusBarProps {
 }
 
 const StatusBar = (props: StatusBarProps) => {
+  const { t } = usePreferencesLocalization();
   const { statuses } = props;
   return (
     <Box className="NtosNotepad__StatusBar">
       <Box className="NtosNotepad__StatusBar__entry" minWidth="25rem">
-        Press shift-enter to insert new line
+        {t('ui.ntos_notepad.press_shift_enter')}
       </Box>
       <Box className="NtosNotepad__StatusBar__entry" minWidth="15rem">
-        Ln {statuses.line}, Col {statuses.column}
+        {t('ui.ntos_notepad.line_short')} {statuses.line},{' '}
+        {t('ui.ntos_notepad.column_short')} {statuses.column}
       </Box>
       <Box className="NtosNotepad__StatusBar__entry" minWidth="5rem">
         100%
@@ -280,28 +282,27 @@ type AboutDialogProps = {
 };
 
 const AboutDialog = (props: AboutDialogProps) => {
+  const { t } = usePreferencesLocalization();
   const { close } = props;
   const { data } = useBackend<NTOSData>();
   const { show_imprint, login } = data;
   const paragraphStyle = { padding: '.5rem 1rem 0 2rem' };
 
   return (
-    <Dialog title="About Notepad" onClose={close} width={'500px'}>
+    <Dialog title={t('ui.ntos_notepad.about_notepad')} onClose={close} width={'500px'}>
       <div className="Dialog__body">
-        <span className="NtosNotepad__AboutDialog__logo">NtOS</span>
+        <span className="NtosNotepad__AboutDialog__logo">{t('ui.ntos_notepad.ntos')}</span>
         <Divider />
         <Box className="NtosNotepad__AboutDialog__text">
-          <span style={paragraphStyle}>Nanotrasen NtOS</span>
+          <span style={paragraphStyle}>{t('ui.ntos_notepad.nanotrasen_ntos')}</span>
           <span style={paragraphStyle}>
-            Version 7815696ecbf1c96e6894b779456d330e
+            {t('ui.common.version')} 7815696ecbf1c96e6894b779456d330e
           </span>
           <span style={paragraphStyle}>
-            &copy; NT Corporation. All rights reserved.
+            {t('ui.ntos_notepad.copyright_text')}
           </span>
           <span style={{ padding: '3rem 1rem 3rem 2rem' }}>
-            The NtOS operating system and its user interface are protected by
-            trademark and other pending or existing intellectual property rights
-            in the Sol system and other regions.
+            {t('ui.ntos_notepad.legal_notice')}
           </span>
           <span
             style={{
@@ -309,15 +310,15 @@ const AboutDialog = (props: AboutDialogProps) => {
               maxWidth: '35rem',
             }}
           >
-            This product is licensed under the NT Corporation Terms to:
+            {t('ui.ntos_notepad.licensed_to')}
           </span>
           <span style={{ padding: '0 1rem 0 4rem' }}>
-            {show_imprint ? login.IDName : 'Unknown'}
+            {show_imprint ? login.IDName : t('ui.common.unknown')}
           </span>
         </Box>
       </div>
       <div className="Dialog__footer">
-        <Dialog.Button onClick={close}>Ok</Dialog.Button>
+        <Dialog.Button onClick={close}>{t('ui.common.ok')}</Dialog.Button>
       </div>
     </Dialog>
   );
@@ -329,9 +330,11 @@ type NoteData = {
 type RetryActionType = (retrying?: boolean) => void;
 
 export const NtosNotepad = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<NoteData>();
   const { note } = data;
-  const [documentName, setDocumentName] = useState(DEFAULT_DOCUMENT_NAME);
+  const defaultDocumentName = t('ui.ntos_notepad.untitled');
+  const [documentName, setDocumentName] = useState(defaultDocumentName);
   const [originalText, setOriginalText] = useState(note);
   const [text, setText] = useState(note);
   const [statuses, setStatuses] = useState<Statuses>({
@@ -388,14 +391,14 @@ export const NtosNotepad = (props) => {
     }
     setOriginalText('');
     setText('');
-    setDocumentName(DEFAULT_DOCUMENT_NAME);
+    setDocumentName(defaultDocumentName);
   };
 
   // MS Notepad displays an asterisk when there's unsaved changes
   const unsavedAsterisk = text !== originalText ? '*' : '';
   return (
     <NtosWindow
-      title={`${unsavedAsterisk}${documentName} - Notepad`}
+      title={`${unsavedAsterisk}${documentName} - ${t('ui.ntos_notepad.notepad')}`}
       width={840}
       height={900}
     >
@@ -427,16 +430,16 @@ export const NtosNotepad = (props) => {
         </Box>
       </NtosWindow.Content>
       {activeDialog === Dialogs.UNSAVED_CHANGES && (
-        <Dialog title="Notepad" onClose={handleCloseDialog}>
+        <Dialog title={t('ui.ntos_notepad.notepad')} onClose={handleCloseDialog}>
           <div className="Dialog__body">
-            Do you want to save changes to {documentName}?
+            {t('ui.ntos_notepad.save_changes_question')} {documentName}?
           </div>
           <div className="Dialog__footer">
-            <Dialog.Button onClick={handleSave}>Save</Dialog.Button>
+            <Dialog.Button onClick={handleSave}>{t('ui.common.save')}</Dialog.Button>
             <Dialog.Button onClick={handleCloseDialog}>
-              Don&apos;t Save
+              {t('ui.ntos_notepad.dont_save')}
             </Dialog.Button>
-            <Dialog.Button onClick={handleCloseDialog}>Cancel</Dialog.Button>
+            <Dialog.Button onClick={handleCloseDialog}>{t('ui.common.cancel')}</Dialog.Button>
           </div>
         </Dialog>
       )}

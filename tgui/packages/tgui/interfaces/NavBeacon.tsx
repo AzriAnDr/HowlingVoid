@@ -11,6 +11,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
+import { usePreferencesLocalization } from './localization';
 
 export type Data = {
   locked: BooleanLike;
@@ -39,8 +40,9 @@ export type NavBeaconStaticControl = {
 
 export const NavBeacon = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   return (
-    <Window title="Nagivational Beacon" width={400} height={350}>
+    <Window title={t('ui.nav_beacon.title')} width={400} height={350}>
       <Window.Content>
         <NavBeaconContent />
       </Window.Content>
@@ -63,47 +65,56 @@ export const NavBeaconContent = (props) => {
 
 export const NavBeaconControlSection = (props: DisabledProps) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { controls, static_controls } = data;
   return (
-    <Section title="Controls">
+    <Section title={t('ui.common.controls')}>
       <LabeledList>
-        <LabeledList.Item label="Location">
+        <LabeledList.Item label={t('ui.common.location')}>
           <Button
             fluid
-            content={controls.location ?? 'None set'}
+            content={controls.location ?? t('ui.nav_beacon.none_set')}
             icon="pencil-alt"
             disabled={props.disabled}
             onClick={() => act('set_location')}
           />
         </LabeledList.Item>
-        <LabeledList.Item label="Enable as Patrol Beacon">
+        <LabeledList.Item label={t('ui.nav_beacon.enable_as_patrol_beacon')}>
           <Button.Checkbox
             fluid
             checked={controls.patrol_enabled}
-            content={controls.patrol_enabled ? 'Enabled' : 'Disabled'}
+            content={
+              controls.patrol_enabled
+                ? t('ui.common.enabled')
+                : t('ui.common.disabled')
+            }
             disabled={props.disabled}
             onClick={() => act('toggle_patrol')}
           />
         </LabeledList.Item>
-        <LabeledList.Item label="Next patrol">
+        <LabeledList.Item label={t('ui.nav_beacon.next_patrol')}>
           <Button
             fluid
-            content={controls.patrol_next ?? 'No next patrol location'}
+            content={controls.patrol_next ?? t('ui.nav_beacon.no_next_patrol_location')}
             icon="pencil-alt"
             disabled={props.disabled}
             onClick={() => act('set_patrol_next')}
           />
         </LabeledList.Item>
-        <LabeledList.Item label="Enable as Delivery Beacon">
+        <LabeledList.Item label={t('ui.nav_beacon.enable_as_delivery_beacon')}>
           <Button.Checkbox
             fluid
             checked={controls.delivery_enabled}
-            content={controls.delivery_enabled ? 'Enabled' : 'Disabled'}
+            content={
+              controls.delivery_enabled
+                ? t('ui.common.enabled')
+                : t('ui.common.disabled')
+            }
             disabled={props.disabled}
             onClick={() => act('toggle_delivery')}
           />
         </LabeledList.Item>
-        <LabeledList.Item label="Delivery Direction">
+        <LabeledList.Item label={t('ui.nav_beacon.delivery_direction')}>
           <Dropdown
             disabled={!!props.disabled}
             options={static_controls.direction_options}
@@ -122,27 +133,34 @@ export const NavBeaconControlSection = (props: DisabledProps) => {
 
 export const NavBeaconMaintenanceSection = (props: DisabledProps) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { controls, static_controls } = data;
   return (
-    <Section title="Maintenance">
+    <Section title={t('ui.common.maintenance')}>
       <LabeledList>
-        <LabeledList.Item label="Reset codes">
+        <LabeledList.Item label={t('ui.nav_beacon.reset_codes')}>
           {!!static_controls.has_codes && (
             <Button
               fluid
-              content={'Reset'}
+              content={t('ui.common.reset')}
               icon="power-off"
               disabled={props.disabled}
               onClick={() => act('reset_codes')}
             />
           )}
-          {!static_controls.has_codes && <Box>No backup codes found</Box>}
+          {!static_controls.has_codes && (
+            <Box>{t('ui.nav_beacon.no_backup_codes_found')}</Box>
+          )}
         </LabeledList.Item>
-        <LabeledList.Item label="Maintenance hatch cover">
+        <LabeledList.Item label={t('ui.nav_beacon.maintenance_hatch_cover')}>
           <Button.Checkbox
             fluid
             checked={controls.cover_locked}
-            content={controls.cover_locked ? 'Locked' : 'Unlocked'}
+            content={
+              controls.cover_locked
+                ? t('ui.common.locked')
+                : t('ui.common.unlocked')
+            }
             disabled={props.disabled}
             onClick={() => act('toggle_cover')}
           />

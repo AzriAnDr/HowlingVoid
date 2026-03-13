@@ -2,6 +2,7 @@ import { Component, createRef, type RefObject } from 'react';
 import { Box, Button, Flex, Section, TextArea } from 'tgui-core/components';
 
 import { useBackend, useLocalState } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { TEXTAREA_INPUT_HEIGHT } from './constants';
 import { PreviewView } from './Preview';
 import { PaperSheetStamper } from './Stamper';
@@ -38,6 +39,7 @@ export class PrimaryView extends Component {
 
   render() {
     const { act, data } = useBackend<PaperContext>();
+    const { t } = usePreferencesLocalization(data);
     const {
       raw_text_input,
       raw_field_input,
@@ -94,7 +96,7 @@ export class PrimaryView extends Component {
           {canEdit && (
             <Flex.Item shrink={1} height={`${TEXTAREA_INPUT_HEIGHT}px`}>
               <Section
-                title="Insert Text"
+                title={t('ui.paper_sheet.insert_text')}
                 fitted
                 fill
                 buttons={

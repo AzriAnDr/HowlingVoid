@@ -10,6 +10,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Port = {
   name: string;
@@ -26,6 +27,7 @@ type ProcCallMenuData = {
 };
 
 export const ProcCallMenu = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<ProcCallMenuData>();
   const {
     input_ports,
@@ -39,9 +41,9 @@ export const ProcCallMenu = (props) => {
       <Window.Content scrollable>
         <Stack fill>
           <Stack.Item>
-            <Section fill title="Options">
+            <Section fill title={t('ui.proc_call_menu.options')}>
               <Stack vertical width="180px">
-                <Stack.Item color="label">Expected Output:</Stack.Item>
+                <Stack.Item color="label">{t('ui.proc_call_menu.expected_output')}:</Stack.Item>
                 <Stack.Item>
                   <Dropdown
                     width="100%"
@@ -56,7 +58,7 @@ export const ProcCallMenu = (props) => {
                 <Stack.Divider />
                 <Stack.Item>
                   <Button.Checkbox
-                    content="Resolve Weakref"
+                    content={t('ui.proc_call_menu.resolve_weakref')}
                     textAlign="center"
                     checked={resolve_weakref}
                     onClick={() => act('resolve_weakref')}
@@ -65,15 +67,14 @@ export const ProcCallMenu = (props) => {
                 </Stack.Item>
                 <Stack.Item>
                   <NoticeBox info width="100%">
-                    This determines whether we automatically resolve any
-                    weakrefs in lists.
+                    {t('ui.proc_call_menu.resolve_weakref_help')}
                   </NoticeBox>
                 </Stack.Item>
               </Stack>
             </Section>
           </Stack.Item>
           <Stack.Item grow>
-            <Section fill title="Arguments">
+            <Section fill title={t('ui.proc_call_menu.arguments')}>
               <Stack vertical>
                 {input_ports.map((val, index) => (
                   <PortEntry
@@ -104,7 +105,7 @@ export const ProcCallMenu = (props) => {
                 <Stack.Item>
                   <Button
                     fluid
-                    content="Add Argument"
+                    content={t('ui.proc_call_menu.add_argument')}
                     color="good"
                     icon="plus"
                     onClick={() => act('add_argument')}
@@ -120,6 +121,7 @@ export const ProcCallMenu = (props) => {
 };
 
 const PortEntry = (props) => {
+  const { t } = usePreferencesLocalization();
   const {
     onRemove,
     onEnter,
@@ -135,7 +137,7 @@ const PortEntry = (props) => {
     <Stack.Item {...rest}>
       <Stack>
         <Stack.Item grow>
-          <Input placeholder="Name" value={name} onChange={onEnter} fluid />
+          <Input placeholder={t('ui.common.name')} value={name} onChange={onEnter} fluid />
         </Stack.Item>
         <Stack.Item>
           <Dropdown

@@ -5,6 +5,7 @@ import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { Connections } from '../common/Connections';
+import { getPreferencesLocalization } from '../localization';
 import { CircuitInfo } from './CircuitInfo';
 import { ComponentMenu } from './ComponentMenu';
 import {
@@ -280,9 +281,13 @@ export class IntegratedCircuit extends Component {
   }
 
   handleVarClicked(event, variable, is_setter) {
+    const { data } = useBackend();
+    const { t } = getPreferencesLocalization(data);
     const component = {
-      name: is_setter ? 'Setter' : 'Getter',
-      description: 'This is a component',
+      name: is_setter
+        ? t('ui.integrated_circuit.setter')
+        : t('ui.integrated_circuit.getter'),
+      description: t('ui.integrated_circuit.this_is_a_component'),
       color: 'blue',
       input_ports: [],
       output_ports: [],
@@ -291,7 +296,7 @@ export class IntegratedCircuit extends Component {
     if (is_setter) {
       component.input_ports = [
         {
-          name: 'Input',
+          name: t('ui.integrated_circuit.input'),
           type: variable.datatype,
           color: variable.color,
         },
@@ -299,7 +304,7 @@ export class IntegratedCircuit extends Component {
     } else {
       component.output_ports = [
         {
-          name: 'Value',
+          name: t('ui.integrated_circuit.value'),
           type: variable.datatype,
           color: variable.color,
         },
@@ -391,6 +396,7 @@ export class IntegratedCircuit extends Component {
 
   render() {
     const { act, data } = useBackend();
+    const { t } = getPreferencesLocalization(data);
     const {
       components,
       display_name,
@@ -460,7 +466,7 @@ export class IntegratedCircuit extends Component {
           <Stack>
             <Stack.Item>
               <Input
-                placeholder="Name"
+                placeholder={t('ui.common.name')}
                 value={display_name}
                 onBlur={(value) =>
                   act('set_display_name', { display_name: value })
@@ -470,7 +476,7 @@ export class IntegratedCircuit extends Component {
             <Stack.Item>
               <Button
                 color="transparent"
-                tooltip="Show Variables Menu"
+                tooltip={t('ui.integrated_circuit.show_variables_menu')}
                 icon="cog"
                 selected={variableMenuOpen}
                 onClick={() =>
@@ -483,7 +489,7 @@ export class IntegratedCircuit extends Component {
             <Stack.Item>
               <Button
                 color="transparent"
-                tooltip="Show Components Menu"
+                tooltip={t('ui.integrated_circuit.show_components_menu')}
                 icon="plus"
                 selected={componentMenuOpen}
                 onClick={() =>
@@ -496,7 +502,7 @@ export class IntegratedCircuit extends Component {
             <Stack.Item>
               <Button
                 color="transparent"
-                tooltip="Enable Grid Aligning"
+                tooltip={t('ui.integrated_circuit.enable_grid_aligning')}
                 icon="th-large"
                 selected={grid_mode}
                 onClick={() => act('toggle_grid_mode')}

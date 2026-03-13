@@ -15,6 +15,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Rules } from './AntagInfoRules';
+import { usePreferencesLocalization } from './localization';
 
 type Objectives = {
   count: number;
@@ -55,6 +56,7 @@ type Info = {
 export const AntagInfoAssaultops = (props) => {
   const [tab, setTab] = useState(1);
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { required_keys, uploaded_keys, objectives } = data;
   return (
     <Window theme="hackerman" width={650} height={650}>
@@ -70,7 +72,10 @@ export const AntagInfoAssaultops = (props) => {
                   </Box>
                 </Box>
               </Stack.Item>
-              <Section title="GoldenEye Subversion Progress" fontSize="15px">
+              <Section
+                title={t('ui.antaginfoassaultops.goldeneye_subversion_progress')}
+                fontSize="15px"
+              >
                 {uploaded_keys >= required_keys ? (
                   <Box fontSize="20px" color="green">
                     GOLDENEYE ACTIVATED, WELL DONE OPERATIVE.
@@ -95,7 +100,7 @@ export const AntagInfoAssaultops = (props) => {
                 )}
               </Section>
             </Section>
-            <Section title="Objectives">
+            <Section title={t('ui.antaginfoassaultops.objectives')}>
               <LabeledList>
                 {objectives.map((objective) => (
                   <LabeledList.Item
@@ -144,6 +149,7 @@ export const AntagInfoAssaultops = (props) => {
 
 const TargetPrintout = (props) => {
   const { act, data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { available_targets, extracted_targets } = data;
   return (
     <Section>
@@ -152,7 +158,7 @@ const TargetPrintout = (props) => {
       </Box>
       <Stack>
         <Stack.Item grow>
-          <Section title="Available Targets">
+          <Section title={t('ui.antaginfoassaultops.available_targets')}>
             <Box textColor="red" mb={2}>
               These are targets you have not yet extracted a GoldenEye key from.
               They can be extracted by the in-TERROR-gator.
@@ -172,7 +178,7 @@ const TargetPrintout = (props) => {
         </Stack.Item>
         <Divider vertical />
         <Stack.Item grow>
-          <Section title="Extracted Targets">
+          <Section title={t('ui.antaginfoassaultops.extracted_targets')}>
             <Box textColor="green" mb={2}>
               These are targets you have extracted a GoldenEye keycard from.
               They cannot be extracted again.

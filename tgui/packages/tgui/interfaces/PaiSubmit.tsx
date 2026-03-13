@@ -3,6 +3,7 @@ import { Box, Button, Input, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   comments: string;
@@ -10,16 +11,8 @@ type Data = {
   name: string;
 };
 
-const PAI_DESCRIPTION = `Personal AIs are advanced models capable of nuanced
-interaction. They are designed to assist their masters in their work. They
-do not possess hands, thus they cannot interact with equipment or items. While
-in hologram form, you cannot be directly killed, but you may be incapacitated.`;
-
-const PAI_RULES = `You are expected to role play to some degree. Keep in mind:
-Not entering information may lead to you not being selected. Press submit to
-alert pAI cards of your candidacy.`;
-
 export const PaiSubmit = (props) => {
+  const { t } = usePreferencesLocalization();
   const { data } = useBackend<Data>();
   const { comments, description, name } = data;
   const [input, setInput] = useState({
@@ -29,7 +22,7 @@ export const PaiSubmit = (props) => {
   });
 
   return (
-    <Window width={400} height={460} title="pAI Candidacy Menu">
+    <Window width={400} height={460} title={t('ui.pai_submit.candidacy_menu')}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>
@@ -49,13 +42,14 @@ export const PaiSubmit = (props) => {
 
 /** Displays basic info about playing pAI */
 const DetailsDisplay = (props) => {
+  const { t } = usePreferencesLocalization();
   return (
-    <Section fill scrollable title="Details">
+    <Section fill scrollable title={t('ui.common.details')}>
       <Box color="label">
-        {PAI_DESCRIPTION}
+        {t('ui.pai_submit.description')}
         <br />
         <br />
-        {PAI_RULES}
+        {t('ui.pai_submit.rules')}
       </Box>
     </Section>
   );
@@ -63,15 +57,16 @@ const DetailsDisplay = (props) => {
 
 /** Input boxes for submission details */
 const InputDisplay = (props) => {
+  const { t } = usePreferencesLocalization();
   const { input, setInput } = props;
   const { name, description, comments } = input;
 
   return (
-    <Section fill title="Input">
+    <Section fill title={t('ui.common.input')}>
       <Stack fill vertical>
         <Stack.Item>
           <Box bold color="label">
-            Name
+            {t('ui.common.name')}
           </Box>
           <Input
             fluid
@@ -82,7 +77,7 @@ const InputDisplay = (props) => {
         </Stack.Item>
         <Stack.Item>
           <Box bold color="label">
-            Description
+            {t('ui.common.description')}
           </Box>
           <Input
             fluid
@@ -93,7 +88,7 @@ const InputDisplay = (props) => {
         </Stack.Item>
         <Stack.Item>
           <Box bold color="label">
-            OOC Comments
+            {t('ui.pai_submit.ooc_comments')}
           </Box>
           <Input
             fluid
@@ -109,6 +104,7 @@ const InputDisplay = (props) => {
 
 /** Gives the user a submit button */
 const ButtonsDisplay = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act } = useBackend<Data>();
   const { input } = props;
   const { comments, description, name } = input;
@@ -119,17 +115,17 @@ const ButtonsDisplay = (props) => {
         <Stack.Item>
           <Button
             onClick={() => act('save', { comments, description, name })}
-            tooltip="Saves your candidate data locally."
+            tooltip={t('ui.pai_submit.save_tooltip')}
           >
-            SAVE
+            {t('ui.pai_submit.save')}
           </Button>
         </Stack.Item>
         <Stack.Item>
           <Button
             onClick={() => act('load')}
-            tooltip="Loads saved candidate data, if any."
+            tooltip={t('ui.pai_submit.load_tooltip')}
           >
-            LOAD
+            {t('ui.pai_submit.load')}
           </Button>
         </Stack.Item>
         <Stack.Item>
@@ -142,15 +138,15 @@ const ButtonsDisplay = (props) => {
               })
             }
           >
-            SUBMIT
+            {t('ui.pai_submit.submit')}
           </Button>
         </Stack.Item>
         <Stack.Item>
           <Button
             onClick={() => act('withdraw')}
-            tooltip="Withdraws your pAI candidacy, if any."
+            tooltip={t('ui.pai_submit.withdraw_tooltip')}
           >
-            WITHDRAW
+            {t('ui.pai_submit.withdraw')}
           </Button>
         </Stack.Item>
       </Stack>

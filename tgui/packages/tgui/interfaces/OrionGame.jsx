@@ -2,6 +2,7 @@ import { Box, Button, Divider, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const buttonWidth = 2;
 
@@ -103,6 +104,7 @@ const locationInfo = [
 
 const AdventureStatus = (props) => {
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     lings_suspected,
     eventname,
@@ -116,7 +118,7 @@ const AdventureStatus = (props) => {
   } = data;
   return (
     <Section
-      title="Adventure Status"
+      title={t('ui.orion.adventure_status')}
       fill
       buttons={
         !!lings_suspected && (
@@ -125,7 +127,7 @@ const AdventureStatus = (props) => {
             color="black"
             textAlign="center"
             icon="skull"
-            content="RANDOM KILL"
+            content={t('ui.orion.random_kill')}
             disabled={eventname}
             onClick={() => act('random_kill')}
           />
@@ -143,7 +145,7 @@ const AdventureStatus = (props) => {
                   color="red"
                   textAlign="center"
                   icon="skull"
-                  content="KILL"
+                  content={t('ui.orion.kill')}
                   disabled={lings_suspected || eventname}
                   onClick={() =>
                     act('target_kill', {
@@ -224,7 +226,7 @@ const ORION_STATUS_START = (props) => {
             lineHeight={2}
             fluid
             icon="play"
-            content="Begin Game"
+            content={t('ui.orion.begin_game')}
             onClick={() => act('start_game')}
           />
         </Stack.Item>
@@ -233,7 +235,7 @@ const ORION_STATUS_START = (props) => {
             lineHeight={2}
             fluid
             icon="info"
-            content="Instructions"
+            content={t('ui.common.instructions')}
             onClick={() => act('instructions')}
           />
         </Stack.Item>
@@ -244,16 +246,17 @@ const ORION_STATUS_START = (props) => {
 };
 
 const ORION_STATUS_INSTRUCTIONS = (props) => {
-  const { act } = useBackend();
+  const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const fake_settlers = ['John', 'William', 'Alice', 'Tom'];
   return (
     <>
       <Section
         color="label"
-        title="Objective"
+        title={t('ui.orion.objective')}
         buttons={
           <Button
-            content="Back to Main Menu"
+            content={t('ui.orion.back_to_main_menu')}
             onClick={() => act('back_to_menu')}
           />
         }
@@ -265,7 +268,7 @@ const ORION_STATUS_INSTRUCTIONS = (props) => {
           what they were seeking... or lose their lives on the way.
         </Box>
       </Section>
-      <Section title="Status Example">
+      <Section title={t('ui.orion.status_example')}>
         <Stack>
           <Stack.Item basis={70} grow align="center">
             {fake_settlers?.map((settler) => (
@@ -277,7 +280,7 @@ const ORION_STATUS_INSTRUCTIONS = (props) => {
                     color="red"
                     textAlign="center"
                     icon="skull"
-                    content="KILL"
+                    content={t('ui.orion.kill')}
                   />
                 </Stack.Item>
                 <Stack.Item className={'moods32x32 mood5'} />
@@ -287,29 +290,29 @@ const ORION_STATUS_INSTRUCTIONS = (props) => {
           <Divider vertical />
           <Stack.Item>
             This is the status panel for your pioneers. Each one requires 1 food
-            every time you continue towards <span style={goodstyle}>Orion</span>
+            every time you continue towards <span style={goodstyle}>{t('ui.orion.orion')}</span>
             . You can find more crew on your journey, and lose them as fast as
             you found &apos;em.
             <br />
             <br />
             If you run out of food or crew, it&apos;s{' '}
-            <span style={badstyle}>GAME OVER</span> for you!
+            <span style={badstyle}>{t('ui.orion.game_over')}</span> for you!
           </Stack.Item>
         </Stack>
       </Section>
-      <Section title="Resources">
+      <Section title={t('ui.orion.resources')}>
         <Stack>
           <Stack.Item grow>
-            If you want to make it to <span style={goodstyle}>Orion</span>,
+            If you want to make it to <span style={goodstyle}>{t('ui.orion.orion')}</span>,
             you&apos;ll need to manage your resources:
             <br />
-            <span style={goodstyle}>Food</span>: Your crewmembers consume it.
+            <span style={goodstyle}>{t('ui.orion.food')}</span>: Your crewmembers consume it.
             More crew means this goes down faster!
             <br />
-            <span style={fuelstyle}>Fuel</span>: You use 5u of fuel with every
+            <span style={fuelstyle}>{t('ui.orion.fuel')}</span>: You use 5u of fuel with every
             movement. Don&apos;t let it run out.
             <br />
-            <span style={partstyle}>Parts</span>: Used to repair breakdowns.
+            <span style={partstyle}>{t('ui.orion.parts')}</span>: Used to repair breakdowns.
             Nobody likes wasting time on repairs!
           </Stack.Item>
           <Divider vertical />
@@ -411,7 +414,7 @@ const ORION_STATUS_NORMAL = (props) => {
                   lineHeight={3}
                   width={16}
                   icon="arrow-right"
-                  content="Continue"
+                  content={t('ui.common.continue')}
                   onClick={() => act('continue')}
                 />
               )}
@@ -444,7 +447,7 @@ const ORION_STATUS_GAMEOVER = (props) => {
             lineHeight={2}
             fluid
             icon="arrow-left"
-            content="Main Menu"
+            content={t('ui.common.main_menu')}
             onClick={() => act('back_to_menu')}
           />
         </Stack.Item>
@@ -458,24 +461,25 @@ const marketButtonSpacing = 0.8;
 
 const ORION_STATUS_MARKET = (props) => {
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { turns, spaceport_raided } = data;
   return (
     <Stack vertical fill>
       <Stack.Item grow>
         <Section
-          title="Market"
+          title={t('ui.orion.market')}
           fill
           buttons={
             <>
               <Button
-                content="Raid"
+                content={t('ui.orion.raid')}
                 icon="skull"
                 color="black"
                 disabled={spaceport_raided}
                 onClick={() => act('raid_spaceport')}
               />
               <Button
-                content="Leave"
+                content={t('ui.common.leave')}
                 icon="arrow-right"
                 onClick={() => act('leave_spaceport')}
               />
@@ -509,7 +513,7 @@ const ORION_STATUS_MARKET = (props) => {
               </>
             )) || (
               <>
-                <Stack.Item>General Markets:</Stack.Item>
+                <Stack.Item>{t('ui.orion.general_markets')}</Stack.Item>
                 <Stack.Item>
                   <Stack mb={-1} fill>
                     <Stack.Item grow basis={0}>
@@ -528,7 +532,7 @@ const ORION_STATUS_MARKET = (props) => {
                           />
                         </Stack.Item>
                         <Divider />
-                        <Stack.Item mt={0}>Port Hangar Bay:</Stack.Item>
+                        <Stack.Item mt={0}>{t('ui.orion.port_hangar_bay')}</Stack.Item>
                         <Stack.Item mb={marketButtonSpacing}>
                           <Button
                             fluid
@@ -586,7 +590,7 @@ const ORION_STATUS_MARKET = (props) => {
                           />
                         </Stack.Item>
                         <Divider />
-                        <Stack.Item mt={0}>Port Bar:</Stack.Item>
+                        <Stack.Item mt={0}>{t('ui.orion.port_bar')}</Stack.Item>
                         <Stack.Item mb={marketButtonSpacing}>
                           <Button
                             fluid

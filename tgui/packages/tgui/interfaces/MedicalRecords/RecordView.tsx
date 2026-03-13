@@ -10,6 +10,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { EditableText } from '../common/EditableText';
 import {
@@ -27,9 +28,11 @@ import type { MedicalRecordData } from './types';
 /** Views a selected record. */
 export const MedicalRecordView = (props) => {
   const foundRecord = getMedicalRecord();
-  if (!foundRecord) return <NoticeBox>No record selected.</NoticeBox>;
+  const { data } = useBackend<MedicalRecordData>();
+  const { t } = usePreferencesLocalization(data);
+  if (!foundRecord) return <NoticeBox>{t('ui.medical_records.no_record_selected')}</NoticeBox>;
 
-  const { act, data } = useBackend<MedicalRecordData>();
+  const { act } = useBackend<MedicalRecordData>();
   const { assigned_view, physical_statuses, mental_statuses, station_z } = data;
 
   // const { min_age, max_age } = data; // ORIGINAL
@@ -81,9 +84,9 @@ export const MedicalRecordView = (props) => {
               icon="trash"
               disabled={!station_z}
               onClick={() => act('expunge_record', { crew_ref: crew_ref })}
-              tooltip="Expunge record data."
+              tooltip={t('ui.medical_records.expunge_record_data')}
             >
-              Delete
+              {t('ui.common.delete')}
             </Button.Confirm>
           }
           fill
@@ -91,16 +94,13 @@ export const MedicalRecordView = (props) => {
           title={name}
         >
           <LabeledList>
-            <LabeledList.Item label="Name">
+            <LabeledList.Item label={t('ui.common.name')}>
               <EditableText field="name" target_ref={crew_ref} text={name} />
             </LabeledList.Item>
-            <LabeledList.Item label="Job">
+            <LabeledList.Item label={t('ui.common.job')}>
               <EditableText field="job" target_ref={crew_ref} text={rank} />
             </LabeledList.Item>
-            {/* <LabeledList.Item label="Age"> // ORIGINAL */}
-            {/* NOVA EDIT CHANGE BEGIN - Chronological age */}
-            <LabeledList.Item label="Physical Age">
-              {/* NOVA EDIT CHANGE END */}
+            <LabeledList.Item label={t('ui.common.physical_age')}>
               <RestrictedInput
                 minValue={min_age}
                 maxValue={max_age}
@@ -117,7 +117,7 @@ export const MedicalRecordView = (props) => {
               />
             </LabeledList.Item>
             {/* NOVA EDIT ADDITION BEGIN - Chronological age */}
-            <LabeledList.Item label="Chronological Age">
+            <LabeledList.Item label={t('ui.common.chronological_age')}>
               <RestrictedInput
                 minValue={min_age}
                 maxValue={max_chrono_age}
@@ -132,21 +132,21 @@ export const MedicalRecordView = (props) => {
               />
             </LabeledList.Item>
             {/* NOVA EDIT ADDITION END */}
-            <LabeledList.Item label="Species">
+            <LabeledList.Item label={t('ui.common.species')}>
               <EditableText
                 field="species"
                 target_ref={crew_ref}
                 text={species}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Gender">
+            <LabeledList.Item label={t('ui.common.gender')}>
               <EditableText
                 field="gender"
                 target_ref={crew_ref}
                 text={gender}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="DNA">
+            <LabeledList.Item label={t('ui.common.dna')}>
               <EditableText
                 color="good"
                 field="dna"
@@ -154,7 +154,7 @@ export const MedicalRecordView = (props) => {
                 text={dna}
               />
             </LabeledList.Item>
-            <LabeledList.Item color="bad" label="Blood Type">
+            <LabeledList.Item color="bad" label={t('ui.medical_records.blood_type')}>
               <EditableText
                 field="blood_type"
                 target_ref={crew_ref}
@@ -185,7 +185,7 @@ export const MedicalRecordView = (props) => {
                   </Button>
                 );
               })}
-              label="Physical Status"
+              label={t('ui.medical_records.physical_status')}
             >
               <Box color={PHYSICALSTATUS2COLOR[physical_status]}>
                 {physical_status}
@@ -215,36 +215,36 @@ export const MedicalRecordView = (props) => {
                   </Button>
                 );
               })}
-              label="Mental Status"
+              label={t('ui.medical_records.mental_status')}
             >
               <Box color={MENTALSTATUS2COLOR[mental_status]}>
                 {mental_status}
               </Box>
             </LabeledList.Item>
-            <LabeledList.Item label="Minor Disabilities">
+            <LabeledList.Item label={t('ui.medical_records.minor_disabilities')}>
               {minor_disabilities_array.map((disability, index) => (
                 <Box key={index}>&#8226; {disability}</Box>
               ))}
             </LabeledList.Item>
-            <LabeledList.Item label="Major Disabilities">
+            <LabeledList.Item label={t('ui.medical_records.major_disabilities')}>
               {major_disabilities_array.map((disability, index) => (
                 <Box key={index}>&#8226; {disability}</Box>
               ))}
             </LabeledList.Item>
-            <LabeledList.Item label="Quirks">
+            <LabeledList.Item label={t('ui.medical_records.quirks')}>
               {quirk_notes_array.map((quirk, index) => (
                 <Box key={index}>&#8226; {quirk}</Box>
               ))}
             </LabeledList.Item>
             {/* NOVA EDIT START - RP Records (Not pretty but it's there) */}
-            <LabeledList.Item label="General Records">
+            <LabeledList.Item label={t('ui.common.general_records')}>
               <Box maxWidth="100%" preserveWhitespace>
-                {past_general_records || 'N/A'}
+                {past_general_records || t('ui.common.not_available_short')}
               </Box>
             </LabeledList.Item>
-            <LabeledList.Item label="Past Medical Records">
+            <LabeledList.Item label={t('ui.medical_records.past_medical_records')}>
               <Box maxWidth="100%" preserveWhitespace>
-                {past_medical_records || 'N/A'}
+                {past_medical_records || t('ui.common.not_available_short')}
               </Box>
             </LabeledList.Item>
             {/* NOVA EDIT END */}

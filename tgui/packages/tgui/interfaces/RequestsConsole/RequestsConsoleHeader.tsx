@@ -1,6 +1,7 @@
 import { Button, NoticeBox, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { RequestPriority, type RequestsData } from './types';
 
 export const RequestsConsoleHeader = (props) => {
@@ -17,12 +18,14 @@ export const RequestsConsoleHeader = (props) => {
 
 const EmergencyBox = (props) => {
   const { act, data } = useBackend<RequestsData>();
+  const { t } = usePreferencesLocalization(data);
   const { emergency } = data;
   return (
     <>
       {!!emergency && (
         <NoticeBox danger>
-          {emergency} called! RETA may open doors in area to them.
+          {t('ui.requests_console.emergency_called_notice')
+            .replace('{emergency}', emergency)}
         </NoticeBox>
       )}
       {!emergency && (
@@ -32,7 +35,7 @@ const EmergencyBox = (props) => {
               fluid
               color="red"
               icon="shield"
-              content="Call Security"
+              content={t('ui.requests_console.call_security')}
               onClick={() =>
                 act('set_emergency', {
                   emergency: 'Security',
@@ -45,7 +48,7 @@ const EmergencyBox = (props) => {
               fluid
               color="red"
               icon="screwdriver-wrench"
-              content="Call Engineering"
+              content={t('ui.requests_console.call_engineering')}
               onClick={() =>
                 act('set_emergency', {
                   emergency: 'Engineering',
@@ -58,7 +61,7 @@ const EmergencyBox = (props) => {
               fluid
               color="red"
               icon="suitcase-medical"
-              content="Call Medical"
+              content={t('ui.requests_console.call_medical')}
               onClick={() =>
                 act('set_emergency', {
                   emergency: 'Medical',
@@ -73,20 +76,24 @@ const EmergencyBox = (props) => {
 };
 
 const ErrorNoticeBox = (props) => {
+  const { t } = usePreferencesLocalization();
   return (
-    <NoticeBox danger>{'Error occured while sending a message!'}</NoticeBox>
+    <NoticeBox danger>{t('ui.requests_console.send_message_error')}</NoticeBox>
   );
 };
 
 const MessageNoticeBox = (props) => {
   const { data } = useBackend<RequestsData>();
+  const { t } = usePreferencesLocalization(data);
   const { new_message_priority } = data;
   return (
     <NoticeBox>
-      {'You have new unread '}
-      {new_message_priority === RequestPriority.HIGH && 'PRIORITY '}
-      {new_message_priority === RequestPriority.EXTREME && 'EXTREME PRIORITY '}
-      {'messages'}
+      {t('ui.requests_console.new_unread_prefix')}
+      {new_message_priority === RequestPriority.HIGH &&
+        ` ${t('ui.requests_console.high_priority_uppercase')} `}
+      {new_message_priority === RequestPriority.EXTREME &&
+        ` ${t('ui.requests_console.extreme_priority_uppercase')} `}
+      {t('ui.requests_console.new_unread_suffix')}
     </NoticeBox>
   );
 };

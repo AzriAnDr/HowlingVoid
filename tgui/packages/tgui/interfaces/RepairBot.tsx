@@ -10,6 +10,7 @@ import {
   Stack,
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   can_hack: BooleanLike;
@@ -69,11 +70,14 @@ export function RepairBot(props) {
 
 function RepairBotMats(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { repairbot_materials } = data;
 
   return (
-    <Section title="Materials" minHeight="100px">
-      {repairbot_materials.length === 0 && <NoticeBox>No Materials!</NoticeBox>}
+    <Section title={t('ui.repairbot.materials')} minHeight="100px">
+      {repairbot_materials.length === 0 && (
+        <NoticeBox>{t('ui.repairbot.no_materials')}</NoticeBox>
+      )}
       <Flex style={{ padding: '0% 25%' }}>
         {repairbot_materials.map((mat) => (
           <Flex.Item grow key={mat.material_ref}>

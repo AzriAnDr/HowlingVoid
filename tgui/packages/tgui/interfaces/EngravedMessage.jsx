@@ -3,8 +3,10 @@ import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const EngravedMessage = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend();
   const {
     admin_mode,
@@ -68,26 +70,26 @@ export const EngravedMessage = (props) => {
         </Section>
         <Section>
           <LabeledList>
-            <LabeledList.Item label="Created On">{realdate}</LabeledList.Item>
+            <LabeledList.Item label={t('ui.engraved_message.created_on')}>{realdate}</LabeledList.Item>
           </LabeledList>
         </Section>
         {!!admin_mode && (
           <Section
-            title="Admin Panel"
+            title={t('ui.common.admin_panel')}
             buttons={
               <Button
                 icon="times"
-                content="Delete"
+                content={t('ui.common.delete')}
                 color="bad"
                 onClick={() => act('delete')}
               />
             }
           >
             <LabeledList>
-              <LabeledList.Item label="Creator Ckey">
+              <LabeledList.Item label={t('ui.engraved_message.creator_ckey')}>
                 {creator_key}
               </LabeledList.Item>
-              <LabeledList.Item label="Creator Character Name">
+              <LabeledList.Item label={t('ui.engraved_message.creator_character_name')}>
                 {creator_name}
               </LabeledList.Item>
             </LabeledList>

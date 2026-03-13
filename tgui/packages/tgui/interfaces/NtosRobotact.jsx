@@ -17,6 +17,7 @@ import { formatPower } from 'tgui-core/format';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const NtosRobotact = (props) => {
   return (
@@ -30,6 +31,7 @@ export const NtosRobotact = (props) => {
 
 export const NtosRobotactContent = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const [tab_main, setTab_main] = useState(1);
   const [tab_sub, setTab_sub] = useState(1);
   const {
@@ -72,7 +74,7 @@ export const NtosRobotactContent = (props) => {
             selected={tab_main === 1}
             onClick={() => setTab_main(1)}
           >
-            Status
+            {t('ui.ntos_robotact.tab_status')}
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
@@ -80,7 +82,7 @@ export const NtosRobotactContent = (props) => {
             selected={tab_main === 2}
             onClick={() => setTab_main(2)}
           >
-            Logs
+            {t('ui.ntos_robotact.tab_logs')}
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
@@ -88,7 +90,7 @@ export const NtosRobotactContent = (props) => {
             selected={tab_main === 3}
             onClick={() => setTab_main(3)}
           >
-            Network
+            {t('ui.ntos_robotact.tab_network')}
           </Tabs.Tab>
         </Tabs>
       </Flex.Item>
@@ -96,23 +98,23 @@ export const NtosRobotactContent = (props) => {
         <>
           <Flex direction={'row'}>
             <Flex.Item width="30%">
-              <Section title="Configuration" fill>
+              <Section title={t('ui.ntos_robotact.configuration')} fill>
                 <LabeledList>
-                  <LabeledList.Item label="Unit">
+                  <LabeledList.Item label={t('ui.ntos_robotact.unit')}>
                     {borgName.slice(0, 17)}
                   </LabeledList.Item>
-                  <LabeledList.Item label="Type">{borgType}</LabeledList.Item>
-                  <LabeledList.Item label="AI">
+                  <LabeledList.Item label={t('ui.common.type')}>{borgType}</LabeledList.Item>
+                  <LabeledList.Item label={t('ui.ntos_robotact.ai')}>
                     {masterAI.slice(0, 17)}
                   </LabeledList.Item>
                 </LabeledList>
               </Section>
             </Flex.Item>
             <Flex.Item grow={1} basis="content" ml={1}>
-              <Section title="Status">
-                Charge:
+              <Section title={t('ui.common.status')}>
+                {t('ui.ntos_robotact.charge')}:
                 <Button
-                  content="Power Alert"
+                  content={t('ui.ntos_robotact.power_alert')}
                   disabled={charge}
                   onClick={() => act('alertPower')}
                 />
@@ -129,7 +131,7 @@ export const NtosRobotactContent = (props) => {
                     format={(charge) => formatEnergy(charge)}
                   />
                 </ProgressBar>
-                Chassis Integrity:
+                {t('ui.ntos_robotact.chassis_integrity')}:
                 <ProgressBar
                   value={integrity}
                   minValue={0}
@@ -141,7 +143,7 @@ export const NtosRobotactContent = (props) => {
                   }}
                 />
               </Section>
-              <Section title="Lamp Power">
+              <Section title={t('ui.ntos_robotact.lamp_power')}>
                 <Slider
                   value={lampIntensity}
                   step={1}
@@ -154,7 +156,8 @@ export const NtosRobotactContent = (props) => {
                     })
                   }
                 />
-                Lamp power usage: {formatPower(lampIntensity * lampConsumption)}
+                {t('ui.ntos_robotact.lamp_power_usage')}:{' '}
+                {formatPower(lampIntensity * lampConsumption)}
               </Section>
             </Flex.Item>
             <Flex.Item width="50%" ml={1}>
@@ -166,7 +169,7 @@ export const NtosRobotactContent = (props) => {
                     selected={tab_sub === 1}
                     onClick={() => setTab_sub(1)}
                   >
-                    Actions
+                    {t('ui.common.actions')}
                   </Tabs.Tab>
                   <Tabs.Tab
                     icon=""
@@ -174,7 +177,7 @@ export const NtosRobotactContent = (props) => {
                     selected={tab_sub === 2}
                     onClick={() => setTab_sub(2)}
                   >
-                    Upgrades
+                    {t('ui.ntos_robotact.upgrades')}
                   </Tabs.Tab>
                   <Tabs.Tab
                     icon=""
@@ -182,28 +185,28 @@ export const NtosRobotactContent = (props) => {
                     selected={tab_sub === 3}
                     onClick={() => setTab_sub(3)}
                   >
-                    Diagnostics
+                    {t('ui.ntos_robotact.diagnostics')}
                   </Tabs.Tab>
                 </Tabs>
               </Section>
               {tab_sub === 1 && (
                 <Section>
                   <LabeledList>
-                    <LabeledList.Item label="Maintenance Cover">
+                    <LabeledList.Item label={t('ui.ntos_robotact.maintenance_cover')}>
                       <Button.Confirm
-                        content="Unlock"
+                        content={t('ui.ntos_robotact.unlock')}
                         disabled={cover === 'UNLOCKED'}
                         onClick={() => act('coverunlock')}
                       />
                     </LabeledList.Item>
-                    <LabeledList.Item label="Sensor Overlay">
+                    <LabeledList.Item label={t('ui.ntos_robotact.sensor_overlay')}>
                       <Button
                         content={sensors}
                         onClick={() => act('toggleSensors')}
                       />
                     </LabeledList.Item>
                     {/* NOVA EDIT ADDITION START */}
-                    <LabeledList.Item label="Camera Status">
+                    <LabeledList.Item label={t('ui.ntos_robotact.camera_status')}>
                       <Button
                         content={wireCamera}
                         onClick={() => act('cameraToggle')}
@@ -214,21 +217,21 @@ export const NtosRobotactContent = (props) => {
                       label={`Stored Photos (${printerPictures})`}
                     >
                       <Button
-                        content="View"
+                        content={t('ui.ntos_robotact.view')}
                         disabled={!printerPictures}
                         onClick={() => act('viewImage')}
                       />
                       <Button
-                        content="Print"
+                        content={t('ui.common.print')}
                         disabled={!printerPictures}
                         onClick={() => act('printImage')}
                       />
                     </LabeledList.Item>
-                    <LabeledList.Item label="Printer Toner">
+                    <LabeledList.Item label={t('ui.ntos_robotact.printer_toner')}>
                       <ProgressBar value={printerToner / printerTonerMax} />
                     </LabeledList.Item>
                     {!!thrustersInstalled && (
-                      <LabeledList.Item label="Toggle Thrusters">
+                      <LabeledList.Item label={t('ui.ntos_robotact.toggle_thrusters')}>
                         <Button
                           content={thrustersStatus}
                           onClick={() => act('toggleThrusters')}
@@ -236,9 +239,9 @@ export const NtosRobotactContent = (props) => {
                       </LabeledList.Item>
                     )}
                     {!!selfDestructAble && (
-                      <LabeledList.Item label="Self Destruct">
+                      <LabeledList.Item label={t('ui.ntos_robotact.self_destruct')}>
                         <Button.Confirm
-                          content="ACTIVATE"
+                          content={t('ui.ntos_robotact.activate')}
                           color="red"
                           onClick={() => act('selfDestruct')}
                         />
@@ -260,7 +263,7 @@ export const NtosRobotactContent = (props) => {
                 <Section>
                   <LabeledList>
                     <LabeledList.Item
-                      label="AI Connection"
+                      label={t('ui.ntos_robotact.ai_connection')}
                       color={
                         wireAI === 'FAULT'
                           ? 'red'
@@ -272,13 +275,13 @@ export const NtosRobotactContent = (props) => {
                       {wireAI}
                     </LabeledList.Item>
                     <LabeledList.Item
-                      label="LawSync"
+                      label={t('ui.ntos_robotact.lawsync')}
                       color={wireLaw === 'FAULT' ? 'red' : 'green'}
                     >
                       {wireLaw}
                     </LabeledList.Item>
                     <LabeledList.Item
-                      label="Camera"
+                      label={t('ui.ntos_robotact.camera')}
                       color={
                         wireCamera === 'FAULT'
                           ? 'red'
@@ -290,13 +293,13 @@ export const NtosRobotactContent = (props) => {
                       {wireCamera}
                     </LabeledList.Item>
                     <LabeledList.Item
-                      label="Module Controller"
+                      label={t('ui.ntos_robotact.module_controller')}
                       color={wireModule === 'FAULT' ? 'red' : 'green'}
                     >
                       {wireModule}
                     </LabeledList.Item>
                     <LabeledList.Item
-                      label="Motor Controller"
+                      label={t('ui.ntos_robotact.motor_controller')}
                       color={
                         locomotion === 'FAULT'
                           ? 'red'
@@ -308,7 +311,7 @@ export const NtosRobotactContent = (props) => {
                       {locomotion}
                     </LabeledList.Item>
                     <LabeledList.Item
-                      label="Maintenance Cover"
+                      label={t('ui.ntos_robotact.maintenance_cover')}
                       color={cover === 'UNLOCKED' ? 'red' : 'green'}
                     >
                       {cover}
@@ -320,13 +323,13 @@ export const NtosRobotactContent = (props) => {
           </Flex>
           <Flex.Item height={21} mt={1}>
             <Section
-              title="Laws"
+              title={t('ui.common.laws')}
               fill
               scrollable
               buttons={
                 <>
                   <Button
-                    content="State Laws"
+                    content={t('ui.ntos_robotact.state_laws')}
                     onClick={() => act('lawstate')}
                   />
                   <Button icon="volume-off" onClick={() => act('lawchannel')} />
@@ -356,17 +359,17 @@ export const NtosRobotactContent = (props) => {
       {tab_main === 3 && (
         <Flex.Item height={40}>
           <Section
-            title={MasterAI_connected ? masterAI : 'NOT CONFIGURED'}
+            title={MasterAI_connected ? masterAI : t('ui.ntos_robotact.not_configured')}
             textAlign="center"
           >
             <LabeledList>
-              <LabeledList.Item label="Status">
+              <LabeledList.Item label={t('ui.common.status')}>
                 <Box color={masterAI_online ? 'good' : 'bad'}>
                   {!MasterAI_connected
-                    ? 'No Conection'
+                    ? t('ui.ntos_robotact.no_connection')
                     : masterAI_online
-                      ? 'Online'
-                      : 'Unresponsive'}
+                      ? t('ui.ntos_robotact.online')
+                      : t('ui.ntos_robotact.unresponsive')}
                 </Box>
               </LabeledList.Item>
             </LabeledList>
@@ -383,7 +386,7 @@ export const NtosRobotactContent = (props) => {
                         title={cyborg.otherBorgName.slice(0, 20)}
                       >
                         <LabeledList>
-                          <LabeledList.Item label="Status">
+                          <LabeledList.Item label={t('ui.common.status')}>
                             <Box
                               color={
                                 cyborg.status
@@ -394,15 +397,15 @@ export const NtosRobotactContent = (props) => {
                               }
                             >
                               {cyborg.status
-                                ? 'Not Responding'
+                                ? t('ui.ntos_robotact.not_responding')
                                 : cyborg.locked_down
-                                  ? 'Locked Down'
+                                  ? t('ui.ntos_robotact.locked_down')
                                   : cyborg.shell_discon
-                                    ? 'Nominal/Disconnected'
-                                    : 'Nominal'}
+                                    ? t('ui.ntos_robotact.nominal_disconnected')
+                                    : t('ui.ntos_robotact.nominal')}
                             </Box>
                           </LabeledList.Item>
-                          <LabeledList.Item label="Condition">
+                          <LabeledList.Item label={t('ui.ntos_robotact.condition')}>
                             <Box
                               color={
                                 cyborg.integ <= 25
@@ -413,15 +416,15 @@ export const NtosRobotactContent = (props) => {
                               }
                             >
                               {cyborg.integ === 0
-                                ? 'Hard Fault'
+                                ? t('ui.ntos_robotact.hard_fault')
                                 : cyborg.integ <= 25
-                                  ? 'Functionality Disrupted'
+                                  ? t('ui.ntos_robotact.functionality_disrupted')
                                   : cyborg.integ <= 75
-                                    ? 'Functionality Impaired'
-                                    : 'Operational'}
+                                    ? t('ui.ntos_robotact.functionality_impaired')
+                                    : t('ui.ntos_robotact.operational')}
                             </Box>
                           </LabeledList.Item>
-                          <LabeledList.Item label="Charge">
+                          <LabeledList.Item label={t('ui.ntos_robotact.charge')}>
                             <Box
                               color={
                                 cyborg.charge <= 30
@@ -433,10 +436,10 @@ export const NtosRobotactContent = (props) => {
                             >
                               {typeof cyborg.charge === 'number'
                                 ? `${cyborg.charge}%`
-                                : 'No Cell'}
+                                : t('ui.ntos_robotact.no_cell')}
                             </Box>
                           </LabeledList.Item>
-                          <LabeledList.Item label="Model">
+                          <LabeledList.Item label={t('ui.ntos_robotact.model')}>
                             {cyborg.module}
                           </LabeledList.Item>
                         </LabeledList>
@@ -452,7 +455,7 @@ export const NtosRobotactContent = (props) => {
           {!cyborg_groups.length && (
             <NoticeBox textAlign="center" top="30%" position="relative">
               <Box fontSize={2}>
-                CONNECTION UNAVAILABLE -- NETWORK STATUS UNKNOWN
+                {t('ui.ntos_robotact.connection_unavailable')}
               </Box>
             </NoticeBox>
           )}

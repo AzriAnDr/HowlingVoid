@@ -10,9 +10,11 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const CommandReportConsole = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     command_report_content,
     command_report_title,
@@ -20,7 +22,7 @@ export const CommandReportConsole = (props) => {
     error,
   } = data;
   return (
-    <Window title="Create Fleet Report" width={325} height={525}>
+    <Window title={t('ui.command_report.create_fleet_report')} width={325} height={525}>
       <Window.Content>
         {!!error && (
           <NoticeBox textAlign="center" color="red">
@@ -29,7 +31,7 @@ export const CommandReportConsole = (props) => {
         )}
         <Stack vertical>
           <Stack.Item>
-            <Section title="Set report title:" textAlign="center">
+            <Section title={t('ui.command_report.set_report_title')} textAlign="center">
               <Input
                 width="100%"
                 mt={1}
@@ -41,7 +43,7 @@ export const CommandReportConsole = (props) => {
                 }
               />
             </Section>
-            <Section title="Set report text:" textAlign="center">
+            <Section title={t('ui.command_report.set_report_text')} textAlign="center">
               <TextArea
                 height="200px"
                 mb={1}
@@ -59,7 +61,7 @@ export const CommandReportConsole = (props) => {
                     checked={announce_contents}
                     onClick={() => act('toggle_announce')}
                   >
-                    Announce Contents
+                    {t('ui.command_report.announce_contents')}
                   </Button.Checkbox>
                 </Stack.Item>
                 <Stack.Item>
@@ -68,7 +70,7 @@ export const CommandReportConsole = (props) => {
                     icon="check"
                     color="good"
                     textAlign="center"
-                    content="Submit Report"
+                    content={t('ui.command_report.submit_report')}
                     onClick={() => act('submit_report')}
                   />
                 </Stack.Item>

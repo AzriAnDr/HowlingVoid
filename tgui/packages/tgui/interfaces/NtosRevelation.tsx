@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   armed: BooleanLike;
@@ -10,6 +11,7 @@ type Data = {
 
 export const NtosRevelation = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { armed } = data;
 
   return (
@@ -28,7 +30,7 @@ export const NtosRevelation = (props) => {
           />
           <LabeledList>
             <LabeledList.Item
-              label="Payload Status"
+              label={t('ui.ntos_revelation.payload_status')}
               buttons={
                 <Button
                   content={armed ? 'ARMED' : 'DISARMED'}

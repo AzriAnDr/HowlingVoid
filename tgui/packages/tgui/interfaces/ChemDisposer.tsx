@@ -7,6 +7,7 @@ import {
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   enabled: BooleanLike;
@@ -16,25 +17,26 @@ type Data = {
 
 export function ChemDisposer() {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { enabled, max_volume, disposal_rate } = data;
 
   return (
     <Window width={320} height={105}>
       <Window.Content>
         <Section
-          title="Control Panel"
+          title={t('ui.chem_disposer.control_panel')}
           buttons={
             <Button
               icon="power-off"
               selected={enabled}
               onClick={() => act('toggle_power')}
             >
-              {enabled ? 'On' : 'Off'}
+              {enabled ? t('ui.common.on') : t('ui.common.off')}
             </Button>
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Volume">
+            <LabeledList.Item label={t('ui.common.volume')}>
               <NumberInput
                 value={disposal_rate}
                 unit="u"

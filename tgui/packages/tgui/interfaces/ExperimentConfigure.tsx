@@ -11,6 +11,7 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export type Techweb = {
   all_servers: string[];
@@ -225,6 +226,7 @@ export function Experiment(props: ExperimentProps) {
 
 export function ExperimentConfigure(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { always_active, has_start_callback } = data;
 
   const techwebs = data.techwebs ?? [];
@@ -257,7 +259,7 @@ export function ExperimentConfigure(props) {
   return (
     <Window width={600} height={735}>
       <Window.Content scrollable>
-        <Section title="Servers">
+        <Section title={t('ui.experiment_configure.servers')}>
           <Box color="label">
             {webs.size > 0
               ? 'Please select a techweb to connect to...'
@@ -272,7 +274,7 @@ export function ExperimentConfigure(props) {
           {techwebs.some((e) => e.selected) && (
             <Stack.Item>
               <Section
-                title="Experiments"
+                title={t('ui.common.experiments')}
                 className="ExperimentConfigure__ExperimentsContainer"
                 fill
               >

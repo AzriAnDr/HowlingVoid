@@ -1,20 +1,22 @@
 import { Button, NoticeBox, Section } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import { ForensicLogs } from './ForensicLogs';
 import type { ForensicScannerData } from './types';
 
 export function ForensicScanner() {
   const { act, data } = useBackend<ForensicScannerData>();
+  const { t } = usePreferencesLocalization();
   const { logs = [] } = data;
   return (
     <Window width={512} height={512}>
       <Window.Content>
         {logs.length === 0 ? (
-          <NoticeBox>Log empty.</NoticeBox>
+          <NoticeBox>{t('ui.forensic_scanner.log_empty')}</NoticeBox>
         ) : (
           <Section
-            title="Scan history"
+            title={t('ui.forensic_scanner.scan_history')}
             fill
             scrollable
             buttons={
@@ -24,10 +26,10 @@ export function ForensicScanner() {
                   color="danger"
                   onClick={() => act('clear')}
                 >
-                  Clear logs
+                  {t('ui.forensic_scanner.clear_logs')}
                 </Button.Confirm>
                 <Button icon="print" onClick={() => act('print')}>
-                  Print report
+                  {t('ui.forensic_scanner.print_report')}
                 </Button>
               </>
             }

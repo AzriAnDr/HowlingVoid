@@ -2,9 +2,11 @@ import { Box, Button, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const KeycardAuth = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization();
   return (
     // NOVA EDIT: height 125 -> 190, eng override/firing pin
     <Window width={375} height={190}>
@@ -12,7 +14,7 @@ export const KeycardAuth = (props) => {
         <Section>
           <Box>
             {data.waiting === 1 && (
-              <span>Waiting for another device to confirm your request...</span>
+              <span>{t('ui.keycard_auth.waiting_for_confirmation')}</span>
             )}
           </Box>
           <Box>
@@ -26,7 +28,7 @@ export const KeycardAuth = (props) => {
                     lineHeight="60px"
                     fluid
                     onClick={() => act('auth_swipe')}
-                    content="Authorize"
+                    content={t('ui.keycard_auth.authorize')}
                   />
                 )}
                 {data.auth_required === 0 && (
@@ -37,27 +39,27 @@ export const KeycardAuth = (props) => {
                       onClick={() => {
                         return act('red_alert');
                       }}
-                      content="Red Alert"
+                      content={t('ui.keycard_auth.red_alert')}
                     />
                     <Button
                       icon="id-card-o"
                       fluid
                       onClick={() => act('emergency_maint')}
-                      content="Emergency Maintenance Access"
+                      content={t('ui.keycard_auth.emergency_maintenance_access')}
                     />
                     {/* NOVA EDIT ADDITION START - Engineering Override */}
                     <Button
                       icon="wrench"
                       fluid
                       onClick={() => act('eng_override')}
-                      content="Engineering Override Access"
+                      content={t('ui.keycard_auth.engineering_override_access')}
                     />
                     {/* NOVA EDIT ADDITION END */}
                     <Button
                       icon="meteor"
                       fluid
                       onClick={() => act('bsa_unlock')}
-                      content="Bluespace Artillery Unlock"
+                      content={t('ui.keycard_auth.bluespace_artillery_unlock')}
                     />
                     {/* NOVA EDIT ADDITION START - Permit Pins */}
                     {!!data.permit_pins && (
@@ -65,7 +67,9 @@ export const KeycardAuth = (props) => {
                         icon="key"
                         fluid
                         onClick={() => act('pin_unrestrict')}
-                        content="Permit-Locked Firing Pin Unrestriction"
+                        content={t(
+                          'ui.keycard_auth.permit_locked_firing_pin_unrestriction',
+                        )}
                       />
                     )}
                     {/* NOVA EDIT ADDITION END */}
@@ -73,7 +77,7 @@ export const KeycardAuth = (props) => {
                       icon="key"
                       fluid
                       onClick={() => act('give_janitor_access')}
-                      content="Grant Janitor Access"
+                      content={t('ui.keycard_auth.grant_janitor_access')}
                     />
                   </>
                 )}

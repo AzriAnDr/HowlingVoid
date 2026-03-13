@@ -13,6 +13,7 @@ import { capitalizeAll, createSearch } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { getLayoutState, LAYOUT, LayoutToggle } from './common/LayoutToggle';
+import { usePreferencesLocalization } from './localization';
 
 type StockItem = {
   amount: number;
@@ -186,6 +187,7 @@ const ProductDisplay = (props: {
   selectedCategory: string | null;
 }) => {
   const { data } = useBackend<VendingData>();
+  const { t } = usePreferencesLocalization(data);
   const { inventory, stockSearch, setStockSearch, selectedCategory } = props;
   const {
     stock,
@@ -200,7 +202,7 @@ const ProductDisplay = (props: {
     <Section
       fill
       scrollable
-      title="Products"
+      title={t('ui.vending.products')}
       buttons={
         <Stack>
           {!all_products_free && user && (
@@ -214,7 +216,7 @@ const ProductDisplay = (props: {
             <Input
               onChange={setStockSearch}
               expensive
-              placeholder="Search..."
+              placeholder={t('ui.vending.search')}
               value={stockSearch}
             />
           </Stack.Item>

@@ -5,6 +5,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
+import { usePreferencesLocalization } from './localization';
 import { MalfAiModules } from './common/MalfAiModules';
 import {
   type Objective,
@@ -49,10 +50,11 @@ type Data = {
 
 function IntroductionSection(props) {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { intro, objectives, can_change_objective } = data;
 
   return (
-    <Section fill title="Intro" scrollable>
+    <Section fill title={t('ui.antaginfomalf.intro')} scrollable>
       <Stack vertical fill>
         <Stack.Item fontSize="25px">{intro}</Stack.Item>
         <Stack.Item grow>
@@ -77,12 +79,13 @@ function IntroductionSection(props) {
 
 function FlavorSection(props) {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { allies, goal } = data;
 
   return (
     <Section
       fill
-      title="Diagnostics"
+      title={t('ui.antaginfomalf.diagnostics')}
       buttons={
         <Button
           mr={-0.8}
@@ -138,10 +141,11 @@ function FlavorSection(props) {
 
 function CodewordsSection(props) {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { has_codewords, phrases, responses } = data;
 
   return (
-    <Section title="Codewords" mb={!has_codewords && -1}>
+    <Section title={t('ui.antaginfomalf.codewords')} mb={!has_codewords && -1}>
       <Stack fill>
         {!has_codewords ? (
           <BlockQuote>
@@ -166,11 +170,11 @@ function CodewordsSection(props) {
             <Stack.Divider mr={1} />
             <Stack.Item grow basis={0}>
               <Stack vertical>
-                <Stack.Item>Code Phrases:</Stack.Item>
+                <Stack.Item>{t('ui.antaginfomalf.code_phrases')}</Stack.Item>
                 <Stack.Item bold textColor="blue">
                   {phrases}
                 </Stack.Item>
-                <Stack.Item>Code Responses:</Stack.Item>
+                <Stack.Item>{t('ui.antaginfomalf.code_responses')}</Stack.Item>
                 <Stack.Item bold textColor="red">
                   {responses}
                 </Stack.Item>

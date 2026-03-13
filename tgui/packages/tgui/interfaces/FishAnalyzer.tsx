@@ -15,6 +15,7 @@ import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type FishData = {
   fish_name: string;
@@ -56,6 +57,7 @@ type Data = {
 };
 
 export const FishAnalyzer = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const { fish_list = [], fish_scanned } = data;
   const [searchText, setSearchText] = useState('');
@@ -67,7 +69,7 @@ export const FishAnalyzer = (props) => {
 
   return (
     <Window
-      title="Fish Analyzer"
+      title={t('ui.fish_analyzer.title')}
       width={fish_scanned ? 530 : 700}
       height={fish_scanned ? 270 : 460}
     >
@@ -85,7 +87,7 @@ export const FishAnalyzer = (props) => {
                   position="relative"
                   mt={0.5}
                   height="20px"
-                  placeholder="Search Fish..."
+                  placeholder={t('ui.fish_analyzer.search_fish_placeholder')}
                   value={searchText}
                   onChange={setSearchText}
                   fluid
@@ -94,7 +96,7 @@ export const FishAnalyzer = (props) => {
             </Stack.Item>
           )}
           <Stack.Item grow>
-            <Section title="Fish" fill scrollable>
+            <Section title={t('ui.fish_analyzer.fish')} fill scrollable>
               <Stack wrap>
                 {fish_filtered.map((fish, index) => (
                   <Stack.Item
@@ -124,6 +126,7 @@ export const FishAnalyzer = (props) => {
 };
 
 const FishItem = (props) => {
+  const { t } = usePreferencesLocalization();
   const { fish } = props;
 
   return (
@@ -142,10 +145,10 @@ const FishItem = (props) => {
                 />
               </Stack.Item>
               <Stack.Item style={{ fontSize: '10px' }}>
-                {fish.fish_weight} kiloclam
+                {fish.fish_weight} {t('ui.fish_analyzer.kiloclam')}
               </Stack.Item>
               <Stack.Item style={{ fontSize: '10px' }}>
-                {fish.fish_size} cm
+                {fish.fish_size} {t('ui.fish_analyzer.centimeters')}
               </Stack.Item>
             </Stack>
           </Flex.Item>
@@ -167,8 +170,8 @@ const FishItem = (props) => {
               </Stack.Item>
               <Stack.Item mt={2}>
                 {fish.fish_traits.length === 0 ? (
-                  <Button color="transparent" tooltip="Fish has no traits!">
-                    None
+                  <Button color="transparent" tooltip={t('ui.fish_analyzer.fish_has_no_traits')}>
+                    {t('ui.common.none')}
                   </Button>
                 ) : (
                   <Stack vertical>
@@ -179,7 +182,7 @@ const FishItem = (props) => {
                           tooltip={
                             <Stack vertical>
                               <Stack.Item>
-                                Inheritance: {trait.trait_inherit}%
+                                {t('ui.fish_analyzer.inheritance')}: {trait.trait_inherit}%
                               </Stack.Item>
                               <Stack.Item>{trait.trait_desc}</Stack.Item>
                             </Stack>
@@ -197,7 +200,7 @@ const FishItem = (props) => {
           <Flex.Item grow ml={2}>
             <Stack vertical>
               <Stack.Item>
-                Health:{' '}
+                {t('ui.common.health')}:{' '}
                 <ProgressBar
                   width="95%"
                   value={fish.fish_health / 100}
@@ -209,7 +212,7 @@ const FishItem = (props) => {
                 />
               </Stack.Item>
               <Stack.Item>
-                Hunger:{' '}
+                {t('ui.fish_analyzer.hunger')}:{' '}
                 <ProgressBar
                   width="95%"
                   value={fish.fish_hunger}
@@ -222,7 +225,7 @@ const FishItem = (props) => {
               </Stack.Item>
               <Stack.Item mt={2}>
                 {fish.fish_evolutions.length === 0 ? (
-                  <Box mb={2}>No evolutions!</Box>
+                  <Box mb={2}>{t('ui.fish_analyzer.no_evolutions')}</Box>
                 ) : (
                   <Stack mt={-2} vertical>
                     {fish.fish_evolutions.map((evolution, index) => (
@@ -246,7 +249,9 @@ const FishItem = (props) => {
               color: fish.fish_suitable_temp ? '#1ac400' : 'red',
             }}
           >
-            {fish.fish_min_temp}k - {fish.fish_max_temp}k
+            {fish.fish_min_temp}
+            {t('ui.fish_analyzer.kelvin_suffix')} - {fish.fish_max_temp}
+            {t('ui.fish_analyzer.kelvin_suffix')}
           </Flex.Item>
           <Flex.Item
             ml={3}

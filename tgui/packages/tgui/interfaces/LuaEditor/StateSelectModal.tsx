@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Input, Modal, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import type { LuaEditorData, LuaEditorModal } from './types';
 
 type StateSelectModalProps = {
@@ -10,6 +11,7 @@ type StateSelectModalProps = {
 
 export const StateSelectModal = (props: StateSelectModalProps) => {
   const { act, data } = useBackend<LuaEditorData>();
+  const { t } = usePreferencesLocalization(data);
   const { setModal } = props;
 
   const [input, setInput] = useState('');
@@ -19,7 +21,7 @@ export const StateSelectModal = (props: StateSelectModalProps) => {
     <Modal position="absolute" width="30%" height="50%" top="25%" left="35%">
       <Section
         fill
-        title="States"
+        title={t('ui.lua_editor.states')}
         buttons={
           <Button
             color="red"
@@ -28,7 +30,7 @@ export const StateSelectModal = (props: StateSelectModalProps) => {
               setModal(undefined);
             }}
           >
-            Cancel
+            {t('ui.common.cancel')}
           </Button>
         }
       >
@@ -47,7 +49,7 @@ export const StateSelectModal = (props: StateSelectModalProps) => {
           <Stack.Item grow>
             <Input
               fluid
-              placeholder="New State"
+              placeholder={t('ui.lua_editor.new_state')}
               value={input}
               onChange={setInput}
             />

@@ -10,6 +10,7 @@ import {
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
+import { usePreferencesLocalization } from '../../localization';
 import { GroupTitle } from '../GroupTitle';
 import { findIcon } from '../helpers';
 import { type CraftingData, type Diet, MODE, type Recipe } from '../types';
@@ -27,6 +28,7 @@ type Props = {
 export function RecipeContentCompact(props: Props) {
   const { item, craftable, busy, mode } = props;
   const { act, data } = useBackend<CraftingData>();
+  const { t } = usePreferencesLocalization();
 
   return (
     <Section>
@@ -96,7 +98,7 @@ export function RecipeContentCompact(props: Props) {
                 <Box>
                   {!!item.tool_behaviors && (
                     <Tooltip
-                      content={`Tools: ${item.tool_behaviors.join(', ')}`}
+                      content={`${t('ui.personal_crafting.tools')}: ${item.tool_behaviors.join(', ')}`}
                     >
                       <Icon p={1} name="screwdriver-wrench" />
                     </Tooltip>
@@ -120,7 +122,7 @@ export function RecipeContentCompact(props: Props) {
                       })
                     }
                   >
-                    Make
+                    {t('ui.common.make')}
                   </Button>
                   {!!item.mass_craftable && (
                     <Button
@@ -128,7 +130,9 @@ export function RecipeContentCompact(props: Props) {
                       lineHeight={2.5}
                       width="32px"
                       align="center"
-                      tooltip="Repeat this craft until you run out of ingredients."
+                      tooltip={t(
+                        'ui.personal_crafting.repeat_until_out_of_ingredients',
+                      )}
                       tooltipPosition="top"
                       disabled={!craftable || busy}
                       icon="repeat"
@@ -169,6 +173,7 @@ type FullProps = Props & {
 export function RecipeContent(props: FullProps) {
   const { item, craftable, busy, mode, diet } = props;
   const { act, data } = useBackend<CraftingData>();
+  const { t } = usePreferencesLocalization();
 
   return (
     <Section>
@@ -194,7 +199,7 @@ export function RecipeContent(props: FullProps) {
               {!!item.has_food_effect && (
                 <Box my={2} color="pink">
                   <Icon name="wand-magic-sparkles" mr={1} />
-                  Special effect on consumption.
+                  {t('ui.personal_crafting.special_effect_on_consumption')}
                 </Box>
               )}
               <Box style={{ textTransform: 'capitalize' }}>
@@ -202,7 +207,9 @@ export function RecipeContent(props: FullProps) {
                   <Box>
                     <GroupTitle
                       title={
-                        mode === MODE.cooking ? 'Ingredients' : 'Materials'
+                        mode === MODE.cooking
+                          ? t('ui.personal_crafting.ingredients')
+                          : t('ui.personal_crafting.materials')
                       }
                     />
                     {Object.keys(item.reqs).map((atom_id) => (
@@ -216,7 +223,7 @@ export function RecipeContent(props: FullProps) {
                 )}
                 {item.chem_catalysts && (
                   <Box>
-                    <GroupTitle title="Catalysts" />
+                    <GroupTitle title={t('ui.personal_crafting.catalysts')} />
                     {Object.keys(item.chem_catalysts).map((atom_id) => (
                       <AtomContent
                         key={atom_id}
@@ -228,7 +235,7 @@ export function RecipeContent(props: FullProps) {
                 )}
                 {(item.tool_paths || item.tool_behaviors) && (
                   <Box>
-                    <GroupTitle title="Tools" />
+                    <GroupTitle title={t('ui.personal_crafting.tools')} />
                     {item.tool_paths?.map((tool) => (
                       <AtomContent key={tool} atom_id={tool} amount={1} />
                     ))}
@@ -239,7 +246,7 @@ export function RecipeContent(props: FullProps) {
                 )}
                 {item.machinery && (
                   <Box>
-                    <GroupTitle title="Machinery" />
+                    <GroupTitle title={t('ui.personal_crafting.machinery')} />
                     {item.machinery.map((atom_id) => (
                       <AtomContent key={atom_id} atom_id={atom_id} amount={1} />
                     ))}
@@ -247,7 +254,7 @@ export function RecipeContent(props: FullProps) {
                 )}
                 {item.structures && (
                   <Box>
-                    <GroupTitle title="Structures" />
+                    <GroupTitle title={t('ui.personal_crafting.structures')} />
                     {item.structures.map((atom_id) => (
                       <AtomContent key={atom_id} atom_id={atom_id} amount={1} />
                     ))}
@@ -256,7 +263,7 @@ export function RecipeContent(props: FullProps) {
               </Box>
               {!!item.steps?.length && (
                 <Box>
-                  <GroupTitle title="Steps" />
+                  <GroupTitle title={t('ui.personal_crafting.steps')} />
                   <ul style={{ paddingLeft: '20px' }}>
                     {item.steps.map((step) => (
                       <li key={step}>{step}</li>
@@ -290,7 +297,7 @@ export function RecipeContent(props: FullProps) {
                             })
                           }
                         >
-                          Make
+                          {t('ui.common.make')}
                         </Button>
                       </Stack.Item>
                       <Stack.Item>
@@ -299,7 +306,9 @@ export function RecipeContent(props: FullProps) {
                             minWidth="30px"
                             lineHeight={2.5}
                             align="center"
-                            tooltip="Repeat this craft until you run out of ingredients."
+                            tooltip={t(
+                              'ui.personal_crafting.repeat_until_out_of_ingredients',
+                            )}
                             tooltipPosition="top"
                             disabled={!craftable || busy}
                             icon="repeat"
@@ -318,7 +327,7 @@ export function RecipeContent(props: FullProps) {
                 <Stack.Item>
                   {!!item.complexity && (
                     <Box color="gray" width="104px" lineHeight={1.5} mt={1}>
-                      Complexity: {item.complexity}
+                      {t('ui.personal_crafting.complexity')}: {item.complexity}
                     </Box>
                   )}
                   {item.foodtypes?.length > 0 && (

@@ -3,6 +3,7 @@ import { classes } from 'tgui-core/react';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import {
   CLEAR_GENE,
   GENE_COLORS,
@@ -89,8 +90,10 @@ function isPairMatched(sequence, index) {
 
 const GenomeSequencer = (props) => {
   const { mutation } = props;
+  const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   if (!mutation) {
-    return <Box color="average">No genome selected for sequencing.</Box>;
+    return <Box color="average">{t('ui.dna.no_genome_selected')}</Box>;
   }
   if (mutation.Scrambled) {
     return (
@@ -160,8 +163,7 @@ const GenomeSequencer = (props) => {
     <>
       <Box m={-0.5}>{pairs}</Box>
       <Box color="label" mt={1}>
-        <b>Tip:</b> Ctrl+Click on the gene to set it to X. Right Click to cycle
-        in reverse.
+        <b>{t('ui.common.tip')}:</b> {t('ui.dna.gene_ctrl_click_tip')}
       </Box>
     </>
   );
@@ -169,6 +171,7 @@ const GenomeSequencer = (props) => {
 
 export const DnaConsoleSequencer = (props) => {
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const mutations = data.storage?.occupant ?? [];
   const { isJokerReady, isMonkey, jokerSeconds, subjectStatus } = data;
   const { sequencerMutation, jokerActive } = data.view;
@@ -180,7 +183,7 @@ export const DnaConsoleSequencer = (props) => {
       <Stack mb={1}>
         <Stack.Item width={(mutations.length <= 8 && '154px') || '174px'}>
           <Section
-            title="Sequences"
+            title={t('ui.dna.sequences')}
             height="214px"
             overflowY={mutations.length > 8 && 'scroll'}
           >
@@ -202,7 +205,7 @@ export const DnaConsoleSequencer = (props) => {
           </Section>
         </Stack.Item>
         <Stack.Item grow={1} basis={0}>
-          <Section title="Sequence Info" minHeight="100%">
+          <Section title={t('ui.dna.sequence_info')} minHeight="100%">
             <MutationInfo mutation={mutation} />
           </Section>
         </Stack.Item>
@@ -223,7 +226,7 @@ export const DnaConsoleSequencer = (props) => {
           </Section>
         )) || (
           <Section
-            title="Genome Sequencer™"
+            title={t('ui.dna.genome_sequencer')}
             buttons={
               (!isJokerReady && (
                 <Box lineHeight="20px" color="label">
@@ -236,7 +239,7 @@ export const DnaConsoleSequencer = (props) => {
                     Click on a gene to reveal it.
                   </Box>
                   <Button
-                    content="Cancel Joker"
+                    content={t('ui.dna.cancel_joker')}
                     onClick={() =>
                       act('set_view', {
                         jokerActive: '',
@@ -248,7 +251,7 @@ export const DnaConsoleSequencer = (props) => {
                 <Button
                   icon="crown"
                   color="purple"
-                  content="Use Joker"
+                  content={t('ui.dna.use_joker')}
                   onClick={() =>
                     act('set_view', {
                       jokerActive: '1',
@@ -264,3 +267,5 @@ export const DnaConsoleSequencer = (props) => {
     </>
   );
 };
+
+

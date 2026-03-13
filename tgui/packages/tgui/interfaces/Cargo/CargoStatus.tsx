@@ -8,10 +8,12 @@ import {
 import { formatMoney } from 'tgui-core/format';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import type { CargoData } from './types';
 
 export function CargoStatus(props) {
   const { act, data } = useBackend<CargoData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     department,
     grocery,
@@ -40,13 +42,13 @@ export function CargoStatus(props) {
       }
     >
       <LabeledList>
-        <LabeledList.Item label="Shuttle">
+        <LabeledList.Item label={t('ui.cargo.shuttle')}>
           {!!docked && !requestonly && !!can_send ? (
             <Button
               color={grocery ? 'orange' : 'green'}
               tooltip={
                 grocery
-                  ? 'The kitchen is waiting for their grocery supply delivery!'
+                  ? t('ui.cargo.kitchen_waiting_for_grocery_delivery')
                   : ''
               }
               tooltipPosition="right"
@@ -58,15 +60,15 @@ export function CargoStatus(props) {
             String(location)
           )}
         </LabeledList.Item>
-        <LabeledList.Item label="CentCom Message">{message}</LabeledList.Item>
+        <LabeledList.Item label={t('ui.cargo.centcom_message')}>{message}</LabeledList.Item>
         {!!loan && !requestonly && (
-          <LabeledList.Item label="Loan">
+          <LabeledList.Item label={t('ui.cargo.loan')}>
             {!loan_dispatched ? (
               <Button disabled={!(away && docked)} onClick={() => act('loan')}>
-                Loan Shuttle
+                {t('ui.cargo.loan_shuttle')}
               </Button>
             ) : (
-              <Box color="bad">Loaned to Centcom</Box>
+              <Box color="bad">{t('ui.cargo.loaned_to_centcom')}</Box>
             )}
           </LabeledList.Item>
         )}

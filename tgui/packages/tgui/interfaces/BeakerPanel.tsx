@@ -9,6 +9,7 @@ import {
 import { capitalizeFirst } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type typePath = string;
 
@@ -91,6 +92,7 @@ type ContainerProps = {
 const ContainerSection = (props: ContainerProps) => {
   const { container, number, updateContainer, reagents, containers } = props;
   const { act } = useBackend<Data>();
+  const { t } = usePreferencesLocalization();
 
   const [setAddingReagent, setSetAddingReagent] = useState<string>(
     reagents[0].id,
@@ -101,7 +103,7 @@ const ContainerSection = (props: ContainerProps) => {
   return (
     <Section
       fill
-      title={`Container ${number}`}
+      title={`${t('ui.common.container')} ${number}`}
       buttons={
         <Button
           icon="cog"
@@ -109,7 +111,7 @@ const ContainerSection = (props: ContainerProps) => {
             act('spawn', { spawn_info: containerToSpawnInfo(container) })
           }
         >
-          Spawn
+          {t('ui.common.spawn')}
         </Button>
       }
     >
@@ -121,7 +123,7 @@ const ContainerSection = (props: ContainerProps) => {
               displayText: readableContainerType(container),
               value: container.id,
             }))}
-            placeholder="Select Container Type"
+            placeholder={t('ui.beaker_panel.select_container_type')}
             selected={container.type}
             displayText={readableContainerType(
               containers.find((c) => c.id === container.type)!,
@@ -178,7 +180,7 @@ const ContainerSection = (props: ContainerProps) => {
                   displayText: readableReagentType(reagent),
                   value: reagent.id,
                 }))}
-                placeholder="Add Reagent"
+                placeholder={t('ui.beaker_panel.add_reagent')}
                 selected={setAddingReagent}
                 displayText={readableReagentType(
                   reagents.find((r) => r.id === setAddingReagent)!,
@@ -224,6 +226,7 @@ const ContainerSection = (props: ContainerProps) => {
 
 export const BeakerPanel = () => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { reagents, containers } = data;
 
   const [container_one, setContainerOne] = makeContainerState(containers[0]);
@@ -237,7 +240,7 @@ export const BeakerPanel = () => {
 
   return (
     <Window
-      title="Spawn a Reagent Container"
+      title={t('ui.beaker_panel.spawn_reagent_container')}
       width={750}
       height={400}
       theme="admin"
@@ -252,7 +255,7 @@ export const BeakerPanel = () => {
                     tooltip={
                       grenadeCheck([container_one, container_two])
                         ? ''
-                        : 'Both containers must be beakers!'
+                        : t('ui.beaker_panel.both_containers_must_be_beakers')
                     }
                     disabled={!grenadeCheck([container_one, container_two])}
                     onClick={() =>
@@ -268,16 +271,16 @@ export const BeakerPanel = () => {
                       })
                     }
                   >
-                    Spawn Grenade
+                    {t('ui.beaker_panel.spawn_grenade')}
                   </Button>
                 </Stack.Item>
                 <Stack.Item grow>
-                  Timer:&nbsp;
+                  {t('ui.beaker_panel.timer')}:&nbsp;
                   <NumberInput
                     step={0.1}
                     minValue={1.0}
                     maxValue={10.0}
-                    unit="seconds"
+                    unit={t('ui.common.seconds_lower')}
                     value={grenadeTimer}
                     onChange={(value) => {
                       setGrenadeTimer(value);
@@ -286,7 +289,7 @@ export const BeakerPanel = () => {
                 </Stack.Item>
                 <Stack.Item fontSize={0.9} align="center">
                   <i>
-                    Spawned containers will grow to fit all listed reagents!
+                    {t('ui.beaker_panel.spawned_containers_will_grow')}
                   </i>
                 </Stack.Item>
               </Stack>

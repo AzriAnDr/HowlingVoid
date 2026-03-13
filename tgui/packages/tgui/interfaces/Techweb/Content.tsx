@@ -1,11 +1,13 @@
 import { Button, Flex, LabeledList } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../localization';
 import { useRemappedBackend } from './helpers';
 import { useTechWebRoute } from './hooks';
 import { TechwebRouter } from './Router';
 
 export function TechwebContent(props) {
   const { act, data } = useRemappedBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     d_disk,
     node_cache,
@@ -24,13 +26,15 @@ export function TechwebContent(props) {
         <Flex className="Techweb__HeaderContent">
           <Flex.Item>
             <LabeledList>
-              <LabeledList.Item label="Security">
+              <LabeledList.Item label={t('ui.techweb.security')}>
                 <span
                   className={`Techweb__SecProtocol ${
                     !!sec_protocols && 'engaged'
                   }`}
                 >
-                  {sec_protocols ? 'Engaged' : 'Disengaged'}
+                  {sec_protocols
+                    ? t('ui.techweb.engaged')
+                    : t('ui.techweb.disengaged')}
                 </span>
               </LabeledList.Item>
               {Object.keys(points).map((k) => (
@@ -39,7 +43,7 @@ export function TechwebContent(props) {
                   {!!points_last_tick[k] && ` (+${points_last_tick[k]}/sec)`}
                 </LabeledList.Item>
               ))}
-              <LabeledList.Item label="Queue">
+              <LabeledList.Item label={t('ui.techweb.queue')}>
                 {queue_nodes.length !== 0
                   ? Object.keys(queue_nodes).map((node_id) => (
                       <Button
@@ -49,14 +53,14 @@ export function TechwebContent(props) {
                         {node_cache[node_id].name}
                       </Button>
                     ))
-                  : 'Empty'}
+                  : t('ui.common.empty')}
               </LabeledList.Item>
             </LabeledList>
           </Flex.Item>
           <Flex.Item grow />
           <Flex.Item>
             <Button fluid onClick={() => act('toggleLock')} icon="lock">
-              Lock Console
+              {t('ui.techweb.lock_console')}
             </Button>
             {d_disk && (
               <Flex.Item>
@@ -66,7 +70,7 @@ export function TechwebContent(props) {
                     setTechwebRoute({ route: 'disk', diskType: 'design' })
                   }
                 >
-                  Design Disk Inserted
+                  {t('ui.techweb.design_disk_inserted')}
                 </Button>
               </Flex.Item>
             )}
@@ -78,7 +82,7 @@ export function TechwebContent(props) {
                     setTechwebRoute({ route: 'disk', diskType: 'tech' })
                   }
                 >
-                  Tech Disk Inserted
+                  {t('ui.techweb.tech_disk_inserted')}
                 </Button>
               </Flex.Item>
             )}

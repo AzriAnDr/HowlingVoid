@@ -10,6 +10,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const JOB_REPORT_MENU_FAIL_REASON_TRACKING_DISABLED = 1;
 const JOB_REPORT_MENU_FAIL_REASON_NO_RECORDS = 2;
@@ -17,6 +18,7 @@ const JOB_REPORT_MENU_FAIL_REASON_NO_RECORDS = 2;
 const sortByPlaytime = (array) => sortBy(array, [([_, playtime]) => -playtime]);
 
 const PlaytimeSection = (props) => {
+  const { t } = usePreferencesLocalization();
   const { playtimes } = props;
 
   const sortedPlaytimes = sortByPlaytime(Object.entries(playtimes)).filter(
@@ -24,7 +26,7 @@ const PlaytimeSection = (props) => {
   );
 
   if (!sortedPlaytimes.length) {
-    return 'No recorded playtime hours for this section.';
+    return t('ui.tracked_playtime.no_recorded_playtime');
   }
 
   const mostPlayed = sortedPlaytimes[0][1];
@@ -65,6 +67,7 @@ const PlaytimeSection = (props) => {
 };
 
 export const TrackedPlaytime = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend();
   const {
     failReason,
@@ -77,41 +80,41 @@ export const TrackedPlaytime = (props) => {
     adminTime,
   } = data;
   return (
-    <Window title="Tracked Playtime" width={550} height={650}>
+    <Window title={t('ui.tracked_playtime.title')} width={550} height={650}>
       <Window.Content scrollable>
         {(failReason &&
           ((failReason === JOB_REPORT_MENU_FAIL_REASON_TRACKING_DISABLED && (
-            <Box>This server has disabled tracking.</Box>
+            <Box>{t('ui.tracked_playtime.tracking_disabled')}</Box>
           )) ||
             (failReason === JOB_REPORT_MENU_FAIL_REASON_NO_RECORDS && (
-              <Box>You have no records.</Box>
+              <Box>{t('ui.tracked_playtime.no_records')}</Box>
             )))) || (
           <Box>
-            <Section title="Total">
+            <Section title={t('ui.common.total')}>
               <PlaytimeSection
                 playtimes={{
-                  Ghost: ghostTime,
-                  Living: livingTime,
-                  Admin: adminTime,
+                  [t('ui.tracked_playtime.ghost')]: ghostTime,
+                  [t('ui.tracked_playtime.living')]: livingTime,
+                  [t('ui.common.admin')]: adminTime,
                 }}
               />
             </Section>
             <Section
-              title="Jobs"
+              title={t('ui.common.jobs')}
               buttons={
                 !!isAdmin && (
                   <Button.Checkbox
                     checked={!!exemptStatus}
                     onClick={() => act('toggle_exempt')}
                   >
-                    Job Playtime Exempt
+                    {t('ui.tracked_playtime.job_playtime_exempt')}
                   </Button.Checkbox>
                 )
               }
             >
               <PlaytimeSection playtimes={jobPlaytimes} />
             </Section>
-            <Section title="Special">
+            <Section title={t('ui.common.special')}>
               <PlaytimeSection playtimes={specialPlaytimes} />
             </Section>
           </Box>

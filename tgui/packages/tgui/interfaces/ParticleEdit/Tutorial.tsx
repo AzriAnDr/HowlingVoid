@@ -10,40 +10,46 @@ import {
 } from 'tgui-core/components';
 
 import { resolveAsset } from '../../assets';
+import { usePreferencesLocalization } from '../localization';
 import { ParticleContext } from '.';
 
 export const ShowDesc = (props) => {
   const { desc, setDesc } = useContext(ParticleContext);
+  const { t } = usePreferencesLocalization();
+  const VarExplanation = getVarExplanation(t);
   return (
     <Modal
       width={'60em'}
       align={VarExplanation[desc].dataunit ? 'center' : 'left'}
     >
       <Section
-        title={'Var Details'}
+        title={t('ui.particle_editor.var_details')}
         buttons={
           VarExplanation[desc].dataunit ? (
-            <Button content="Dismiss" onClick={() => setDesc('')} />
+            <Button
+              content={t('ui.common.dismiss')}
+              onClick={() => setDesc('')}
+            />
           ) : (
             <>
               <Button
-                content="Motion basics"
+                content={t('ui.particle_editor.motion_basics')}
                 selected={desc === 'motion'}
                 onClick={() => setDesc('motion')}
               />
               <Button
-                content="Rand types"
+                content={t('ui.particle_editor.rand_types')}
                 selected={desc === 'randtypes'}
                 onClick={() => setDesc('randtypes')}
               />
               <Button
-                content="Generator types"
+                content={t('ui.particle_editor.generator_types')}
                 selected={desc === 'gentypes'}
                 onClick={() => setDesc('gentypes')}
               />
               <Button
                 icon="x"
-                tooltip={'Dismiss'}
+                tooltip={t('ui.common.dismiss')}
                 color={'red'}
                 onClick={() => setDesc('')}
               />
@@ -53,10 +59,10 @@ export const ShowDesc = (props) => {
       >
         {VarExplanation[desc].dataunit ? (
           <LabeledList>
-            <LabeledList.Item label={'Data unit'}>
+            <LabeledList.Item label={t('ui.particle_editor.data_unit')}>
               {VarExplanation[desc].dataunit}
             </LabeledList.Item>
-            <LabeledList.Item label={'Description'}>
+            <LabeledList.Item label={t('ui.common.description')}>
               {VarExplanation[desc].desc}
             </LabeledList.Item>
           </LabeledList>
@@ -69,7 +75,7 @@ export const ShowDesc = (props) => {
 };
 
 /** Dictionary for all the tutorial question marks + generators guide */
-const VarExplanation = {
+const getVarExplanation = (t) => ({
   width: {
     dataunit: 'Pixels',
     desc: 'This is the width of the particle "image" ie if you go out of this size the particles vanish, but if they go back into the "image" they reappear.',
@@ -226,7 +232,7 @@ const VarExplanation = {
           <Stack>
             <Stack.Item>
               <Stack vertical fill>
-                <Stack.Item bold>UNIFORM RAND(default):</Stack.Item>
+                <Stack.Item bold>{t('ui.particle_editor.uniform_rand_default')}</Stack.Item>
                 <Stack.Item>
                   <Image width={25} src={resolveAsset('uniform')} />
                 </Stack.Item>
@@ -234,7 +240,7 @@ const VarExplanation = {
             </Stack.Item>
             <Stack.Item>
               <Stack vertical fill>
-                <Stack.Item bold>NORMAL RAND:</Stack.Item>
+                <Stack.Item bold>{t('ui.particle_editor.normal_rand')}</Stack.Item>
                 <Stack.Item>
                   <Image width={28.2} src={resolveAsset('normal')} />
                 </Stack.Item>
@@ -246,7 +252,7 @@ const VarExplanation = {
           <Stack>
             <Stack.Item>
               <Stack vertical fill>
-                <Stack.Item bold>LINEAR RAND:</Stack.Item>
+                <Stack.Item bold>{t('ui.particle_editor.linear_rand')}</Stack.Item>
                 <Stack.Item>
                   <Image width={25} src={resolveAsset('linear')} />
                 </Stack.Item>
@@ -254,7 +260,7 @@ const VarExplanation = {
             </Stack.Item>
             <Stack.Item>
               <Stack vertical fill>
-                <Stack.Item bold>SQUARE RAND:</Stack.Item>
+                <Stack.Item bold>{t('ui.particle_editor.square_rand')}</Stack.Item>
                 <Stack.Item>
                   <Image width={25} src={resolveAsset('square_rand')} />
                 </Stack.Item>
@@ -272,16 +278,16 @@ const VarExplanation = {
         <Stack.Item height={2}>
           <Stack>
             <Stack.Item width={10} bold>
-              Type
+              {t('ui.common.type')}
             </Stack.Item>
             <Stack.Item width={11} bold>
-              Result
+              {t('ui.common.result')}
             </Stack.Item>
             <Stack.Item width={20} bold>
-              Description
+              {t('ui.common.description')}
             </Stack.Item>
             <Stack.Item bold width={15}>
-              Visual help
+              {t('ui.particle_editor.visual_help')}
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -289,7 +295,9 @@ const VarExplanation = {
           <Stack>
             <Stack.Item width={10}>num</Stack.Item>
             <Stack.Item width={11}>num</Stack.Item>
-            <Stack.Item width={20}>A random number between A and B.</Stack.Item>
+            <Stack.Item width={20}>
+              {t('ui.particle_editor.random_number_between')}
+            </Stack.Item>
             <Stack.Item>
               <Image
                 src={resolveAsset('num')}
@@ -426,6 +434,6 @@ const VarExplanation = {
   },
 
   generator: {
-    desc: <Box>Please select a topic</Box>,
+    desc: <Box>{t('ui.particle_editor.select_topic')}</Box>,
   },
-};
+});

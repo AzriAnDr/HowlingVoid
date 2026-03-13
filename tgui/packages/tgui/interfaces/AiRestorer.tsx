@@ -10,6 +10,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   AI_present: BooleanLike;
@@ -34,6 +35,7 @@ export const AiRestorer = () => {
 
 export const AiRestorerContent = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     AI_present,
     error,
@@ -52,22 +54,24 @@ export const AiRestorerContent = (props) => {
         <Button
           fluid
           icon="eject"
-          content={AI_present ? name : '----------'}
+          content={AI_present ? name : t('ui.ai_restorer.no_name_placeholder')}
           disabled={!AI_present}
           onClick={() => act('PRG_eject')}
         />
       )}
       {!!AI_present && (
         <Section
-          title={ejectable ? 'System Status' : name}
+          title={ejectable ? t('ui.ai_restorer.system_status') : name}
           buttons={
             <Box inline bold color={isDead ? 'bad' : 'good'}>
-              {isDead ? 'Nonfunctional' : 'Functional'}
+              {isDead
+                ? t('ui.ai_restorer.nonfunctional')
+                : t('ui.ai_restorer.functional')}
             </Box>
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Integrity">
+            <LabeledList.Item label={t('ui.common.integrity')}>
               <ProgressBar
                 value={health}
                 minValue={0}
@@ -82,18 +86,18 @@ export const AiRestorerContent = (props) => {
           </LabeledList>
           {!!restoring && (
             <Box bold textAlign="center" fontSize="20px" color="good" mt={1}>
-              RECONSTRUCTION IN PROGRESS
+              {t('ui.ai_restorer.reconstruction_in_progress')}
             </Box>
           )}
           <Button
             fluid
             icon="plus"
-            content="Begin Reconstruction"
+            content={t('ui.ai_restorer.begin_reconstruction')}
             disabled={restoring}
             mt={1}
             onClick={() => act('PRG_beginReconstruction')}
           />
-          <Section title="Laws">
+          <Section title={t('ui.common.laws')}>
             {laws.map((law) => (
               <Box key={law} className="candystripe">
                 {law}

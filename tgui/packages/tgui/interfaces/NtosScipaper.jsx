@@ -15,6 +15,7 @@ import {
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const NtosScipaper = (props) => {
   return (
@@ -28,6 +29,7 @@ export const NtosScipaper = (props) => {
 
 const PaperPublishing = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     title,
     author,
@@ -47,18 +49,18 @@ const PaperPublishing = (props) => {
   } = data;
   return (
     <>
-      <Section title="Submission Form">
+      <Section title={t('ui.ntos_scipaper.submission_form')}>
         {fileList.length === 0 && (
           <NoticeBox>
-            Use data disk to download files from compressor or doppler array.
+            {t('ui.ntos_scipaper.use_data_disk_notice')}
           </NoticeBox>
         )}
         <LabeledList>
           <LabeledList.Item
-            label="File (required)"
+            label={t('ui.ntos_scipaper.file_required')}
             buttons={
               <Button
-                tooltip="The selected file containing experimental data for our paper. Must be present in the local file system or a data disk to be accesible."
+                tooltip={t('ui.ntos_scipaper.file_tooltip')}
                 icon="info-circle"
               />
             }
@@ -77,10 +79,10 @@ const PaperPublishing = (props) => {
             </Box>
           </LabeledList.Item>
           <LabeledList.Item
-            label="Experiment (required)"
+            label={t('ui.ntos_scipaper.experiment_required')}
             buttons={
               <Button
-                tooltip="The topic we want to publish our paper on. Different topics unlock different technologies and possible partners."
+                tooltip={t('ui.ntos_scipaper.experiment_tooltip')}
                 icon="info-circle"
               />
             }
@@ -99,10 +101,10 @@ const PaperPublishing = (props) => {
             </Box>
           </LabeledList.Item>
           <LabeledList.Item
-            label="Tier (required)"
+            label={t('ui.ntos_scipaper.tier_required')}
             buttons={
               <Button
-                tooltip="The tier we want to publish on. Higher tiers can confer better rewards but means our data will be judged more harshly."
+                tooltip={t('ui.ntos_scipaper.tier_tooltip')}
                 icon="info-circle"
               />
             }
@@ -121,10 +123,10 @@ const PaperPublishing = (props) => {
             </Box>
           </LabeledList.Item>
           <LabeledList.Item
-            label="Partner (required)"
+            label={t('ui.ntos_scipaper.partner_required')}
             buttons={
               <Button
-                tooltip="Which organization to partner with. We can obtain research boosts in techs related to the partner's interests."
+                tooltip={t('ui.ntos_scipaper.partner_tooltip')}
                 icon="info-circle"
               />
             }
@@ -143,10 +145,10 @@ const PaperPublishing = (props) => {
             </Box>
           </LabeledList.Item>
           <LabeledList.Item
-            label="Principal Author"
+            label={t('ui.ntos_scipaper.principal_author')}
             buttons={
               <Button
-                tooltip="Multiple"
+                tooltip={t('ui.ntos_scipaper.multiple')}
                 selected={etAlia}
                 icon="users"
                 onClick={() => act('et_alia')}
@@ -164,7 +166,7 @@ const PaperPublishing = (props) => {
               }
             />
           </LabeledList.Item>
-          <LabeledList.Item label="Title">
+          <LabeledList.Item label={t('ui.common.title')}>
             <Input
               fluid
               value={title}
@@ -175,7 +177,7 @@ const PaperPublishing = (props) => {
               }
             />
           </LabeledList.Item>
-          <LabeledList.Item label="Abstract">
+          <LabeledList.Item label={t('ui.common.abstract')}>
             <Input
               fluid
               value={abstract}
@@ -188,22 +190,22 @@ const PaperPublishing = (props) => {
           </LabeledList.Item>
         </LabeledList>
       </Section>
-      <Section title="Expected Results" key="rewards">
+      <Section title={t('ui.ntos_scipaper.expected_results')} key="rewards">
         <Stack fill>
           <Stack.Item grow>
             <Button
-              tooltip="How much will our relation improve with the particular partner. Cooperation will be used to unlock boosts."
+              tooltip={t('ui.ntos_scipaper.cooperation_tooltip')}
               icon="info-circle"
             />
-            {' Cooperation: '}
+            {` ${t('ui.ntos_scipaper.cooperation')}: `}
             <BlockQuote>{gains[coopIndex]}</BlockQuote>
           </Stack.Item>
           <Stack.Item grow>
             <Button
-              tooltip="How much grant will we be endowed with upon the publication of this paper."
+              tooltip={t('ui.ntos_scipaper.funding_tooltip')}
               icon="info-circle"
             />
-            {' Funding: '}
+            {` ${t('ui.ntos_scipaper.funding')}: `}
             <BlockQuote>{gains[fundingIndex]}</BlockQuote>
           </Stack.Item>
         </Stack>
@@ -215,7 +217,7 @@ const PaperPublishing = (props) => {
           fluid
           onClick={() => act('publish')}
         >
-          Publish Paper
+          {t('ui.ntos_scipaper.publish_paper')}
         </Button>
       </Section>
     </>
@@ -224,9 +226,10 @@ const PaperPublishing = (props) => {
 
 const PaperBrowser = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { publishedPapers, coopIndex, fundingIndex } = data;
   if (publishedPapers.length === 0) {
-    return <NoticeBox> No Published Papers! </NoticeBox>;
+    return <NoticeBox>{t('ui.ntos_scipaper.no_published_papers')}</NoticeBox>;
   } else {
     return publishedPapers.map((paper) => (
       <Collapsible
@@ -235,24 +238,24 @@ const PaperBrowser = (props) => {
       >
         <Section>
           <LabeledList>
-            <LabeledList.Item label="Topic">
+            <LabeledList.Item label={t('ui.ntos_scipaper.topic')}>
               {`${paper.experimentName} - ${paper.tier}`}
             </LabeledList.Item>
-            <LabeledList.Item label="Author">
+            <LabeledList.Item label={t('ui.common.author')}>
               {paper.author + (paper.etAlia ? ' et al.' : '')}
             </LabeledList.Item>
-            <LabeledList.Item label="Partner">{paper.partner}</LabeledList.Item>
-            <LabeledList.Item label="Yield">
+            <LabeledList.Item label={t('ui.ntos_scipaper.partner')}>{paper.partner}</LabeledList.Item>
+            <LabeledList.Item label={t('ui.ntos_scipaper.yield')}>
               <LabeledList>
-                <LabeledList.Item label="Cooperation">
+                <LabeledList.Item label={t('ui.ntos_scipaper.cooperation')}>
                   {paper.gains[coopIndex]}
                 </LabeledList.Item>
-                <LabeledList.Item label="Funding">
+                <LabeledList.Item label={t('ui.ntos_scipaper.funding')}>
                   {paper.gains[fundingIndex]}
                 </LabeledList.Item>
               </LabeledList>
             </LabeledList.Item>
-            <LabeledList.Item label="Abstract">
+            <LabeledList.Item label={t('ui.common.abstract')}>
               {paper.abstract}
             </LabeledList.Item>
           </LabeledList>
@@ -263,6 +266,7 @@ const PaperBrowser = (props) => {
 };
 const ExperimentBrowser = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { experimentInformation = [] } = data;
   return experimentInformation.map((experiment) => (
     <Section title={experiment.name} key={experiment.name}>
@@ -275,7 +279,7 @@ const ExperimentBrowser = (props) => {
             label={
               'Optimal ' +
               experiment.prefix +
-              ' Amount - Tier ' +
+              ` ${t('ui.ntos_scipaper.amount_tier')} ` +
               String(Number(tier) + 1)
             }
           >
@@ -289,6 +293,7 @@ const ExperimentBrowser = (props) => {
 
 const PartnersBrowser = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     partnersInformation,
     coopIndex,
@@ -299,34 +304,34 @@ const PartnersBrowser = (props) => {
   } = data;
   return partnersInformation.map((partner) => (
     <Section title={partner.name} key={partner.path}>
-      <Collapsible title={`Relations: ${relations[partner.path]}`}>
+      <Collapsible title={`${t('ui.ntos_scipaper.relations')}: ${relations[partner.path]}`}>
         <LabeledList>
-          <LabeledList.Item label="Description">
+          <LabeledList.Item label={t('ui.common.description')}>
             {partner.flufftext}
           </LabeledList.Item>
-          <LabeledList.Item label="Relations">
+          <LabeledList.Item label={t('ui.ntos_scipaper.relations')}>
             {relations[partner.path]}
           </LabeledList.Item>
-          <LabeledList.Item label="Cooperation Bonus">
+          <LabeledList.Item label={t('ui.ntos_scipaper.cooperation_bonus')}>
             {`${partner.multipliers[coopIndex]}x`}
           </LabeledList.Item>
-          <LabeledList.Item label="Funding Bonus">
+          <LabeledList.Item label={t('ui.ntos_scipaper.funding_bonus')}>
             {`${partner.multipliers[fundingIndex]}x`}
           </LabeledList.Item>
-          <LabeledList.Item label="Accepted Experiments">
+          <LabeledList.Item label={t('ui.ntos_scipaper.accepted_experiments')}>
             {partner.acceptedExperiments.map((experiment_name) => (
               <Box key={experiment_name}>{experiment_name}</Box>
             ))}
           </LabeledList.Item>
-          <LabeledList.Item label="Technology Sharing">
+          <LabeledList.Item label={t('ui.ntos_scipaper.technology_sharing')}>
             <Table>
               {partner.boostedNodes.map((node) => (
                 <Table.Row key={node.id}>
                   <Table.Cell>
-                    {visibleNodes.includes(node.id)
-                      ? node.name
-                      : 'Unknown Technology'}
-                  </Table.Cell>
+                      {visibleNodes.includes(node.id)
+                        ? node.name
+                        : t('ui.common.unknown_technology')}
+                    </Table.Cell>
                   <Table.Cell>
                     <Button
                       fluid
@@ -335,8 +340,8 @@ const PartnersBrowser = (props) => {
                       disabled={
                         !purchaseableBoosts[partner.path].includes(node.id)
                       }
-                      content="Purchase"
-                      tooltip={`Discount: ${node.discount}`}
+                      content={t('ui.common.purchase')}
+                      tooltip={`${t('ui.ntos_scipaper.discount')}: ${node.discount}`}
                       onClick={() =>
                         act('purchase_boost', {
                           purchased_boost: node.id,
@@ -357,12 +362,13 @@ const PartnersBrowser = (props) => {
 
 export const NtosScipaperContent = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { currentTab, has_techweb } = data;
   return (
     <>
       {!has_techweb && (
-        <Section title="No techweb detected!" key="rewards">
-          Please sync this application to a valid techweb to upload progress!
+        <Section title={t('ui.ntos_scipaper.no_techweb_detected')} key="rewards">
+          {t('ui.ntos_scipaper.sync_to_techweb')}
         </Section>
       )}
       <Tabs key="navigation" fluid align="center">
@@ -374,7 +380,7 @@ export const NtosScipaperContent = (props) => {
             })
           }
         >
-          {'Publish Papers'}
+          {t('ui.ntos_scipaper.tab_publish_papers')}
         </Tabs.Tab>
         <Tabs.Tab
           selected={currentTab === 2}
@@ -384,7 +390,7 @@ export const NtosScipaperContent = (props) => {
             })
           }
         >
-          {'Publications'}
+          {t('ui.ntos_scipaper.tab_publications')}
         </Tabs.Tab>
         <Tabs.Tab
           selected={currentTab === 3}
@@ -394,7 +400,7 @@ export const NtosScipaperContent = (props) => {
             })
           }
         >
-          {'Experiments'}
+          {t('ui.common.experiments')}
         </Tabs.Tab>
         <Tabs.Tab
           selected={currentTab === 4}
@@ -404,7 +410,7 @@ export const NtosScipaperContent = (props) => {
             })
           }
         >
-          {'Scientific Partners'}
+          {t('ui.ntos_scipaper.tab_scientific_partners')}
         </Tabs.Tab>
       </Tabs>
       {currentTab === 1 && <PaperPublishing />}

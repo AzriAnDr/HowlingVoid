@@ -1,18 +1,20 @@
 // THIS IS A NOVA SECTOR UI FILE
 import { BlockQuote, Box, NoticeBox, Section } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from './localization';
 import { Window } from '../layouts';
 
 export const DelamProcedure = () => {
+  const { t } = usePreferencesLocalization();
   return (
     <Window
-      title="Safety Moth - Delamination Emergency Procedure"
+      title={t('ui.delamprocedure.safety_moth_delamination_emergency_procedure')}
       width={666}
       height={865}
       theme="dark"
     >
       <Window.Content>
-        <Section title="NT-approved delam emergency procedure">
+        <Section title={t('ui.delamprocedure.nt_approved_delam_emergency_procedure')}>
           <NoticeBox danger m={2}>
             <b>
               So you&apos;ve found yourself in a bit of a pickle with a
@@ -86,7 +88,7 @@ export const DelamProcedure = () => {
             heroism, but know that the all-knowing Moff is onto you.
           </BlockQuote>
           <Box m={2}>
-            <b>Optional step, for the true daredevils out there</b>
+            <b>{t('ui.delamprocedure.optional_step_for_the_true_daredevils_out_there')}</b>
           </Box>
           <BlockQuote m={2}>
             When it comes time for your second attempt at starting the SM: Take

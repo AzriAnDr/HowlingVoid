@@ -2,9 +2,11 @@ import { Box, Button, Icon, Image, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const OutfitEditor = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { outfit, saveable, dummy64 } = data;
   return (
     <Window width={380} height={600} theme="admin">
@@ -33,7 +35,7 @@ export const OutfitEditor = (props) => {
                   ml={0.5}
                   color="transparent"
                   icon="pencil-alt"
-                  title="Rename this outfit"
+                  title={t('ui.outfiteditor.rename_this_outfit')}
                   onClick={() => act('rename', {})}
                 />
                 {outfit.name}
@@ -42,12 +44,14 @@ export const OutfitEditor = (props) => {
                 <Button
                   color="transparent"
                   icon="info"
-                  tooltip="Ctrl-click a button to select *any* item instead of what will probably fit in that slot."
+                  tooltip={t(
+                    'ui.outfiteditor.ctrl_click_a_button_to_select_any_item_instead_of_what_will_prob',
+                  )}
                   tooltipPosition="bottom-start"
                 />
                 <Button
                   icon="code"
-                  tooltip="Edit this outfit on a VV window"
+                  tooltip={t('ui.outfiteditor.edit_this_outfit_on_a_vv_window')}
                   tooltipPosition="bottom-start"
                   onClick={() => act('vv')}
                 />
@@ -119,6 +123,7 @@ export const OutfitEditor = (props) => {
 
 const OutfitSlot = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { name, icon, iconRot, slot } = props;
   const { outfit } = data;
   const currItem = outfit[slot];
@@ -160,7 +165,7 @@ const OutfitSlot = (props) => {
         }}
         title={currItem?.path}
       >
-        {currItem?.name || 'Empty'}
+        {currItem?.name || t('ui.common.empty')}
       </Box>
     </Stack.Item>
   );

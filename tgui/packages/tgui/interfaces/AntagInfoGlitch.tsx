@@ -2,6 +2,7 @@ import { Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import type { Objective } from './common/Objectives';
 
 type Data = {
@@ -20,6 +21,7 @@ const textStyles = {
 
 export const AntagInfoGlitch = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { antag_name, objectives = [] } = data;
 
   return (
@@ -27,14 +29,14 @@ export const AntagInfoGlitch = (props) => {
       <Window.Content>
         <Section scrollable fill>
           <Stack fill vertical>
-            <Stack.Item>FN TERMINATE_INTRUDERS (REF)</Stack.Item>
+            <Stack.Item>{t('ui.antaginfoglitch.fn_terminate_intruders_ref')}</Stack.Item>
             <Stack.Divider />
             <Stack.Item bold fontSize="16px">
               <span style={textStyles.variable}>Initialize({antag_name})</span>
             </Stack.Item>
             <Stack.Item mb={1}>
-              <span style={textStyles.danger}>Bitrunning</span> is a crime. Your
-              mission: <span style={textStyles.variable}>Eliminate</span>{' '}
+              <span style={textStyles.danger}>{t('ui.antaginfoglitch.bitrunning')}</span> is a crime. Your
+              mission: <span style={textStyles.variable}>{t('ui.antaginfoglitch.eliminate')}</span>{' '}
               organic intruders to maintain the integrity of the system.
             </Stack.Item>
             <SpecificInfo />
@@ -46,21 +48,21 @@ export const AntagInfoGlitch = (props) => {
               </span>
             </Stack.Item>
             <Stack.Item>
-              const <span style={textStyles.variable}>TARGETS</span> ={' '}
+              const <span style={textStyles.variable}>{t('ui.antaginfoglitch.targets')}</span> ={' '}
             </Stack.Item>
             <Stack.Item>
-              <span style={textStyles.variable}>system.</span>
-              <span style={textStyles.danger}>INTRUDERS</span>
+              <span style={textStyles.variable}>{t('ui.antaginfoglitch.system')}</span>
+              <span style={textStyles.danger}>{t('ui.antaginfoglitch.intruders')}</span>
             </Stack.Item>
             <Stack.Item>
-              while <span style={textStyles.variable}>TARGETS</span>.LIFE !={' '}
-              <span style={textStyles.variable}>stat.</span>DEAD
+              while <span style={textStyles.variable}>{t('ui.antaginfoglitch.targets')}</span>.LIFE !={' '}
+              <span style={textStyles.variable}>{t('ui.antaginfoglitch.stat')}</span>DEAD
             </Stack.Item>
             <Stack.Item>
-              <span style={textStyles.variable}>action.</span>
-              <span style={textStyles.danger}>KILL()</span>
+              <span style={textStyles.variable}>{t('ui.antaginfoglitch.action')}</span>
+              <span style={textStyles.danger}>{t('ui.antaginfoglitch.kill')}</span>
             </Stack.Item>
-            <Stack.Item>terminate_intruders([0x70cf4020])</Stack.Item>
+            <Stack.Item>{t('ui.antaginfoglitch.terminate_intruders_0x70cf4020')}</Stack.Item>
           </Stack>
         </Section>
       </Window.Content>
@@ -70,6 +72,7 @@ export const AntagInfoGlitch = (props) => {
 
 const SpecificInfo = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { antag_name } = data;
 
   switch (antag_name) {
@@ -78,10 +81,10 @@ const SpecificInfo = (props) => {
         <>
           <Stack.Item mb={1}>
             To assist your task, your program has been loaded with cutting edge{' '}
-            <span style={textStyles.variable}>martial arts</span> skills.
+            <span style={textStyles.variable}>{t('ui.antaginfoglitch.martial_arts')}</span> skills.
           </Stack.Item>
           <Stack.Item grow>
-            Ranged weaponry is <span style={textStyles.danger}>forbidden</span>.
+            Ranged weaponry is <span style={textStyles.danger}>{t('ui.antaginfoglitch.forbidden')}</span>.
             Ballistic defense is frowned upon. Style is paramount.
           </Stack.Item>
         </>
@@ -91,10 +94,10 @@ const SpecificInfo = (props) => {
         <>
           <Stack.Item mb={1}>
             You are an advanced combat unit. You have been outfitted with{' '}
-            <span style={textStyles.variable}>lethal weaponry</span>.
+            <span style={textStyles.variable}>{t('ui.antaginfoglitch.lethal_weaponry')}</span>.
           </Stack.Item>
           <Stack.Item grow>
-            <span style={textStyles.danger}>Terminate</span> organic life at any
+            <span style={textStyles.danger}>{t('ui.antaginfoglitch.terminate')}</span> organic life at any
             cost.
           </Stack.Item>
         </>

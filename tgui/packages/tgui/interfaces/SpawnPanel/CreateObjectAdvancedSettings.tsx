@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Button, Dropdown, Slider, Table } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import type { IconSettings } from './index';
 
 type SpawnPanelData = {
@@ -21,6 +22,7 @@ export function CreateObjectAdvancedSettings(
   props: CreateObjectAdvancedSettingsProps,
 ) {
   const { act, data } = useBackend<SpawnPanelData>();
+  const { t } = usePreferencesLocalization(data);
   const { iconSettings, onIconSettingsChange } = props;
 
   const sendUpdatedSettings = (
@@ -50,11 +52,11 @@ export function CreateObjectAdvancedSettings(
     <Table>
       <Table.Row className="candystripe" lineHeight="26px">
         <Table.Cell pl={1} width="fit-content">
-          Icon:
+          {t('ui.common.icon')}:
         </Table.Cell>
         <Table.Cell>
           <Button fluid onClick={() => act('select-new-DMI')}>
-            {data.icon || iconSettings.icon || 'Default'}
+            {data.icon || iconSettings.icon || t('ui.common.default')}
           </Button>
         </Table.Cell>
         <Table.Cell pr={1} width="25px">
@@ -69,12 +71,16 @@ export function CreateObjectAdvancedSettings(
         </Table.Cell>
       </Table.Row>
       <Table.Row className="candystripe" lineHeight="26px">
-        <Table.Cell pl={1}>Icon state:</Table.Cell>
+        <Table.Cell pl={1}>{t('ui.common.icon_state')}:</Table.Cell>
         <Table.Cell>
           <Dropdown
             options={iconStateOptions}
-            selected={data.iconState || iconSettings.iconState || 'Default'}
-            displayText={data.iconState || iconSettings.iconState || 'Default'}
+            selected={
+              data.iconState || iconSettings.iconState || t('ui.common.default')
+            }
+            displayText={
+              data.iconState || iconSettings.iconState || t('ui.common.default')
+            }
             onSelected={(value) => {
               act('select-new-icon-state', {
                 new_state: value,
@@ -98,7 +104,7 @@ export function CreateObjectAdvancedSettings(
         </Table.Cell>
       </Table.Row>
       <Table.Row className="candystripe" lineHeight="26px">
-        <Table.Cell pl={1}>Explicitly set icon:</Table.Cell>
+        <Table.Cell pl={1}>{t('ui.spawn_panel.explicitly_set_icon')}:</Table.Cell>
         <Table.Cell>
           <Button.Checkbox
             checked={!!iconSettings.applyIcon}
@@ -108,13 +114,13 @@ export function CreateObjectAdvancedSettings(
               act('set-apply-icon-override', { value: next });
             }}
           >
-            Enabled
+            {t('ui.common.enabled')}
           </Button.Checkbox>
         </Table.Cell>
         <Table.Cell pr={1} />
       </Table.Row>
       <Table.Row className="candystripe" lineHeight="26px">
-        <Table.Cell pl={1}>Icon scale:</Table.Cell>
+        <Table.Cell pl={1}>{t('ui.spawn_panel.icon_scale')}:</Table.Cell>
         <Table.Cell width="auto">
           <Slider
             minValue={25}

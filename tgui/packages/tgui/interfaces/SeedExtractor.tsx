@@ -16,6 +16,7 @@ import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type TraitData = {
   path: string;
@@ -61,6 +62,7 @@ type SeedExtractorData = {
 
 export const SeedExtractor = (props) => {
   const { act, data } = useBackend<SeedExtractorData>();
+  const { t } = usePreferencesLocalization();
   const [searchText, setSearchText] = useState('');
   const [sortField, setSortField] = useState('name');
   const [action, toggleAction] = useState(true);
@@ -81,7 +83,7 @@ export const SeedExtractor = (props) => {
               <Table.Cell colSpan={3} px={1} py={2}>
                 <Input
                   autoFocus
-                  placeholder="Search..."
+                  placeholder={t('ui.common.search_placeholder')}
                   value={searchText}
                   onChange={setSearchText}
                   fluid
@@ -90,7 +92,7 @@ export const SeedExtractor = (props) => {
               <Table.Cell collapsing p={1}>
                 <Tooltip
                   content={
-                    'Potency: Determines product mass, reagent volume and strength of effects.'
+                    t('ui.seed_extractor.potency_tooltip')
                   }
                 >
                   <Box
@@ -104,7 +106,7 @@ export const SeedExtractor = (props) => {
               <Table.Cell collapsing p={1}>
                 <Tooltip
                   content={
-                    'Yield: The number of products gathered in a single harvest.'
+                    t('ui.seed_extractor.yield_tooltip')
                   }
                 >
                   <Box
@@ -118,7 +120,7 @@ export const SeedExtractor = (props) => {
               <Table.Cell collapsing p={1}>
                 <Tooltip
                   content={
-                    'Instability: The likelihood of the plant to randomize stats or mutate. Affects quality of resulting food & drinks.'
+                    t('ui.seed_extractor.instability_tooltip')
                   }
                 >
                   <Box
@@ -132,7 +134,7 @@ export const SeedExtractor = (props) => {
               <Table.Cell collapsing p={1}>
                 <Tooltip
                   content={
-                    'Endurance: The health pool of the plant that delays death. Improves quality of resulting food & drinks.'
+                    t('ui.seed_extractor.endurance_tooltip')
                   }
                 >
                   <Box
@@ -181,7 +183,7 @@ export const SeedExtractor = (props) => {
               </Table.Cell>
               <Table.Cell collapsing p={1} textAlign="right">
                 {sortField !== 'name' && (
-                  <Tooltip content="Reset sorting">
+                    <Tooltip content={t('ui.seed_extractor.reset_sorting')}>
                     <Button
                       color="transparent"
                       icon="refresh"
@@ -192,7 +194,13 @@ export const SeedExtractor = (props) => {
                 <Box align="right" />
               </Table.Cell>
               <Table.Cell collapsing p={1} textAlign="right">
-                <Tooltip content={action ? 'Scrap seeds' : 'Take seeds'}>
+                <Tooltip
+                  content={
+                    action
+                      ? t('ui.seed_extractor.scrap_seeds')
+                      : t('ui.seed_extractor.take_seeds')
+                  }
+                >
                   <Button
                     icon={action ? 'trash' : 'eject'}
                     color={action ? 'bad' : ''}
@@ -226,7 +234,7 @@ export const SeedExtractor = (props) => {
                     ))}
                     {!!item.mutatelist.length && (
                       <Tooltip
-                        content={`Mutates into: ${item.mutatelist.join(', ')}`}
+                        content={`${t('ui.seed_extractor.mutates_into')}: ${item.mutatelist.join(', ')}`}
                       >
                         <Icon name="dna" m={0.5} />
                       </Tooltip>
@@ -247,13 +255,15 @@ export const SeedExtractor = (props) => {
                       </Tooltip>
                     )}
                     {!!item.juice_name && (
-                      <Tooltip content={`Juicing result: ${item.juice_name}`}>
+                      <Tooltip
+                        content={`${t('ui.seed_extractor.juicing_result')}: ${item.juice_name}`}
+                      >
                         <Icon name="glass-water" m={0.5} />
                       </Tooltip>
                     )}
                     {!!item.distill_reagent && (
                       <Tooltip
-                        content={`Ferments into: ${item.distill_reagent}`}
+                        content={`${t('ui.seed_extractor.ferments_into')}: ${item.distill_reagent}`}
                       >
                         <Icon name="wine-bottle" m={0.5} />
                       </Tooltip>
@@ -290,7 +300,7 @@ export const SeedExtractor = (props) => {
                     {action ? (
                       <Button
                         icon="eject"
-                        content="Take"
+                        content={t('ui.common.take')}
                         onClick={() =>
                           act('take', {
                             item: item.key,
@@ -300,7 +310,7 @@ export const SeedExtractor = (props) => {
                     ) : (
                       <Button
                         icon="trash"
-                        content="Scrap"
+                        content={t('ui.common.scrap')}
                         color="bad"
                         onClick={() =>
                           act('scrap', {
@@ -315,7 +325,7 @@ export const SeedExtractor = (props) => {
           </Table>
           {seeds.length === 0 && (
             <NoticeBox m={1} p={1}>
-              No seeds found.
+              {t('ui.seed_extractor.no_seeds_found')}
             </NoticeBox>
           )}
         </Section>
@@ -354,6 +364,7 @@ export const Level = (props) => {
 };
 
 export const ReagentTooltip = (props) => {
+  const { t } = usePreferencesLocalization();
   let rate_total = 0;
   props.reagents.forEach((reagent) => {
     rate_total += reagent.rate;
@@ -377,7 +388,7 @@ export const ReagentTooltip = (props) => {
   return (
     <Table>
       <Table.Row header>
-        <Table.Cell colSpan={3}>Reagents on grind:</Table.Cell>
+        <Table.Cell colSpan={3}>{t('ui.seed_extractor.reagents_on_grind')}</Table.Cell>
       </Table.Row>
       {props.reagents?.map((reagent, i) => (
         <Table.Row key={i}>
@@ -395,7 +406,7 @@ export const ReagentTooltip = (props) => {
         <Table.Cell colSpan={3} style={{ borderTop: '1px dotted gray' }} />
       </Table.Row>
       <Table.Row header>
-        <Table.Cell pt={1.5}>Total</Table.Cell>
+        <Table.Cell pt={1.5}>{t('ui.common.total')}</Table.Cell>
         <Table.Cell py={0.5} pl={2} textAlign={'right'}>
           {Math.round(reagent_volumes.reduce((a, b) => a + b))}u
         </Table.Cell>
@@ -404,7 +415,7 @@ export const ReagentTooltip = (props) => {
         </Table.Cell>
       </Table.Row>
       <Table.Row header>
-        <Table.Cell>Capacity</Table.Cell>
+        <Table.Cell>{t('ui.common.capacity')}</Table.Cell>
         <Table.Cell py={0.5} pl={2} textAlign={'right'}>
           {props.volume_units}u
         </Table.Cell>
@@ -417,7 +428,7 @@ export const ReagentTooltip = (props) => {
           </Table.Row>
           <Table.Row header>
             <Table.Cell colSpan={3} pt={1}>
-              Nutriments turn into:
+              {t('ui.seed_extractor.nutriments_turn_into')}
             </Table.Cell>
           </Table.Row>
           {props.grind_results?.map((reagent, i) => (
@@ -432,6 +443,7 @@ export const ReagentTooltip = (props) => {
 };
 
 export const TraitTooltip = (props) => {
+  const { t } = usePreferencesLocalization();
   const trait = props.trait_db.find((t) => {
     return t.path === props.path;
   });
@@ -444,7 +456,9 @@ export const TraitTooltip = (props) => {
         <Table>
           {!!props.grafting && (
             <Table.Row>
-              <Table.Cell pb={1}>Graft gains the following trait:</Table.Cell>
+              <Table.Cell pb={1}>
+                {t('ui.seed_extractor.graft_gains_trait')}
+              </Table.Cell>
             </Table.Row>
           )}
           <Table.Row header>
@@ -455,7 +469,7 @@ export const TraitTooltip = (props) => {
           </Table.Row>
           {!!props.removable && (
             <Table.Row>
-              <Table.Cell pb={1}>Removable trait.</Table.Cell>
+              <Table.Cell pb={1}>{t('ui.seed_extractor.removable_trait')}</Table.Cell>
             </Table.Row>
           )}
           {!!trait.description && (

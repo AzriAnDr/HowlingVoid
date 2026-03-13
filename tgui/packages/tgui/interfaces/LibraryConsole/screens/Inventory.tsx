@@ -1,17 +1,19 @@
 import { useBackend } from 'tgui/backend';
 import { Button, NoticeBox, Stack, Table } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../../localization';
 import { PageSelect } from '../components/PageSelect';
 import { ScrollableSection } from '../components/ScrollableSection';
 import type { LibraryConsoleData } from '../types';
 
 export function Inventory(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { inventory_page_count, inventory_page, has_inventory } = data;
 
   if (!has_inventory) {
     return (
-      <NoticeBox>No Book Records detected. Update your inventory!</NoticeBox>
+      <NoticeBox>{t('ui.library.no_book_records_detected')}</NoticeBox>
     );
   }
 
@@ -19,7 +21,7 @@ export function Inventory(props) {
     <Stack vertical justify="space-between" height="100%">
       <Stack.Item grow>
         <ScrollableSection
-          header="Library Inventory"
+          header={t('ui.library.inventory')}
           contents={<InventoryDetails />}
         />
       </Stack.Item>
@@ -41,6 +43,7 @@ export function Inventory(props) {
 
 function InventoryDetails(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { inventory = [] } = data;
 
   const sorted = inventory
@@ -54,9 +57,9 @@ function InventoryDetails(props) {
   return (
     <Table>
       <Table.Row header className="candystripe">
-        <Table.Cell>Title</Table.Cell>
-        <Table.Cell>Author</Table.Cell>
-        <Table.Cell textAlign="center">Remove</Table.Cell>
+        <Table.Cell>{t('ui.common.title')}</Table.Cell>
+        <Table.Cell>{t('ui.common.author')}</Table.Cell>
+        <Table.Cell textAlign="center">{t('ui.common.remove')}</Table.Cell>
       </Table.Row>
       {sorted.map((book) => (
         <Table.Row key={book.key} className="candystripe">
@@ -73,7 +76,7 @@ function InventoryDetails(props) {
               }
               icon="times"
             >
-              Clear Record
+              {t('ui.library.clear_record')}
             </Button>
           </Table.Cell>
         </Table.Row>

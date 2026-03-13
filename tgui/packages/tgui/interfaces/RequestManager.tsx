@@ -17,6 +17,7 @@ import { createSearch, decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   requests: Request[];
@@ -46,6 +47,7 @@ const displayTypeMap = {
 
 export const RequestManager = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { requests = [] } = data;
   const [filteredTypes, setFilteredTypes] = useState(
     Object.fromEntries(
@@ -74,10 +76,10 @@ export const RequestManager = (props) => {
   }
 
   return (
-    <Window title="Request Manager" width={575} height={600} theme="admin">
+    <Window title={t('ui.request_manager.title')} width={575} height={600} theme="admin">
       <Window.Content scrollable>
         <Section
-          title="Requests"
+          title={t('ui.request_manager.requests')}
           buttons={
             <Stack>
               <Stack.Item>
@@ -88,12 +90,12 @@ export const RequestManager = (props) => {
                     'Enables automatic printing of fax requests to the admin fax machine. By default, this fax is located in the briefing room at the central command station'
                   }
                 >
-                  Auto-print Faxes
+                  {t('ui.request_manager.auto_print_faxes')}
                 </Button.Checkbox>
                 <Input
                   value={searchText}
                   onChange={setSearchText}
-                  placeholder="Search..."
+                  placeholder={t('ui.common.search_placeholder')}
                   mr={1}
                 />
               </Stack.Item>
@@ -143,20 +145,21 @@ const RequestType = (props) => {
 };
 
 const RequestControls = (props) => {
-  const { act } = useBackend<Data>();
+  const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { request } = props;
 
   return (
     <div className="RequestManager__controlsContainer">
-      <Button onClick={() => act('pp', { id: request.id })}>PP</Button>
-      <Button onClick={() => act('vv', { id: request.id })}>VV</Button>
-      <Button onClick={() => act('sm', { id: request.id })}>SM</Button>
-      <Button onClick={() => act('flw', { id: request.id })}>FLW</Button>
-      <Button onClick={() => act('tp', { id: request.id })}>TP</Button>
-      <Button onClick={() => act('logs', { id: request.id })}>LOGS</Button>
-      <Button onClick={() => act('smite', { id: request.id })}>SMITE</Button>
+      <Button onClick={() => act('pp', { id: request.id })}>{t('ui.request_manager.pp')}</Button>
+      <Button onClick={() => act('vv', { id: request.id })}>{t('ui.request_manager.vv')}</Button>
+      <Button onClick={() => act('sm', { id: request.id })}>{t('ui.request_manager.sm')}</Button>
+      <Button onClick={() => act('flw', { id: request.id })}>{t('ui.request_manager.flw')}</Button>
+      <Button onClick={() => act('tp', { id: request.id })}>{t('ui.request_manager.tp')}</Button>
+      <Button onClick={() => act('logs', { id: request.id })}>{t('ui.request_manager.logs')}</Button>
+      <Button onClick={() => act('smite', { id: request.id })}>{t('ui.request_manager.smite')}</Button>
       {request.req_type !== 'request_prayer' && (
-        <Button onClick={() => act('rply', { id: request.id })}>RPLY</Button>
+        <Button onClick={() => act('rply', { id: request.id })}>{t('ui.request_manager.rply')}</Button>
       )}
       {request.req_type === 'request_nuke' && (
         <Button onClick={() => act('setcode', { id: request.id })}>
@@ -165,14 +168,14 @@ const RequestControls = (props) => {
       )}
       {request.req_type === 'request_fax' && (
         <>
-          <Button onClick={() => act('show', { id: request.id })}>SHOW</Button>
+          <Button onClick={() => act('show', { id: request.id })}>{t('ui.request_manager.show')}</Button>
           <Button onClick={() => act('print', { id: request.id })}>
             PRINT
           </Button>
         </>
       )}
       {request.req_type === 'request_internet_sound' && (
-        <Button onClick={() => act('play', { id: request.id })}>PLAY</Button>
+        <Button onClick={() => act('play', { id: request.id })}>{t('ui.request_manager.play')}</Button>
       )}
     </div>
   );

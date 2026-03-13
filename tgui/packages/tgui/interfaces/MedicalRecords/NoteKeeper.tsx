@@ -12,6 +12,7 @@ import {
 } from 'tgui-core/components';
 
 import { getMedicalRecord } from './helpers';
+import { usePreferencesLocalization } from '../localization';
 import type { MedicalNote, MedicalRecordData } from './types';
 
 /** Small section for adding notes. Passes a ref and note to Byond. */
@@ -19,7 +20,8 @@ export const NoteKeeper = (props) => {
   const foundRecord = getMedicalRecord();
   if (!foundRecord) return;
 
-  const { act } = useBackend<MedicalRecordData>();
+  const { act, data } = useBackend<MedicalRecordData>();
+  const { t } = usePreferencesLocalization(data);
   const { crew_ref } = foundRecord;
 
   const [selectedNote, setSelectedNote] = useLocalState<
@@ -46,7 +48,12 @@ export const NoteKeeper = (props) => {
   };
 
   return (
-    <Section buttons={<NoteTabs />} fill scrollable title="Notes">
+    <Section
+      buttons={<NoteTabs />}
+      fill
+      scrollable
+      title={t('ui.medical_records.notes')}
+    >
       {writing && (
         <TextArea
           fluid
@@ -61,17 +68,17 @@ export const NoteKeeper = (props) => {
         <>
           <LabeledList>
             <LabeledList.Item
-              label="Author"
+              label={t('ui.common.author')}
               buttons={<Button color="bad" icon="trash" onClick={deleteNote} />}
             >
               {selectedNote.author}
             </LabeledList.Item>
-            <LabeledList.Item label="Time">
+            <LabeledList.Item label={t('ui.common.time')}>
               {selectedNote.time}
             </LabeledList.Item>
           </LabeledList>
           <Box color="label" mb={1} mt={1}>
-            Content:
+            {t('ui.common.content')}:
           </Box>
           <BlockQuote>{selectedNote.content}</BlockQuote>
         </>
@@ -85,6 +92,8 @@ const NoteTabs = (props) => {
   const foundRecord = getMedicalRecord();
   if (!foundRecord) return;
   const { notes } = foundRecord;
+  const { data } = useBackend<MedicalRecordData>();
+  const { t } = usePreferencesLocalization(data);
 
   const [selectedNote, setSelectedNote] = useLocalState<
     MedicalNote | undefined
@@ -118,11 +127,11 @@ const NoteTabs = (props) => {
         </Tabs.Tab>
       ))}
       <Tooltip
-        content={`Add a new note. Press enter or escape to exit view.`}
+        content={t('ui.medical_records.add_new_note_tooltip')}
         position="bottom"
       >
         <Tabs.Tab onClick={composeNew} selected={writing}>
-          <Icon name="plus" /> New
+          <Icon name="plus" /> {t('ui.common.new')}
         </Tabs.Tab>
       </Tooltip>
     </Tabs>

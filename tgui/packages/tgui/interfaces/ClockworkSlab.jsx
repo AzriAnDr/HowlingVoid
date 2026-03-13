@@ -14,6 +14,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const brassColor = '#DFC69C';
 const tinkerCache = '#B5FD9D';
@@ -32,6 +33,8 @@ const convertPower = (power_in) => {
 };
 
 export const ClockworkSlab = (props) => {
+  const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const [selectedTab, setSelectedTab] = useState('Servitude');
   const updateSelectedTab = (tab) => {
     setSelectedTab(tab);
@@ -43,7 +46,7 @@ export const ClockworkSlab = (props) => {
           title={
             <Box inline color={'good'}>
               <Icon name={'cog'} rotation={0} spin={1} />
-              {' Clockwork Slab '}
+              {` ${t('ui.clockwork.slab_title')} `}
               <Icon name={'cog'} rotation={35} spin={1} />
             </Box>
           }
@@ -65,7 +68,7 @@ export const ClockworkSlab = (props) => {
             <Section
               height="100%"
               overflowY="auto"
-              title="Servants of the Cog vol.1"
+              title={t('ui.clockwork.help_title')}
             >
               <ClockworkHelp />
             </Section>
@@ -77,132 +80,112 @@ export const ClockworkSlab = (props) => {
 };
 
 const ClockworkHelp = (props) => {
+  const { t } = usePreferencesLocalization();
   return (
     <>
-      <Collapsible title="Where To Start" color="average" open={1}>
+      <Collapsible title={t('ui.clockwork.where_to_start')} color="average" open={1}>
         <Section>
-          After a long and destructive war, Rat&#39;Var has been imprisoned
-          inside a dimension of suffering.
+          {t('ui.clockwork.help_start_desc_1')}
           <br />
-          You are one of his last remaining, most loyal servants. <br />
-          You are very weak and have little power, with most of your scriptures
-          unable to function.
+          {t('ui.clockwork.help_start_desc_2')} <br />
+          {t('ui.clockwork.help_start_desc_3')}
           <br />
           <b>
-            Install&nbsp;
-            <font color={brassColor}>Integration Cogs&nbsp;</font>
-            to unlock more scriptures and siphon power!
+            {t('ui.clockwork.help_start_install')}&nbsp;
+            <font color={brassColor}>{t('ui.clockwork.integration_cogs')}&nbsp;</font>
+            {t('ui.clockwork.help_start_install_suffix')}
           </b>
           <br />
         </Section>
       </Collapsible>
-      <Collapsible title="Unlocking Scriptures" color="average">
+      <Collapsible title={t('ui.clockwork.unlocking_scriptures')} color="average">
         <Section>
-          Most scriptures require <b>cogs</b> to unlock.
+          {t('ui.clockwork.help_unlock_desc_1')} <b>{t('ui.clockwork.cogs')}</b> {t('ui.clockwork.help_unlock_desc_2')}
           <br />
-          Invoke&nbsp;
+          {t('ui.clockwork.help_unlock_invoke')}&nbsp;
           <font color={brassColor}>
-            <b>Integration Cog&nbsp;</b>
+            <b>{t('ui.clockwork.integration_cog')}&nbsp;</b>
           </font>
-          to summon an Integration Cog, which can be placed into any&nbsp;
-          <b>APC&nbsp;</b>
-          on the station.
+          {t('ui.clockwork.help_unlock_place')}&nbsp;
+          <b>{t('ui.clockwork.apc')}&nbsp;</b>
+          {t('ui.clockwork.help_unlock_place_suffix')}
           <br />
-          Slice open the&nbsp;
-          <b>APC&nbsp;</b>
-          with the&nbsp;
-          <b>Integration Cog&nbsp;</b>
-          and then insert it in to begin siphoning power. However, you will only
-          gain a cog after the Integration Cog has been inside the APC for 5
-          minutes.
+          {t('ui.clockwork.help_unlock_slice')}&nbsp;
+          <b>{t('ui.clockwork.apc')}&nbsp;</b>
+          {t('ui.clockwork.help_unlock_with')}&nbsp;
+          <b>{t('ui.clockwork.integration_cog')}&nbsp;</b>
+          {t('ui.clockwork.help_unlock_insert')}
           <br />
         </Section>
       </Collapsible>
-      <Collapsible title="Research" color="average">
+      <Collapsible title={t('ui.clockwork.research')} color="average">
         <Section>
-          Some scriptures and equipment take more than simply cogs to unlock.
+          {t('ui.clockwork.help_research_desc_1')}
           <br />
           The&nbsp;
           <font color={brassColor}>
-            <b>Technologist&apos;s Lectern&nbsp;</b>
+            <b>{t('ui.clockwork.technologists_lectern')}&nbsp;</b>
           </font>
-          can be used to research normally-locked equipment and abilities, but
-          not easily.
+          {t('ui.clockwork.help_research_desc_2')}
           <br />
-          Each individual piece of research can only be done in a specific
-          location, and will take time to finish. In that time, your presence
-          will be exceedingly obvious.
+          {t('ui.clockwork.help_research_desc_3')}
           <br />
         </Section>
       </Collapsible>
-      <Collapsible title="Defense" color="average">
+      <Collapsible title={t('ui.clockwork.defense')} color="average">
         <Section>
           <b>
-            You have a wide range of structures and powers that will be vital in
-            defending your grounds.
+            {t('ui.clockwork.help_defense_desc_1')}
           </b>
           <br />
           <b>
-            <font color={brassColor}>Structures:&nbsp;</font>
+            <font color={brassColor}>{t('ui.clockwork.structures')}:&nbsp;</font>
           </b>
-          A variety of invaluable structures are available to you, allowing
-          effective defense of your sanctum. Use your Slab on a structure to
-          gain extra information.
+          {t('ui.clockwork.help_defense_structures_desc')}
           <br />
           <b>
-            <font color={brassColor}>Traps:&nbsp;</font>
+            <font color={brassColor}>{t('ui.clockwork.traps')}:&nbsp;</font>
           </b>
-          Traps are useful contraptions, able to be created at a{' '}
-          <font color={tinkerCache}>Tinkerer&apos;s Cache</font>. Use your Slab
-          to link traps and triggers together.
+          {t('ui.clockwork.help_defense_traps_desc_1')}{' '}
+          <font color={tinkerCache}>{t('ui.clockwork.tinkerers_cache')}</font>. {t('ui.clockwork.help_defense_traps_desc_2')}
           <br />
           <b>
-            <font color={clockMarauder}>Clockwork Marauder:&nbsp;</font>
+            <font color={clockMarauder}>{t('ui.clockwork.clockwork_marauder')}:&nbsp;</font>
           </b>
-          A powerful shell that can deflect attacks and delivers a strong blow
-          in close quarter combat.
+          {t('ui.clockwork.help_defense_marauder_desc')}
           <br />
           <br />
         </Section>
       </Collapsible>
-      <Collapsible title="Tips" color="average">
+      <Collapsible title={t('ui.clockwork.tips')} color="average">
         <Section>
           <b>
-            <font color={brassColor}>Vitality:&nbsp;</font>
+            <font color={brassColor}>{t('ui.clockwork.vitality')}:&nbsp;</font>
           </b>
-          You need vitality to create{' '}
-          <font color={clockMarauder}>Clockwork Marauders</font>, which is
-          gotten from sacrificing living beings to a{' '}
-          <font color={brassColor}>Vitality Sigil</font>.
+          {t('ui.clockwork.help_tips_vitality_desc_1')}{' '}
+          <font color={clockMarauder}>{t('ui.clockwork.clockwork_marauders')}</font>, {t('ui.clockwork.help_tips_vitality_desc_2')}{' '}
+          <font color={brassColor}>{t('ui.clockwork.vitality_sigil')}</font>.
           <br />
           <b>
-            <font color={brassColor}>Power:&nbsp;</font>
+            <font color={brassColor}>{t('ui.clockwork.power')}:&nbsp;</font>
           </b>
-          Watch your power upkeep! You&apos;re dependent on your cogged APCs to
-          stay powered, and a lot of structures can drain it quickly.
+          {t('ui.clockwork.help_tips_power_desc')}
           <br />
           <b>
-            <font color={brassColor}>Your Base:&nbsp;</font>
+            <font color={brassColor}>{t('ui.clockwork.your_base')}:&nbsp;</font>
           </b>
-          Make sure to have a defensible base of operations! You&apos;re
-          significantly stronger while on brass tiles, so make your home
-          indefensible.
+          {t('ui.clockwork.help_tips_base_desc')}
           <br />
           <b>
-            <font color={replicaFab}>Replica Fabricator:&nbsp;</font>
+            <font color={replicaFab}>{t('ui.clockwork.replica_fabricator')}:&nbsp;</font>
           </b>
-          The Replica Fabricator is one of the strongest tools available to you,
-          via the <font color={tinkerCache}>Tinkerer&apos;s Cache</font>. It
-          allows the conversion of all materials into power, which can be used
-          to create floors, walls, and airlocks. The airlocks will shock all
-          non-cultists.
+          {t('ui.clockwork.help_tips_replica_desc_1')}{' '}
+          <font color={tinkerCache}>{t('ui.clockwork.tinkerers_cache')}</font>. {t('ui.clockwork.help_tips_replica_desc_2')}
           <br />
           <b>
-            <font color={brassColor}>Nar&apos;sie:&nbsp;</font>
+            <font color={brassColor}>{t('ui.clockwork.narsie')}:&nbsp;</font>
           </b>
-          Nar&apos;sian cultists are your greatest foe! Some of your spells are
-          less effective on them, and vice-versa. What remains of Ratvar may
-          reward a vitality sacrifice of such heresy.
+          {t('ui.clockwork.help_tips_narsie_desc')}
           <br />
           <br />
         </Section>
@@ -213,6 +196,7 @@ const ClockworkHelp = (props) => {
 
 const ClockworkSpellList = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { selectedTab } = props;
   const { scriptures = [] } = data;
   return (
@@ -228,12 +212,12 @@ const ClockworkSpellList = (props) => {
                   color={script.purchased ? 'default' : 'average'}
                   content={
                     script.purchased
-                      ? `Invoke ${convertPower(script.cost)}`
-                      : `${script.cog_cost} Cogs`
+                      ? `${t('ui.clockwork.invoke')} ${convertPower(script.cost)}`
+                      : `${script.cog_cost} ${t('ui.clockwork.cogs')}`
                   }
                   tooltip={
                     script.research_required
-                      ? 'Research is required to unlock this.'
+                      ? t('ui.clockwork.research_required_tooltip')
                       : script.tip
                   }
                   disabled={script.research_required}
@@ -250,7 +234,7 @@ const ClockworkSpellList = (props) => {
               <Table.Cell collapsing textAlign="right">
                 <Button
                   fluid
-                  content={'Quickbind'}
+                  content={t('ui.clockwork.quickbind')}
                   disabled={!script.purchased}
                   onClick={() =>
                     act('quickbind', {
@@ -274,29 +258,30 @@ const ClockworkSpellList = (props) => {
 
 const ClockworkOverview = (props) => {
   const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { power, cogs, vitality, max_power, max_vitality } = data;
   return (
     <Box>
       <Box color="good" bold fontSize="16px">
-        {'Celestial Gateway Report'}
+        {t('ui.clockwork.celestial_gateway_report')}
       </Box>
       <Divider />
       <ClockworkOverviewStat
-        title="Cogs"
+        title={t('ui.clockwork.cogs')}
         amount={cogs}
         maxAmount={10}
         iconName="cog"
         unit=""
       />
       <ClockworkOverviewStat
-        title="Power"
+        title={t('ui.clockwork.power')}
         amount={power}
         maxAmount={max_power}
         iconName="battery-half "
         overrideText={convertPower(power)}
       />
       <ClockworkOverviewStat
-        title="Vitality"
+        title={t('ui.clockwork.vitality')}
         amount={vitality}
         maxAmount={max_vitality}
         iconName="tint"
@@ -335,8 +320,13 @@ const ClockworkOverviewStat = (props) => {
 };
 
 const ClockworkButtonSelection = (props) => {
+  const { t } = usePreferencesLocalization();
   const { updateSelectedTab } = props;
-  const tabs = ['Servitude', 'Preservation', 'Structures'];
+  const tabs = [
+    { id: 'Servitude', label: t('ui.clockwork.tab_servitude') },
+    { id: 'Preservation', label: t('ui.clockwork.tab_preservation') },
+    { id: 'Structures', label: t('ui.clockwork.tab_structures') },
+  ];
   const setSelectedTab = (tab) => {
     updateSelectedTab(tab);
   };
@@ -344,9 +334,9 @@ const ClockworkButtonSelection = (props) => {
     <Table>
       <Table.Row>
         {tabs.map((tab) => (
-          <Table.Cell key={tab} collapsing>
-            <Button fluid onClick={() => setSelectedTab(tab)}>
-              {tab}
+          <Table.Cell key={tab.id} collapsing>
+            <Button fluid onClick={() => setSelectedTab(tab.id)}>
+              {tab.label}
             </Button>
           </Table.Cell>
         ))}

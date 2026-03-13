@@ -3,6 +3,7 @@ import { Box, Button, Image, Section } from 'tgui-core/components';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   all_worlds: string[];
@@ -39,6 +40,7 @@ type EquippedGear = {
 
 export const BattleArcade = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     ui_panel,
     player_current_hp,
@@ -60,7 +62,8 @@ export const BattleArcade = (props) => {
           <span style={{ color: '#0783b5' }}>
             {player_current_mp}/{max_mp}
           </span>{' '}
-          | <span style={{ color: '#b8c10b' }}>{player_gold || 0}</span>G <br />
+          | <span style={{ color: '#b8c10b' }}>{player_gold || 0}</span>
+          {t('ui.battle_arcade.gold_suffix')} <br />
           {!equipped_gear.length && 'No gear equipped!'}
           {equipped_gear.map((gear, index) => (
             <>
@@ -86,10 +89,11 @@ export const BattleArcade = (props) => {
 
 const ShopPanel = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { shop_items, cost_of_items, unlocked_world_modifier } = data;
   return (
     <Section align="center">
-      <Box>Welcome to the Inn!</Box>
+      <Box>{t('ui.battle_arcade.welcome_to_the_inn')}</Box>
       <Image width={8} src={resolveAsset('shopkeeper.png')} />
       <Box m={2}>
         Feel free to browse our wares, or take a nap. I&apos;ll be here to

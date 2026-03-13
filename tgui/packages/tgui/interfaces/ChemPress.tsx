@@ -11,6 +11,7 @@ import { capitalizeAll } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Product = {
   ref: string;
@@ -36,6 +37,7 @@ type Data = {
 
 export const ChemPress = () => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     current_volume,
     pill_duration,
@@ -56,7 +58,7 @@ export const ChemPress = () => {
       <Window.Content>
         <Section>
           <LabeledList>
-            <LabeledList.Item label="Product">
+            <LabeledList.Item label={t('ui.chem_press.product')}>
               {packaging_types.map((category, i) => (
                 <Button.Checkbox
                   key={category.cat_name}
@@ -67,7 +69,7 @@ export const ChemPress = () => {
                 </Button.Checkbox>
               ))}
             </LabeledList.Item>
-            <LabeledList.Item label="Volume">
+            <LabeledList.Item label={t('ui.common.volume')}>
               <NumberInput
                 value={current_volume}
                 unit="u"
@@ -84,7 +86,7 @@ export const ChemPress = () => {
               />
             </LabeledList.Item>
             {shownCategory.cat_name === 'pills' && (
-              <LabeledList.Item label="Duration">
+              <LabeledList.Item label={t('ui.common.duration')}>
                 <NumberInput
                   value={pill_duration}
                   unit="s"
@@ -101,7 +103,7 @@ export const ChemPress = () => {
                 />
               </LabeledList.Item>
             )}
-            <LabeledList.Item label="Name">
+            <LabeledList.Item label={t('ui.common.name')}>
               <Input
                 value={product_name}
                 onBlur={(value) =>
@@ -111,7 +113,7 @@ export const ChemPress = () => {
                 }
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Styles">
+            <LabeledList.Item label={t('ui.chem_press.styles')}>
               {shownCategory.products.map((design, j) => (
                 <ImageButton
                   asset={['', design.class_name]}

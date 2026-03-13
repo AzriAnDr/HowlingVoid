@@ -15,6 +15,7 @@ import { capitalizeAll } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const ROOT_CATEGORIES = ['Atmospherics', 'Disposals', 'Transit Tubes'] as const;
 
@@ -92,12 +93,13 @@ type Data = {
 };
 
 export function ColorItem(props) {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const { selected_color, paint_colors = {} } = data;
   const colorNames = Object.keys(paint_colors);
 
   return (
-    <LabeledList.Item label="Color">
+    <LabeledList.Item label={t('ui.common.color')}>
       {colorNames.map((colorName) => (
         <ColorBox
           key={colorName}
@@ -124,11 +126,12 @@ export function ColorItem(props) {
 }
 
 function ModeItem(props) {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const { mode } = data;
 
   return (
-    <LabeledList.Item label="Modes">
+    <LabeledList.Item label={t('ui.rapid_pipe_dispenser.modes')}>
       {TOOLS.map((tool) => (
         <Button.Checkbox
           key={tool.bitmask}
@@ -147,11 +150,12 @@ function ModeItem(props) {
 }
 
 function CategoryItem(props) {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const { category: rootCategoryIndex } = data;
 
   return (
-    <LabeledList.Item label="Category">
+    <LabeledList.Item label={t('ui.common.category')}>
       {ROOT_CATEGORIES.map((categoryName, i) => (
         <Button
           key={categoryName}
@@ -188,11 +192,12 @@ function layerToBitmask(layer: number) {
 }
 
 function LayerSelect(props) {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const { pipe_layers, multi_layer, max_pipe_layers = 1 } = data;
 
   return (
-    <LabeledList.Item label="Layer">
+    <LabeledList.Item label={t('ui.common.layer')}>
       {Array.from({ length: max_pipe_layers }).map((_, layer) => (
         <Button.Checkbox
           key={layer}
@@ -211,12 +216,12 @@ function LayerSelect(props) {
       <Button.Checkbox
         key="multilayer"
         checked={multi_layer}
-        tooltip="Build on multiple pipe layers simultaneously"
+        tooltip={t('ui.rapid_pipe_dispenser.multi_layer_tooltip')}
         onClick={() => {
           act('toggle_multi_layer');
         }}
       >
-        Multi
+        {t('ui.rapid_pipe_dispenser.multi')}
       </Button.Checkbox>
     </LabeledList.Item>
   );
@@ -311,6 +316,7 @@ function PipeTypeSection(props) {
 }
 
 export function SmartPipeBlockSection(props) {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const { init_directions } = data;
 
@@ -324,10 +330,7 @@ export function SmartPipeBlockSection(props) {
                 color="transparent"
                 icon="info"
                 tooltipPosition="right"
-                tooltip="This is a panel for blocking certain connection
-                directions for the smart pipes.
-                The button in the center resets to
-                default (all directions can connect)"
+                tooltip={t('ui.rapid_pipe_dispenser.smart_pipe_block_tooltip')}
               />
             </Stack.Item>
             <Stack.Item>

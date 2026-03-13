@@ -21,6 +21,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type MODsuitData = {
   // Static
@@ -122,6 +123,7 @@ type ModuleConfig = {
 
 export const MODsuit = (props) => {
   const { act, data } = useBackend<MODsuitData>();
+  const { t } = usePreferencesLocalization(data);
   const { ui_theme } = data;
   const { interface_break } = data.suit_status;
   return (
@@ -129,7 +131,7 @@ export const MODsuit = (props) => {
       width={600}
       height={600}
       theme={ui_theme}
-      title="MOD Interface Panel"
+      title={t('ui.modsuit.interface_panel')}
     >
       <Window.Content scrollable={!interface_break}>
         <MODsuitContent />
@@ -248,6 +250,7 @@ const ConfigureListEntry = (props) => {
 const ConfigurePinEntry = (props) => {
   const { name, value, module_ref } = props;
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
   return (
     <Button
       onClick={() =>
@@ -255,7 +258,7 @@ const ConfigurePinEntry = (props) => {
       }
       icon="thumbtack"
       selected={value}
-      tooltip="Pin"
+      tooltip={t('ui.modsuit.pin')}
       tooltipPosition="left"
     />
   );
@@ -292,22 +295,26 @@ const ConfigureDataEntry = (props) => {
   );
 };
 
-const LockedInterface = () => (
-  <Section align="center" fill>
+const LockedInterface = () => {
+  const { t } = usePreferencesLocalization();
+  return (
+    <Section align="center" fill>
     <Icon color="red" name="exclamation-triangle" size={15} />
     <Box fontSize="30px" color="red">
-      ERROR: INTERFACE UNRESPONSIVE
+      {t('ui.modsuit.error_interface_unresponsive')}
     </Box>
-  </Section>
-);
+    </Section>
+  );
+};
 
 const LockedModule = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization();
   return (
     <Dimmer>
       <Stack>
         <Stack.Item fontSize="16px" color="blue">
-          SUIT UNPOWERED
+          {t('ui.modsuit.suit_unpowered')}
         </Stack.Item>
       </Stack>
     </Dimmer>
@@ -339,32 +346,33 @@ const ConfigureScreen = (props) => {
   );
 };
 
-const moduleTypeAction = (param) => {
+const moduleTypeAction = (param, t) => {
   switch (param) {
     case 1:
-      return 'Use';
+      return t('ui.modsuit.use');
     case 2:
-      return 'Toggle';
+      return t('ui.modsuit.toggle');
     case 3:
-      return 'Select';
+      return t('ui.modsuit.select');
   }
 };
 
-const radiationLevels = (param) => {
+const radiationLevels = (param, t) => {
   switch (param) {
     case 1:
-      return 'Low';
+      return t('ui.modsuit.radiation_low');
     case 2:
-      return 'Medium';
+      return t('ui.modsuit.radiation_medium');
     case 3:
-      return 'High';
+      return t('ui.modsuit.radiation_high');
     case 4:
-      return 'Extreme';
+      return t('ui.modsuit.radiation_extreme');
   }
 };
 
 const SuitStatusSection = (props) => {
   const { act, data } = useBackend<MODsuitData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     charge_current,
     charge_max,
@@ -384,14 +392,14 @@ const SuitStatusSection = (props) => {
   } = data.suit_status;
   const { display_time, shift_time, shift_id } = data.module_custom_status;
   const status = malfunctioning
-    ? 'Malfunctioning'
+    ? t('ui.modsuit.status_malfunctioning')
     : active
-      ? 'Active'
-      : 'Inactive';
+      ? t('ui.modsuit.status_active')
+      : t('ui.modsuit.status_inactive');
 
   return (
     <Section
-      title="Suit Status"
+      title={t('ui.modsuit.suit_status')}
       fill
       buttons={
         <Button
@@ -403,7 +411,7 @@ const SuitStatusSection = (props) => {
       }
     >
       <LabeledList>
-        <LabeledList.Item label="Charge">
+        <LabeledList.Item label={t('ui.modsuit.charge')}>
           <ProgressBar
             value={charge_current / charge_max}
             color={chargebar_color}
@@ -414,46 +422,46 @@ const SuitStatusSection = (props) => {
             {chargebar_string}
           </ProgressBar>
         </LabeledList.Item>
-        <LabeledList.Item label="ID Lock">
+        <LabeledList.Item label={t('ui.modsuit.id_lock')}>
           <Button
             icon={locked ? 'lock' : 'lock-open'}
             color={locked ? 'good' : 'default'}
-            content={locked ? 'Locked' : 'Unlocked'}
+            content={locked ? t('ui.modsuit.locked') : t('ui.modsuit.unlocked')}
             onClick={() => act('lock')}
           />
         </LabeledList.Item>
-        <LabeledList.Item label="MODLink">
+        <LabeledList.Item label={t('ui.modsuit.modlink')}>
           <Button
             icon={'wifi'}
             color={link_call ? 'good' : 'default'}
             disabled={!link_freq}
-            tooltip={link_freq ? '' : 'Set a frequency with a multitool!'}
+            tooltip={link_freq ? '' : t('ui.modsuit.set_frequency_multitool')}
             content={
               link_freq
                 ? link_call
-                  ? `Calling (${link_call})`
-                  : `Call (${link_id})`
-                : 'Frequency Unset'
+                  ? `${t('ui.modsuit.calling')} (${link_call})`
+                  : `${t('ui.modsuit.call')} (${link_id})`
+                : t('ui.modsuit.frequency_unset')
             }
             onClick={() => act('call')}
           />
         </LabeledList.Item>
         {!!open && (
-          <LabeledList.Item label="Cover">
-            <Box color="red">Open</Box>
+          <LabeledList.Item label={t('ui.modsuit.cover')}>
+            <Box color="red">{t('ui.modsuit.open')}</Box>
           </LabeledList.Item>
         )}
         {!!seconds_electrified && (
-          <LabeledList.Item label="Circuits">
-            <Box color="red">Shorted</Box>
+          <LabeledList.Item label={t('ui.modsuit.circuits')}>
+            <Box color="red">{t('ui.modsuit.shorted')}</Box>
           </LabeledList.Item>
         )}
         {!!ai_name && (
-          <LabeledList.Item label="pAI Control">
+          <LabeledList.Item label={t('ui.modsuit.pai_control')}>
             {has_pai && (
               <Button
                 icon="eject"
-                content="Eject pAI"
+                content={t('ui.modsuit.eject_pai')}
                 disabled={is_ai}
                 onClick={() => act('eject_pai')}
               />
@@ -462,11 +470,11 @@ const SuitStatusSection = (props) => {
         )}
       </LabeledList>
       {!!display_time && (
-        <Section title="Operation" mt={2}>
-          <LabeledList.Item label="Time">
-            {active ? shift_time : '00:00:00'}
+        <Section title={t('ui.modsuit.operation')} mt={2}>
+          <LabeledList.Item label={t('ui.common.time')}>
+            {active ? shift_time : t('ui.modsuit.time_zero')}
           </LabeledList.Item>
-          <LabeledList.Item label="Number">
+          <LabeledList.Item label={t('ui.modsuit.number')}>
             {active && shift_id ? shift_id : '???'}
           </LabeledList.Item>
         </Section>
@@ -477,18 +485,19 @@ const SuitStatusSection = (props) => {
 
 const HardwareSection = (props) => {
   const { act, data } = useBackend<MODsuitData>();
+  const { t } = usePreferencesLocalization(data);
   const { control } = data;
   const { ai_name, core_name } = data.suit_status;
   return (
-    <Section title="Hardware" style={{ textTransform: 'capitalize' }}>
+    <Section title={t('ui.modsuit.hardware')} style={{ textTransform: 'capitalize' }}>
       <LabeledList>
-        <LabeledList.Item label="Control Unit">{control}</LabeledList.Item>
-        <LabeledList.Item label="Core">
-          {core_name || 'No Core Detected'}
+        <LabeledList.Item label={t('ui.modsuit.control_unit')}>{control}</LabeledList.Item>
+        <LabeledList.Item label={t('ui.modsuit.core')}>
+          {core_name || t('ui.modsuit.no_core_detected')}
         </LabeledList.Item>
         <ModParts />
-        <LabeledList.Item label="AI Assistant">
-          {ai_name || 'No AI Detected'}
+        <LabeledList.Item label={t('ui.modsuit.ai_assistant')}>
+          {ai_name || t('ui.modsuit.no_ai_detected')}
         </LabeledList.Item>
       </LabeledList>
     </Section>
@@ -497,6 +506,7 @@ const HardwareSection = (props) => {
 
 const ModParts = (props) => {
   const { act, data } = useBackend<MODsuitData>();
+  const { t } = usePreferencesLocalization(data);
   const { parts } = data;
   return (
     <>
@@ -504,12 +514,12 @@ const ModParts = (props) => {
         return (
           <LabeledList.Item
             key={part.slot}
-            label={`${part.slot} Slot`}
+            label={`${part.slot} ${t('ui.modsuit.slot')}`}
             buttons={
               <Button
                 selected={part.deployed}
                 icon={part.deployed ? 'arrow-down' : 'arrow-up'}
-                content={part.deployed ? 'Retract' : 'Deploy'}
+                content={part.deployed ? t('ui.modsuit.retract') : t('ui.modsuit.deploy')}
                 onClick={() => act('deploy', { ref: part.ref })}
               />
             }
@@ -524,6 +534,7 @@ const ModParts = (props) => {
 
 const UserStatusSection = (props) => {
   const { act, data } = useBackend<MODsuitData>();
+  const { t } = usePreferencesLocalization(data);
   const { active } = data.suit_status;
   const { user_name, user_assignment } = data.user_status;
   const {
@@ -542,11 +553,11 @@ const UserStatusSection = (props) => {
     viruses,
   } = data.module_custom_status;
   return (
-    <Section title="User Status" fill>
+    <Section title={t('ui.modsuit.user_status')} fill>
       {!active && <LockedModule />}
       <LabeledList>
         {health !== undefined && (
-          <LabeledList.Item label="Health">
+          <LabeledList.Item label={t('ui.common.health')}>
             <ProgressBar
               value={active ? health / health_max : 0}
               ranges={{
@@ -560,7 +571,7 @@ const UserStatusSection = (props) => {
           </LabeledList.Item>
         )}
         {loss_brute !== undefined && (
-          <LabeledList.Item label="Brute Damage">
+          <LabeledList.Item label={t('ui.modsuit.brute_damage')}>
             <ProgressBar
               value={active ? loss_brute / health_max : 0}
               ranges={{
@@ -574,7 +585,7 @@ const UserStatusSection = (props) => {
           </LabeledList.Item>
         )}
         {loss_fire !== undefined && (
-          <LabeledList.Item label="Burn Damage">
+          <LabeledList.Item label={t('ui.modsuit.burn_damage')}>
             <ProgressBar
               value={active ? loss_fire / health_max : 0}
               ranges={{
@@ -588,7 +599,7 @@ const UserStatusSection = (props) => {
           </LabeledList.Item>
         )}
         {loss_oxy !== undefined && (
-          <LabeledList.Item label="Oxy Damage">
+          <LabeledList.Item label={t('ui.modsuit.oxy_damage')}>
             <ProgressBar
               value={active ? loss_oxy / health_max : 0}
               ranges={{
@@ -602,7 +613,7 @@ const UserStatusSection = (props) => {
           </LabeledList.Item>
         )}
         {loss_tox !== undefined && (
-          <LabeledList.Item label="Tox Damage">
+          <LabeledList.Item label={t('ui.modsuit.tox_damage')}>
             <ProgressBar
               value={active ? loss_tox / health_max : 0}
               ranges={{
@@ -616,36 +627,36 @@ const UserStatusSection = (props) => {
           </LabeledList.Item>
         )}
         {background_radiation_level !== undefined && (
-          <LabeledList.Item label="Radiation">
+          <LabeledList.Item label={t('ui.modsuit.radiation')}>
             {!active ? (
-              'Unknown'
+              t('ui.modsuit.unknown')
             ) : is_user_irradiated ? (
-              <NoticeBox danger>User Irradiated</NoticeBox>
+              <NoticeBox danger>{t('ui.modsuit.user_irradiated')}</NoticeBox>
             ) : background_radiation_level ? (
               <NoticeBox>
-                {`Background: ${radiationLevels(background_radiation_level)}`}
+                {`${t('ui.modsuit.background')}: ${radiationLevels(background_radiation_level, t)}`}
               </NoticeBox>
             ) : (
-              <NoticeBox info>Not Detected</NoticeBox>
+              <NoticeBox info>{t('ui.common.not_detected')}</NoticeBox>
             )}
           </LabeledList.Item>
         )}
         {body_temperature !== undefined && (
-          <LabeledList.Item label="Body Temp">
+          <LabeledList.Item label={t('ui.modsuit.body_temp')}>
             {`${active ? Math.round(body_temperature) : 0} K`}
           </LabeledList.Item>
         )}
         {nutrition !== undefined && (
-          <LabeledList.Item label="Satiety Level">
+          <LabeledList.Item label={t('ui.modsuit.satiety_level')}>
             {`${active ? Math.round(nutrition) : 0}`}
           </LabeledList.Item>
         )}
-        <LabeledList.Item label="Name">{user_name}</LabeledList.Item>
-        <LabeledList.Item label="Assignment">
+        <LabeledList.Item label={t('ui.common.name')}>{user_name}</LabeledList.Item>
+        <LabeledList.Item label={t('ui.modsuit.assignment')}>
           {user_assignment}
         </LabeledList.Item>
         {dna_unique_identity !== undefined && (
-          <LabeledList.Item label="Fingerprints">
+          <LabeledList.Item label={t('ui.modsuit.fingerprints')}>
             <Box
               style={{
                 wordBreak: 'break-all',
@@ -657,7 +668,7 @@ const UserStatusSection = (props) => {
           </LabeledList.Item>
         )}
         {dna_unique_enzymes !== undefined && (
-          <LabeledList.Item label="Enzymes">
+          <LabeledList.Item label={t('ui.modsuit.enzymes')}>
             <Box
               style={{
                 wordBreak: 'break-all',
@@ -670,18 +681,18 @@ const UserStatusSection = (props) => {
         )}
       </LabeledList>
       {!!viruses && (
-        <Section title="Diseases">
+        <Section title={t('ui.modsuit.diseases')}>
           {viruses.map((virus) => {
             return (
               <Collapsible title={virus.name} key={virus.name}>
                 <LabeledList>
-                  <LabeledList.Item label="Spread">
+                  <LabeledList.Item label={t('ui.common.spread')}>
                     {virus.type}
                   </LabeledList.Item>
-                  <LabeledList.Item label="Stage">
+                  <LabeledList.Item label={t('ui.modsuit.stage')}>
                     {virus.stage}/{virus.maxstage}
                   </LabeledList.Item>
-                  <LabeledList.Item label="Cure">{virus.cure}</LabeledList.Item>
+                  <LabeledList.Item label={t('ui.common.cure')}>{virus.cure}</LabeledList.Item>
                 </LabeledList>
               </Collapsible>
             );
@@ -694,28 +705,29 @@ const UserStatusSection = (props) => {
 
 const ModuleSection = (props) => {
   const { act, data } = useBackend<MODsuitData>();
+  const { t } = usePreferencesLocalization(data);
   const { complexity_max, module_info } = data;
   const { complexity } = data.suit_status;
   const [configureState, setConfigureState] = useState('');
 
   return (
     <Section
-      title="Modules"
+      title={t('ui.modsuit.modules')}
       fill
-      buttons={`${complexity} of ${complexity_max} complexity used`}
+      buttons={`${complexity} ${t('ui.modsuit.of').toLowerCase()} ${complexity_max} ${t('ui.modsuit.complexity_used').toLowerCase()}`}
     >
       {!module_info.length ? (
-        <NoticeBox>No Modules Detected</NoticeBox>
+        <NoticeBox>{t('ui.modsuit.no_modules_detected')}</NoticeBox>
       ) : (
         <Table>
           <Table.Row header>
-            <Table.Cell colSpan={3}>Actions</Table.Cell>
-            <Table.Cell>Name</Table.Cell>
+            <Table.Cell colSpan={3}>{t('ui.common.actions')}</Table.Cell>
+            <Table.Cell>{t('ui.common.name')}</Table.Cell>
             <Table.Cell width={1} textAlign="center">
               <Button
                 color="transparent"
                 icon="plug"
-                tooltip="Idle Power Cost (Watts)"
+                tooltip={t('ui.modsuit.idle_power_cost_watts')}
                 tooltipPosition="top"
               />
             </Table.Cell>
@@ -723,7 +735,7 @@ const ModuleSection = (props) => {
               <Button
                 color="transparent"
                 icon="lightbulb"
-                tooltip="Active Power Cost (Watts)"
+                tooltip={t('ui.modsuit.active_power_cost_watts')}
                 tooltipPosition="top"
               />
             </Table.Cell>
@@ -731,7 +743,7 @@ const ModuleSection = (props) => {
               <Button
                 color="transparent"
                 icon="bolt"
-                tooltip="Use Energy Cost (Joules)"
+                tooltip={t('ui.modsuit.use_energy_cost_joules')}
                 tooltipPosition="top"
               />
             </Table.Cell>
@@ -739,7 +751,7 @@ const ModuleSection = (props) => {
               <Button
                 color="transparent"
                 icon="save"
-                tooltip="Complexity"
+                tooltip={t('ui.modsuit.complexity')}
                 tooltipPosition="top"
               />
             </Table.Cell>
@@ -758,7 +770,7 @@ const ModuleSection = (props) => {
                         : 'power-off'
                     }
                     selected={module.module_active}
-                    tooltip={moduleTypeAction(module.module_type)}
+                    tooltip={moduleTypeAction(module.module_type, t)}
                     tooltipPosition="left"
                     disabled={!module.module_type || module.cooldown > 0}
                   />
@@ -772,7 +784,7 @@ const ModuleSection = (props) => {
                     }
                     icon="cog"
                     selected={configureState === module.ref}
-                    tooltip="Configure"
+                    tooltip={t('ui.modsuit.configure')}
                     tooltipPosition="left"
                     disabled={module.configuration_data.length === 0}
                   />
@@ -782,7 +794,7 @@ const ModuleSection = (props) => {
                     onClick={() => act('pin', { ref: module.ref })}
                     icon="thumbtack"
                     selected={module.pinned}
-                    tooltip="Pin"
+                    tooltip={t('ui.modsuit.pin')}
                     tooltipPosition="left"
                     disabled={!module.module_type}
                   />

@@ -11,6 +11,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   broken: BooleanLike;
@@ -64,12 +65,13 @@ const dipUnderCircle = (dest, dep) => {
 
 export const TramControl = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { broken, moving, destinations = [], tram_location } = data;
 
   const [transitIndex, setTransitIndex] = useState(1);
 
   return (
-    <Window title="Tram Controls" width={600} height={300}>
+    <Window title={t('ui.tram_control.title')} width={600} height={300}>
       <Window.Content>
         {(!!broken && <BrokenTramDimmer />) || (
           <Section fill>
@@ -81,7 +83,7 @@ export const TramControl = (props) => {
               justify="space-around"
               vertical
             >
-              <Stack.Item>Nanotrasen Transit System</Stack.Item>
+              <Stack.Item>{t('ui.tram_control.nanotrasen_transit_system')}</Stack.Item>
               <Stack.Item>
                 <Stack fill>
                   {destinations.map((dest) => (

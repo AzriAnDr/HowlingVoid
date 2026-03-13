@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   sensorStatus: BooleanLike;
@@ -13,31 +14,41 @@ type Data = {
 
 export const CrossingSignal = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
 
   const { sensorStatus, operatingStatus, inboundPlatform, outboundPlatform } =
     data;
 
   return (
-    <Window title="Crossing Signal" width={400} height={175} theme="dark">
+    <Window
+      title={t('ui.crossing_signal.title')}
+      width={400}
+      height={175}
+      theme="dark"
+    >
       <Window.Content>
-        <Section title="System Status">
+        <Section title={t('ui.crossing_signal.system_status')}>
           <LabeledList>
             <LabeledList.Item
-              label="Operating Status"
+              label={t('ui.crossing_signal.operating_status')}
               color={operatingStatus ? 'bad' : 'good'}
             >
-              {operatingStatus ? 'Degraded' : 'Normal'}
+              {operatingStatus
+                ? t('ui.crossing_signal.degraded')
+                : t('ui.common.normal')}
             </LabeledList.Item>
             <LabeledList.Item
-              label="Sensor Status"
+              label={t('ui.crossing_signal.sensor_status')}
               color={sensorStatus ? 'good' : 'bad'}
             >
-              {sensorStatus ? 'Connected' : 'Error'}
+              {sensorStatus
+                ? t('ui.common.connected')
+                : t('ui.common.error')}
             </LabeledList.Item>
-            <LabeledList.Item label="Inbound Platform">
+            <LabeledList.Item label={t('ui.crossing_signal.inbound_platform')}>
               {inboundPlatform}
             </LabeledList.Item>
-            <LabeledList.Item label="Outbound Platform">
+            <LabeledList.Item label={t('ui.crossing_signal.outbound_platform')}>
               {outboundPlatform}
             </LabeledList.Item>
           </LabeledList>

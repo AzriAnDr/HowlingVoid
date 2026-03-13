@@ -1,6 +1,7 @@
 import { useReducer, useState } from 'react';
 import { Button, Dropdown, Input, Section, Stack } from 'tgui-core/components';
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import { SORTING_TYPES } from './contants';
 import { FilterAction, type FilterState, filterReducer } from './filters';
 import { OverviewSection } from './OverviewSection';
@@ -9,8 +10,9 @@ import { SubsystemViews } from './SubsystemViews';
 import { SortType, type SubsystemData } from './types';
 
 export function ControllerOverview(props) {
+  const { t } = usePreferencesLocalization();
   return (
-    <Window title="Controller Overview" height={600} width={500}>
+    <Window title={t('ui.controller_overview.title')} height={600} width={500}>
       <Window.Content>
         <ControllerContent />
       </Window.Content>
@@ -19,6 +21,7 @@ export function ControllerOverview(props) {
 }
 
 export function ControllerContent(props) {
+  const { t } = usePreferencesLocalization();
   const [state, dispatch] = useReducer(filterReducer, {
     ascending: true,
     inactive: true,
@@ -29,12 +32,14 @@ export function ControllerContent(props) {
 
   const [selected, setSelected] = useState<SubsystemData>();
 
-  const { label, inDeciseconds } =
+  const { label, key, inDeciseconds } =
     SORTING_TYPES?.[state.sortType] || SORTING_TYPES[0];
 
   function onSelectionHandler(value: string) {
     const updates: Partial<FilterState> = {
-      sortType: SORTING_TYPES.findIndex((type) => type.label === value),
+      sortType: SORTING_TYPES.findIndex(
+        (type) => t(`ui.controller_overview.sort.${type.key}`) === value,
+      ),
     };
 
     if (updates.sortType === undefined) return;
@@ -68,7 +73,7 @@ export function ControllerContent(props) {
                     onChange={(value) =>
                       dispatch({ type: FilterAction.Query, payload: value })
                     }
-                    placeholder="By name"
+                    placeholder={t('ui.controller_overview.by_name')}
                     value={state.query}
                     width="85%"
                   />
@@ -77,7 +82,7 @@ export function ControllerContent(props) {
                   <Button
                     disabled={!inDeciseconds}
                     selected={state.smallValues}
-                    tooltip="Hide values under 1"
+                    tooltip={t('ui.controller_overview.hide_values_under_1')}
                     icon={state.smallValues ? 'eye-slash' : 'eye'}
                     onClick={() =>
                       dispatch({
@@ -86,11 +91,11 @@ export function ControllerContent(props) {
                       })
                     }
                   >
-                    Small
+                    {t('ui.controller_overview.small')}
                   </Button>
                   <Button
                     icon={state.inactive ? 'eye-slash' : 'eye'}
-                    tooltip="Hide offline/paused"
+                    tooltip={t('ui.controller_overview.hide_offline_paused')}
                     selected={state.inactive}
                     onClick={() =>
                       dispatch({
@@ -99,7 +104,7 @@ export function ControllerContent(props) {
                       })
                     }
                   >
-                    Inactive
+                    {t('ui.controller_overview.inactive')}
                   </Button>
                 </Stack.Item>
               </Stack>
@@ -108,9 +113,11 @@ export function ControllerContent(props) {
               <Stack vertical>
                 <Stack.Item>
                   <Dropdown
-                    options={SORTING_TYPES.map((type) => type.label)}
-                    selected={label}
-                    displayText={label}
+                    options={SORTING_TYPES.map((type) =>
+                      t(`ui.controller_overview.sort.${type.key}`),
+                    )}
+                    selected={t(`ui.controller_overview.sort.${key}`)}
+                    displayText={t(`ui.controller_overview.sort.${key}`)}
                     onSelected={onSelectionHandler}
                   />
                 </Stack.Item>
@@ -124,7 +131,7 @@ export function ControllerContent(props) {
                       })
                     }
                   >
-                    Ascending
+                    {t('ui.common.ascending')}
                   </Button>
                   <Button
                     selected={!state.ascending}
@@ -135,7 +142,7 @@ export function ControllerContent(props) {
                       })
                     }
                   >
-                    Descending
+                    {t('ui.common.descending')}
                   </Button>
                 </Stack.Item>
               </Stack>

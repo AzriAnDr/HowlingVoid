@@ -13,6 +13,7 @@ import { toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Material = {
   name: string;
@@ -38,6 +39,7 @@ type Data = {
 };
 
 export const MatMarket = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
 
   const {
@@ -60,17 +62,17 @@ export const MatMarket = (props) => {
       <Window.Content scrollable>
         {!!catastrophe && <MarketCrashModal />}
         <Section
-          title="Materials for sale"
+          title={t('ui.mat_market.materials_for_sale')}
           buttons={
             !!canOrderCargo && (
               <Button
                 icon="dollar"
-                tooltip="Place order from cargo budget."
+                tooltip={t('ui.mat_market.place_order_from_cargo_budget')}
                 color={orderingPrive ? '' : 'green'}
                 content={
                   orderingPrive
-                    ? 'Order via Cargo Budget?'
-                    : 'Ordering via Cargo Budget'
+                    ? t('ui.mat_market.order_via_cargo_budget_question')
+                    : t('ui.mat_market.ordering_via_cargo_budget')
                 }
                 onClick={() => act('toggle_budget')}
               />
@@ -78,37 +80,23 @@ export const MatMarket = (props) => {
           }
         >
           <NoticeBox info>
-            <Collapsible title="Instructions" color="blue">
-              Buy orders for material sheets placed here will be ordered on the
-              next cargo shipment.
-              <br /> <br />
-              To sell materials, please insert sheets or similar stacks of
-              materials. All minerals sold on the market directly are subject to
-              a scaling value decrease per material, but this will recover over
-              time. To prevent market manipulation, all registered traders can
-              buy a total of 10 full stacks of materials at a time.
-              <br /> <br />
-              When selling materials, prices will be decreased based on the
-              elastic modifier of the material, which will recover over time.
-              <br /> <br />
-              All new purchases will include the cost of the shipped crate,
-              which may be recycled afterwards.
+            <Collapsible title={t('ui.common.instructions')} color="blue">
+              {t('ui.mat_market.instructions')}
             </Collapsible>
           </NoticeBox>
           <Section>
             <Stack>
               <Stack.Item width="15%">
-                Balance: <b>{formatMoney(creditBalance)}</b> cr.
+                {t('ui.common.balance')}: <b>{formatMoney(creditBalance)}</b> {t('ui.common.credits_short')}
               </Stack.Item>
               <Stack.Item width="15%">
-                Order: <b>{formatMoney(orderBalance)}</b> cr.
+                {t('ui.mat_market.order')}: <b>{formatMoney(orderBalance)}</b> {t('ui.common.credits_short')}
               </Stack.Item>
               <Stack.Item
                 width="20%"
                 color={data.updateTime > 150 ? 'green' : '#ad7526'}
               >
-                <b>{Math.round(data.updateTime / 10)} seconds</b> until next
-                update
+                <b>{Math.round(data.updateTime / 10)} {t('ui.common.seconds_lower')}</b> {t('ui.mat_market.until_next_update')}
               </Stack.Item>
               <Stack.Item>
                 <Button
@@ -117,7 +105,7 @@ export const MatMarket = (props) => {
                   ml={66}
                   onClick={() => act('clear')}
                 >
-                  Clear
+                  {t('ui.common.clear')}
                 </Button>
               </Stack.Item>
             </Stack>
@@ -156,8 +144,8 @@ export const MatMarket = (props) => {
                     </Stack.Item>
                     {material.price < material.threshold ? (
                       <Stack.Item width="33%" ml={2} textColor="grey">
-                        Material price critical!
-                        <br /> <b>Trading temporarily suspended.</b>
+                        {t('ui.mat_market.material_price_critical')}
+                        <br /> <b>{t('ui.mat_market.trading_temporarily_suspended')}</b>
                       </Stack.Item>
                     ) : (
                       <Stack.Item width="33%" ml={2}>
@@ -287,15 +275,10 @@ export const MatMarket = (props) => {
 };
 
 const MarketCrashModal = (props) => {
+  const { t } = usePreferencesLocalization();
   return (
     <Modal textAlign="center" mr={1.5}>
-      ATTENTION! THE MARKET HAS CRASHED
-      <br /> <br />
-      ALL MATERIALS ARE NOW WORTHLESS
-      <br /> <br />
-      TRADING CIRCUIT BREAKER HAS BEEN ENGAGED FOR ALL TRADERS
-      <br /> <br />
-      <b>DO NOT PANIC, WE ARE FIXING THIS</b>
+      {t('ui.mat_market.market_crash_modal')}
     </Modal>
   );
 };

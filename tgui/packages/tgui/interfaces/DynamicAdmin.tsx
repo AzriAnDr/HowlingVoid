@@ -18,6 +18,7 @@ import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type RulesetCount = Record<string, number>;
 
@@ -70,10 +71,10 @@ type Data = {
   antag_events_enabled: BooleanLike;
 };
 
-function formatTime(seconds: number): string {
+function formatTime(seconds: number, t: (key: string) => string): string {
   seconds /= 10;
   if (seconds < 0) {
-    return 'never';
+    return t('ui.dynamic_admin.never');
   }
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
@@ -82,13 +83,13 @@ function formatTime(seconds: number): string {
   return `${hours}h ${minutes}m ${secs}s`;
 }
 
-function getPlayerString(players: Player[]): string {
+function getPlayerString(players: Player[], t: (key: string) => string): string {
   if (players.length === 0) {
-    return 'No one';
+    return t('ui.dynamic_admin.no_one');
   } else if (players.length === 1) {
     return players[0].key;
   } else if (players.length === 2) {
-    return `${players[0].key} and ${players[1].key}`;
+    return `${players[0].key} ${t('ui.common.and')} ${players[1].key}`;
   }
   let playerString = '';
   for (let i = 0; i < players.length; i++) {
@@ -97,7 +98,7 @@ function getPlayerString(players: Player[]): string {
       playerString += ', ';
     }
     if (i === players.length - 2) {
-      playerString += 'and ';
+      playerString += `${t('ui.common.and')} `;
     }
   }
   return playerString;
@@ -114,6 +115,7 @@ function readableRulesesetCategory(ruleset_category: string): string {
 
 const StatusPanel = () => {
   const { data, act } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     current_tier,
     ruleset_count,
@@ -136,8 +138,10 @@ const StatusPanel = () => {
   if (!current_tier) {
     return (
       <LabeledList>
-        <LabeledList.Item label="Current Tier">
-          <Button onClick={() => act('set_tier')}>(Click to set)</Button>
+        <LabeledList.Item label={t('ui.dynamic_admin.current_tier')}>
+          <Button onClick={() => act('set_tier')}>
+            {t('ui.dynamic_admin.click_to_set')}
+          </Button>
         </LabeledList.Item>
       </LabeledList>
     );
@@ -145,7 +149,7 @@ const StatusPanel = () => {
 
   return (
     <LabeledList>
-      <LabeledList.Item label="Current Tier">
+      <LabeledList.Item label={t('ui.dynamic_admin.current_tier')}>
         <Box>
           <b>{current_tier.number}</b> ({current_tier.name})
         </Box>
@@ -165,9 +169,9 @@ const StatusPanel = () => {
               <Flex.Item>{count}</Flex.Item>
               {(name !== 'roundstart' || !roundstarted) && (
                 <Flex.Item ml={1}>
-                  <Button
+            <Button
                     icon="plus"
-                    tooltip="Add one max ruleset of this type"
+                    tooltip={t('ui.dynamic_admin.add_one_max_ruleset')}
                     tooltipPosition="right"
                     onClick={() =>
                       act('add_ruleset_category_count', {
@@ -182,7 +186,7 @@ const StatusPanel = () => {
                   <Button
                     icon="times"
                     disabled={count === 0}
-                    tooltip="Set max ruleset of this type to 0"
+                    tooltip={t('ui.dynamic_admin.set_max_ruleset_zero')}
                     tooltipPosition="right"
                     onClick={() =>
                       act('set_ruleset_category_count', {
@@ -197,27 +201,27 @@ const StatusPanel = () => {
           </LabeledList.Item>
         ))}
       {time_until_lights > 0 ? (
-        <LabeledList.Item label="Light Midround Start">
+        <LabeledList.Item label={t('ui.dynamic_admin.light_midround_start')}>
           <Flex>
             <Flex.Item>
-              <Box>{formatTime(time_until_lights)}</Box>
+              <Box>{formatTime(time_until_lights, t)}</Box>
             </Flex.Item>
             <Flex.Item>
               <Button ml={1} onClick={() => act('light_start_now')}>
-                Start Now
+                {t('ui.dynamic_admin.start_now')}
               </Button>
             </Flex.Item>
           </Flex>
         </LabeledList.Item>
       ) : (
         <>
-          <LabeledList.Item label="Light Midround Cooldown">
+          <LabeledList.Item label={t('ui.dynamic_admin.light_midround_cooldown')}>
             <Flex>
               <Flex.Item>
                 <Box>
                   {time_until_next_midround > 0
-                    ? formatTime(time_until_next_midround)
-                    : `Next dynamic tick (${formatTime(next_dynamic_tick)})`}
+                    ? formatTime(time_until_next_midround, t)
+                    : `${t('ui.dynamic_admin.next_dynamic_tick')} (${formatTime(next_dynamic_tick, t)})`}
                 </Box>
               </Flex.Item>
               <Flex.Item>
@@ -226,12 +230,12 @@ const StatusPanel = () => {
                   disabled={time_until_next_midround <= 0}
                   onClick={() => act('reset_midround_cooldown')}
                 >
-                  Reset Cooldown
+                  {t('ui.dynamic_admin.reset_cooldown')}
                 </Button>
               </Flex.Item>
             </Flex>
           </LabeledList.Item>
-          <LabeledList.Item label="Light Midround Chance">
+          <LabeledList.Item label={t('ui.dynamic_admin.light_midround_chance')}>
             <Flex>
               <Flex.Item>
                 <Box
@@ -240,14 +244,16 @@ const StatusPanel = () => {
                     borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
                   }}
                 >
-                  <Tooltip content="Chance of a light midround ruleset being selected on next dynamic tick">
+                  <Tooltip content={t('ui.dynamic_admin.light_midround_chance_tooltip')}>
                     {light_midround_chance}%
                   </Tooltip>
                 </Box>
               </Flex.Item>
               <Flex.Item>
                 <Button ml={1} onClick={() => act('max_light_chance')}>
-                  {light_chance_maxxed ? 'Reset' : 'Set to 100%'}
+                  {light_chance_maxxed
+                    ? t('ui.common.reset')
+                    : t('ui.dynamic_admin.set_to_100')}
                 </Button>
               </Flex.Item>
             </Flex>
@@ -255,27 +261,27 @@ const StatusPanel = () => {
         </>
       )}
       {time_until_heavies > 0 ? (
-        <LabeledList.Item label="Heavy Midround Start">
+        <LabeledList.Item label={t('ui.dynamic_admin.heavy_midround_start')}>
           <Flex>
             <Flex.Item>
-              <Box>{formatTime(time_until_heavies)}</Box>
+              <Box>{formatTime(time_until_heavies, t)}</Box>
             </Flex.Item>
             <Flex.Item>
               <Button ml={1} onClick={() => act('heavy_start_now')}>
-                Start Now
+                {t('ui.dynamic_admin.start_now')}
               </Button>
             </Flex.Item>
           </Flex>
         </LabeledList.Item>
       ) : (
         <>
-          <LabeledList.Item label="Heavy Midround Cooldown">
+          <LabeledList.Item label={t('ui.dynamic_admin.heavy_midround_cooldown')}>
             <Flex>
               <Flex.Item>
                 <Box>
                   {time_until_next_midround > 0
-                    ? formatTime(time_until_next_midround)
-                    : `Next dynamic tick (${formatTime(next_dynamic_tick)})`}
+                    ? formatTime(time_until_next_midround, t)
+                    : `${t('ui.dynamic_admin.next_dynamic_tick')} (${formatTime(next_dynamic_tick, t)})`}
                 </Box>
               </Flex.Item>
               <Flex.Item>
@@ -284,12 +290,12 @@ const StatusPanel = () => {
                   disabled={time_until_next_midround <= 0}
                   onClick={() => act('reset_midround_cooldown')}
                 >
-                  Reset Cooldown
+                  {t('ui.dynamic_admin.reset_cooldown')}
                 </Button>
               </Flex.Item>
             </Flex>
           </LabeledList.Item>
-          <LabeledList.Item label="Heavy Midround Chance">
+          <LabeledList.Item label={t('ui.dynamic_admin.heavy_midround_chance')}>
             <Flex>
               <Flex.Item>
                 <Box
@@ -298,14 +304,16 @@ const StatusPanel = () => {
                     borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
                   }}
                 >
-                  <Tooltip content="Chance of a heavy midround ruleset being selected on next dynamic tick">
+                  <Tooltip content={t('ui.dynamic_admin.heavy_midround_chance_tooltip')}>
                     {heavy_midround_chance}%
                   </Tooltip>
                 </Box>
               </Flex.Item>
               <Flex.Item>
                 <Button ml={1} onClick={() => act('max_heavy_chance')}>
-                  {heavy_chance_maxxed ? 'Reset' : 'Set to 100%'}
+                  {heavy_chance_maxxed
+                    ? t('ui.common.reset')
+                    : t('ui.dynamic_admin.set_to_100')}
                 </Button>
               </Flex.Item>
             </Flex>
@@ -313,27 +321,27 @@ const StatusPanel = () => {
         </>
       )}
       {time_until_latejoins > 0 ? (
-        <LabeledList.Item label="Latejoin Start">
+        <LabeledList.Item label={t('ui.dynamic_admin.latejoin_start')}>
           <Flex>
             <Flex.Item>
-              <Box>{formatTime(time_until_latejoins)}</Box>
+              <Box>{formatTime(time_until_latejoins, t)}</Box>
             </Flex.Item>
             <Flex.Item>
               <Button ml={1} onClick={() => act('latejoin_start_now')}>
-                Start Now
+                {t('ui.dynamic_admin.start_now')}
               </Button>
             </Flex.Item>
           </Flex>
         </LabeledList.Item>
       ) : (
         <>
-          <LabeledList.Item label="Latejoin Cooldown">
+          <LabeledList.Item label={t('ui.dynamic_admin.latejoin_cooldown')}>
             <Flex>
               <Flex.Item>
                 <Box>
                   {time_until_next_latejoin
-                    ? formatTime(time_until_next_latejoin)
-                    : 'Next latejoin'}
+                    ? formatTime(time_until_next_latejoin, t)
+                    : t('ui.dynamic_admin.next_latejoin')}
                 </Box>
               </Flex.Item>
               <Flex.Item>
@@ -342,12 +350,12 @@ const StatusPanel = () => {
                   disabled={time_until_next_latejoin <= 0}
                   onClick={() => act('reset_latejoin_cooldown')}
                 >
-                  Reset Cooldown
+                  {t('ui.dynamic_admin.reset_cooldown')}
                 </Button>
               </Flex.Item>
             </Flex>
           </LabeledList.Item>
-          <LabeledList.Item label="Latejoin Chance">
+          <LabeledList.Item label={t('ui.dynamic_admin.latejoin_chance')}>
             <Flex>
               <Flex.Item>
                 <Box
@@ -356,18 +364,17 @@ const StatusPanel = () => {
                     borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
                   }}
                 >
-                  <Tooltip
-                    content="Chance the next person who joins the game will selected for a latejoin ruleset.
-              Note this does not GUARANTEE a latejoin ruleset is ran - if it fails,
-              the chance will increase for the next player who joins."
-                  >
-                    {latejoin_chance}% ({failed_latejoins} failed attempts)
+                  <Tooltip content={t('ui.dynamic_admin.latejoin_chance_tooltip')}>
+                    {latejoin_chance}% ({failed_latejoins}{' '}
+                    {t('ui.dynamic_admin.failed_attempts')})
                   </Tooltip>
                 </Box>
               </Flex.Item>
               <Flex.Item>
                 <Button ml={1} onClick={() => act('max_latejoin_chance')}>
-                  {latejoin_chance_maxxed ? 'Reset' : 'Set to 100%'}
+                  {latejoin_chance_maxxed
+                    ? t('ui.common.reset')
+                    : t('ui.dynamic_admin.set_to_100')}
                 </Button>
               </Flex.Item>
             </Flex>
@@ -381,6 +388,7 @@ const StatusPanel = () => {
 // This just reports the entire config
 const ConfigPanel = () => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { full_config = {} } = data;
 
   const configKeys = Object.keys(full_config);
@@ -391,7 +399,7 @@ const ConfigPanel = () => {
   if (configKeys.length === 0) {
     return (
       <NoticeBox>
-        No config loaded - refer to repo defaults for reference.
+        {t('ui.dynamic_admin.no_config_loaded')}
       </NoticeBox>
     );
   }
@@ -400,10 +408,7 @@ const ConfigPanel = () => {
     <Stack vertical fill>
       <Stack.Item>
         <NoticeBox>
-          This is the current config read by the dynamic system when running
-          rulesets. If you want to edit these values temporarily, you can do so
-          via View Variables. (Note: Editing tier configs has no effect after
-          roundstart)
+          {t('ui.dynamic_admin.config_notice')}
         </NoticeBox>
       </Stack.Item>
       <Stack.Item>
@@ -440,6 +445,7 @@ const ConfigPanel = () => {
 // This is where you can see queued rulesets, active rulesets, and trigger new ones
 const RulesetsPanel = () => {
   const { data, act } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { all_rulesets, queued_rulesets, active_rulesets, roundstarted } = data;
 
   const any_admin_disabled = Object.values(all_rulesets).some((ruleset_list) =>
@@ -458,11 +464,13 @@ const RulesetsPanel = () => {
   return (
     <Stack vertical fill>
       <Stack.Item>
-        <Section title="Queued Rulesets">
+        <Section title={t('ui.dynamic_admin.queued_rulesets')}>
           <Stack vertical>
             {queued_rulesets.length === 0 ? (
               <Stack.Item grow>
-                <NoticeBox align="center">No rulesets queued.</NoticeBox>
+                <NoticeBox align="center">
+                  {t('ui.dynamic_admin.no_rulesets_queued')}
+                </NoticeBox>
               </Stack.Item>
             ) : (
               queued_rulesets.map((ruleset) => (
@@ -470,7 +478,7 @@ const RulesetsPanel = () => {
                   <Button
                     mr={0.5}
                     icon="times"
-                    tooltip="Remove from queue"
+                    tooltip={t('ui.dynamic_admin.remove_from_queue')}
                     onClick={() =>
                       act('remove_queued_ruleset', {
                         ruleset_index: ruleset.index,
@@ -486,11 +494,13 @@ const RulesetsPanel = () => {
       </Stack.Item>
       <Stack.Divider />
       <Stack.Item>
-        <Section title="Active Rulesets">
+        <Section title={t('ui.dynamic_admin.active_rulesets')}>
           <Stack vertical>
             {active_rulesets.length === 0 ? (
               <Stack.Item grow>
-                <NoticeBox align="center">No rulesets active.</NoticeBox>
+                <NoticeBox align="center">
+                  {t('ui.dynamic_admin.no_rulesets_active')}
+                </NoticeBox>
               </Stack.Item>
             ) : (
               active_rulesets.map((ruleset) => (
@@ -509,8 +519,7 @@ const RulesetsPanel = () => {
                       <Button.Checkbox
                         checked={ruleset.hidden}
                         icon="times"
-                        tooltip="If checked, this ruleset
-                          will not show in the roundend report."
+                        tooltip={t('ui.dynamic_admin.hidden_ruleset_tooltip')}
                         onClick={() =>
                           act('hide_ruleset', {
                             ruleset_index: ruleset.index,
@@ -520,7 +529,8 @@ const RulesetsPanel = () => {
                     </Flex.Item>
                   </Flex>
                   <BlockQuote>
-                    Selected: {getPlayerString(ruleset.selected_players)}
+                    {t('ui.dynamic_admin.selected')}:{' '}
+                    {getPlayerString(ruleset.selected_players, t)}
                   </BlockQuote>
                 </Stack.Item>
               ))
@@ -532,12 +542,12 @@ const RulesetsPanel = () => {
       <Stack.Item height="330px">
         <Section
           fill
-          title="Available Rulesets"
+          title={t('ui.dynamic_admin.available_rulesets')}
           scrollable
           buttons={
             <>
               <Input
-                placeholder="Search for ruleset..."
+                placeholder={t('ui.dynamic_admin.search_for_ruleset')}
                 onChange={setSearchText}
                 expensive
                 value={searchText}
@@ -546,13 +556,13 @@ const RulesetsPanel = () => {
                 disabled={all_admin_disabled}
                 onClick={() => act('disable_all')}
               >
-                Disable All
+                {t('ui.dynamic_admin.disable_all')}
               </Button>
               <Button
                 disabled={!any_admin_disabled}
                 onClick={() => act('enable_all')}
               >
-                Enable All
+                {t('ui.dynamic_admin.enable_all')}
               </Button>
             </>
           }
@@ -579,8 +589,8 @@ const RulesetsPanel = () => {
                                   tooltip={
                                     ruleset_category === 'roundstart' &&
                                     roundstarted
-                                      ? 'Round already started!'
-                                      : 'Add to queue'
+                                      ? t('ui.dynamic_admin.round_already_started')
+                                      : t('ui.dynamic_admin.add_to_queue')
                                   }
                                   tooltipPosition="right"
                                   disabled={
@@ -598,7 +608,7 @@ const RulesetsPanel = () => {
                               <Flex.Item>
                                 <Button
                                   icon="play"
-                                  tooltip="Execute this ruleset"
+                                  tooltip={t('ui.dynamic_admin.execute_ruleset')}
                                   tooltipPosition="right"
                                   onClick={() =>
                                     act('execute_ruleset', {
@@ -614,8 +624,7 @@ const RulesetsPanel = () => {
                                 <Button.Checkbox
                                   ml={0.5}
                                   tooltipPosition="right"
-                                  tooltip="If checked, this ruleset
-                                      will never run randomly."
+                                  tooltip={t('ui.dynamic_admin.disable_ruleset_tooltip')}
                                   checked={ruleset.admin_disabled}
                                   color={
                                     ruleset.admin_disabled ? 'bad' : 'grey'
@@ -665,6 +674,7 @@ enum TABS {
 
 export const DynamicAdmin = () => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { config_even_enabled, antag_events_enabled } = data;
 
   // disable config tab if config_even_enabled is false
@@ -692,27 +702,26 @@ export const DynamicAdmin = () => {
 
   return (
     <Window
-      title="Dynamic Admin Panel"
+      title={t('ui.dynamic_admin.panel_title')}
       width={currentTab === TABS.Rulesets ? 800 : 500}
       height={currentTab === TABS.Rulesets ? 600 : 400}
     >
       <Window.Content>
         <Section
-          title="&nbsp;"
+          title={t('ui.dynamic_admin.section_spacer')}
           height="100%"
           width="100%"
           buttons={
             <>
               <Button.Checkbox
                 checked={antag_events_enabled}
-                tooltip="If checked, random events that spawn antags
-                  or dynamic rulesets can trigger."
+                tooltip={t('ui.dynamic_admin.antag_events_tooltip')}
                 onClick={() => act('toggle_antag_events')}
               >
-                Antag Events
+                {t('ui.dynamic_admin.antag_events')}
               </Button.Checkbox>
               <Button
-                tooltip="Opens the Dynamic subsystem VV panel."
+                tooltip={t('ui.dynamic_admin.open_vv_tooltip')}
                 onClick={() => act('dynamic_vv')}
               >
                 VV
@@ -727,7 +736,7 @@ export const DynamicAdmin = () => {
                 selected={currentTab === tab}
                 onClick={() => setCurrentTab(tab)}
               >
-                {tab}
+                {t(`ui.dynamic_admin.tab_${tab.toLowerCase()}`)}
               </Tabs.Tab>
             ))}
           </Tabs>

@@ -11,6 +11,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { getPreferencesLocalization } from './localization';
 
 type Response = {
   name: string;
@@ -61,6 +62,7 @@ export class CircuitSignalHandler extends Component<
 
   render() {
     const { act, data } = useBackend<CircuitSignalHandlerData>();
+    const { t } = getPreferencesLocalization(data);
     const { responseList, parameterList, signal_id, global } = this
       .state as CircuitSignalHandlerState;
     const { global_port_types } = data;
@@ -72,7 +74,7 @@ export class CircuitSignalHandler extends Component<
               <Stack fill>
                 <Stack.Item grow>
                   <Input
-                    placeholder="Signal ID"
+                    placeholder={t('ui.circuit_signal_handler.signal_id')}
                     value={signal_id}
                     fluid
                     onChange={(value) => this.setState({ signal_id: value })}
@@ -81,7 +83,7 @@ export class CircuitSignalHandler extends Component<
                 <Stack.Item>
                   <Button.Checkbox
                     checked={global}
-                    content="Global"
+                    content={t('ui.circuit_signal_handler.global')}
                     onClick={(e) => this.setState({ global: !global })}
                   />
                 </Stack.Item>
@@ -90,7 +92,11 @@ export class CircuitSignalHandler extends Component<
             <Stack.Item grow>
               <Stack fill>
                 <Stack.Item grow={1} basis={0}>
-                  <Section title="Responses" fill scrollable>
+                  <Section
+                    title={t('ui.circuit_signal_handler.responses')}
+                    fill
+                    scrollable
+                  >
                     <Stack vertical>
                       {responseList.map((val, index) => (
                         <Entry
@@ -111,7 +117,7 @@ export class CircuitSignalHandler extends Component<
                       <Stack.Item>
                         <Button
                           fluid
-                          content="Add Response"
+                          content={t('ui.circuit_signal_handler.add_response')}
                           color="good"
                           icon="plus"
                           onClick={() => {
@@ -122,7 +128,7 @@ export class CircuitSignalHandler extends Component<
                               this.bitflags,
                             ) as unknown as number[];
                             responseList.push({
-                              name: 'Response',
+                              name: t('ui.circuit_signal_handler.response'),
                               bitflag: bitflag_keys[responseList.length],
                             });
                             this.setState({ parameterList });
@@ -133,7 +139,11 @@ export class CircuitSignalHandler extends Component<
                   </Section>
                 </Stack.Item>
                 <Stack.Item grow={1} basis={0}>
-                  <Section title="Parameters" fill scrollable>
+                  <Section
+                    title={t('ui.circuit_signal_handler.parameters')}
+                    fill
+                    scrollable
+                  >
                     <Stack vertical>
                       {parameterList.map((val, index) => (
                         <Entry
@@ -160,12 +170,12 @@ export class CircuitSignalHandler extends Component<
                       <Stack.Item>
                         <Button
                           fluid
-                          content="Add Parameter"
+                          content={t('ui.circuit_signal_handler.add_parameter')}
                           color="good"
                           icon="plus"
                           onClick={() => {
                             parameterList.push({
-                              name: 'Parameter',
+                              name: t('ui.circuit_signal_handler.parameter'),
                               datatype: global_port_types[0],
                             });
                             this.setState({ parameterList });
@@ -179,7 +189,7 @@ export class CircuitSignalHandler extends Component<
             </Stack.Item>
             <Stack.Item>
               <Button
-                content="Submit"
+                content={t('ui.common.submit')}
                 textAlign="center"
                 fluid
                 onClick={() =>
@@ -209,6 +219,8 @@ type EntryProps = {
 };
 
 const Entry = (props: EntryProps) => {
+  const { data } = useBackend<CircuitSignalHandlerData>();
+  const { t } = getPreferencesLocalization(data);
   const {
     onRemove,
     onChange,
@@ -223,7 +235,12 @@ const Entry = (props: EntryProps) => {
     <Stack.Item {...rest}>
       <Stack>
         <Stack.Item grow>
-          <Input placeholder="Name" value={name} onChange={onChange} fluid />
+          <Input
+            placeholder={t('ui.common.name')}
+            value={name}
+            onChange={onChange}
+            fluid
+          />
         </Stack.Item>
         <Stack.Item>
           {options.length > 0 ? (

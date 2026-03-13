@@ -4,9 +4,11 @@ import { Box, Button, Flex, Section, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const AtmosControlPanel = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const groups = sortBy(
     map(data.excited_groups, (group, i) => ({
       ...group,
@@ -16,7 +18,7 @@ export const AtmosControlPanel = (props) => {
     [(group) => group.id],
   );
   return (
-    <Window title="SSAir Control Panel" width={900} height={500}>
+    <Window title={t('ui.atmos_control_panel.title')} width={900} height={500}>
       <Section m={1}>
         <Flex justify="space-between" align="baseline">
           <Flex.Item>
@@ -24,20 +26,32 @@ export const AtmosControlPanel = (props) => {
               onClick={() => act('toggle-freeze')}
               color={data.frozen === 1 ? 'good' : 'bad'}
             >
-              {data.frozen === 1 ? 'Freeze Subsystem' : 'Unfreeze Subsystem'}
+              {data.frozen === 1
+                ? t('ui.atmos_control_panel.freeze_subsystem')
+                : t('ui.atmos_control_panel.unfreeze_subsystem')}
             </Button>
           </Flex.Item>
-          <Flex.Item>Fire Cnt: {data.fire_count}</Flex.Item>
-          <Flex.Item>Active Turfs: {data.active_size}</Flex.Item>
-          <Flex.Item>Excited Groups: {data.excited_size}</Flex.Item>
-          <Flex.Item>Hotspots: {data.hotspots_size}</Flex.Item>
-          <Flex.Item>Superconductors: {data.conducting_size}</Flex.Item>
+          <Flex.Item>
+            {t('ui.atmos_control_panel.fire_count')}: {data.fire_count}
+          </Flex.Item>
+          <Flex.Item>
+            {t('ui.atmos_control_panel.active_turfs')}: {data.active_size}
+          </Flex.Item>
+          <Flex.Item>
+            {t('ui.atmos_control_panel.excited_groups')}: {data.excited_size}
+          </Flex.Item>
+          <Flex.Item>
+            {t('ui.atmos_control_panel.hotspots')}: {data.hotspots_size}
+          </Flex.Item>
+          <Flex.Item>
+            {t('ui.atmos_control_panel.superconductors')}: {data.conducting_size}
+          </Flex.Item>
           <Flex.Item>
             <Button.Checkbox
               checked={data.showing_user}
               onClick={() => act('toggle_user_display')}
             >
-              Personal View
+              {t('ui.atmos_control_panel.personal_view')}
             </Button.Checkbox>
           </Flex.Item>
           <Flex.Item>
@@ -45,7 +59,7 @@ export const AtmosControlPanel = (props) => {
               checked={data.show_all}
               onClick={() => act('toggle_show_all')}
             >
-              Display all
+              {t('ui.atmos_control_panel.display_all')}
             </Button.Checkbox>
           </Flex.Item>
         </Flex>
@@ -55,14 +69,15 @@ export const AtmosControlPanel = (props) => {
           <Section>
             <Table>
               <Table.Row header>
-                <Table.Cell>Area Name</Table.Cell>
-                <Table.Cell collapsing>Breakdown</Table.Cell>
-                <Table.Cell collapsing>Dismantle</Table.Cell>
-                <Table.Cell collapsing>Turfs</Table.Cell>
+                <Table.Cell>{t('ui.atmos_control_panel.area_name')}</Table.Cell>
+                <Table.Cell collapsing>{t('ui.atmos_control_panel.breakdown')}</Table.Cell>
+                <Table.Cell collapsing>{t('ui.atmos_control_panel.dismantle')}</Table.Cell>
+                <Table.Cell collapsing>{t('ui.atmos_control_panel.turfs')}</Table.Cell>
                 <Table.Cell collapsing>
-                  {data.display_max === 1 && 'Max Share'}
+                  {data.display_max === 1 &&
+                    t('ui.atmos_control_panel.max_share')}
                 </Table.Cell>
-                <Table.Cell collapsing>Display</Table.Cell>
+                <Table.Cell collapsing>{t('ui.atmos_control_panel.display')}</Table.Cell>
               </Table.Row>
               {groups.map((group) => (
                 <tr key={group.id}>

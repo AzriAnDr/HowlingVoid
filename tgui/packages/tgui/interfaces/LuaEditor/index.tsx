@@ -22,6 +22,7 @@ import {
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import { CallModal } from './CallModal';
 import { ChunkViewModal } from './ChunkViewModal';
 import { ListMapper } from './ListMapper';
@@ -34,6 +35,7 @@ hljs.registerLanguage('lua', lua);
 
 export const LuaEditor = () => {
   const { act, data } = useBackend<LuaEditorData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     noStateYet,
     globals,
@@ -106,7 +108,7 @@ export const LuaEditor = () => {
       if (!globals) {
         tabContent = (
           <h1>
-            Could not retrieve the global table. Was it corrupted or shadowed?
+            {t('ui.lua_editor.could_not_retrieve_global_table')}
           </h1>
         );
       } else {
@@ -127,7 +129,7 @@ export const LuaEditor = () => {
     }
     case 'tasks': {
       if (!tasks) {
-        tabContent = <h1>Could not retrieve task info.</h1>;
+        tabContent = <h1>{t('ui.lua_editor.could_not_retrieve_task_info')}</h1>;
       } else {
         tabContent = <TaskManager setModal={setModal} setToCall={setToCall} />;
       }
@@ -180,21 +182,21 @@ export const LuaEditor = () => {
           <MenuBar.Dropdown
             entry="file"
             openWidth="22rem"
-            display="File"
+            display={t('ui.lua_editor.file')}
             {...menuBarProps}
           >
             <MenuBar.Dropdown.MenuItem
-              displayText="States"
+              displayText={t('ui.lua_editor.states')}
               onClick={closeMenuAndThen(() => {
                 setModal('states');
               })}
             />
             <MenuBar.Dropdown.MenuItem
-              displayText="Open"
+              displayText={t('ui.lua_editor.open')}
               onClick={closeMenuAndThen(() => fileInputRef.current?.click())}
             />
             <MenuBar.Dropdown.MenuItem
-              displayText="Upload and Run"
+              displayText={t('ui.lua_editor.upload_and_run')}
               onClick={closeMenuAndThen(() => act('runCodeFile'))}
             />
           </MenuBar.Dropdown>
@@ -206,7 +208,7 @@ export const LuaEditor = () => {
             align="center"
             justify="space-around"
           >
-            <h1>Please select or create a lua state to get started.</h1>
+            <h1>{t('ui.lua_editor.select_or_create_state_to_get_started')}</h1>
           </Flex>
         ) : (
           <Stack height="calc(100% - 16px)">
@@ -229,7 +231,7 @@ export const LuaEditor = () => {
                         <Button
                           onClick={() => act('runCode', { code: scriptInput })}
                         >
-                          Run
+                          {t('ui.lua_editor.run')}
                         </Button>
                       </Stack.Item>
                     </Stack>
@@ -254,14 +256,14 @@ export const LuaEditor = () => {
                             setActiveTab('globals');
                           }}
                         >
-                          Globals
+                          {t('ui.lua_editor.globals')}
                         </Tabs.Tab>
                       )}
                       <Tabs.Tab
                         selected={activeTab === 'tasks'}
                         onClick={() => setActiveTab('tasks')}
                       >
-                        Tasks
+                        {t('ui.lua_editor.tasks')}
                       </Tabs.Tab>
                       <Tabs.Tab
                         selected={activeTab === 'log'}
@@ -270,7 +272,7 @@ export const LuaEditor = () => {
                           setTimeout(handleSectionScroll, 0);
                         }}
                       >
-                        Log
+                        {t('ui.lua_editor.log')}
                       </Tabs.Tab>
                     </Tabs>
                   </Stack.Item>
@@ -278,7 +280,7 @@ export const LuaEditor = () => {
                     <Button.Checkbox
                       inline
                       checked={showGlobalTable}
-                      tooltip="WARNING: Displaying the global table can cause significant lag for the entire server, especially when there is a large number of global variables."
+                      tooltip={t('ui.lua_editor.show_global_table_warning')}
                       onClick={() => {
                         if (showGlobalTable && activeTab === 'globals') {
                           setActiveTab('tasks');
@@ -286,7 +288,7 @@ export const LuaEditor = () => {
                         act('toggleShowGlobalTable');
                       }}
                     >
-                      Show Global Table
+                      {t('ui.lua_editor.show_global_table')}
                     </Button.Checkbox>
                   </Stack.Item>
                 </Stack>
@@ -306,11 +308,11 @@ export const LuaEditor = () => {
                               checked={supressRuntimes}
                               onClick={() => act('toggleSupressRuntimes')}
                             >
-                              Supress Runtime Logging
+                              {t('ui.lua_editor.suppress_runtime_logging')}
                             </Button.Checkbox>
                             <Button.Confirm
                               color="red"
-                              tooltip="Delete All Logs"
+                              tooltip={t('ui.lua_editor.delete_all_logs')}
                               icon="trash-alt"
                               confirmIcon="trash-alt"
                               confirmContent={null}
@@ -340,7 +342,7 @@ export const LuaEditor = () => {
                             }
                           }}
                         >
-                          Jump to Bottom
+                          {t('ui.lua_editor.jump_to_bottom')}
                         </Button>
                       </Flex>
                     )}
@@ -365,7 +367,9 @@ export const LuaEditor = () => {
                             value={page / (pageCount - 1)}
                           >
                             <Box width="100%" align="center">
-                              {`Page ${page + 1}/${pageCount}`}
+                              {t('ui.lua_editor.page_progress')
+                                .replace('{page}', String(page + 1))
+                                .replace('{pageCount}', String(pageCount))}
                             </Box>
                           </ProgressBar>
                         </Stack.Item>

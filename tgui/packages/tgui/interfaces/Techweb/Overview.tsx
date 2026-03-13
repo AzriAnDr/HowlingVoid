@@ -2,6 +2,7 @@ import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import { Flex, Input, Section, Tabs, VirtualList } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../localization';
 import { useRemappedBackend } from './helpers';
 import { TechNode } from './nodes/TechNode';
 
@@ -13,6 +14,7 @@ enum Tab {
 
 export function TechwebOverview(props) {
   const { data } = useRemappedBackend();
+  const { t } = usePreferencesLocalization(data);
   const { nodes, node_cache, design_cache } = data;
   const [tabIndex, setTabIndex] = useState(Tab.AVAILABLE);
   const [searchText, setSearchText] = useState('');
@@ -73,14 +75,16 @@ export function TechwebOverview(props) {
               >
                 Future
               </Tabs.Tab>
-              {!!searching && <Tabs.Tab selected>Search Results</Tabs.Tab>}
+              {!!searching && (
+                <Tabs.Tab selected>{t('ui.techweb.search_results')}</Tabs.Tab>
+              )}
             </Tabs>
           </Flex.Item>
           <Flex.Item align="center">
             <Input
               value={searchText}
               onChange={setSearchText}
-              placeholder="Search..."
+              placeholder={t('ui.common.search_placeholder')}
               expensive
             />
           </Flex.Item>

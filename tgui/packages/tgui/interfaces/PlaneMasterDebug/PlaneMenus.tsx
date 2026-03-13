@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Dropdown, Modal, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { BlendModes, type Plane } from './types';
 import { usePlaneDebugContext } from './usePlaneDebug';
 
@@ -17,7 +18,8 @@ export function PlaneMenus() {
 }
 
 function AddConnectionModal() {
-  const { act } = useBackend();
+  const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { activePlane, setActivePlane, setConnectionOpen, planesProcessed } =
     usePlaneDebugContext();
   const currentPlane = planesProcessed[activePlane as number];
@@ -48,7 +50,7 @@ function AddConnectionModal() {
     <Modal p={1}>
       <Section
         fill
-        title={`Add relay from ${currentPlane.name}`}
+        title={`${t('ui.plane_master_debug.add_relay_from')} ${currentPlane.name}`}
         buttons={
           <Button
             icon="close"
@@ -67,7 +69,7 @@ function AddConnectionModal() {
               selected={
                 selectedTarget !== undefined
                   ? planesProcessed[selectedTarget].name
-                  : 'Select target'
+                  : t('ui.plane_master_debug.select_target')
               }
               width="300px"
               onSelected={(value) => setSelectedTarget(optionMap[value])}
@@ -96,7 +98,7 @@ function AddConnectionModal() {
                 setActivePlane(undefined);
               }}
             >
-              Confirm
+              {t('ui.common.confirm')}
             </Button>
           </Stack.Item>
         </Stack>
@@ -106,6 +108,8 @@ function AddConnectionModal() {
 }
 
 function InfoModal() {
+  const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { setInfoOpen } = usePlaneDebugContext();
   return (
     <Modal
@@ -118,124 +122,94 @@ function InfoModal() {
       <Section
         fill
         scrollable
-        title="Information Panel"
+        title={t('ui.plane_master_debug.information_panel')}
         buttons={
           <Button
             icon="times"
-            tooltip="Close"
+            tooltip={t('ui.common.close')}
             onClick={() => setInfoOpen(false)}
           />
         }
       >
-        <h3>What is all this?</h3>
-        This UI exists to help visualize plane masters, the backbone of our
-        rendering system. <br />
-        It also provices some tools for editing and messing with them. <br />
+        <h3>{t('ui.plane_master_debug.what_is_this')}</h3>
+        {t('ui.plane_master_debug.what_is_this_desc_1')} <br />
+        {t('ui.plane_master_debug.what_is_this_desc_2')} <br />
         <br />
-        <h3>How to use this UI</h3> <br />
-        This UI exists primarially as a visualizer, mostly because this info is
-        quite obscure, and I want it to be easier to understand.
+        <h3>{t('ui.plane_master_debug.how_to_use')}</h3> <br />
+        {t('ui.plane_master_debug.how_to_use_desc_1')}
         <br />
         <br />
-        That said, it also supports editing plane masters, adding and removing
-        relays, and provides easy access to color matrix/filter/alpha/vv
-        editing. <br />
+        {t('ui.plane_master_debug.how_to_use_desc_2')} <br />
         <br />
-        To start off with, each little circle represents a{' '}
-        <code>render_target</code> based connection.
+        {t('ui.plane_master_debug.render_target_connection_prefix')}{' '}
+        <code>render_target</code> {t('ui.plane_master_debug.render_target_connection_suffix')}
         <br />
-        Blue nodes are relays, so drawing one plane onto another. Purple ones
-        are filter based connections. <br />
-        You can tell where a node starts and ends based on the side of the plane
-        it&apos;s on. <br />
+        {t('ui.plane_master_debug.node_colors_desc')} <br />
+        {t('ui.plane_master_debug.node_side_desc')} <br />
         <br />
-        Adding a new relay is simple, you just need to hit the + button, and
-        select a plane by name to relay onto. <br />
+        {t('ui.plane_master_debug.add_relay_help')} <br />
         <br />
-        Each plane can be viewed more closely by clicking the little button in
-        it&apos;s top right corner. This opens a sidebar, and displays a lot of
-        more general info about the plane and its purpose, alongside exposing
-        some useful buttons and interesting values. <br />
+        {t('ui.plane_master_debug.open_plane_sidebar_help')} <br />
         <br />
-        Planes are aligned based off their initial setup. If you end up breaking
-        things byond repair, or just want to reset things, you can hit the
-        recycle button in the top left to totally refresh your plane masters.{' '}
+        {t('ui.plane_master_debug.recycle_help')} <br />
         <br />
+        <h3>{t('ui.plane_master_debug.what_is_plane_master')}</h3>
+        {t('ui.plane_master_debug.plane_master_desc_1')} <br />
+        {t('ui.plane_master_debug.plane_master_desc_2_prefix')}{' '}
+        <code>plane</code> {t('ui.plane_master_debug.plane_master_desc_2_mid')}{' '}
+        <code>/atom</code>. <br />
         <br />
-        <h3>What is a plane master?</h3>
-        You can think of a plane master as a way to group a set of objects onto
-        one rendering slate. <br />
-        It is per client too, which makes it quite powerful. This is done using
-        the <code>plane</code> variable of <code>/atom</code>. <br />
+        {t('ui.plane_master_debug.setup_step_1_prefix')} <code>PLANE_MASTER</code>{' '}
+        {t('ui.plane_master_debug.setup_step_1_mid')} <code>plane</code>{' '}
+        {t('ui.plane_master_debug.setup_step_1_suffix')} <br />
+        {t('ui.plane_master_debug.setup_step_2')} <br />
         <br />
-        We first create an atom with an appearance flag that contains{' '}
-        <code>PLANE_MASTER</code> and give it a <code>plane</code> value. <br />
-        Then we mirror the same <code>plane</code> value on all the atoms we
-        want to render in this group.
+        {t('ui.plane_master_debug.setup_step_3_prefix')} <code>PLANE_MASTER</code>
+        {t('ui.plane_master_debug.setup_step_3_suffix')} <br />
+        {t('ui.plane_master_debug.setup_step_4')} <br />
         <br />
+        {t('ui.plane_master_debug.plane_var_note_prefix')} <code>plane</code>{' '}
+        {t('ui.plane_master_debug.plane_var_note_suffix')} <br />
+        {t('ui.plane_master_debug.layering_note')} <br />
         <br />
-        Finally, we place the <code>PLANE_MASTER</code>&apos;d atom in the
-        relevent client&apos;s screen contents. <br />
-        That sets up the bare minimum.
+        {t('ui.plane_master_debug.hard_effects_note_1')} <br />
+        {t('ui.plane_master_debug.hard_effects_note_2')} <br />
+        {t('ui.plane_master_debug.hard_effects_note_3')} <br />
         <br />
+        {t('ui.plane_master_debug.relay_question_1')} <br />
+        {t('ui.plane_master_debug.relay_question_2')} <br />
         <br />
-        It is worth noting that the <code>plane</code> var does not only effect
-        this rendering grouping behavior. <br />
-        It also effects the layering of objects on the map. <br />
+        <h3>{t('ui.plane_master_debug.render_targets_and_relays')}</h3>
         <br />
-        For this reason, there are some effects that are pretty much impossible
-        with planes. <br />
-        Masking one thing while also drawing that thing in the correct order
-        with other objects on the map is a good example of this.
-        <br />
-        It <b>is</b> possible to do, but it&apos;s quite disruptive.
+        {t('ui.plane_master_debug.rendering_note_1')} <br />
+        {t('ui.plane_master_debug.rendering_note_2_prefix')} <code>render_target</code>{' '}
+        {t('ui.plane_master_debug.rendering_note_2_mid')} <code>render_source</code>.
         <br />
         <br />
-        Normally, planes will just group, apply an effect, and then draw
-        directly to the game.
-        <br />
-        What if we wanted to draw <b>planes</b> onto other planes then? <br />
-        <br />
-        <h3>Render Targets and Relays</h3>
-        <br />
-        Rendering one thing onto another is actually not that complex. <br />
-        We can set the <code>render_target</code> variable of an atom to relay
-        it to some <code>render_source</code>.<br />
-        <br />
-        If that <code>render_target</code> is preceeded by *, it will
-        <b>not</b> be drawn to the actual client view, and instead just relayed.{' '}
+        {t('ui.plane_master_debug.rendering_note_3_prefix')} <code>render_target</code>{' '}
+        {t('ui.plane_master_debug.rendering_note_3_mid')}
+        <b>{t('ui.common.not')}</b> {t('ui.plane_master_debug.rendering_note_3_suffix')}
         <br />
         <br />
-        Ok so we can relay a plane master onto some other atom, but how do we
-        get it on another plane master? We can&apos;t just draw it with{' '}
-        <code>render_source</code>, since we might want to relay more then one
-        plane master.
+        {t('ui.plane_master_debug.rendering_note_4_prefix')} <code>render_source</code>
+        {t('ui.plane_master_debug.rendering_note_4_suffix')} <br />
         <br />
+        {t('ui.plane_master_debug.rendering_note_5_prefix')} <code>plane</code>{' '}
+        {t('ui.plane_master_debug.rendering_note_5_suffix')} <br />
         <br />
-        Why not relay it to another atom then? and then well, set that
-        atom&apos;s <code>plane</code> var to the plane master we want? <br />
+        {t('ui.plane_master_debug.rendering_note_6')} <br />
+        {t('ui.plane_master_debug.rendering_note_7')} <br />
         <br />
-        That ends up being about what we do. <br />
-        It&apos;s worth noting that render sources are often used by filters,
-        normally to apply some displacement or mask.
+        <h3>{t('ui.plane_master_debug.applying_effects')}</h3> <br />
+        {t('ui.plane_master_debug.effects_note_1')} <br />
         <br />
+        {t('ui.plane_master_debug.effects_note_2')} <br />
+        {t('ui.plane_master_debug.effects_note_3')} <br />
         <br />
-        <h3>Applying effects</h3> <br />
-        Ok so we can group and relay planes, but what can we actually do with
-        that? <br />
+        {t('ui.plane_master_debug.effects_note_4')} <br />
+        {t('ui.plane_master_debug.effects_note_5')} <br />
         <br />
-        Lots of stuff it turns out. Filters are quite powerful, and we use them
-        quite a bit. <br />
-        You can use filters to mask one plane with another, or use one plane as
-        a distortion source for another. <br />
-        <br />
-        Can do more basic stuff too, setting a plane&apos;s color matrix can be
-        quite powerful. <br />
-        Even just setting alpha to show and hide things can be quite useful.{' '}
-        <br />
-        <br />
-        I won&apos;t get into every effect we do here, you can learn more about
-        each plane by clicking on the little button in their top right. <br />
+        {t('ui.plane_master_debug.effects_note_6')} <br />
         <br />
       </Section>
     </Modal>

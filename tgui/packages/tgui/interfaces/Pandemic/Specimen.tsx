@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Button, NoticeBox, Section, Stack, Tabs } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../localization';
 import { SymptomDisplay } from './Symptom';
 import type { Data } from './types';
 import { VirusDisplay } from './Virus';
 
 export const SpecimenDisplay = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { is_ready, viruses = [] } = data;
 
   const [tab, setTab] = useState(0);
@@ -17,7 +19,7 @@ export const SpecimenDisplay = (props) => {
     <Section
       fill
       scrollable
-      title="Specimen"
+      title={t('ui.pandemic.specimen')}
       buttons={
         <Stack>
           {viruses.length > 1 && (
@@ -41,21 +43,21 @@ export const SpecimenDisplay = (props) => {
             <Button
               icon="flask"
               disabled={!is_ready || !virus}
-              tooltip={virus ? '' : 'No virus culture found.'}
+              tooltip={virus ? '' : t('ui.pandemic.no_virus_culture_found')}
               onClick={() =>
                 act('create_culture_bottle', {
                   index: virus.index,
                 })
               }
             >
-              Create Culture Bottle
+              {t('ui.pandemic.create_culture_bottle')}
             </Button>
           </Stack.Item>
         </Stack>
       }
     >
       {!virus ? (
-        <NoticeBox success>Nothing detected.</NoticeBox>
+        <NoticeBox success>{t('ui.common.nothing_detected')}</NoticeBox>
       ) : (
         <Stack fill vertical>
           <Stack.Item>

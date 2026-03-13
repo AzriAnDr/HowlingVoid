@@ -14,6 +14,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type GlassData = {
   hasGlass: BooleanLike;
@@ -44,13 +45,18 @@ type RemainingSteps = {
 
 export const GlassBlowing = (props) => {
   const { act, data } = useBackend<GlassData>();
+  const { t } = usePreferencesLocalization();
   const { glass, inUse } = data;
 
   return (
     <Window width={335} height={325}>
       <Window.Content scrollable>
         <Section
-          title={glass?.timeLeft ? 'Molten Glass' : 'Cooled Glass'}
+          title={
+            glass?.timeLeft
+              ? t('ui.glass_blowing.molten_glass')
+              : t('ui.glass_blowing.cooled_glass')
+          }
           buttons={
             <Button
               icon={
@@ -70,52 +76,56 @@ export const GlassBlowing = (props) => {
               tooltipPosition="bottom"
               tooltip={
                 glass?.timeLeft
-                  ? 'You may want to think twice about touching this right now...'
-                  : 'It has cooled and is safe to handle.'
+                  ? t('ui.glass_blowing.hot_glass_warning')
+                  : t('ui.glass_blowing.safe_to_handle')
               }
-              content={glass?.isFinished ? 'Complete Craft' : 'Remove'}
+              content={
+                glass?.isFinished
+                  ? t('ui.glass_blowing.complete_craft')
+                  : t('ui.glass_blowing.remove')
+              }
               disabled={!glass || inUse}
               onClick={() => act('Remove')}
             />
           }
         />
         {glass && !glass.chosenItem && (
-          <Section title="Pick a craft">
+          <Section title={t('ui.glass_blowing.pick_a_craft')}>
             <Stack fill vertical>
               <Stack.Item>
-                <Box>What will you craft?</Box>
+                <Box>{t('ui.glass_blowing.what_will_you_craft')}</Box>
               </Stack.Item>
 
               <Stack.Item>
                 <Button
-                  content="Plate"
+                  content={t('ui.glass_blowing.plate')}
                   disabled={inUse}
                   onClick={() => act('Plate')}
                 />
                 <Button
-                  content="Bowl"
+                  content={t('ui.glass_blowing.bowl')}
                   tooltipPosition="bottom"
                   disabled={inUse}
                   onClick={() => act('Bowl')}
                 />
                 <Button
-                  content="Globe"
+                  content={t('ui.glass_blowing.globe')}
                   disabled={inUse}
                   onClick={() => act('Globe')}
                 />
                 <Button
-                  content="Cup"
+                  content={t('ui.glass_blowing.cup')}
                   disabled={inUse}
                   onClick={() => act('Cup')}
                 />
                 <Button
-                  content="Lens"
+                  content={t('ui.glass_blowing.lens')}
                   tooltipPosition="bottom"
                   disabled={inUse}
                   onClick={() => act('Lens')}
                 />
                 <Button
-                  content="Bottle"
+                  content={t('ui.glass_blowing.bottle')}
                   disabled={inUse}
                   onClick={() => act('Bottle')}
                 />
@@ -125,11 +135,11 @@ export const GlassBlowing = (props) => {
         )}
         {glass?.chosenItem && (
           <>
-            <Section title="Steps Remaining:">
+            <Section title={t('ui.glass_blowing.steps_remaining')}>
               <Stack fill vertical>
                 <Stack.Item>
                   <Box>
-                    You are crafting a {glass.chosenItem.name}.
+                    {t('ui.glass_blowing.you_are_crafting')} {glass.chosenItem.name}.
                     <br />
                     <br />
                   </Box>
@@ -139,14 +149,14 @@ export const GlassBlowing = (props) => {
                     {glass.stepsRemaining.blow !== 0 && (
                       <Table.Cell>
                         <Button
-                          content="Blow"
+                          content={t('ui.glass_blowing.blow')}
                           icon="fire"
                           color="orange"
                           disabled={inUse || !glass.timeLeft}
                           tooltipPosition="bottom"
                           tooltip={
                             glass.timeLeft === 0
-                              ? 'Needs to be glowing hot.'
+                              ? t('ui.glass_blowing.needs_to_be_glowing_hot')
                               : ''
                           }
                           onClick={() => act('Blow')}
@@ -157,14 +167,14 @@ export const GlassBlowing = (props) => {
                     {glass.stepsRemaining.spin !== 0 && (
                       <Table.Cell>
                         <Button
-                          content="Spin"
+                          content={t('ui.glass_blowing.spin')}
                           icon="fire"
                           color="orange"
                           disabled={inUse || !glass.timeLeft}
                           tooltipPosition="bottom"
                           tooltip={
                             glass.timeLeft === 0
-                              ? 'Needs to be glowing hot.'
+                              ? t('ui.glass_blowing.needs_to_be_glowing_hot')
                               : ''
                           }
                           onClick={() => act('Spin')}
@@ -175,10 +185,10 @@ export const GlassBlowing = (props) => {
                     {glass.stepsRemaining.paddle !== 0 && (
                       <Table.Cell>
                         <Button
-                          content="Paddle"
+                          content={t('ui.glass_blowing.paddle')}
                           disabled={inUse}
                           tooltipPosition="bottom"
-                          tooltip={'You need to use a paddle.'}
+                          tooltip={t('ui.glass_blowing.you_need_to_use_a_paddle')}
                           onClick={() => act('Paddle')}
                         />
                         &nbsp;x{glass.stepsRemaining.paddle}
@@ -187,10 +197,10 @@ export const GlassBlowing = (props) => {
                     {glass.stepsRemaining.shear !== 0 && (
                       <Table.Cell>
                         <Button
-                          content="Shears"
+                          content={t('ui.glass_blowing.shears')}
                           disabled={inUse}
                           tooltipPosition="bottom"
-                          tooltip={'You need to use shears.'}
+                          tooltip={t('ui.glass_blowing.you_need_to_use_shears')}
                           onClick={() => act('Shear')}
                         />
                         &nbsp;x{glass.stepsRemaining.shear}
@@ -199,10 +209,10 @@ export const GlassBlowing = (props) => {
                     {glass.stepsRemaining.jacks !== 0 && (
                       <Table.Cell>
                         <Button
-                          content="Jacks"
+                          content={t('ui.glass_blowing.jacks')}
                           disabled={inUse}
                           tooltipPosition="bottom"
-                          tooltip={'You need to use jacks.'}
+                          tooltip={t('ui.glass_blowing.you_need_to_use_jacks')}
                           onClick={() => act('Jacks')}
                         />
                         &nbsp;x{glass.stepsRemaining.jacks}
@@ -218,7 +228,7 @@ export const GlassBlowing = (props) => {
                   <Button
                     icon="times"
                     color={glass.timeLeft ? 'orange' : 'default'}
-                    content="Cancel craft"
+                    content={t('ui.glass_blowing.cancel_craft')}
                     disabled={inUse}
                     onClick={() => act('Cancel')}
                   />
@@ -228,7 +238,7 @@ export const GlassBlowing = (props) => {
           </>
         )}
         {glass && glass.timeLeft !== 0 && (
-          <Section title="Heat level">
+          <Section title={t('ui.glass_blowing.heat_level')}>
             <ProgressBar
               value={glass.timeLeft / glass.totalTime}
               ranges={{
@@ -251,7 +261,7 @@ export const GlassBlowing = (props) => {
           </Section>
         )}
         {glass && glass.timeLeft === 0 && (
-          <Section title="Heat level">
+          <Section title={t('ui.glass_blowing.heat_level')}>
             <ProgressBar
               value={0 / 0}
               ranges={{}}

@@ -14,6 +14,7 @@ import { HypertorusGases } from './Gases';
 import { HypertorusParameters } from './Parameters';
 import { HypertorusRecipes } from './Recipes';
 import { HypertorusTemperatures } from './Temperatures';
+import { usePreferencesLocalization } from '../localization';
 
 export type HypertorusData = {
   start_power: number;
@@ -52,6 +53,7 @@ export type HypertorusFuel = {
 
 const HypertorusMainControls = (props) => {
   const { act, data } = useBackend<HypertorusData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     start_power,
     start_cooling,
@@ -65,17 +67,17 @@ const HypertorusMainControls = (props) => {
     <Section>
       <Stack>
         <Stack.Item color="label" mb={1}>
-          {'Start power: '}
+          {t('ui.hypertorus.start_power') + ': '}
           <Button
             disabled={power_level > 0}
             icon={start_power ? 'power-off' : 'times'}
-            content={start_power ? 'On' : 'Off'}
+            content={start_power ? t('ui.common.on') : t('ui.common.off')}
             selected={start_power}
             onClick={() => act('start_power')}
           />
         </Stack.Item>
         <Stack.Item color="label">
-          {'Start cooling: '}
+          {t('ui.hypertorus.start_cooling') + ': '}
           <Button
             disabled={
               start_fuel === 1 ||
@@ -84,13 +86,13 @@ const HypertorusMainControls = (props) => {
               (start_cooling && power_level > 0)
             }
             icon={start_cooling ? 'power-off' : 'times'}
-            content={start_cooling ? 'On' : 'Off'}
+            content={start_cooling ? t('ui.common.on') : t('ui.common.off')}
             selected={start_cooling}
             onClick={() => act('start_cooling')}
           />
         </Stack.Item>
       </Stack>
-      <Collapsible title="Recipe selection">
+      <Collapsible title={t('ui.hypertorus.recipe_selection')}>
         <HypertorusRecipes
           baseMaxTemperature={base_max_temperature}
           enableRecipeSelection={power_level === 0}
@@ -131,6 +133,7 @@ const HypertorusLayout = () => {
 };
 
 export const Hypertorus = (props) => {
+  const { t } = usePreferencesLocalization();
   // The HFR has a ridiculous amount of knobs and information.
   // Ideally we'd display a large window for it all...
   const idealWidth = 850,
@@ -146,7 +149,7 @@ export const Hypertorus = (props) => {
 
   return (
     <Window
-      title="Hypertorus Fusion Reactor control panel"
+      title={t('ui.hypertorus.window_title')}
       width={width}
       height={height}
     >

@@ -18,6 +18,7 @@ import { toFixed } from 'tgui-core/math';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { LoadingScreen } from './common/LoadingScreen';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   areas: Area[];
@@ -79,10 +80,11 @@ const PEAK_DRAW = 500000;
 
 export function PowerMonitorContent(props) {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { history } = data;
 
   if (!history) {
-    return 'Loading...';
+    return t('ui.common.loading');
   }
 
   const supply = history.supply[history.supply.length - 1] || 0;
@@ -104,7 +106,7 @@ export function PowerMonitorContent(props) {
           <Flex.Item mx={0.5} width="200px">
             <Section>
               <LabeledList>
-                <LabeledList.Item label="Supply">
+                <LabeledList.Item label={t('ui.power_monitor.supply')}>
                   <ProgressBar
                     value={supply}
                     minValue={0}
@@ -114,7 +116,7 @@ export function PowerMonitorContent(props) {
                     {`${toFixed(supply / 1000)} kW`}
                   </ProgressBar>
                 </LabeledList.Item>
-                <LabeledList.Item label="Draw">
+                <LabeledList.Item label={t('ui.power_monitor.draw')}>
                   <ProgressBar
                     value={demand}
                     minValue={0}
@@ -158,6 +160,7 @@ export function PowerMonitorContent(props) {
 
 function StationAreas(props) {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
 
   const [sortByField, setSortByField] = useState('');
 
@@ -185,13 +188,13 @@ function StationAreas(props) {
       <Section height={3}>
         <Box>
           <Box inline mr={2} color="label">
-            Sort by:
+            {t('ui.common.sort_by')}
           </Box>
           <Button.Checkbox
             checked={sortByField === 'name'}
             onClick={() => setSortByField(sortByField !== 'name' ? 'name' : '')}
           >
-            Name
+            {t('ui.common.name')}
           </Button.Checkbox>
           <Button.Checkbox
             checked={sortByField === 'charge'}
@@ -199,13 +202,13 @@ function StationAreas(props) {
               setSortByField(sortByField !== 'charge' ? 'charge' : '')
             }
           >
-            Charge
+            {t('ui.power_monitor.charge')}
           </Button.Checkbox>
           <Button.Checkbox
             checked={sortByField === 'draw'}
             onClick={() => setSortByField(sortByField !== 'draw' ? 'draw' : '')}
           >
-            Draw
+            {t('ui.power_monitor.draw')}
           </Button.Checkbox>
         </Box>
       </Section>
@@ -213,20 +216,20 @@ function StationAreas(props) {
       <Stack.Item grow mt={-1}>
         <Section fill scrollable>
           <Table>
-            <Table.Row header>
-              <Table.Cell>Area</Table.Cell>
-              <Table.Cell collapsing>Charge</Table.Cell>
+              <Table.Row header>
+              <Table.Cell>{t('ui.power_monitor.area')}</Table.Cell>
+              <Table.Cell collapsing>{t('ui.power_monitor.charge')}</Table.Cell>
               <Table.Cell textAlign="right" width={7}>
-                Draw
+                {t('ui.power_monitor.draw')}
               </Table.Cell>
-              <Tooltip content="Equipment power">
-                <Table.Cell collapsing>Eqp</Table.Cell>
+              <Tooltip content={t('ui.power_monitor.equipment_power')}>
+                <Table.Cell collapsing>{t('ui.power_monitor.eqp')}</Table.Cell>
               </Tooltip>
-              <Tooltip content="Lighting power">
-                <Table.Cell collapsing>Lgt</Table.Cell>
+              <Tooltip content={t('ui.power_monitor.lighting_power')}>
+                <Table.Cell collapsing>{t('ui.power_monitor.lgt')}</Table.Cell>
               </Tooltip>
-              <Tooltip content="Environment power">
-                <Table.Cell collapsing>Env</Table.Cell>
+              <Tooltip content={t('ui.power_monitor.environment_power')}>
+                <Table.Cell collapsing>{t('ui.power_monitor.env')}</Table.Cell>
               </Tooltip>
             </Table.Row>
             {areas.map((area) => (
@@ -302,10 +305,11 @@ type AreaStatusColorBoxProps = {
 
 function AreaStatusColorBox(props: AreaStatusColorBoxProps) {
   const { status } = props;
+  const { t } = usePreferencesLocalization({});
 
   const power = Boolean(status & 2);
   const mode = Boolean(status & 1);
-  const tooltipText = `${power ? 'On' : 'Off'} [${mode ? 'auto' : 'manual'}]`;
+  const tooltipText = `${power ? t('ui.common.on') : t('ui.common.off')} [${mode ? t('ui.common.auto') : t('ui.common.manual')}]`;
 
   return (
     <Tooltip content={tooltipText}>

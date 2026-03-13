@@ -10,6 +10,7 @@ import {
 import { classes } from 'tgui-core/react';
 
 import { useSharedState } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { SearchBar } from '../common/SearchBar';
 import type { Design, MaterialMap } from './Types';
 
@@ -125,6 +126,7 @@ const BLACKLISTED_CATEGORIES: Record<string, boolean> = {
 export const DesignBrowser = <T extends Design = Design>(
   props: DesignBrowserProps<T>,
 ) => {
+  const { t } = usePreferencesLocalization();
   const {
     designs,
     availableMaterials,
@@ -212,7 +214,7 @@ export const DesignBrowser = <T extends Design = Design>(
         <Section fill>
           <Stack vertical fill>
             <Stack.Item>
-              <Section title="Categories" fitted />
+              <Section title={t('ui.fabrication.categories')} fitted />
             </Stack.Item>
             <Stack.Item grow style={{ overflowY: 'auto', overflowX: 'hidden' }}>
               <Section fill>

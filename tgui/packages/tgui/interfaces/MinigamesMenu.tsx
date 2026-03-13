@@ -2,18 +2,20 @@ import { Button, Divider, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const MinigamesMenu = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act } = useBackend();
 
   return (
-    <Window title="Minigames Menu" width={530} height={320}>
+    <Window title={t('ui.minigames.menu_title')} width={530} height={320}>
       <Window.Content>
-        <Section title="Select Minigame" textAlign="center" fill>
+        <Section title={t('ui.minigames.select_minigame')} textAlign="center" fill>
           <Stack>
             <Stack.Item grow>
               <Button
-                content="CTF"
+                content={t('ui.minigames.ctf')}
                 fluid
                 fontSize={3}
                 textAlign="center"
@@ -23,7 +25,7 @@ export const MinigamesMenu = (props) => {
             </Stack.Item>
             <Stack.Item grow>
               <Button
-                content="Mafia"
+                content={t('ui.minigames.mafia')}
                 fluid
                 fontSize={3}
                 textAlign="center"
@@ -36,7 +38,7 @@ export const MinigamesMenu = (props) => {
           <Stack>
             <Stack.Item grow>
               <Button
-                content="Basketball"
+                content={t('ui.minigames.basketball')}
                 fluid
                 fontSize={3}
                 textAlign="center"
@@ -46,7 +48,7 @@ export const MinigamesMenu = (props) => {
             </Stack.Item>
             <Stack.Item grow>
               <Button
-                content="Deathmatch"
+                content={t('ui.minigames.deathmatch')}
                 fluid
                 fontSize={3}
                 textAlign="center"

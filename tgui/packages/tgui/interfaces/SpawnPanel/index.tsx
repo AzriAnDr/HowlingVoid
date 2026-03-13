@@ -5,6 +5,7 @@ import { fetchRetry } from 'tgui-core/http';
 import { resolveAsset } from '../../assets';
 import { Window } from '../../layouts';
 import { logger } from '../../logging';
+import { usePreferencesLocalization } from '../localization';
 import { CreateObject } from './CreateObject';
 import { CreateObjectAdvancedSettings } from './CreateObjectAdvancedSettings';
 import type { CreateObjectData } from './types';
@@ -17,6 +18,7 @@ export interface IconSettings {
 }
 
 export function SpawnPanel() {
+  const { t } = usePreferencesLocalization();
   const [data, setData] = useState<CreateObjectData | undefined>();
   const [advancedSettings, setAdvancedSettings] = useState(false);
   const [iconSettings, setIconSettings] = useState<IconSettings>({
@@ -46,7 +48,12 @@ export function SpawnPanel() {
   };
 
   return (
-    <Window height={550} title="Spawn Panel" width={500} theme="admin">
+    <Window
+      height={550}
+      title={t('ui.spawn_panel.title')}
+      width={500}
+      theme="admin"
+    >
       <Window.Content>
         {advancedSettings && (
           <Modal
@@ -57,7 +64,7 @@ export function SpawnPanel() {
             }}
           >
             <Section
-              title="Advanced settings"
+              title={t('ui.spawn_panel.advanced_settings')}
               buttons={
                 <Button
                   color="transparent"

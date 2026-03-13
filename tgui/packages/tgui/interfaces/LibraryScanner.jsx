@@ -2,10 +2,12 @@ import { Button, NoticeBox, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const LibraryScanner = (props) => {
+  const { t } = usePreferencesLocalization();
   return (
-    <Window title="Library Scanner" width={350} height={150}>
+    <Window title={t('ui.library.library_scanner')} width={350} height={150}>
       <BookScanning />
     </Window>
   );
@@ -13,9 +15,10 @@ export const LibraryScanner = (props) => {
 
 const BookScanning = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { has_book, has_cache, book } = data;
   if (!has_book && !has_cache) {
-    return <NoticeBox>Insert a book to scan</NoticeBox>;
+    return <NoticeBox>{t('ui.library.insert_a_book_to_scan')}</NoticeBox>;
   }
   return (
     <Stack direction="column" height="100%" justify="flex-end">
@@ -34,7 +37,7 @@ const BookScanning = (props) => {
               onClick={() => act('eject')}
               disabled={!has_book}
             >
-              Eject Book
+              {t('ui.library.eject_book')}
             </Button>
           </Stack.Item>
           <Stack.Item grow>
@@ -46,7 +49,7 @@ const BookScanning = (props) => {
               icon="qrcode"
               disabled={!has_book}
             >
-              Scan Book
+              {t('ui.library.scan_book')}
             </Button>
           </Stack.Item>
           <Stack.Item grow>
@@ -58,7 +61,7 @@ const BookScanning = (props) => {
               color="bad"
               disabled={!has_cache}
             >
-              Clear Cache
+              {t('ui.library.clear_cache')}
             </Button>
           </Stack.Item>
         </Stack>

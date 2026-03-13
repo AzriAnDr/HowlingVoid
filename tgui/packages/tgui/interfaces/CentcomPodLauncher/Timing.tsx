@@ -1,12 +1,14 @@
 import { Button, Divider, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { DELAYS, REV_DELAYS } from './constants';
 import { DelayHelper } from './DelayHelper';
 import type { PodLauncherData } from './types';
 
 export function Timing(props) {
   const { act, data } = useBackend<PodLauncherData>();
+  const { t } = usePreferencesLocalization(data);
   const { custom_rev_delay, effectReverse } = data;
 
   return (
@@ -17,9 +19,7 @@ export function Timing(props) {
             color="transparent"
             icon="undo"
             onClick={() => act('resetTiming')}
-            tooltip={`
-            Reset all pod
-            timings/delays`}
+            tooltip={t('ui.centcom_pod_launcher.reset_timings_delays')}
             tooltipPosition="bottom-start"
           />
           <Button
@@ -28,17 +28,13 @@ export function Timing(props) {
             icon={custom_rev_delay === 1 ? 'toggle-on' : 'toggle-off'}
             onClick={() => act('toggleRevDelays')}
             selected={custom_rev_delay}
-            tooltip={`
-            Toggle Reverse Delays
-            Note: Top set is
-            normal delays, bottom set
-            is reversing pod's delays`}
+            tooltip={t('ui.centcom_pod_launcher.toggle_reverse_delays_tooltip')}
             tooltipPosition="bottom"
           />
         </>
       }
       fill
-      title="Time"
+      title={t('ui.common.time')}
     >
       <DelayHelper delay_list={DELAYS} />
       {!!custom_rev_delay && (

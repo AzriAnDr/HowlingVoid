@@ -2,9 +2,11 @@ import { Button, Section, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const NtosFileManager = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { usbconnected, files = [], usbfiles = [] } = data;
   return (
     <NtosWindow>
@@ -26,7 +28,7 @@ export const NtosFileManager = (props) => {
           />
         </Section>
         {usbconnected && (
-          <Section title="Data Disk">
+          <Section title={t('ui.ntosfilemanager.data_disk')}>
             <FileTable
               usbmode
               files={usbfiles}
@@ -49,6 +51,8 @@ export const NtosFileManager = (props) => {
 };
 
 const FileTable = (props) => {
+  const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     files = [],
     usbconnected,
@@ -61,9 +65,9 @@ const FileTable = (props) => {
   return (
     <Table>
       <Table.Row header>
-        <Table.Cell>File</Table.Cell>
-        <Table.Cell collapsing>Type</Table.Cell>
-        <Table.Cell collapsing>Size</Table.Cell>
+        <Table.Cell>{t('ui.ntosfilemanager.file')}</Table.Cell>
+        <Table.Cell collapsing>{t('ui.ntosfilemanager.type')}</Table.Cell>
+        <Table.Cell collapsing>{t('ui.ntosfilemanager.size')}</Table.Cell>
       </Table.Row>
       {files.map((file) => (
         <Table.Row key={file.name} className="candystripe">
@@ -82,33 +86,37 @@ const FileTable = (props) => {
           <Table.Cell>{file.size}</Table.Cell>
           <Table.Cell collapsing>
             {!!file.alert_able && (
-              <Button
-                icon={file.alert_silenced ? 'bell-slash' : 'bell'}
-                color={file.alert_silenced ? 'red' : 'default'}
-                tooltip={file.alert_silenced ? 'Unmute Alerts' : 'Mute Alerts'}
-                onClick={() => onToggleSilence(file.name)}
-              />
-            )}
+                <Button
+                  icon={file.alert_silenced ? 'bell-slash' : 'bell'}
+                  color={file.alert_silenced ? 'red' : 'default'}
+                  tooltip={
+                    file.alert_silenced
+                      ? t('ui.ntosfilemanager.unmute_alerts')
+                      : t('ui.ntosfilemanager.mute_alerts')
+                  }
+                  onClick={() => onToggleSilence(file.name)}
+                />
+              )}
             {!file.undeletable && (
               <>
                 <Button.Confirm
                   icon="trash"
                   confirmIcon="times"
                   confirmContent=""
-                  tooltip="Delete"
+                  tooltip={t('ui.ntosfilemanager.delete')}
                   onClick={() => onDelete(file.name)}
                 />
                 {!!usbconnected &&
                   (usbmode ? (
                     <Button
                       icon="download"
-                      tooltip="Download"
+                      tooltip={t('ui.ntosfilemanager.download')}
                       onClick={() => onUpload(file.name)}
                     />
                   ) : (
                     <Button
                       icon="upload"
-                      tooltip="Upload"
+                      tooltip={t('ui.ntosfilemanager.upload')}
                       onClick={() => onUpload(file.name)}
                     />
                   ))}
@@ -120,3 +128,4 @@ const FileTable = (props) => {
     </Table>
   );
 };
+

@@ -11,6 +11,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type UserList = Record<string, User>;
 
@@ -25,6 +26,7 @@ type Data = {
 };
 
 export function AdminPDA(props) {
+  const { t } = usePreferencesLocalization();
   const jobState = useState('');
   const nameState = useState('');
   const spamState = useState(false);
@@ -32,7 +34,12 @@ export function AdminPDA(props) {
   const invisibleState = useState<BooleanLike>(0);
 
   return (
-    <Window title="Send PDA Message" width={300} height={575} theme="admin">
+    <Window
+      title={t('ui.admin_pda.send_pda_message')}
+      width={300}
+      height={575}
+      theme="admin"
+    >
       <Window.Content>
         <ReceiverChoice
           invisibleState={invisibleState}
@@ -60,6 +67,7 @@ type ReceiverProps = {
 
 function ReceiverChoice(props: ReceiverProps) {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { users } = data;
 
   const [user, setUser] = props.userState;
@@ -75,12 +83,12 @@ function ReceiverChoice(props: ReceiverProps) {
     }));
 
   return (
-    <Section title="To Who?" textAlign="center">
+    <Section title={t('ui.admin_pda.to_who')} textAlign="center">
       <Dropdown
         disabled={spam}
         selected={user}
         displayText={users[user]?.username}
-        placeholder="Pick a user..."
+        placeholder={t('ui.admin_pda.pick_a_user')}
         options={dropdownOptions}
         width="275px"
         mb={1}
@@ -94,10 +102,10 @@ function ReceiverChoice(props: ReceiverProps) {
           fluid
           onClick={() => setShowInvisible(!showInvisible)}
         >
-          Include invisible?
+          {t('ui.admin_pda.include_invisible')}
         </Button.Checkbox>
         <Button.Checkbox checked={spam} fluid onClick={() => setSpam(!spam)}>
-          Should it be sent to everyone?
+          {t('ui.admin_pda.send_to_everyone')}
         </Button.Checkbox>
       </Box>
     </Section>
@@ -110,16 +118,25 @@ type SenderInfoProps = {
 };
 
 function SenderInfo(props: SenderInfoProps) {
+  const { t } = usePreferencesLocalization();
   const [_name, setName] = props.nameState;
   const [_job, setJob] = props.jobState;
 
   return (
-    <Section title="From Who?" textAlign="center">
+    <Section title={t('ui.admin_pda.from_who')} textAlign="center">
       <Box fontSize="14px">
-        <Input placeholder="Sender name..." fluid onChange={setName} />
+        <Input
+          placeholder={t('ui.admin_pda.sender_name_placeholder')}
+          fluid
+          onChange={setName}
+        />
       </Box>
       <Box fontSize="14px" pt="10px">
-        <Input placeholder="Sender's job..." fluid onChange={setJob} />
+        <Input
+          placeholder={t('ui.admin_pda.sender_job_placeholder')}
+          fluid
+          onChange={setJob}
+        />
       </Box>
     </Section>
   );
@@ -134,21 +151,23 @@ type MessageInputProps = {
 };
 
 function getErrorText(
+  t: (key: string) => string,
   name: string,
   job: string,
   message: string,
   target: boolean,
 ) {
   const reasonList: string[] = [];
-  if (!target) reasonList.push('target');
-  if (!name) reasonList.push('name');
-  if (!job) reasonList.push('job');
-  if (!message) reasonList.push('message text');
+  if (!target) reasonList.push(t('ui.admin_pda.target'));
+  if (!name) reasonList.push(t('ui.common.name'));
+  if (!job) reasonList.push(t('ui.common.job'));
+  if (!message) reasonList.push(t('ui.admin_pda.message_text'));
   return reasonList.join(', ');
 }
 
 function MessageInput(props: MessageInputProps) {
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
 
   const [messageText, setMessageText] = useState('');
   const [force, setForce] = useState(false);
@@ -162,11 +181,11 @@ function MessageInput(props: MessageInputProps) {
   const blocked = !name || !job || !messageText;
 
   return (
-    <Section title="Message" textAlign="center">
+    <Section title={t('ui.common.message')} textAlign="center">
       <Box>
         <TextArea
           fluid
-          placeholder="Type the message you want to send..."
+          placeholder={t('ui.admin_pda.message_placeholder')}
           height="200px"
           mb={1}
           onChange={setMessageText}
@@ -177,18 +196,18 @@ function MessageInput(props: MessageInputProps) {
           fluid
           checked={force}
           tooltip={
-            'This will immediately broadcast the message, bypassing telecomms altogether.'
+            t('ui.admin_pda.force_send_tooltip')
           }
           onClick={() => setForce(!force)}
         >
-          Force send the message?
+          {t('ui.admin_pda.force_send')}
         </Button.Checkbox>
         <Button
           tooltip={
             blocked
-              ? 'Fill in the following lines: ' +
-                getErrorText(name, job, messageText, spam || !!user)
-              : 'Send message to user(s)'
+              ? `${t('ui.admin_pda.fill_in_following_lines')}: ` +
+                getErrorText(t, name, job, messageText, spam || !!user)
+              : t('ui.admin_pda.send_message_to_users')
           }
           fluid
           disabled={blocked}
@@ -205,7 +224,7 @@ function MessageInput(props: MessageInputProps) {
             })
           }
         >
-          Send Message
+          {t('ui.admin_pda.send_message')}
         </Button>
       </Box>
     </Section>

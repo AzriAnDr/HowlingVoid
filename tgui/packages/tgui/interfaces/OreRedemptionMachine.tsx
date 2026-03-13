@@ -18,6 +18,7 @@ import { createSearch, toTitleCase } from 'tgui-core/string';
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 import { SearchBar } from './common/SearchBar';
+import { usePreferencesLocalization } from './localization';
 
 type Material = {
   name: string;
@@ -44,9 +45,10 @@ type Data = {
 export function OreRedemptionMachine(props) {
   const [compact, setCompact] = useState(false);
   const [searchItem, setSearchItem] = useState('');
+  const { t } = usePreferencesLocalization();
 
   return (
-    <Window title="Ore Redemption Machine" width={435} height={500}>
+    <Window title={t('ui.ore_redemption_machine.title')} width={435} height={500}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
@@ -56,7 +58,7 @@ export function OreRedemptionMachine(props) {
             <PointsSection />
           </Stack.Item>
           <NoticeBox info mb={0}>
-            This machine only accepts ore. Gibtonite and Slag are not accepted.
+            {t('ui.ore_redemption_machine.accepts_only_ore')}
           </NoticeBox>
           <Stack.Item mb={-1}>
             <MaterialSearchHeader
@@ -81,6 +83,7 @@ type MaterialRowProps = {
 
 function MaterialRow(props: MaterialRowProps) {
   const { compact, material, onRelease } = props;
+  const { t } = usePreferencesLocalization();
 
   const sheet_amounts = Math.floor(material.amount);
   const print_amount = 5;
@@ -103,13 +106,19 @@ function MaterialRow(props: MaterialRowProps) {
       <Table.Cell collapsing textAlign="left">
         <Box color="label">
           {formatSiUnit(sheet_amounts, 0)}{' '}
-          {material.amount === 1 ? 'sheet' : 'sheets'}
+          {material.amount === 1
+            ? t('ui.ore_redemption_machine.sheet')
+            : t('ui.ore_redemption_machine.sheets')}
         </Box>
       </Table.Cell>
       <Table.Cell collapsing textAlign="left">
         <Button
           color="transparent"
-          tooltip={material.value ? `${material.value} cr` : 'No cost'}
+          tooltip={
+            material.value
+              ? `${material.value} ${t('ui.ore_redemption_machine.cr_short')}`
+              : t('ui.ore_redemption_machine.no_cost')
+          }
           onClick={() => onRelease(1)}
         >
           x1
@@ -117,16 +126,18 @@ function MaterialRow(props: MaterialRowProps) {
         <Button
           color="transparent"
           tooltip={
-            material.value ? `${material.value * print_amount} cr` : 'No cost'
+            material.value
+              ? `${material.value * print_amount} ${t('ui.ore_redemption_machine.cr_short')}`
+              : t('ui.ore_redemption_machine.no_cost')
           }
           onClick={() => onRelease(print_amount)}
         >
           x{print_amount}
         </Button>
         <Button.Input
-          buttonText={`[Max: ${
+          buttonText={`${t('ui.ore_redemption_machine.max')}: ${
             sheet_amounts < max_sheets ? sheet_amounts : max_sheets
-          }]`}
+          }`}
           color="transparent"
           onCommit={onRelease}
         />
@@ -142,6 +153,7 @@ type IDSectionProps = {
 
 function IDSection(props: IDSectionProps) {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { user } = data;
 
   const { compact, setCompact } = props;
@@ -154,11 +166,11 @@ function IDSection(props: IDSectionProps) {
         </Stack.Item>
         <Stack.Item grow>
           <LabeledList>
-            <LabeledList.Item label="Name">
-              {user?.name || 'No Name Detected'}
+            <LabeledList.Item label={t('ui.common.name')}>
+              {user?.name || t('ui.ore_redemption_machine.no_name_detected')}
             </LabeledList.Item>
-            <LabeledList.Item label="Point Balance">
-              {user?.cash || 'No Balance Detected'}
+            <LabeledList.Item label={t('ui.ore_redemption_machine.point_balance')}>
+              {user?.cash || t('ui.ore_redemption_machine.no_balance_detected')}
             </LabeledList.Item>
           </LabeledList>
         </Stack.Item>
@@ -167,7 +179,7 @@ function IDSection(props: IDSectionProps) {
             color={compact ? 'red' : 'green'}
             onClick={() => setCompact(!compact)}
           >
-            Compact
+            {t('ui.ore_redemption_machine.compact')}
           </Button>
         </Stack.Item>
       </Stack>
@@ -177,6 +189,7 @@ function IDSection(props: IDSectionProps) {
 
 function PointsSection(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { disconnected, unclaimedPoints } = data;
 
   return (
@@ -185,7 +198,7 @@ function PointsSection(props) {
         <Stack.Item grow>
           <Icon name="coins" color="gold" />
           <Box inline color="label" ml={1}>
-            Unclaimed points:
+            {t('ui.ore_redemption_machine.unclaimed_points')}:
           </Box>
           {` ${unclaimedPoints}`}
         </Stack.Item>
@@ -196,7 +209,7 @@ function PointsSection(props) {
             tooltip={disconnected}
             onClick={() => act('Claim')}
           >
-            Claim
+            {t('ui.ore_redemption_machine.claim')}
           </Button>
         </Stack.Item>
       </Stack>
@@ -261,6 +274,7 @@ type SearchProps = {
 
 function MaterialSearchHeader(props: SearchProps) {
   const { searchItem, setSearchItem } = props;
+  const { t } = usePreferencesLocalization();
 
   const [tab, setTab] = useSharedState('tab', 'material');
 
@@ -281,7 +295,7 @@ function MaterialSearchHeader(props: SearchProps) {
                 }
               }}
             >
-              Materials
+              {t('ui.ore_redemption_machine.materials')}
             </Tabs.Tab>
             <Tabs.Tab
               icon="list"
@@ -295,7 +309,7 @@ function MaterialSearchHeader(props: SearchProps) {
                 }
               }}
             >
-              Alloys
+              {t('ui.ore_redemption_machine.alloys')}
             </Tabs.Tab>
           </Tabs>
         </Stack.Item>
@@ -304,7 +318,7 @@ function MaterialSearchHeader(props: SearchProps) {
             expensive
             style={{ height: '23px' }}
             query={searchItem}
-            placeholder="Search Material..."
+            placeholder={t('ui.ore_redemption_machine.search_material')}
             onSearch={(value) => {
               setSearchItem(value);
               if (value.length > 0) {

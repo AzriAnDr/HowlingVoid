@@ -22,6 +22,7 @@ import {
 import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend, useSharedState } from '../backend';
+import { usePreferencesLocalization } from './localization';
 import { processedText } from '../process';
 import { BountyBoardContent } from './BountyBoard';
 import { LoadingScreen } from './common/LoadingScreen';
@@ -33,6 +34,7 @@ const CENSOR_MESSAGE =
 
 export const Newscaster = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const NEWSCASTER_SCREEN = 1;
   const BOUNTYBOARD_SCREEN = 2;
   const [screenmode, setScreenmode] = useSharedState(
@@ -53,14 +55,14 @@ export const Newscaster = (props) => {
               selected={screenmode === NEWSCASTER_SCREEN}
               onClick={() => setScreenmode(NEWSCASTER_SCREEN)}
             >
-              Newscaster
+              {t('ui.newscaster.title')}
             </Tabs.Tab>
             <Tabs.Tab
               Color="Blue"
               selected={screenmode === BOUNTYBOARD_SCREEN}
               onClick={() => setScreenmode(BOUNTYBOARD_SCREEN)}
             >
-              Bounty Board
+              {t('ui.newscaster.bounty_board')}
             </Tabs.Tab>
           </Tabs>
         </Stack.Item>
@@ -76,12 +78,15 @@ export const Newscaster = (props) => {
 /** The modal menu that contains the prompts to making new channels. */
 const NewscasterChannelCreation = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const [lockedmode, setLockedmode] = useState(true);
   const [cross_sector, setcross_sector] = useState(false);
   const { creating_channel, awaiting_approval, name, desc } = data;
 
   if (awaiting_approval) {
-    return <LoadingScreen label="Awaiting Central Command approval..." />;
+    return (
+      <LoadingScreen label={t('ui.newscaster.awaiting_central_command_approval')} />
+    );
   }
 
   if (!creating_channel) {
@@ -93,7 +98,7 @@ const NewscasterChannelCreation = (props) => {
       <Stack vertical>
         <Stack.Item>
           <Box pb={1}>
-            Enter channel name here:
+            {t('ui.newscaster.enter_channel_name_here')}
             <Button
               color="red"
               icon="times"
@@ -115,11 +120,11 @@ const NewscasterChannelCreation = (props) => {
               })
             }
           >
-            Channel Name
+            {t('ui.newscaster.channel_name')}
           </TextArea>
         </Stack.Item>
         <Stack.Item>
-          <Box pb={1}>Enter channel description here:</Box>
+          <Box pb={1}>{t('ui.newscaster.enter_channel_description_here')}</Box>
           <TextArea
             height="150px"
             width="240px"
@@ -132,26 +137,26 @@ const NewscasterChannelCreation = (props) => {
               })
             }
           >
-            Channel Description
+            {t('ui.newscaster.channel_description')}
           </TextArea>
         </Stack.Item>
         <Stack.Item>
           <Section>
-            Set Channel as Public or Private
+            {t('ui.newscaster.set_channel_public_or_private')}
             <Box pt={1}>
               <Button
                 selected={!lockedmode}
                 disabled={cross_sector}
                 onClick={() => setLockedmode(false)}
               >
-                Public
+                {t('ui.common.public')}
               </Button>
               <Button
                 selected={!!lockedmode}
                 disabled={cross_sector}
                 onClick={() => setLockedmode(true)}
               >
-                Private
+                {t('ui.common.private')}
               </Button>
             </Box>
           </Section>
@@ -164,10 +169,10 @@ const NewscasterChannelCreation = (props) => {
               setcross_sector(!cross_sector);
               setLockedmode(true);
             }}
-            tooltip="Cross-sector newscaster messaging will require Central Command approval for each article. Cross-sector channels are automatically locked."
+            tooltip={t('ui.newscaster.cross_sector_requires_approval')}
             tooltipPosition="bottom-start"
           >
-            Make cross-sector?
+            {t('ui.newscaster.make_cross_sector')}
           </Button.Checkbox>
         </Stack.Item>
         <Stack.Item>
@@ -180,7 +185,7 @@ const NewscasterChannelCreation = (props) => {
                 })
               }
             >
-              Submit Channel
+              {t('ui.newscaster.submit_channel')}
             </Button>
           </Box>
         </Stack.Item>
@@ -192,6 +197,7 @@ const NewscasterChannelCreation = (props) => {
 /** The modal menu that contains the prompts to making new comments. */
 const NewscasterCommentCreation = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { creating_comment, viewing_message } = data;
   if (!creating_comment) {
     return null;
@@ -201,7 +207,7 @@ const NewscasterCommentCreation = (props) => {
       <Stack vertical>
         <Stack.Item>
           <Box pb={1}>
-            Enter comment:
+            {t('ui.newscaster.enter_comment')}
             <Button
               color="red"
               position="relative"
@@ -223,7 +229,7 @@ const NewscasterCommentCreation = (props) => {
               })
             }
           >
-            Channel Name
+            {t('ui.newscaster.channel_name')}
           </TextArea>
         </Stack.Item>
         <Stack.Item>
@@ -235,7 +241,7 @@ const NewscasterCommentCreation = (props) => {
                 })
               }
             >
-              Submit Comment
+              {t('ui.newscaster.submit_comment')}
             </Button>
           </Box>
         </Stack.Item>
@@ -246,6 +252,7 @@ const NewscasterCommentCreation = (props) => {
 
 const NewscasterWantedScreen = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     viewing_wanted,
     photo_data,
@@ -265,8 +272,8 @@ const NewscasterWantedScreen = (props) => {
             <Stack.Item>
               <Box bold color="red">
                 {activeWanted.active
-                  ? 'Active Wanted Issue:'
-                  : 'Dismissed Wanted Issue:'}
+                  ? t('ui.newscaster.active_wanted_issue')
+                  : t('ui.newscaster.dismissed_wanted_issue')}
                 <Button
                   color="red"
                   position="relative"
@@ -285,7 +292,9 @@ const NewscasterWantedScreen = (props) => {
                   <Image src={activeWanted.image ? activeWanted.image : null} />
                   <Box italic>
                     Posted by{' '}
-                    {activeWanted.author ? activeWanted.author : 'N/A'}
+                    {activeWanted.author
+                      ? activeWanted.author
+                      : t('ui.common.not_available')}
                   </Box>
                 </>
               )}
@@ -297,23 +306,25 @@ const NewscasterWantedScreen = (props) => {
       {security_mode ? (
         <>
           <LabeledList>
-            <LabeledList.Item label="Criminal Name">
+            <LabeledList.Item label={t('ui.newscaster.criminal_name')}>
               <Button
                 disabled={!security_mode}
                 icon="pen"
                 onClick={() => act('setCriminalName')}
               >
-                {criminal_name ? criminal_name : ' N/A'}
+                {criminal_name ? criminal_name : ` ${t('ui.common.not_available')}`}
               </Button>
             </LabeledList.Item>
-            <LabeledList.Item label="Criminal Activity">
+            <LabeledList.Item label={t('ui.newscaster.criminal_activity')}>
               <Button
                 nowrap={false}
                 disabled={!security_mode}
                 icon="pen"
                 onClick={() => act('setCrimeData')}
               >
-                {crime_description ? crime_description : ' N/A'}
+                {crime_description
+                  ? crime_description
+                  : ` ${t('ui.common.not_available')}`}
               </Button>
             </LabeledList.Item>
           </LabeledList>
@@ -324,14 +335,16 @@ const NewscasterWantedScreen = (props) => {
               disabled={!security_mode}
               onClick={() => act('togglePhoto')}
             >
-              {photo_data ? 'Remove photo' : 'Attach photo'}
+              {photo_data
+                ? t('ui.newscaster.remove_photo')
+                : t('ui.newscaster.attach_photo')}
             </Button>
             <Button
               disabled={!security_mode}
               icon="volume-up"
               onClick={() => act('submitWantedIssue')}
             >
-              Set Wanted Issue
+              {t('ui.newscaster.set_wanted_issue')}
             </Button>
             <Button
               disabled={!security_mode}
@@ -339,7 +352,7 @@ const NewscasterWantedScreen = (props) => {
               color="red"
               onClick={() => act('clearWantedIssue')}
             >
-              Clear Wanted
+              {t('ui.newscaster.clear_wanted')}
             </Button>
           </Section>
         </>
@@ -347,8 +360,8 @@ const NewscasterWantedScreen = (props) => {
         <Box>
           {wanted.map((activeWanted) =>
             activeWanted.active
-              ? 'Please contact your local security officer if spotted.'
-              : 'No wanted issue posted. Have a secure day.',
+              ? t('ui.newscaster.contact_security_if_spotted')
+              : t('ui.newscaster.no_wanted_issue_posted'),
           )}
         </Box>
       )}
@@ -357,7 +370,7 @@ const NewscasterWantedScreen = (props) => {
 };
 
 const NewscasterContent = (props) => {
-  const { act, data } = useBackend();
+  const { data } = useBackend();
   const { current_channel = {} } = data;
   return (
     <Stack fill vertical>
@@ -392,6 +405,7 @@ const NewscasterContent = (props) => {
 /** The Channel Box is the basic channel information where buttons live.*/
 const NewscasterChannelBox = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     channelName,
     channelDesc,
@@ -412,7 +426,7 @@ const NewscasterChannelBox = (props) => {
           {channelCensored ? (
             <Section>
               <BlockQuote color="red">
-                <b>ATTENTION:</b> {CENSOR_MESSAGE}
+                <b>{t('ui.common.attention')}:</b> {CENSOR_MESSAGE}
               </BlockQuote>
             </Section>
           ) : (
@@ -435,7 +449,7 @@ const NewscasterChannelBox = (props) => {
               onClick={() => act('createStory', { current: viewing_channel })}
               mt={1}
             >
-              Submit Story
+              {t('ui.newscaster.submit_story')}
             </Button>
             <Button
               icon="camera"
@@ -447,13 +461,12 @@ const NewscasterChannelBox = (props) => {
               }
               onClick={() => act('togglePhoto')}
             >
-              Select Photo
+              {t('ui.newscaster.select_photo')}
             </Button>
             {!!admin_mode && (
               <Button
                 icon="ban"
-                tooltip="Censor the whole channel and its \
-                  contents as dangerous to the station. Cannot be undone."
+                tooltip={t('ui.newscaster.censor_whole_channel_tooltip')}
                 disabled={!admin_mode || !viewing_channel}
                 onClick={() =>
                   act('channelDNotice', {
@@ -462,18 +475,18 @@ const NewscasterChannelBox = (props) => {
                   })
                 }
               >
-                D-Notice
+                {t('ui.newscaster.d_notice')}
               </Button>
             )}
           </Box>
           <Box>
             <Button
               icon="newspaper"
-              tooltip={paper <= 0 ? 'Insert paper first!' : ''}
+              tooltip={paper <= 0 ? t('ui.newscaster.insert_paper_first') : ''}
               disabled={paper <= 0}
               onClick={() => act('printNewspaper')}
             >
-              Print Newspaper
+              {t('ui.newscaster.print_newspaper')}
             </Button>
           </Box>
         </Stack.Item>
@@ -485,6 +498,7 @@ const NewscasterChannelBox = (props) => {
 /** Channel select is the left-hand menu where all the channels are listed. */
 const NewscasterChannelSelector = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { channels = [], viewing_channel, wanted = [] } = data;
   return (
     <Section minHeight="100%" width={`${window.innerWidth - 410}px`}>
@@ -499,7 +513,7 @@ const NewscasterChannelSelector = (props) => {
             textColor={activeWanted.active ? 'red' : 'grey'}
             onClick={() => act('toggleWanted')}
           >
-            Wanted Issue
+            {t('ui.newscaster.wanted_issue')}
           </Tabs.Tab>
         ))}
         {channels.map((channel) => (
@@ -528,7 +542,7 @@ const NewscasterChannelSelector = (props) => {
           color="Green"
           onClick={() => act('startCreateChannel')}
         >
-          Create Channel [+]
+          {t('ui.newscaster.create_channel')}
         </Tabs.Tab>
       </Tabs>
     </Section>
@@ -538,6 +552,7 @@ const NewscasterChannelSelector = (props) => {
 /** This is where the channels comments get spangled out (tm) */
 const NewscasterChannelMessages = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     messages = [],
     viewing_channel,
@@ -551,9 +566,9 @@ const NewscasterChannelMessages = (props) => {
   if (channelCensored) {
     return (
       <Section color="red">
-        <b>ATTENTION:</b> Comments cannot be read at this time.
+        <b>{t('ui.common.attention')}:</b> {t('ui.newscaster.comments_cannot_be_read')}
         <br />
-        Thank you for your understanding, and have a secure day.
+        {t('ui.newscaster.have_a_secure_day')}
       </Section>
     );
   }
@@ -571,11 +586,11 @@ const NewscasterChannelMessages = (props) => {
               <i>
                 {message.censored_author ? (
                   <Box textColor="red">
-                    By: [REDACTED]. <b>D-Notice Notice</b> .
+                    {t('ui.newscaster.by_redacted')} <b>{t('ui.newscaster.d_notice_notice')}</b>.
                   </Box>
                 ) : (
                   <>
-                    By: {message.auth} at {message.time}
+                    {`${t('ui.newscaster.by')} ${message.auth} ${t('ui.newscaster.at')} ${message.time}`}
                   </>
                 )}
               </i>
@@ -585,7 +600,7 @@ const NewscasterChannelMessages = (props) => {
                 {!!admin_mode && (
                   <Button
                     icon="comment-slash"
-                    tooltip="Censor Story"
+                    tooltip={t('ui.newscaster.censor_story')}
                     disabled={!admin_mode}
                     onClick={() =>
                       act('storyCensor', {
@@ -597,7 +612,7 @@ const NewscasterChannelMessages = (props) => {
                 {!!admin_mode && (
                   <Button
                     icon="user-slash"
-                    tooltip="Censor Author"
+                    tooltip={t('ui.newscaster.censor_author')}
                     disabled={!admin_mode}
                     onClick={() =>
                       act('authorCensor', {
@@ -608,7 +623,7 @@ const NewscasterChannelMessages = (props) => {
                 )}
                 <Button
                   icon="comment"
-                  tooltip="Leave a Comment."
+                  tooltip={t('ui.newscaster.leave_a_comment')}
                   disabled={
                     message.censored_author ||
                     message.censored_message ||
@@ -627,8 +642,8 @@ const NewscasterChannelMessages = (props) => {
             <BlockQuote>
               {message.censored_message ? (
                 <Section textColor="red">
-                  This message was deemed dangerous to the general welfare of
-                  the station and therefore marked with a <b>D-Notice</b>.
+                  {t('ui.newscaster.message_deemed_dangerous')}{' '}
+                  <b>{t('ui.newscaster.d_notice')}</b>.
                 </Section>
               ) : (
                 <Section pl={1}>
@@ -643,7 +658,7 @@ const NewscasterChannelMessages = (props) => {
                   {message.comments.map((comment) => (
                     <BlockQuote key={comment.index}>
                       <Box italic textColor="white">
-                        By: {comment.auth} at {comment.time}
+                        {`${t('ui.newscaster.by')} ${comment.auth} ${t('ui.newscaster.at')} ${comment.time}`}
                       </Box>
                       <Section ml={2.5}>
                         <Box

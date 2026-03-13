@@ -4,6 +4,7 @@ import { Icon, Section, Stack } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Rules } from './AntagInfoRules';
+import { usePreferencesLocalization } from './localization';
 
 type Info = {
   antag_name: string;
@@ -37,9 +38,10 @@ export const AntagInfoClock = (props) => {
 
 const ObjectivePrintout = (props) => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   return (
     <Stack vertical>
-      <Stack.Item bold>Your goals:</Stack.Item>
+      <Stack.Item bold>{t('ui.antag_info_clock.your_goals')}</Stack.Item>
       <Stack.Item>
         {
           '- Further the goals of any other organization you are a part of using the power granted to you.'

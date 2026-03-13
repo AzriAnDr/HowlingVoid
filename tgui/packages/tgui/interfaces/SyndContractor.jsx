@@ -17,6 +17,7 @@ import {
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 import { FakeTerminal } from './common/FakeTerminal';
+import { usePreferencesLocalization } from './localization';
 
 const CONTRACT_STATUS_INACTIVE = 1;
 const CONTRACT_STATUS_ACTIVE = 2;
@@ -37,6 +38,7 @@ export const SyndContractor = (props) => {
 
 export const SyndContractorContent = (props) => {
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
 
   const terminalMessages = [
     'Recording biometric data...',
@@ -101,7 +103,10 @@ export const SyndContractorContent = (props) => {
           <Box width="260px" textAlign="left" minHeight="80px">
             {data.error}
           </Box>
-          <Button content="Dismiss" onClick={() => act('PRG_clear_error')} />
+          <Button
+            content={t('ui.syndicate_contractor.dismiss')}
+            onClick={() => act('PRG_clear_error')}
+          />
         </Flex.Item>
       </Flex>
     </Modal>
@@ -112,7 +117,7 @@ export const SyndContractorContent = (props) => {
       <Section minHeight="525px">
         <Box width="100%" textAlign="center">
           <Button
-            content="REGISTER USER"
+            content={t('ui.syndicate_contractor.register_user')}
             color="transparent"
             onClick={() => act('PRG_login')}
           />
@@ -142,7 +147,7 @@ export const SyndContractorContent = (props) => {
         </Box>
         <Button
           fluid
-          content="CONTINUE"
+          content={t('ui.syndicate_contractor.continue')}
           color="transparent"
           textAlign="center"
           onClick={() => act('PRG_toggle_info')}
@@ -161,14 +166,15 @@ export const SyndContractorContent = (props) => {
 
 export const StatusPane = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
 
   return (
     <Section
       title={
         <>
-          Contractor Status
+          {t('ui.syndicate_contractor.contractor_status')}
           <Button
-            content="View Information Again"
+            content={t('ui.syndicate_contractor.view_information_again')}
             color="transparent"
             mb={0}
             ml={1}
@@ -186,10 +192,10 @@ export const StatusPane = (props) => {
         <Stack.Item grow>
           <LabeledList>
             <LabeledList.Item
-              label="TC Available"
+              label={t('ui.syndicate_contractor.tc_available')}
               buttons={
                 <Button
-                  content="Claim"
+                  content={t('ui.syndicate_contractor.claim')}
                   disabled={data.redeemable_tc <= 0}
                   onClick={() => act('PRG_redeem_TC')}
                 />
@@ -197,17 +203,23 @@ export const StatusPane = (props) => {
             >
               {String(data.redeemable_tc)}
             </LabeledList.Item>
-            <LabeledList.Item label="TC Earned">
+            <LabeledList.Item label={t('ui.syndicate_contractor.tc_earned')}>
               {String(data.earned_tc)}
             </LabeledList.Item>
           </LabeledList>
         </Stack.Item>
         <Stack.Item grow>
           <LabeledList>
-            <LabeledList.Item label="Contracts Completed">
+            <LabeledList.Item
+              label={t('ui.syndicate_contractor.contracts_completed')}
+            >
               {String(data.contracts_completed)}
             </LabeledList.Item>
-            <LabeledList.Item label="Current Status">ACTIVE</LabeledList.Item>
+            <LabeledList.Item
+              label={t('ui.syndicate_contractor.current_status')}
+            >
+              {t('ui.syndicate_contractor.active')}
+            </LabeledList.Item>
           </LabeledList>
         </Stack.Item>
       </Stack>
@@ -217,15 +229,16 @@ export const StatusPane = (props) => {
 
 export const SyndPane = (props) => {
   const [tab, setTab] = useState(1);
+  const { t } = usePreferencesLocalization();
   return (
     <>
       <StatusPane state={props.state} />
       <Tabs>
         <Tabs.Tab selected={tab === 1} onClick={() => setTab(1)}>
-          Contracts
+          {t('ui.syndicate_contractor.contracts')}
         </Tabs.Tab>
         <Tabs.Tab selected={tab === 2} onClick={() => setTab(2)}>
-          Hub
+          {t('ui.syndicate_contractor.hub')}
         </Tabs.Tab>
       </Tabs>
       {tab === 1 && <ContractsTab />}
@@ -236,14 +249,15 @@ export const SyndPane = (props) => {
 
 const ContractsTab = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const contracts = data.contracts || [];
   return (
     <>
       <Section
-        title="Available Contracts"
+        title={t('ui.syndicate_contractor.available_contracts')}
         buttons={
           <Button
-            content="Call Extraction"
+            content={t('ui.syndicate_contractor.call_extraction')}
             disabled={!data.ongoing_contract || data.extraction_enroute}
             onClick={() => act('PRG_call_extraction')}
           />
@@ -267,7 +281,7 @@ const ContractsTab = (props) => {
               title={
                 contract.target
                   ? `${contract.target} (${contract.target_rank})`
-                  : 'Invalid Target'
+                  : t('ui.syndicate_contractor.invalid_target')
               }
               level={active ? 1 : 2}
               buttons={
@@ -276,7 +290,11 @@ const ContractsTab = (props) => {
                     {`${contract.payout} (+${contract.payout_bonus}) TC`}
                   </Box>
                   <Button
-                    content={active ? 'Abort' : 'Accept'}
+                    content={
+                      active
+                        ? t('ui.syndicate_contractor.abort')
+                        : t('ui.syndicate_contractor.accept')
+                    }
                     disabled={contract.extraction_enroute}
                     color={active && 'bad'}
                     onClick={() =>
@@ -292,7 +310,7 @@ const ContractsTab = (props) => {
                 <Stack.Item grow>{contract.message}</Stack.Item>
                 <Stack.Item>
                   <Box bold mb={1}>
-                    Dropoff Location:
+                    {t('ui.syndicate_contractor.dropoff_location')}:
                   </Box>
                   <Box>{contract.dropoff}</Box>
                 </Stack.Item>
@@ -302,7 +320,7 @@ const ContractsTab = (props) => {
         })}
       </Section>
       <Section
-        title="Dropoff Locator"
+        title={t('ui.syndicate_contractor.dropoff_locator')}
         textAlign="center"
         opacity={data.ongoing_contract ? 100 : 0}
       >
@@ -314,11 +332,14 @@ const ContractsTab = (props) => {
 
 const HubTab = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const contractor_hub_items = data.contractor_hub_items || [];
   return (
     <Section>
       {contractor_hub_items.map((item) => {
-        const repInfo = item.cost ? `${item.cost} Rep` : 'FREE';
+        const repInfo = item.cost
+          ? `${item.cost} ${t('ui.syndicate_contractor.rep_short')}`
+          : t('ui.syndicate_contractor.free');
         const limited = item.limited !== -1;
         return (
           <Section
@@ -329,11 +350,11 @@ const HubTab = (props) => {
               <>
                 {limited && (
                   <Box inline bold mr={1}>
-                    {item.limited} remaining
+                    {item.limited} {t('ui.syndicate_contractor.remaining')}
                   </Box>
                 )}
                 <Button
-                  content="Purchase"
+                  content={t('ui.syndicate_contractor.purchase')}
                   disabled={
                     data.contract_rep < item.cost ||
                     (limited && item.limited <= 0)

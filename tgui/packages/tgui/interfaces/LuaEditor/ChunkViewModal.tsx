@@ -3,6 +3,7 @@ import type { Dispatch, SetStateAction } from 'react';
 import { Box, Button, Modal, Section } from 'tgui-core/components';
 
 import { sanitizeText } from '../../sanitize';
+import { usePreferencesLocalization } from '../localization';
 import type { LuaEditorModal } from './types';
 
 type ChunkViewModalProps = {
@@ -12,6 +13,7 @@ type ChunkViewModalProps = {
 };
 
 export const ChunkViewModal = (props: ChunkViewModalProps) => {
+  const { t } = usePreferencesLocalization();
   const { setModal, viewedChunk, setViewedChunk } = props;
   return (
     <Modal position="absolute" width="50%" height="80%" top="10%" left="25%">
@@ -19,7 +21,7 @@ export const ChunkViewModal = (props: ChunkViewModalProps) => {
         fill
         scrollable
         scrollableHorizontal
-        title="Chunk"
+        title={t('ui.lua_editor.chunk')}
         buttons={
           <Button
             color="red"
@@ -29,7 +31,7 @@ export const ChunkViewModal = (props: ChunkViewModalProps) => {
               setViewedChunk(undefined);
             }}
           >
-            Close
+            {t('ui.common.close')}
           </Button>
         }
       >

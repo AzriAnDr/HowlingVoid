@@ -9,6 +9,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import { GenericUplink, type Item } from './Uplink/GenericUplink';
 
 type AbductorConsoleData = {
@@ -71,10 +72,11 @@ export const AbductorConsole = (props) => {
 
 const Abductsoft = (props) => {
   const { act, data } = useBackend<AbductorConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { experiment, points, credits, categories } = data;
 
   if (!experiment) {
-    return <NoticeBox danger>No Experiment Machine Detected</NoticeBox>;
+    return <NoticeBox danger>{t('ui.abductor_console.no_experiment_machine_detected')}</NoticeBox>;
   }
 
   const categoriesList: string[] = [];
@@ -103,7 +105,7 @@ const Abductsoft = (props) => {
     <>
       <Section>
         <LabeledList>
-          <LabeledList.Item label="Collected Samples">
+          <LabeledList.Item label={t('ui.abductor_console.collected_samples')}>
             {points}
           </LabeledList.Item>
         </LabeledList>
@@ -120,15 +122,16 @@ const Abductsoft = (props) => {
 
 const EmergencyTeleporter = (props) => {
   const { act, data } = useBackend<AbductorConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { pad, gizmo } = data;
 
   if (!pad) {
-    return <NoticeBox danger>No Telepad Detected</NoticeBox>;
+    return <NoticeBox danger>{t('ui.abductor_console.no_telepad_detected')}</NoticeBox>;
   }
 
   return (
     <Section
-      title="Emergency Teleport"
+      title={t('ui.abductor_console.emergency_teleport')}
       buttons={
         <Button
           icon="exclamation-circle"
@@ -139,13 +142,13 @@ const EmergencyTeleporter = (props) => {
       }
     >
       <LabeledList>
-        <LabeledList.Item label="Mark Retrieval">
+        <LabeledList.Item label={t('ui.abductor_console.mark_retrieval')}>
           <Button
             icon={gizmo ? 'user-plus' : 'user-slash'}
             disabled={!gizmo}
             onClick={() => act('teleporter_retrieve')}
           >
-            {gizmo ? 'Retrieve' : 'No Mark'}
+            {gizmo ? t('ui.common.retrieve') : t('ui.abductor_console.no_mark')}
           </Button>
         </LabeledList.Item>
       </LabeledList>
@@ -155,36 +158,37 @@ const EmergencyTeleporter = (props) => {
 
 const VestSettings = (props) => {
   const { act, data } = useBackend<AbductorConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { vest, vest_mode, vest_lock } = data;
 
   if (!vest) {
-    return <NoticeBox danger>No Agent Vest Detected</NoticeBox>;
+    return <NoticeBox danger>{t('ui.abductor_console.no_agent_vest_detected')}</NoticeBox>;
   }
 
   return (
     <Section
-      title="Agent Vest Settings"
+      title={t('ui.abductor_console.agent_vest_settings')}
       buttons={
         <Button
           icon={vest_lock ? 'lock' : 'unlock'}
           onClick={() => act('toggle_vest')}
         >
-          {vest_lock ? 'Locked' : 'Unlocked'}
+          {vest_lock ? t('ui.common.locked') : t('ui.common.unlocked')}
         </Button>
       }
     >
       <LabeledList>
-        <LabeledList.Item label="Mode">
+        <LabeledList.Item label={t('ui.common.mode')}>
           <Button
             icon={vest_mode === 1 ? 'eye-slash' : 'fist-raised'}
             onClick={() => act('flip_vest')}
           >
-            {vest_mode === 1 ? 'Stealth' : 'Combat'}
+            {vest_mode === 1 ? t('ui.common.stealth') : t('ui.common.combat')}
           </Button>
         </LabeledList.Item>
-        <LabeledList.Item label="Disguise">
+        <LabeledList.Item label={t('ui.common.disguise')}>
           <Button icon="user-secret" onClick={() => act('select_disguise')}>
-            Select
+            {t('ui.common.select')}
           </Button>
         </LabeledList.Item>
       </LabeledList>

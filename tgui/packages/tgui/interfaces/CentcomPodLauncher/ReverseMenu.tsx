@@ -1,12 +1,14 @@
 import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { REVERSE_OPTIONS } from './constants';
 import { useTab } from './hooks';
 import type { PodLauncherData } from './types';
 
 export function ReverseMenu(props) {
   const { act, data } = useBackend<PodLauncherData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     customDropoff,
     effectReverse,
@@ -29,16 +31,12 @@ export function ReverseMenu(props) {
             }
           }}
           selected={effectReverse}
-          tooltip={`
-            Doesn't send items.
-            Afer landing, returns to
-            dropoff turf (or bay
-            if none specified).`}
+          tooltip={t('ui.centcom_pod_launcher.reverse_tooltip')}
           tooltipPosition="bottom"
         />
       }
       fill
-      title="Reverse"
+      title={t('ui.centcom_pod_launcher.reverse')}
     >
       {!!effectReverse && (
         <Stack fill vertical>
@@ -47,12 +45,10 @@ export function ReverseMenu(props) {
               disabled={!effectReverse}
               onClick={() => act('pickDropoffTurf')}
               selected={picking_dropoff_turf}
-              tooltip={`
-                Where reverse pods
-                go after landing`}
+              tooltip={t('ui.centcom_pod_launcher.dropoff_turf_tooltip')}
               tooltipPosition="bottom-end"
             >
-              Dropoff Turf
+              {t('ui.centcom_pod_launcher.dropoff_turf')}
             </Button>
             <Button
               disabled={!customDropoff}
@@ -65,11 +61,7 @@ export function ReverseMenu(props) {
                   act('tabSwitch', { tabIndex: 1 });
                 }
               }}
-              tooltip={`
-                Clears the custom dropoff
-                location. Reverse pods will
-                instead dropoff at the
-                selected bay.`}
+              tooltip={t('ui.centcom_pod_launcher.clear_dropoff_turf_tooltip')}
               tooltipPosition="bottom"
             />
           </Stack.Item>

@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import { type Objective, ObjectivePrintout } from './common/Objectives';
 
 const jauntstyle = {
@@ -21,6 +22,7 @@ type Info = {
 
 export const AntagInfoDemon = (props) => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { fluff, objectives, explain_attack } = data;
   return (
     <Window width={620} height={356} theme="syndicate">
@@ -43,7 +45,7 @@ export const AntagInfoDemon = (props) => {
                     </Stack.Item>
                     <Stack.Item>
                       <ObjectivePrintout
-                        titleMessage="It is in your nature to accomplish these goals:"
+                        titleMessage={t('ui.antaginfodemon.objectives_title')}
                         objectiveTextSize="20px"
                         objectives={objectives}
                       />
@@ -53,23 +55,18 @@ export const AntagInfoDemon = (props) => {
               </Stack.Item>
               {!!explain_attack && (
                 <Stack.Item>
-                  <Section fill title="Demonic Powers">
+                  <Section fill title={t('ui.antaginfodemon.demonic_powers')}>
                     <Stack vertical>
                       <Stack.Item>
-                        <span style={jauntstyle}>Blood Jaunt:</span> You can
-                        dive in and out of blood to travel anywhere you need to
-                        be. You will gain a speed boost upon leaving the jaunt
-                        for surprise attacks. You can drag victims you have
-                        disabled through the blood, consuming them and restoring
-                        health.
+                        <span style={jauntstyle}>{t('ui.antaginfodemon.blood_jaunt')}</span>{' '}
+                        {t('ui.antaginfodemon.blood_jaunt_description')}
                       </Stack.Item>
                       <Stack.Divider />
                       <Stack.Item>
-                        <span style={injurestyle}>Monstrous strike:</span> You
-                        can launch a devastating slam attack by right-clicking,
-                        capable of smashing bones in one strike. Great for
-                        preventing the escape of your victims, as their wounds
-                        will slow them.
+                        <span style={injurestyle}>
+                          {t('ui.antaginfodemon.monstrous_strike')}
+                        </span>{' '}
+                        {t('ui.antaginfodemon.monstrous_strike_description')}
                       </Stack.Item>
                     </Stack>
                   </Section>
@@ -87,6 +84,7 @@ export const AntagInfoDemon = (props) => {
 };
 
 const DemonRunes = (props) => {
+  const runeWord = 'YUKTOPUS';
   return (
     <Section height="102%" mt="-6px" fill>
       {/*
@@ -94,10 +92,16 @@ const DemonRunes = (props) => {
       Damn, that was such a good game.
       */}
       <Box className="HellishRunes__demonrune">
-        Y<br />U<br />K<br />T<br />O<br />P<br />U<br />S<br />
-        Y<br />U<br />K<br />T<br />O<br />P<br />U<br />S<br />
-        Y<br />U<br />K<br />T<br />O<br />P<br />U<br />S<br />
-        Y<br />U<br />K<br />T<br />O<br />P<br />U<br />S
+        {Array.from({ length: 4 }).map((_, row) => (
+          <span key={row}>
+            {runeWord.split('').map((ch, idx) => (
+              <span key={`${row}-${idx}`}>
+                {ch}
+                <br />
+              </span>
+            ))}
+          </span>
+        ))}
       </Box>
     </Section>
   );

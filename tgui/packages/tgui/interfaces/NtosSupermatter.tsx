@@ -4,11 +4,13 @@ import { Button, ProgressBar, Section, Table } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 import { SupermatterContent, type SupermatterData } from './Supermatter';
+import { usePreferencesLocalization } from './localization';
 
 type NtosSupermatterData = SupermatterData & { focus_uid?: number };
 
 export const NtosSupermatter = (props) => {
   const { act, data } = useBackend<NtosSupermatterData>();
+  const { t } = usePreferencesLocalization(data);
   const { sm_data, gas_metadata, focus_uid } = data;
   const [activeUID, setActiveUID] = useState(0);
   const activeSM = sm_data.find((sm) => sm.uid === activeUID);
@@ -22,17 +24,17 @@ export const NtosSupermatter = (props) => {
             gas_metadata={gas_metadata}
             sectionButton={
               <Button icon="arrow-left" onClick={() => setActiveUID(0)}>
-                Back
+                {t('ui.common.back')}
               </Button>
             }
           />
         ) : (
           <Section
-            title="Detected Supermatters"
+            title={t('ui.ntossupermatter.detected_supermatters')}
             buttons={
               <Button
                 icon="sync"
-                content="Refresh"
+                content={t('ui.ntossupermatter.refresh')}
                 onClick={() => act('PRG_refresh')}
               />
             }
@@ -42,7 +44,7 @@ export const NtosSupermatter = (props) => {
                 <Table.Row key={sm.uid}>
                   <Table.Cell>{`${sm.uid}. ${sm.area_name}`}</Table.Cell>
                   <Table.Cell collapsing color="label">
-                    Integrity:
+                    {t('ui.ntos_supermatter.integrity')}:
                   </Table.Cell>
                   <Table.Cell collapsing width="120px">
                     <ProgressBar
@@ -63,7 +65,7 @@ export const NtosSupermatter = (props) => {
                   </Table.Cell>
                   <Table.Cell collapsing>
                     <Button
-                      content="Details"
+                      content={t('ui.ntossupermatter.details')}
                       onClick={() => setActiveUID(sm.uid)}
                     />
                   </Table.Cell>

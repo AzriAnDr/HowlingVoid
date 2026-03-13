@@ -2,6 +2,7 @@ import { Button } from 'tgui-core/components';
 import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { SWIPE_NEEDED } from './constants';
 import type { CommsConsoleData } from './types';
 
@@ -14,6 +15,7 @@ export function AlertButton(props: Props) {
   const { alertLevel, onClick } = props;
 
   const { act, data } = useBackend<CommsConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { canSetAlertLevel } = data;
 
   const thisIsCurrent = data.alertLevel === alertLevel;
@@ -36,7 +38,7 @@ export function AlertButton(props: Props) {
         }
       }}
     >
-      {capitalize(alertLevel)}
+      {t(`ui.communications_console.alert_level_${alertLevel}`, capitalize(alertLevel))}
     </Button>
   );
 }

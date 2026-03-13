@@ -13,9 +13,11 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const Telecomms = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     channels,
     type,
@@ -39,11 +41,11 @@ export const Telecomms = (props) => {
   return (
     <Window title={id} width={400} height={600}>
       <Window.Content scrollable>
-        {!multitool && <NoticeBox>Use a multitool to make changes.</NoticeBox>}
-        <Section title="Settings">
+        {!multitool && <NoticeBox>{t('ui.telecomms.use_multitool_to_make_changes')}</NoticeBox>}
+        <Section title={t('ui.common.settings')}>
           <LabeledList>
             <LabeledList.Item
-              label="Power"
+              label={t('ui.common.power')}
               buttons={
                 <Button
                   icon={toggled ? 'power-off' : 'times'}
@@ -55,7 +57,7 @@ export const Telecomms = (props) => {
               }
             />
             <LabeledList.Item
-              label="Identification String"
+              label={t('ui.telecomms.identification_string')}
               buttons={
                 <Input
                   width={13}
@@ -65,18 +67,18 @@ export const Telecomms = (props) => {
               }
             />
             <LabeledList.Item
-              label="Network"
+              label={t('ui.common.network')}
               buttons={
                 <Input
                   width={10}
                   value={network}
-                  placeholder="tcommsat"
+                  placeholder={t('ui.telecomms.network_placeholder')}
                   onBlur={(value) => act('network', { value })}
                 />
               }
             />
             <LabeledList.Item
-              label="Prefabrication"
+              label={t('ui.telecomms.prefabrication')}
               buttons={
                 <Button
                   icon={prefab ? 'check' : 'times'}
@@ -91,10 +93,10 @@ export const Telecomms = (props) => {
         {!!(toggled && multitool) && (
           <Box>
             {type === 'bus' && (
-              <Section title="Bus">
+              <Section title={t('ui.telecomms.bus')}>
                 <Table>
                   <Table.Row>
-                    <Table.Cell>Change Frequency:</Table.Cell>
+                    <Table.Cell>{t('ui.telecomms.change_frequency')}</Table.Cell>
                     <Table.Cell>
                       {channels.find(
                         (channel) => channel.freq === changefrequency,
@@ -139,7 +141,7 @@ export const Telecomms = (props) => {
               </Section>
             )}
             {type === 'relay' && (
-              <Section title="Relay">
+              <Section title={t('ui.telecomms.relay')}>
                 <Button
                   content={'Receiving'}
                   icon={receiving ? 'volume-up' : 'volume-mute'}
@@ -154,7 +156,7 @@ export const Telecomms = (props) => {
                 />
               </Section>
             )}
-            <Section title="Linked Network Entities">
+            <Section title={t('ui.telecomms.linked_network_entities')}>
               <Table>
                 {linked.map((entry) => (
                   <Table.Row key={entry.id} className="candystripe">
@@ -173,7 +175,7 @@ export const Telecomms = (props) => {
                 ))}
               </Table>
             </Section>
-            <Section title="Filtered Frequencies">
+            <Section title={t('ui.telecomms.filtered_frequencies')}>
               <Table>
                 {frequencies.map((entry) => (
                   <Table.Row key={frequencies.i} className="candystripe">
@@ -210,7 +212,7 @@ export const Telecomms = (props) => {
                 ))}
                 {!!multitool && (
                   <Table.Row className="candystripe" collapsing>
-                    <Table.Cell>Add Frequency</Table.Cell>
+                    <Table.Cell>{t('ui.telecomms.add_frequency')}</Table.Cell>
                     <Table.Cell>
                       {channels.find(
                         (channel) => channel.freq === frequency,
@@ -257,7 +259,7 @@ export const Telecomms = (props) => {
             </Section>
             {type === 'server' && (
               <Section
-                title="Frequencies Settings"
+                title={t('ui.telecomms.frequencies_settings')}
                 buttons={
                   <Button
                     icon="plus"
@@ -309,7 +311,7 @@ export const Telecomms = (props) => {
               </Section>
             )}
             {!!multitool && (
-              <Section title="Multitool">
+              <Section title={t('ui.common.multitool')}>
                 {!!multibuff && (
                   <Box bold m={1}>
                     Current Buffer: {multibuff}

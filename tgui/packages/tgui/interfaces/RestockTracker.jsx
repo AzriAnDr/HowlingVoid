@@ -4,6 +4,7 @@ import { round } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const Restock = (props) => {
   return (
@@ -17,11 +18,12 @@ export const Restock = (props) => {
 
 export const RestockTracker = (props) => {
   const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const vending_list = sortBy(data.vending_list ?? [], [
     (vend) => vend.percentage,
   ]);
   return (
-    <Section fill title="Vendor Stocking Status">
+    <Section fill title={t('ui.restock_tracker.vendor_stocking_status')}>
       <Stack vertical>
         <Stack fill horizontal>
           <Stack.Item bold width="35%">

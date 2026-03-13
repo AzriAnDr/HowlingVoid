@@ -6,6 +6,7 @@ import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import { SpriteEditor } from './common/SpriteEditor';
 import {
   AdvancedCanvas,
@@ -45,25 +46,36 @@ type CanvasCommonProps = ZoomProps & {
 };
 
 const ZoomButtons = ({ zoom, setZoom, pixelsPerUnit }: ZoomProps) => (
-  <Stack>
-    <Stack.Item>
-      <Button
-        icon="search-minus"
-        tooltip="Zoom Out (Shift + Scroll Down)"
-        disabled={zoom <= 1}
-        onClick={() => setZoom(Math.max(1, zoom - 1 / pixelsPerUnit))}
-      />
-    </Stack.Item>
-    <Stack.Item>
-      <Button
-        icon="search-plus"
-        tooltip="Zoom In (Shift + Scroll Up)"
-        disabled={zoom >= 3}
-        onClick={() => setZoom(Math.min(3, zoom + 1 / pixelsPerUnit))}
-      />
-    </Stack.Item>
-  </Stack>
+  <ZoomButtonsWithLocalization
+    zoom={zoom}
+    setZoom={setZoom}
+    pixelsPerUnit={pixelsPerUnit}
+  />
 );
+
+const ZoomButtonsWithLocalization = ({ zoom, setZoom, pixelsPerUnit }: ZoomProps) => {
+  const { t } = usePreferencesLocalization();
+  return (
+    <Stack>
+      <Stack.Item>
+        <Button
+          icon="search-minus"
+          tooltip={t('ui.canvas.zoom_out_shift_scroll_down')}
+          disabled={zoom <= 1}
+          onClick={() => setZoom(Math.max(1, zoom - 1 / pixelsPerUnit))}
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          icon="search-plus"
+          tooltip={t('ui.canvas.zoom_in_shift_scroll_up')}
+          disabled={zoom >= 3}
+          onClick={() => setZoom(Math.min(3, zoom + 1 / pixelsPerUnit))}
+        />
+      </Stack.Item>
+    </Stack>
+  );
+};
 
 const ZoomListener = ({
   zoom,

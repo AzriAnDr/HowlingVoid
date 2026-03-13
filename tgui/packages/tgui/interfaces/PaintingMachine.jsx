@@ -2,9 +2,11 @@ import { Button, Dropdown, Section, Stack } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const PaintingMachine = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
 
   const { pdaTypes, cardTrims, hasPDA, pdaName, hasID, idName } = data;
 
@@ -22,13 +24,13 @@ export const PaintingMachine = (props) => {
     <Window width={500} height={620}>
       <Window.Content scrollable>
         <Section
-          title="PDA Painter"
+          title={t('ui.painting_machine.pda_painter')}
           buttons={
             <>
               <Button.Confirm
                 disabled={!hasPDA}
-                content="Paint PDA"
-                confirmContent="Confirm?"
+                content={t('ui.painting_machine.paint_pda')}
+                confirmContent={t('ui.common.confirm_question')}
                 onClick={() =>
                   act('trim_pda', {
                     selection: selectedPDA,
@@ -37,8 +39,8 @@ export const PaintingMachine = (props) => {
               />
               <Button.Confirm
                 disabled={!hasPDA}
-                content="Reset Imprint"
-                confirmContent="Confirm?"
+                content={t('ui.painting_machine.reset_imprint')}
+                confirmContent={t('ui.common.confirm_question')}
                 onClick={() => {
                   act('reset_pda');
                 }}
@@ -59,19 +61,19 @@ export const PaintingMachine = (props) => {
           </Stack>
         </Section>
         <Section
-          title="ID Trim Imprinter"
+          title={t('ui.painting_machine.id_trim_imprinter')}
           buttons={
             <>
               <Button.Confirm
                 disabled={!hasID}
-                content="Reset ID Account"
-                confirmContent="Confirm?"
+                content={t('ui.painting_machine.reset_id_account')}
+                confirmContent={t('ui.common.confirm_question')}
                 onClick={() => act('reset_card')}
               />
               <Button.Confirm
                 disabled={!hasID}
-                content="Imprint ID Trim"
-                confirmContent="Confirm?"
+                content={t('ui.painting_machine.imprint_id_trim')}
+                confirmContent={t('ui.common.confirm_question')}
                 onClick={(sel) =>
                   act('trim_card', {
                     selection: selectedTrim,
@@ -81,8 +83,7 @@ export const PaintingMachine = (props) => {
               <Button
                 icon="question-circle"
                 tooltip={
-                  'WARNING: This is destructive' +
-                  ' and will wipe ALL access on the card.'
+                  t('ui.painting_machine.destructive_warning')
                 }
                 tooltipPosition="left"
               />

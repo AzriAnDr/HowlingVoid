@@ -11,10 +11,12 @@ import {
 import { formatMoney } from 'tgui-core/format';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import type { CargoData } from './types';
 
 export function CargoCart(props) {
   const { act, data } = useBackend<CargoData>();
+  const { t } = usePreferencesLocalization(data);
   const { can_send, away, cart = [], docked, location } = data;
 
   const sendable = !!away && !!docked;
@@ -44,7 +46,7 @@ export function CargoCart(props) {
                   py={1}
                   tooltip={sendable ? '' : `Shuttle is at ${location}`}
                 >
-                  Confirm the order
+                  {t('ui.cargo.confirm_order')}
                 </Button>
               </Stack.Item>
             </Stack>
@@ -57,23 +59,24 @@ export function CargoCart(props) {
 
 function CheckoutItems(props) {
   const { act, data } = useBackend<CargoData>();
+  const { t } = usePreferencesLocalization(data);
   const { can_send, cart = [], max_order } = data;
 
   const [isValid, setIsValid] = useState(true);
 
   if (cart.length === 0) {
-    return <NoticeBox>Nothing in cart</NoticeBox>;
+    return <NoticeBox>{t('ui.cargo.nothing_in_cart')}</NoticeBox>;
   }
 
   return (
     <Table>
       <Table.Row header color="gray">
-        <Table.Cell collapsing>ID</Table.Cell>
-        <Table.Cell>Supply Type</Table.Cell>
-        <Table.Cell>Amount</Table.Cell>
+        <Table.Cell collapsing>{t('ui.common.id')}</Table.Cell>
+        <Table.Cell>{t('ui.cargo.supply_type')}</Table.Cell>
+        <Table.Cell>{t('ui.common.amount')}</Table.Cell>
         <Table.Cell collapsing />
         <Table.Cell collapsing textAlign="right">
-          Cost
+          {t('ui.common.cost')}
         </Table.Cell>
       </Table.Row>
 

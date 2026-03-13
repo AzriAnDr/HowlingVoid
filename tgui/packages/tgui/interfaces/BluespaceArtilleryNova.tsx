@@ -12,6 +12,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   connected: BooleanLike;
@@ -27,6 +28,7 @@ type Data = {
 
 export const BluespaceArtilleryNova = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization();
   const {
     notice,
     connected,
@@ -45,7 +47,7 @@ export const BluespaceArtilleryNova = (props) => {
         {!!notice && <NoticeBox>{notice}</NoticeBox>}
         {connected ? (
           <>
-            <Section title="System Status">
+            <Section title={t('ui.bluespace_artillery.system_status')}>
               <Box
                 color={status !== 'SYSTEM READY' ? 'bad' : 'green'}
                 fontSize="25px"
@@ -54,23 +56,23 @@ export const BluespaceArtilleryNova = (props) => {
               </Box>
             </Section>
             <Section
-              title="Capacitors"
+              title={t('ui.bluespace_artillery.capacitors')}
               buttons={
                 <Button
-                  content="Charge Capacitors"
+                  content={t('ui.bluespace_artillery.charge_capacitors')}
                   color="orange"
                   onClick={() => act('charge')}
                 />
               }
             >
               <LabeledList>
-                <LabeledList.Item label="Capacitor Charge">
+                <LabeledList.Item label={t('ui.bluespace_artillery.capacitor_charge')}>
                   {formatPower(capacitor_charge, 1)}
                 </LabeledList.Item>
-                <LabeledList.Item label="Available Power">
+                <LabeledList.Item label={t('ui.bluespace_artillery.available_power')}>
                   {formatPower(powernet_power, 1)}
                 </LabeledList.Item>
-                <LabeledList.Item label="Target Charge">
+                <LabeledList.Item label={t('ui.bluespace_artillery.target_charge')}>
                   <Slider
                     value={target_capacitor_charge}
                     fillValue={target_capacitor_charge}
@@ -89,7 +91,7 @@ export const BluespaceArtilleryNova = (props) => {
               </LabeledList>
             </Section>
             <Section
-              title="Target"
+              title={t('ui.common.target')}
               buttons={
                 <Button
                   icon="crosshairs"
@@ -99,7 +101,7 @@ export const BluespaceArtilleryNova = (props) => {
               }
             >
               <Box color={target ? 'average' : 'bad'} fontSize="25px">
-                {target || 'No Target Set'}
+                {target || t('ui.bluespace_artillery.no_target_set')}
               </Box>
             </Section>
             <Section>
@@ -107,7 +109,7 @@ export const BluespaceArtilleryNova = (props) => {
                 <Box style={{ margin: 'auto' }}>
                   <Button
                     fluid
-                    content="FIRE"
+                    content={t('ui.bluespace_artillery.fire')}
                     color="bad"
                     disabled={!target || status !== 'SYSTEM READY'}
                     fontSize="30px"
@@ -119,11 +121,10 @@ export const BluespaceArtilleryNova = (props) => {
               ) : (
                 <>
                   <Box color="bad" fontSize="18px">
-                    Bluespace artillery is currently locked.
+                    {t('ui.bluespace_artillery.currently_locked')}
                   </Box>
                   <Box mt={1}>
-                    Awaiting authorization via keycard reader from at minimum
-                    two station heads.
+                    {t('ui.bluespace_artillery.awaiting_authorization')}
                   </Box>
                 </>
               )}
@@ -132,10 +133,10 @@ export const BluespaceArtilleryNova = (props) => {
         ) : (
           <Section>
             <LabeledList>
-              <LabeledList.Item label="Maintenance">
+              <LabeledList.Item label={t('ui.common.maintenance')}>
                 <Button
                   icon="wrench"
-                  content="Complete Deployment"
+                  content={t('ui.bluespace_artillery.complete_deployment')}
                   onClick={() => act('build')}
                 />
               </LabeledList.Item>

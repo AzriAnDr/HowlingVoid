@@ -15,19 +15,24 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 import { logger } from '../../logging';
+import { usePreferencesLocalization } from '../localization';
 import type { CallInfo, LuaEditorModal, Variant, VariantList } from './types';
 import type { ListElement, ListPath } from './types';
 
-const mapListVariantsInner = (value: any, variant: Variant) => {
+const mapListVariantsInner = (
+  value: any,
+  variant: Variant,
+  t: (key: string, fallback?: string) => string,
+) => {
   if (Array.isArray(variant)) {
     const [variant_inner, param] = variant;
     switch (variant_inner) {
       case 'list':
-        return mapListVariants(value, param);
+        return mapListVariants(value, param, t);
       case 'cycle':
         return (
           <Box key="cycle" bold textColor="green">
-            Circular Reference
+            {t('ui.lua_editor.circular_reference')}
           </Box>
         );
       case 'ref':
@@ -43,7 +48,7 @@ const mapListVariantsInner = (value: any, variant: Variant) => {
         return (
           <Tooltip key="error" content={value}>
             <Box bold textColor="red">
-              Conversion Error
+              {t('ui.lua_editor.conversion_error')}
             </Box>
           </Tooltip>
         );
@@ -56,13 +61,13 @@ const mapListVariantsInner = (value: any, variant: Variant) => {
       case 'thread':
         return (
           <Box key="thread" bold backgroundColor="yellow">
-            Thread: {value}
+            {t('ui.lua_editor.thread')}: {value}
           </Box>
         );
       case 'userdata':
         return (
           <Box key="userdata" bold backgroundColor="grey">
-            Userdata: {value}
+            {t('ui.lua_editor.userdata')}: {value}
           </Box>
         );
       case 'error_as_value':
@@ -77,7 +82,11 @@ const mapListVariantsInner = (value: any, variant: Variant) => {
   }
 };
 
-const mapListVariants = (list: any[], variants: VariantList) => {
+const mapListVariants = (
+  list: any[],
+  variants: VariantList,
+  t: (key: string, fallback?: string) => string,
+) => {
   logger.log(list, variants);
   return list.map((element, i) => {
     const { key, value } = element;
@@ -86,12 +95,12 @@ const mapListVariants = (list: any[], variants: VariantList) => {
     if (typeof key === 'number') {
       return {
         key: key,
-        value: mapListVariantsInner(value, key_variant),
+        value: mapListVariantsInner(value, key_variant, t),
       };
     } else {
       return {
-        key: mapListVariantsInner(key, key_variant),
-        value: mapListVariantsInner(value, value_variant),
+        key: mapListVariantsInner(key, key_variant, t),
+        value: mapListVariantsInner(value, value_variant, t),
       };
     }
   });
@@ -113,7 +122,8 @@ type ListMapperProps = ComponentProps<typeof Box> & {
   }>;
 
 export const ListMapper = (props: ListMapperProps) => {
-  const { act } = useBackend();
+  const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
 
   const { variants, list: _, ...safeProps } = props;
 
@@ -132,7 +142,7 @@ export const ListMapper = (props: ListMapperProps) => {
   let { list } = props;
 
   if (variants) {
-    list = mapListVariants(list, variants);
+    list = mapListVariants(list, variants, t);
   }
 
   const ThingNode = (
@@ -146,7 +156,10 @@ export const ListMapper = (props: ListMapperProps) => {
         <ListMapper
           {...safeProps}
           list={thing}
-          name={`List[${thing.length}]`}
+          name={t('ui.lua_editor.list_with_count').replace(
+            '{count}',
+            String(thing.length),
+          )}
           path={path}
           collapsible
           {...rest}
@@ -158,7 +171,7 @@ export const ListMapper = (props: ListMapperProps) => {
         case 'ref':
           return (
             <Button
-              tooltip="Click to VV"
+              tooltip={t('ui.lua_editor.click_to_vv')}
               onClick={vvAct && (() => vvAct(path))}
               {...thing.props}
             />
@@ -167,7 +180,7 @@ export const ListMapper = (props: ListMapperProps) => {
           if (canCall && setToCall && setModal) {
             return (
               <Button
-                tooltip="Click to call"
+                tooltip={t('ui.lua_editor.click_to_call')}
                 onClick={() => {
                   setToCall({
                     type: 'callFunction',
@@ -181,7 +194,7 @@ export const ListMapper = (props: ListMapperProps) => {
               />
             );
           } else if (thing === null) {
-            return <b>nil</b>;
+            return <b>{t('ui.lua_editor.nil')}</b>;
           } else {
             return thing;
           }
@@ -189,6 +202,9 @@ export const ListMapper = (props: ListMapperProps) => {
           return thing;
       }
     } else {
+      if (thing === 'nil') {
+        return <Box {...rest}>{t('ui.lua_editor.nil')}</Box>;
+      }
       return <Box {...rest}>{thing}</Box>;
     }
   };
@@ -237,19 +253,19 @@ export const ListMapper = (props: ListMapperProps) => {
                 <Button
                   icon="arrow-up"
                   disabled={i === 0}
-                  tooltip="Move Up"
+                  tooltip={t('ui.lua_editor.move_up')}
                   onClick={() => act('moveArgUp', { path: entryPath })}
                 />
                 <Button
                   icon="arrow-down"
                   disabled={i === list.length - 1}
-                  tooltip="Move Down"
+                  tooltip={t('ui.lua_editor.move_down')}
                   onClick={() => act('moveArgDown', { path: entryPath })}
                 />
                 <Button
                   icon="window-close"
                   color="red"
-                  tooltip="Remove"
+                  tooltip={t('ui.common.remove')}
                   onClick={() => act('removeArg', { path: entryPath })}
                 />
               </>
@@ -268,7 +284,7 @@ export const ListMapper = (props: ListMapperProps) => {
       {editable && (
         <Button
           icon="plus"
-          tooltip="Add"
+          tooltip={t('ui.common.add')}
           onClick={() => act('addArg', { path: path })}
         />
       )}
@@ -276,7 +292,11 @@ export const ListMapper = (props: ListMapperProps) => {
   );
 
   const buttons = vvAct && list?.length > 0 && (
-    <Button icon="search" tooltip="VV List" onClick={() => vvAct(path ?? [])} />
+    <Button
+      icon="search"
+      tooltip={t('ui.lua_editor.vv_list')}
+      onClick={() => vvAct(path ?? [])}
+    />
   );
 
   return collapsible ? (

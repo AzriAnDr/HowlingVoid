@@ -11,11 +11,13 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const CargoImportConsole = (props) => {
   const [category, setCategory] = useState('');
   const [weapon, setArmament] = useState('weapon');
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization();
   const {
     armaments_list = [],
     budget_points,
@@ -26,31 +28,33 @@ export const CargoImportConsole = (props) => {
   return (
     <Window
       theme="armament"
-      title="Company Import Requisition Console"
+      title={t('ui.cargo_import_console.title')}
       width={1000}
       height={600}
     >
       <Window.Content>
-        <Section height="100%" title="Company Import Requisition Console">
+        <Section height="100%" title={t('ui.cargo_import_console.title')}>
           <Stack>
             <Stack.Item grow fill>
               <Button.Checkbox
-                content="Buy Privately"
+                content={t('ui.cargo_import_console.buy_privately')}
                 checked={self_paid}
                 onClick={() => act('toggleprivate')}
               />
               <Box>
-                <b>Current Budget:</b> {budget_name}
+                <b>{t('ui.cargo_import_console.current_budget')}:</b>{' '}
+                {budget_name}
               </Box>
               <Box>
-                <b>Budget Remaining:</b> {budget_points}
+                <b>{t('ui.cargo_import_console.budget_remaining')}:</b>{' '}
+                {budget_points}
               </Box>
             </Stack.Item>
           </Stack>
           <Divider />
           <Stack fill grow>
             <Stack.Item mr={1}>
-              <Section title="Companies">
+              <Section title={t('ui.cargo_import_console.companies')}>
                 <Stack vertical>
                   {armaments_list.map((armament_category) => (
                     <Stack.Item key={armament_category.category}>
@@ -107,7 +111,7 @@ export const CargoImportConsole = (props) => {
             </Stack.Item>
             <Divider vertical />
             <Stack.Item width="20%">
-              <Section title="Selected Item">
+              <Section title={t('ui.cargo_import_console.selected_item')}>
                 {armaments_list.map((armament_category) =>
                   armament_category.subcategories.map((subcat) =>
                     subcat.items.map(
@@ -128,7 +132,9 @@ export const CargoImportConsole = (props) => {
                             <Stack.Item>{item.description}</Stack.Item>
                             {!!cant_buy_restricted && !!item.restricted && (
                               <Stack.Item textColor={'red'}>
-                                {'You need a weapon permit to buy this item!'}
+                                {t(
+                                  'ui.cargo_import_console.weapon_permit_required',
+                                )}
                               </Stack.Item>
                             )}
                             <Stack.Item
@@ -136,11 +142,11 @@ export const CargoImportConsole = (props) => {
                                 item.cost > budget_points ? 'red' : 'green'
                               }
                             >
-                              {`Cost: ${item.cost}`}
+                              {`${t('ui.common.cost')}: ${item.cost}`}
                             </Stack.Item>
                             <Stack.Item>
                               <Button
-                                content="Buy"
+                                content={t('ui.common.buy')}
                                 textAlign="center"
                                 width="100%"
                                 disabled={

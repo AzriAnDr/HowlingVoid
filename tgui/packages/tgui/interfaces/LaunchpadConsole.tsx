@@ -12,6 +12,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   launchpads: LaunchPad[];
@@ -49,13 +50,14 @@ const buttonConfigs = [
 
 export function LaunchpadConsole(props) {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { launchpads = [], selected_id } = data;
 
   return (
     <Window width={475} height={260}>
       <Window.Content>
         {launchpads.length === 0 ? (
-          <NoticeBox>No Pads Connected</NoticeBox>
+          <NoticeBox>{t('ui.launchpad_console.no_pads_connected')}</NoticeBox>
         ) : (
           <Stack fill>
             <Stack.Item grow>
@@ -64,7 +66,7 @@ export function LaunchpadConsole(props) {
 
             <Stack.Item grow={3}>
               {!selected_id ? (
-                <Box>Please select a pad</Box>
+                <Box>{t('ui.launchpad_console.please_select_a_pad')}</Box>
               ) : (
                 <LaunchpadControl />
               )}
@@ -128,6 +130,7 @@ function LaunchpadTabs(props) {
 
 function LaunchpadTitle(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { pad_name } = data;
 
   return (
@@ -146,7 +149,7 @@ function LaunchpadTitle(props) {
         </Stack.Item>
         <Stack.Item>
           <Button icon="times" color="bad" onClick={() => act('remove')}>
-            Remove
+            {t('ui.common.remove')}
           </Button>
         </Stack.Item>
       </Stack>
@@ -156,9 +159,10 @@ function LaunchpadTitle(props) {
 
 function LaunchpadButtonPad(props) {
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
 
   return (
-    <Section fill title="Controls" align="center">
+    <Section fill title={t('ui.common.controls')} align="center">
       <Stack fill justify="center">
         {buttonConfigs.map((buttonRow, i) => (
           <Stack.Item key={i}>
@@ -188,6 +192,7 @@ function LaunchpadButtonPad(props) {
 
 function TargetingControls(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { x, y, range } = data;
 
   const inputConfigs = [
@@ -196,7 +201,7 @@ function TargetingControls(props) {
   ];
 
   return (
-    <Section fill title="Target" align="center">
+    <Section fill title={t('ui.common.target')} align="center">
       {inputConfigs.map((inputConfig, i) => (
         <Stack key={i} mb={2}>
           <Stack.Item grow>
@@ -230,6 +235,7 @@ function TargetingControls(props) {
 
 function DeliveryButtons(props) {
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
 
   return (
     <Section fill>
@@ -241,7 +247,7 @@ function DeliveryButtons(props) {
             onClick={() => act('launch')}
             textAlign="center"
           >
-            Launch
+            {t('ui.common.launch')}
           </Button>
         </Stack.Item>
         <Stack.Item grow>
@@ -251,7 +257,7 @@ function DeliveryButtons(props) {
             onClick={() => act('pull')}
             textAlign="center"
           >
-            Pull
+            {t('ui.launchpad_console.pull')}
           </Button>
         </Stack.Item>
       </Stack>

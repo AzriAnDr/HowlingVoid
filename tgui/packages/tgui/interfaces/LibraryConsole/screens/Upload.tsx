@@ -13,11 +13,13 @@ import {
   Stack,
 } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../../localization';
 import type { LibraryConsoleData } from '../types';
 import { useLibraryContext } from '../useLibraryContext';
 
 export function Upload(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     active_newscaster_cooldown,
     cache_author,
@@ -35,13 +37,13 @@ export function Upload(props) {
   if (!has_scanner) {
     return (
       <NoticeBox>
-        No nearby scanner detected, construct one to continue.
+        {t('ui.library.no_nearby_scanner')}
       </NoticeBox>
     );
   }
 
   if (!has_cache) {
-    return <NoticeBox>Scan in a book to upload.</NoticeBox>;
+    return <NoticeBox>{t('ui.library.scan_book_to_upload')}</NoticeBox>;
   }
 
   const contentHtml = {
@@ -53,7 +55,7 @@ export function Upload(props) {
       <Stack vertical height="100%">
         <Stack.Item>
           <Box fontSize="20px" textAlign="center" pt="6px">
-            Current Scan Cache
+            {t('ui.library.current_scan_cache')}
           </Box>
         </Stack.Item>
         <Stack.Item grow>
@@ -62,14 +64,14 @@ export function Upload(props) {
               <Stack justify="center">
                 <Stack.Item>
                   <Box pt={1} fontSize={'20px'}>
-                    Title:
+                    {t('ui.common.title')}:
                   </Box>
                 </Stack.Item>
                 <Stack.Item>
                   <Input
                     fontSize="20px"
                     value={cache_title}
-                    placeholder={cache_title || 'Title'}
+                    placeholder={cache_title || t('ui.common.title')}
                     mt={0.5}
                     width={22}
                     onBlur={(value) =>
@@ -81,14 +83,14 @@ export function Upload(props) {
                 </Stack.Item>
                 <Stack.Item>
                   <Box pt={1} fontSize="20px">
-                    Author:
+                    {t('ui.common.author')}:
                   </Box>
                 </Stack.Item>
                 <Stack.Item>
                   <Input
                     fontSize="20px"
                     value={cache_author}
-                    placeholder={cache_author || 'Author'}
+                    placeholder={cache_author || t('ui.common.author')}
                     mt={0.5}
                     onBlur={(value) =>
                       act('set_cache_author', {
@@ -105,7 +107,7 @@ export function Upload(props) {
                 scrollable
                 preserveWhitespace
                 fontSize="15px"
-                title="Content:"
+                title={`${t('ui.common.content')}:`}
               >
                 <Box dangerouslySetInnerHTML={contentHtml} />
               </Section>
@@ -120,10 +122,8 @@ export function Upload(props) {
                 fluid
                 tooltip={
                   active_newscaster_cooldown
-                    ? "Send your book to the station's newscaster's channel."
-                    : 'Please wait ' +
-                      cooldown_string +
-                      ' before sending your book to the newscaster!'
+                    ? t('ui.library.send_book_to_newscaster')
+                    : `${t('ui.library.please_wait')} ${cooldown_string} ${t('ui.library.before_sending_newscaster')}`
                 }
                 tooltipPosition="top"
                 icon="newspaper"
@@ -132,7 +132,7 @@ export function Upload(props) {
                 textAlign="center"
                 onClick={() => act('news_post')}
               >
-                Newscaster
+                {t('ui.library.newscaster')}
               </Button>
             </Stack.Item>
             <Stack.Item grow>
@@ -145,7 +145,7 @@ export function Upload(props) {
                 textAlign="center"
                 onClick={() => setUploadToDB(true)}
               >
-                Archive
+                {t('ui.library.archive')}
               </Button>
             </Stack.Item>
           </Stack>
@@ -158,6 +158,7 @@ export function Upload(props) {
 
 function UploadModal(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { upload_categories, default_category, can_db_request } = data;
 
   const { uploadToDBState } = useLibraryContext();
@@ -170,10 +171,10 @@ function UploadModal(props) {
   return (
     <Modal width="650px">
       <Box fontSize="20px" pb={2}>
-        Are you sure you want to upload this book to the database?
+        {t('ui.library.confirm_upload_to_database')}
       </Box>
       <LabeledList>
-        <LabeledList.Item label="Category">
+        <LabeledList.Item label={t('ui.common.category')}>
           <Dropdown
             options={upload_categories}
             selected={display_category}
@@ -196,7 +197,7 @@ function UploadModal(props) {
             }}
             lineHeight={2}
           >
-            Upload To DB
+            {t('ui.library.upload_to_db')}
           </Button>
         </Stack.Item>
         <Stack.Item>
@@ -207,7 +208,7 @@ function UploadModal(props) {
             onClick={() => setUploadToDB(false)}
             lineHeight={2}
           >
-            Return
+            {t('ui.common.return')}
           </Button>
         </Stack.Item>
       </Stack>

@@ -9,6 +9,7 @@ import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { getGasLabel } from '../../constants';
+import { usePreferencesLocalization } from '../localization';
 
 export type VentProps = {
   refID: string;
@@ -41,6 +42,7 @@ export type ScrubberProps = {
 
 export const Vent = (props: VentProps) => {
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
   const {
     refID,
     long_name,
@@ -65,7 +67,7 @@ export const Vent = (props: VentProps) => {
             icon={power ? 'power-off' : 'times'}
             selected={power}
             disabled={integrity <= 0}
-            content={power ? 'On' : 'Off'}
+            content={power ? t('ui.common.on') : t('ui.common.off')}
             onClick={() =>
               act('power', {
                 ref: refID,
@@ -82,13 +84,13 @@ export const Vent = (props: VentProps) => {
                 ref: refID,
               })
             }
-            tooltip={`${overclock ? 'Disable' : 'Enable'} overclocking`}
+            tooltip={`${overclock ? t('ui.common.disable') : t('ui.common.enable')} ${t('ui.atmos.overclocking')}`}
           />
         </>
       }
     >
       <LabeledList>
-        <LabeledList.Item label="Integrity">
+        <LabeledList.Item label={t('ui.common.integrity')}>
           <p
             title={
               'Overclocking will allow the vent to overpower extreme pressure conditions. However, it will also cause the vent to become damaged over time and eventually fail. The lower the integrity, the less effective the vent will be when in normal operation.'
@@ -97,10 +99,14 @@ export const Vent = (props: VentProps) => {
             {(integrity * 100).toFixed(2)}%
           </p>
         </LabeledList.Item>
-        <LabeledList.Item label="Mode">
+        <LabeledList.Item label={t('ui.common.mode')}>
           <Button
             icon="sign-in-alt"
-            content={direction ? 'Pressurizing' : 'Siphoning'}
+            content={
+              direction
+                ? t('ui.atmos.pressurizing')
+                : t('ui.atmos.siphoning')
+            }
             color={!direction && 'danger'}
             onClick={() =>
               act('direction', {
@@ -110,10 +116,10 @@ export const Vent = (props: VentProps) => {
             }
           />
         </LabeledList.Item>
-        <LabeledList.Item label="Pressure Regulator">
+        <LabeledList.Item label={t('ui.atmos.pressure_regulator')}>
           <Button
             icon="sign-in-alt"
-            content="Internal"
+            content={t('ui.common.internal')}
             selected={incheck}
             onClick={() =>
               act('incheck', {
@@ -124,7 +130,7 @@ export const Vent = (props: VentProps) => {
           />
           <Button
             icon="sign-out-alt"
-            content="External"
+            content={t('ui.common.external')}
             selected={excheck}
             onClick={() =>
               act('excheck', {
@@ -135,7 +141,7 @@ export const Vent = (props: VentProps) => {
           />
         </LabeledList.Item>
         {!!incheck && (
-          <LabeledList.Item label="Internal Target">
+          <LabeledList.Item label={t('ui.atmos.internal_target')}>
             <NumberInput
               value={Math.round(internal)}
               unit="kPa"
@@ -153,7 +159,7 @@ export const Vent = (props: VentProps) => {
             <Button
               icon="undo"
               disabled={intdefault}
-              content="Reset"
+              content={t('ui.common.reset')}
               onClick={() =>
                 act('reset_internal_pressure', {
                   ref: refID,
@@ -163,7 +169,7 @@ export const Vent = (props: VentProps) => {
           </LabeledList.Item>
         )}
         {!!excheck && (
-          <LabeledList.Item label="External Target">
+          <LabeledList.Item label={t('ui.atmos.external_target')}>
             <NumberInput
               value={Math.round(external)}
               unit="kPa"
@@ -181,7 +187,7 @@ export const Vent = (props: VentProps) => {
             <Button
               icon="undo"
               disabled={extdefault}
-              content="Reset"
+              content={t('ui.common.reset')}
               onClick={() =>
                 act('reset_external_pressure', {
                   ref: refID,
@@ -197,6 +203,7 @@ export const Vent = (props: VentProps) => {
 
 export const Scrubber = (props: ScrubberProps) => {
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
   const { long_name, power, scrubbing, refID, widenet, filter_types } = props;
   return (
     <Section
@@ -204,7 +211,7 @@ export const Scrubber = (props: ScrubberProps) => {
       buttons={
         <Button
           icon={power ? 'power-off' : 'times'}
-          content={power ? 'On' : 'Off'}
+          content={power ? t('ui.common.on') : t('ui.common.off')}
           selected={power}
           onClick={() =>
             act('power', {
@@ -216,11 +223,15 @@ export const Scrubber = (props: ScrubberProps) => {
       }
     >
       <LabeledList>
-        <LabeledList.Item label="Mode">
+        <LabeledList.Item label={t('ui.common.mode')}>
           <Button
             icon={scrubbing ? 'filter' : 'sign-in-alt'}
             color={!scrubbing && 'danger'}
-            content={scrubbing ? 'Scrubbing' : 'Siphoning'}
+            content={
+              scrubbing
+                ? t('ui.atmos.scrubbing')
+                : t('ui.atmos.siphoning')
+            }
             onClick={() =>
               act('scrubbing', {
                 ref: refID,
@@ -231,7 +242,11 @@ export const Scrubber = (props: ScrubberProps) => {
           <Button
             icon={widenet ? 'expand' : 'compress'}
             selected={widenet}
-            content={widenet ? 'Expanded range' : 'Normal range'}
+            content={
+              widenet
+                ? t('ui.atmos.expanded_range')
+                : t('ui.atmos.normal_range')
+            }
             onClick={() =>
               act('widenet', {
                 ref: refID,
@@ -240,7 +255,7 @@ export const Scrubber = (props: ScrubberProps) => {
             }
           />
         </LabeledList.Item>
-        <LabeledList.Item label="Filters">
+        <LabeledList.Item label={t('ui.common.filters')}>
           {(scrubbing &&
             filter_types.map((filter) => (
               <Button
@@ -258,7 +273,7 @@ export const Scrubber = (props: ScrubberProps) => {
                 {getGasLabel(filter.gas_id, filter.gas_name)}
               </Button>
             ))) ||
-            'N/A'}
+            t('ui.common.not_available_short')}
         </LabeledList.Item>
       </LabeledList>
     </Section>

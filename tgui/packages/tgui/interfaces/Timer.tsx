@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   minutes: number;
@@ -13,13 +14,14 @@ type Data = {
 
 export const Timer = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { timing, loop } = data;
 
   return (
     <Window width={275} height={115}>
       <Window.Content>
         <Section
-          title="Timing Unit"
+          title={t('ui.timer.title')}
           buttons={
             <>
               <Button

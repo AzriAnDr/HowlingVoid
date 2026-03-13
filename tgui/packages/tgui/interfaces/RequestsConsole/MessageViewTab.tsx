@@ -9,6 +9,7 @@ import {
 import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import {
   type RequestMessage,
   RequestPriority,
@@ -18,6 +19,7 @@ import {
 
 export const MessageViewTab = (props) => {
   const { act, data } = useBackend<RequestsData>();
+  usePreferencesLocalization(data);
   const { messages = [] } = data;
   return (
     <Section fill scrollable>
@@ -31,7 +33,8 @@ export const MessageViewTab = (props) => {
 };
 
 const MessageDisplay = (props: { message: RequestMessage }) => {
-  const { act } = useBackend();
+  const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { message } = props;
   const append_list_keys = message.appended_list
     ? Object.keys(message.appended_list)
@@ -48,10 +51,10 @@ const MessageDisplay = (props: { message: RequestMessage }) => {
         }
       >
         {message.priority === RequestPriority.HIGH && (
-          <NoticeBox>High Priority</NoticeBox>
+          <NoticeBox>{t('ui.requests_console.high_priority')}</NoticeBox>
         )}
         {message.priority === RequestPriority.EXTREME && (
-          <NoticeBox danger>!!!Extreme Priority!!!</NoticeBox>
+          <NoticeBox danger>{t('ui.requests_console.extreme_priority')}</NoticeBox>
         )}
         <BlockQuote>
           {decodeHtmlEntities(message.content)}
@@ -66,11 +69,11 @@ const MessageDisplay = (props: { message: RequestMessage }) => {
           )}
         </BlockQuote>
         <LabeledList>
-          <LabeledList.Item label="Message Verified By">
-            {message.message_verified_by || 'Not Verified'}
+          <LabeledList.Item label={t('ui.requests_console.message_verified_by')}>
+            {message.message_verified_by || t('ui.requests_console.not_verified')}
           </LabeledList.Item>
-          <LabeledList.Item label="Message Stamped By">
-            {message.message_stamped_by || 'Not Stamped'}
+          <LabeledList.Item label={t('ui.requests_console.message_stamped_by')}>
+            {message.message_stamped_by || t('ui.requests_console.not_stamped')}
           </LabeledList.Item>
         </LabeledList>
         {message.request_type !== RequestType.ORE_UPDATE && (

@@ -10,6 +10,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   name: string;
@@ -22,6 +23,7 @@ type Data = {
 
 export const LTSRBT = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { name, price, min_price, max_price, loaded_icon, desc } = data;
 
   return (
@@ -32,7 +34,7 @@ export const LTSRBT = (props) => {
             <Input
               width="80%"
               value={name}
-              placeholder="Insert a name"
+              placeholder={t('ui.ltsrbt.insert_a_name')}
               onBlur={(value) =>
                 act('change_name', {
                   value: value,
@@ -72,7 +74,7 @@ export const LTSRBT = (props) => {
               height="100%"
               fluid
               value={desc}
-              placeholder="Insert a description (or don't)"
+              placeholder={t('ui.ltsrbt.insert_a_description_or_don_t')}
               onBlur={(value) =>
                 act('change_desc', {
                   value: value,
@@ -85,7 +87,7 @@ export const LTSRBT = (props) => {
             <Button.Confirm
               fluid
               icon="truck-arrow-right"
-              content="Place on Market"
+              content={t('ui.ltsrbt.place_on_market')}
               onClick={() => act('place_on_market')}
             />
           </Stack.Item>

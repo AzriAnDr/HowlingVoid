@@ -10,6 +10,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type ModularShieldGenData = {
   max_strength: number;
@@ -26,6 +27,7 @@ type ModularShieldGenData = {
 
 export const ModularShieldGen = (props) => {
   const { act, data } = useBackend<ModularShieldGenData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     max_strength,
     max_regeneration,
@@ -40,12 +42,12 @@ export const ModularShieldGen = (props) => {
   } = data;
 
   return (
-    <Window title="Modular Shield Generator" width={690} height={225}>
+    <Window title={t('ui.modular_shield.title')} width={690} height={225}>
       <Window.Content>
         <Stack fill>
           <Stack.Item grow={2}>
             <Section
-              title="Shield Strength"
+              title={t('ui.modular_shield.shield_strength')}
               color={recovering ? 'red' : 'white'}
             >
               <ProgressBar
@@ -60,7 +62,7 @@ export const ModularShieldGen = (props) => {
                 {current_strength}/{max_strength}
               </ProgressBar>
             </Section>
-            <Section title="Regeneration and Radius">
+            <Section title={t('ui.modular_shield.regeneration_and_radius')}>
               <ProgressBar
                 value={current_regeneration}
                 maxValue={max_regeneration}
@@ -69,9 +71,10 @@ export const ModularShieldGen = (props) => {
                   average: [max_regeneration * 0.25, max_regeneration * 0.75],
                   bad: [0, max_regeneration * 0.25],
                 }}
-              >
-                Regeneration {current_regeneration}/{max_regeneration}
-              </ProgressBar>
+                >
+                  {t('ui.modular_shield.regeneration')} {current_regeneration}/
+                  {max_regeneration}
+                </ProgressBar>
               <Section>
                 <ProgressBar
                   value={current_radius}
@@ -82,15 +85,15 @@ export const ModularShieldGen = (props) => {
                     bad: [0, max_radius * 0.25],
                   }}
                 >
-                  Radius {current_radius}/{max_radius}
+                  {t('ui.modular_shield.radius')} {current_radius}/{max_radius}
                 </ProgressBar>
               </Section>
             </Section>
           </Stack.Item>
           <Stack.Item grow>
-            <Section title="Settings">
+            <Section title={t('ui.common.settings')}>
               <LabeledList>
-                <LabeledList.Item label="Set Radius">
+                <LabeledList.Item label={t('ui.modular_shield.set_radius')}>
                   <NumberInput
                     disabled={!!active}
                     fluid
@@ -105,24 +108,26 @@ export const ModularShieldGen = (props) => {
                     }
                   />
                 </LabeledList.Item>
-                <LabeledList.Item label="Limitations">
+                <LabeledList.Item label={t('ui.modular_shield.limitations')}>
                   <Button
                     disabled={active}
                     onClick={() => act('toggle_exterior')}
                   >
-                    {exterior_only ? 'External only' : 'Internal & External'}
+                    {exterior_only
+                      ? t('ui.modular_shield.external_only')
+                      : t('ui.modular_shield.internal_and_external')}
                   </Button>
                 </LabeledList.Item>
               </LabeledList>
             </Section>
             <Section>
               <LabeledList>
-                <LabeledList.Item label="Toggle Power">
+                <LabeledList.Item label={t('ui.modular_shield.toggle_power')}>
                   <Button
                     bold
                     disabled={recovering || initiating_field}
                     selected={active}
-                    content={active ? 'On' : 'Off'}
+                    content={active ? t('ui.common.on') : t('ui.common.off')}
                     icon="power-off"
                     onClick={() => act('toggle_shields')}
                   />

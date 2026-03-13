@@ -3,6 +3,7 @@ import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   code: number;
@@ -25,14 +26,13 @@ export const Signaler = (props) => {
 
 export const SignalerContent = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { code, frequency, cooldown, minFrequency, maxFrequency } = data;
 
-  const color = 'rgba(13, 13, 213, 0.7)';
-  const backColor = 'rgba(0, 0, 69, 0.5)';
   return (
     <Section>
       <Stack>
-        <Stack.Item color="label">Frequency:</Stack.Item>
+        <Stack.Item color="label">{t('ui.signaler.frequency')}:</Stack.Item>
         <Stack.Item>
           <NumberInput
             animated
@@ -56,7 +56,7 @@ export const SignalerContent = (props) => {
           <Button
             ml={1.3}
             icon="sync"
-            content="Reset"
+            content={t('ui.common.reset')}
             onClick={() =>
               act('reset', {
                 reset: 'freq',
@@ -67,7 +67,7 @@ export const SignalerContent = (props) => {
       </Stack>
       <Stack mt={0.6}>
         <Stack.Item pr={5.3} color="label">
-          Code:
+          {t('ui.signaler.code')}:
         </Stack.Item>
         <Stack.Item>
           <NumberInput
@@ -90,7 +90,7 @@ export const SignalerContent = (props) => {
           <Button
             ml={1.3}
             icon="sync"
-            content="Reset"
+            content={t('ui.common.reset')}
             onClick={() =>
               act('reset', {
                 reset: 'code',
@@ -104,9 +104,12 @@ export const SignalerContent = (props) => {
           <Button
             mb={-0.1}
             fluid
-            tooltip={cooldown && `Cooldown: ${cooldown * 0.1} seconds`}
+            tooltip={
+              cooldown &&
+              `${t('ui.signaler.cooldown')}: ${cooldown * 0.1} ${t('ui.common.seconds_lower')}`
+            }
             icon="arrow-up"
-            content="Send Signal"
+            content={t('ui.signaler.send_signal')}
             textAlign="center"
             onClick={() => act('signal')}
           />

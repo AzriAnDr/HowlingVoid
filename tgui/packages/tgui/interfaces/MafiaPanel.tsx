@@ -16,6 +16,7 @@ import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type RoleInfo = {
   role_theme: string;
@@ -68,6 +69,7 @@ type MafiaData = {
 
 export const MafiaPanelData = (props) => {
   const { act, data } = useBackend<MafiaData>();
+  const { t } = usePreferencesLocalization(data);
   const { phase, roleinfo, admin_controls, messages, player_voted_up } = data;
   const [mafia_tab, setMafiaMode] = useState('Role list');
 
@@ -118,7 +120,7 @@ export const MafiaPanelData = (props) => {
                         selected={mafia_tab === 'Role list'}
                         onClick={() => setMafiaMode('Role list')}
                       >
-                        Role list
+                        {t('ui.mafia.role_list')}
                         <Button
                           color="transparent"
                           icon="address-book"
@@ -134,7 +136,7 @@ export const MafiaPanelData = (props) => {
                         selected={mafia_tab === 'Notes'}
                         onClick={() => setMafiaMode('Notes')}
                       >
-                        Notes
+                        {t('ui.common.notes')}
                         <Button
                           color="transparent"
                           icon="pencil"
@@ -161,9 +163,10 @@ export const MafiaPanelData = (props) => {
 
 export const MafiaPanel = (props) => {
   const { act, data } = useBackend<MafiaData>();
+  const { t } = usePreferencesLocalization(data);
   const { roleinfo } = data;
   return (
-    <Window title="Mafia" theme={roleinfo?.role_theme} width={900} height={600}>
+    <Window title={t('ui.mafia.title')} theme={roleinfo?.role_theme} width={900} height={600}>
       <Window.Content>
         <MafiaPanelData />
       </Window.Content>
@@ -173,13 +176,14 @@ export const MafiaPanel = (props) => {
 
 const MafiaChat = (props) => {
   const { act, data } = useBackend<MafiaData>();
+  const { t } = usePreferencesLocalization(data);
   const { messages } = data;
   const [message_to_send, setMessagingBox] = useState('');
   return (
     <Stack vertical fill>
       {!!messages && (
         <>
-          <Section fill scrollable title="Chat Logs">
+          <Section fill scrollable title={t('ui.mafia.chat_logs')}>
             {messages.map((message) => (
               <Box key={message.msg}>{decodeHtmlEntities(message.msg)}</Box>
             ))}
@@ -190,20 +194,20 @@ const MafiaChat = (props) => {
             maxLength={300}
             className="Section__title candystripe"
             onChange={setMessagingBox}
-            placeholder="Type to chat"
+            placeholder={t('ui.mafia.type_to_chat')}
             value={message_to_send}
           />
           <Button
             color="bad"
             fluid
             textAlign="center"
-            tooltip="Sends your message to chat."
+            tooltip={t('ui.mafia.tooltip_send_message')}
             onClick={() => {
               setMessagingBox('');
               act('send_message_to_chat', { message: message_to_send });
             }}
           >
-            Send to Chat
+            {t('ui.common.send_to_chat')}
           </Button>
         </>
       )}
@@ -213,6 +217,7 @@ const MafiaChat = (props) => {
 
 const MafiaLobby = (props) => {
   const { act, data } = useBackend<MafiaData>();
+  const { t } = usePreferencesLocalization(data);
   const { lobbydata = [], is_observer } = data;
   const readyGhosts = lobbydata
     ? lobbydata.filter((player) => player.status === 'Ready')
@@ -221,7 +226,7 @@ const MafiaLobby = (props) => {
     <Section
       fill
       scrollable
-      title="Lobby"
+      title={t('ui.common.lobby')}
       buttons={
         <>
           <Button
@@ -232,7 +237,7 @@ const MafiaLobby = (props) => {
               is an ongoing one, you will be signed up
               for the next.
             `}
-            content="Sign Up"
+            content={t('ui.mafia.sign_up')}
             onClick={() => act('mf_signup')}
           />
           <Button
@@ -243,7 +248,7 @@ const MafiaLobby = (props) => {
               Starts when half of the current signup list have voted to start.
               Requires a bare minimum of six players.
             `}
-            content="Start Now!"
+            content={t('ui.mafia.start_now')}
             onClick={() => act('vote_to_start')}
           />
         </>
@@ -270,7 +275,7 @@ const MafiaLobby = (props) => {
           <Stack.Item grow>
             {!is_observer ? 'Unknown Player' : lobbyist.name}
           </Stack.Item>
-          <Stack.Item>Status:</Stack.Item>
+          <Stack.Item>{t('ui.common.status')}:</Stack.Item>
           <Stack.Item color={lobbyist.status === 'Ready' ? 'green' : 'red'}>
             {lobbyist.status}
           </Stack.Item>
@@ -363,6 +368,7 @@ const MafiaListOfRoles = (props) => {
 
 const MafiaNotesTab = (props) => {
   const { act, data } = useBackend<MafiaData>();
+  const { t } = usePreferencesLocalization(data);
   const { user_notes } = data;
   const [note_message, setNotesMessage] = useState(user_notes);
   return (
@@ -372,7 +378,7 @@ const MafiaNotesTab = (props) => {
         maxLength={600}
         className="Section__title candystripe"
         onChange={setNotesMessage}
-        placeholder="Insert Notes..."
+        placeholder={t('ui.mafia.insert_notes')}
         value={note_message}
       />
 
@@ -381,14 +387,14 @@ const MafiaNotesTab = (props) => {
         fluid
         textAlign="center"
         onClick={() => act('change_notes', { new_notes: note_message })}
-        tooltip="Saves whatever is written as your notepad. This can't be done while dead."
+        tooltip={t('ui.mafia.tooltip_save_notes')}
       >
         Save
       </Button>
       <Button.Confirm
         color="bad"
         fluid
-        content="Send to Chat"
+        content={t('ui.common.send_to_chat')}
         textAlign="center"
         onClick={() => act('send_notes_to_chat')}
       />
@@ -398,8 +404,9 @@ const MafiaNotesTab = (props) => {
 
 const MafiaJudgement = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   return (
-    <Section title="Judgement">
+    <Section title={t('ui.mafia.judgement')}>
       <Flex>
         <Button
           icon="smile-beam"
@@ -408,7 +415,7 @@ const MafiaJudgement = (props) => {
         >
           Innocent
         </Button>
-        <Box>It is now time to vote, vote the accused innocent or guilty!</Box>
+        <Box>{t('ui.mafia.vote_prompt')}</Box>
         <Button icon="angry" color="bad" onClick={() => act('vote_guilty')}>
           Guilty
         </Button>
@@ -424,9 +431,10 @@ const MafiaJudgement = (props) => {
 
 const MafiaPlayers = (props) => {
   const { act, data } = useBackend<MafiaData>();
+  const { t } = usePreferencesLocalization(data);
   const { players = [], person_voted_up_ref } = data;
   return (
-    <Section fill scrollable title="Players">
+    <Section fill scrollable title={t('ui.common.players')}>
       <Flex direction="column" fill justify="space-around">
         {players?.map((player) => (
           <Flex.Item className="Section__title candystripe" key={player.ref}>
@@ -472,10 +480,11 @@ const MafiaPlayers = (props) => {
 
 const MafiaAdmin = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   return (
-    <Collapsible title="ADMIN CONTROLS" color="red">
+    <Collapsible title={t('ui.mafia.admin_controls')} color="red">
       <Section>
-        <Collapsible title="A kind, coder warning" color="transparent">
+        <Collapsible title={t('ui.mafia.coder_warning')} color="transparent">
           Almost all of these are all built to help me debug the game (ow,
           debugging a 12 player game!) So they are rudamentary and prone to
           breaking at the drop of a hat. Make sure you know what you&apos;re

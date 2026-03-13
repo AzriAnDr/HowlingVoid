@@ -11,6 +11,7 @@ import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const Trophycase = (props) => {
   const { act, data } = useBackend();
@@ -38,6 +39,7 @@ export const Trophycase = (props) => {
 };
 
 const HistorianPanel = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend();
   const {
     has_showpiece,
@@ -51,7 +53,7 @@ const HistorianPanel = (props) => {
       {!historian_mode && (
         <Button
           icon="key"
-          content="Insert key for historian mode"
+          content={t('ui.trophycase.insert_key_for_historian_mode')}
           onClick={() => act('insert_key')}
         />
       )}
@@ -59,12 +61,12 @@ const HistorianPanel = (props) => {
         <div>
           <Button
             icon="times"
-            content="Lock historian mode"
+            content={t('ui.trophycase.lock_historian_mode')}
             onClick={() => act('lock')}
           />
           <Button
             icon="pencil"
-            content="Edit description"
+            content={t('ui.trophycase.edit_description')}
             disabled={!has_showpiece || holographic_showpiece}
             onClick={() => act('change_message')}
           />
@@ -72,33 +74,28 @@ const HistorianPanel = (props) => {
       )}
       {!!historian_mode && !!holographic_showpiece && (
         <Box>
-          A holographic trophy is already present. Replace it with a new trophy
-          to create a new recording.
+          {t('ui.trophycase.holographic_trophy_present')}
         </Box>
       )}
-      {!!historian_mode && !has_showpiece && <Box>No trophies located.</Box>}
+      {!!historian_mode && !has_showpiece && <Box>{t('ui.trophycase.no_trophies_located')}</Box>}
       {!!historian_mode &&
         !!has_showpiece &&
         !holographic_showpiece &&
         !!showpiece_description && (
-          <Box>
-            Recording has begun. Trophy data will be saved overnight, as long as
-            the trophy stays within an intact case.
-          </Box>
+          <Box>{t('ui.trophycase.recording_has_begun')}</Box>
         )}
       {!!historian_mode &&
         !!has_showpiece &&
         !holographic_showpiece &&
         !showpiece_description && (
-          <Box>
-            New trophy detected. Please record a description to begin archival.
-          </Box>
+          <Box>{t('ui.trophycase.new_trophy_detected')}</Box>
         )}
     </Section>
   );
 };
 
 const ShowpieceDescription = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend();
   const {
     has_showpiece,
@@ -111,7 +108,7 @@ const ShowpieceDescription = (props) => {
     <Section fill align="center">
       {!has_showpiece && (
         <Box fill className="Trophycase-description">
-          <b>This exhibit is empty. History awaits your contribution!</b>
+          <b>{t('ui.trophycase.exhibit_empty')}</b>
         </Box>
       )}
       {!!holographic_showpiece && <b>{showpiece_description}</b>}
@@ -119,7 +116,7 @@ const ShowpieceDescription = (props) => {
         <Box fill className="Trophycase-description">
           {showpiece_description
             ? decodeHtmlEntities(showpiece_description)
-            : "This exhibit is under construction. Get the curator's key to finalize your contribution!"}
+            : t('ui.trophycase.exhibit_under_construction')}
         </Box>
       )}
     </Section>
@@ -150,6 +147,7 @@ const ShowpieceImage = (props) => {
 };
 
 const ShowpieceName = (props) => {
+  const { t } = usePreferencesLocalization();
   const { data } = useBackend();
   const { showpiece_name } = data;
   return (
@@ -157,7 +155,7 @@ const ShowpieceName = (props) => {
       <b>
         {showpiece_name
           ? decodeHtmlEntities(showpiece_name)
-          : 'Under construction.'}
+          : t('ui.trophycase.under_construction')}
       </b>
     </Section>
   );

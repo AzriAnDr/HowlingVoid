@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   server_connected: BooleanLike;
@@ -23,6 +24,7 @@ type NodeData = {
 
 export const DestructiveAnalyzer = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     server_connected,
     indestructible,
@@ -35,10 +37,14 @@ export const DestructiveAnalyzer = (props) => {
   } = data;
   if (!server_connected) {
     return (
-      <Window width={400} height={260} title="Destructive Analyzer">
+      <Window
+        width={400}
+        height={260}
+        title={t('ui.destructive_analyzer.title')}
+      >
         <Window.Content>
           <NoticeBox textAlign="center" danger>
-            Not connected to a server. Please sync one using a multitool.
+            {t('ui.destructive_analyzer.not_connected_to_server')}
           </NoticeBox>
         </Window.Content>
       </Window>
@@ -46,25 +52,34 @@ export const DestructiveAnalyzer = (props) => {
   }
   if (!loaded_item) {
     return (
-      <Window width={400} height={260} title="Destructive Analyzer">
+      <Window
+        width={400}
+        height={260}
+        title={t('ui.destructive_analyzer.title')}
+      >
         <Window.Content>
           <NoticeBox textAlign="center" danger>
-            No item loaded! <br />
-            Put any item inside to see what it&apos;s capable of!
+            {t('ui.destructive_analyzer.no_item_loaded')}
+            <br />
+            {t('ui.destructive_analyzer.insert_item_hint')}
           </NoticeBox>
         </Window.Content>
       </Window>
     );
   }
   return (
-    <Window width={400} height={260} title="Destructive Analyzer">
+    <Window
+      width={400}
+      height={260}
+      title={t('ui.destructive_analyzer.title')}
+    >
       <Window.Content scrollable>
         <Section
           title={loaded_item}
           buttons={
             <Button
               icon="eject"
-              tooltip="Ejects the item currently inside the machine."
+              tooltip={t('ui.destructive_analyzer.eject_tooltip')}
               onClick={() => act('eject_item')}
             />
           }
@@ -76,27 +91,29 @@ export const DestructiveAnalyzer = (props) => {
             verticalAlign="middle"
           />
         </Section>
-        <Section title="Deconstruction Methods">
+        <Section title={t('ui.destructive_analyzer.deconstruction_methods')}>
           {!indestructible && (
             <NoticeBox textAlign="center" danger>
-              This item can&apos;t be deconstructed!
+              {t('ui.destructive_analyzer.item_cannot_be_deconstructed')}
             </NoticeBox>
           )}
           {!!indestructible && (
             <>
               {!!recoverable_points && (
                 <>
-                  <Box fontSize="14px">Research points from deconstruction</Box>
+                  <Box fontSize="14px">
+                    {t('ui.destructive_analyzer.research_points_from_deconstruction')}
+                  </Box>
                   <Box>{recoverable_points}</Box>
                 </>
               )}
               <Button.Confirm
-                content="Deconstruct"
+                content={t('ui.destructive_analyzer.deconstruct')}
                 icon="hammer"
                 tooltip={
                   already_deconstructed
-                    ? 'This item item has already been deconstructed, and will not give any additional information.'
-                    : 'Destroys the object currently residing in the machine.'
+                    ? t('ui.destructive_analyzer.already_deconstructed_tooltip')
+                    : t('ui.destructive_analyzer.destroy_object_tooltip')
                 }
                 onClick={() =>
                   act('deconstruct', { deconstruct_id: research_point_id })
@@ -112,8 +129,8 @@ export const DestructiveAnalyzer = (props) => {
               key={node.node_id}
               tooltip={
                 node.node_hidden
-                  ? 'Deconstruct this to research the selected node.'
-                  : 'This node has already been researched.'
+                  ? t('ui.destructive_analyzer.deconstruct_for_node_research')
+                  : t('ui.destructive_analyzer.node_already_researched')
               }
               onClick={() =>
                 act('deconstruct', { deconstruct_id: node.node_id })

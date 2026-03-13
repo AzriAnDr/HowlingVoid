@@ -2,6 +2,7 @@ import type { Dispatch, SetStateAction } from 'react';
 import { Button, Modal, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { ListMapper } from './ListMapper';
 import type { CallInfo, LuaEditorData, LuaEditorModal } from './types';
 
@@ -13,6 +14,7 @@ type CallModalProps = {
 
 export const CallModal = (props: CallModalProps) => {
   const { act, data } = useBackend<LuaEditorData>();
+  const { t } = usePreferencesLocalization(data);
   const { callArguments } = data;
   const { setModal, toCall, setToCall } = props;
   const { type, params } = toCall;
@@ -25,7 +27,7 @@ export const CallModal = (props: CallModalProps) => {
         fill
         scrollable
         scrollableHorizontal
-        title="Call Function/Task"
+        title={t('ui.lua_editor.call_function_or_task')}
         buttons={
           <Button
             color="red"
@@ -36,11 +38,11 @@ export const CallModal = (props: CallModalProps) => {
               act('clearArgs');
             }}
           >
-            Cancel
+            {t('ui.common.cancel')}
           </Button>
         }
       >
-        <ListMapper name="Arguments" list={callArguments} editable />
+        <ListMapper name={t('ui.lua_editor.arguments')} list={callArguments} editable />
         <Button
           onClick={() => {
             setModal(undefined);
@@ -48,7 +50,7 @@ export const CallModal = (props: CallModalProps) => {
             act(type, params);
           }}
         >
-          Call
+          {t('ui.lua_editor.call')}
         </Button>
       </Section>
     </Modal>

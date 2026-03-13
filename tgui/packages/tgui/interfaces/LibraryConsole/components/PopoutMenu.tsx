@@ -1,10 +1,12 @@
 import { useBackend } from 'tgui/backend';
 import { Button, Section, Stack } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../../localization';
 import type { LibraryConsoleData } from '../types';
 
 export function PopoutMenu(props) {
   const { act, data } = useBackend<LibraryConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { display_lore, screen_state, show_dropdown } = data;
 
   return (
@@ -16,21 +18,25 @@ export function PopoutMenu(props) {
             fontSize="13px"
             onClick={() => act('toggle_dropdown')}
             icon={show_dropdown === 1 ? 'chevron-left' : 'chevron-right'}
-            tooltip={!show_dropdown && 'Expand'}
+            tooltip={!show_dropdown && t('ui.common.expand')}
           >
-            {!!show_dropdown && 'Collapse'}
+            {!!show_dropdown && t('ui.common.collapse')}
           </Button>
         </Stack.Item>
-        <PopoutEntry id={1} icon="list" text="Inventory" />
-        <PopoutEntry id={2} icon="calendar" text="Checkout" />
-        <PopoutEntry id={3} icon="server" text="Archive" />
-        <PopoutEntry id={4} icon="upload" text="Upload" />
-        <PopoutEntry id={5} icon="print" text="Print" />
+        <PopoutEntry id={1} icon="list" text={t('ui.library.inventory')} />
+        <PopoutEntry id={2} icon="calendar" text={t('ui.library.checkout')} />
+        <PopoutEntry id={3} icon="server" text={t('ui.library.archive')} />
+        <PopoutEntry id={4} icon="upload" text={t('ui.library.upload')} />
+        <PopoutEntry id={5} icon="print" text={t('ui.library.print')} />
         {!!display_lore && (
           <PopoutEntry
             id={6}
             icon="question"
-            text={screen_state === 6 ? 'Gur Fbeprere' : 'Forbidden Lore'}
+            text={
+              screen_state === 6
+                ? t('ui.library.gur_fbeprere')
+                : t('ui.library.forbidden_lore')
+            }
             color="black"
             font="copperplate"
           />

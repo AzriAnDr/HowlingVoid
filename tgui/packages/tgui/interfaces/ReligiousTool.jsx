@@ -12,6 +12,7 @@ import {
 
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const ALIGNMENT2COLOR = {
   good: 'yellow',
@@ -56,6 +57,7 @@ export const ReligiousTool = (props) => {
 
 const SectTab = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     name,
     quote,
@@ -85,7 +87,11 @@ const SectTab = (props) => {
           <BlockQuote>{desc}</BlockQuote>
         </Stack.Item>
         <Stack.Item>
-          <Section mx={3} mt={-1} title="Wanted Sacrifices">
+          <Section
+            mx={3}
+            mt={-1}
+            title={t('ui.religious_tool.wanted_sacrifices')}
+          >
             {(!wanted && `${deity} doesn't want any sacrifices.`) ||
               `${deity} wishes for ${wanted}.`}
           </Section>
@@ -97,9 +103,10 @@ const SectTab = (props) => {
 
 const SectSelectTab = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { sects } = data;
   return (
-    <Section fill title="Sect Select" scrollable>
+    <Section fill title={t('ui.religious_tool.sect_select')} scrollable>
       <Stack vertical>
         {sects.map((sect) => (
           <>

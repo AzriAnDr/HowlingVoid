@@ -11,6 +11,7 @@ import { formatSiUnit } from 'tgui-core/format';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import { logger } from '../../logging';
 import { AccessConfig } from '../common/AccessConfig';
 import { AlertPane } from './AlertPane';
@@ -30,6 +31,7 @@ export const Mecha = (props) => {
 
 export const Content = (props) => {
   const { act, data } = useBackend<MainData>();
+  const { t } = usePreferencesLocalization(data);
   const [edit_access, editAccess] = useState(false);
   const {
     name,
@@ -56,7 +58,7 @@ export const Content = (props) => {
                 <>
                   <Button
                     icon="edit"
-                    tooltip="Rename"
+                    tooltip={t('ui.mecha.rename')}
                     tooltipPosition="left"
                     onClick={() => act('changename')}
                   />
@@ -64,7 +66,7 @@ export const Content = (props) => {
                     <Button
                       icon="tachograph-digital"
                       color="violet"
-                      tooltip="Diagnostic"
+                      tooltip={t('ui.mecha.diagnostic')}
                       tooltipPosition="left"
                       onClick={() => act('diagnostic')}
                     />
@@ -90,10 +92,12 @@ export const Content = (props) => {
                     <LightsBar />
                     <CabinSeal />
                     <DNALock />
-                    <LabeledList.Item label="ID Lock">
+                    <LabeledList.Item label={t('ui.mecha.id_lock')}>
                       <Button
                         icon={id_lock ? 'lock' : 'lock-open'}
-                        content={id_lock ? 'Enabled' : 'Disabled'}
+                        content={
+                          id_lock ? t('ui.common.enabled') : t('ui.common.disabled')
+                        }
                         tooltipPosition="top"
                         onClick={() => {
                           editAccess(false);
@@ -104,14 +108,18 @@ export const Content = (props) => {
                       {!!id_lock && (
                         <>
                           <Button
-                            tooltip="Edit Access"
+                            tooltip={t('ui.mecha.edit_access')}
                             tooltipPosition="top"
                             icon="id-card-o"
                             onClick={() => editAccess(!edit_access)}
                             selected={edit_access}
                           />
                           <Button
-                            tooltip={one_access ? 'Require Any' : 'Require All'}
+                            tooltip={
+                              one_access
+                                ? t('ui.mecha.require_any')
+                                : t('ui.mecha.require_all')
+                            }
                             tooltipPosition="top"
                             icon={one_access ? 'check' : 'check-double'}
                             onClick={() => act('one_access')}
@@ -162,9 +170,10 @@ export const Content = (props) => {
 
 const PowerBar = (props) => {
   const { act, data } = useBackend<MainData>();
+  const { t } = usePreferencesLocalization(data);
   const { power_level, power_max } = data;
   return (
-    <LabeledList.Item label="Power">
+    <LabeledList.Item label={t('ui.mecha.power')}>
       <ProgressBar
         value={power_max ? power_level / power_max : 0}
         ranges={{
@@ -177,10 +186,10 @@ const PowerBar = (props) => {
         }}
       >
         {power_max === null
-          ? 'Power cell missing'
+          ? t('ui.mecha.power_cell_missing')
           : power_level === 1e31
-            ? 'Infinite'
-            : `${formatSiUnit(power_level, 0, 'J')} of ${formatSiUnit(
+            ? t('ui.mecha.infinite')
+            : `${formatSiUnit(power_level, 0, 'J')} ${t('ui.common.of').toLowerCase()} ${formatSiUnit(
                 power_max,
                 0,
                 'J',
@@ -192,9 +201,10 @@ const PowerBar = (props) => {
 
 const IntegrityBar = (props) => {
   const { act, data } = useBackend<MainData>();
+  const { t } = usePreferencesLocalization(data);
   const { integrity, integrity_max, scanmod_rating } = data;
   return (
-    <LabeledList.Item label="Integrity">
+    <LabeledList.Item label={t('ui.mecha.integrity')}>
       <ProgressBar
         value={scanmod_rating ? integrity / integrity_max : 0}
         ranges={{
@@ -206,7 +216,9 @@ const IntegrityBar = (props) => {
           textShadow: '1px 1px 0 black',
         }}
       >
-        {!scanmod_rating ? 'Unknown' : `${integrity} of ${integrity_max}`}
+        {!scanmod_rating
+          ? t('ui.mecha.unknown')
+          : `${integrity} ${t('ui.common.of').toLowerCase()} ${integrity_max}`}
       </ProgressBar>
     </LabeledList.Item>
   );
@@ -214,14 +226,15 @@ const IntegrityBar = (props) => {
 
 const LightsBar = (props) => {
   const { act, data } = useBackend<MainData>();
+  const { t } = usePreferencesLocalization(data);
   const { power_level, power_max, mecha_flags, mechflag_keys } = data;
   const has_lights = mecha_flags & mechflag_keys.HAS_LIGHTS;
   const lights_on = mecha_flags & mechflag_keys.LIGHTS_ON;
   return (
-    <LabeledList.Item label="Lights">
+    <LabeledList.Item label={t('ui.mecha.lights')}>
       <Button
         icon="lightbulb"
-        content={lights_on ? 'On' : 'Off'}
+        content={lights_on ? t('ui.common.on') : t('ui.common.off')}
         selected={lights_on}
         disabled={!has_lights || !power_max || !power_level}
         onClick={() => act('toggle_lights')}
@@ -232,6 +245,7 @@ const LightsBar = (props) => {
 
 const CabinSeal = (props) => {
   const { act, data } = useBackend<MainData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     enclosed,
     cabin_sealed,
@@ -258,7 +272,7 @@ const CabinSeal = (props) => {
     cabin_pressure > cabin_pressure_hazard_max;
   return (
     <LabeledList.Item
-      label="Cabin Air"
+      label={t('ui.mecha.cabin_air')}
       buttons={
         !!cabin_sealed && (
           <>
@@ -272,7 +286,7 @@ const CabinSeal = (props) => {
               }
               icon="temperature-low"
               tooltipPosition="top"
-              tooltip={`Air temperature: ${cabin_temp}°C`}
+              tooltip={`${t('ui.mecha.air_temperature')}: ${cabin_temp}°C`}
             />
             <Button
               color={
@@ -284,7 +298,7 @@ const CabinSeal = (props) => {
               }
               icon="gauge-high"
               tooltipPosition="top"
-              tooltip={`Air pressure: ${cabin_pressure} kPa`}
+              tooltip={`${t('ui.mecha.air_pressure')}: ${cabin_pressure} kPa`}
             />
           </>
         )
@@ -292,7 +306,7 @@ const CabinSeal = (props) => {
     >
       <Button
         icon={cabin_sealed ? 'mask-ventilator' : 'wind'}
-        content={cabin_sealed ? 'Sealed' : 'Exposed'}
+        content={cabin_sealed ? t('ui.mecha.sealed') : t('ui.mecha.exposed')}
         disabled={!enclosed}
         onClick={() => act('toggle_cabin_seal')}
         selected={cabin_sealed}
@@ -303,14 +317,15 @@ const CabinSeal = (props) => {
 
 const DNALock = (props) => {
   const { act, data } = useBackend<MainData>();
+  const { t } = usePreferencesLocalization(data);
   const { dna_lock } = data;
   return (
-    <LabeledList.Item label="DNA Lock">
+    <LabeledList.Item label={t('ui.mecha.dna_lock')}>
       <Button
         onClick={() => act('dna_lock')}
         icon="syringe"
-        content={dna_lock ? 'Enabled' : 'Unset'}
-        tooltip="Set new DNA key"
+        content={dna_lock ? t('ui.common.enabled') : t('ui.mecha.unset')}
+        tooltip={t('ui.mecha.set_new_dna_key')}
         selected={!!dna_lock}
         tooltipPosition="top"
       />
@@ -318,14 +333,14 @@ const DNALock = (props) => {
         <>
           <Button
             icon="key"
-            tooltip={`Key enzyme: ${dna_lock}`}
+            tooltip={`${t('ui.mecha.key_enzyme')}: ${dna_lock}`}
             tooltipPosition="top"
             disabled={!dna_lock}
           />
           <Button
             onClick={() => act('reset_dna')}
             icon="ban"
-            tooltip="Reset DNA lock"
+            tooltip={t('ui.mecha.reset_dna_lock')}
             tooltipPosition="top"
             disabled={!dna_lock}
           />

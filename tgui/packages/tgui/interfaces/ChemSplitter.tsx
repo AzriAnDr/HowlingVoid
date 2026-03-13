@@ -3,6 +3,7 @@ import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   straight: number;
@@ -12,6 +13,7 @@ type Data = {
 
 export const ChemSplitter = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { straight, side, max_transfer } = data;
 
   return (
@@ -19,7 +21,7 @@ export const ChemSplitter = (props) => {
       <Window.Content>
         <Section>
           <LabeledList>
-            <LabeledList.Item label="Straight">
+            <LabeledList.Item label={t('ui.chem_splitter.straight')}>
               <NumberInput
                 value={straight}
                 unit="u"
@@ -37,7 +39,7 @@ export const ChemSplitter = (props) => {
                 }
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Side">
+            <LabeledList.Item label={t('ui.chem_splitter.side')}>
               <NumberInput
                 value={side}
                 unit="u"

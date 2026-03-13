@@ -2,6 +2,7 @@ import { Box, Button, Icon, LabeledList, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type AirlockControllerData = {
   airlockState: string;
@@ -19,31 +20,32 @@ type AirlockStatus = {
 
 export const AirlockController = (props) => {
   const { data } = useBackend<AirlockControllerData>();
+  const { t } = usePreferencesLocalization(data);
   const { airlockState, pumpStatus, interiorStatus, exteriorStatus } = data;
-  const currentStatus: AirlockStatus = getAirlockStatus(airlockState);
+  const currentStatus: AirlockStatus = getAirlockStatus(airlockState, t);
   const nameToUpperCase = (str: string) =>
     str.replace(/^\w/, (c) => c.toUpperCase());
 
   return (
     <Window width={500} height={190}>
       <Window.Content>
-        <Section title="Airlock Status" buttons={<AirLockButtons />}>
+        <Section title={t('ui.airlock_controller.airlock_status')} buttons={<AirLockButtons />}>
           <LabeledList>
-            <LabeledList.Item label="Current Status">
+            <LabeledList.Item label={t('ui.airlock_controller.current_status')}>
               {currentStatus.primary}
             </LabeledList.Item>
-            <LabeledList.Item label="Chamber Pressure">
+            <LabeledList.Item label={t('ui.airlock_controller.chamber_pressure')}>
               <PressureIndicator currentStatus={currentStatus} />
             </LabeledList.Item>
-            <LabeledList.Item label="Control Pump">
+            <LabeledList.Item label={t('ui.airlock_controller.control_pump')}>
               {nameToUpperCase(pumpStatus)}
             </LabeledList.Item>
-            <LabeledList.Item label="Interior Door">
+            <LabeledList.Item label={t('ui.airlock_controller.interior_door')}>
               <Box color={interiorStatus === 'open' && 'good'}>
                 {nameToUpperCase(interiorStatus)}
               </Box>
             </LabeledList.Item>
-            <LabeledList.Item label="Exterior Door">
+            <LabeledList.Item label={t('ui.airlock_controller.exterior_door')}>
               <Box color={exteriorStatus === 'open' && 'good'}>
                 {nameToUpperCase(exteriorStatus)}
               </Box>
@@ -58,23 +60,24 @@ export const AirlockController = (props) => {
 /** Displays the buttons on top of the window to cycle the airlock */
 const AirLockButtons = (props) => {
   const { act, data } = useBackend<AirlockControllerData>();
+  const { t } = usePreferencesLocalization(data);
   const { airlockState } = data;
   switch (airlockState) {
     case 'pressurize':
     case 'depressurize':
       return (
         <Button icon="stop-circle" onClick={() => act('abort')}>
-          Abort
+          {t('ui.airlock_controller.abort')}
         </Button>
       );
     case 'closed':
       return (
         <>
           <Button icon="lock-open" onClick={() => act('cycleInterior')}>
-            Open Interior Airlock
+            {t('ui.airlock_controller.open_interior_airlock')}
           </Button>
           <Button icon="lock-open" onClick={() => act('cycleExterior')}>
-            Open Exterior Airlock
+            {t('ui.airlock_controller.open_exterior_airlock')}
           </Button>
         </>
       );
@@ -82,10 +85,10 @@ const AirLockButtons = (props) => {
       return (
         <>
           <Button icon="lock" onClick={() => act('cycleClosed')}>
-            Close Interior Airlock
+            {t('ui.airlock_controller.close_interior_airlock')}
           </Button>
           <Button icon="sync" onClick={() => act('cycleExterior')}>
-            Cycle to Exterior Airlock
+            {t('ui.airlock_controller.cycle_to_exterior_airlock')}
           </Button>
         </>
       );
@@ -93,10 +96,10 @@ const AirLockButtons = (props) => {
       return (
         <>
           <Button icon="lock" onClick={() => act('cycleClosed')}>
-            Close Exterior Airlock
+            {t('ui.airlock_controller.close_exterior_airlock')}
           </Button>
           <Button icon="sync" onClick={() => act('cycleInterior')}>
-            Cycle to Interior Airlock
+            {t('ui.airlock_controller.cycle_to_interior_airlock')}
           </Button>
         </>
       );
@@ -122,41 +125,41 @@ const PressureIndicator = (props) => {
 };
 
 /** Displays the current status as two text strings, depending on door state. */
-const getAirlockStatus = (airlockState): AirlockStatus => {
+const getAirlockStatus = (airlockState, t): AirlockStatus => {
   switch (airlockState) {
     case 'inopen':
       return {
-        primary: 'Interior Airlock Open',
+        primary: t('ui.airlock_controller.interior_airlock_open'),
         icon: '',
         color: 'good',
       };
     case 'pressurize':
       return {
-        primary: 'Cycling to Interior Airlock',
+        primary: t('ui.airlock_controller.cycling_to_interior_airlock'),
         icon: 'fan',
         color: 'average',
       };
     case 'closed':
       return {
-        primary: 'Inactive',
+        primary: t('ui.airlock_controller.inactive'),
         icon: '',
         color: 'white',
       };
     case 'depressurize':
       return {
-        primary: 'Cycling to Exterior Airlock',
+        primary: t('ui.airlock_controller.cycling_to_exterior_airlock'),
         icon: 'fan',
         color: 'average',
       };
     case 'outopen':
       return {
-        primary: 'Exterior Airlock Open',
+        primary: t('ui.airlock_controller.exterior_airlock_open'),
         icon: 'exclamation-triangle',
         color: 'bad',
       };
     default:
       return {
-        primary: 'Unknown',
+        primary: t('ui.airlock_controller.unknown'),
         icon: '',
         color: 'average',
       };

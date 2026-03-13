@@ -2,35 +2,39 @@ import { Button, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const ProbingConsole = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { open, feedback, occupant, occupant_name, occupant_status } = data;
   return (
     <Window width={330} height={207} theme="abductor">
       <Window.Content>
         <Section>
           <LabeledList>
-            <LabeledList.Item label="Machine Report">
+            <LabeledList.Item label={t('ui.probing_console.machine_report')}>
               {feedback}
             </LabeledList.Item>
           </LabeledList>
         </Section>
         <Section
-          title="Scanner"
+          title={t('ui.probing_console.scanner')}
           buttons={
             <Button
               icon={open ? 'sign-out-alt' : 'sign-in-alt'}
-              content={open ? 'Close' : 'Open'}
+              content={open ? t('ui.common.close') : t('ui.common.open')}
               onClick={() => act('door')}
             />
           }
         >
           {(occupant && (
             <LabeledList>
-              <LabeledList.Item label="Name">{occupant_name}</LabeledList.Item>
+              <LabeledList.Item label={t('ui.common.name')}>
+                {occupant_name}
+              </LabeledList.Item>
               <LabeledList.Item
-                label="Status"
+                label={t('ui.common.status')}
                 color={
                   occupant_status === 3
                     ? 'bad'
@@ -40,15 +44,15 @@ export const ProbingConsole = (props) => {
                 }
               >
                 {occupant_status === 3
-                  ? 'Deceased'
+                  ? t('ui.common.deceased')
                   : occupant_status === 2
-                    ? 'Unconscious'
-                    : 'Conscious'}
+                    ? t('ui.common.unconscious')
+                    : t('ui.common.conscious')}
               </LabeledList.Item>
-              <LabeledList.Item label="Experiments">
+              <LabeledList.Item label={t('ui.probing_console.experiments')}>
                 <Button
                   icon="thermometer"
-                  content="Probe"
+                  content={t('ui.probing_console.probe')}
                   onClick={() =>
                     act('experiment', {
                       experiment_type: 1,
@@ -57,7 +61,7 @@ export const ProbingConsole = (props) => {
                 />
                 <Button
                   icon="brain"
-                  content="Dissect"
+                  content={t('ui.probing_console.dissect')}
                   onClick={() =>
                     act('experiment', {
                       experiment_type: 2,
@@ -66,7 +70,7 @@ export const ProbingConsole = (props) => {
                 />
                 <Button
                   icon="search"
-                  content="Analyze"
+                  content={t('ui.probing_console.analyze')}
                   onClick={() =>
                     act('experiment', {
                       experiment_type: 3,
@@ -75,7 +79,7 @@ export const ProbingConsole = (props) => {
                 />
               </LabeledList.Item>
             </LabeledList>
-          )) || <NoticeBox>No Subject</NoticeBox>}
+          )) || <NoticeBox>{t('ui.probing_console.no_subject')}</NoticeBox>}
         </Section>
       </Window.Content>
     </Window>

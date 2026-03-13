@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type CircuitAdminPanelData = {
   circuits: {
@@ -15,9 +16,10 @@ type CircuitAdminPanelData = {
 
 export const CircuitAdminPanel = (props) => {
   const { act, data } = useBackend<CircuitAdminPanelData>();
+  const { t } = usePreferencesLocalization(data);
 
   return (
-    <Window title="Circuit Admin Panel" width={1200} height={500}>
+    <Window title={t('ui.circuit_admin.panel_title')} width={1200} height={500}>
       <Window.Content>
         <Stack vertical>
           <Stack.Item>
@@ -29,7 +31,7 @@ export const CircuitAdminPanel = (props) => {
                     act('disable_circuit_sound');
                   }}
                 >
-                  Disable all circuit sound emitters
+                  {t('ui.circuit_admin.disable_all_sound_emitters')}
                 </Button>
               </Stack.Item>
             </Stack>
@@ -37,11 +39,11 @@ export const CircuitAdminPanel = (props) => {
           <Stack.Item>
             <Table>
               <Table.Row header>
-                <Table.Cell>Circuit name</Table.Cell>
+                <Table.Cell>{t('ui.circuit_admin.circuit_name')}</Table.Cell>
 
-                <Table.Cell>Creator</Table.Cell>
+                <Table.Cell>{t('ui.circuit_admin.creator')}</Table.Cell>
 
-                <Table.Cell>Actions</Table.Cell>
+                <Table.Cell>{t('ui.common.actions')}</Table.Cell>
               </Table.Row>
 
               {data.circuits.map((circuit) => {
@@ -57,22 +59,26 @@ export const CircuitAdminPanel = (props) => {
 
                     <Table.Cell>
                       <Button onClick={createAct('follow_circuit')}>
-                        Follow
+                        {t('ui.common.follow')}
                       </Button>
 
-                      <Button onClick={createAct('open_circuit')}>Open</Button>
+                      <Button onClick={createAct('open_circuit')}>
+                        {t('ui.common.open')}
+                      </Button>
 
                       <Button onClick={createAct('vv_circuit')}>VV</Button>
 
-                      <Button onClick={createAct('save_circuit')}>Save</Button>
+                      <Button onClick={createAct('save_circuit')}>
+                        {t('ui.common.save')}
+                      </Button>
 
                       <Button onClick={createAct('duplicate_circuit')}>
-                        Duplicate
+                        {t('ui.common.duplicate')}
                       </Button>
 
                       {!!circuit.has_inserter && (
                         <Button onClick={createAct('open_player_panel')}>
-                          Player Panel
+                          {t('ui.circuit_admin.player_panel')}
                         </Button>
                       )}
                     </Table.Cell>

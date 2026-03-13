@@ -14,6 +14,7 @@ import {
 import { Box, Button, type Interaction, Interactive, Pointer, Stack } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
 import { classes } from 'tgui-core/react';
+import { usePreferencesLocalization } from '../localization';
 import { colorList } from './ColorPresets';
 
 interface ColorPresetsProps {
@@ -70,6 +71,7 @@ interface SaturationValueProps {
 
 export const SaturationValue: React.FC<SaturationValueProps> = React.memo(
   ({ hsva, onChange }) => {
+    const { t } = usePreferencesLocalization();
     const handleMove = (interaction: Interaction) => {
       onChange({
         s: interaction.left * 100,
@@ -104,10 +106,10 @@ export const SaturationValue: React.FC<SaturationValueProps> = React.memo(
           containerRef={containerRef}
           onMove={handleMove}
           onKey={handleKey}
-          aria-label="Color"
-          aria-valuetext={`Saturation ${Math.round(
+          aria-label={t('ui.color_picker.color')}
+          aria-valuetext={`${t('ui.color_picker.saturation')} ${Math.round(
             hsva.s,
-          )}%, Brightness ${Math.round(hsva.v)}%`}
+          )}%, ${t('ui.color_picker.brightness')} ${Math.round(hsva.v)}%`}
         >
           <Pointer
             className="react-colorful__saturation_value-pointer"
@@ -129,6 +131,7 @@ interface HueProps {
 
 export const Hue: React.FC<HueProps> = React.memo(
   ({ className, hue, onChange }) => {
+    const { t } = usePreferencesLocalization();
     const handleMove = (interaction: Interaction) => {
       onChange({ h: 360 * interaction.left });
     };
@@ -146,7 +149,7 @@ export const Hue: React.FC<HueProps> = React.memo(
           containerRef={containerRef}
           onMove={handleMove}
           onKey={handleKey}
-          aria-label="Hue"
+          aria-label={t('ui.color_picker.hue')}
           aria-valuenow={Math.round(hue)}
           aria-valuemax={360}
           aria-valuemin={0}
@@ -170,6 +173,7 @@ interface SaturationProps {
 
 export const Saturation: React.FC<SaturationProps> = React.memo(
   ({ className, color, onChange }) => {
+    const { t } = usePreferencesLocalization();
     const handleMove = (interaction: Interaction) => {
       onChange({ s: 100 * interaction.left });
     };
@@ -199,7 +203,7 @@ export const Saturation: React.FC<SaturationProps> = React.memo(
           style={{ background }}
           onMove={handleMove}
           onKey={handleKey}
-          aria-label="Saturation"
+          aria-label={t('ui.color_picker.saturation')}
           aria-valuenow={Math.round(color.s)}
           aria-valuemax={100}
           aria-valuemin={0}
@@ -228,6 +232,7 @@ interface ValueProps {
 
 export const Value: React.FC<ValueProps> = React.memo(
   ({ className, color, onChange }) => {
+    const { t } = usePreferencesLocalization();
     const handleMove = (interaction: Interaction) => {
       onChange({ v: 100 * interaction.left });
     };
@@ -261,7 +266,7 @@ export const Value: React.FC<ValueProps> = React.memo(
           containerRef={containerRef}
           onMove={handleMove}
           onKey={handleKey}
-          aria-label="Value"
+          aria-label={t('ui.color_picker.value')}
           aria-valuenow={Math.round(color.v)}
           aria-valuemax={100}
           aria-valuemin={0}

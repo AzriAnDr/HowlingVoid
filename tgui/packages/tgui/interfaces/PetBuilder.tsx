@@ -15,6 +15,7 @@ import {
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { IconDisplay } from './LootPanel/IconDisplay';
+import { usePreferencesLocalization } from './localization';
 type Data = {
   pet_name: string | null;
   pet_specie: string;
@@ -62,6 +63,7 @@ const FilterPetList = (pet_specie: string, pet_options: PetOptions[]) => {
 
 export const PetBuilder = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     pet_name,
     pet_path,
@@ -125,7 +127,7 @@ export const PetBuilder = (props) => {
   };
 
   return (
-    <Window title="Create Your Pet!" width={665} height={325}>
+    <Window title={t('ui.pet_builder.create_your_pet')} width={665} height={325}>
       <Window.Content>
         <Flex width="50%">
           <Flex.Item>
@@ -168,7 +170,7 @@ export const PetBuilder = (props) => {
                       <Flex.Item>
                         <Icon name="paw" />
                       </Flex.Item>
-                      <Flex.Item ml={1}>Finalize Pet!</Flex.Item>
+                      <Flex.Item ml={1}>{t('ui.pet_builder.finalize_pet')}</Flex.Item>
                       <Flex.Item>
                         <Icon ml={1} name="paw" />
                       </Flex.Item>
@@ -294,12 +296,16 @@ const PetDetails = ({
   setSelectedName,
   selectedGender,
   setSelectedGender,
-}: any) => (
+}: any) => {
+  const { t } = usePreferencesLocalization();
+  return (
   <Stack vertical width="85%">
     <Flex style={{ borderBottom: '1px solid gray' }}>
       <Flex.Item>
         <Stack vertical>
-          <Stack.Item style={{ fontSize: '16px' }}>Pet Name</Stack.Item>
+          <Stack.Item style={{ fontSize: '16px' }}>
+            {t('ui.pet_builder.pet_name')}
+          </Stack.Item>
           <Stack.Item>
             <Input
               mb={2}
@@ -325,7 +331,9 @@ const PetDetails = ({
     </Flex>
     <Stack.Item>
       <Stack vertical>
-        <Stack.Item style={{ fontSize: '16px' }}>Pet Gender</Stack.Item>
+        <Stack.Item style={{ fontSize: '16px' }}>
+          {t('ui.pet_builder.pet_gender')}
+        </Stack.Item>
         <Stack.Item>
           <Stack mt={0.5} style={{ borderBottom: '1px solid gray' }}>
             <Stack.Item grow ml={2} mb={2}>
@@ -354,7 +362,8 @@ const PetDetails = ({
       </Stack>
     </Stack.Item>
   </Stack>
-);
+  );
+};
 
 const TrickSequence = ({
   TrickName,
@@ -363,7 +372,9 @@ const TrickSequence = ({
   pet_possible_emotes,
   UpdateSequence,
   carrier_options,
-}: any) => (
+}: any) => {
+  const { t } = usePreferencesLocalization();
+  return (
   <Section
     mt={1}
     width="80%"
@@ -371,7 +382,7 @@ const TrickSequence = ({
     title={TrickName}
     buttons={
       <Button.Input
-        buttonText="Rename"
+        buttonText={t('ui.common.rename')}
         color="transparent"
         onCommit={setTrickName}
         value={TrickName}
@@ -381,7 +392,10 @@ const TrickSequence = ({
     <Box ml={2}>
       <LabeledList>
         {sequences.map((sequence: string, index: number) => (
-          <LabeledList.Item key={index} label={`Move ${index + 1}`}>
+          <LabeledList.Item
+            key={index}
+            label={`${t('ui.pet_builder.move')} ${index + 1}`}
+          >
             <Dropdown
               width="80%"
               selected={sequences[index]}
@@ -393,7 +407,8 @@ const TrickSequence = ({
       </LabeledList>
     </Box>
   </Section>
-);
+  );
+};
 
 const CarrierSelector = ({
   selectedCarrier,

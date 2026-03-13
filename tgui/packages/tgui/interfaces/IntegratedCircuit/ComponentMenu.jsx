@@ -11,6 +11,8 @@ import { fetchRetry } from 'tgui-core/http';
 import { shallowDiffers } from 'tgui-core/react';
 
 import { resolveAsset } from '../../assets';
+import { useBackend } from '../../backend';
+import { getPreferencesLocalization } from '../localization';
 import { DEFAULT_COMPONENT_MENU_LIMIT } from './constants';
 import { DisplayComponent } from './DisplayComponent';
 
@@ -71,6 +73,8 @@ export class ComponentMenu extends Component {
       currentLimit,
       currentSearch,
     } = this.state;
+    const { data } = useBackend();
+    const { t } = getPreferencesLocalization(data);
 
     const tabs = ['All'];
     const shownComponents = componentData.filter((val) => {
@@ -97,7 +101,7 @@ export class ComponentMenu extends Component {
     shownComponents.length = currentLimit;
     return (
       <Section
-        title="Component Menu"
+        title={t('ui.integrated_circuit.component_menu')}
         {...rest}
         fill
         buttons={
@@ -121,14 +125,14 @@ export class ComponentMenu extends Component {
                 })
               }
               selected={selectedTab}
-              placeholder="Category"
+              placeholder={t('ui.common.category')}
               color="transparent"
               className="IntegratedCircuit__BlueBorder"
             />
           </Stack.Item>
           <Stack.Item>
             <Input
-              placeholder="Search.."
+              placeholder={t('ui.common.search_placeholder')}
               value={currentSearch}
               fluid
               onChange={(val) =>
@@ -145,9 +149,7 @@ export class ComponentMenu extends Component {
               {trueLength === 0 && (
                 <Stack.Item mt={1} fontSize={1}>
                   <NoticeBox info>
-                    You can hit this integrated circuit onto a component printer
-                    to link it so that you&apos;re able to remotely create and
-                    add components to this circuit.
+                    {t('ui.integrated_circuit.component_printer_hint')}
                   </NoticeBox>
                 </Stack.Item>
               )}
@@ -167,7 +169,7 @@ export class ComponentMenu extends Component {
                     textAlign="center"
                     py={1}
                     mb={1}
-                    content="Show More"
+                    content={t('ui.common.show_more')}
                     onClick={() =>
                       this.setState({
                         currentLimit: currentLimit + 5,

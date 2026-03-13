@@ -1,12 +1,14 @@
 import { Button, ByondUi, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { POD_GREY, TABPAGES } from './constants';
 import { useTab } from './hooks';
 import type { PodLauncherData } from './types';
 
 export function ViewTabHolder(props) {
   const { act, data } = useBackend<PodLauncherData>();
+  const { t } = usePreferencesLocalization(data);
   const { mapRef, customDropoff, effectReverse } = data;
 
   const [tab, setTab] = useTab();
@@ -27,7 +29,7 @@ export function ViewTabHolder(props) {
                 act('tabSwitch', { tabIndex: 2 });
               }}
               selected={tab === 2}
-              tooltip="View Dropoff Location"
+              tooltip={t('ui.centcom_pod_launcher.view_dropoff_location')}
             />
           )}
           <Button
@@ -39,7 +41,7 @@ export function ViewTabHolder(props) {
               act('tabSwitch', { tabIndex: 0 });
             }}
             selected={tab === 0}
-            tooltip="View Pod"
+            tooltip={t('ui.centcom_pod_launcher.view_pod')}
           />
           <Button
             color="transparent"
@@ -50,7 +52,7 @@ export function ViewTabHolder(props) {
               act('tabSwitch', { tabIndex: 1 });
             }}
             selected={tab === 1}
-            tooltip="View Source Bay"
+            tooltip={t('ui.centcom_pod_launcher.view_source_bay')}
           />
           <span style={POD_GREY}>|</span>
           <Button
@@ -61,12 +63,12 @@ export function ViewTabHolder(props) {
               setTab(tab);
               act('refreshView');
             }}
-            tooltip="Refresh view window in case it breaks"
+            tooltip={t('ui.centcom_pod_launcher.refresh_view_window')}
           />
         </>
       }
       fill
-      title="View"
+      title={t('ui.common.view')}
     >
       <Stack fill vertical>
         <Stack.Item>

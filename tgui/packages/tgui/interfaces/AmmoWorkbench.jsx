@@ -19,18 +19,20 @@ import { toTitleCase } from 'tgui-core/string';
 
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const AmmoWorkbench = (props) => {
   const [tab, setTab] = useSharedState('tab', 1);
+  const { t } = usePreferencesLocalization();
   return (
-    <Window width={600} height={600} title="Ammunitions Workbench">
+    <Window width={600} height={600} title={t('ui.ammo_workbench.title')}>
       <Window.Content scrollable>
         <Tabs fluid textAlign="center">
           <Tabs.Tab selected={tab === 1} onClick={() => setTab(1)}>
-            Ammunition
+            {t('ui.ammo_workbench.ammunition')}
           </Tabs.Tab>
           <Tabs.Tab selected={tab === 2} onClick={() => setTab(2)}>
-            Materials
+            {t('ui.common.materials')}
           </Tabs.Tab>
         </Tabs>
         {tab === 1 && <AmmunitionsTab />}
@@ -42,6 +44,7 @@ export const AmmoWorkbench = (props) => {
 
 export const AmmunitionsTab = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization();
   const {
     mag_loaded,
     system_busy,
@@ -65,9 +68,9 @@ export const AmmunitionsTab = (props) => {
           {error}
         </NoticeBox>
       )}
-      <Section title="Machine Settings">
+      <Section title={t('ui.ammo_workbench.machine_settings')}>
         <Box inline mr={4}>
-          Current Efficiency:{' '}
+          {t('ui.ammo_workbench.current_efficiency')}:{' '}
           <RoundGauge
             value={efficiency}
             minValue={1.6}
@@ -75,17 +78,20 @@ export const AmmunitionsTab = (props) => {
             format={() => null}
           />
         </Box>
-        <Box>Time Per Round: {time} seconds</Box>
+        <Box>
+          {t('ui.ammo_workbench.time_per_round')}: {time}{' '}
+          {t('ui.common.seconds').toLowerCase()}
+        </Box>
         <Button.Checkbox
           textAlign="right"
           checked={turboBoost}
           onClick={() => act('turboBoost')}
         >
-          Overclock
+          {t('ui.ammo_workbench.overclock')}
         </Button.Checkbox>
       </Section>
       <Section
-        title="Loaded Magazine"
+        title={t('ui.ammo_workbench.loaded_magazine')}
         buttons={
           <>
             {!!mag_loaded && (
@@ -99,7 +105,7 @@ export const AmmunitionsTab = (props) => {
             )}
             <Button
               icon="eject"
-              content="Eject"
+              content={t('ui.common.eject')}
               disabled={!mag_loaded}
               onClick={() => act('EjectMag')}
             />
@@ -113,7 +119,7 @@ export const AmmunitionsTab = (props) => {
           </Box>
         )}
       </Section>
-      <Section title="Available Ammunition Types">
+      <Section title={t('ui.ammo_workbench.available_ammunition_types')}>
         {!!mag_loaded && (
           <Flex.Item grow={1} basis={0}>
             {available_rounds.map((available_round) => (
@@ -145,29 +151,28 @@ export const AmmunitionsTab = (props) => {
         )}
       </Section>
       <Section
-        title="Module Management"
+        title={t('ui.ammo_workbench.module_management')}
         buttons={
           <Button
             icon="eject"
-            content="Eject"
+            content={t('ui.common.eject')}
             disabled={!datadisk_loaded}
             onClick={() => act('EjectDisk')}
           />
         }
       >
-        {!!datadisk_loaded && <Box>Loaded Module: {datadisk_name}</Box>}
-        <Collapsible title="Owner's Manual">
+        {!!datadisk_loaded && (
+          <Box>
+            {t('ui.ammo_workbench.loaded_module')}: {datadisk_name}
+          </Box>
+        )}
+        <Collapsible title={t('ui.ammo_workbench.owners_manual')}>
           <Section color="label">
-            The ammunition workbench, by default, can print basic non-lethal
-            ammunition (e.g. rubber bullets, IHDF).
+            {t('ui.ammo_workbench.manual_line_1')}
             <br />
             <br />
-            License modules can be purchased from Cargo or printed with
-            sufficient research, enabling the printing of other ammunition
-            variants, such as lethal, armor-piercing, or hollow-point
-            ammunition. These modules are <b>reusable</b> and infinite-use, but
-            many of their outputs require additional and/or exotic materials to
-            print. Spend wisely!
+            {t('ui.ammo_workbench.manual_line_2_prefix')} <b>{t('ui.ammo_workbench.reusable')}</b>{' '}
+            {t('ui.ammo_workbench.manual_line_2_suffix')}
           </Section>
         </Collapsible>
       </Section>
@@ -177,9 +182,10 @@ export const AmmunitionsTab = (props) => {
 
 export const MaterialsTab = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization();
   const { materials = [] } = data;
   return (
-    <Section title="Materials">
+    <Section title={t('ui.common.materials')}>
       <Table>
         {materials
           .filter((material) => material.amount > 0)
@@ -202,6 +208,7 @@ export const MaterialsTab = (props) => {
 
 const MaterialRow = (props) => {
   const { material, onRelease } = props;
+  const { t } = usePreferencesLocalization();
 
   const [amount, setAmount] = useState(1);
 
@@ -211,7 +218,7 @@ const MaterialRow = (props) => {
       <Table.Cell>{toTitleCase(material.name)}</Table.Cell>
       <Table.Cell collapsing textAlign="right">
         <Box mr={2} color="label" inline>
-          {amountAvailable} sheets
+          {amountAvailable} {t('ui.ammo_workbench.sheets')}
         </Box>
       </Table.Cell>
       <Table.Cell collapsing>
@@ -226,7 +233,7 @@ const MaterialRow = (props) => {
         />
         <Button
           disabled={amountAvailable < 1}
-          content="Release"
+          content={t('ui.common.release')}
           onClick={() => onRelease(amount)}
         />
       </Table.Cell>

@@ -9,10 +9,12 @@ import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const RemoteRobotControl = (props) => {
+  const { t } = usePreferencesLocalization();
   return (
-    <Window title="Remote Robot Control" width={500} height={500}>
+    <Window title={t('ui.remote_robot_control.title')} width={500} height={500}>
       <Window.Content scrollable>
         <RemoteRobotControlContent />
       </Window.Content>
@@ -21,12 +23,13 @@ export const RemoteRobotControl = (props) => {
 };
 
 export const RemoteRobotControlContent = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend();
   const { robots = [] } = data;
   if (!robots.length) {
     return (
       <Section>
-        <NoticeBox textAlign="center">No robots detected</NoticeBox>
+        <NoticeBox textAlign="center">{t('ui.remote_robot_control.no_robots_detected')}</NoticeBox>
       </Section>
     );
   }
@@ -39,7 +42,7 @@ export const RemoteRobotControlContent = (props) => {
           <>
             <Button
               icon="tools"
-              content="Interface"
+              content={t('ui.remote_robot_control.interface')}
               onClick={() =>
                 act('interface', {
                   ref: robot.ref,
@@ -48,7 +51,7 @@ export const RemoteRobotControlContent = (props) => {
             />
             <Button
               icon="phone-alt"
-              content="Call"
+              content={t('ui.remote_robot_control.call')}
               onClick={() =>
                 act('callbot', {
                   ref: robot.ref,
@@ -59,7 +62,7 @@ export const RemoteRobotControlContent = (props) => {
         }
       >
         <LabeledList>
-          <LabeledList.Item label="Status">
+          <LabeledList.Item label={t('ui.common.status')}>
             <Box
               inline
               color={
@@ -74,12 +77,12 @@ export const RemoteRobotControlContent = (props) => {
             </Box>{' '}
             {(robot.hacked && (
               <Box inline color="bad">
-                (HACKED)
+                ({t('ui.remote_robot_control.hacked')})
               </Box>
             )) ||
               ''}
           </LabeledList.Item>
-          <LabeledList.Item label="Location">{robot.location}</LabeledList.Item>
+          <LabeledList.Item label={t('ui.common.location')}>{robot.location}</LabeledList.Item>
         </LabeledList>
       </Section>
     );

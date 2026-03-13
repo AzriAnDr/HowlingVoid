@@ -9,17 +9,19 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const SentienceFunBalloon = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend();
   const { group_name, range, antag } = data;
   return (
-    <Window title={'Sentience Fun Balloon'} width={400} height={200}>
+    <Window title={t('ui.sentience_balloon.title')} width={400} height={200}>
       <Window.Content>
         <Stack vertical>
-          <Section title="Configure balloon effect:">
+          <Section title={t('ui.sentience_balloon.configure_effect')}>
             <LabeledList>
-              <LabeledList.Item label="Group name">
+              <LabeledList.Item label={t('ui.sentience_balloon.group_name')}>
                 <Input
                   fluid
                   value={group_name}
@@ -30,7 +32,7 @@ export const SentienceFunBalloon = (props) => {
                   }
                 />
               </LabeledList.Item>
-              <LabeledList.Item label="Effect range">
+              <LabeledList.Item label={t('ui.sentience_balloon.effect_range')}>
                 <NumberInput
                   tickWhileDragging
                   width="84px"
@@ -46,10 +48,10 @@ export const SentienceFunBalloon = (props) => {
                   }
                 />
               </LabeledList.Item>
-              <LabeledList.Item label="Make group into antagonists?">
+              <LabeledList.Item label={t('ui.sentience_balloon.make_group_antags')}>
                 <Button.Checkbox
                   icon={data.antag ? 'user-secret' : 'times'}
-                  content={data.antag ? 'Yes' : 'No'}
+                  content={data.antag ? t('ui.common.yes') : t('ui.common.no')}
                   selected={data.antag}
                   onClick={() => act('select_antag')}
                 />
@@ -62,7 +64,7 @@ export const SentienceFunBalloon = (props) => {
               icon="magic"
               color="good"
               textAlign="center"
-              content="Pop Balloon"
+              content={t('ui.sentience_balloon.pop_balloon')}
               onClick={() => act('pop')}
             />
           </Section>

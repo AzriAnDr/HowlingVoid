@@ -9,6 +9,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   satellites: Satellite[];
@@ -40,12 +41,13 @@ export const SatelliteControl = (props) => {
 /** Displays coverage info of the meteor shield */
 const ShieldInfo = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { meteor_shield_coverage, meteor_shield_coverage_max } = data;
 
   return (
     <Section>
       <LabeledList>
-        <LabeledList.Item label="Coverage">
+        <LabeledList.Item label={t('ui.satellitecontrol.coverage')}>
           <ProgressBar
             value={meteor_shield_coverage / meteor_shield_coverage_max}
             ranges={{
@@ -63,10 +65,11 @@ const ShieldInfo = (props) => {
 /** Displays a map of satellites and their status */
 const SatelliteDisplay = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { satellites = [] } = data;
 
   return (
-    <Section title="Satellite Controls">
+    <Section title={t('ui.satellitecontrol.satellite_controls')}>
       <Box mr={-1}>
         {satellites.map((satellite) => (
           <Button.Checkbox

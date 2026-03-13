@@ -6,6 +6,7 @@ import { createSearch } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const HEALTH_COLOR_BY_LEVEL = [
   '#17d568',
@@ -23,13 +24,13 @@ const jobIsHead = (jobId: number) => jobId % 10 === 0;
 
 const SORT_OPTIONS = [
   {
-    name: 'Job',
+    nameKey: 'ui.common.job',
     sort: (a: CrewSensor, b: CrewSensor) => {
       return a.ijob - b.ijob;
     }
   },
   {
-    name: 'Name',
+    nameKey: 'ui.common.name',
     sort: (a: CrewSensor, b: CrewSensor) => {
       if (a.name > b.name) return 1;
       if (a.name < b.name) return -1;
@@ -37,7 +38,7 @@ const SORT_OPTIONS = [
     }
   },
   {
-    name: 'Area',
+    nameKey: 'ui.common.area',
     sort: (a: CrewSensor, b: CrewSensor) => {
       if (a.area === undefined) return 1;
       if (b.area === undefined) return -1;
@@ -47,7 +48,7 @@ const SORT_OPTIONS = [
     }
   },
   {
-    name: 'Vitals',
+    nameKey: 'ui.crew_console.vitals',
     sort: (a: CrewSensor, b: CrewSensor) => {
       if (a.life_status > b.life_status) return -1;
       if (a.life_status < b.life_status) return 1;
@@ -133,8 +134,9 @@ const HealthStat = (props: HealthStatProps) => {
 };
 
 export const CrewConsole = () => {
+  const { t } = usePreferencesLocalization();
   return (
-    <Window title="Crew Monitor" width={600} height={600}>
+    <Window title={t('ui.crew_console.title')} width={600} height={600}>
       <Window.Content scrollable>
         <Section minHeight="540px">
           <CrewTable />
@@ -167,6 +169,7 @@ type CrewConsoleData = {
 
 const CrewTable = () => {
   const { data } = useBackend<CrewConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { sensors } = data;
 
   const [sortAsc, setSortAsc] = useState(true);
@@ -189,7 +192,9 @@ const CrewTable = () => {
     <Section
       title={
         <>
-          <Button onClick={cycleSortBy}>{SORT_OPTIONS[indexOfSortingOption].name}</Button>
+          <Button onClick={cycleSortBy}>
+            {t(SORT_OPTIONS[indexOfSortingOption].nameKey)}
+          </Button>
           <Button onClick={() => setSortAsc(!sortAsc)}>
             <Icon
               style={{ marginLeft: '2px' }}
@@ -197,7 +202,7 @@ const CrewTable = () => {
             />
           </Button>
           <Input
-            placeholder="Search for name..."
+            placeholder={t('ui.crew_console.search_for_name_placeholder')}
             onChange={setSearchQuery}
             value={searchQuery}
           />
@@ -206,17 +211,17 @@ const CrewTable = () => {
     >
       <Table>
         <Table.Row>
-          <Table.Cell bold>Name</Table.Cell>
+          <Table.Cell bold>{t('ui.common.name')}</Table.Cell>
           <Table.Cell bold collapsing />
           <Table.Cell bold collapsing textAlign="center">
-            Vitals
+            {t('ui.crew_console.vitals')}
           </Table.Cell>
           <Table.Cell bold textAlign="center">
-            Position
+            {t('ui.common.position')}
           </Table.Cell>
           {!!data.link_allowed && (
             <Table.Cell bold collapsing textAlign="center">
-              Tracking
+              {t('ui.crew_console.tracking')}
             </Table.Cell>
           )}
         </Table.Row>
@@ -234,6 +239,7 @@ type CrewTableEntryProps = {
 
 const CrewTableEntry = (props: CrewTableEntryProps) => {
   const { act, data } = useBackend<CrewConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { link_allowed } = data;
   const { sensor_data } = props;
   const {
@@ -292,9 +298,9 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
             <HealthStat type="brute" value={brutedam} />
           </Box>
         ) : life_status !== STAT_DEAD ? (
-          'Alive'
+          t('ui.common.alive')
         ) : (
-          'Dead'
+          t('ui.common.dead')
         )}
       </Table.Cell>
       <Table.Cell>
@@ -314,7 +320,7 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
               })
             }
           >
-            Track
+            {t('ui.crew_console.track')}
           </Button>
         </Table.Cell>
       )}

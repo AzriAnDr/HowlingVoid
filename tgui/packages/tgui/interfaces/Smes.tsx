@@ -12,6 +12,7 @@ import { round } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   capacity: number;
@@ -33,6 +34,7 @@ const POWER_MUL = 1e3;
 
 export const Smes = () => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     capacity,
     charge,
@@ -56,7 +58,7 @@ export const Smes = () => {
   return (
     <Window width={340} height={350}>
       <Window.Content>
-        <Section title="Stored Energy">
+        <Section title={t('ui.smes.stored_energy')}>
           <ProgressBar
             value={capacityPercent * 0.01}
             ranges={{
@@ -67,26 +69,26 @@ export const Smes = () => {
           />
         </Section>
         <Section
-          title="Input"
+          title={t('ui.smes.input')}
           buttons={
             <Button
               icon={inputAttempt ? 'sync-alt' : 'times'}
               selected={inputAttempt}
               onClick={() => act('tryinput')}
             >
-              {inputAttempt ? 'Auto' : 'Off'}
+              {inputAttempt ? t('ui.smes.auto') : t('ui.smes.off')}
             </Button>
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Charge Mode">
+            <LabeledList.Item label={t('ui.smes.charge_mode')}>
               <Box color={inputState}>
-                {(capacityPercent >= 100 && 'Fully Charged') ||
-                  (inputting && 'Charging') ||
-                  'Not Charging'}
+                {(capacityPercent >= 100 && t('ui.smes.fully_charged')) ||
+                  (inputting && t('ui.smes.charging')) ||
+                  t('ui.smes.not_charging')}
               </Box>
             </LabeledList.Item>
-            <LabeledList.Item label="Target Input">
+            <LabeledList.Item label={t('ui.smes.target_input')}>
               <Stack fill>
                 <Stack.Item>
                   <Button
@@ -146,34 +148,34 @@ export const Smes = () => {
                 </Stack.Item>
               </Stack>
             </LabeledList.Item>
-            <LabeledList.Item label="Available">
+            <LabeledList.Item label={t('ui.smes.available')}>
               {formatPower(inputAvailable)}
             </LabeledList.Item>
           </LabeledList>
         </Section>
         <Section
-          title="Output"
+          title={t('ui.smes.output')}
           buttons={
             <Button
               icon={outputAttempt ? 'power-off' : 'times'}
               selected={outputAttempt}
               onClick={() => act('tryoutput')}
             >
-              {outputAttempt ? 'On' : 'Off'}
+              {outputAttempt ? t('ui.smes.on') : t('ui.smes.off')}
             </Button>
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Output Mode">
+            <LabeledList.Item label={t('ui.smes.output_mode')}>
               <Box color={outputState}>
                 {outputting
-                  ? 'Sending'
+                  ? t('ui.smes.sending')
                   : charge > 0
-                    ? 'Not Sending'
-                    : 'No Charge'}
+                    ? t('ui.smes.not_sending')
+                    : t('ui.smes.no_charge')}
               </Box>
             </LabeledList.Item>
-            <LabeledList.Item label="Target Output">
+            <LabeledList.Item label={t('ui.smes.target_output')}>
               <Stack fill>
                 <Stack.Item>
                   <Button
@@ -232,7 +234,7 @@ export const Smes = () => {
                 </Stack.Item>
               </Stack>
             </LabeledList.Item>
-            <LabeledList.Item label="Outputting">
+            <LabeledList.Item label={t('ui.smes.outputting')}>
               {formatPower(outputUsed)}
             </LabeledList.Item>
           </LabeledList>

@@ -9,9 +9,11 @@ import { formatEnergy } from 'tgui-core/format';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const MechBayPowerConsole = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { recharge_port } = data;
   const mech = recharge_port?.mech;
   const cell = mech?.cell;
@@ -19,22 +21,24 @@ export const MechBayPowerConsole = (props) => {
     <Window width={400} height={200}>
       <Window.Content>
         <Section
-          title="Mech status"
+          title={t('ui.mech_bay_power_console.mech_status')}
           textAlign="center"
           buttons={
             <Button
               icon="sync"
-              content="Sync"
+              content={t('ui.common.sync')}
               onClick={() => act('reconnect')}
             />
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Integrity">
+            <LabeledList.Item label={t('ui.common.integrity')}>
               {(!recharge_port && (
-                <NoticeBox>No power port detected. Please re-sync.</NoticeBox>
+                <NoticeBox>
+                  {t('ui.mech_bay_power_console.no_power_port_detected')}
+                </NoticeBox>
               )) ||
-                (!mech && <NoticeBox>No mech detected.</NoticeBox>) || (
+                (!mech && <NoticeBox>{t('ui.mech_bay_power_console.no_mech_detected')}</NoticeBox>) || (
                   <ProgressBar
                     value={mech.health / mech.maxhealth}
                     ranges={{
@@ -45,12 +49,14 @@ export const MechBayPowerConsole = (props) => {
                   />
                 )}
             </LabeledList.Item>
-            <LabeledList.Item label="Power">
+            <LabeledList.Item label={t('ui.common.power')}>
               {(!recharge_port && (
-                <NoticeBox>No power port detected. Please re-sync.</NoticeBox>
+                <NoticeBox>
+                  {t('ui.mech_bay_power_console.no_power_port_detected')}
+                </NoticeBox>
               )) ||
-                (!mech && <NoticeBox>No mech detected.</NoticeBox>) ||
-                (!cell && <NoticeBox>No cell is installed.</NoticeBox>) || (
+                (!mech && <NoticeBox>{t('ui.mech_bay_power_console.no_mech_detected')}</NoticeBox>) ||
+                (!cell && <NoticeBox>{t('ui.mech_bay_power_console.no_cell_installed')}</NoticeBox>) || (
                   <ProgressBar
                     value={cell.charge / cell.maxcharge}
                     ranges={{

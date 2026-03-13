@@ -10,6 +10,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   policy: Record<string, string>;
@@ -23,12 +24,13 @@ function searchForPolicy(policy: Record<string, string>, token: string) {
 
 export const Policypanel = () => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { policy } = data;
 
   const [currentPolicy, setCurrentPolicy] = useState<string>('');
 
   return (
-    <Window title="Policy Panel" theme="admin" width={400} height={300}>
+    <Window title={t('ui.policypanel.policy_panel')} theme="admin" width={400} height={300}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
@@ -42,7 +44,7 @@ export const Policypanel = () => {
               </Flex.Item>
               <Flex.Item width="50%">
                 <Input
-                  placeholder="Search..."
+                  placeholder={t('ui.policypanel.search')}
                   fluid
                   onEnter={(value) => {
                     const results = searchForPolicy(policy, value);

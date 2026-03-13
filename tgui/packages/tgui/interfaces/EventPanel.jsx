@@ -10,9 +10,11 @@ import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const EventPanel = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     event_list = [],
     end_time,
@@ -24,12 +26,12 @@ export const EventPanel = (props) => {
     next_low_chaos_time,
   } = data;
   return (
-    <Window title={'Event Panel'} width={500} height={900} theme={'admin'}>
+    <Window title={t('ui.event.panel')} width={500} height={900} theme={'admin'}>
       <Window.Content>
         <Stack vertical fill>
           {!!admin_mode && (
             <Stack.Item>
-              <Section title={'Event Control'}>
+              <Section title={t('ui.event.control')}>
                 <NoticeBox color="blue">
                   {`Next vote in ${toFixed(next_vote_time, 0)} seconds.`}
                 </NoticeBox>
@@ -40,58 +42,58 @@ export const EventPanel = (props) => {
                 </NoticeBox>
                 <Button
                   icon="plus"
-                  content="Start Admin Vote"
-                  tooltip="Start a vote for the next event."
+                  content={t('ui.event.start_admin_vote')}
+                  tooltip={t('ui.event.tooltip_start_admin_vote')}
                   disabled={vote_in_progress}
                   onClick={() => act('start_vote_admin')}
                 />
                 <Button
                   icon="plus"
-                  content="Start Admin Chaos Vote"
-                  tooltip="Start a chaos vote for the next event."
+                  content={t('ui.event.start_admin_chaos_vote')}
+                  tooltip={t('ui.event.tooltip_start_admin_chaos_vote')}
                   disabled={vote_in_progress}
                   onClick={() => act('start_vote_admin_chaos')}
                 />
                 <Button
                   icon="user-plus"
-                  content="Start Player Vote"
-                  tooltip="This will start a vote that will be publically visible."
+                  content={t('ui.event.start_player_vote')}
+                  tooltip={t('ui.event.tooltip_public_vote')}
                   color="average"
                   disabled={vote_in_progress}
                   onClick={() => act('start_player_vote')}
                 />
                 <Button
                   icon="user-plus"
-                  content="Start Public Chaos Vote"
-                  tooltip="This will start a vote that will be publically visible."
+                  content={t('ui.event.start_public_chaos_vote')}
+                  tooltip={t('ui.event.tooltip_public_vote')}
                   color="average"
                   disabled={vote_in_progress}
                   onClick={() => act('start_player_vote_chaos')}
                 />
                 <Button
                   icon="stopwatch"
-                  content="End Vote"
-                  tooltip="End the current vote and execute the winning event."
+                  content={t('ui.event.end_vote')}
+                  tooltip={t('ui.event.tooltip_end_vote')}
                   disabled={!vote_in_progress}
                   onClick={() => act('end_vote')}
                 />
                 <Button
                   icon="ban"
-                  content="Cancel Vote"
-                  tooltip="Cancel the current vote and reset the voting system."
+                  content={t('ui.event.cancel_vote')}
+                  tooltip={t('ui.event.tooltip_cancel_vote')}
                   disabled={!vote_in_progress}
                   onClick={() => act('cancel_vote')}
                 />
                 <Button
                   icon="clock"
-                  content="Rescedule Next Vote"
-                  tooltip="Rescedule the next timed vote."
+                  content={t('ui.event.reschedule_next_vote')}
+                  tooltip={t('ui.event.tooltip_reschedule_next_vote')}
                   onClick={() => act('reschedule')}
                 />
                 <Button
                   icon="clock"
-                  content="Rescedule Next Low Chaos Event"
-                  tooltip="Rescedule the next timed LOW CHAOS event."
+                  content={t('ui.event.reschedule_next_low_chaos_event')}
+                  tooltip={t('ui.event.tooltip_reschedule_next_low_chaos_event')}
                   onClick={() => act('reschedule_low_chaos')}
                 />
               </Section>
@@ -118,7 +120,7 @@ export const EventPanel = (props) => {
                         <Button
                           color={event.self_vote ? 'good' : 'blue'}
                           icon="vote-yea"
-                          content="Vote"
+                          content={t('ui.event.vote')}
                           onClick={() =>
                             act('register_vote', {
                               event_ref: event.ref,
@@ -132,7 +134,7 @@ export const EventPanel = (props) => {
                   ))}
                 </LabeledList>
               ) : (
-                <NoticeBox>No vote in progress.</NoticeBox>
+                <NoticeBox>{t('ui.event.no_vote_in_progress')}</NoticeBox>
               )}
             </Section>
           </Stack.Item>
@@ -143,18 +145,18 @@ export const EventPanel = (props) => {
                 grow
                 fill
                 height="150px"
-                title="Previous Events"
+                title={t('ui.event.previous_events')}
               >
                 {previous_events.length > 0 ? (
                   <LabeledList>
                     {previous_events.map((event) => (
-                      <LabeledList.Item label="Event" key={event}>
+                      <LabeledList.Item label={t('ui.event.event')} key={event}>
                         {event}
                       </LabeledList.Item>
                     ))}
                   </LabeledList>
                 ) : (
-                  <NoticeBox>No previous events.</NoticeBox>
+                  <NoticeBox>{t('ui.event.no_previous_events')}</NoticeBox>
                 )}
               </Section>
             </Stack.Item>

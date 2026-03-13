@@ -8,6 +8,7 @@ import { Button, LabeledList, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import type { ParticleUIData } from './data';
 import {
   EntryCoord,
@@ -33,6 +34,7 @@ export const ParticleContext = createContext({} as ParticleEditContext);
 
 export const ParticleEdit = (props) => {
   const { act, data } = useBackend<ParticleUIData>();
+  const { t } = usePreferencesLocalization(data);
   const [desc, setDesc] = useState('');
 
   const {
@@ -67,7 +69,10 @@ export const ParticleEdit = (props) => {
   return (
     <ParticleContext.Provider value={{ desc, setDesc }}>
       <Window
-        title={`${data.target_name}'s particles`}
+        title={t('ui.particle_editor.target_particles').replace(
+          '{target}',
+          data.target_name,
+        )}
         width={940}
         height={890}
       >
@@ -75,133 +80,153 @@ export const ParticleEdit = (props) => {
         <Window.Content scrollable>
           <LabeledList>
             <Section
-              title={'Affects entire set'}
+              title={t('ui.particle_editor.affects_entire_set')}
               buttons={
                 <>
                   <Button
                     icon={'question'}
                     onClick={() => setDesc('generator')}
-                    tooltip={'Generator information'}
+                    tooltip={t('ui.particle_editor.generator_information')}
                   />
                   <Button
                     icon={'sync'}
                     onClick={() => act('new_type')}
-                    tooltip={'Change type'}
+                    tooltip={t('ui.common.change_type')}
                   />
                   <Button
                     icon={'x'}
                     color={'red'}
                     onClick={() => act('delete_and_close')}
-                    tooltip={'Delete and close UI'}
+                    tooltip={t('ui.particle_editor.delete_and_close_ui')}
                   />
                 </>
               }
             >
-              <EntryFloat name={'Width'} var_name={'width'} float={width} />
-              <EntryFloat name={'Height'} var_name={'height'} float={height} />
-              <EntryFloat name={'Count'} var_name={'count'} float={count} />
               <EntryFloat
-                name={'Spawning'}
+                name={t('ui.particle_editor.width')}
+                var_name={'width'}
+                float={width}
+              />
+              <EntryFloat
+                name={t('ui.particle_editor.height')}
+                var_name={'height'}
+                float={height}
+              />
+              <EntryFloat
+                name={t('ui.particle_editor.count')}
+                var_name={'count'}
+                float={count}
+              />
+              <EntryFloat
+                name={t('ui.particle_editor.spawning')}
                 var_name={'spawning'}
                 float={spawning}
               />
               <EntryCoord
-                name={'Bound corner 1'}
+                name={t('ui.particle_editor.bound_corner_1')}
                 var_name={'bound1'}
                 coord={bound1}
               />
               <EntryCoord
-                name={'Bound corner 2'}
+                name={t('ui.particle_editor.bound_corner_2')}
                 var_name={'bound2'}
                 coord={bound2}
               />
               <EntryCoord
-                name={'Gravity'}
+                name={t('ui.particle_editor.gravity')}
                 var_name={'gravity'}
                 coord={gravity}
               />
               <EntryGradient
-                name={'Gradient'}
+                name={t('ui.particle_editor.gradient')}
                 var_name={'gradient'}
                 gradient={gradient}
               />
               <EntryTransform
-                name={'Transform'}
+                name={t('ui.particle_editor.transform')}
                 var_name={'transform'}
                 transform={transform}
               />
             </Section>
-            <Section title={'Evaluated on particle creation'}>
-              <EntryIcon name={'Icon'} var_name={'icon'} icon_state={icon} />
+            <Section title={t('ui.particle_editor.evaluated_on_particle_creation')}>
+              <EntryIcon
+                name={t('ui.common.icon')}
+                var_name={'icon'}
+                icon_state={icon}
+              />
               <EntryIconState
-                name={'Icon State'}
+                name={t('ui.particle_editor.icon_state')}
                 var_name={'icon_state'}
                 icon_state={icon_state}
               />
               <FloatGenerator
-                name={'Lifespan'}
+                name={t('ui.particle_editor.lifespan')}
                 var_name={'lifespan'}
                 float={lifespan}
               />
               <FloatGenerator
-                name={'Fade out'}
+                name={t('ui.particle_editor.fade_out')}
                 var_name={'fade'}
                 float={fade}
               />
               <FloatGenerator
-                name={'Fade in'}
+                name={t('ui.particle_editor.fade_in')}
                 var_name={'fadein'}
                 float={fadein}
               />
               <FloatGeneratorColor
-                name={'Color'}
+                name={t('ui.common.color')}
                 var_name={'color'}
                 float={color}
               />
               <FloatGenerator
-                name={'Color change'}
+                name={t('ui.particle_editor.color_change')}
                 var_name={'color_change'}
                 float={color_change}
               />
               <EntryGeneratorNumbersList
-                name={'Position'}
+                name={t('ui.common.position')}
                 var_name={'position'}
                 allow_z
                 input={position}
               />
               <EntryGeneratorNumbersList
-                name={'Velocity'}
+                name={t('ui.common.velocity')}
                 var_name={'velocity'}
                 allow_z
                 input={velocity}
               />
               <EntryGeneratorNumbersList
-                name={'Scale'}
+                name={t('ui.common.scale')}
                 var_name={'scale'}
                 allow_z={false}
                 input={scale}
               />
               <EntryGeneratorNumbersList
-                name={'Grow'}
+                name={t('ui.particle_editor.grow')}
                 var_name={'grow'}
                 allow_z={false}
                 input={grow}
               />
               <FloatGenerator
-                name={'Rotation'}
+                name={t('ui.common.rotation')}
                 var_name={'rotation'}
                 float={rotation}
               />
-              <FloatGenerator name={'Spin'} var_name={'spin'} float={spin} />
               <FloatGenerator
-                name={'Friction'}
+                name={t('ui.particle_editor.spin')}
+                var_name={'spin'}
+                float={spin}
+              />
+              <FloatGenerator
+                name={t('ui.particle_editor.friction')}
                 var_name={'friction'}
                 float={friction}
               />
             </Section>
-            <Section title={'Evaluated every tick'}>
+            <Section title={t('ui.particle_editor.evaluated_every_tick')}>
               <EntryGeneratorNumbersList
-                name={'Drift'}
+                name={t('ui.particle_editor.drift')}
                 var_name={'drift'}
                 allow_z
                 input={drift}

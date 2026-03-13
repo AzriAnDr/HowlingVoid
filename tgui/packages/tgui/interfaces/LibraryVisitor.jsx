@@ -14,10 +14,12 @@ import {
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { PageSelect } from './LibraryConsole/components/PageSelect';
+import { usePreferencesLocalization } from './localization';
 
 export const LibraryVisitor = (props) => {
+  const { t } = usePreferencesLocalization();
   return (
-    <Window title="Library Lookup Console" width={702} height={421}>
+    <Window title={t('ui.library_visitor.title')} width={702} height={421}>
       <BookListing />
     </Window>
   );
@@ -25,12 +27,12 @@ export const LibraryVisitor = (props) => {
 
 const BookListing = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { can_connect, can_db_request, our_page, page_count } = data;
   if (!can_connect) {
     return (
       <NoticeBox>
-        Unable to retrieve book listings. Please contact your system
-        administrator for assistance.
+        {t('ui.library_visitor.unable_to_retrieve_book_listings')}
       </NoticeBox>
     );
   }
@@ -62,6 +64,7 @@ const BookListing = (props) => {
 
 const SearchAndDisplay = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     can_db_request,
     search_categories = [],
@@ -87,7 +90,7 @@ const SearchAndDisplay = (props) => {
             <Stack.Item>
               <Input
                 value={book_id}
-                placeholder={book_id === null ? 'ID' : book_id}
+                placeholder={book_id === null ? t('ui.common.id') : book_id}
                 mt={0.5}
                 width="70px"
                 onBlur={(value) =>
@@ -111,7 +114,7 @@ const SearchAndDisplay = (props) => {
             <Stack.Item>
               <Input
                 value={title}
-                placeholder={title || 'Title'}
+                placeholder={title || t('ui.common.title')}
                 mt={0.5}
                 onBlur={(value) =>
                   act('set_search_title', {
@@ -123,7 +126,7 @@ const SearchAndDisplay = (props) => {
             <Stack.Item>
               <Input
                 value={author}
-                placeholder={author || 'Author'}
+                placeholder={author || t('ui.common.author')}
                 mt={0.5}
                 onBlur={(value) =>
                   act('set_search_author', {
@@ -142,7 +145,7 @@ const SearchAndDisplay = (props) => {
             color={params_changed ? 'good' : ''}
             icon="book"
           >
-            Search
+            {t('ui.common.search')}
           </Button>
           <Button
             disabled={!can_db_request}
@@ -151,16 +154,16 @@ const SearchAndDisplay = (props) => {
             color="bad"
             icon="fire"
           >
-            Reset Search
+            {t('ui.library_visitor.reset_search')}
           </Button>
         </Stack.Item>
       </Stack>
       <Table>
         <Table.Row>
           <Table.Cell fontSize={1.5}>#</Table.Cell>
-          <Table.Cell fontSize={1.5}>Category</Table.Cell>
-          <Table.Cell fontSize={1.5}>Title</Table.Cell>
-          <Table.Cell fontSize={1.5}>Author</Table.Cell>
+          <Table.Cell fontSize={1.5}>{t('ui.common.category')}</Table.Cell>
+          <Table.Cell fontSize={1.5}>{t('ui.common.title')}</Table.Cell>
+          <Table.Cell fontSize={1.5}>{t('ui.common.author')}</Table.Cell>
         </Table.Row>
         {records.map((record) => (
           <Table.Row key={record.key}>

@@ -13,6 +13,7 @@ import { toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 enum Screen {
   Main,
@@ -37,10 +38,11 @@ type Data = {
 
 export const TelecommsMonitor = (props: any) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { screen, statusMessage } = data;
 
   return (
-    <Window width={350} height={500} title="T-comms Monitoring Console">
+    <Window width={350} height={500} title={t('ui.telecomms_monitor.title')}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -58,6 +60,7 @@ export const TelecommsMonitor = (props: any) => {
 
 const MainScreen = (props: any) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { network, machines = [] } = data;
 
   const [networkId, setNetworkId] = useState(network);
@@ -72,13 +75,13 @@ const MainScreen = (props: any) => {
                 fluid
                 value={networkId}
                 onChange={setNetworkId}
-                placeholder="Enter Network ID..."
+                placeholder={t('ui.telecomms_monitor.enter_network_id')}
                 onEnter={() => act('probe', { id: networkId })}
               />
             </Stack.Item>
             <Stack.Item>
               <Button onClick={() => act('probe', { id: networkId })}>
-                Probe Network
+                {t('ui.telecomms_monitor.probe_network')}
               </Button>
             </Stack.Item>
           </Stack>
@@ -86,12 +89,12 @@ const MainScreen = (props: any) => {
       </Stack.Item>
       <Stack.Item grow>
         <MachineList
-          title="Detected Network Entities"
+          title={t('ui.telecomms_monitor.detected_network_entities')}
           buttons={
             <Button
               icon="trash"
               color="red"
-              tooltip="Flush Buffer"
+              tooltip={t('ui.common.flush_buffer')}
               disabled={machines.length === 0}
               onClick={() => act('flush')}
             />
@@ -106,23 +109,24 @@ const MainScreen = (props: any) => {
 
 const MachineScreen = (props: any) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { id, name, network, linkedMachines } = data.machine!;
 
   return (
     <Stack fill vertical>
       <Stack.Item>
         <Section
-          title="Entity Information"
+          title={t('ui.telecomms_monitor.entity_information')}
           buttons={
             <Button icon="home" onClick={() => act('home')}>
-              Main Menu
+              {t('ui.common.main_menu')}
             </Button>
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Network">{network}</LabeledList.Item>
-            <LabeledList.Item label="Network ID">{id}</LabeledList.Item>
-            <LabeledList.Item label="Network Entity">
+            <LabeledList.Item label={t('ui.common.network')}>{network}</LabeledList.Item>
+            <LabeledList.Item label={t('ui.telecomms_monitor.network_id')}>{id}</LabeledList.Item>
+            <LabeledList.Item label={t('ui.telecomms_monitor.network_entity')}>
               {toTitleCase(name)}
             </LabeledList.Item>
           </LabeledList>
@@ -130,7 +134,7 @@ const MachineScreen = (props: any) => {
       </Stack.Item>
       <Stack.Item grow>
         <MachineList
-          title="Linked Entities"
+          title={t('ui.telecomms_monitor.linked_entities')}
           machines={linkedMachines}
           onSelect={(machine) => act('view', { id: machine.id })}
         />
@@ -148,6 +152,8 @@ type MachineListProps = {
 
 const MachineList = (props: MachineListProps) => {
   const { title, buttons, machines, onSelect } = props;
+  const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
 
   const [searching, setSearching] = useState(false);
   const [search, setSearch] = useState('');
@@ -171,7 +177,7 @@ const MachineList = (props: MachineListProps) => {
             icon="magnifying-glass"
             selected={searching}
             disabled={machines.length === 0}
-            tooltip="Search by ID"
+            tooltip={t('ui.telecomms_monitor.search_by_id')}
             onClick={() => setSearching(!searching)}
           />
           {buttons}
@@ -211,14 +217,14 @@ const MachineList = (props: MachineListProps) => {
                 autoFocus
                 value={search}
                 verticalAlign="middle"
-                placeholder="Enter machine ID..."
+                placeholder={t('ui.telecomms_monitor.enter_machine_id')}
                 onChange={setSearch}
               />
             </Stack.Item>
           )}
         </Stack>
       ) : (
-        <NoticeBox>No machines connected!</NoticeBox>
+        <NoticeBox>{t('ui.telecomms_monitor.no_machines_connected')}</NoticeBox>
       )}
     </Section>
   );

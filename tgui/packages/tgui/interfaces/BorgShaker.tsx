@@ -2,6 +2,7 @@ import { Button, NoticeBox, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type BorgShakerContext = {
   minVolume: number;
@@ -26,6 +27,7 @@ enum ContainerPreference {
 
 export const BorgShaker = (props) => {
   const { act, data } = useBackend<BorgShakerContext>();
+  const { t } = usePreferencesLocalization(data);
   const { theme, minVolume, sodas, alcohols, selectedReagent } = data;
 
   const dynamicHeight =
@@ -37,18 +39,18 @@ export const BorgShaker = (props) => {
     <Window width={650} height={dynamicHeight} theme={theme}>
       <Window.Content>
         <Section
-          title={'Non-Alcoholic'}
+          title={t('ui.borg_shaker.non_alcoholic')}
           buttons={
             <>
               <Button
                 icon="book"
-                content={'Reaction search'}
+                content={t('ui.borg_shaker.reaction_search')}
                 disabled={
                   data.reagentSearchContainer !==
                     ContainerPreference.InternalBeaker && !data.apparatusHasItem
                 }
                 tooltip={
-                  'Look up recipes and reagents! Choose a container source'
+                  t('ui.borg_shaker.reaction_search_tooltip')
                 }
                 tooltipPosition="bottom-start"
                 onClick={() => act('reaction_lookup')}
@@ -62,7 +64,7 @@ export const BorgShaker = (props) => {
                     ? 'green'
                     : 'default'
                 }
-                tooltip="Search source: Internal Beaker"
+                tooltip={t('ui.borg_shaker.search_source_internal_beaker')}
                 onClick={() => {
                   act('set_preferred_container', {
                     value: ContainerPreference.InternalBeaker,
@@ -72,7 +74,7 @@ export const BorgShaker = (props) => {
               <Button
                 icon="vial"
                 width="24px"
-                tooltip="Search source: Beverage Apparatus"
+                tooltip={t('ui.borg_shaker.search_source_beverage_apparatus')}
                 color={
                   data.reagentSearchContainer ===
                   ContainerPreference.BeverageApparatus
@@ -94,7 +96,7 @@ export const BorgShaker = (props) => {
             minimum={minVolume}
           />
         </Section>
-        <Section title={'Alcoholic'}>
+        <Section title={t('ui.borg_shaker.alcoholic')}>
           <ReagentDisplay
             reagents={alcohols}
             selected={selectedReagent}
@@ -108,9 +110,10 @@ export const BorgShaker = (props) => {
 
 const ReagentDisplay = (props) => {
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
   const { reagents, selected, minimum } = props;
   if (reagents.length === 0) {
-    return <NoticeBox>No reagents available!</NoticeBox>;
+    return <NoticeBox>{t('ui.borg_shaker.no_reagents_available')}</NoticeBox>;
   }
   return reagents.map((reagent) => (
     <Button

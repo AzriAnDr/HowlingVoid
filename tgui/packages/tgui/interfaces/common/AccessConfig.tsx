@@ -1,6 +1,7 @@
 import { sortBy } from 'es-toolkit';
 import { useState } from 'react';
 import { Button, Section, Stack, Tabs } from 'tgui-core/components';
+import { usePreferencesLocalization } from '../localization';
 
 type BaseProps = {
   accessMod: (ref: string) => void;
@@ -53,6 +54,7 @@ const DIFFMAP = [
 ] as const;
 
 export function AccessConfig(props: ConfigProps) {
+  const { t } = usePreferencesLocalization();
   const {
     accesses = [],
     selectedList = [],
@@ -97,7 +99,7 @@ export function AccessConfig(props: ConfigProps) {
   return (
     <Section
       fill
-      title="Access"
+      title={t('ui.common.access')}
       buttons={
         <>
           <Button icon="check-double" color="good" onClick={grantAll}>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Icon, Input } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   trackimplants: Trackable[];
@@ -27,6 +28,7 @@ const DIRECTION_TO_ICON = {
 
 export const BluespaceLocator = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { trackimplants, trackingrange } = data;
   const [selectedImplantName, setSelectedImplantName] = useState<string | null>(
     trackimplants.length > 0 ? trackimplants[0].name : null,
@@ -103,7 +105,7 @@ export const BluespaceLocator = (props) => {
               color="rgba(100, 150, 255, 0.5)"
               style={{ filter: 'blur(1px)' }}
             />
-            <div>Bluespace signatures not detected</div>
+            <div>{t('ui.bluespace_locator.signatures_not_detected')}</div>
             <div
               style={{
                 fontSize: '0.9rem',
@@ -111,7 +113,7 @@ export const BluespaceLocator = (props) => {
                 maxWidth: '80%',
               }}
             >
-              No active tracking implants detected within operational range
+              {t('ui.bluespace_locator.no_active_tracking_implants')}
             </div>
           </div>
         </Window.Content>
@@ -152,7 +154,7 @@ export const BluespaceLocator = (props) => {
                 />
               )}
               <Input
-                placeholder="Search targets..."
+                placeholder={t('ui.bluespace_locator.search_targets_placeholder')}
                 value={searchQuery}
                 onChange={(value) => setSearchQuery(value)}
                 width="100%"
@@ -276,7 +278,7 @@ export const BluespaceLocator = (props) => {
                 }}
               >
                 <Icon name="search" size={3} color="rgba(200, 200, 200, 0.5)" />
-                <div>No targets matching search criteria</div>
+                <div>{t('ui.bluespace_locator.no_targets_matching_search')}</div>
               </div>
             ) : selectedImplant ? (
               <>
@@ -308,8 +310,8 @@ export const BluespaceLocator = (props) => {
                       marginTop: '0.75rem',
                       fontSize: '1.1rem',
                     }}
-                  >
-                    Distance: {selectedImplant.distance}
+                    >
+                    {t('ui.common.distance')}: {selectedImplant.distance}
                   </div>
                 </div>
               </>

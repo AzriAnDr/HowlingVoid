@@ -14,6 +14,7 @@ import {
 } from 'tgui-core/components';
 
 import { JOB2ICON } from '../common/JobToIcon';
+import { usePreferencesLocalization } from '../localization';
 import { CRIMESTATUS2COLOR } from './constants';
 import { isRecordMatch } from './helpers';
 import type { SecurityRecord, SecurityRecordsData } from './types';
@@ -21,11 +22,12 @@ import type { SecurityRecord, SecurityRecordsData } from './types';
 /** Tabs on left, with search bar */
 export const SecurityRecordTabs = (props) => {
   const { act, data } = useBackend<SecurityRecordsData>();
+  const { t } = usePreferencesLocalization(data);
   const { higher_access, records = [] } = data;
 
   const errorMessage = !records.length
-    ? 'No records found.'
-    : 'No match. Refine your search.';
+    ? t('ui.security_records.no_records_found')
+    : t('ui.security_records.no_match_refine_search');
 
   const [search, setSearch] = useState('');
 
@@ -39,7 +41,7 @@ export const SecurityRecordTabs = (props) => {
       <Stack.Item>
         <Input
           fluid
-          placeholder="Name/Job/Fingerprints"
+          placeholder={t('ui.security_records.search_placeholder')}
           onChange={setSearch}
           expensive
         />
@@ -63,18 +65,18 @@ export const SecurityRecordTabs = (props) => {
             <Button
               disabled
               icon="plus"
-              tooltip="Add new records by inserting a 1 by 1 meter photo into the terminal. You do not need this screen open."
+              tooltip={t('ui.security_records.add_records_tooltip')}
             >
-              Create
+              {t('ui.common.create')}
             </Button>
           </Stack.Item>
           <Stack.Item>
             <Button.Confirm
-              content="Purge"
+              content={t('ui.security_records.purge')}
               disabled={!higher_access}
               icon="trash"
               onClick={() => act('purge_records')}
-              tooltip="Wipe criminal record data."
+              tooltip={t('ui.security_records.purge_tooltip')}
             />
           </Stack.Item>
         </Stack>

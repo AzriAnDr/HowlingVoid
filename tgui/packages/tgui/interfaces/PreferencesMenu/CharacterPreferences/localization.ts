@@ -7,6 +7,8 @@ import dataLabelsEn from './locales/data_labels.en.json';
 import dataLabelsRu from './locales/data_labels.ru.json';
 import featureLabelsEn from './locales/feature_labels.en.json';
 import featureLabelsRu from './locales/feature_labels.ru.json';
+import uiEn from '../../locales/ui.en.json';
+import uiRu from '../../locales/ui.ru.json';
 import uiCharacterEn from './locales/ui.character.en.json';
 import uiCharacterRu from './locales/ui.character.ru.json';
 import uiGameEn from './locales/ui.game.en.json';
@@ -16,11 +18,13 @@ import gameFeaturesRu from '../GamePreferences/locales/features.ru.json';
 export type InterfaceLanguage = 'english' | 'russian';
 
 const EN_UI_BY_KEY = {
+  ...(uiEn as Record<string, string>),
   ...(uiCharacterEn as Record<string, string>),
   ...(uiGameEn as Record<string, string>),
 } as Record<string, string>;
 
 const RU_UI_BY_KEY = {
+  ...(uiRu as Record<string, string>),
   ...(uiCharacterRu as Record<string, string>),
   ...(uiGameRu as Record<string, string>),
 } as Record<string, string>;

@@ -9,6 +9,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   connected: BooleanLike;
@@ -19,6 +20,7 @@ type Data = {
 
 export const BluespaceArtillery = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { notice, connected, unlocked, target } = data;
 
   return (
@@ -28,7 +30,7 @@ export const BluespaceArtillery = (props) => {
         {connected ? (
           <>
             <Section
-              title="Target"
+              title={t('ui.common.target')}
               buttons={
                 <Button
                   icon="crosshairs"
@@ -38,7 +40,7 @@ export const BluespaceArtillery = (props) => {
               }
             >
               <Box color={target ? 'average' : 'bad'} fontSize="25px">
-                {target || 'No Target Set'}
+                {target || t('ui.bluespace_artillery.no_target_set')}
               </Box>
             </Section>
             <Section>
@@ -46,7 +48,7 @@ export const BluespaceArtillery = (props) => {
                 <Box style={{ margin: 'auto' }}>
                   <Button
                     fluid
-                    content="FIRE"
+                    content={t('ui.bluespace_artillery.fire')}
                     color="bad"
                     disabled={!target}
                     fontSize="30px"
@@ -58,11 +60,10 @@ export const BluespaceArtillery = (props) => {
               ) : (
                 <>
                   <Box color="bad" fontSize="18px">
-                    Bluespace artillery is currently locked.
+                    {t('ui.bluespace_artillery.currently_locked')}
                   </Box>
                   <Box mt={1}>
-                    Awaiting authorization via keycard reader from at minimum
-                    two station heads.
+                    {t('ui.bluespace_artillery.awaiting_authorization')}
                   </Box>
                 </>
               )}
@@ -71,10 +72,10 @@ export const BluespaceArtillery = (props) => {
         ) : (
           <Section>
             <LabeledList>
-              <LabeledList.Item label="Maintenance">
+              <LabeledList.Item label={t('ui.common.maintenance')}>
                 <Button
                   icon="wrench"
-                  content="Complete Deployment"
+                  content={t('ui.bluespace_artillery.complete_deployment')}
                   onClick={() => act('build')}
                 />
               </LabeledList.Item>

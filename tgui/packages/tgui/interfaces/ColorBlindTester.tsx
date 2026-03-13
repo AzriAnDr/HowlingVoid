@@ -2,6 +2,7 @@ import { Box, Button, NoticeBox, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   details: string[];
@@ -30,10 +31,15 @@ with a crowbar`,
 
 export const ColorBlindTester = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { details } = data;
 
   return (
-    <Window title="Color Blindness Testing" width={600} height={515}>
+    <Window
+      title={t('ui.colorblindtester.color_blindness_testing')}
+      width={600}
+      height={515}
+    >
       <Window.Content>
         <NoticeBox>
           {UI_WARNINGS.map((warning, index) => (
@@ -52,6 +58,7 @@ export const ColorBlindTester = (props) => {
 
 const ColorBlindCategory = (props: Props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { category } = props;
   const { details, selected } = data;
 
@@ -63,7 +70,7 @@ const ColorBlindCategory = (props: Props) => {
         buttons={
           <Button
             icon="eye"
-            content="Select"
+            content={t('ui.common.select')}
             onClick={() =>
               act('set_matrix', {
                 name: category,
@@ -83,7 +90,7 @@ const ColorBlindCategory = (props: Props) => {
       buttons={
         <Button
           icon="times"
-          content="Clear"
+          content={t('ui.common.clear')}
           color="bad"
           onClick={() => act('clear_matrix')}
         />

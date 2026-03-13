@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   on: BooleanLike;
@@ -11,6 +12,7 @@ type Data = {
 
 export const InfraredEmitter = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { on, visible } = data;
 
   return (
@@ -18,7 +20,7 @@ export const InfraredEmitter = (props) => {
       <Window.Content>
         <Section>
           <LabeledList>
-            <LabeledList.Item label="Status">
+            <LabeledList.Item label={t('ui.common.status')}>
               <Button
                 icon={on ? 'power-off' : 'times'}
                 content={on ? 'On' : 'Off'}
@@ -26,7 +28,7 @@ export const InfraredEmitter = (props) => {
                 onClick={() => act('power')}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Visibility">
+            <LabeledList.Item label={t('ui.infrared_emitter.visibility')}>
               <Button
                 icon={visible ? 'eye' : 'eye-slash'}
                 content={visible ? 'Visible' : 'Invisible'}

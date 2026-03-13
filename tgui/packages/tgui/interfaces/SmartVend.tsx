@@ -14,6 +14,7 @@ import { createSearch } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { getLayoutState, LAYOUT, LayoutToggle } from './common/LayoutToggle';
+import { usePreferencesLocalization } from './localization';
 
 type Item = {
   path: string;
@@ -32,6 +33,7 @@ type Data = {
 
 export const SmartVend = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const [searchText, setSearchText] = useState('');
   const [displayMode, setDisplayMode] = useState(getLayoutState());
   const search = createSearch(searchText, (item: Item) => item.name);
@@ -45,7 +47,7 @@ export const SmartVend = (props) => {
         <Section
           fill
           scrollable
-          title="Storage"
+          title={t('ui.smartvend.storage')}
           buttons={
             <Stack>
               {data.isdryer ? (
@@ -54,7 +56,9 @@ export const SmartVend = (props) => {
                     icon={data.drying ? 'stop' : 'tint'}
                     onClick={() => act('Dry')}
                   >
-                    {data.drying ? 'Stop drying' : 'Dry'}
+                    {data.drying
+                      ? t('ui.smart_vend.stop_drying')
+                      : t('ui.smart_vend.dry')}
                   </Button>
                 </Stack.Item>
               ) : (
@@ -62,7 +66,7 @@ export const SmartVend = (props) => {
                   <Stack.Item>
                     <Input
                       autoFocus
-                      placeholder="Search..."
+                      placeholder={t('ui.smartvend.search')}
                       value={searchText}
                       onChange={setSearchText}
                       expensive
@@ -76,9 +80,9 @@ export const SmartVend = (props) => {
                   icon="question"
                   tooltip={
                     <>
-                      LMB - Vend selected amount
+                      {t('ui.smart_vend.lmb_vend_selected')}
                       <br />
-                      RMB - Vend all
+                      {t('ui.smart_vend.rmb_vend_all')}
                     </>
                   }
                   tooltipPosition={'bottom-end'}
@@ -88,7 +92,7 @@ export const SmartVend = (props) => {
           }
         >
           {!contents.length ? (
-            <NoticeBox>Nothing found.</NoticeBox>
+            <NoticeBox>{t('ui.smartvend.nothing_found')}</NoticeBox>
           ) : (
             contents.map((item) =>
               displayMode === LAYOUT.Grid ? (

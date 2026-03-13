@@ -2,6 +2,7 @@ import { BlockQuote, Stack } from 'tgui-core/components';
 
 import { Window } from '../layouts';
 import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
+import { usePreferencesLocalization } from './localization';
 
 const goodstyle = {
   color: 'lightgreen',
@@ -16,11 +17,14 @@ const noticestyle = {
 };
 
 export const AntagInfoMorph = (props) => {
+  const { t } = usePreferencesLocalization();
   return (
     <Window width={620} height={170} theme="abductor">
       <Window.Content>
         <Stack vertical fill>
-          <Stack.Item fontSize="25px">You are a morph...</Stack.Item>
+          <Stack.Item fontSize="25px">
+            {t('ui.antag_info_morph.you_are_a_morph')}
+          </Stack.Item>
           <Stack.Item>
             <BlockQuote>
               ...a shapeshifting abomination that can eat almost anything. You

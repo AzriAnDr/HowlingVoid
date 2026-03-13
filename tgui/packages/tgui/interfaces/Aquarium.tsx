@@ -18,6 +18,7 @@ import { capitalizeFirst } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   temperature: number;
@@ -56,6 +57,7 @@ type PropData = {
 
 export const Aquarium = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { fishData } = data;
 
   return (
@@ -68,7 +70,7 @@ export const Aquarium = (props) => {
           <Stack.Item grow>
             <Flex>
               <Flex.Item height="300px" width="75%">
-                <Section fill title="Fish" scrollable>
+                <Section fill title={t('ui.aquarium.fish')} scrollable>
                   <Stack wrap>
                     {fishData.map((fish) => (
                       <Stack.Item
@@ -106,6 +108,7 @@ type FishInfoProps = {
 
 const FishInfo = (props: FishInfoProps) => {
   const { act } = useBackend<Data>();
+  const { t } = usePreferencesLocalization();
   const { fish } = props;
 
   return (
@@ -174,7 +177,7 @@ const FishInfo = (props: FishInfoProps) => {
                 })
               }
             >
-              Pet
+              {t('ui.aquarium.pet')}
             </Button>
           </Flex.Item>
           <Flex.Item width="50%">
@@ -184,7 +187,7 @@ const FishInfo = (props: FishInfoProps) => {
               ml={1}
               fluid
               icon="keyboard"
-              buttonText="Rename"
+              buttonText={t('ui.common.rename')}
               color="transparent"
               onCommit={(value) => {
                 act('rename_fish', {
@@ -208,10 +211,11 @@ const FishInfo = (props: FishInfoProps) => {
 
 const PropTypes = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { propData } = data;
 
   return (
-    <Section scrollable fill title="Props">
+    <Section scrollable fill title={t('ui.aquarium.props')}>
       <Stack vertical>
         {propData.map((prop) => (
           <Stack.Item className="candystripe" key={prop.prop_ref}>
@@ -272,6 +276,7 @@ const CalculateHappiness = (props) => {
 
 const Settings = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     temperature,
     minTemperature,
@@ -289,7 +294,7 @@ const Settings = (props) => {
   return (
     <Flex fill>
       <Flex.Item grow>
-        <Section fill title="Temperature">
+        <Section fill title={t('ui.aquarium.temperature')}>
           {!!lockedFluidTemp && <LockedSection />}
           <Knob
             mt={3}
@@ -310,7 +315,7 @@ const Settings = (props) => {
         </Section>
       </Flex.Item>
       <Flex.Item ml={1} grow>
-        <Section fill title="Fluid">
+        <Section fill title={t('ui.aquarium.fluid')}>
           {!!lockedFluidTemp && <LockedSection />}
           <Flex direction="column" mb={1}>
             {fluidTypes.map((f) => (
@@ -329,10 +334,10 @@ const Settings = (props) => {
         </Section>
       </Flex.Item>
       <Flex.Item ml={1} grow>
-        <Section fill title="Settings">
+        <Section fill title={t('ui.common.settings')}>
           <Box mt={2}>
             <LabeledList>
-              <LabeledList.Item label="Aquarium Mode">
+              <LabeledList.Item label={t('ui.aquarium.mode')}>
                 <Dropdown
                   width="80%"
                   selected={currentMode}
@@ -350,14 +355,14 @@ const Settings = (props) => {
                   />
                 </Tooltip>
               </LabeledList.Item>
-              <LabeledList.Item label="Feeding Interval">
+              <LabeledList.Item label={t('ui.aquarium.feeding_interval')}>
                 <NumberInput
                   width="15px"
                   value={feedingInterval}
                   minValue={1}
                   maxValue={7}
                   step={1}
-                  unit="minutes"
+                  unit={t('ui.aquarium.minutes')}
                   onChange={(value) =>
                     act('feeding_interval', {
                       feeding_interval: value,
@@ -377,13 +382,14 @@ function dissectName(input: string): string {
 }
 
 const LockedSection = () => {
+  const { t } = usePreferencesLocalization();
   return (
     <Dimmer>
       <Stack align="baseline" vertical>
         <Stack ml={-2}>
           <Icon color="red" name="lock" size={3} />
         </Stack>
-        <Stack.Item fontSize="20px">LOCKED</Stack.Item>
+        <Stack.Item fontSize="20px">{t('ui.common.locked')}</Stack.Item>
       </Stack>
     </Dimmer>
   );

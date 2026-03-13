@@ -16,6 +16,27 @@ import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { sendAct as act } from '../events/act';
 import { Window } from '../layouts';
+import uiEn from './locales/ui.en.json';
+import uiRu from './locales/ui.ru.json';
+
+const UI_EN = uiEn;
+const UI_RU = uiRu;
+
+const resolveLanguage = (data) => {
+  const candidates = [
+    data?.interface_language,
+    data?.client?.interface_language,
+    data?.preferences?.interface_language,
+  ];
+  const raw = candidates.find((value) => typeof value === 'string');
+  const normalized = (raw || '').toLowerCase();
+  return normalized.startsWith('ru') || normalized === 'russian'
+    ? 'russian'
+    : 'english';
+};
+
+const localize = (language, key, fallback) =>
+  (language === 'russian' ? UI_RU[key] : UI_EN[key]) ?? UI_EN[key] ?? fallback;
 
 const icons = {
   add: { icon: 'check-circle', color: 'green' },
@@ -112,8 +133,10 @@ export class Changelog extends Component {
   render() {
     const { data, selectedDate, selectedIndex } = this.state;
     const {
-      data: { dates },
+      data: backendData,
     } = useBackend();
+    const { dates } = backendData;
+    const language = resolveLanguage(backendData);
     const { dateChoices } = this;
 
     const dateDropdown = dateChoices.length > 0 && (
@@ -184,9 +207,9 @@ export class Changelog extends Component {
 
     const header = (
       <Section>
-        <h1>Nova Sector</h1>
+        <h1>{localize(language, 'ui.changelog.nova_sector', 'Nova Sector')}</h1>
         <p>
-          <b>Thanks to: </b>
+          <b>{localize(language, 'ui.changelog.thanks_to', 'Thanks to:')} </b>
           Traditional Games 13, Skyrat Station 13, Baystation 12, /vg/station,
           NTstation, CDK Station devs, FacepunchStation, GoonStation devs, the
           original Space Station 13 developers, Invisty for the title image and
@@ -194,16 +217,16 @@ export class Changelog extends Component {
         </p>
         <p>
           {'Current project maintainers can be found '}
-          <a href="https://github.com/NovaSector?tab=members">here</a>
+          <a href="https://github.com/NovaSector?tab=members">{localize(language, 'ui.common.here', 'here')}</a>
           {', recent GitHub contributors can be found '}
           <a href="https://github.com/NovaSector/NovaSector/pulse/monthly">
-            here
+            {localize(language, 'ui.common.here', 'here')}
           </a>
           .
         </p>
         {/* <p>
           {'You can also join our forums '}
-          <a href="">here</a>.
+          <a href="">{localize(language, 'ui.common.here', 'here')}</a>.
         </p> */}
         {dateDropdown}
       </Section>
@@ -212,14 +235,14 @@ export class Changelog extends Component {
     const footer = (
       <Section>
         {dateDropdown}
-        <h3>GoonStation 13 Development Team</h3>
+        <h3>{localize(language, 'ui.changelog.goonstation_dev_team', 'GoonStation 13 Development Team')}</h3>
         <p>
-          <b>Coders: </b>
+          <b>{localize(language, 'ui.changelog.coders', 'Coders:')} </b>
           Stuntwaffle, Showtime, Pantaloons, Nannek, Keelin, Exadv1, hobnob,
           Justicefries, 0staf, sniperchance, AngriestIBM, BrianOBlivion
         </p>
         <p>
-          <b>Spriters: </b>
+          <b>{localize(language, 'ui.changelog.spriters', 'Spriters:')} </b>
           Supernorn, Haruhi, Stuntwaffle, Pantaloons, Rho, SynthOrange, I Said
           No
         </p>
@@ -227,7 +250,7 @@ export class Changelog extends Component {
           Traditional Games Space Station 13 is thankful to the GoonStation 13
           Development Team for its work on the game up to the
           {' r4407 release. The changelog for changes up to r4407 can be seen '}
-          <a href="https://wiki.ss13.co/Pre-2016_Changelog#April_2010">here</a>.
+          <a href="https://wiki.ss13.co/Pre-2016_Changelog#April_2010">{localize(language, 'ui.common.here', 'here')}</a>.
         </p>
         <p>
           {'Except where otherwise noted, Goon Station 13 is licensed under a '}
@@ -235,10 +258,10 @@ export class Changelog extends Component {
             Creative Commons Attribution-Noncommercial-Share Alike 3.0 License
           </a>
           {'. Rights are currently extended to '}
-          <a href="http://forums.somethingawful.com/">SomethingAwful Goons</a>
+          <a href="http://forums.somethingawful.com/">{localize(language, 'ui.changelog.somethingawful_goons', 'SomethingAwful Goons')}</a>
           {' only.'}
         </p>
-        <h3>Traditional Games Space Station 13 License</h3>
+        <h3>{localize(language, 'ui.changelog.traditional_games_license', 'Traditional Games Space Station 13 License')}</h3>
         <p>
           {'All code after '}
           <a
@@ -251,9 +274,9 @@ export class Changelog extends Component {
             4:38 PM PST
           </a>
           {' is licensed under '}
-          <a href="https://www.gnu.org/licenses/agpl-3.0.html">GNU AGPL v3</a>
+          <a href="https://www.gnu.org/licenses/agpl-3.0.html">{localize(language, 'ui.changelog.gnu_agpl_v3', 'GNU AGPL v3')}</a>
           {'. All code before that commit is licensed under '}
-          <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU GPL v3</a>
+          <a href="https://www.gnu.org/licenses/gpl-3.0.html">{localize(language, 'ui.changelog.gnu_gpl_v3', 'GNU GPL v3')}</a>
           {', including tools unless their readme specifies otherwise. See '}
           <a href="https://github.com/tgstation/tgstation/blob/master/LICENSE">
             LICENSE
@@ -347,7 +370,7 @@ export class Changelog extends Component {
         ));
 
     return (
-      <Window title="Changelog" width={675} height={650}>
+      <Window title={localize(language, 'ui.changelog.title', 'Changelog')} width={675} height={650}>
         <Window.Content scrollable>
           {header}
           {changes}

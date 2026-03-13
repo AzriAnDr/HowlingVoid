@@ -1,4 +1,4 @@
-import {
+﻿import {
   Box,
   Button,
   LabeledList,
@@ -10,33 +10,43 @@ import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const SpaceHeater = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization();
+
+  const modeLabel = (mode) => {
+    if (mode === 'auto') return t('ui.common.auto');
+    if (mode === 'heat') return t('ui.space_heater.heat');
+    if (mode === 'cool') return t('ui.space_heater.cool');
+    return capitalize(mode);
+  };
+
   return (
     <Window width={400} height={305}>
       <Window.Content>
         <Section
-          title="Power"
+          title={t('ui.common.power')}
           buttons={
             <>
               {!!data.chemHacked && (
                 <Button
                   icon="eject"
-                  content="Eject beaker"
+                  content={t('ui.space_heater.eject_beaker')}
                   disabled={!data.beaker}
                   onClick={() => act('ejectBeaker')}
                 />
               )}
               <Button
                 icon="eject"
-                content="Eject Cell"
+                content={t('ui.space_heater.eject_cell')}
                 disabled={!data.hasPowercell || !data.open}
                 onClick={() => act('eject')}
               />
               <Button
                 icon={data.on ? 'power-off' : 'times'}
-                content={data.on ? 'On' : 'Off'}
+                content={data.on ? t('ui.common.on') : t('ui.common.off')}
                 selected={data.on}
                 disabled={!data.hasPowercell}
                 onClick={() => act('power')}
@@ -45,7 +55,10 @@ export const SpaceHeater = (props) => {
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Cell" color={!data.hasPowercell && 'bad'}>
+            <LabeledList.Item
+              label={t('ui.space_heater.cell')}
+              color={!data.hasPowercell && 'bad'}
+            >
               {(data.hasPowercell && (
                 <ProgressBar
                   value={data.powerLevel / 100}
@@ -58,13 +71,13 @@ export const SpaceHeater = (props) => {
                   {`${data.powerLevel}%`}
                 </ProgressBar>
               )) ||
-                'None'}
+                t('ui.common.none')}
             </LabeledList.Item>
           </LabeledList>
         </Section>
-        <Section title="Thermostat">
+        <Section title={t('ui.space_heater.thermostat')}>
           <LabeledList>
-            <LabeledList.Item label="Current Temperature">
+            <LabeledList.Item label={t('ui.space_heater.current_temperature')}>
               <Box
                 fontSize="18px"
                 color={
@@ -75,16 +88,17 @@ export const SpaceHeater = (props) => {
                       : 'good'
                 }
               >
-                {data.currentTemp}°C
+                {data.currentTemp}
+                {t('ui.space_heater.degrees_celsius')}
               </Box>
             </LabeledList.Item>
-            <LabeledList.Item label="Target Temperature">
+            <LabeledList.Item label={t('ui.space_heater.target_temperature')}>
               {(data.open && (
                 <NumberInput
                   animated
                   value={parseFloat(data.targetTemp)}
                   width="65px"
-                  unit="°C"
+                  unit={t('ui.space_heater.degrees_celsius')}
                   step={1}
                   minValue={data.minTemp}
                   maxValue={data.maxTemp}
@@ -95,14 +109,14 @@ export const SpaceHeater = (props) => {
                   }
                 />
               )) ||
-                `${data.targetTemp}°C`}
+                `${data.targetTemp}${t('ui.space_heater.degrees_celsius')}`}
             </LabeledList.Item>
-            <LabeledList.Item label="Mode">
-              {(!data.open && capitalize(data.mode)) || (
+            <LabeledList.Item label={t('ui.common.mode')}>
+              {(!data.open && modeLabel(data.mode)) || (
                 <>
                   <Button
                     icon="thermometer-half"
-                    content="Auto"
+                    content={t('ui.common.auto')}
                     selected={data.mode === 'auto'}
                     onClick={() =>
                       act('mode', {
@@ -112,7 +126,7 @@ export const SpaceHeater = (props) => {
                   />
                   <Button
                     icon="fire-alt"
-                    content="Heat"
+                    content={t('ui.space_heater.heat')}
                     selected={data.mode === 'heat'}
                     onClick={() =>
                       act('mode', {
@@ -122,7 +136,7 @@ export const SpaceHeater = (props) => {
                   />
                   <Button
                     icon="fan"
-                    content="Cool"
+                    content={t('ui.space_heater.cool')}
                     selected={data.mode === 'cool'}
                     onClick={() =>
                       act('mode', {

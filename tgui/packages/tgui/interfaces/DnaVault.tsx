@@ -10,6 +10,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   animals_max: number;
@@ -25,6 +26,7 @@ type Data = {
 };
 
 export function DnaVault(props) {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const {
     animals_max,
@@ -42,29 +44,29 @@ export function DnaVault(props) {
   return (
     <Window width={350} height={400}>
       <Window.Content>
-        <Section title="DNA Vault Database">
+        <Section title={t('ui.dna_vault.database')}>
           <LabeledList>
-            <LabeledList.Item label="Human DNA">
+            <LabeledList.Item label={t('ui.dna_vault.human_dna')}>
               <ProgressBar value={dna / dna_max}>
-                {`${dna} / ${dna_max} Samples`}
+                {`${dna} / ${dna_max} ${t('ui.dna_vault.samples')}`}
               </ProgressBar>
             </LabeledList.Item>
-            <LabeledList.Item label="Plant DNA">
+            <LabeledList.Item label={t('ui.dna_vault.plant_dna')}>
               <ProgressBar value={plants / plants_max}>
-                {`${plants} / ${plants_max} Samples`}
+                {`${plants} / ${plants_max} ${t('ui.dna_vault.samples')}`}
               </ProgressBar>
             </LabeledList.Item>
-            <LabeledList.Item label="Animal DNA">
+            <LabeledList.Item label={t('ui.dna_vault.animal_dna')}>
               <ProgressBar value={animals / animals_max}>
-                {`${animals} / ${animals_max} Samples`}
+                {`${animals} / ${animals_max} ${t('ui.dna_vault.samples')}`}
               </ProgressBar>
             </LabeledList.Item>
           </LabeledList>
         </Section>
         {!!(completed && !used) && (
-          <Section title="Personal Gene Therapy">
+          <Section title={t('ui.dna_vault.personal_gene_therapy')}>
             <Box bold textAlign="center" mb={1}>
-              Applicable Gene Therapy Treatments
+              {t('ui.dna_vault.applicable_treatments')}
             </Box>
             <Stack>
               <Stack.Item grow>

@@ -11,6 +11,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import {
   directionIcons,
   directionNames,
@@ -36,6 +37,7 @@ interface CreateObjectSettingsProps {
 export function CreateObjectSettings(props: CreateObjectSettingsProps) {
   const { onCreateObject, setAdvancedSettings, iconSettings } = props;
   const { act, data } = useBackend<SpawnPanelData>();
+  const { t } = usePreferencesLocalization(data);
 
   const [amount, setAmount] = useState(1);
   const [cordsType, setCordsType] = useState(0);
@@ -271,7 +273,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
             }}
           >
             <Table.Row className="candystripe" lineHeight="26px">
-              <Table.Cell pl={1}>Amnt.:</Table.Cell>
+              <Table.Cell pl={1}>{t('ui.spawn_panel.amount_short')}:</Table.Cell>
               <Table.Cell>
                 <Stack>
                   <Stack.Item>
@@ -285,7 +287,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       disabled={isAnyPreciseModeActive}
                     />
                   </Stack.Item>
-                  <Stack.Item>Dir:</Stack.Item>
+                  <Stack.Item>{t('ui.spawn_panel.direction_short')}:</Stack.Item>
                   <Stack.Item>
                     <Button
                       icon={directionIcons[[1, 2, 4, 8][direction]]}
@@ -321,7 +323,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
               </Table.Cell>
             </Table.Row>
             <Table.Row className="candystripe" lineHeight="26px">
-              <Table.Cell pl={1}>Offset:</Table.Cell>
+              <Table.Cell pl={1}>{t('ui.common.offset')}:</Table.Cell>
               <Table.Cell width="1200px">
                 <Stack>
                   <Stack.Item>
@@ -335,7 +337,11 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                           disablePreciseMode();
                         }
                       }}
-                      tooltip={cordsType ? 'Absolute' : 'Relative'}
+                      tooltip={
+                        cordsType
+                          ? t('ui.common.absolute')
+                          : t('ui.common.relative')
+                      }
                       tooltipPosition="top"
                       disabled={
                         isTargetMode ||
@@ -347,7 +353,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                   </Stack.Item>
                   <Stack.Item grow>
                     <Input
-                      placeholder="x, y, z"
+                      placeholder={t('ui.spawn_panel.offset_xyz_placeholder')}
                       value={offset}
                       onChange={(value: string) => updateOffset(value)}
                       width="100%"
@@ -364,14 +370,14 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
             </Table.Row>
             <Table.Row className="candystripe" lineHeight="26px">
               <Table.Cell pl={1} width="80px">
-                Name:
+                {t('ui.common.name')}:
               </Table.Cell>
               <Table.Cell>
                 <Input
                   onChange={(value: string) => updateObjectName(value)}
                   value={objectName}
                   width="100%"
-                  placeholder="leave empty for initial"
+                  placeholder={t('ui.spawn_panel.leave_empty_for_initial')}
                   disabled={isAnyPreciseModeActive}
                 />
               </Table.Cell>
@@ -391,7 +397,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       width: '22px',
                       lineHeight: '22px',
                     }}
-                    tooltip="Advanced settings"
+                    tooltip={t('ui.spawn_panel.advanced_settings')}
                     tooltipPosition="top"
                     disabled={isAnyPreciseModeActive}
                   />
@@ -405,7 +411,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       lineHeight: '22px',
                     }}
                     onClick={() => resetAdvancedSettings()}
-                    tooltip="Reset advanced settings"
+                    tooltip={t('ui.spawn_panel.reset_advanced_settings')}
                     tooltipPosition="top"
                     disabled={isAnyPreciseModeActive}
                   />
@@ -438,8 +444,8 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                     tooltip={
                       spawnLocation === 'At a marked object' ||
                       spawnLocation === 'In the marked object'
-                        ? 'Mark atom'
-                        : 'Copy atom path'
+                        ? t('ui.spawn_panel.mark_atom')
+                        : t('ui.spawn_panel.copy_atom_path')
                     }
                     tooltipPosition="top"
                     disabled={isAnyPreciseModeActive && !isMarkModeActive}
@@ -462,7 +468,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                     icon={spawnLocationIcons[spawnLocation]}
                     selected={isTargetMode && isPreciseModeActive}
                   >
-                    SPAWN
+                    {t('ui.spawn_panel.spawn')}
                   </Button>
                 </Stack.Item>
                 <Stack.Item>

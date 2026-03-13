@@ -2,6 +2,7 @@ import { type Dispatch, useEffect, useState } from 'react';
 import { Button, Section, Stack, Table } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { SORTING_TYPES } from './contants';
 import type { FilterState } from './filters';
 import { SubsystemRow } from './SubsystemRow';
@@ -14,6 +15,7 @@ type Props = {
 
 export function SubsystemViews(props: Props) {
   const { data } = useBackend<ControllerData>();
+  const { t } = usePreferencesLocalization(data);
   const { subsystems } = data;
 
   const { filterOpts, setSelected } = props;
@@ -78,7 +80,7 @@ export function SubsystemViews(props: Props) {
     <Section
       fill
       scrollable
-      title="Subsystem Overview"
+      title={t('ui.controller_overview.subsystem_overview')}
       buttons={
         <Stack align="center">
           <Stack.Item color="label">
@@ -91,7 +93,7 @@ export function SubsystemViews(props: Props) {
               onClick={() => setBars(!bars)}
               selected={bars}
             >
-              Bars
+              {t('ui.controller_overview.bars')}
             </Button>
           </Stack.Item>
         </Stack>

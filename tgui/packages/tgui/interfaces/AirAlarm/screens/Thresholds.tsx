@@ -1,31 +1,33 @@
 import { useBackend } from 'tgui/backend';
 import { Button, Table } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../../localization';
 import type { AirAlarmData } from '../types';
 import { useAlarmModal } from '../useModal';
 
 export function AirAlarmControlThresholds(props) {
   const { act, data } = useBackend<AirAlarmData>();
+  const { t } = usePreferencesLocalization(data);
   const [activeModal, setActiveModal] = useAlarmModal();
   const { tlvSettings, thresholdTypeMap } = data;
 
   return (
     <Table>
       <Table.Row>
-        <Table.Cell bold>Threshold</Table.Cell>
+        <Table.Cell bold>{t('ui.air_alarm.threshold')}</Table.Cell>
         <Table.Cell bold color="bad">
-          Danger Below
+          {t('ui.air_alarm.danger_below')}
         </Table.Cell>
         <Table.Cell bold color="average">
-          Warning Below
+          {t('ui.air_alarm.warning_below')}
         </Table.Cell>
         <Table.Cell bold color="average">
-          Warning Above
+          {t('ui.air_alarm.warning_above')}
         </Table.Cell>
         <Table.Cell bold color="bad">
-          Danger Above
+          {t('ui.air_alarm.danger_above')}
         </Table.Cell>
-        <Table.Cell bold>Actions</Table.Cell>
+        <Table.Cell bold>{t('ui.common.actions')}</Table.Cell>
       </Table.Row>
       {tlvSettings.map((tlv) => (
         <Table.Row key={tlv.name} className="candystripe">
@@ -46,7 +48,7 @@ export function AirAlarmControlThresholds(props) {
               }
             >
               {tlv.hazard_min === -1
-                ? 'Disabled'
+                ? t('ui.common.disabled')
                 : `${tlv.hazard_min} ${tlv.unit}`}
             </Button>
           </Table.Cell>
@@ -66,7 +68,7 @@ export function AirAlarmControlThresholds(props) {
               }
             >
               {tlv.warning_min === -1
-                ? 'Disabled'
+                ? t('ui.common.disabled')
                 : `${tlv.warning_min} ${tlv.unit}`}
             </Button>
           </Table.Cell>
@@ -86,7 +88,7 @@ export function AirAlarmControlThresholds(props) {
               }
             >
               {tlv.warning_max === -1
-                ? 'Disabled'
+                ? t('ui.common.disabled')
                 : `${tlv.warning_max} ${tlv.unit}`}
             </Button>
           </Table.Cell>
@@ -106,7 +108,7 @@ export function AirAlarmControlThresholds(props) {
               }
             >
               {tlv.hazard_max === -1
-                ? 'Disabled'
+                ? t('ui.common.disabled')
                 : `${tlv.hazard_max} ${tlv.unit}`}
             </Button>
           </Table.Cell>

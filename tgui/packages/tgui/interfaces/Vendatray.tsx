@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   product_name: string;
@@ -15,6 +16,7 @@ type Data = {
 
 export const Vendatray = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { product_name, registered, owner_name } = data;
 
   return (
@@ -27,14 +29,16 @@ export const Vendatray = (props) => {
           </Stack.Item>
         </Stack>
         {registered ? (
-          <Section italic>Pays to the account of {owner_name}.</Section>
+          <Section italic>
+            {t('ui.vendatray.pays_to_account_of').replace('{owner}', owner_name)}
+          </Section>
         ) : (
           <>
-            <Section>Tray is unregistered.</Section>
+            <Section>{t('ui.vendatray.tray_is_unregistered')}</Section>
             <Button
               fluid
               icon="cash-register"
-              content="Register Tray"
+              content={t('ui.vendatray.register_tray')}
               disabled={registered}
               onClick={() => act('Register')}
             />
@@ -48,14 +52,15 @@ export const Vendatray = (props) => {
 /** Lists product info and buttons to open or purchase */
 const ProductInfo = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { product_name, product_cost, tray_open } = data;
 
   return (
     <>
       <Section fontSize="18px" align="center">
-        <b>{product_name ? product_name : 'Empty'}</b>
+        <b>{product_name ? product_name : t('ui.common.empty')}</b>
         <Box fontSize="16px">
-          <i>{product_name ? product_cost : 'N/A'} cr </i>
+          <i>{product_name ? product_cost : t('ui.vendatray.not_available')} cr </i>
           <Button icon="pen" onClick={() => act('Adjust')} />
         </Box>
       </Section>
@@ -63,14 +68,14 @@ const ProductInfo = (props) => {
       <Button
         fluid
         icon="window-restore"
-        content={tray_open ? 'Open' : 'Closed'}
+        content={tray_open ? t('ui.common.open') : t('ui.common.closed')}
         selected={tray_open}
         onClick={() => act('Open')}
       />
       <Button.Confirm
         fluid
         icon="money-bill-wave"
-        content="Purchase Item"
+        content={t('ui.vendatray.purchase_item')}
         disabled={!product_name}
         onClick={() => act('Buy')}
       />

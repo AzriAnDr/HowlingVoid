@@ -14,6 +14,7 @@ import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
 import type { Design, MaterialMap } from './Fabrication/Types';
@@ -33,6 +34,7 @@ type AutolatheData = {
 };
 
 export const Autolathe = (props) => {
+  const { t } = usePreferencesLocalization();
   const { data } = useBackend<AutolatheData>();
   const {
     materialtotal,
@@ -52,13 +54,13 @@ export const Autolathe = (props) => {
   }
 
   return (
-    <Window title="Autolathe" width={670} height={600}>
+    <Window title={t('ui.autolathe.title')} width={670} height={600}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <Section title="Total Materials">
+            <Section title={t('ui.autolathe.total_materials')}>
               <LabeledList>
-                <LabeledList.Item label="Total Materials">
+                <LabeledList.Item label={t('ui.autolathe.total_materials')}>
                   <ProgressBar
                     value={materialtotal}
                     minValue={0}
@@ -72,12 +74,12 @@ export const Autolathe = (props) => {
                     {materialtotal / SHEET_MATERIAL_AMOUNT +
                       '/' +
                       materialsmax / SHEET_MATERIAL_AMOUNT +
-                      ' sheets'}
+                      ` ${t('ui.autolathe.sheets')}`}
                   </ProgressBar>
                 </LabeledList.Item>
                 <LabeledList.Item>
                   {filteredMaterials.length > 0 && (
-                    <Collapsible title="Materials">
+                    <Collapsible title={t('ui.common.materials')}>
                       <LabeledList>
                         {filteredMaterials.map((material) => (
                           <LabeledList.Item
@@ -95,7 +97,7 @@ export const Autolathe = (props) => {
                             >
                               <div style={{ transform: 'scaleX(-1)' }}>
                                 {material.amount / SHEET_MATERIAL_AMOUNT +
-                                  ' sheets'}
+                                  ` ${t('ui.autolathe.sheets')}`}
                               </div>
                             </ProgressBar>
                           </LabeledList.Item>

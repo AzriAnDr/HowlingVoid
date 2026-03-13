@@ -11,6 +11,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type ReactorInfo = {
   venting: BooleanLike;
@@ -40,50 +41,51 @@ type ReactorInfo = {
 
 export const RBMK2 = (props) => {
   const { act, data } = useBackend<ReactorInfo>();
+  const { t } = usePreferencesLocalization(data);
   return (
     <Window width={360} height={710}>
       <Window.Content>
-        <Section textAlign="center" title="Status">
+        <Section textAlign="center" title={t('ui.rbmk.status')}>
           <LabeledList>
             <LabeledList.Item
-              label="Activity"
-              tooltip="NOTICE: REACTOR CANNOT BE DEACTIVATED DURING MELTDOWN"
+              label={t('ui.rbmk.activity')}
+              tooltip={t('ui.rbmk.tooltip_activity')}
             >
               <NoticeBox
                 danger
                 textAlign="center"
                 backgroundColor={data.active ? 'good' : 'bad'}
               >
-                {data.active ? 'ONLINE' : 'OFFLINE'}
+                {data.active ? t('ui.rbmk.online').toUpperCase() : t('ui.rbmk.offline').toUpperCase()}
               </NoticeBox>
             </LabeledList.Item>
             <LabeledList.Item
-              label="Reaction"
-              tooltip="NOTICE: ATTEMPTING TO DEACTIVATE WHILE REACTION SAYS 'MELTDOWN' WILL RESULT IN A JAM."
+              label={t('ui.rbmk.reaction')}
+              tooltip={t('ui.rbmk.tooltip_reaction')}
             >
               <NoticeBox
                 danger
                 textAlign="center"
                 backgroundColor={data.meltdown ? 'bad' : 'good'}
               >
-                {data.meltdown ? 'MELTDOWN' : 'STABLE'}
+                {data.meltdown ? t('ui.rbmk.meltdown').toUpperCase() : t('ui.rbmk.stable').toUpperCase()}
               </NoticeBox>
             </LabeledList.Item>
             <LabeledList.Item
-              label="Clearance"
-              tooltip="NOTICE: DOES NOT SHOW WHETHER OR NOT THE ROD WILL JAM WHEN ATTEMPTING TO DEACTIVATE."
+              label={t('ui.rbmk.clearance')}
+              tooltip={t('ui.rbmk.tooltip_clearance')}
             >
               <NoticeBox
                 danger
                 textAlign="center"
                 backgroundColor={data.jammed ? 'bad' : 'good'}
               >
-                {data.jammed ? 'JAMMED' : 'SAFE'}
+                {data.jammed ? t('ui.rbmk.jammed').toUpperCase() : t('ui.rbmk.safe').toUpperCase()}
               </NoticeBox>
             </LabeledList.Item>
             <LabeledList.Item
-              label="Power Generation"
-              tooltip="Power generation is influenced by pressure and temperature. If unsure, view those meters for further explanations."
+              label={t('ui.rbmk.power_generation')}
+              tooltip={t('ui.rbmk.tooltip_power_generation')}
             >
               <ProgressBar
                 value={data.raw_last_power_output}
@@ -106,8 +108,8 @@ export const RBMK2 = (props) => {
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item
-              label="Rod Pressure"
-              tooltip="Pressures above 4500 kPa begin to increasingly slow down the reaction, with the slowest speed by 18,000 kPa. Safety systems will trigger at pressures exceeding 9000 kPa."
+              label={t('ui.rbmk.rod_pressure')}
+              tooltip={t('ui.rbmk.tooltip_rod_pressure')}
             >
               <ProgressBar
                 value={data.rod_mix_pressure}
@@ -131,8 +133,8 @@ export const RBMK2 = (props) => {
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item
-              label="Rod Temperature"
-              tooltip="As the temperature of the mix increases, fuel consumption rises, leading to greater power generation. If safeties are disabled, the reactor will begin to meltdown at 2,073.15°K."
+              label={t('ui.rbmk.rod_temperature')}
+              tooltip={t('ui.rbmk.tooltip_rod_temperature')}
             >
               <ProgressBar
                 value={data.rod_mix_temperature}
@@ -152,8 +154,8 @@ export const RBMK2 = (props) => {
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item
-              label="Remaining Fuel"
-              tooltip="Amount of tritium remaining in the current rod. Assuming a sane operator, 9 moles can produce 1 MW for 3 hours. We have calculated for 5, 10, and 15 minutes to give colored warnings."
+              label={t('ui.rbmk.remaining_fuel')}
+              tooltip={t('ui.rbmk.tooltip_remaining_fuel')}
             >
               <ProgressBar // Changes color based on rate of consumption while giving you a total reading.
                 value={data.rod_trit_moles}
@@ -169,12 +171,12 @@ export const RBMK2 = (props) => {
                 {data.rod_trit_moles} Moles
               </ProgressBar>
             </LabeledList.Item>
-            <LabeledList.Item label="Tritium Usage">
+            <LabeledList.Item label={t('ui.rbmk.tritium_usage')}>
               {data.consuming}/s
             </LabeledList.Item>
             <LabeledList.Item
-              label="Criticality"
-              tooltip="During meltdowns, criticality levels rise significantly. As criticality rises, the risk of explosive integrity failure intensifies (as does the blast radius.) Exceeding 100% criticality poses a severe risk of spontaneous reactor explosion. Kindly don't let this happen planetside; we don't want another incident."
+              label={t('ui.rbmk.criticality')}
+              tooltip={t('ui.rbmk.tooltip_criticality')}
             >
               <ProgressBar
                 value={data.criticality}
@@ -191,7 +193,7 @@ export const RBMK2 = (props) => {
                 {data.criticality}%
               </ProgressBar>
             </LabeledList.Item>
-            <LabeledList.Item label="Integrity">
+            <LabeledList.Item label={t('ui.rbmk.integrity')}>
               <ProgressBar
                 value={data.health_percent}
                 minValue={0}
@@ -209,77 +211,77 @@ export const RBMK2 = (props) => {
             </LabeledList.Item>
           </LabeledList>
         </Section>
-        <Section title="Controls" textAlign="center">
+        <Section title={t('ui.rbmk.controls')} textAlign="center">
           <LabeledList>
             <Button.Confirm
-              tooltip="Reactor Activation/Deactivation Button"
+              tooltip={t('ui.rbmk.tooltip_activate')}
               textAlign="center"
               width="100%"
               icon="fa-power-off"
-              confirmContent="Are you sure?"
+              confirmContent={t('ui.common.are_you_sure')}
               color={data.active ? 'yellow' : 'good'}
               onClick={() => act('activate')}
             >
-              {data.active ? 'Deactivate' : 'Activate'}
+              {data.active ? t('ui.common.deactivate') : t('ui.common.activate')}
             </Button.Confirm>
             {data.rod ? (
               <Button.Confirm
-                tooltip="Ejects currently inserted rod. NOTE: We haven't been able to consistently recreate this in testing, but this button can (rarely) unjam the rod. It's better to use a crowbar."
+                tooltip={t('ui.rbmk.tooltip_eject_rod')}
                 textAlign="center"
                 width="100%"
                 icon="fa-eject"
                 color="bad"
                 onClick={() => act('eject')}
               >
-                Eject Fuel Rod
+                {t('ui.rbmk.eject_fuel_rod')}
               </Button.Confirm>
             ) : (
               <NoticeBox danger textAlign="center">
-                No control rod to eject
+                {t('ui.rbmk.no_control_rod')}
               </NoticeBox>
             )}
           </LabeledList>
-          <Section title="Vent Controls" textAlign="center">
-            NOTICE: The vents must be off to change directions.
+          <Section title={t('ui.rbmk.vent_controls')} textAlign="center">
+            {t('ui.rbmk.vent_notice')}
             <br />
-            <i>(This is a cost saving measure - do not print this part.)</i>
+            <i>{t('ui.rbmk.vent_notice_sub')}</i>
           </Section>
           <LabeledList>
             <LabeledList.Item
-              label="Vent Power"
+              label={t('ui.rbmk.vent_power')}
               buttons={
                 <>
                   <Box inline mx={2} color={data.venting ? 'good' : 'bad'}>
-                    {data.venting ? 'ONLINE' : 'OFFLINE'}
+                    {data.venting ? t('ui.rbmk.online').toUpperCase() : t('ui.rbmk.offline').toUpperCase()}
                   </Box>
                   <Button.Confirm
-                    tooltip="Toggle the vents On/Off."
+                    tooltip={t('ui.rbmk.tooltip_toggle_vents')}
                     textAlign="center"
                     icon="fa-fan"
                     color={data.venting ? 'bad' : 'good'}
                     onClick={() => act('venttoggle')}
                   >
-                    TOGGLE
+                    {t('ui.common.toggle').toUpperCase()}
                   </Button.Confirm>
                 </>
               }
             />
             <LabeledList.Item
-              label="Vent Direction"
+              label={t('ui.rbmk.vent_direction')}
               buttons={
                 <>
                   <Box inline mx={5.68} color={data.vent_dir ? 'bad' : 'good'}>
-                    {data.vent_dir ? 'PULLING' : 'PUSHING'}
+                    {data.vent_dir ? t('ui.rbmk.pulling').toUpperCase() : t('ui.rbmk.pushing').toUpperCase()}
                   </Box>
                   <Button
-                    tooltip="Adjust the vents to draw air from the surrounding environment into the internal chamber of the RBMK2."
+                    tooltip={t('ui.rbmk.tooltip_vent_pull')}
                     icon="fa-clock-rotate-left"
                     disabled={data.venting}
                     color={data.vent_dir ? 'yellow' : 'blue'}
                     onClick={() => act('ventpull')}
                   />
                   <Button
-                    tooltip="Adjust the vents to release the contents of the RBMK2's internal chamber into the surrounding environment."
+                    tooltip={t('ui.rbmk.tooltip_vent_push')}
                     icon="fa-clock-rotate-left fa-flip-horizontal"
                     disabled={data.venting}
                     color={data.vent_dir ? 'blue' : 'good'}
@@ -289,43 +291,42 @@ export const RBMK2 = (props) => {
               }
             />
           </LabeledList>
-          <Section title="Adv. Controls" textAlign="center">
-            WARNING: Settings within this section may explosively void your
-            warranty.
+          <Section title={t('ui.rbmk.advanced_controls')} textAlign="center">
+            {t('ui.rbmk.advanced_warning')}
           </Section>
           <LabeledList>
             <LabeledList.Item
-              label="Safeties"
+              label={t('ui.rbmk.safeties')}
               buttons={
                 <>
                   <Box inline mx={2} color={data.safety ? 'good' : 'bad'}>
-                    {data.safety ? 'ONLINE' : 'OFFLINE'}
+                    {data.safety ? t('ui.rbmk.online').toUpperCase() : t('ui.rbmk.offline').toUpperCase()}
                   </Box>
                   <Button.Confirm
-                    tooltip="DANGER: Toggle safeties on/off. Only do this if you KNOW what you're doing!"
+                    tooltip={t('ui.rbmk.tooltip_toggle_safeties')}
                     icon="fa-helmet-safety"
                     color={data.safety ? 'bad' : 'good'}
                     onClick={() => act('safetytoggle')}
                   >
-                    TOGGLE
+                    {t('ui.common.toggle').toUpperCase()}
                   </Button.Confirm>
                 </>
               }
             />
             <LabeledList.Item
-              label="Overclock"
+              label={t('ui.rbmk.overclock')}
               buttons={
                 <>
                   <Box inline mx={2} color={data.overclocked ? 'good' : 'bad'}>
-                    {data.overclocked ? 'ONLINE' : 'OFFLINE'}
+                    {data.overclocked ? t('ui.rbmk.online').toUpperCase() : t('ui.rbmk.offline').toUpperCase()}
                   </Box>
                   <Button.Confirm
-                    tooltip="DANGER: Toggle overclock on/off. When combined with disabled safeties, this can be very volatile! Make sure you know what you're doing!"
+                    tooltip={t('ui.rbmk.tooltip_toggle_overclock')}
                     icon="exclamation-triangle"
                     color={data.overclocked ? 'yellow' : 'good'}
                     onClick={() => act('overclocktoggle')}
                   >
-                    TOGGLE
+                    {t('ui.common.toggle').toUpperCase()}
                   </Button.Confirm>
                 </>
               }

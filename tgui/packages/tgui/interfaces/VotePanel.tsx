@@ -13,6 +13,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 enum VoteConfig {
   None = -1,
@@ -67,12 +68,13 @@ type Data = {
 
 export const VotePanel = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { currentVote, user, LastVoteTime, VoteCD } = data;
 
   /**
    * Adds the voting type to title if there is an ongoing vote.
    */
-  let windowTitle = 'Vote';
+  let windowTitle = t('ui.vote_panel.vote');
   if (currentVote) {
     windowTitle +=
       ': ' +
@@ -86,14 +88,14 @@ export const VotePanel = (props) => {
       <Window.Content>
         <Stack fill vertical>
           <Section
-            title="Create Vote"
+            title={t('ui.vote_panel.create_vote')}
             buttons={
               !!user.isLowerAdmin && (
                 <Stack>
                   <Stack.Item>
                     <Button
                       icon="refresh"
-                      content="Reset Cooldown"
+                      content={t('ui.vote_panel.reset_cooldown')}
                       disabled={LastVoteTime + VoteCD <= 0}
                       onClick={() => act('resetCooldown')}
                     />
@@ -101,7 +103,7 @@ export const VotePanel = (props) => {
                   <Stack.Item>
                     <Button
                       icon="skull"
-                      content="Toggle dead vote"
+                      content={t('ui.vote_panel.toggle_dead_vote')}
                       disabled={!user.isUpperAdmin}
                       onClick={() => act('toggleDeadVote')}
                     />
@@ -123,13 +125,14 @@ export const VotePanel = (props) => {
 
 const VoteOptionDimmer = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { LastVoteTime, VoteCD } = data;
 
   return (
     <Dimmer>
       <Box textAlign="center">
         <Box fontSize={2} bold>
-          Vote Cooldown
+          {t('ui.vote_panel.vote_cooldown')}
         </Box>
         <Box fontSize={1.5}>{Math.floor((VoteCD + LastVoteTime) / 10)}s</Box>
       </Box>
@@ -143,11 +146,12 @@ const VoteOptionDimmer = (props) => {
  */
 const VoteOptions = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { possibleVotes, user, LastVoteTime, VoteCD } = data;
 
   return (
     <Stack.Item>
-      <Collapsible title="Start a Vote">
+      <Collapsible title={t('ui.vote_panel.start_a_vote')}>
         <Section>
           {LastVoteTime + VoteCD > 0 && <VoteOptionDimmer />}
           <Stack vertical justify="space-between">
@@ -166,13 +170,13 @@ const VoteOptions = (props) => {
                         }
                         tooltip={
                           option.config === VoteConfig.None
-                            ? 'This vote cannot be disabled.'
+                            ? t('ui.vote_panel.vote_cannot_be_disabled')
                             : null
                         }
                         content={
                           option.config === VoteConfig.Enabled
-                            ? 'Enabled'
-                            : 'Disabled'
+                            ? t('ui.common.enabled')
+                            : t('ui.common.disabled')
                         }
                         onClick={() =>
                           act('toggleVote', {
@@ -212,11 +216,12 @@ const VoteOptions = (props) => {
  */
 const VotersList = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
 
   return (
     <Stack.Item>
       <Collapsible
-        title={`View Active Voters${
+        title={`${t('ui.vote_panel.view_active_voters')}${
           data.voting.length ? ` (${data.voting.length})` : ''
         }`}
       >
@@ -236,13 +241,14 @@ const VotersList = (props) => {
  */
 const ChoicesPanel = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { currentVote, user } = data;
 
   return (
     <Stack.Item grow>
-      <Section fill scrollable title="Active Vote">
+      <Section fill scrollable title={t('ui.vote_panel.active_vote')}>
         {currentVote && currentVote.countMethod === VoteSystem.VOTE_SINGLE ? (
-          <NoticeBox success>Select one option</NoticeBox>
+          <NoticeBox success>{t('ui.vote_panel.select_one_option')}</NoticeBox>
         ) : null}
         {currentVote &&
         currentVote.choices.length !== 0 &&
@@ -256,7 +262,8 @@ const ChoicesPanel = (props) => {
                   buttons={
                     <Button
                       tooltip={
-                        user.isGhost && 'Ghost voting was disabled by an admin.'
+                        user.isGhost &&
+                        t('ui.vote_panel.ghost_voting_disabled')
                       }
                       disabled={
                         user.singleSelection === choice.name || user.isGhost
@@ -265,7 +272,7 @@ const ChoicesPanel = (props) => {
                         act('voteSingle', { voteOption: choice.name });
                       }}
                     >
-                      Vote
+                      {t('ui.common.vote')}
                     </Button>
                   }
                 >
@@ -280,7 +287,7 @@ const ChoicesPanel = (props) => {
                     )}
                   {currentVote.displayStatistics /* NOVA EDIT CHANGE - isLowerAdmin - ORIGINAL: {currentVote.displayStatistics */ ||
                   user.isLowerAdmin // NoVA EDIT ADDITION
-                    ? `${choice.votes} Votes`
+                    ? `${choice.votes} ${t('ui.common.votes')}`
                     : null}
                 </LabeledList.Item>
                 <LabeledList.Divider />
@@ -289,7 +296,7 @@ const ChoicesPanel = (props) => {
           </LabeledList>
         ) : null}
         {currentVote && currentVote.countMethod === VoteSystem.VOTE_MULTI ? (
-          <NoticeBox success>Select any number of options</NoticeBox>
+          <NoticeBox success>{t('ui.vote_panel.select_any_options')}</NoticeBox>
         ) : null}
         {currentVote &&
         currentVote.choices.length !== 0 &&
@@ -303,14 +310,15 @@ const ChoicesPanel = (props) => {
                   buttons={
                     <Button
                       tooltip={
-                        user.isGhost && 'Ghost voting was disabled by an admin.'
+                        user.isGhost &&
+                        t('ui.vote_panel.ghost_voting_disabled')
                       }
                       disabled={user.isGhost}
                       onClick={() => {
                         act('voteMulti', { voteOption: choice.name });
                       }}
                     >
-                      Vote
+                      {t('ui.common.vote')}
                     </Button>
                   }
                 >
@@ -320,7 +328,7 @@ const ChoicesPanel = (props) => {
                   ) : null}
                   {
                     user.isLowerAdmin
-                      ? `${choice.votes} Votes`
+                      ? `${choice.votes} ${t('ui.common.votes')}`
                       : '' /* NOVA EDIT*/
                   }
                 </LabeledList.Item>
@@ -329,7 +337,9 @@ const ChoicesPanel = (props) => {
             ))}
           </LabeledList>
         ) : null}
-        {currentVote ? null : <NoticeBox>No vote active!</NoticeBox>}
+        {currentVote ? null : (
+          <NoticeBox>{t('ui.vote_panel.no_vote_active')}</NoticeBox>
+        )}
       </Section>
     </Stack.Item>
   );
@@ -341,6 +351,7 @@ const ChoicesPanel = (props) => {
  */
 const TimePanel = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { currentVote, user } = data;
 
   return (
@@ -348,7 +359,7 @@ const TimePanel = (props) => {
       <Section>
         <Stack justify="space-between">
           <Box fontSize={1.5}>
-            Time Remaining:&nbsp;
+            {t('ui.vote_panel.time_remaining')}:&nbsp;
             {currentVote?.timeRemaining || 0}s
           </Box>
           {!!user.isLowerAdmin && (
@@ -359,7 +370,7 @@ const TimePanel = (props) => {
                   disabled={!user.isLowerAdmin || !currentVote}
                   onClick={() => act('endNow')}
                 >
-                  End Now
+                  {t('ui.vote_panel.end_now')}
                 </Button>
               </Stack.Item>
               <Stack.Item>
@@ -368,7 +379,7 @@ const TimePanel = (props) => {
                   disabled={!user.isLowerAdmin || !currentVote}
                   onClick={() => act('cancel')}
                 >
-                  Cancel Vote
+                  {t('ui.vote_panel.cancel_vote')}
                 </Button>
               </Stack.Item>
             </Stack>

@@ -18,6 +18,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   mob_name: string;
@@ -62,13 +63,13 @@ type Data = {
 
 const PAGES = [
   {
-    title: 'General',
+    titleKey: 'ui.player_panel.page_general',
     component: () => GeneralActions,
     color: 'green',
     icon: 'tools',
   },
   {
-    title: 'Mob',
+    titleKey: 'ui.player_panel.page_mob',
     component: () => PhysicalActions,
     color: 'yellow',
     icon: 'bolt',
@@ -77,25 +78,25 @@ const PAGES = [
     },
   },
   {
-    title: 'Transform',
+    titleKey: 'ui.player_panel.page_transform',
     component: () => TransformActions,
     color: 'orange',
     icon: 'exchange-alt',
   },
   {
-    title: 'Punish',
+    titleKey: 'ui.player_panel.page_punish',
     component: () => PunishmentActions,
     color: 'red',
     icon: 'gavel',
   },
   {
-    title: 'Fun',
+    titleKey: 'ui.player_panel.page_fun',
     component: () => FunActions,
     color: 'blue',
     icon: 'laugh',
   },
   {
-    title: 'Other',
+    titleKey: 'ui.player_panel.page_other',
     component: () => OtherActions,
     color: 'blue',
     icon: 'crosshairs',
@@ -108,6 +109,7 @@ function isPresent<T>(value: T | null): value is T {
 
 export const PlayerPanel = () => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const [pageIndex, setPageIndex] = useState(0);
   const PageComponent = PAGES[pageIndex].component();
 
@@ -123,12 +125,12 @@ export const PlayerPanel = () => {
   } = data;
 
   return (
-    <Window title={`${mob_name} Player Panel`} width={650} height={500}>
+    <Window title={`${mob_name} ${t('ui.player_panel.title_suffix')}`} width={650} height={500}>
       <Window.Content scrollable>
         <Section>
           <Flex>
             <Flex.Item width="80px" color="label" align="center">
-              Name:
+              {t('ui.player_panel.name')}
             </Flex.Item>
             <Flex.Item grow={1}>
               <Input
@@ -140,7 +142,7 @@ export const PlayerPanel = () => {
             {!!client_ckey && (
               <Flex.Item>
                 <Box inline ml=".75rem" mr=".5rem" color="label">
-                  Rank:
+                  {t('ui.player_panel.rank')}
                 </Box>
                 <Flex.Item inline>
                   <Button
@@ -156,7 +158,7 @@ export const PlayerPanel = () => {
           </Flex>
           <Flex mt={1} align="center" wrap="wrap" justify="flex-end">
             <Flex.Item width="80px" color="label">
-              Mob Type:
+              {t('ui.player_panel.mob_type')}
             </Flex.Item>
             <Flex.Item grow={1} align="right">
               {mob_type}
@@ -169,7 +171,7 @@ export const PlayerPanel = () => {
                 icon="window-restore"
                 onClick={() => act('access_variables')}
               >
-                Access Variables
+                {t('ui.player_panel.access_variables')}
               </Button>
             </Flex.Item>
             {!!client_ckey && (
@@ -182,7 +184,7 @@ export const PlayerPanel = () => {
                   disabled={!playtimes_enabled}
                   onClick={() => act('access_playtimes')}
                 >
-                  {playtimes_enabled ? playtime : 'Playtimes'}
+                  {playtimes_enabled ? playtime : t('ui.player_panel.playtimes')}
                 </Button>
               </Flex.Item>
             )}
@@ -190,12 +192,14 @@ export const PlayerPanel = () => {
           {(!!client_ckey || !!last_ckey) && (
             <Flex mt={1} align="center">
               <Flex.Item width="80px" color="label">
-                {client_ckey ? 'Client:' : 'Last client:'}
+                {client_ckey
+                  ? t('ui.player_panel.client')
+                  : t('ui.player_panel.last_client')}
               </Flex.Item>
               <Flex.Item tooltip grow={1}>
                 <Tooltip
                   position="bottom"
-                  content={ranks || 'No additional ranks'}
+                  content={ranks || t('ui.player_panel.no_additional_ranks')}
                 >
                   <Box
                     inline
@@ -213,7 +217,7 @@ export const PlayerPanel = () => {
                   <Button
                     ml={1}
                     icon="magnifying-glass"
-                    tooltip="Get player's current panel"
+                    tooltip={t('ui.player_panel.get_current_panel')}
                     onClick={() => act('open_latest_panel')}
                   />
                 )}
@@ -228,7 +232,7 @@ export const PlayerPanel = () => {
                     icon="comment-dots"
                     onClick={() => act('private_message')}
                   >
-                    Private Message
+                    {t('ui.player_panel.private_message')}
                   </Button>
                   <Button
                     minWidth="11rem"
@@ -236,7 +240,7 @@ export const PlayerPanel = () => {
                     icon="phone-alt"
                     onClick={() => act('subtle_message')}
                   >
-                    Subtle Message
+                    {t('ui.player_panel.subtle_message')}
                   </Button>
                 </Flex.Item>
               )}
@@ -262,7 +266,7 @@ export const PlayerPanel = () => {
                       icon={page.icon}
                       onClick={() => setPageIndex(index)}
                     >
-                      {page.title}
+                      {t(page.titleKey)}
                     </Tabs.Tab>
                   ))}
               </Tabs>
@@ -279,10 +283,11 @@ export const PlayerPanel = () => {
 
 const GeneralActions = () => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { client_ckey, mob_type, admin_mob_type } = data;
   return (
     <Section>
-      <Section title="Damage">
+      <Section title={t('ui.player_panel.damage')}>
         <Flex>
           <Button
             width="100%"
@@ -291,7 +296,7 @@ const GeneralActions = () => {
             disabled={!mob_type.includes('/mob/living')}
             onClick={() => act('heal')}
           >
-            Rejuvenate
+            {t('ui.player_panel.rejuvenate')}
           </Button>
           <Button
             width="100%"
@@ -301,22 +306,22 @@ const GeneralActions = () => {
             disabled={!mob_type.includes('/mob/living/carbon/human')}
             onClick={() => act('smite')}
           >
-            Smite
+            {t('ui.player_panel.smite')}
           </Button>
         </Flex>
       </Section>
 
-      <Section title="Teleportation">
+      <Section title={t('ui.player_panel.teleportation')}>
         <Flex>
           <Button.Confirm
             width="100%"
             icon="reply"
             onClick={() => act('bring')}
           >
-            Bring
+            {t('ui.player_panel.bring')}
           </Button.Confirm>
           <Button width="100%" onClick={() => act('orbit')}>
-            Orbit
+            {t('ui.player_panel.orbit')}
           </Button>
           <Button.Confirm
             width="100%"
@@ -324,12 +329,12 @@ const GeneralActions = () => {
             icon="share"
             onClick={() => act('jump_to')}
           >
-            Jump To
+            {t('ui.player_panel.jump_to')}
           </Button.Confirm>
         </Flex>
       </Section>
 
-      <Section title="Miscellaneous">
+      <Section title={t('ui.player_panel.miscellaneous')}>
         <Flex>
           <Button
             width="100%"
@@ -337,7 +342,7 @@ const GeneralActions = () => {
             disabled={!mob_type.includes('/mob/living/carbon/human')}
             onClick={() => act('select_equipment')}
           >
-            Select Equipment
+            {t('ui.player_panel.select_equipment')}
           </Button>
           <Button.Confirm
             icon="trash-alt"
@@ -346,7 +351,7 @@ const GeneralActions = () => {
             disabled={!mob_type.includes('/mob/living/carbon/human')}
             onClick={() => act('strip')}
           >
-            Drop All Items
+            {t('ui.player_panel.drop_all_items')}
           </Button.Confirm>
         </Flex>
         <Flex>
@@ -357,7 +362,7 @@ const GeneralActions = () => {
             disabled={!mob_type.includes('/mob/living/carbon/human')}
             onClick={() => act('cryo')}
           >
-            Send To Cryo
+            {t('ui.player_panel.send_to_cryo')}
           </Button.Confirm>
           <Button.Confirm
             width="100%"
@@ -367,16 +372,16 @@ const GeneralActions = () => {
             disabled={!mob_type.includes('/mob/dead/observer')}
             tooltip={
               mob_type !== '/mob/dead/observer'
-                ? 'Can only be used on ghosts'
+                ? t('ui.player_panel.can_only_be_used_on_ghosts')
                 : ''
             }
             onClick={() => act('lobby')}
           >
-            Send To Lobby
+            {t('ui.player_panel.send_to_lobby')}
           </Button.Confirm>
         </Flex>
       </Section>
-      <Section title="Control">
+      <Section title={t('ui.player_panel.control')}>
         <Flex>
           <Button.Confirm
             width="100%"
@@ -385,7 +390,7 @@ const GeneralActions = () => {
             disabled={!client_ckey || !mob_type.includes('/mob/living')}
             onClick={() => act('ghost')}
           >
-            Eject Ghost
+            {t('ui.player_panel.eject_ghost')}
           </Button.Confirm>
           <Button.Confirm
             width="100%"
@@ -396,17 +401,17 @@ const GeneralActions = () => {
             }
             onClick={() => act('take_control')}
           >
-            Take Control
+            {t('ui.player_panel.take_control')}
           </Button.Confirm>
           <Button.Confirm
             width="100%"
             height="100%" // weird ass bug here, so height set to 100%
             icon="ghost"
-            tooltip="Offers control to ghosts"
+            tooltip={t('ui.player_panel.offers_control_to_ghosts')}
             disabled={!mob_type.includes('/mob/living')}
             onClick={() => act('offer_control')}
           >
-            Offer Control
+            {t('ui.player_panel.offer_control')}
           </Button.Confirm>
         </Flex>
       </Section>
@@ -416,6 +421,7 @@ const GeneralActions = () => {
 
 const PhysicalActions = () => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { glob_limbs, godmode, mob_type } = data;
   const [mobScale, setMobScale] = useState(1);
   const limbs = Object.keys(glob_limbs);
@@ -425,14 +431,14 @@ const PhysicalActions = () => {
   return (
     <Section fill>
       <Section
-        title="Traits"
+        title={t('ui.player_panel.traits')}
         buttons={
           <Button
             icon={godmode ? 'check-square-o' : 'square-o'}
             color={godmode ? 'green' : 'transparent'}
             onClick={() => act('toggle_godmode')}
           >
-            God Mode
+            {t('ui.player_panel.god_mode')}
           </Button>
         }
       >
@@ -443,7 +449,7 @@ const PhysicalActions = () => {
             disabled={!mob_type.includes('/mob/living/carbon/human')}
             onClick={() => act('species')}
           >
-            Species
+            {t('ui.player_panel.species')}
           </Button>
           <Button
             width="100%"
@@ -451,7 +457,7 @@ const PhysicalActions = () => {
             disabled={!mob_type.includes('/mob/living/carbon/human')}
             onClick={() => act('quirk')}
           >
-            Quirks
+            {t('ui.player_panel.quirks')}
           </Button>
           <Button
             width="100%"
@@ -459,7 +465,7 @@ const PhysicalActions = () => {
             icon="magic"
             onClick={() => act('spell')}
           >
-            Spells
+            {t('ui.player_panel.spells')}
           </Button>
         </Flex>
         <Flex>
@@ -469,14 +475,14 @@ const PhysicalActions = () => {
             disabled={!mob_type.includes('/mob/living/carbon/human')}
             onClick={() => act('martial_art')}
           >
-            Martial Arts
+            {t('ui.player_panel.martial_arts')}
           </Button>
           <Button
             width="100%"
             icon="lightbulb"
             onClick={() => act('skill_panel')}
           >
-            Skills
+            {t('ui.player_panel.skills')}
           </Button>
           <Button
             width="100%"
@@ -484,12 +490,12 @@ const PhysicalActions = () => {
             icon="comment-dots"
             onClick={() => act('languages')}
           >
-            Languages
+            {t('ui.player_panel.languages')}
           </Button>
         </Flex>
       </Section>
       <Section
-        title="Limbs"
+        title={t('ui.player_panel.limbs')}
         buttons={
           <Flex>
             {limbs.map((val, index) => (
@@ -528,7 +534,7 @@ const PhysicalActions = () => {
               })
             }
           >
-            Delimb
+            {t('ui.player_panel.delimb')}
           </Button.Confirm>
           <Button.Confirm
             width="100%"
@@ -545,12 +551,12 @@ const PhysicalActions = () => {
               })
             }
           >
-            Relimb
+            {t('ui.player_panel.relimb')}
           </Button.Confirm>
         </Flex>
       </Section>
       <Section
-        title="Scale"
+        title={t('ui.player_panel.scale')}
         buttons={
           <Button
             icon="sync"
@@ -559,7 +565,7 @@ const PhysicalActions = () => {
               act('scale', { new_scale: 1 });
             }}
           >
-            Reset
+            {t('ui.common.reset')}
           </Button>
         }
       >
@@ -578,10 +584,10 @@ const PhysicalActions = () => {
           />
         </Flex>
       </Section>
-      <Section title="Speak">
+      <Section title={t('ui.player_panel.speak')}>
         <Flex mt={1}>
           <Flex.Item width="100px" color="label">
-            Force Say:
+            {t('ui.player_panel.force_say')}
           </Flex.Item>
           <Flex.Item grow={1}>
             <Input
@@ -592,7 +598,7 @@ const PhysicalActions = () => {
         </Flex>
         <Flex mt={2}>
           <Flex.Item width="100px" color="label">
-            Force Emote:
+            {t('ui.player_panel.force_emote')}
           </Flex.Item>
           <Flex.Item grow={1}>
             <Input
@@ -608,6 +614,7 @@ const PhysicalActions = () => {
 
 const TransformActions = () => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { transformables, mob_type } = data;
   return (
     <Section>
@@ -617,7 +624,7 @@ const TransformActions = () => {
         textAlign="center"
         onClick={() => act('transform', { newType: '/mob/living' })}
       >
-        Custom
+        {t('ui.player_panel.custom')}
       </Button>
 
       {transformables.map((transformables_category) => {
@@ -654,6 +661,7 @@ const TransformActions = () => {
 
 const PunishmentActions = () => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     client_ckey,
     mob_type,
@@ -681,7 +689,7 @@ const PunishmentActions = () => {
           disabled={!client_ckey}
           onClick={() => act('notes')}
         >
-          Notes
+          {t('ui.player_panel.notes')}
         </Button>
         <Button
           width="50%"
@@ -692,10 +700,10 @@ const PunishmentActions = () => {
           textAlign="center"
           onClick={() => act('logs')}
         >
-          Logs
+          {t('ui.player_panel.logs')}
         </Button>
       </Flex>
-      <Section title="Contain">
+      <Section title={t('ui.player_panel.contain')}>
         <Flex>
           <Button
             width="100%"
@@ -704,7 +712,7 @@ const PunishmentActions = () => {
             disabled={!mob_type.includes('/mob/living')}
             onClick={() => act('freeze')}
           >
-            Freeze
+            {t('ui.player_panel.freeze')}
           </Button>
           <Button
             width="100%"
@@ -713,7 +721,7 @@ const PunishmentActions = () => {
             disabled={!mob_type.includes('/mob/living')}
             onClick={() => act('sleep')}
           >
-            Sleep
+            {t('ui.player_panel.sleep')}
           </Button>
           <Button.Confirm
             width="100%"
@@ -723,12 +731,12 @@ const PunishmentActions = () => {
             disabled={!mob_type.includes('/mob/living')}
             onClick={() => act('prison')}
           >
-            Admin Prison
+            {t('ui.player_panel.admin_prison')}
           </Button.Confirm>
         </Flex>
       </Section>
 
-      <Section title="Banishment">
+      <Section title={t('ui.player_panel.banishment')}>
         <Flex>
           <Button.Confirm
             width="100%"
@@ -737,7 +745,7 @@ const PunishmentActions = () => {
             disabled={!client_ckey}
             onClick={() => act('kick')}
           >
-            Kick
+            {t('ui.player_panel.kick')}
           </Button.Confirm>
           <Button
             width="100%"
@@ -746,7 +754,7 @@ const PunishmentActions = () => {
             disabled={!client_ckey}
             onClick={() => act('ban')}
           >
-            Ban
+            {t('ui.player_panel.ban')}
           </Button>
           <Button.Confirm
             width="100%"
@@ -756,13 +764,13 @@ const PunishmentActions = () => {
             disabled={!client_ckey}
             onClick={() => act('sticky_ban')}
           >
-            Sticky Ban
+            {t('ui.player_panel.sticky_ban')}
           </Button.Confirm>
         </Flex>
       </Section>
 
       <Section
-        title="Mute"
+        title={t('ui.player_panel.mute')}
         buttons={
           <>
             <Button
@@ -771,7 +779,7 @@ const PunishmentActions = () => {
               disabled={!client_ckey}
               onClick={() => act('unmute_all')}
             >
-              Unmute All
+              {t('ui.player_panel.unmute_all')}
             </Button>
             <Button
               icon="lock"
@@ -779,7 +787,7 @@ const PunishmentActions = () => {
               disabled={!client_ckey}
               onClick={() => act('mute_all')}
             >
-              Mute All
+              {t('ui.player_panel.mute_all')}
             </Button>
           </>
         }
@@ -810,11 +818,11 @@ const PunishmentActions = () => {
         </Flex>
       </Section>
       <Section
-        title="Investigate"
+        title={t('ui.player_panel.investigate')}
         buttons={
           <Flex>
             <Flex.Item align="center" mr=".5rem" color="label">
-              Related accounts by:
+              {t('ui.player_panel.related_accounts_by')}
             </Flex.Item>
             <Button
               minWidth="5rem"
@@ -824,7 +832,7 @@ const PunishmentActions = () => {
               disabled={!data_related_cid}
               onClick={() => act('related_accounts', { related_thing: 'CID' })}
             >
-              CID
+              {t('ui.player_panel.cid')}
             </Button>
             <Button
               minWidth="5rem"
@@ -834,26 +842,26 @@ const PunishmentActions = () => {
               disabled={!data_related_ip}
               onClick={() => act('related_accounts', { related_thing: 'IP' })}
             >
-              IP
+              {t('ui.player_panel.ip')}
             </Button>
           </Flex>
         }
       >
-        <Collapsible width="100%" color="orange" title="Details">
+        <Collapsible width="100%" color="orange" title={t('ui.player_panel.details')}>
           <LabeledList>
-            <LabeledList.Item label="NOW" color="label">
+            <LabeledList.Item label={t('ui.common.now')} color="label">
               {current_time}
             </LabeledList.Item>
-            <LabeledList.Item label="Account made">
+            <LabeledList.Item label={t('ui.player_panel.account_made')}>
               {data_account_join_date}
             </LabeledList.Item>
-            <LabeledList.Item label="First joined server">
+            <LabeledList.Item label={t('ui.player_panel.first_joined_server')}>
               {data_player_join_date}
             </LabeledList.Item>
-            <LabeledList.Item label="Byond version">
+            <LabeledList.Item label={t('ui.player_panel.byond_version')}>
               {data_byond_version}
             </LabeledList.Item>
-            <LabeledList.Item label="Old names">
+            <LabeledList.Item label={t('ui.player_panel.old_names')}>
               {data_old_names}
             </LabeledList.Item>
           </LabeledList>
@@ -865,6 +873,7 @@ const PunishmentActions = () => {
 
 const FunActions = () => {
   const { act } = useBackend<Data>();
+  const { t } = usePreferencesLocalization();
 
   const colours = {
     White: '#a4bad6',
@@ -903,11 +912,11 @@ const FunActions = () => {
   return (
     <Section fill>
       <NoticeBox info textAlign="center">
-        These features are centred on YOUR viewport
+        {t('ui.player_panel.features_centered_on_viewport')}
       </NoticeBox>
 
       <Section
-        title="Explosion"
+        title={t('ui.player_panel.explosion')}
         buttons={
           <>
             <Button.Checkbox
@@ -915,14 +924,14 @@ const FunActions = () => {
               color="transparent"
               onClick={() => setEmpMode(!empMode)}
             >
-              EMP Mode
+              {t('ui.player_panel.emp_mode')}
             </Button.Checkbox>
             <Button
               icon={lockExplode ? 'lock' : 'lock-open'}
               onClick={() => setLockExplode(!lockExplode)}
               color={lockExplode ? 'green' : 'bad'}
             >
-              {lockExplode ? 'Locked' : 'Unlocked'}
+              {lockExplode ? t('ui.common.locked') : t('ui.common.unlocked')}
             </Button>
           </>
         }
@@ -939,7 +948,7 @@ const FunActions = () => {
               }
             >
               <Box height="100%" pt={2} pb={2} textAlign="center">
-                Detonate
+                {t('ui.player_panel.detonate')}
               </Box>
             </Button>
           </Flex.Item>
@@ -962,14 +971,14 @@ const FunActions = () => {
         </Flex>
       </Section>
       <Section
-        title="Narrate"
+        title={t('ui.player_panel.narrate')}
         buttons={
           <Button
             icon={narrateGlobal ? 'check-square-o' : 'square-o'}
             color={narrateGlobal ? 'red' : 'transparent'}
             onClick={() => setNarrateGlobal(!narrateGlobal)}
           >
-            Global Narrate
+            {t('ui.player_panel.global_narrate')}
           </Button>
         }
       >
@@ -977,7 +986,7 @@ const FunActions = () => {
           <Flex width="100%" wrap>
             <Flex.Item width="52%">
               <LabeledList>
-                <LabeledList.Item label="Colour">
+                <LabeledList.Item label={t('ui.player_panel.colour')}>
                   <Dropdown
                     width="calc(100% - 1rem)"
                     options={Object.keys(colours)}
@@ -985,7 +994,7 @@ const FunActions = () => {
                     onSelected={(value) => setNarrateColour(value)}
                   />
                 </LabeledList.Item>
-                <LabeledList.Item label="Font">
+                <LabeledList.Item label={t('ui.player_panel.font')}>
                   <Dropdown
                     width="calc(100% - 1rem)"
                     selected={narrateFont}
@@ -1003,7 +1012,7 @@ const FunActions = () => {
             </Flex.Item>
             <Flex.Item width="20%">
               <LabeledList>
-                <LabeledList.Item label="Bold">
+                <LabeledList.Item label={t('ui.player_panel.bold')}>
                   <Button.Checkbox
                     checked={narrateBold}
                     height="100%"
@@ -1011,7 +1020,7 @@ const FunActions = () => {
                     onClick={() => setNarrateBold(!narrateBold)}
                   />
                 </LabeledList.Item>
-                <LabeledList.Item label="Italic">
+                <LabeledList.Item label={t('ui.player_panel.italic')}>
                   <Button.Checkbox
                     checked={narrateItalic}
                     height="100%"
@@ -1023,7 +1032,7 @@ const FunActions = () => {
             </Flex.Item>
             <Flex.Item width="28%">
               <LabeledList>
-                <LabeledList.Item label="Size">
+                <LabeledList.Item label={t('ui.player_panel.size')}>
                   <NumberInput
                     width="100%"
                     value={narrateSize}
@@ -1037,7 +1046,7 @@ const FunActions = () => {
                   />
                 </LabeledList.Item>
                 {!narrateGlobal && (
-                  <LabeledList.Item label="Range">
+                  <LabeledList.Item label={t('ui.player_panel.range')}>
                     <NumberInput
                       width="100%"
                       value={narrateRange}
@@ -1079,7 +1088,7 @@ const FunActions = () => {
               })
             }
           >
-            Broadcast
+            {t('ui.player_panel.broadcast')}
           </Button>
         </Flex>
 
@@ -1099,11 +1108,12 @@ const FunActions = () => {
 
 const OtherActions = () => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { mob_type, client_ckey } = data;
 
   return (
     <Section fill>
-      <Section title="Miscellaneous Features">
+      <Section title={t('ui.player_panel.miscellaneous_features')}>
         <Button
           width="100%"
           p=".5rem"
@@ -1112,7 +1122,7 @@ const OtherActions = () => {
           disabled={!client_ckey}
           onClick={() => act('traitor_panel')}
         >
-          Traitor Panel
+          {t('ui.player_panel.traitor_panel')}
         </Button>
         <Button
           width="100%"
@@ -1122,7 +1132,7 @@ const OtherActions = () => {
           disabled={!client_ckey}
           onClick={() => act('commend')}
         >
-          Commend Behavior
+          {t('ui.player_panel.commend_behavior')}
         </Button>
         <Button
           width="100%"
@@ -1132,7 +1142,7 @@ const OtherActions = () => {
           disabled={!client_ckey}
           onClick={() => act('play_sound_to')}
         >
-          Play Sound To
+          {t('ui.player_panel.play_sound_to')}
         </Button>
         <Button
           width="100%"
@@ -1144,7 +1154,7 @@ const OtherActions = () => {
           }
           onClick={() => act('apply_client_quirks')}
         >
-          Apply Client Quirks
+          {t('ui.player_panel.apply_client_quirks')}
         </Button>
       </Section>
     </Section>

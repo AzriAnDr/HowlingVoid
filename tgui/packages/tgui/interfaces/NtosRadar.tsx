@@ -11,6 +11,7 @@ import { type BooleanLike, classes } from 'tgui-core/react';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   selected: string;
@@ -70,6 +71,7 @@ export const NtosRadarContent = (props) => {
 /** Returns object information */
 const ObjectDisplay = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { object = [], scanning, selected } = data;
 
   return (
@@ -77,12 +79,14 @@ const ObjectDisplay = (props) => {
       <Section>
         <Button
           icon="redo-alt"
-          content={scanning ? 'Scanning...' : 'Scan'}
+          content={scanning ? t('ui.ntos_radar.scanning') : t('ui.common.scan')}
           color="blue"
           disabled={scanning}
           onClick={() => act('scan')}
         />
-        {!object.length && !scanning && <div>No trackable signals found</div>}
+        {!object.length && !scanning && (
+          <div>{t('ui.ntos_radar.no_trackable_signals_found')}</div>
+        )}
         {!scanning &&
           object.map((object) => (
             <div
@@ -112,6 +116,7 @@ const ObjectDisplay = (props) => {
 /** Returns target information */
 const TargetDisplay = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { selected, target } = data;
 
   if (!selected || !target) {
@@ -127,7 +132,7 @@ const TargetDisplay = (props) => {
         fontSize="30px"
         textAlign="center"
       >
-        Signal Lost
+        {t('ui.ntos_radar.signal_lost')}
       </NoticeBox>
     );
   }

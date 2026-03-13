@@ -14,6 +14,7 @@ import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   has_item: BooleanLike;
@@ -50,12 +51,13 @@ type Blank = {
 };
 
 export const Photocopier = (props) => {
+  const { t } = usePreferencesLocalization();
   const [selectedBlank, setSelectedBlank] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
 
   return (
     <Window
-      title="Photocopier"
+      title={t('ui.photocopier.title')}
       width={selectedCategory ? 550 : 325}
       height={525}
     >
@@ -102,6 +104,7 @@ type StatusProps = {
 
 const Status = (props: StatusProps) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { selectedBlank } = props;
   const {
     has_toner,
@@ -124,7 +127,7 @@ const Status = (props: StatusProps) => {
   return (
     <Section
       fill
-      title="Status"
+      title={t('ui.common.status')}
       buttons={
         <Button
           icon="eject"
@@ -136,7 +139,7 @@ const Status = (props: StatusProps) => {
       }
     >
       <LabeledList>
-        <LabeledList.Item label="Toner">
+        <LabeledList.Item label={t('ui.photocopier.toner')}>
           {has_toner ? (
             <ProgressBar
               minValue={0}
@@ -149,11 +152,11 @@ const Status = (props: StatusProps) => {
             />
           ) : (
             <ProgressBar color="bad" minValue={0} value={0} maxValue={1}>
-              No Cartridge
+              {t('ui.photocopier.no_cartridge')}
             </ProgressBar>
           )}
         </LabeledList.Item>
-        <LabeledList.Item label="Paper Stored">
+        <LabeledList.Item label={t('ui.photocopier.paper_stored')}>
           <ProgressBar
             minValue={0}
             value={paper_count}
@@ -166,21 +169,23 @@ const Status = (props: StatusProps) => {
             {paper_count} / {max_paper_count}
           </ProgressBar>
         </LabeledList.Item>
-        <LabeledList.Item label="Queue">
+        <LabeledList.Item label={t('ui.common.queue')}>
           <ProgressBar
             verticalAlign="middle"
             minValue={0}
             value={copies_left}
             maxValue={num_copies}
           >
-            {copies_left ? `${copies_left} / ${num_copies}` : 'Empty'}
+            {copies_left
+              ? `${copies_left} / ${num_copies}`
+              : t('ui.common.empty')}
           </ProgressBar>
         </LabeledList.Item>
-        <LabeledList.Item label="Blank" textAlign="center">
-          <b>{selectedBlank ? selectedBlank : 'Not Selected'}</b>
+        <LabeledList.Item label={t('ui.photocopier.blank')} textAlign="center">
+          <b>{selectedBlank ? selectedBlank : t('ui.common.not_selected')}</b>
         </LabeledList.Item>
 
-        <LabeledList.Item label="Paper Type">
+        <LabeledList.Item label={t('ui.photocopier.paper_type')}>
           <Stack align="center">
             {paper_types.map((paper) => (
               <Stack.Item grow key={paper.type}>
@@ -213,6 +218,7 @@ type ActionsProps = {
 
 const Actions = (props: ActionsProps) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { selectedBlank } = props;
   const {
     has_item,
@@ -225,12 +231,12 @@ const Actions = (props: ActionsProps) => {
   } = data;
 
   return (
-    <Section fill title="Actions">
+    <Section fill title={t('ui.common.actions')}>
       <Stack fill vertical textAlign="center">
         <Stack.Item>
           <Stack align="center" textAlign="left">
             <Stack.Item grow color="label">
-              Copies:
+              {t('ui.photocopier.copies')}:
             </Stack.Item>
             <Stack.Item grow>
               <Slider
@@ -256,7 +262,7 @@ const Actions = (props: ActionsProps) => {
               disabled={!can_AI_print}
               onClick={() => act('ai_photo', { code: selectedBlank })}
             >
-              Print photo from database
+              {t('ui.photocopier.print_photo_from_database')}
             </Button>
           </Stack.Item>
         )}
@@ -269,7 +275,7 @@ const Actions = (props: ActionsProps) => {
                 disabled={!selectedBlank}
                 onClick={() => act('print_blank', { code: selectedBlank })}
               >
-                Print
+                {t('ui.common.print')}
               </Button>
             </Stack.Item>
             <Stack.Item grow>
@@ -279,7 +285,7 @@ const Actions = (props: ActionsProps) => {
                 disabled={!has_item}
                 onClick={() => act('make_copy')}
               >
-                Copy
+                {t('ui.common.copy')}
               </Button>
             </Stack.Item>
           </Stack>
@@ -298,7 +304,7 @@ const Actions = (props: ActionsProps) => {
                     })
                   }
                 >
-                  Color
+                  {t('ui.common.color')}
                 </Button>
               </Stack.Item>
               <Stack.Item grow>
@@ -312,7 +318,7 @@ const Actions = (props: ActionsProps) => {
                     })
                   }
                 >
-                  Greyscale
+                  {t('ui.common.greyscale')}
                 </Button>
               </Stack.Item>
             </Stack>
@@ -325,7 +331,7 @@ const Actions = (props: ActionsProps) => {
             disabled={!has_item}
             onClick={() => act('remove')}
           >
-            Eject Item
+            {t('ui.photocopier.eject_item')}
           </Button>
         </Stack.Item>
       </Stack>
@@ -340,17 +346,18 @@ type CategoriesProps = {
 
 const Categories = (props: CategoriesProps) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { selectedCategory, setSelectedCategory } = props;
 
   return (
     <Section
       fill
       scrollable
-      title="Blanks"
+      title={t('ui.photocopier.blanks')}
       buttons={
         <Button
           icon="times"
-          tooltip="Close selected blank category"
+          tooltip={t('ui.photocopier.close_selected_blank_category')}
           disabled={!selectedCategory}
           onClick={() => {
             setSelectedCategory('');
@@ -368,8 +375,8 @@ const Categories = (props: CategoriesProps) => {
             onClick={() => {
               setSelectedCategory('All Blanks');
             }}
-          >
-            All Blanks
+            >
+            {t('ui.photocopier.all_blanks')}
           </Button>
         </Stack.Item>
         {data.categories.map((category) => (
@@ -400,6 +407,7 @@ type BlanksProps = {
 
 const Blanks = (props: BlanksProps) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { selectedCategory, selectedBlank, setSelectedBlank } = props;
   const { blanks } = data;
 
@@ -421,7 +429,7 @@ const Blanks = (props: BlanksProps) => {
         <Input
           width={8.75}
           value={searchText}
-          placeholder="Search blank..."
+          placeholder={t('ui.photocopier.search_blank_placeholder')}
           onChange={setSearchText}
         />
       }

@@ -3,6 +3,7 @@ import { Box, Button, LabeledList, Section, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type FaxData = {
   faxes: FaxInfo[];
@@ -39,6 +40,7 @@ type FaxSpecial = {
 export const Fax = (props) => {
   const { act } = useBackend();
   const { data } = useBackend<FaxData>();
+  const { t } = usePreferencesLocalization(data);
   const faxes = data.faxes
     ? sortBy(
         data.syndicate_network
@@ -56,34 +58,36 @@ export const Fax = (props) => {
   return (
     <Window width={340} height={540}>
       <Window.Content scrollable>
-        <Section title="About Fax">
-          <LabeledList.Item label="Network name">
+        <Section title={t('ui.fax.about_fax')}>
+          <LabeledList.Item label={t('ui.fax.network_name')}>
             {data.fax_name}
           </LabeledList.Item>
-          <LabeledList.Item label="Network ID">{data.fax_id}</LabeledList.Item>
-          <LabeledList.Item label="Visible to Network">
-            {data.visible ? 'true' : 'false'}
+          <LabeledList.Item label={t('ui.fax.network_id')}>
+            {data.fax_id}
+          </LabeledList.Item>
+          <LabeledList.Item label={t('ui.fax.visible_to_network')}>
+            {data.visible ? t('ui.common.true') : t('ui.common.false')}
           </LabeledList.Item>
         </Section>
         <Section
-          title="Paper"
+          title={t('ui.common.paper')}
           buttons={
             <Button onClick={() => act('remove')} disabled={!data.has_paper}>
-              Remove
+              {t('ui.common.remove')}
             </Button>
           }
         >
-          <LabeledList.Item label="Paper">
+          <LabeledList.Item label={t('ui.common.paper')}>
             {data.has_paper ? (
-              <Box color="green">Paper in tray</Box>
+              <Box color="green">{t('ui.fax.paper_in_tray')}</Box>
             ) : (
-              <Box color="red">No paper</Box>
+              <Box color="red">{t('ui.fax.no_paper')}</Box>
             )}
           </LabeledList.Item>
         </Section>
-        <Section title="Send">
+        <Section title={t('ui.common.send')}>
           {faxes.length === 0 && special_networks.length === 0 ? (
-            "The fax couldn't detect any other faxes on the network."
+            t('ui.fax.no_other_faxes_detected')
           ) : (
             <Box mt={0.4}>
               {special_networks.map((special: FaxSpecial) => (
@@ -124,13 +128,13 @@ export const Fax = (props) => {
           )}
         </Section>
         <Section
-          title="History"
+          title={t('ui.common.history')}
           buttons={
             <Button
               onClick={() => act('history_clear')}
               disabled={!data.fax_history}
             >
-              Clear
+              {t('ui.common.clear')}
             </Button>
           }
         >

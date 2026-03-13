@@ -17,6 +17,7 @@ import { useBackend } from '../backend';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
 import { type Beaker, BeakerSectionDisplay } from './common/BeakerDisplay';
+import { usePreferencesLocalization } from './localization';
 
 export type ActiveReaction = {
   name: string;
@@ -53,6 +54,8 @@ type ReactionDisplayProps = {
 };
 
 export const ReactionDisplay = (props: ReactionDisplayProps) => {
+  const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     beaker,
     isFlashing,
@@ -63,7 +66,7 @@ export const ReactionDisplay = (props: ReactionDisplayProps) => {
 
   return (
     <Section
-      title="Reactions"
+      title={t('ui.chem_heater.reactions')}
       buttons={
         <Flex>
           <Flex.Item color="label">
@@ -98,7 +101,7 @@ export const ReactionDisplay = (props: ReactionDisplayProps) => {
       }
     >
       {(activeReactions.length === 0 && (
-        <Box color="label">No active reactions.</Box>
+        <Box color="label">{t('ui.chem_heater.no_active_reactions')}</Box>
       )) || (
         <Table>
           <Table.Row>
@@ -182,6 +185,7 @@ export const ReactionDisplay = (props: ReactionDisplayProps) => {
 
 export const ChemHeater = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     targetTemp,
     isActive,
@@ -201,7 +205,7 @@ export const ChemHeater = (props) => {
     <Window width={350} height={350}>
       <Window.Content scrollable>
         <Section
-          title="Controls"
+          title={t('ui.chem_heater.controls')}
           buttons={
             <Flex>
               <Button
@@ -209,7 +213,7 @@ export const ChemHeater = (props) => {
                 selected={isActive}
                 onClick={() => act('power')}
               >
-                {isActive ? 'On' : 'Off'}
+                {isActive ? t('ui.common.on') : t('ui.common.off')}
               </Button>
             </Flex>
           }

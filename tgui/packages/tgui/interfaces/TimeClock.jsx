@@ -3,9 +3,11 @@ import { Box, Button, LabeledList, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const TimeClock = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     inserted_id,
     insert_id_cooldown,
@@ -17,24 +19,24 @@ export const TimeClock = (props) => {
   } = data;
 
   return (
-    <Window title={'Time Clock'} width={500} height={250} resizable>
+    <Window title={t('ui.time_clock.title')} width={500} height={250} resizable>
       <Window.Content>
         <Section>
           <Box textAlign="center" fontSize="15px">
-            Station Time : <b>{current_time}</b>
+            {t('ui.time_clock.station_time')}: <b>{current_time}</b>
           </Box>
           <Box textAlign="center" fontSize="15px">
-            Current Alert Level : <b>{station_alert_level}</b>
+            {t('ui.time_clock.current_alert_level')}: <b>{station_alert_level}</b>
           </Box>
         </Section>
         {inserted_id ? (
           <>
             <Section title={false}>
               <LabeledList>
-                <LabeledList.Item label="ID Holder">
+                <LabeledList.Item label={t('ui.time_clock.id_holder')}>
                   {id_holder_name}
                 </LabeledList.Item>
-                <LabeledList.Item label="Current Job">
+                <LabeledList.Item label={t('ui.time_clock.current_job')}>
                   {id_job_title}
                 </LabeledList.Item>
               </LabeledList>
@@ -45,7 +47,11 @@ export const TimeClock = (props) => {
                 disabled={insert_id_cooldown}
                 onClick={() => act('clock_in_or_out')}
               >
-                <center>{clock_status ? 'Clock In' : 'Clock Out'} </center>
+                <center>
+                  {clock_status
+                    ? t('ui.time_clock.clock_in')
+                    : t('ui.time_clock.clock_out')}
+                </center>
               </Button>
               <Button icon="eject" onClick={() => act('eject_id')} />
             </Box>
@@ -55,7 +61,7 @@ export const TimeClock = (props) => {
             {' '}
             <Box fontSize="18px">
               <center>
-                <b> Insert an ID to begin!</b>
+                <b>{t('ui.time_clock.insert_id_to_begin')}</b>
               </center>
             </Box>
           </Section>

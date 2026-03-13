@@ -4,6 +4,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
+import { usePreferencesLocalization } from './localization';
 import {
   type Objective,
   ObjectivePrintout,
@@ -57,6 +58,7 @@ type Info = {
 // NOVA EDIT CHANGE - height from 630 to 700
 export const AntagInfoWizard = (props) => {
   const { data, act } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { ritual, objectives, can_change_objective } = data;
 
   return (
@@ -94,7 +96,7 @@ export const AntagInfoWizard = (props) => {
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Section fill title="Spellbook">
+            <Section fill title={t('ui.antaginfowizard.spellbook')}>
               <Stack vertical fill>
                 <Stack.Item>
                   You have a spellbook which is bound to you. You can use it to
@@ -138,15 +140,15 @@ export const AntagInfoWizard = (props) => {
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Section title="Misc Gear">
+            <Section title={t('ui.antaginfowizard.misc_gear')}>
               <Stack>
                 <Stack.Item>
-                  <span style={teleportstyle}>Teleport scroll:</span> 4 uses to
+                  <span style={teleportstyle}>{t('ui.antaginfowizard.teleport_scroll')}</span> 4 uses to
                   teleport wherever you want. You will not be able to come back
                   to the den, so be sure you have everything ready before
                   departing.
                   <br />
-                  <span style={robestyle}>Wizard robes:</span> Used to cast most
+                  <span style={robestyle}>{t('ui.antaginfowizard.wizard_robes')}</span> Used to cast most
                   spells. Your spellbook will let you know which spells cannot
                   be cast without a garb.
                 </Stack.Item>
@@ -165,6 +167,8 @@ export const AntagInfoWizard = (props) => {
 };
 
 const RitualPrintout = (props: { ritual: GrandRitual }) => {
+  const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { ritual } = props;
   if (!ritual.next_area) {
     return null;
@@ -172,7 +176,7 @@ const RitualPrintout = (props: { ritual: GrandRitual }) => {
   return (
     <Box>
       Alternately, complete the{' '}
-      <span style={grandritualstyle}>Grand Ritual </span>
+      <span style={grandritualstyle}>{t('ui.antaginfowizard.grand_ritual')} </span>
       by invoking a ritual circle at several nexuses of power.
       <br />
       You must complete the ritual

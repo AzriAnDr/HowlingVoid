@@ -14,6 +14,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type RadioData = {
   freqlock: BooleanLike;
@@ -32,6 +33,7 @@ type RadioData = {
 
 export const Radio = (props) => {
   const { act, data } = useBackend<RadioData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     freqlock,
     frequency,
@@ -64,7 +66,7 @@ export const Radio = (props) => {
       <Window.Content>
         <Section>
           <LabeledList>
-            <LabeledList.Item label="Frequency">
+            <LabeledList.Item label={t('ui.radio.frequency')}>
               {(freqlock && (
                 <Box inline color="light-gray">
                   {`${toFixed(frequency / 10, 1)} kHz`}
@@ -93,7 +95,7 @@ export const Radio = (props) => {
                 </Box>
               )}
             </LabeledList.Item>
-            <LabeledList.Item label="Audio">
+            <LabeledList.Item label={t('ui.radio.audio')}>
               <Button
                 textAlign="center"
                 width="37px"
@@ -113,7 +115,7 @@ export const Radio = (props) => {
                   ml={1}
                   icon="bullhorn"
                   selected={useCommand}
-                  content={`High volume ${useCommand ? 'ON' : 'OFF'}`}
+                  content={`${t('ui.radio.high_volume')} ${useCommand ? t('ui.common.on') : t('ui.common.off')}`}
                   onClick={() => act('command')}
                 />
               )}
@@ -122,12 +124,12 @@ export const Radio = (props) => {
                   ml={1}
                   icon="bullhorn"
                   selected={subspace}
-                  content={`Subspace Tx ${subspace ? 'ON' : 'OFF'}`}
+                  content={`${t('ui.radio.subspace_tx')} ${subspace ? t('ui.common.on') : t('ui.common.off')}`}
                   onClick={() => act('subspace')}
                 />
               )}
             </LabeledList.Item>
-            <LabeledList.Item label="Radio Noise Volume">
+            <LabeledList.Item label={t('ui.radio.radio_noise_volume')}>
               <Slider
                 onChange={(e, value) => {
                   act('set_radio_volume', {
@@ -142,10 +144,10 @@ export const Radio = (props) => {
               />
             </LabeledList.Item>
             {(!!subspace || channels.length > 0) && (
-              <LabeledList.Item label="Channels">
+              <LabeledList.Item label={t('ui.radio.channels')}>
                 {channels.length === 0 && (
                   <Box inline color="bad">
-                    No encryption keys installed.
+                    {t('ui.radio.no_encryption_keys_installed')}
                   </Box>
                 )}
                 <Stack vertical>
@@ -175,7 +177,7 @@ export const Radio = (props) => {
                             })
                           }
                         >
-                          Tune
+                          {t('ui.radio.tune')}
                         </Button>
                       )}
                     </Box>

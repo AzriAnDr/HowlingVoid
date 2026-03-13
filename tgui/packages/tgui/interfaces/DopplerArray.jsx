@@ -11,6 +11,7 @@ import {
 
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const DopplerArray = (props) => {
   return (
@@ -24,6 +25,7 @@ export const DopplerArray = (props) => {
 
 const DopplerArrayContent = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { records = [], disk, storage } = data;
   const [activeRecordName, setActiveRecordName] = useSharedState(
     'activeRecordrecord',
@@ -33,12 +35,12 @@ const DopplerArrayContent = (props) => {
     return record.name === activeRecordName;
   });
   const DopplerArrayFooter = (
-    <Section title={disk ? `${disk} (${storage})` : 'No Disk Inserted'}>
+    <Section title={disk ? `${disk} (${storage})` : t('ui.doppler_array.no_disk_inserted')}>
       <Button
         textAlign="center"
         fluid
         icon="eject"
-        content="Eject Disk"
+        content={t('ui.common.eject_disk')}
         disabled={!disk}
         onClick={() => act('eject_disk')}
       />
@@ -69,7 +71,7 @@ const DopplerArrayContent = (props) => {
                 <>
                   <Button.Confirm
                     icon="trash"
-                    content="Delete"
+                    content={t('ui.common.delete')}
                     color="bad"
                     onClick={() =>
                       act('delete_record', {
@@ -79,9 +81,9 @@ const DopplerArrayContent = (props) => {
                   />
                   <Button
                     icon="floppy-disk"
-                    content="Save"
+                    content={t('ui.common.save')}
                     disabled={!disk}
-                    tooltip="Save the record selected to an inserted data disk."
+                    tooltip={t('ui.doppler_array.save_record_tooltip')}
                     tooltipPosition="bottom"
                     onClick={() =>
                       act('save_record', {
@@ -93,47 +95,47 @@ const DopplerArrayContent = (props) => {
               }
             >
               <LabeledList>
-                <LabeledList.Item label="Timestamp">
+                <LabeledList.Item label={t('ui.common.timestamp')}>
                   {activeRecord.timestamp}
                 </LabeledList.Item>
-                <LabeledList.Item label="Coordinates">
+                <LabeledList.Item label={t('ui.common.coordinates')}>
                   {activeRecord.coordinates}
                 </LabeledList.Item>
-                <LabeledList.Item label="Displacement">
+                <LabeledList.Item label={t('ui.doppler_array.displacement')}>
                   {activeRecord.displacement} seconds
                 </LabeledList.Item>
-                <LabeledList.Item label="Epicenter Radius">
+                <LabeledList.Item label={t('ui.doppler_array.epicenter_radius')}>
                   {activeRecord.factual_epicenter_radius}
                   {activeRecord.theory_epicenter_radius &&
                     ' (Theoretical: ' +
                       activeRecord.theory_epicenter_radius +
                       ')'}
                 </LabeledList.Item>
-                <LabeledList.Item label="Outer Radius">
+                <LabeledList.Item label={t('ui.doppler_array.outer_radius')}>
                   {activeRecord.factual_outer_radius}
                   {activeRecord.theory_outer_radius &&
                     ` (Theoretical: ${activeRecord.theory_outer_radius})`}
                 </LabeledList.Item>
-                <LabeledList.Item label="Shockwave Radius">
+                <LabeledList.Item label={t('ui.doppler_array.shockwave_radius')}>
                   {activeRecord.factual_shockwave_radius}
                   {activeRecord.theory_shockwave_radius &&
                     ' (Theoretical: ' +
                       activeRecord.theory_shockwave_radius +
                       ')'}
                 </LabeledList.Item>
-                <LabeledList.Item label="Possible Cause(s)">
+                <LabeledList.Item label={t('ui.doppler_array.possible_causes')}>
                   {activeRecord.reaction_results.length
                     ? activeRecord.reaction_results.map((reaction_name) => (
                         <Box key={reaction_name}>{reaction_name}</Box>
                       ))
-                    : 'No information available'}
+                    : t('ui.common.no_information_available')}
                 </LabeledList.Item>
               </LabeledList>
             </Section>
           </Stack.Item>
         ) : (
           <Stack.Item grow={1} basis={0}>
-            <NoticeBox>No Record Selected</NoticeBox>
+            <NoticeBox>{t('ui.doppler_array.no_record_selected')}</NoticeBox>
           </Stack.Item>
         )}
       </Stack>
@@ -143,7 +145,7 @@ const DopplerArrayContent = (props) => {
     <Flex direction="column" height="100%">
       <Flex.Item grow>
         {!records.length ? (
-          <NoticeBox>No Records</NoticeBox>
+          <NoticeBox>{t('ui.doppler_array.no_records')}</NoticeBox>
         ) : (
           DopplerArrayRecords
         )}

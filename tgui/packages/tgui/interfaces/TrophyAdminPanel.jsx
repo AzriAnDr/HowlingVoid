@@ -3,20 +3,22 @@ import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const TrophyAdminPanel = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { trophies } = data;
   return (
-    <Window title="Trophies Admin Panel" width={800} height={600}>
+    <Window title={t('ui.trophy_admin_panel.title')} width={800} height={600}>
       <Window.Content scrollable>
         <Table>
           <Table.Row header>
-            <Table.Cell color="label">Path</Table.Cell>
+            <Table.Cell color="label">{t('ui.trophy_admin_panel.path')}</Table.Cell>
             <Table.Cell color="label" />
-            <Table.Cell color="label">Message</Table.Cell>
+            <Table.Cell color="label">{t('ui.common.message')}</Table.Cell>
             <Table.Cell color="label" />
-            <Table.Cell color="label">Placer Key</Table.Cell>
+            <Table.Cell color="label">{t('ui.trophy_admin_panel.placer_key')}</Table.Cell>
             <Table.Cell color="label" />
           </Table.Row>
           {!!trophies &&
@@ -36,7 +38,7 @@ export const TrophyAdminPanel = (props) => {
                 <Table.Cell>
                   <Button
                     icon="edit"
-                    tooltip={'Edit path'}
+                    tooltip={t('ui.trophy_admin_panel.edit_path')}
                     tooltipPosition="bottom"
                     onClick={() => act('edit_path', { ref: trophy.ref })}
                   />
@@ -52,7 +54,7 @@ export const TrophyAdminPanel = (props) => {
                 <Table.Cell>
                   <Button
                     icon="edit"
-                    tooltip={'Edit message'}
+                    tooltip={t('ui.trophy_admin_panel.edit_message')}
                     tooltipPosition="bottom"
                     onClick={() => act('edit_message', { ref: trophy.ref })}
                   />
@@ -68,7 +70,7 @@ export const TrophyAdminPanel = (props) => {
                 <Table.Cell>
                   <Button
                     icon="trash"
-                    tooltip={'Delete trophy'}
+                    tooltip={t('ui.trophy_admin_panel.delete_trophy')}
                     tooltipPosition="bottom"
                     onClick={() => act('delete', { ref: trophy.ref })}
                   />

@@ -2,6 +2,7 @@ import { Box, Button, NoticeBox, Section, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   previous_attempts: Attempts[];
@@ -26,13 +27,14 @@ and the number of correct digits in incorrect locations.`;
 
 export const AbandonedCrate = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { previous_attempts, attempts_left } = data;
 
   return (
     <Window width={335} height={180 + previous_attempts.length * 19}>
       <Window.Content scrollable>
         <Section
-          title="Deca-Code Lock"
+          title={t('ui.abandoned_crate.deca_code_lock')}
           buttons={
             <Button
               tooltip={BULLS_COWS_INFO}

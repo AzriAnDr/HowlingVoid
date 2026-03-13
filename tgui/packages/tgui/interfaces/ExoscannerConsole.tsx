@@ -13,6 +13,7 @@ import { formatTime } from 'tgui-core/format';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type SiteData = {
   name: string;
@@ -33,15 +34,16 @@ type ScanData = {
 };
 
 const ScanFailedModal = (props) => {
-  const { act } = useBackend();
+  const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   return (
     <Modal>
       <Stack fill vertical>
         <Stack.Item>
-          <Box color="bad">SCAN FAILURE!</Box>
+          <Box color="bad">{t('ui.exoscanner.scan_failure')}</Box>
         </Stack.Item>
         <Stack.Item>
-          <Button content="Confirm" onClick={() => act('confirm_fail')} />
+          <Button content={t('ui.common.confirm')} onClick={() => act('confirm_fail')} />
         </Stack.Item>
       </Stack>
     </Modal>
@@ -50,6 +52,7 @@ const ScanFailedModal = (props) => {
 
 const ScanSelectionSection = (props) => {
   const { act, data } = useBackend<ScanData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     scan_power,
     point_scan_eta,
@@ -68,24 +71,24 @@ const ScanSelectionSection = (props) => {
       <Stack.Item grow>
         <Section
           fill
-          title="Site Data"
+          title={t('ui.exoscanner.site_data')}
           buttons={
             <Button
-              content="Back"
+              content={t('ui.common.back')}
               onClick={() => act('select_site', { site_ref: null })}
             />
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Name">{site.name}</LabeledList.Item>
-            <LabeledList.Item label="Description">
-              {site.revealed ? site.description : 'No Data'}
+            <LabeledList.Item label={t('ui.common.name')}>{site.name}</LabeledList.Item>
+            <LabeledList.Item label={t('ui.common.description')}>
+              {site.revealed ? site.description : t('ui.common.no_data')}
             </LabeledList.Item>
-            <LabeledList.Item label="Distance">
+            <LabeledList.Item label={t('ui.common.distance')}>
               {site.distance}
             </LabeledList.Item>
             <LabeledList.Divider />
-            <LabeledList.Item label="Spectrography Data" />
+            <LabeledList.Item label={t('ui.exoscanner.spectrography_data')} />
             <LabeledList.Divider />
             {Object.keys(site.band_info).map((band) => (
               <LabeledList.Item key={band} label={band}>
@@ -97,16 +100,16 @@ const ScanSelectionSection = (props) => {
       </Stack.Item>
       {scan_available && (
         <Stack.Item>
-          <Section fill title="Scans">
+          <Section fill title={t('ui.exoscanner.scans')}>
             {!point_scan_complete && (
-              <Section title="Point Scan">
+              <Section title={t('ui.exoscanner.point_scan')}>
                 <BlockQuote>
                   Point scan performs rudimentary scan of the site, revealing
                   its general characteristics.
                 </BlockQuote>
                 <Box>
                   <Button
-                    content="Scan"
+                    content={t('ui.common.scan')}
                     disabled={scan_power <= 0}
                     onClick={() => act('start_point_scan')}
                   />
@@ -117,14 +120,14 @@ const ScanSelectionSection = (props) => {
               </Section>
             )}
             {!deep_scan_complete && (
-              <Section title="Deep Scan">
+              <Section title={t('ui.exoscanner.deep_scan')}>
                 <BlockQuote>
                   Deep scan performs full scan of the site, revealing all
                   details.
                 </BlockQuote>
                 <Box>
                   <Button
-                    content="Scan"
+                    content={t('ui.common.scan')}
                     disabled={scan_power <= 0}
                     onClick={() => act('start_deep_scan')}
                   />
@@ -149,25 +152,26 @@ type ScanInProgressData = {
 
 const ScanInProgressModal = (props) => {
   const { act, data } = useBackend<ScanInProgressData>();
+  const { t } = usePreferencesLocalization(data);
   const { scan_time, scan_power, scan_description } = data;
 
   return (
     <Modal ml={1}>
-      <NoticeBox>Scan in Progress!</NoticeBox>
+      <NoticeBox>{t('ui.exoscanner.scan_in_progress')}</NoticeBox>
       <Box color="danger" />
       <LabeledList>
-        <LabeledList.Item label="Scan summary">
+        <LabeledList.Item label={t('ui.exoscanner.scan_summary')}>
           {scan_description}
         </LabeledList.Item>
-        <LabeledList.Item label="Time left">
+        <LabeledList.Item label={t('ui.common.time_left')}>
           {formatTime(scan_time)}
         </LabeledList.Item>
-        <LabeledList.Item label="Scanning array power">
+        <LabeledList.Item label={t('ui.exoscanner.scanning_array_power')}>
           {scan_power}
         </LabeledList.Item>
-        <LabeledList.Item label="Emergency Stop">
+        <LabeledList.Item label={t('ui.common.emergency_stop')}>
           <Button.Confirm
-            content="STOP SCAN"
+            content={t('ui.exoscanner.stop_scan')}
             color="red"
             icon="times"
             onClick={() => act('stop_scan')}
@@ -190,6 +194,7 @@ type ExoscannerConsoleData = {
 
 export const ExoscannerConsole = (props) => {
   const { act, data } = useBackend<ExoscannerConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     scan_in_progress,
     scan_power,
@@ -209,7 +214,7 @@ export const ExoscannerConsole = (props) => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <Section fill title="Available array power">
+            <Section fill title={t('ui.exoscanner.available_array_power')}>
               <Stack>
                 <Stack.Item grow>
                   {(scan_power > 0 && (
@@ -223,7 +228,7 @@ export const ExoscannerConsole = (props) => {
                     'No properly configured scanner arrays detected.'}
                 </Stack.Item>
               </Stack>
-              <Section title="Special Scan Condtions">
+              <Section title={t('ui.exoscanner.special_scan_conditions')}>
                 {scan_conditions?.map((condition) => (
                   <NoticeBox key={condition}>{condition}</NoticeBox>
                 ))}
@@ -249,7 +254,7 @@ export const ExoscannerConsole = (props) => {
                     </Button>
                   }
                   fill
-                  title="Configure Wide Scan"
+                  title={t('ui.exoscanner.configure_wide_scan')}
                 >
                   <Stack>
                     <Stack.Item>
@@ -270,11 +275,11 @@ export const ExoscannerConsole = (props) => {
               <Stack.Item grow>
                 <Section
                   fill
-                  title="Configure Targeted Scans"
+                  title={t('ui.exoscanner.configure_targeted_scans')}
                   scrollable
                   buttons={
                     <Button
-                      content="View Experiments"
+                      content={t('ui.exoscanner.view_experiments')}
                       onClick={() => act('open_experiments')}
                       icon="tasks"
                     />

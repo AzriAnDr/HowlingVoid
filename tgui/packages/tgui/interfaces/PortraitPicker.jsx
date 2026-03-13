@@ -4,27 +4,35 @@ import { Button, Flex, Input, NoticeBox, Section } from 'tgui-core/components';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const PortraitPicker = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const [listIndex, setListIndex] = useState(0);
   const { paintings, search_string, search_mode } = data;
   const got_paintings = !!paintings.length;
   const current_portrait_title = got_paintings && paintings[listIndex].title;
   const current_portrait_author =
-    got_paintings && `By ${paintings[listIndex].creator}`;
+    got_paintings &&
+    `${t('ui.portrait_picker.by')} ${paintings[listIndex].creator}`;
   const current_portrait_asset_name =
     got_paintings && `paintings_${paintings[listIndex].md5}`;
 
   return (
-    <Window theme="ntos" title="Portrait Picker" width={400} height={406}>
+    <Window
+      theme="ntos"
+      title={t('ui.portrait_picker.title')}
+      width={400}
+      height={406}
+    >
       <Window.Content>
         <Flex height="100%" direction="column">
           <Flex.Item mb={1}>
-            <Section title="Search">
+            <Section title={t('ui.common.search')}>
               <Input
                 fluid
-                placeholder="Search Paintings..."
+                placeholder={t('ui.portrait_picker.search_paintings_placeholder')}
                 value={search_string}
                 onBlur={(value) => {
                   act('search', {
@@ -71,7 +79,7 @@ export const PortraitPicker = (props) => {
                   </>
                 ) : (
                   <Flex.Item className="Section__titleText">
-                    No paintings found.
+                    {t('ui.portrait_picker.no_paintings_found')}
                   </Flex.Item>
                 )}
               </Flex>
@@ -99,7 +107,7 @@ export const PortraitPicker = (props) => {
                     <Flex.Item grow={3}>
                       <Button
                         icon="check"
-                        content="Select Portrait"
+                        content={t('ui.portrait_picker.select_portrait')}
                         disabled={!got_paintings}
                         onClick={() =>
                           act('select', {
@@ -128,17 +136,12 @@ export const PortraitPicker = (props) => {
             </Flex>
             <Flex.Item mt={1}>
               <NoticeBox info>
-                Only the 23x23 or 24x24 canvas size art can be displayed. Make
-                sure you read the warning below before embracing the wide
-                wonderful world of artistic expression!
+                {t('ui.portrait_picker.canvas_size_notice')}
               </NoticeBox>
             </Flex.Item>
             <Flex.Item>
               <NoticeBox danger>
-                WARNING: While Central Command loves art as much as you do,
-                choosing erotic art will lead to severe consequences.
-                Additionally, Central Command reserves the right to request you
-                change your display portrait, for any reason.
+                {t('ui.portrait_picker.warning')}
               </NoticeBox>
             </Flex.Item>
           </Flex.Item>

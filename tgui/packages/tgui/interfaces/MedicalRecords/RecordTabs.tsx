@@ -14,17 +14,19 @@ import {
 } from 'tgui-core/components';
 
 import { JOB2ICON } from '../common/JobToIcon';
+import { usePreferencesLocalization } from '../localization';
 import { isRecordMatch } from '../SecurityRecords/helpers';
 import type { MedicalRecord, MedicalRecordData } from './types';
 
 /** Displays all found records. */
 export const MedicalRecordTabs = (props) => {
   const { act, data } = useBackend<MedicalRecordData>();
+  const { t } = usePreferencesLocalization(data);
   const { records = [] } = data;
 
   const errorMessage = !records.length
-    ? 'No records found.'
-    : 'No match. Refine your search.';
+    ? t('ui.medical_records.no_records_found')
+    : t('ui.medical_records.no_match_refine_search');
 
   const [search, setSearch] = useState('');
 
@@ -39,7 +41,7 @@ export const MedicalRecordTabs = (props) => {
         <Input
           fluid
           onChange={setSearch}
-          placeholder="Name/Job/DNA"
+          placeholder={t('ui.medical_records.search_placeholder')}
           expensive
         />
       </Stack.Item>
@@ -62,17 +64,17 @@ export const MedicalRecordTabs = (props) => {
             <Button
               disabled
               icon="plus"
-              tooltip="Add new records by inserting a 1 by 1 meter photo into the terminal. You do not need this screen open."
+              tooltip={t('ui.medical_records.create_tooltip')}
             >
-              Create
+              {t('ui.common.create')}
             </Button>
           </Stack.Item>
           <Stack.Item>
             <Button.Confirm
-              content="Purge"
+              content={t('ui.medical_records.purge')}
               icon="trash"
               onClick={() => act('purge_records')}
-              tooltip="Wipe all record data."
+              tooltip={t('ui.medical_records.purge_tooltip')}
             />
           </Stack.Item>
         </Stack>

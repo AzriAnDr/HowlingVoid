@@ -9,6 +9,7 @@ import {
 
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type StoryManagerData = {
   current_stories: Story[];
@@ -27,6 +28,7 @@ type Story = {
 
 export const StoryManager = (props) => {
   const { data, act } = useBackend<StoryManagerData>();
+  const { t } = usePreferencesLocalization(data);
   const { current_stories, archived_stories, current_date } = data;
 
   const [title, setTitle] = useLocalState('title', '');
@@ -34,42 +36,42 @@ export const StoryManager = (props) => {
   const [id, setID] = useLocalState('id', '');
 
   return (
-    <Window width={600} height={800} title="Lorecaster Manager">
+    <Window width={600} height={800} title={t('ui.story_manager.title')}>
       <Window.Content scrollable>
         <Section textAlign="center">
-          Lorecaster story manager
+          {t('ui.story_manager.header')}
           <br />
-          <i>Anything published here will not appear until the next round!</i>
+          <i>{t('ui.story_manager.next_round_notice')}</i>
           <br />
           <span style={{ color: 'red' }}>
-            Do not mess with this unless you know what you&apos;re doing.
+            {t('ui.story_manager.do_not_mess_warning')}
           </span>
         </Section>
         <Section>
           <LabeledList>
-            <LabeledList.Item label="Title">
+            <LabeledList.Item label={t('ui.common.title')}>
               <TextArea
                 height="20px"
-                placeholder="A short, consise title/author for the article."
+                placeholder={t('ui.story_manager.title_placeholder')}
                 onChange={(value) => setTitle(value)}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Body Text">
+            <LabeledList.Item label={t('ui.story_manager.body_text')}>
               <TextArea
                 height="100px"
-                placeholder="The contents of the article itself."
+                placeholder={t('ui.story_manager.body_placeholder')}
                 onChange={(value) => setText(value)}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="ID">
+            <LabeledList.Item label={t('ui.common.id')}>
               <TextArea
                 height="20px"
-                placeholder="A unique id for the article. Article will not publish if set ID is in use."
+                placeholder={t('ui.story_manager.id_placeholder')}
                 onChange={(value) => setID(value)}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Date">
-              <i>Publishing Date: {current_date}</i>
+            <LabeledList.Item label={t('ui.common.date')}>
+              <i>{`${t('ui.story_manager.publishing_date')}: ${current_date}`}</i>
             </LabeledList.Item>
           </LabeledList>
           <Button
@@ -84,10 +86,10 @@ export const StoryManager = (props) => {
               });
             }}
           >
-            Publish
+            {t('ui.common.publish')}
           </Button>
         </Section>
-        <Collapsible title="Current Stories">
+        <Collapsible title={t('ui.story_manager.current_stories')}>
           {current_stories.map((story) => (
             <Collapsible
               bold
@@ -115,13 +117,13 @@ export const StoryManager = (props) => {
                     });
                   }}
                 >
-                  Archive
+                  {t('ui.common.archive')}
                 </Button>
               </Section>
             </Collapsible>
           ))}
         </Collapsible>
-        <Collapsible title="Archived Stories">
+        <Collapsible title={t('ui.story_manager.archived_stories')}>
           {archived_stories.map((story) => (
             <Collapsible
               bold
@@ -149,7 +151,7 @@ export const StoryManager = (props) => {
                     });
                   }}
                 >
-                  Circulate
+                  {t('ui.story_manager.circulate')}
                 </Button>
               </Section>
             </Collapsible>

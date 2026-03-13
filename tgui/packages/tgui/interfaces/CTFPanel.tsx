@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type CTFPanelData =
   | {
@@ -22,33 +23,42 @@ type CTFPanelData =
 
 export const CTFPanel = (props) => {
   const { act, data } = useBackend<CTFPanelData>();
+  const { t } = usePreferencesLocalization(data);
 
   return (
-    <Window title="CTF Panel" width={700} height={600}>
+    <Window title={t('ui.ctfpanel.ctf_panel')} width={700} height={600}>
       <Window.Content scrollable>
         {'teams' in data ? (
           <Flex align="center" wrap="wrap" textAlign="center" m={-0.5}>
             {data.teams.map((team) => (
               <Flex.Item key={team.name} width="49%" m={0.5} mb={8}>
-                <Section key={team.name} title={`${team.color} Team`}>
+                <Section
+                  key={team.name}
+                  title={t('ui.ctfpanel.team_title')
+                    .replace('{color}', team.color)}
+                >
                   <Stack fill mb={1}>
                     <Stack.Item grow>
                       <Box>
-                        <b>{team.team_size}</b> member
-                        {team.team_size === 1 ? '' : 's'}
+                        <b>{team.team_size}</b>{' '}
+                        {team.team_size === 1
+                          ? t('ui.ctfpanel.member')
+                          : t('ui.ctfpanel.members')}
                       </Box>
                     </Stack.Item>
 
                     <Stack.Item grow>
                       <Box>
-                        <b>{team.score}</b> point
-                        {team.score === 1 ? '' : 's'}
+                        <b>{team.score}</b>{' '}
+                        {team.score === 1
+                          ? t('ui.ctfpanel.point')
+                          : t('ui.ctfpanel.points')}
                       </Box>
                     </Stack.Item>
                   </Stack>
 
                   <Button
-                    content="Jump"
+                    content={t('ui.ctfpanel.jump')}
                     fontSize="18px"
                     fluid
                     color={team.color.toLowerCase()}
@@ -60,7 +70,7 @@ export const CTFPanel = (props) => {
                   />
 
                   <Button
-                    content="Join"
+                    content={t('ui.ctfpanel.join')}
                     fontSize="18px"
                     fluid
                     color={team.color.toLowerCase()}
@@ -82,7 +92,7 @@ export const CTFPanel = (props) => {
               </Box>
               <br />
               <Box fontSize="30px" textAlign="center">
-                CTF voters
+                {t('ui.ctfpanel.voters')}
               </Box>
             </Stack.Item>
 
@@ -98,7 +108,9 @@ export const CTFPanel = (props) => {
                   }
                 }}
               >
-                {data.voted ? 'Unvote for CTF' : 'Vote for CTF'}
+                {data.voted
+                  ? t('ui.ctfpanel.unvote_for_ctf')
+                  : t('ui.ctfpanel.vote_for_ctf')}
               </Button>
             </Stack.Item>
           </Stack>

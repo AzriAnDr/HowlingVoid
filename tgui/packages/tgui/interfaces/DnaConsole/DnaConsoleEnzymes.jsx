@@ -12,17 +12,19 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { PULSE_DURATION_MAX, PULSE_STRENGTH_MAX } from './constants';
 import { GeneticMakeupInfo } from './GeneticMakeupInfo';
 
 const GeneticMakeupBufferInfo = (props) => {
   const { index, makeup } = props;
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { isViableSubject, hasDisk, diskReadOnly, isInjectorReady } = data;
   // Type of the action for applying makeup
   const ACTION_MAKEUP_APPLY = isViableSubject ? 'makeup_apply' : 'makeup_delay';
   if (!makeup) {
-    return <Box color="average">No stored subject data.</Box>;
+    return <Box color="average">{t('ui.dna.no_stored_subject_data')}</Box>;
   }
   return (
     <>
@@ -32,11 +34,11 @@ const GeneticMakeupBufferInfo = (props) => {
         Makeup Actions
       </Box>
       <LabeledList>
-        <LabeledList.Item label="Enzymes">
+        <LabeledList.Item label={t('ui.dna.enzymes')}>
           <Button
             icon="syringe"
             disabled={!isInjectorReady}
-            content="Print"
+            content={t('ui.common.print')}
             onClick={() =>
               act('makeup_injector', {
                 index,
@@ -57,11 +59,11 @@ const GeneticMakeupBufferInfo = (props) => {
             {!isViableSubject && ' (Delayed)'}
           </Button>
         </LabeledList.Item>
-        <LabeledList.Item label="Identity">
+        <LabeledList.Item label={t('ui.dna.identity')}>
           <Button
             icon="syringe"
             disabled={!isInjectorReady}
-            content="Print"
+            content={t('ui.common.print')}
             onClick={() =>
               act('makeup_injector', {
                 index,
@@ -82,11 +84,11 @@ const GeneticMakeupBufferInfo = (props) => {
             {!isViableSubject && ' (Delayed)'}
           </Button>
         </LabeledList.Item>
-        <LabeledList.Item label="Features">
+        <LabeledList.Item label={t('ui.dna.features')}>
           <Button
             icon="syringe"
             disabled={!isInjectorReady}
-            content="Print"
+            content={t('ui.common.print')}
             onClick={() =>
               act('makeup_injector', {
                 index,
@@ -107,11 +109,11 @@ const GeneticMakeupBufferInfo = (props) => {
             {!isViableSubject && ' (Delayed)'}
           </Button>
         </LabeledList.Item>
-        <LabeledList.Item label="Full Makeup">
+        <LabeledList.Item label={t('ui.dna.full_makeup')}>
           <Button
             icon="syringe"
             disabled={!isInjectorReady}
-            content="Print"
+            content={t('ui.common.print')}
             onClick={() =>
               act('makeup_injector', {
                 index,
@@ -136,7 +138,7 @@ const GeneticMakeupBufferInfo = (props) => {
           <Button
             icon="save"
             disabled={!hasDisk || diskReadOnly}
-            content="Export To Disk"
+            content={t('ui.dna.export_to_disk')}
             onClick={() =>
               act('save_makeup_disk', {
                 index,
@@ -151,6 +153,7 @@ const GeneticMakeupBufferInfo = (props) => {
 
 const GeneticMakeupBuffers = (props) => {
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     diskHasMakeup,
     geneticMakeupCooldown,
@@ -171,7 +174,7 @@ const GeneticMakeupBuffers = (props) => {
               <Button
                 mr={1}
                 disabled={!hasDisk || !diskHasMakeup}
-                content="Import from disk"
+                content={t('ui.dna.import_from_disk')}
                 onClick={() =>
                   act('load_makeup_disk', {
                     index: i,
@@ -181,7 +184,7 @@ const GeneticMakeupBuffers = (props) => {
             )}
             <Button
               disabled={!isViableSubject}
-              content="Save"
+              content={t('ui.common.save')}
               onClick={() =>
                 act('save_makeup_console', {
                   index: i,
@@ -208,7 +211,7 @@ const GeneticMakeupBuffers = (props) => {
     elements.push(element);
   }
   return (
-    <Section title="Genetic Makeup Buffers">
+    <Section title={t('ui.dna.genetic_makeup_buffers')}>
       {!!geneticMakeupCooldown && (
         <Dimmer fontSize="14px" textAlign="center">
           <Icon mr={1} name="spinner" spin />
@@ -224,11 +227,12 @@ const GeneticMakeupBuffers = (props) => {
 
 const PulseEmitterProbs = (props) => {
   const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { stdDevAcc, stdDevStr } = data;
   return (
-    <Section title="Probabilities" minHeight="100%">
+    <Section title={t('ui.dna.probabilities')} minHeight="100%">
       <LabeledList>
-        <LabeledList.Item label="Accuracy" textAlign="right">
+        <LabeledList.Item label={t('ui.dna.accuracy')} textAlign="right">
           {stdDevAcc}
         </LabeledList.Item>
         <LabeledList.Item label={`P(±${stdDevStr})`} textAlign="right">
@@ -287,11 +291,12 @@ const PulseBoard = (props) => {
 
 const PulseSettings = (props) => {
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { pulseStrength, pulseDuration } = data;
   return (
-    <Section title="Emitter Configuration" minHeight="100%">
+    <Section title={t('ui.dna.emitter_configuration')} minHeight="100%">
       <LabeledList>
-        <LabeledList.Item label="Output level">
+        <LabeledList.Item label={t('ui.dna.output_level')}>
           <NumberInput
             animated
             tickWhileDragging
@@ -308,7 +313,7 @@ const PulseSettings = (props) => {
             }
           />
         </LabeledList.Item>
-        <LabeledList.Item label="Pulse duration">
+        <LabeledList.Item label={t('ui.dna.pulse_duration')}>
           <NumberInput
             animated
             tickWhileDragging
@@ -332,10 +337,11 @@ const PulseSettings = (props) => {
 
 export const DnaConsoleEnzymes = (props) => {
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { isScannerConnected } = data;
   const { subjectBlock, type, name } = props;
   if (!isScannerConnected) {
-    return <Section color="bad">DNA Scanner is not connected.</Section>;
+    return <Section color="bad">{t('ui.dna.scanner_not_connected')}</Section>;
   }
   return (
     <>

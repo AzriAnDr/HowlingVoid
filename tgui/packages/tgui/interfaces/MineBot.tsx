@@ -13,6 +13,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   auto_defend: BooleanLike;
@@ -35,6 +36,7 @@ type Possible_Colors = {
 
 export const MineBot = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     auto_defend,
     repair_node_drone,
@@ -60,7 +62,12 @@ export const MineBot = (props) => {
     possibleColorList[bot_color],
   );
   return (
-    <Window title="Minebot Settings" width={625} height={328} theme="hackerman">
+    <Window
+      title={t('ui.mine_bot.title')}
+      width={625}
+      height={328}
+      theme="hackerman"
+    >
       <Window.Content>
         <Stack>
           <Stack.Item width="50%">
@@ -69,7 +76,7 @@ export const MineBot = (props) => {
               title={bot_name}
               buttons={
                 <Button.Input
-                  buttonText="Rename"
+                  buttonText={t('ui.common.rename')}
                   color="transparent"
                   onCommit={(value) =>
                     act('set_name', {
@@ -116,63 +123,67 @@ export const MineBot = (props) => {
                       })
                     }
                   >
-                    Apply Color
+                    {t('ui.mine_bot.apply_color')}
                   </Button>
                 </Stack.Item>
               </Stack>
             </Section>
           </Stack.Item>
           <Stack.Item width="50%" textAlign="center">
-            <Section title="Configurations">
+            <Section title={t('ui.mine_bot.configurations')}>
               <LabeledList>
-                <LabeledList.Item label="Health">
+                <LabeledList.Item label={t('ui.common.health')}>
                   <ProgressBar
                     value={bot_health}
                     maxValue={bot_maxhealth}
                     color="white"
                   />
                 </LabeledList.Item>
-                <LabeledList.Item label="Mode">
+                <LabeledList.Item label={t('ui.common.mode')}>
                   <Button
                     textAlign="center"
                     width="50%"
                     style={{ padding: '3px' }}
                     onClick={() => act('toggle_mode')}
                   >
-                    {bot_mode ? 'Combat' : 'Safe'}
+                    {bot_mode
+                      ? t('ui.mine_bot.combat')
+                      : t('ui.mine_bot.safe')}
                   </Button>
                 </LabeledList.Item>
-                <LabeledList.Item label="Repair Node Drones">
+                <LabeledList.Item label={t('ui.mine_bot.repair_node_drones')}>
                   <Button
                     textAlign="center"
                     width="50%"
                     style={{ padding: '3px' }}
                     onClick={() => act('toggle_repair')}
                   >
-                    {repair_node_drone ? 'Repair' : 'Ignore'}
+                    {repair_node_drone
+                      ? t('ui.mine_bot.repair')
+                      : t('ui.mine_bot.ignore')}
                   </Button>
                 </LabeledList.Item>
-                <LabeledList.Item label="Plant Mines">
+                <LabeledList.Item label={t('ui.mine_bot.plant_mines')}>
                   <Button
                     textAlign="center"
                     width="50%"
                     style={{ padding: '3px' }}
                     onClick={() => act('toggle_mines')}
                   >
-                    {plant_mines ? 'On' : 'Off'}
+                    {plant_mines ? t('ui.common.on') : t('ui.common.off')}
                   </Button>
                 </LabeledList.Item>
-                <LabeledList.Item label="Auto protect">
+                <LabeledList.Item label={t('ui.mine_bot.auto_protect')}>
                   <Button
                     textAlign="center"
                     width="50%"
                     style={{ padding: '3px' }}
                     onClick={() => act('toggle_defend')}
                   >
-                    {auto_defend ? 'On' : 'Off'}
+                    {auto_defend ? t('ui.common.on') : t('ui.common.off')}
                   </Button>
                 </LabeledList.Item>
-                <LabeledList.Item label="Distance To Maintain">
+                <LabeledList.Item label={t('ui.mine_bot.distance_to_maintain')}>
                   <NumberInput
                     width="50%"
                     value={selectedDistance}

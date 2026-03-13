@@ -10,6 +10,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   announce_contents: string;
@@ -26,9 +27,10 @@ type Data = {
 };
 
 export function CommandReport() {
+  const { t } = usePreferencesLocalization();
   return (
     <Window
-      title="Create Command Report"
+      title={t('ui.command_report.create_command_report')}
       width={325}
       height={685}
       theme="admin"
@@ -55,6 +57,7 @@ export function CommandReport() {
 /** Allows the user to set the "sender" of the message via dropdown */
 function CentComName(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { command_name, command_name_presets = [], custom_name } = data;
 
   const [name, setName] = useState(command_name);
@@ -67,7 +70,7 @@ function CentComName(props) {
   }
 
   return (
-    <Section title="Set Central Command name" textAlign="center">
+    <Section title={t('ui.command_report.set_central_command_name')} textAlign="center">
       <Dropdown
         width="100%"
         selected={name}
@@ -84,15 +87,16 @@ function CentComName(props) {
 /** Allows the user to set the "sender" of the message via dropdown */
 function SubHeader(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { subheader } = data;
 
   return (
-    <Section title="Set report subheader" textAlign="center">
+    <Section title={t('ui.command_report.set_report_subheader')} textAlign="center">
       <Input
         fluid
         mt={1}
         value={subheader}
-        placeholder="Keep blank to not include a subheader"
+        placeholder={t('ui.command_report.keep_blank_no_subheader')}
         onBlur={(value) =>
           act('set_subheader', {
             new_subheader: value,
@@ -106,10 +110,11 @@ function SubHeader(props) {
 /** Features a section with dropdown for the announcement colour. */
 function AnnouncementColor(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { announcement_colors = [], announcement_color } = data;
 
   return (
-    <Section title="Set announcement color" textAlign="center">
+    <Section title={t('ui.command_report.set_announcement_color')} textAlign="center">
       <Dropdown
         width="100%"
         selected={announcement_color}
@@ -127,10 +132,11 @@ function AnnouncementColor(props) {
 /** Features a section with dropdown for sounds. */
 function AnnouncementSound(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { announcer_sounds = [], played_sound } = data;
 
   return (
-    <Section title="Set announcement sound" textAlign="center">
+    <Section title={t('ui.command_report.set_announcement_sound')} textAlign="center">
       <Dropdown
         width="100%"
         selected={played_sound}
@@ -148,11 +154,12 @@ function AnnouncementSound(props) {
 /** Creates the report textarea with a submit button. */
 function ReportText(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { announce_contents, print_report, command_report_content } = data;
   const [commandReport, setCommandReport] = useState(command_report_content);
 
   return (
-    <Section fill title="Set report text" textAlign="center">
+    <Section fill title={t('ui.command_report.set_report_text')} textAlign="center">
       <Stack fill vertical>
         <Stack.Item grow>
           <TextArea
@@ -160,7 +167,7 @@ function ReportText(props) {
             fluid
             onBlur={setCommandReport}
             value={commandReport}
-            placeholder="Enter report text here..."
+            placeholder={t('ui.command_report.enter_report_text_here_placeholder')}
           />
         </Stack.Item>
         <Stack.Item>
@@ -169,7 +176,7 @@ function ReportText(props) {
             checked={!!announce_contents}
             onClick={() => act('toggle_announce')}
           >
-            Announce Contents
+            {t('ui.command_report.announce_contents')}
           </Button.Checkbox>
         </Stack.Item>
         <Stack.Item>
@@ -180,11 +187,11 @@ function ReportText(props) {
             onClick={() => act('toggle_printing')}
             tooltip={
               !announce_contents &&
-              "Printing the report is required since we aren't announcing its contents."
+              t('ui.command_report.printing_required_tooltip')
             }
             tooltipPosition="top"
           >
-            Print Report
+            {t('ui.command_report.print_report')}
           </Button.Checkbox>
         </Stack.Item>
         <Stack.Item>
@@ -194,7 +201,7 @@ function ReportText(props) {
             textAlign="center"
             onClick={() => act('submit_report', { report: commandReport })}
           >
-            Submit Report
+            {t('ui.command_report.submit_report')}
           </Button.Confirm>
         </Stack.Item>
       </Stack>

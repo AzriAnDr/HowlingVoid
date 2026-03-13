@@ -14,6 +14,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   BossID: string;
@@ -27,10 +28,12 @@ type Data = {
 };
 
 export function NtosArcade(props) {
+  const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   return (
     <NtosWindow width={450} height={350}>
       <NtosWindow.Content>
-        <Section title="Outbomb Cuban Pete Ultra" textAlign="center">
+        <Section title={t('ui.ntosarcade.outbomb_cuban_pete_ultra')} textAlign="center">
           <Stack fill>
             <Stack.Item>
               <PlayerStats />
@@ -48,12 +51,13 @@ export function NtosArcade(props) {
 
 function PlayerStats(props) {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { PauseState, PlayerHitpoints, PlayerMP, Status } = data;
 
   return (
     <>
       <LabeledList>
-        <LabeledList.Item label="Player Health">
+        <LabeledList.Item label={t('ui.ntosarcade.player_health')}>
           <ProgressBar
             value={PlayerHitpoints}
             minValue={0}
@@ -68,7 +72,7 @@ function PlayerStats(props) {
             {PlayerHitpoints}HP
           </ProgressBar>
         </LabeledList.Item>
-        <LabeledList.Item label="Player Magic">
+        <LabeledList.Item label={t('ui.ntosarcade.player_magic')}>
           <ProgressBar
             value={PlayerMP}
             minValue={0}
@@ -118,61 +122,65 @@ function BossBar(props) {
 
 function BottomButtons(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { GameActive, PauseState, TicketCount } = data;
 
   return (
     <>
       <Button
         icon="fist-raised"
-        tooltip="Go in for the kill!"
+        tooltip={t('ui.ntosarcade.go_in_for_the_kill')}
         tooltipPosition="top"
         disabled={!GameActive || !!PauseState}
         onClick={() => act('Attack')}
       >
-        Attack!
+        {t('ui.common.attack')}
       </Button>
       <Button
         icon="band-aid"
-        tooltip="Heal yourself!"
+        tooltip={t('ui.ntosarcade.heal_yourself')}
         tooltipPosition="top"
         disabled={!GameActive || !!PauseState}
         onClick={() => act('Heal')}
       >
-        Heal!
+        {t('ui.common.heal')}
       </Button>
       <Button
         icon="magic"
-        tooltip="Recharge your magic!"
+        tooltip={t('ui.ntosarcade.recharge_your_magic')}
         tooltipPosition="top"
         disabled={!GameActive || !!PauseState}
         onClick={() => act('Recharge_Power')}
       >
-        Recharge!
+        {t('ui.common.recharge')}
       </Button>
 
       <Box>
         <Button
           icon="sync-alt"
-          tooltip="One more game couldn't hurt."
+          tooltip={t('ui.ntosarcade.one_more_game_couldn_t_hurt')}
           tooltipPosition="top"
           disabled={!!GameActive}
           onClick={() => act('Start_Game')}
         >
-          Begin Game
+          {t('ui.ntosarcade.begin_game')}
         </Button>
         <Button
           icon="ticket-alt"
-          tooltip="Claim at your local Arcade Computer for Prizes!"
+          tooltip={t(
+            'ui.ntosarcade.claim_at_your_local_arcade_computer_for_prizes',
+          )}
           tooltipPosition="top"
           disabled={!!GameActive}
           onClick={() => act('Dispense_Tickets')}
         >
-          Claim Tickets
+          {t('ui.ntosarcade.claim_tickets')}
         </Button>
       </Box>
       <Box color={TicketCount >= 1 ? 'good' : 'normal'}>
-        Earned Tickets: {TicketCount}
+        {t('ui.ntosarcade.earned_tickets')}: {TicketCount}
       </Box>
     </>
   );
 }
+

@@ -2,6 +2,7 @@ import { Button, NoticeBox, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type BasketballPanelData = {
   total_votes: number;
@@ -14,28 +15,27 @@ type BasketballPanelData = {
 };
 
 export const BasketballPanel = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<BasketballPanelData>();
 
   return (
-    <Window title="Basketball" width={650} height={580}>
+    <Window title={t('ui.basketball.title')} width={650} height={580}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>
             <Section
               fill
               scrollable
-              title="Lobby"
+              title={t('ui.basketball.lobby')}
               buttons={
                 <>
                   <Button
                     icon="clipboard-check"
                     tooltipPosition="bottom-start"
                     tooltip={`
-                    Signs you up for the next game. If there
-                    is an ongoing one, you will be signed up
-                    for the next.
+                    ${t('ui.basketball.signup_tooltip')}
                   `}
-                    content="Sign Up"
+                    content={t('ui.basketball.sign_up')}
                     onClick={() => act('basketball_signup')}
                   />
                   <Button
@@ -43,14 +43,13 @@ export const BasketballPanel = (props) => {
                     disabled={data.total_votes < data.players_min}
                     onClick={() => act('basketball_start')}
                   >
-                    Start
+                    {t('ui.common.start')}
                   </Button>
                 </>
               }
             >
               <NoticeBox info>
-                The lobby has {data.total_votes} players signed up. The minigame
-                is for {data.players_min} to {data.players_max} players.
+                {t('ui.basketball.lobby_has')} {data.total_votes} {t('ui.basketball.players_signed_up')} {t('ui.basketball.minigame_is_for')} {data.players_min} {t('ui.common.to')} {data.players_max} {t('ui.common.players')}.
               </NoticeBox>
 
               {data.lobbydata.map((lobbyist) => (
@@ -61,7 +60,7 @@ export const BasketballPanel = (props) => {
                   align="baseline"
                 >
                   <Stack.Item grow>{lobbyist.ckey}</Stack.Item>
-                  <Stack.Item>Status:</Stack.Item>
+                  <Stack.Item>{t('ui.common.status')}:</Stack.Item>
                   <Stack.Item
                     color={lobbyist.status === 'Ready' ? 'green' : 'red'}
                   >

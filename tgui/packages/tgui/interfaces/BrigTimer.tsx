@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   timing: BooleanLike;
@@ -13,23 +14,28 @@ type Data = {
 
 export const BrigTimer = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { timing, minutes, seconds, flash_charging } = data;
   return (
     <Window width={300} height={138}>
       <Window.Content scrollable>
         <Section
-          title="Cell Timer"
+          title={t('ui.brig_timer.cell_timer')}
           buttons={
             <>
               <Button
                 icon="clock-o"
-                content={timing ? 'Stop' : 'Start'}
+                content={timing ? t('ui.common.stop') : t('ui.common.start')}
                 selected={timing}
                 onClick={() => act(timing ? 'stop' : 'start')}
               />
               <Button
                 icon="lightbulb-o"
-                content={flash_charging ? 'Recharging' : 'Flash'}
+                content={
+                  flash_charging
+                    ? t('ui.brig_timer.recharging')
+                    : t('ui.brig_timer.flash')
+                }
                 disabled={flash_charging}
                 onClick={() => act('flash')}
               />
@@ -53,17 +59,17 @@ export const BrigTimer = (props) => {
           <br />
           <Button
             icon="hourglass-start"
-            content="Short"
+            content={t('ui.common.short')}
             onClick={() => act('preset', { preset: 'short' })}
           />
           <Button
             icon="hourglass-start"
-            content="Medium"
+            content={t('ui.common.medium')}
             onClick={() => act('preset', { preset: 'medium' })}
           />
           <Button
             icon="hourglass-start"
-            content="Long"
+            content={t('ui.common.long')}
             onClick={() => act('preset', { preset: 'long' })}
           />
         </Section>

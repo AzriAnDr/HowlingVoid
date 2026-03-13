@@ -12,11 +12,13 @@ import {
 import { capitalizeFirst } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { Fallback } from './Fallback';
 import type { PlantAnalyzerData } from './types';
 
 export function PlantAnalyzerTrayStats(props) {
   const { data } = useBackend<PlantAnalyzerData>();
+  const { t } = usePreferencesLocalization(data);
   const { tray_data } = data;
 
   if (!tray_data) {
@@ -83,8 +85,8 @@ export function PlantAnalyzerTrayStats(props) {
         <Stack.Item width="100%">
           <LabeledList>
             <LabeledList.Item
-              label="Water"
-              tooltip="The plant starts withering without water, unless it is a mushroom."
+              label={t('ui.plant_analyzer.water')}
+              tooltip={t('ui.plant_analyzer.tooltip_water')}
             >
               <ProgressBar
                 value={tray_data.water / tray_data.water_max}
@@ -99,8 +101,8 @@ export function PlantAnalyzerTrayStats(props) {
             </LabeledList.Item>
 
             <LabeledList.Item
-              label="Nutrients"
-              tooltip="The plant starts withering without nutrients, unless it is a weed. Nutrients may affect plant and tray stats."
+              label={t('ui.plant_analyzer.nutrients')}
+              tooltip={t('ui.plant_analyzer.tooltip_nutrients')}
             >
               {tray_data.reagents.length > 0 ? (
                 <Box>
@@ -142,8 +144,8 @@ export function PlantAnalyzerTrayStats(props) {
             </LabeledList.Item>
 
             <LabeledList.Item
-              label="Light"
-              tooltip="The plant withers when the light is below 40%. Mushrooms need only 20%."
+              label={t('ui.plant_analyzer.light')}
+              tooltip={t('ui.plant_analyzer.tooltip_light')}
             >
               <ProgressBar
                 value={tray_data.light_level}
@@ -159,8 +161,8 @@ export function PlantAnalyzerTrayStats(props) {
             </LabeledList.Item>
 
             <LabeledList.Item
-              label="Weeds"
-              tooltip="Damage the Yield stat of the plant. At high level may invade the tray. Remove by cultivating."
+              label={t('ui.plant_analyzer.weeds')}
+              tooltip={t('ui.plant_analyzer.tooltip_weeds')}
             >
               <ProgressBar
                 value={tray_data.weeds}
@@ -176,8 +178,8 @@ export function PlantAnalyzerTrayStats(props) {
             </LabeledList.Item>
 
             <LabeledList.Item
-              label="Pests"
-              tooltip="Damage the plant and reduce its Potency stat. Remove with pest controlling nutrients."
+              label={t('ui.plant_analyzer.pests')}
+              tooltip={t('ui.plant_analyzer.tooltip_pests')}
             >
               <ProgressBar
                 value={tray_data.pests}
@@ -193,8 +195,8 @@ export function PlantAnalyzerTrayStats(props) {
             </LabeledList.Item>
 
             <LabeledList.Item
-              label="Toxins"
-              tooltip="Damage the plant. Remove with detoxing nutrients."
+              label={t('ui.plant_analyzer.toxins')}
+              tooltip={t('ui.plant_analyzer.tooltip_toxins')}
             >
               <ProgressBar
                 value={tray_data.toxins}
@@ -217,6 +219,7 @@ export function PlantAnalyzerTrayStats(props) {
 
 export function PlantAnalyzerTrayChems(props) {
   const { data } = useBackend<PlantAnalyzerData>();
+  const { t } = usePreferencesLocalization(data);
   const { tray_data } = data;
 
   if (!tray_data) {
@@ -228,13 +231,13 @@ export function PlantAnalyzerTrayChems(props) {
     <Section title={capitalizeFirst(`${tray_data.name} Nutrients`)}>
       {tray_data.reagents.length === 0 ? (
         <NoticeBox color="red" align="center">
-          No reagents detected
+          {t('ui.plant_analyzer.no_reagents_detected')}
         </NoticeBox>
       ) : (
         <Table>
           <Table.Row header>
-            <Table.Cell>Reagent</Table.Cell>
-            <Table.Cell>Volume</Table.Cell>
+            <Table.Cell>{t('ui.common.reagent')}</Table.Cell>
+            <Table.Cell>{t('ui.common.volume')}</Table.Cell>
           </Table.Row>
           {tray_data.reagents.map((reagent, i) => (
             <Table.Row key={i} className="candystripe">

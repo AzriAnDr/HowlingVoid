@@ -10,6 +10,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import {
   CHROMOSOME_NEVER,
   CHROMOSOME_NONE,
@@ -30,12 +31,13 @@ const isSameMutation = (a, b) => {
 const ChromosomeInfo = (props) => {
   const { mutation, disabled } = props;
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   if (mutation.CanChromo === CHROMOSOME_NEVER) {
-    return <Box color="label">No compatible chromosomes</Box>;
+    return <Box color="label">{t('ui.dna.no_compatible_chromosomes')}</Box>;
   }
   if (mutation.CanChromo === CHROMOSOME_NONE) {
     if (disabled) {
-      return <Box color="label">No chromosome applied.</Box>;
+      return <Box color="label">{t('ui.dna.no_chromosome_applied')}</Box>;
     }
     return (
       <>
@@ -97,6 +99,7 @@ const MutationCombiner = (props) => {
 export const MutationInfo = (props) => {
   const { mutation } = props;
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     diskCapacity,
     diskReadOnly,
@@ -109,12 +112,12 @@ export const MutationInfo = (props) => {
   const mutationStorage = data.storage.console ?? [];
   const advInjectors = data.storage.injector ?? [];
   if (!mutation) {
-    return <Box color="label">Nothing to show.</Box>;
+    return <Box color="label">{t('ui.common.nothing_to_show')}</Box>;
   }
   if (mutation.Source === 'occupant' && !mutation.Discovered) {
     return (
       <LabeledList>
-        <LabeledList.Item label="Name">{mutation.Alias}</LabeledList.Item>
+        <LabeledList.Item label={t('ui.common.name')}>{mutation.Alias}</LabeledList.Item>
       </LabeledList>
     );
   }
@@ -129,15 +132,15 @@ export const MutationInfo = (props) => {
   return (
     <>
       <LabeledList>
-        <LabeledList.Item label="Name">
+        <LabeledList.Item label={t('ui.common.name')}>
           <Box inline color={MUT_COLORS[mutation.Quality]}>
             {mutation.Name}
           </Box>
         </LabeledList.Item>
-        <LabeledList.Item label="Description">
+        <LabeledList.Item label={t('ui.common.description')}>
           {mutation.Description}
         </LabeledList.Item>
-        <LabeledList.Item label="Instability">
+        <LabeledList.Item label={t('ui.dna.instability')}>
           {mutation.Instability}
         </LabeledList.Item>
       </LabeledList>
@@ -231,7 +234,7 @@ export const MutationInfo = (props) => {
                 <Button
                   icon="save"
                   disabled={savedToConsole || !mutation.Active}
-                  content="Save to Console"
+                  content={t('ui.dna.save_to_console')}
                   onClick={() =>
                     act('save_console', {
                       mutref: mutation.ByondRef,
@@ -252,7 +255,7 @@ export const MutationInfo = (props) => {
                     diskReadOnly ||
                     !mutation.Active
                   }
-                  content="Save to Disk"
+                  content={t('ui.dna.save_to_disk')}
                   onClick={() =>
                     act('save_disk', {
                       mutref: mutation.ByondRef,
@@ -280,7 +283,7 @@ export const MutationInfo = (props) => {
               (!!mutation.Scrambled && mutation.Source === 'occupant')) && (
               <Stack.Item>
                 <Button
-                  content="Nullify"
+                  content={t('ui.dna.nullify')}
                   onClick={() =>
                     act('nullify', {
                       mutref: mutation.ByondRef,

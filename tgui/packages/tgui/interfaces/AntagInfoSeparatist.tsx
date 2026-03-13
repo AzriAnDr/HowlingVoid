@@ -2,6 +2,7 @@ import { Icon, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import { type Objective, ObjectivePrintout } from './common/Objectives';
 
 type Info = {
@@ -51,6 +52,7 @@ const IntroductionObjectives = (props) => {
 
 const FrequentlyAskedQuestions = (props) => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { nation } = data;
   return (
     <Section fill>
@@ -82,7 +84,7 @@ const FrequentlyAskedQuestions = (props) => {
         <Stack.Item fontSize="16px">
           &quot;Is {nation} the best nation?&quot;
         </Stack.Item>
-        <Stack.Item>Yes.</Stack.Item>
+        <Stack.Item>{t('ui.common.yes')}</Stack.Item>
       </Stack>
     </Section>
   );

@@ -1,6 +1,7 @@
 import { Button, Flex, NoticeBox } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 
 /**
  * This component by expects the following fields to be returned
@@ -17,6 +18,7 @@ import { useBackend } from '../../backend';
  * it's preferred to stick to defaults.
  */
 export const InterfaceLockNoticeBox = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend();
   const {
     siliconUser = data.siliconUser,
@@ -30,7 +32,7 @@ export const InterfaceLockNoticeBox = (props) => {
     return (
       <NoticeBox color="grey">
         <Flex align="center">
-          <Flex.Item>Interface lock status:</Flex.Item>
+          <Flex.Item>{t('ui.common.interface_lock_status')}</Flex.Item>
           <Flex.Item grow={1} />
           <Flex.Item>
             <Button

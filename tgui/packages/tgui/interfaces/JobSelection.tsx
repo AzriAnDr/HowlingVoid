@@ -14,6 +14,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { JOB2ICON } from './common/JobToIcon';
+import { usePreferencesLocalization } from './localization';
 
 type Job = {
   unavailable_reason: string | null;
@@ -50,6 +51,7 @@ type JobEntryProps = {
 
 function JobEntry(props: JobEntryProps) {
   const { jobName, job, department, onClick } = props;
+  const { t } = usePreferencesLocalization();
 
   const jobIcon = JOB2ICON[jobName] || null;
 
@@ -74,7 +76,7 @@ function JobEntry(props: JobEntryProps) {
         (job.prioritized ? (
           <>
             <p style={{ marginTop: '0px' }}>
-              <b>The HoP wants more people in this job!</b>
+              <b>{t('ui.jobselection.the_hop_wants_more_people_in_this_job')}</b>
             </p>
             {job.description}
           </>
@@ -116,6 +118,7 @@ type DepartmentEntryProps = {
 function DepartmentEntry(props: DepartmentEntryProps) {
   const { name, department } = props;
   const { act } = useBackend<Data>();
+  const { t } = usePreferencesLocalization();
 
   return (
     <Box minWidth="30%">
@@ -133,8 +136,9 @@ function DepartmentEntry(props: DepartmentEntryProps) {
               }}
             >
               {department.open_slots +
-                (department.open_slots === 1 ? ' slot' : ' slots') +
-                ' available'}
+                (department.open_slots === 1
+                  ? t('ui.job_selection.slot_available_suffix')
+                  : t('ui.job_selection.slots_available_suffix'))}
             </span>
           </>
         }
@@ -174,6 +178,7 @@ function DepartmentEntry(props: DepartmentEntryProps) {
 
 export function JobSelection(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   if (!data?.departments_static) {
     return null; // Stop TGUI whitescreens with TGUI-dev!
   }
@@ -193,9 +198,11 @@ export function JobSelection(props) {
           buttons={
             <Button
               onClick={() => act('select_job', { job: 'Random' })}
-              tooltip="Roll target random job. You can re-roll or cancel your random job if you don't like it."
+              tooltip={t(
+                'ui.jobselection.roll_target_random_job_you_can_re_roll_or_cancel_your_random_job',
+              )}
             >
-              Random Job!
+              {t('ui.job_selection.random_job')}
             </Button>
           }
           fill
@@ -206,12 +213,18 @@ export function JobSelection(props) {
               {
                 /* NOVA EDIT ADDITION START - Alert level on jobs menu */
                 <NoticeBox color={data.alert_level.color}>
-                  The current alert level is: {data.alert_level.name}
+                  {t('ui.job_selection.current_alert_level_is').replace(
+                    '{level}',
+                    data.alert_level.name,
+                  )}
                 </NoticeBox>
                 /* NOVA EDIT ADDITION END */
               }
               <Box as="span" color="label">
-                It is currently {round_duration} into the shift.
+                {t('ui.job_selection.current_shift_time').replace(
+                  '{duration}',
+                  round_duration,
+                )}
               </Box>
             </>
           }

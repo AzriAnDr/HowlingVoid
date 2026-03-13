@@ -19,6 +19,7 @@ import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 import { type Beaker, BeakerDisplay } from './common/BeakerDisplay';
 import { bitflagInfo } from './Reagents/types';
+import { usePreferencesLocalization } from './localization';
 
 type DispensableReagent = {
   title: string;
@@ -88,6 +89,7 @@ function reagentListToArray(
 
 export const ChemDispenser = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const recording = !!data.recordingRecipe;
   const {
     recipes = [],
@@ -165,7 +167,7 @@ export const ChemDispenser = (props) => {
             <Stack vertical fill>
               <Stack.Item>
                 <Section
-                  title="Status"
+                  title={t('ui.common.status')}
                   buttons={
                     <>
                       {recording && (
@@ -176,7 +178,7 @@ export const ChemDispenser = (props) => {
                       )}
                       <Button
                         icon="cog"
-                        tooltip="Color code the reagents by pH"
+                        tooltip={t('ui.chem_dispenser.color_code_reagents_by_ph')}
                         tooltipPosition="bottom-start"
                         selected={showPhCol}
                         onClick={() => setShowPhCol(!showPhCol)}
@@ -186,26 +188,26 @@ export const ChemDispenser = (props) => {
                         disabled={!beaker}
                         tooltip={
                           beaker
-                            ? 'Look up recipes and reagents!'
-                            : 'Please insert a beaker!'
+                            ? t('ui.chem_dispenser.look_up_recipes_and_reagents')
+                            : t('ui.chem_dispenser.please_insert_a_beaker')
                         }
                         tooltipPosition="bottom-start"
                         onClick={() => act('reaction_lookup')}
                       >
-                        Reactions
+                        {t('ui.chem_heater.reactions')}
                       </Button>
                       <Button
                         icon={showReactionList ? 'arrow-left' : 'arrow-right'}
                         tooltipPosition="bottom-start"
                         onClick={() => setShowReactionList(!showReactionList)}
                       >
-                        Recipes
+                        {t('ui.chem_dispenser.recipes')}
                       </Button>
                     </>
                   }
                 >
                   <LabeledList>
-                    <LabeledList.Item label="Energy">
+                    <LabeledList.Item label={t('ui.common.energy')}>
                       <ProgressBar value={data.energy / data.maxEnergy}>
                         {data.displayedUnits +
                           ' / ' +
@@ -218,7 +220,7 @@ export const ChemDispenser = (props) => {
               </Stack.Item>
               <Stack.Item>
                 <Section
-                  title="Custom Recipes"
+                  title={t('ui.chem_dispenser.custom_recipes')}
                   buttons={
                     <>
                       {!recording && (
@@ -227,7 +229,7 @@ export const ChemDispenser = (props) => {
                             color="transparent"
                             onClick={() => act('clear_recipes')}
                           >
-                            Clear recipes
+                            {t('ui.chem_dispenser.clear_recipes')}
                           </Button>
                         </Box>
                       )}
@@ -237,7 +239,7 @@ export const ChemDispenser = (props) => {
                           disabled={!beaker}
                           onClick={() => act('record_recipe')}
                         >
-                          Record
+                          {t('ui.common.record')}
                         </Button>
                       )}
                       {recording && (
@@ -246,7 +248,7 @@ export const ChemDispenser = (props) => {
                           color="transparent"
                           onClick={() => act('cancel_recording')}
                         >
-                          Discard
+                          {t('ui.common.discard')}
                         </Button>
                       )}
                       {recording && (
@@ -255,7 +257,7 @@ export const ChemDispenser = (props) => {
                           color="green"
                           onClick={() => act('save_recording')}
                         >
-                          Save
+                          {t('ui.common.save')}
                         </Button>
                       )}
                     </>
@@ -278,7 +280,7 @@ export const ChemDispenser = (props) => {
                       </Button>
                     ))}
                     {recipes.length === 0 && (
-                      <Box color="light-gray">No recipes.</Box>
+                      <Box color="light-gray">{t('ui.chem_dispenser.no_recipes')}</Box>
                     )}
                   </Box>
                 </Section>
@@ -286,11 +288,11 @@ export const ChemDispenser = (props) => {
               <Stack.Item>
                 <Button // NOVA EDIT ADDITION BEGIN - CHEMISTRY QOL
                   icon="pen"
-                  content="Custom Amount"
+                  content={t('ui.common.custom_amount')}
                   onClick={() => act('custom_amount')}
                 />
                 <Section
-                  title="Dispense"
+                  title={t('ui.chem_dispenser.dispense')}
                   buttons={beakerTransferAmounts.map((amount) => (
                     <Button
                       key={amount}
@@ -322,7 +324,7 @@ export const ChemDispenser = (props) => {
               <Stack.Item grow>
                 <Section
                   fill
-                  title="Beaker"
+                  title={t('ui.chem_master.beaker')}
                   buttons={beakerTransferAmounts.map((amount) => (
                     <Button
                       key={amount}
@@ -349,18 +351,18 @@ export const ChemDispenser = (props) => {
                         alignItems: 'center',
                       }}
                     >
-                      <Box color="label">No beaker loaded.</Box>
+                      <Box color="label">{t('ui.common.no_beaker_loaded')}</Box>
                       <Button
                         icon="eject"
                         onClick={() => act('insert')}
                         disabled={!hasBeakerInHand}
                         tooltip={
                           !hasBeakerInHand &&
-                          'You need to hold a container in your hand!'
+                          t('ui.common.need_container_in_hand')
                         }
                         tooltipPosition="left-start"
                       >
-                        Insert
+                        {t('ui.common.insert')}
                       </Button>
                     </Box>
                   )}
@@ -370,13 +372,13 @@ export const ChemDispenser = (props) => {
           </Stack.Item>
           {showReactionList && (
             <Stack.Item width={reactionWidth}>
-              <Section title="Recipes" fill>
+              <Section title={t('ui.chem_dispenser.recipes')} fill>
                 <Stack vertical fill>
                   <Stack.Item>
                     <Stack>
                       <Stack.Item grow>
                         <Input
-                          placeholder="Search reactions..."
+                          placeholder={t('ui.common.search_reactions_placeholder')}
                           value={searchTerm}
                           fluid
                           onChange={(value) => setSearchTerm(value)}
@@ -440,7 +442,7 @@ export const ChemDispenser = (props) => {
                             </Stack.Item>
                           ))
                         ) : (
-                          <NoticeBox>No reactions found.</NoticeBox>
+                          <NoticeBox>{t('ui.common.no_reactions_found')}</NoticeBox>
                         )}
                       </Stack>
                     </Section>
@@ -510,6 +512,8 @@ type ReactionDisplayProps = {
 };
 
 const ReactionDisplay = (props: ReactionDisplayProps) => {
+  const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { reaction, pinnedReactions, setPinnedReactions } = props;
   return (
     <Stack
@@ -575,7 +579,7 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
       </Stack.Item>
       <Stack.Item>
         <Collapsible
-          title="Recipe"
+          title={t('ui.chem_dispenser.recipe')}
           open={pinnedReactions.includes(reaction.name)}
         >
           <BlockQuote>

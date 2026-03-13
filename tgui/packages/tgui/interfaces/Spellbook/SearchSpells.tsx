@@ -1,12 +1,14 @@
 import { useAtom } from 'jotai';
 import { Box, NoticeBox, Stack } from 'tgui-core/components';
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { spellSearchAtom } from '.';
 import { SpellTabDisplay } from './SpellTabDisplay';
 import type { SpellbookData, SpellEntry } from './types';
 
 export function SearchSpells(props) {
   const { data } = useBackend<SpellbookData>();
+  const { t } = usePreferencesLocalization();
   const [spellSearch] = useAtom(spellSearchAtom);
   const { entries } = data;
 
@@ -39,12 +41,11 @@ export function SearchSpells(props) {
     return (
       <Stack width="100%" vertical>
         <Stack.Item>
-          <NoticeBox>No spells found!</NoticeBox>
+          <NoticeBox>{t('ui.spellbook.no_spells_found')}</NoticeBox>
         </Stack.Item>
         <Stack.Item>
           <Box italic align="center" color="lightgrey">
-            Search tip: Searching "Robeless" will only show you spells that
-            don't require wizard garb!
+            {t('ui.spellbook.search_tip_robeless')}
           </Box>
         </Stack.Item>
       </Stack>

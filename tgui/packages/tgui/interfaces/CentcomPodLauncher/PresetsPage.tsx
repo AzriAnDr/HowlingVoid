@@ -11,6 +11,7 @@ import {
 import { createUuid } from 'tgui-core/uuid';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { POD_GREY } from './constants';
 import type { PodLauncherData } from './types';
 
@@ -26,6 +27,7 @@ async function saveDataToPreset(id: string, data: any) {
 
 export function PresetsPage(props) {
   const { act, data } = useBackend<PodLauncherData>();
+  const { t } = usePreferencesLocalization(data);
 
   const [editing, setEditing] = useState(false);
   const [hue, setHue] = useState(0);
@@ -92,12 +94,16 @@ export function PresetsPage(props) {
       }
       fill
       scrollable
-      title="Presets"
+      title={t('ui.centcom_pod_launcher.presets')}
     >
       {editing && (
         <Stack vertical>
           <Stack.Item>
-            <Input autoFocus onChange={setName} placeholder="Preset Name" />
+            <Input
+              autoFocus
+              onChange={setName}
+              placeholder={t('ui.centcom_pod_launcher.preset_name')}
+            />
             <Button
               icon="check"
               inline
@@ -105,7 +111,7 @@ export function PresetsPage(props) {
                 newPreset(name, hue, data);
                 setEditing(false);
               }}
-              tooltip="Confirm"
+              tooltip={t('ui.common.confirm')}
               tooltipPosition="right"
             />
             <Button
@@ -115,11 +121,11 @@ export function PresetsPage(props) {
                 setName('');
                 setEditing(false);
               }}
-              tooltip="Cancel"
+              tooltip={t('ui.common.cancel')}
             />
           </Stack.Item>
           <Stack.Item>
-            <span color="label"> Hue: </span>
+            <span color="label"> {t('ui.centcom_pod_launcher.hue')}: </span>
             <NumberInput
               animated
               maxValue={360}
@@ -144,8 +150,7 @@ export function PresetsPage(props) {
 
       {(!presets || presets.length === 0) && (
         <span style={POD_GREY}>
-          Click [+] to define a new preset. They are persistent across
-          rounds/servers!
+          {t('ui.centcom_pod_launcher.new_preset_hint')}
         </span>
       )}
       {Array.isArray(presets) &&
@@ -172,7 +177,7 @@ export function PresetsPage(props) {
       <span style={POD_GREY}>
         <br />
         <br />
-        NOTE: Custom sounds from outside the base game files will not save! :(
+        {t('ui.centcom_pod_launcher.custom_sounds_not_saved')}
       </span>
     </Section>
   );
@@ -188,6 +193,7 @@ type PresetButtonsProps = {
 
 function PresetButtons(props: PresetButtonsProps) {
   const { data } = useBackend<PodLauncherData>();
+  const { t } = usePreferencesLocalization(data);
   const { editing, deletePreset, loadPreset, presetId, setEditing } = props;
 
   return (
@@ -197,7 +203,7 @@ function PresetButtons(props: PresetButtonsProps) {
           color="transparent"
           icon="plus"
           onClick={() => setEditing(!editing)}
-          tooltip="New Preset"
+          tooltip={t('ui.centcom_pod_launcher.new_preset')}
         />
       )}
       <Button
@@ -205,7 +211,7 @@ function PresetButtons(props: PresetButtonsProps) {
         icon="download"
         inline
         onClick={() => saveDataToPreset(presetId, data)}
-        tooltip="Saves preset"
+        tooltip={t('ui.centcom_pod_launcher.save_preset')}
         tooltipPosition="bottom"
       />
       <Button
@@ -215,14 +221,14 @@ function PresetButtons(props: PresetButtonsProps) {
         onClick={() => {
           loadPreset(presetId);
         }}
-        tooltip="Loads preset"
+        tooltip={t('ui.centcom_pod_launcher.load_preset')}
       />
       <Button
         color="transparent"
         icon="trash"
         inline
         onClick={() => deletePreset(presetId)}
-        tooltip="Deletes the selected preset"
+        tooltip={t('ui.centcom_pod_launcher.delete_selected_preset')}
         tooltipPosition="bottom-start"
       />
     </>

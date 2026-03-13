@@ -11,10 +11,12 @@ import {
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 import { GasmixParser } from './common/GasmixParser';
+import { usePreferencesLocalization } from './localization';
 
 export const AnomalyRefinery = (props) => {
+  const { t } = usePreferencesLocalization();
   return (
-    <Window title="Anomaly Refinery" width={550} height={350}>
+    <Window title={t('ui.anomaly_refinery.title')} width={550} height={350}>
       <Window.Content>
         <AnomalyRefineryContent />
       </Window.Content>
@@ -24,6 +26,7 @@ export const AnomalyRefinery = (props) => {
 
 const AnomalyRefineryContent = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const [currentTab, changeTab] = useSharedState('exploderTab', 1);
   const { core, valvePresent, active } = data;
 
@@ -41,7 +44,7 @@ const AnomalyRefineryContent = (props) => {
               disabled={!core || active}
               onClick={() => act('eject_core')}
             >
-              {'Eject Core'}
+              {t('ui.anomaly_refinery.eject_core')}
             </Button>
           </Stack.Item>
           <Stack.Item grow>
@@ -51,7 +54,9 @@ const AnomalyRefineryContent = (props) => {
               icon={currentTab === 1 ? 'server' : 'compress-arrows-alt'}
               onClick={() => changeTab(currentTab === 1 ? 2 : 1)}
             >
-              {currentTab === 1 ? 'Run Simulations' : 'Implosion Control'}
+              {currentTab === 1
+                ? t('ui.anomaly_refinery.run_simulations')
+                : t('ui.anomaly_refinery.implosion_control')}
             </Button>
           </Stack.Item>
           <Stack.Item grow>
@@ -62,7 +67,7 @@ const AnomalyRefineryContent = (props) => {
               disabled={!valvePresent || active}
               onClick={() => act('eject_bomb')}
             >
-              {'Eject Bomb'}
+              {t('ui.anomaly_refinery.eject_bomb')}
             </Button>
           </Stack.Item>
         </Stack>
@@ -73,6 +78,7 @@ const AnomalyRefineryContent = (props) => {
 
 const CoreCompressorContent = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { core, requiredRadius, gasList, valveReady, active, valvePresent } =
     data;
   return (
@@ -80,7 +86,7 @@ const CoreCompressorContent = (props) => {
       <Stack.Item grow>
         <Section
           fill
-          title="Inserted Core"
+          title={t('ui.anomaly_refinery.inserted_core')}
           buttons={
             <Button
               icon="compress-arrows-alt"
@@ -88,19 +94,23 @@ const CoreCompressorContent = (props) => {
               onClick={() => act('start_implosion')}
               disabled={active || !valveReady || !core}
             >
-              {'Implode Core'}
+              {t('ui.anomaly_refinery.implode_core')}
             </Button>
           }
         >
-          {!core && <Modal textAlign="center">{'No Core Inserted!'}</Modal>}
+          {!core && (
+            <Modal textAlign="center">
+              {t('ui.anomaly_refinery.no_core_inserted')}
+            </Modal>
+          )}
           <LabeledList>
-            <LabeledList.Item label={'Name'}>
+            <LabeledList.Item label={t('ui.common.name')}>
               {core ? core : '-'}
             </LabeledList.Item>
-            <LabeledList.Item label={'Required Radius'}>
+            <LabeledList.Item label={t('ui.anomaly_refinery.required_radius')}>
               {requiredRadius
                 ? `${requiredRadius} tiles`
-                : 'Implosion not possible.'}
+                : t('ui.anomaly_refinery.implosion_not_possible')}
             </LabeledList.Item>
           </LabeledList>
         </Section>
@@ -108,25 +118,28 @@ const CoreCompressorContent = (props) => {
       <Stack.Item grow>
         <Section
           fill
-          title="Inserted Bomb"
+          title={t('ui.anomaly_refinery.inserted_bomb')}
           buttons={
             <Button
               disabled={!valveReady}
               icon="exchange-alt"
               onClick={() => act('swap')}
             >
-              {'Swap Merging Order'}
+              {t('ui.anomaly_refinery.swap_merging_order')}
             </Button>
           }
         >
           {!valvePresent && (
-            <Modal textAlign="center">{'No Bomb Inserted!'}</Modal>
+            <Modal textAlign="center">
+              {t('ui.anomaly_refinery.no_bomb_inserted')}
+            </Modal>
           )}
           <Stack align="center">
             <Stack.Item grow textAlign="center">
               <Box height={2} width="100%" bold>
-                {'Giver Tank (' +
-                  (gasList[1].name ? gasList[1].name : 'Not Available') +
+                {`${t('ui.anomaly_refinery.giver_tank')} (${
+                  gasList[1].name ? gasList[1].name : t('ui.common.not_available')
+                }` +
                   ')'}
               </Box>
               <Box height={2} width="100%">
@@ -152,8 +165,9 @@ const CoreCompressorContent = (props) => {
             </Stack.Item>
             <Stack.Item grow textAlign="center">
               <Box height={2} width="100%" bold>
-                {'Target Tank (' +
-                  (gasList[0].name ? gasList[0].name : 'Not Available') +
+                {`${t('ui.anomaly_refinery.target_tank')} (${
+                  gasList[0].name ? gasList[0].name : t('ui.common.not_available')
+                }` +
                   ')'}
               </Box>
               <Box height={2} width="100%">
@@ -182,6 +196,7 @@ const CoreCompressorContent = (props) => {
 };
 const BombProcessorContent = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { gasList, reactionIncrement } = data;
   return (
     <>
@@ -194,8 +209,8 @@ const BombProcessorContent = (props) => {
             <Button
               tooltip={
                 reactionIncrement === 0
-                  ? 'Valve status: Closed'
-                  : 'Valve status: Open. Current reaction count:' +
+                  ? t('ui.anomaly_refinery.valve_status_closed')
+                  : t('ui.anomaly_refinery.valve_status_open_current_reaction') +
                     reactionIncrement
               }
               icon="vial"
@@ -203,12 +218,18 @@ const BombProcessorContent = (props) => {
               onClick={() => act('react')}
               textAlign="center"
               disabled={!gasList[0].total_moles || !gasList[1].total_moles}
-              content={reactionIncrement === 0 ? 'Open Valve' : 'React'}
+              content={
+                reactionIncrement === 0
+                  ? t('ui.anomaly_refinery.open_valve')
+                  : t('ui.anomaly_refinery.react')
+              }
             />
           }
         >
           {!gasList[2].total_moles && (
-            <Modal textAlign="center">{'No Gas Present'}</Modal>
+            <Modal textAlign="center">
+              {t('ui.anomaly_refinery.no_gas_present')}
+            </Modal>
           )}
           <GasmixParser gasmix={gasList[2]} />
         </Section>
@@ -223,11 +244,13 @@ const BombProcessorContent = (props) => {
                 title={
                   individualGasmix.name
                     ? individualGasmix.name
-                    : 'Not Available'
+                    : t('ui.common.not_available')
                 }
               >
                 {!individualGasmix.total_moles && (
-                  <Modal textAlign="center">{'No Gas Present'}</Modal>
+                  <Modal textAlign="center">
+                    {t('ui.anomaly_refinery.no_gas_present')}
+                  </Modal>
                 )}
                 <GasmixParser gasmix={individualGasmix} />
               </Section>

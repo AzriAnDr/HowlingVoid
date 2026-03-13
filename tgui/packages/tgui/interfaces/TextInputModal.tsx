@@ -5,6 +5,7 @@ import { KEY } from 'tgui-core/keys';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
 
@@ -28,6 +29,7 @@ export const removeAllSkiplines = (toSanitize: string) => {
 
 export const TextInputModal = (props) => {
   const { act, data } = useBackend<TextInputData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     large_buttons,
     max_length,
@@ -89,7 +91,7 @@ export const TextInputModal = (props) => {
                 maxLength={max_length}
                 onEscape={() => act('cancel')}
                 onChange={onType}
-                placeholder="Type something..."
+                placeholder={t('ui.common.type_something_placeholder')}
                 value={input}
               />
             </Stack.Item>

@@ -14,6 +14,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 import { FakeTerminal } from './common/FakeTerminal';
+import { usePreferencesLocalization } from './localization';
 
 enum CONTRACT {
   Inactive = 1,
@@ -90,6 +91,7 @@ export function SyndicateContractor(props) {
 
 function SyndicateContractorContent(props) {
   const { data, act } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { error, logged_in, first_load, info_screen } = data;
 
   const terminalMessages = [
@@ -125,7 +127,9 @@ function SyndicateContractorContent(props) {
           <Box width="260px" textAlign="left" minHeight="80px">
             {error}
           </Box>
-          <Button onClick={() => act('PRG_clear_error')}>Dismiss</Button>
+          <Button onClick={() => act('PRG_clear_error')}>
+            {t('ui.syndicate_contractor.dismiss')}
+          </Button>
         </Flex.Item>
       </Flex>
     </Modal>
@@ -136,7 +140,7 @@ function SyndicateContractorContent(props) {
       <Section minHeight="525px">
         <Box width="100%" textAlign="center">
           <Button color="transparent" onClick={() => act('PRG_login')}>
-            REGISTER USER
+            {t('ui.syndicate_contractor.register_user')}
           </Button>
         </Box>
         {!!error && <NoticeBox>{error}</NoticeBox>}
@@ -168,7 +172,7 @@ function SyndicateContractorContent(props) {
           textAlign="center"
           onClick={() => act('PRG_toggle_info')}
         >
-          CONTINUE
+          {t('ui.syndicate_contractor.continue')}
         </Button>
       </>
     );
@@ -185,6 +189,7 @@ function SyndicateContractorContent(props) {
 
 function StatusPane(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { redeemable_tc, earned_tc, contracts_completed } = data;
 
   return (
@@ -196,38 +201,44 @@ function StatusPane(props) {
           ml={1}
           onClick={() => act('PRG_toggle_info')}
         >
-          View Information Again
+          {t('ui.syndicate_contractor.view_information_again')}
         </Button>
       }
-      title="Contractor Status"
+      title={t('ui.syndicate_contractor.contractor_status')}
     >
       <Stack>
         <Stack.Item grow>
           <LabeledList>
             <LabeledList.Item
-              label="TC Available"
+              label={t('ui.syndicate_contractor.tc_available')}
               buttons={
                 <Button
                   disabled={redeemable_tc <= 0}
                   onClick={() => act('PRG_redeem_TC')}
                 >
-                  Claim
+                  {t('ui.syndicate_contractor.claim')}
                 </Button>
               }
             >
               {String(redeemable_tc)}
             </LabeledList.Item>
-            <LabeledList.Item label="TC Earned">
+            <LabeledList.Item label={t('ui.syndicate_contractor.tc_earned')}>
               {String(earned_tc)}
             </LabeledList.Item>
           </LabeledList>
         </Stack.Item>
         <Stack.Item grow>
           <LabeledList>
-            <LabeledList.Item label="Contracts Completed">
+            <LabeledList.Item
+              label={t('ui.syndicate_contractor.contracts_completed')}
+            >
               {String(contracts_completed)}
             </LabeledList.Item>
-            <LabeledList.Item label="Current Status">ACTIVE</LabeledList.Item>
+            <LabeledList.Item
+              label={t('ui.syndicate_contractor.current_status')}
+            >
+              {t('ui.syndicate_contractor.active')}
+            </LabeledList.Item>
           </LabeledList>
         </Stack.Item>
       </Stack>
@@ -237,6 +248,7 @@ function StatusPane(props) {
 
 function ContractsTab(props) {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     contracts = [],
     ongoing_contract,
@@ -247,13 +259,13 @@ function ContractsTab(props) {
   return (
     <>
       <Section
-        title="Available Contracts"
+        title={t('ui.syndicate_contractor.available_contracts')}
         buttons={
           <Button
             disabled={!ongoing_contract || !!extraction_enroute}
             onClick={() => act('PRG_call_extraction')}
           >
-            Call Extraction
+            {t('ui.syndicate_contractor.call_extraction')}
           </Button>
         }
       >
@@ -271,7 +283,7 @@ function ContractsTab(props) {
               title={
                 contract.target
                   ? `${contract.target} (${contract.target_rank})`
-                  : 'Invalid Target'
+                  : t('ui.syndicate_contractor.invalid_target')
               }
               buttons={
                 <>
@@ -287,7 +299,9 @@ function ContractsTab(props) {
                       })
                     }
                   >
-                    {active ? 'Abort' : 'Accept'}
+                    {active
+                      ? t('ui.syndicate_contractor.abort')
+                      : t('ui.syndicate_contractor.accept')}
                   </Button>
                 </>
               }
@@ -296,7 +310,7 @@ function ContractsTab(props) {
                 <Stack.Item grow>{contract.message}</Stack.Item>
                 <Stack.Item>
                   <Box bold mb={1}>
-                    Dropoff Location:
+                    {t('ui.syndicate_contractor.dropoff_location')}:
                   </Box>
                   <Box>{contract.dropoff}</Box>
                 </Stack.Item>
@@ -306,7 +320,7 @@ function ContractsTab(props) {
         })}
       </Section>
       <Section
-        title="Dropoff Locator"
+        title={t('ui.syndicate_contractor.dropoff_locator')}
         textAlign="center"
         opacity={ongoing_contract ? 100 : 0}
       >

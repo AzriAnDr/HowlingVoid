@@ -8,6 +8,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   health: number;
@@ -17,13 +18,14 @@ type Data = {
 
 export const HealthSensor = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { health, scanning, target } = data;
 
   return (
     <Window width={360} height={115}>
       <Window.Content>
         <Section
-          title="Health Sensor"
+          title={t('ui.health_sensor.title')}
           buttons={
             <>
               <Button

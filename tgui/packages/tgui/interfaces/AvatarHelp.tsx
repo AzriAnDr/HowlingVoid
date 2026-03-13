@@ -2,6 +2,7 @@ import { Box, Icon, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   help_text: string;
@@ -50,10 +51,11 @@ const boxHelp = [
 
 export const AvatarHelp = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { help_text = DEFAULT_HELP } = data;
 
   return (
-    <Window title="Domain Information" width={600} height={600}>
+    <Window title={t('ui.avatar_help.domain_information')} width={600} height={600}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>
@@ -61,7 +63,7 @@ export const AvatarHelp = (props) => {
               color="good"
               fill
               scrollable
-              title="Welcome to the Virtual Domain."
+              title={t('ui.avatar_help.welcome_virtual_domain')}
             >
               {help_text}
             </Section>

@@ -1,6 +1,9 @@
 import { Blink, Dimmer, Flex, Icon } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../localization';
+
 export function NoConnectionModal() {
+  const { t } = usePreferencesLocalization();
   return (
     <Dimmer>
       <Flex direction="column" textAlign="center" width="300px">
@@ -23,7 +26,7 @@ export function NoConnectionModal() {
         </Flex.Item>
 
         <Flex.Item fontSize="16px">
-          A connection to the station cannot be established.
+          {t('ui.communications_console.connection_to_station_cannot_be_established')}
         </Flex.Item>
       </Flex>
     </Dimmer>

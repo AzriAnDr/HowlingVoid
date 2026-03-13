@@ -7,6 +7,7 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../localization';
 import { getColor } from './helpers';
 import type { Threshold } from './types';
 
@@ -15,13 +16,14 @@ import type { Threshold } from './types';
  * Returns info about symptoms as collapsibles.
  */
 export const SymptomDisplay = (props) => {
+  const { t } = usePreferencesLocalization();
   const { symptoms = [] } = props;
   if (!symptoms?.length) {
-    return <NoticeBox>No symptoms detected.</NoticeBox>;
+    return <NoticeBox>{t('ui.pandemic.no_symptoms_detected')}</NoticeBox>;
   }
 
   return (
-    <Section fill title="Symptoms">
+    <Section fill title={t('ui.common.symptoms')}>
       {symptoms.map((symptom) => {
         const { name, desc, threshold_desc } = symptom;
         return (
@@ -45,13 +47,14 @@ export const SymptomDisplay = (props) => {
 
 /** Displays threshold data */
 const Thresholds = (props) => {
+  const { t } = usePreferencesLocalization();
   const { thresholds = [] } = props;
   const convertedThresholds = Object.entries<Threshold>(thresholds);
 
   return (
-    <Section mt={1} title="Thresholds">
+    <Section mt={1} title={t('ui.pandemic.thresholds')}>
       {!convertedThresholds.length ? (
-        <NoticeBox>None</NoticeBox>
+        <NoticeBox>{t('ui.common.none')}</NoticeBox>
       ) : (
         <LabeledList>
           {convertedThresholds.map(([label, descr], index) => {
@@ -69,40 +72,41 @@ const Thresholds = (props) => {
 
 /** Displays the numerical trait modifiers for a virus symptom */
 const Traits = (props) => {
+  const { t } = usePreferencesLocalization();
   const {
     symptom: { level, resistance, stage_speed, stealth, transmission, symptom_cure, cure_color},
   } = props;
 
   return (
-    <Section title="Modifiers">
+    <Section title={t('ui.pandemic.modifiers')}>
       <LabeledList>
-        <Tooltip content="Rarity of the symptom.">
-          <LabeledList.Item color={getColor(level)} label="Level">
+        <Tooltip content={t('ui.pandemic.tooltip_symptom_rarity')}>
+          <LabeledList.Item color={getColor(level)} label={t('ui.common.level')}>
             {level}
           </LabeledList.Item>
         </Tooltip>
-        <Tooltip content="Protection from cures and natural recovery.">
-          <LabeledList.Item color={getColor(resistance)} label="Resistance">
+        <Tooltip content={t('ui.pandemic.tooltip_resistance')}>
+          <LabeledList.Item color={getColor(resistance)} label={t('ui.pandemic.resistance')}>
             {resistance}
           </LabeledList.Item>
         </Tooltip>
-        <Tooltip content="Symptomic progression.">
-          <LabeledList.Item color={getColor(stage_speed)} label="Stage Speed">
+        <Tooltip content={t('ui.pandemic.tooltip_stage_speed')}>
+          <LabeledList.Item color={getColor(stage_speed)} label={t('ui.pandemic.stage_speed')}>
             {stage_speed}
           </LabeledList.Item>
         </Tooltip>
-        <Tooltip content="Detection difficulty from medical equipment.">
-          <LabeledList.Item color={getColor(stealth)} label="Stealth">
+        <Tooltip content={t('ui.pandemic.tooltip_stealth')}>
+          <LabeledList.Item color={getColor(stealth)} label={t('ui.pandemic.stealth')}>
             {stealth}
           </LabeledList.Item>
         </Tooltip>
-        <Tooltip content="Decides the spread type.">
-          <LabeledList.Item color={getColor(transmission)} label="Transmission">
+        <Tooltip content={t('ui.pandemic.tooltip_transmission')}>
+          <LabeledList.Item color={getColor(transmission)} label={t('ui.pandemic.transmission')}>
             {transmission}
           </LabeledList.Item>
         </Tooltip>
-        <Tooltip content="What reagent remedies this symptom.">
-          <LabeledList.Item color={cure_color} label="Cure">
+        <Tooltip content={t('ui.pandemic.tooltip_cure')}>
+          <LabeledList.Item color={cure_color} label={t('ui.pandemic.cure')}>
             {symptom_cure}
           </LabeledList.Item>
         </Tooltip>

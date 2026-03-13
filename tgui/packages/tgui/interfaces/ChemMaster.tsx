@@ -21,6 +21,7 @@ import { capitalize } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import type { Beaker, BeakerReagent } from './common/BeakerDisplay';
+import { usePreferencesLocalization } from './localization';
 
 type Container = {
   icon: string;
@@ -95,6 +96,7 @@ const ChemMasterContent = (props: {
   analyze: (chemical: AnalyzableReagent) => void;
 }) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     isPrinting,
     printingProgress,
@@ -119,7 +121,7 @@ const ChemMasterContent = (props: {
   return (
     <Box>
       <Section
-        title="Beaker"
+        title={t('ui.chem_master.beaker')}
         buttons={
           beaker ? (
             <Box>
@@ -128,7 +130,7 @@ const ChemMasterContent = (props: {
                 {` / ${beaker.maxVolume} units`}
               </Box>
               <Button icon="eject" onClick={() => act('eject')}>
-                Eject
+                {t('ui.common.eject')}
               </Button>
             </Box>
           ) : (
@@ -138,23 +140,21 @@ const ChemMasterContent = (props: {
               style={{
                 opacity: hasBeakerInHand ? 1 : 0.5,
               }}
-              tooltip={
-                !hasBeakerInHand && 'You need to hold a container in your hand'
-              }
+                tooltip={!hasBeakerInHand && t('ui.common.need_container_in_hand')}
               tooltipPosition="bottom-start"
             >
-              Insert
-            </Button>
+                {t('ui.common.insert')}
+              </Button>
           )
         }
       >
         {!beaker ? (
           <Box color="label" my={'4px'}>
-            No beaker loaded.
+            {t('ui.common.no_beaker_loaded')}
           </Box>
         ) : beaker.currentVolume === 0 ? (
           <Box color="label" my={'4px'}>
-            Beaker is empty.
+            {t('ui.common.beaker_is_empty')}
           </Box>
         ) : (
           <Table>
@@ -170,7 +170,7 @@ const ChemMasterContent = (props: {
         )}
       </Section>
       <Section
-        title="Buffer"
+        title={t('ui.chem_master.buffer')}
         buttons={
           <>
             <Box inline color="label" mr={1}>
@@ -182,7 +182,9 @@ const ChemMasterContent = (props: {
               icon={isTransfering ? 'exchange-alt' : 'trash'}
               onClick={() => act('toggleTransferMode')}
             >
-              {isTransfering ? 'Moving reagents' : 'Destroying reagents'}
+              {isTransfering
+                ? t('ui.chem_master.moving_reagents')
+                : t('ui.chem_master.destroying_reagents')}
             </Button>
           </>
         }
@@ -206,7 +208,7 @@ const ChemMasterContent = (props: {
       </Section>
       {!isPrinting && (
         <Section
-          title="Packaging"
+          title={t('ui.chem_master.packaging')}
           buttons={
             buffer_contents.length !== 0 && (
               <Box>
@@ -216,7 +218,7 @@ const ChemMasterContent = (props: {
                     setShowPreferredContainer((currentValue) => !currentValue)
                   }
                 >
-                  Suggest
+                  {t('ui.chem_master.suggest')}
                 </Button.Checkbox>
                 <NumberInput
                   unit={'items'}
@@ -260,7 +262,7 @@ const ChemMasterContent = (props: {
                     })
                   }
                 >
-                  Print
+                  {t('ui.common.print')}
                 </Button>
               </Box>
             )
@@ -283,14 +285,14 @@ const ChemMasterContent = (props: {
       )}
       {!!isPrinting && (
         <Section
-          title="Printing"
+          title={t('ui.chem_master.printing')}
           buttons={
             <Button
               color="bad"
               icon="times"
               onClick={() => act('stopPrinting')}
             >
-              Stop
+              {t('ui.common.stop')}
             </Button>
           }
         >
@@ -306,7 +308,7 @@ const ChemMasterContent = (props: {
                 textShadow: '1px 1px 0 black',
               }}
             >
-              {`Printing ${printingProgress} out of ${printingTotal}`}
+              {`${t('ui.chem_master.printing')} ${printingProgress} ${t('ui.common.of')} ${printingTotal}`}
             </Box>
           </ProgressBar>
         </Section>
@@ -323,6 +325,7 @@ type ReagentProps = {
 
 const ReagentEntry = (props: ReagentProps) => {
   const { data, act } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { chemical, transferTo, analyze } = props;
   const { isPrinting } = data;
   return (
@@ -379,11 +382,11 @@ const ReagentEntry = (props: ReagentProps) => {
             })
           }
         >
-          All
+          {t('ui.common.all')}
         </Button>
         <Button
           icon="ellipsis-h"
-          tooltip="Custom amount"
+          tooltip={t('ui.common.custom_amount')}
           disabled={isPrinting}
           onClick={() =>
             act('transfer', {
@@ -395,7 +398,7 @@ const ReagentEntry = (props: ReagentProps) => {
         />
         <Button
           icon="question"
-          tooltip="Analyze"
+          tooltip={t('ui.common.analyze')}
           onClick={() => analyze(chemical)}
         />
       </Table.Cell>
@@ -452,6 +455,8 @@ const AnalysisResults = (props: {
   analysisData: AnalyzableReagent;
   onExit: () => void;
 }) => {
+  const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     name,
     pH,
@@ -468,16 +473,16 @@ const AnalysisResults = (props: {
 
   return (
     <Section
-      title="Analysis Results"
+      title={t('ui.chem_master.analysis_results')}
       buttons={
         <Button icon="arrow-left" onClick={() => props.onExit()}>
-          Back
+          {t('ui.common.back')}
         </Button>
       }
     >
       <LabeledList>
-        <LabeledList.Item label="Name">{name}</LabeledList.Item>
-        <LabeledList.Item label="Purity">
+        <LabeledList.Item label={t('ui.common.name')}>{name}</LabeledList.Item>
+        <LabeledList.Item label={t('ui.chem_master.purity')}>
           <Box
             style={{
               textTransform: 'capitalize',
@@ -487,20 +492,26 @@ const AnalysisResults = (props: {
             {purityLevel}
           </Box>
         </LabeledList.Item>
-        <LabeledList.Item label="pH">{pH}</LabeledList.Item>
-        <LabeledList.Item label="Color">
+        <LabeledList.Item label={t('ui.chem_master.ph')}>{pH}</LabeledList.Item>
+        <LabeledList.Item label={t('ui.common.color')}>
           <ColorBox color={color} mr={1} />
           {color}
         </LabeledList.Item>
-        <LabeledList.Item label="Description">{description}</LabeledList.Item>
-        <LabeledList.Item label="Metabolization Rate">
-          {metaRate} units/second
+        <LabeledList.Item label={t('ui.common.description')}>
+          {description}
         </LabeledList.Item>
-        <LabeledList.Item label="Overdose Threshold">
-          {overdose > 0 ? `${overdose} units` : 'N/A'}
+        <LabeledList.Item label={t('ui.chem_master.metabolization_rate')}>
+          {metaRate} {t('ui.chem_master.units_per_second')}
         </LabeledList.Item>
-        <LabeledList.Item label="Addiction Types">
-          {addictionTypes.length ? addictionTypes.toString() : 'N/A'}
+        <LabeledList.Item label={t('ui.chem_master.overdose_threshold')}>
+          {overdose > 0
+            ? `${overdose} ${t('ui.common.units')}`
+            : t('ui.common.not_available')}
+        </LabeledList.Item>
+        <LabeledList.Item label={t('ui.chem_master.addiction_types')}>
+          {addictionTypes.length
+            ? addictionTypes.toString()
+            : t('ui.common.not_available')}
         </LabeledList.Item>
       </LabeledList>
     </Section>

@@ -9,6 +9,7 @@ import {
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import {
   type Connection,
   Connections,
@@ -412,6 +413,7 @@ function mapPlanes(planes: PlaneData[]) {
 
 export function PlaneMasterDebug() {
   const { data, act } = useBackend<PlaneDebugData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     mob_name,
     planes,
@@ -533,13 +535,13 @@ export function PlaneMasterDebug() {
       <Window
         width={planeOpen ? 1500 : 1200}
         height={800}
-        title={`Plane Debugging: ${mob_name}`}
+        title={`${t('ui.plane_master.debugging')}: ${mob_name}`}
         buttons={
           <Stack fill>
             <Stack.Item>
               <Dropdown
                 options={planes.map((plane) => plane.name).sort()}
-                placeholder="Find Plane"
+                placeholder={t('ui.plane_master.find_plane')}
                 selected={zoomToPlane}
                 onSelected={(value) => {
                   setZoomToPlane(value);
@@ -557,7 +559,7 @@ export function PlaneMasterDebug() {
             </Stack.Item>
             {!!enable_group_view && (
               <Tooltip
-                content="Plane masters are stored in groups, based off where they came from. MAIN is the main group, but if you open something that displays atoms in a new window, it'll show up here."
+                content={t('ui.plane_master.group_view_tooltip')}
                 position="right"
               >
                 <Dropdown
@@ -570,11 +572,11 @@ export function PlaneMasterDebug() {
               </Tooltip>
             )}
             <Stack.Item>
-              <Button
-                color="transparent"
-                tooltip="Debugger Documentation"
-                icon="question"
-                selected={infoOpen}
+                <Button
+                  color="transparent"
+                  tooltip={t('ui.plane_master.debugger_documentation')}
+                  icon="question"
+                  selected={infoOpen}
                 onClick={() => setInfoOpen(true)}
               />
             </Stack.Item>
@@ -582,7 +584,7 @@ export function PlaneMasterDebug() {
               <Stack.Item>
                 <Button
                   color="transparent"
-                  tooltip="Reset Mob Focus"
+                  tooltip={t('ui.plane_master.reset_mob_focus')}
                   icon="magnifying-glass"
                   onClick={() => act('reset_mob')}
                 />
@@ -591,7 +593,7 @@ export function PlaneMasterDebug() {
             <Stack.Item>
               <Button
                 color="transparent"
-                tooltip="View Mirroring"
+                tooltip={t('ui.plane_master.view_mirroring')}
                 icon={our_ref !== mob_ref ? 'ghost' : 'eye'}
                 selected={tracking_active}
                 onClick={() => act('toggle_mirroring')}
@@ -600,7 +602,7 @@ export function PlaneMasterDebug() {
             <Stack.Item>
               <Button
                 color="transparent"
-                tooltip="View Mob Variables"
+                tooltip={t('ui.plane_master.view_mob_variables')}
                 icon="pen"
                 onClick={() => act('vv_mob')}
               />
@@ -608,7 +610,7 @@ export function PlaneMasterDebug() {
             <Stack.Item>
               <Button
                 color="transparent"
-                tooltip="Rebuild Plane Masters"
+                tooltip={t('ui.plane_master.rebuild_plane_masters')}
                 icon="recycle"
                 onClick={() => act('rebuild')}
               />

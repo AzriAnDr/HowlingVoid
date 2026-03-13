@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { Button, Modal } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { TechwebContent } from './Content';
 import { TechWebRoute } from './hooks';
 import type { TechWebData } from './types';
 
 export function TechwebStart(props) {
   const { act, data } = useBackend<TechWebData>();
+  const { t } = usePreferencesLocalization(data);
   const { locked, stored_research } = data;
   const techwebState = useState({
     route: '',
@@ -17,10 +19,10 @@ export function TechwebStart(props) {
     return (
       <Modal width="15em" align="center" className="Techweb__LockedModal">
         <div>
-          <b>Console Locked</b>
+          <b>{t('ui.techweb.console_locked')}</b>
         </div>
         <Button icon="unlock" onClick={() => act('toggleLock')}>
-          Unlock
+          {t('ui.common.unlock')}
         </Button>
       </Modal>
     );
@@ -30,7 +32,7 @@ export function TechwebStart(props) {
     return (
       <Modal width="25em" align="center" className="Techweb__LockedModal">
         <div>
-          <b>No research techweb found, please synchronize the console.</b>
+          <b>{t('ui.techweb.no_research_techweb_found')}</b>
         </div>
       </Modal>
     );

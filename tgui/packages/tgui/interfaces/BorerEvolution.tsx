@@ -3,6 +3,7 @@ import { BlockQuote, Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const borerColor = {
   fontWeight: 'bold',
@@ -32,8 +33,14 @@ type Info = {
 };
 
 export const BorerEvolution = (props) => {
+  const { t } = usePreferencesLocalization();
   return (
-    <Window width={675} height={600} theme="wizard" title="Evolution Tree">
+    <Window
+      width={675}
+      height={600}
+      theme="wizard"
+      title={t('ui.borerevolution.evolution_tree')}
+    >
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
@@ -47,13 +54,14 @@ export const BorerEvolution = (props) => {
 
 const PastEvolutions = (props) => {
   const { data } = useBackend<EvolutionInfo>();
+  const { t } = usePreferencesLocalization(data);
   const { learnedEvolution } = data;
 
   return (
     <Stack.Item grow>
-      <Section title="Past Evolutions" fill scrollable>
+      <Section title={t('ui.borerevolution.past_evolutions')} fill scrollable>
         <Stack vertical>
-          {(!learnedEvolution.length && 'None!') ||
+          {(!learnedEvolution.length && t('ui.borer_evolution.none_exclamation')) ||
             learnedEvolution.map((learned) => (
               <Stack.Item key={learned.name}>
                 <Button
@@ -74,12 +82,13 @@ const PastEvolutions = (props) => {
 
 const EvolutionList = (props) => {
   const { data, act } = useBackend<EvolutionInfo>();
+  const { t } = usePreferencesLocalization(data);
   const { learnableEvolution } = data;
 
   return (
     <Stack.Item grow>
-      <Section title="Possible Evolutions" fill scrollable>
-        {(!learnableEvolution.length && 'None!') ||
+      <Section title={t('ui.borerevolution.possible_evolutions')} fill scrollable>
+        {(!learnableEvolution.length && t('ui.borer_evolution.none_exclamation')) ||
           learnableEvolution.map((toLearn) => (
             <Stack.Item key={toLearn.name} mb={1}>
               <Button
@@ -116,6 +125,7 @@ const EvolutionList = (props) => {
 
 const EvoInfo = (props) => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { evolution_points } = data;
 
   return (
@@ -123,11 +133,12 @@ const EvoInfo = (props) => {
       <Stack.Item grow>
         <Stack vertical height="100%">
           <Stack.Item fontSize="20px" textAlign="center">
-            You have <b>{evolution_points || 0}</b>&nbsp;
+            {t('ui.borer_evolution.you_have')} <b>{evolution_points || 0}</b>&nbsp;
             <span style={borerColor}>
-              evolution point{evolution_points !== 1 ? 's' : ''}
+              {t('ui.borer_evolution.evolution_point')}
+              {evolution_points !== 1 ? 's' : ''}
             </span>{' '}
-            to spend.
+            {t('ui.borer_evolution.to_spend')}
           </Stack.Item>
           <Stack.Item grow>
             <Stack height="100%">

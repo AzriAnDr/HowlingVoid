@@ -11,22 +11,30 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const ShuttleManipulator = (props) => {
   const [tab, setTab] = useState(1);
+  const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
 
   return (
-    <Window title="Shuttle Manipulator" width={800} height={600} theme="admin">
+    <Window
+      title={t('ui.shuttle_manipulator.title')}
+      width={800}
+      height={600}
+      theme="admin"
+    >
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab selected={tab === 1} onClick={() => setTab(1)}>
-            Status
+            {t('ui.common.status')}
           </Tabs.Tab>
           <Tabs.Tab selected={tab === 2} onClick={() => setTab(2)}>
-            Templates
+            {t('ui.shuttle_manipulator.templates')}
           </Tabs.Tab>
           <Tabs.Tab selected={tab === 3} onClick={() => setTab(3)}>
-            Modification
+            {t('ui.shuttle_manipulator.modification')}
           </Tabs.Tab>
         </Tabs>
         {tab === 1 && <ShuttleManipulatorStatus />}
@@ -39,6 +47,7 @@ export const ShuttleManipulator = (props) => {
 
 export const ShuttleManipulatorStatus = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const shuttles = data.shuttles || [];
   return (
     <Section>
@@ -47,7 +56,7 @@ export const ShuttleManipulatorStatus = (props) => {
           <Table.Row key={shuttle.id}>
             <Table.Cell>
               <Button
-                content="JMP"
+                content={t('ui.shuttle_manipulator.jump_short')}
                 key={shuttle.id}
                 onClick={() =>
                   act('jump_to', {
@@ -59,7 +68,7 @@ export const ShuttleManipulatorStatus = (props) => {
             </Table.Cell>
             <Table.Cell>
               <Button
-                content="Fly"
+                content={t('ui.shuttle_manipulator.fly')}
                 key={shuttle.id}
                 disabled={!shuttle.can_fly}
                 onClick={() =>
@@ -78,7 +87,7 @@ export const ShuttleManipulatorStatus = (props) => {
                 <>
                   ({shuttle.timeleft})
                   <Button
-                    content="Fast Travel"
+                    content={t('ui.shuttle_manipulator.fast_travel')}
                     key={shuttle.id}
                     disabled={!shuttle.can_fast_travel}
                     onClick={() =>
@@ -99,6 +108,7 @@ export const ShuttleManipulatorStatus = (props) => {
 
 export const ShuttleManipulatorTemplates = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const templateObject = data.templates || {};
   const selected = data.selected || {};
   const [selectedTemplateId, setSelectedTemplateId] = useState(
@@ -134,7 +144,11 @@ export const ShuttleManipulatorTemplates = (props) => {
                 key={actualTemplate.shuttle_id}
                 buttons={
                   <Button
-                    content={isSelected ? 'Selected' : 'Select'}
+                    content={
+                      isSelected
+                        ? t('ui.common.selected')
+                        : t('ui.common.select')
+                    }
                     selected={isSelected}
                     onClick={() =>
                       act('select_template', {
@@ -148,12 +162,12 @@ export const ShuttleManipulatorTemplates = (props) => {
                   !!actualTemplate.admin_notes) && (
                   <LabeledList>
                     {!!actualTemplate.description && (
-                      <LabeledList.Item label="Description">
+                      <LabeledList.Item label={t('ui.common.description')}>
                         {actualTemplate.description}
                       </LabeledList.Item>
                     )}
                     {!!actualTemplate.admin_notes && (
-                      <LabeledList.Item label="Admin Notes">
+                      <LabeledList.Item label={t('ui.common.admin_notes')}>
                         {actualTemplate.admin_notes}
                       </LabeledList.Item>
                     )}
@@ -170,6 +184,7 @@ export const ShuttleManipulatorTemplates = (props) => {
 
 export const ShuttleManipulatorModification = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const selected = data.selected || {};
   const existingShuttle = data.existing_shuttle || {};
   return (
@@ -180,12 +195,12 @@ export const ShuttleManipulatorModification = (props) => {
             {(!!selected.description || !!selected.admin_notes) && (
               <LabeledList>
                 {!!selected.description && (
-                  <LabeledList.Item label="Description">
+                  <LabeledList.Item label={t('ui.common.description')}>
                     {selected.description}
                   </LabeledList.Item>
                 )}
                 {!!selected.admin_notes && (
-                  <LabeledList.Item label="Admin Notes">
+                  <LabeledList.Item label={t('ui.common.admin_notes')}>
                     {selected.admin_notes}
                   </LabeledList.Item>
                 )}
@@ -195,14 +210,14 @@ export const ShuttleManipulatorModification = (props) => {
           {existingShuttle ? (
             <Section
               level={2}
-              title={`Existing Shuttle: ${existingShuttle.name}`}
+              title={`${t('ui.shuttle_manipulator.existing_shuttle')}: ${existingShuttle.name}`}
             >
               <LabeledList>
                 <LabeledList.Item
-                  label="Status"
+                  label={t('ui.common.status')}
                   buttons={
                     <Button
-                      content="Jump To"
+                      content={t('ui.common.jump_to')}
                       onClick={() =>
                         act('jump_to', {
                           type: 'mobile',
@@ -218,11 +233,14 @@ export const ShuttleManipulatorModification = (props) => {
               </LabeledList>
             </Section>
           ) : (
-            <Section level={2} title="Existing Shuttle: None" />
+            <Section
+              level={2}
+              title={`${t('ui.shuttle_manipulator.existing_shuttle')}: ${t('ui.common.none')}`}
+            />
           )}
-          <Section level={2} title="Status">
+          <Section level={2} title={t('ui.common.status')}>
             <Button
-              content="Load"
+              content={t('ui.common.load')}
               color="good"
               onClick={() =>
                 act('load', {
@@ -231,7 +249,7 @@ export const ShuttleManipulatorModification = (props) => {
               }
             />
             <Button
-              content="Preview"
+              content={t('ui.common.preview')}
               onClick={() =>
                 act('preview', {
                   shuttle_id: selected.shuttle_id,
@@ -239,7 +257,7 @@ export const ShuttleManipulatorModification = (props) => {
               }
             />
             <Button
-              content="Replace"
+              content={t('ui.common.replace')}
               color="bad"
               onClick={() =>
                 act('replace', {
@@ -250,7 +268,7 @@ export const ShuttleManipulatorModification = (props) => {
           </Section>
         </>
       ) : (
-        'No shuttle selected'
+        t('ui.shuttle_manipulator.no_shuttle_selected')
       )}
     </Section>
   );

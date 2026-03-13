@@ -10,10 +10,12 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const MechpadControl = (props) => {
   const { topLevel } = props;
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { pad_name, connected_mechpad, pad_active, mechonly } = data;
   return (
     <Section
@@ -32,7 +34,7 @@ export const MechpadControl = (props) => {
       buttons={
         <Button
           icon="times"
-          content="Remove"
+          content={t('ui.mechpadconsole.remove')}
           color="bad"
           onClick={() => act('remove')}
         />
@@ -40,14 +42,18 @@ export const MechpadControl = (props) => {
     >
       {(!connected_mechpad && (
         <Box color="bad" textAlign="center">
-          No Launch Pad Connected.
+          {t('ui.mechpadconsole.no_launch_pad_connected')}
         </Box>
       )) || (
         <Button
           fluid
           icon="upload"
           disabled={!pad_active}
-          content={mechonly ? 'Launch (Mech Only)' : 'Launch'}
+          content={
+            mechonly
+              ? t('ui.mechpadconsole.launch_mech_only')
+              : t('ui.mechpadconsole.launch')
+          }
           color={mechonly ? 'default' : 'good'}
           textAlign="center"
           onClick={() => act('launch')}
@@ -59,12 +65,13 @@ export const MechpadControl = (props) => {
 
 export const MechpadConsole = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { mechpads = [], selected_id } = data;
   return (
     <Window width={475} height={130}>
       <Window.Content>
         {(mechpads.length === 0 && (
-          <NoticeBox>No Pads Connected</NoticeBox>
+          <NoticeBox>{t('ui.mechpadconsole.no_pads_connected')}</NoticeBox>
         )) || (
           <Section>
             <Flex minHeight="70px">
@@ -90,7 +97,7 @@ export const MechpadConsole = (props) => {
               </Flex.Item>
               <Flex.Item grow={1} basis={0} minHeight="100%">
                 {(selected_id && <MechpadControl />) || (
-                  <Box>Please select a pad</Box>
+                  <Box>{t('ui.mechpadconsole.please_select_a_pad')}</Box>
                 )}
               </Flex.Item>
             </Flex>

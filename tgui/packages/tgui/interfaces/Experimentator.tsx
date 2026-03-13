@@ -12,6 +12,7 @@ import { toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   hasItem: BooleanLike;
@@ -34,10 +35,11 @@ type Node = {
 
 export const Experimentator = (props: any) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { hasItem, isOnCooldown, isServerConnected, loadedItem } = data;
 
   return (
-    <Window width={450} height={325} title="E.X.P.E.R.I-MENTOR">
+    <Window width={450} height={325} title={t('ui.experimentator.e_x_p_e_r_i_mentor')}>
       <Window.Content>
         {isServerConnected ? (
           hasItem && loadedItem ? (
@@ -49,12 +51,12 @@ export const Experimentator = (props: any) => {
             />
           ) : (
             <NoticeBox danger textAlign="center">
-              No item present in experimentation chamber. Please insert one.
+              {t('ui.experimentator.no_item_present_insert_one')}
             </NoticeBox>
           )
         ) : (
           <NoticeBox danger textAlign="center">
-            Not connected to a server. Please sync one using a multitool.
+            {t('ui.experimentator.not_connected_sync_server')}
           </NoticeBox>
         )}
       </Window.Content>
@@ -122,6 +124,7 @@ type ItemPreviewProps = {
 
 const ItemPreview = (props: ItemPreviewProps) => {
   const { name, icon, onEject } = props;
+  const { t } = usePreferencesLocalization();
 
   return (
     <Stack fill vertical align="center">
@@ -134,7 +137,7 @@ const ItemPreview = (props: ItemPreviewProps) => {
               icon="eject"
               height="100%"
               fontSize={1.5}
-              tooltip="Eject"
+              tooltip={t('ui.experimentator.eject')}
               textAlign="center"
               onClick={() => onEject()}
               verticalAlignContent="middle"
@@ -168,9 +171,10 @@ type NodePreviewProps = {
 
 const NodePreview = (props: NodePreviewProps) => {
   const { nodes } = props;
+  const { t } = usePreferencesLocalization();
 
   return (
-    <Section fill title="Affected Nodes">
+    <Section fill title={t('ui.experimentator.affected_nodes')}>
       {nodes.length > 0 ? (
         <LabeledList>
           {nodes.map((node, index) => (
@@ -179,7 +183,7 @@ const NodePreview = (props: NodePreviewProps) => {
               label={node.name}
               color={node.isUnlocked ? 'good' : 'bad'}
             >
-              {node.isUnlocked ? 'Unlocked' : 'Locked'}
+              {node.isUnlocked ? t('ui.common.unlocked') : t('ui.common.locked')}
             </LabeledList.Item>
           ))}
         </LabeledList>
@@ -206,6 +210,7 @@ type ExperimentButtonsProps = {
 
 const ExperimentButtons = (props: ExperimentButtonsProps) => {
   const { isRelic, disabled, onExperiment } = props;
+  const { t } = usePreferencesLocalization();
 
   return (
     <Section fill>
@@ -237,7 +242,7 @@ const ExperimentButtons = (props: ExperimentButtonsProps) => {
             disabled={!isRelic || disabled}
             onClick={() => onExperiment(7)}
           >
-            Discover!
+            {t('ui.experimentator.discover')}
           </Button>
         </Stack.Item>
       </Stack>

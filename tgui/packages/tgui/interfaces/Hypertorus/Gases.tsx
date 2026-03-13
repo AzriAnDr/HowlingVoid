@@ -13,6 +13,7 @@ import {
 import { toFixed } from 'tgui-core/math';
 
 import type { HypertorusFuel, HypertorusGas } from '.';
+import { usePreferencesLocalization } from '../localization';
 import { HelpDummy, HoverHelp } from './helpers';
 
 type GasListProps = {
@@ -77,6 +78,7 @@ const ensure_gases = (gas_array: HypertorusGas[] = [], gasids) => {
 
 const GasList = (props: GasListProps) => {
   const { act, data } = useBackend<GasListData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     input_max,
     input_min,
@@ -105,14 +107,14 @@ const GasList = (props: GasListProps) => {
         label={
           <>
             <HoverHelp content={rateHelp} />
-            Injection control:
+            {t('ui.hypertorus.injection_control')}:
           </>
         }
       >
         <Button
           disabled={start_power === 0 || start_cooling === 0}
           icon={data[input_switch] ? 'power-off' : 'times'}
-          content={data[input_switch] ? 'On' : 'Off'}
+          content={data[input_switch] ? t('ui.common.on') : t('ui.common.off')}
           selected={data[input_switch]}
           onClick={() => act(input_switch)}
         />
@@ -148,7 +150,7 @@ const GasList = (props: GasListProps) => {
               minValue={0}
               maxValue={minimumScale}
             >
-              {`${toFixed(gas.amount, 2)} moles`}
+              {`${toFixed(gas.amount, 2)} ${t('ui.common.moles')}`}
             </ProgressBar>
           </LabeledList.Item>
         );
@@ -159,6 +161,7 @@ const GasList = (props: GasListProps) => {
 
 export const HypertorusGases = (props) => {
   const { data } = useBackend<HypertorusData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     fusion_gases = [],
     moderator_gases = [],
@@ -170,7 +173,7 @@ export const HypertorusGases = (props) => {
 
   return (
     <>
-      <Section title="Internal Fusion Gases">
+      <Section title={t('ui.hypertorus.internal_fusion_gases')}>
         {selected_fuel ? (
           <GasList
             input_rate="fuel_injection_rate"
@@ -188,12 +191,12 @@ export const HypertorusGases = (props) => {
             stickyGases={selected_fuel.requirements}
           />
         ) : (
-          <Box align="center" color="red">
-            {'No recipe selected'}
-          </Box>
+            <Box align="center" color="red">
+              {t('ui.hypertorus.no_recipe_selected')}
+            </Box>
         )}
       </Section>
-      <Section title="Moderator Gases">
+      <Section title={t('ui.hypertorus.moderator_gases')}>
         <GasList
           input_rate="moderator_injection_rate"
           input_switch="start_moderator"

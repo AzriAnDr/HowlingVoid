@@ -9,6 +9,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   doorstatus: BooleanLike;
@@ -18,13 +19,14 @@ type Data = {
 
 export const VaultController = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { doorstatus, stored, max } = data;
 
   return (
     <Window width={300} height={120}>
       <Window.Content>
         <Section
-          title="Lock Status: "
+          title={t('ui.vaultcontroller.lock_status')}
           buttons={
             <Button
               content={doorstatus ? 'Locked' : 'Unlocked'}
@@ -44,11 +46,12 @@ export const VaultController = (props) => {
 /** Displays info about the vault in a labeledlist */
 const VaultList = (props) => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { stored, max } = data;
 
   return (
     <LabeledList>
-      <LabeledList.Item label="Charge">
+      <LabeledList.Item label={t('ui.vaultcontroller.charge')}>
         <ProgressBar
           value={stored / max}
           ranges={{

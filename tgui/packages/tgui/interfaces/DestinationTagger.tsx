@@ -4,6 +4,7 @@ import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type DestinationTaggerData = {
   locations: string[];
@@ -40,10 +41,16 @@ const sortDestinations = (locations: string[]): DestinationInfo[] => {
 
 export const DestinationTagger = (props) => {
   const { act, data } = useBackend<DestinationTaggerData>();
+  const { t } = usePreferencesLocalization(data);
   const { locations, currentTag } = data;
 
   return (
-    <Window theme="retro" title="TagMaster 2.4" width={420} height={500}>
+    <Window
+      theme="retro"
+      title={t('ui.destination_tagger.tagmaster_2_4')}
+      width={420}
+      height={500}
+    >
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>

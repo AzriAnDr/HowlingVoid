@@ -14,6 +14,7 @@ import { toTitleCase } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import type { Material } from './Fabrication/Types';
+import { usePreferencesLocalization } from './localization';
 
 type IconData = {
   id: string;
@@ -37,22 +38,23 @@ type Data = {
 };
 
 export const ProcessingConsole = (props: any) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const { state } = data;
 
   return (
-    <Window title="Processing Unit Console" width={580} height={500}>
+    <Window title={t('ui.processing_console.title')} width={580} height={500}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow basis={0}>
             <Stack fill>
               <Stack.Item grow={1.2} basis={0}>
-                <Section fill textAlign="center" title="Materials">
+                <Section fill textAlign="center" title={t('ui.common.materials')}>
                   <MaterialSelection />
                 </Section>
               </Stack.Item>
               <Stack.Item grow basis={0}>
-                <Section fill title="Alloys" textAlign="center">
+                <Section fill title={t('ui.processing_console.alloys')} textAlign="center">
                   <AlloySelection />
                 </Section>
               </Stack.Item>
@@ -70,7 +72,7 @@ export const ProcessingConsole = (props: any) => {
               bold
               onClick={() => act('toggle')}
             >
-              {state ? 'Deactivate' : 'Activate'}
+              {state ? t('ui.common.deactivate') : t('ui.common.activate')}
             </Button>
           </Stack.Item>
         </Stack>
@@ -80,6 +82,7 @@ export const ProcessingConsole = (props: any) => {
 };
 
 const MaterialSelection = (props: any) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const { materials, materialIcons, selectedMaterial, SHEET_MATERIAL_AMOUNT } =
     data;
@@ -98,11 +101,12 @@ const MaterialSelection = (props: any) => {
       ))}
     </Table>
   ) : (
-    <NoticeBox danger>No material recipes found!</NoticeBox>
+    <NoticeBox danger>{t('ui.processing_console.no_material_recipes_found')}</NoticeBox>
   );
 };
 
 const AlloySelection = (props: any) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const { alloys, alloyIcons, selectedAlloy } = data;
 
@@ -119,7 +123,7 @@ const AlloySelection = (props: any) => {
       ))}
     </Table>
   ) : (
-    <NoticeBox danger>No alloy recipes found!</NoticeBox>
+    <NoticeBox danger>{t('ui.processing_console.no_alloy_recipes_found')}</NoticeBox>
   );
 };
 
@@ -132,6 +136,7 @@ type DisplayRowProps = {
 };
 
 const DisplayRow = (props: DisplayRowProps) => {
+  const { t } = usePreferencesLocalization();
   const { name, icon, amount, selected, onSelect } = props;
 
   return (
@@ -154,7 +159,7 @@ const DisplayRow = (props: DisplayRowProps) => {
       </Table.Cell>
       {amount !== undefined ? (
         <Box color="label">
-          {`${formatSiUnit(amount, 0)} ${amount === 1 ? 'sheet' : 'sheets'}`}
+          {`${formatSiUnit(amount, 0)} ${amount === 1 ? t('ui.processing_console.sheet') : t('ui.processing_console.sheets')}`}
         </Box>
       ) : null}
       <Table.Cell collapsing pr={1} textAlign="right">

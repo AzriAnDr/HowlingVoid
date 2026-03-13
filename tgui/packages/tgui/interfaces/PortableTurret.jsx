@@ -2,9 +2,11 @@ import { Button, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const PortableTurret = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization();
   const {
     silicon_user,
     locked,
@@ -24,13 +26,15 @@ export const PortableTurret = (props) => {
     <Window width={310} height={lasertag_turret ? 110 : 292}>
       <Window.Content>
         <NoticeBox>
-          Swipe an ID card to {locked ? 'unlock' : 'lock'} this interface.
+          {t('ui.portable_turret.swipe_id_to')}{' '}
+          {locked ? t('ui.portable_turret.unlock') : t('ui.portable_turret.lock')}{' '}
+          {t('ui.portable_turret.this_interface')}
         </NoticeBox>
 
         <Section>
           <LabeledList>
             <LabeledList.Item
-              label="Status"
+              label={t('ui.common.status')}
               buttons={
                 !lasertag_turret &&
                 (!!allow_manual_control ||
@@ -38,7 +42,9 @@ export const PortableTurret = (props) => {
                   <Button
                     icon={manual_control ? 'wifi' : 'terminal'}
                     content={
-                      manual_control ? 'Remotely Controlled' : 'Manual Control'
+                      manual_control
+                        ? t('ui.portable_turret.remotely_controlled')
+                        : t('ui.portable_turret.manual_control')
                     }
                     disabled={manual_control}
                     color="bad"
@@ -49,7 +55,7 @@ export const PortableTurret = (props) => {
             >
               <Button
                 icon={on ? 'power-off' : 'times'}
-                content={on ? 'On' : 'Off'}
+                content={on ? t('ui.common.on') : t('ui.common.off')}
                 selected={on}
                 disabled={locked}
                 onClick={() => act('power')}
@@ -59,11 +65,11 @@ export const PortableTurret = (props) => {
         </Section>
         {!lasertag_turret && (
           <Section
-            title="Target Settings"
+            title={t('ui.portable_turret.target_settings')}
             buttons={
               <Button.Checkbox
                 checked={!neutralize_heads}
-                content="Ignore Command"
+                content={t('ui.portable_turret.ignore_command')}
                 disabled={locked}
                 onClick={() => act('shootheads')}
               />
@@ -72,42 +78,42 @@ export const PortableTurret = (props) => {
             <Button.Checkbox
               fluid
               checked={neutralize_all}
-              content="Non-Security and Non-Command"
+              content={t('ui.portable_turret.non_security_and_non_command')}
               disabled={locked}
               onClick={() => act('shootall')}
             />
             <Button.Checkbox
               fluid
               checked={check_weapons}
-              content="Unauthorized Weapons"
+              content={t('ui.portable_turret.unauthorized_weapons')}
               disabled={locked}
               onClick={() => act('authweapon')}
             />
             <Button.Checkbox
               fluid
               checked={neutralize_unidentified}
-              content="Unidentified Life Signs"
+              content={t('ui.portable_turret.unidentified_life_signs')}
               disabled={locked}
               onClick={() => act('checkxenos')}
             />
             <Button.Checkbox
               fluid
               checked={neutralize_nonmindshielded}
-              content="Non-Mindshielded"
+              content={t('ui.portable_turret.non_mindshielded')}
               disabled={locked}
               onClick={() => act('checkloyal')}
             />
             <Button.Checkbox
               fluid
               checked={neutralize_criminals}
-              content="Wanted Criminals"
+              content={t('ui.portable_turret.wanted_criminals')}
               disabled={locked}
               onClick={() => act('shootcriminals')}
             />
             <Button.Checkbox
               fluid
               checked={neutralize_cyborgs}
-              content="Cyborgs"
+              content={t('ui.portable_turret.cyborgs')}
               disabled={locked}
               onClick={() => act('shootborgs')}
             />

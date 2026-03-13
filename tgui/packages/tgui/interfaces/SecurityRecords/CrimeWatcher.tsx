@@ -17,11 +17,13 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../localization';
 import { getSecurityRecord } from './helpers';
 import { type Crime, SECURETAB, type SecurityRecordsData } from './types';
 
 /** Displays a list of crimes and allows to add new ones. */
 export const CrimeWatcher = (props) => {
+  const { t } = usePreferencesLocalization();
   const foundRecord = getSecurityRecord();
   if (!foundRecord) return;
   const { crimes, citations } = foundRecord;
@@ -38,15 +40,15 @@ export const CrimeWatcher = (props) => {
             onClick={() => setSelectedTab(SECURETAB.Crimes)}
             selected={selectedTab === SECURETAB.Crimes}
           >
-            Crimes: {crimes.length}
+            {t('ui.security_records.crimes')}: {crimes.length}
           </Tabs.Tab>
           <Tabs.Tab
             onClick={() => setSelectedTab(SECURETAB.Citations)}
             selected={selectedTab === SECURETAB.Citations}
           >
-            Citations: {citations.length}
+            {t('ui.security_records.citations')}: {citations.length}
           </Tabs.Tab>
-          <Tooltip content="Add a new crime or citation" position="bottom">
+          <Tooltip content={t('ui.security_records.add_new_crime_or_citation')} position="bottom">
             <Tabs.Tab
               onClick={() => setSelectedTab(SECURETAB.Add)}
               selected={selectedTab === SECURETAB.Add}
@@ -71,6 +73,7 @@ export const CrimeWatcher = (props) => {
 
 /** Displays the crimes and citations of a record. */
 const CrimeList = (props) => {
+  const { t } = usePreferencesLocalization();
   const foundRecord = getSecurityRecord();
   if (!foundRecord) return;
 
@@ -83,7 +86,9 @@ const CrimeList = (props) => {
       {!toDisplay.length ? (
         <Stack.Item>
           <NoticeBox>
-            No {tab === SECURETAB.Crimes ? 'crimes' : 'citations'} found.
+            {tab === SECURETAB.Crimes
+              ? t('ui.security_records.no_crimes_found')
+              : t('ui.security_records.no_citations_found')}
           </NoticeBox>
         </Stack.Item>
       ) : (
@@ -95,6 +100,7 @@ const CrimeList = (props) => {
 
 /** Displays an individual crime */
 const CrimeDisplay = ({ item }: { item: Crime }) => {
+  const { t } = usePreferencesLocalization();
   const foundRecord = getSecurityRecord();
   if (!foundRecord) return;
 
@@ -103,7 +109,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
   const { current_user, higher_access } = data;
   const { author, crime_ref, details, fine, name, paid, time, valid, voider } =
     item;
-  const showFine = !!fine && fine > 0 ? `: ${fine} cr` : ': PAID OFF';
+  const showFine = !!fine && fine > 0 ? `: ${fine} cr` : `: ${t('ui.security_records.paid_off')}`;
 
   let collapsibleColor = '';
   if (!valid) {
@@ -123,32 +129,32 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
     <Stack.Item>
       <Collapsible color={collapsibleColor} open={editing} title={displayTitle}>
         <LabeledList>
-          <LabeledList.Item label="Time">{time}</LabeledList.Item>
-          <LabeledList.Item label="Author">{author}</LabeledList.Item>
-          <LabeledList.Item color={!valid ? 'bad' : 'good'} label="Status">
-            {!valid ? 'Void' : 'Active'}
+          <LabeledList.Item label={t('ui.common.time')}>{time}</LabeledList.Item>
+          <LabeledList.Item label={t('ui.common.author')}>{author}</LabeledList.Item>
+          <LabeledList.Item color={!valid ? 'bad' : 'good'} label={t('ui.common.status')}>
+            {!valid ? t('ui.security_records.void') : t('ui.common.active')}
           </LabeledList.Item>
           {!valid && (
             <LabeledList.Item
               color={voider ? 'gold' : 'good'}
-              label="Voided by"
+              label={t('ui.security_records.voided_by')}
             >
-              {!voider ? 'Automation' : voider}
+              {!voider ? t('ui.security_records.automation') : voider}
             </LabeledList.Item>
           )}
           {!!fine && fine > 0 && (
             <>
-              <LabeledList.Item color="bad" label="Fine">
+              <LabeledList.Item color="bad" label={t('ui.security_records.fine')}>
                 {fine}cr <Icon color="gold" name="coins" />
               </LabeledList.Item>
-              <LabeledList.Item color="good" label="Paid">
+              <LabeledList.Item color="good" label={t('ui.security_records.paid')}>
                 {paid}cr <Icon color="gold" name="coins" />
               </LabeledList.Item>
             </>
           )}
         </LabeledList>
         <Box color="label" mt={1} mb={1}>
-          Details:
+          {t('ui.security_records.details')}:
         </Box>
         <BlockQuote>{details}</BlockQuote>
 
@@ -159,10 +165,10 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
               icon="pen"
               onClick={() => setEditing(true)}
             >
-              Edit
+              {t('ui.common.edit')}
             </Button>
             <Button.Confirm
-              content="Invalidate"
+              content={t('ui.security_records.invalidate')}
               disabled={!valid || (!higher_access && author !== current_user)}
               icon="ban"
               onClick={() =>
@@ -187,7 +193,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
                   name: value,
                 });
               }}
-              placeholder="Enter a new name"
+              placeholder={t('ui.security_records.enter_new_name')}
             />
             <Input
               fluid
@@ -202,7 +208,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
                   description: value,
                 });
               }}
-              placeholder="Enter a new description"
+              placeholder={t('ui.security_records.enter_new_description')}
             />
           </>
         )}
@@ -213,6 +219,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
 
 /** Writes a new crime. Reducers don't seem to work here, so... */
 const CrimeAuthor = (props) => {
+  const { t } = usePreferencesLocalization();
   const foundRecord = getSecurityRecord();
   if (!foundRecord) return;
 
@@ -253,26 +260,26 @@ const CrimeAuthor = (props) => {
   return (
     <Stack fill vertical>
       <Stack.Item color="label">
-        Name
+        {t('ui.common.name')}
         <Input
           fluid
           maxLength={25}
           onChange={setCrimeName}
-          placeholder="Brief overview"
+          placeholder={t('ui.security_records.brief_overview')}
         />
       </Stack.Item>
       <Stack.Item color="label">
-        Details
+        {t('ui.security_records.details')}
         <TextArea
           fluid
           height={4}
           maxLength={1025}
           onChange={setCrimeDetails}
-          placeholder="Type some details..."
+          placeholder={t('ui.security_records.type_some_details')}
         />
       </Stack.Item>
       <Stack.Item color="label">
-        Fine (leave blank to arrest)
+        {t('ui.security_records.fine_leave_blank_to_arrest')}
         <RestrictedInput
           fluid
           value={crimeFine}
@@ -286,9 +293,9 @@ const CrimeAuthor = (props) => {
           disabled={!nameMeetsReqs || !crimeFineIsValid}
           icon="plus"
           onClick={createCrime}
-          tooltip={!nameMeetsReqs ? 'Name must be at least 3 characters.' : ''}
+          tooltip={!nameMeetsReqs ? t('ui.security_records.name_min_length') : ''}
         >
-          Create
+          {t('ui.common.create')}
         </Button.Confirm>
       </Stack.Item>
     </Stack>

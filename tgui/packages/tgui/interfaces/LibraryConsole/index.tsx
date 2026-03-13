@@ -3,6 +3,7 @@ import { Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import { PopoutMenu } from './components/PopoutMenu';
 import { Archive } from './screens/Archive';
 import { Checkout } from './screens/Checkout';
@@ -15,6 +16,7 @@ import { LibraryContext } from './useLibraryContext';
 
 export function LibraryConsole(props) {
   const { data } = useBackend<LibraryConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   const { display_lore, screen_state } = data;
 
   const checkoutBookState = useState(false);
@@ -24,7 +26,7 @@ export function LibraryConsole(props) {
     <LibraryContext.Provider value={{ checkoutBookState, uploadToDBState }}>
       <Window
         theme={display_lore ? 'spookyconsole' : ''}
-        title="Library Terminal"
+        title={t('ui.library.library_terminal')}
         width={880}
         height={520}
       >

@@ -8,6 +8,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   chem_temp: number;
@@ -22,6 +23,7 @@ type Data = {
 
 export const ChemAcclimator = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     chem_temp,
     target_temperature,
@@ -36,12 +38,12 @@ export const ChemAcclimator = (props) => {
   return (
     <Window width={320} height={271}>
       <Window.Content>
-        <Section title="Acclimator">
+        <Section title={t('ui.chem_acclimator.acclimator')}>
           <LabeledList>
-            <LabeledList.Item label="Current Temperature">
+            <LabeledList.Item label={t('ui.chem_acclimator.current_temperature')}>
               {chem_temp} K
             </LabeledList.Item>
-            <LabeledList.Item label="Target Temperature">
+            <LabeledList.Item label={t('ui.chem_acclimator.target_temperature')}>
               <NumberInput
                 value={target_temperature}
                 unit="K"
@@ -57,7 +59,9 @@ export const ChemAcclimator = (props) => {
                 }
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Acceptable Temp. Difference">
+            <LabeledList.Item
+              label={t('ui.chem_acclimator.acceptable_temp_difference')}
+            >
               <NumberInput
                 step={1}
                 value={allowed_temperature_difference}
@@ -76,18 +80,18 @@ export const ChemAcclimator = (props) => {
           </LabeledList>
         </Section>
         <Section
-          title="Status"
+          title={t('ui.common.status')}
           buttons={
             <Button
               icon="power-off"
-              content={enabled ? 'On' : 'Off'}
+              content={enabled ? t('ui.common.on') : t('ui.common.off')}
               selected={enabled}
               onClick={() => act('toggle_power')}
             />
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Volume">
+            <LabeledList.Item label={t('ui.common.volume')}>
               <NumberInput
                 value={max_volume}
                 unit="u"
@@ -103,11 +107,13 @@ export const ChemAcclimator = (props) => {
                 }
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Current Operation">
+            <LabeledList.Item label={t('ui.chem_acclimator.current_operation')}>
               {acclimate_state}
             </LabeledList.Item>
-            <LabeledList.Item label="Current State">
-              {emptying ? 'Emptying' : 'Filling'}
+            <LabeledList.Item label={t('ui.chem_acclimator.current_state')}>
+              {emptying
+                ? t('ui.chem_acclimator.emptying')
+                : t('ui.chem_acclimator.filling')}
             </LabeledList.Item>
           </LabeledList>
         </Section>

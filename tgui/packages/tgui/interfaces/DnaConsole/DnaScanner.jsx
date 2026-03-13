@@ -8,6 +8,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import {
   SUBJECT_CONCIOUS,
   SUBJECT_DEAD,
@@ -19,6 +20,7 @@ import {
 
 const DnaScannerButtons = (props) => {
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     hasDelayedAction,
     isPulsing,
@@ -32,7 +34,7 @@ const DnaScannerButtons = (props) => {
   if (!isScannerConnected) {
     return (
       <Button
-        content="Connect Scanner"
+        content={t('ui.dna.connect_scanner')}
         onClick={() => act('connect_scanner')}
       />
     );
@@ -41,7 +43,7 @@ const DnaScannerButtons = (props) => {
     <>
       {!!hasDelayedAction && (
         <Button
-          content="Cancel Delayed Action"
+          content={t('ui.dna.cancel_delayed_action')}
           onClick={() => act('cancel_delay')}
         />
       )}
@@ -76,6 +78,8 @@ const DnaScannerButtons = (props) => {
  */
 const SubjectStatus = (props) => {
   const { status } = props;
+  const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   if (status === SUBJECT_CONCIOUS) {
     return (
       <Box inline color="good">
@@ -111,11 +115,12 @@ const SubjectStatus = (props) => {
       </Box>
     );
   }
-  return <Box inline>Unknown</Box>;
+  return <Box inline>{t('ui.common.unknown')}</Box>;
 };
 
 const DnaScannerContent = (props) => {
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     subjectName,
     isScannerConnected,
@@ -125,19 +130,19 @@ const DnaScannerContent = (props) => {
     subjectStatus,
   } = data;
   if (!isScannerConnected) {
-    return <Box color="bad">DNA Scanner is not connected.</Box>;
+    return <Box color="bad">{t('ui.dna.scanner_not_connected')}</Box>;
   }
   if (!isViableSubject) {
-    return <Box color="average">No viable subject found in DNA Scanner.</Box>;
+    return <Box color="average">{t('ui.dna.no_viable_subject')}</Box>;
   }
   return (
     <LabeledList>
-      <LabeledList.Item label="Status">
+      <LabeledList.Item label={t('ui.common.status')}>
         {subjectName}
         <Icon mx={1} color="label" name="long-arrow-alt-right" />
         <SubjectStatus status={subjectStatus} />
       </LabeledList.Item>
-      <LabeledList.Item label="Health">
+      <LabeledList.Item label={t('ui.common.health')}>
         <ProgressBar
           value={subjectHealth}
           minValue={0}
@@ -152,7 +157,7 @@ const DnaScannerContent = (props) => {
           {subjectHealth}%
         </ProgressBar>
       </LabeledList.Item>
-      <LabeledList.Item label="Genetic Damage">
+      <LabeledList.Item label={t('ui.dna.genetic_damage')}>
         <ProgressBar
           value={subjectDamage}
           minValue={0}
@@ -172,8 +177,10 @@ const DnaScannerContent = (props) => {
 };
 
 export const DnaScanner = (props) => {
+  const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   return (
-    <Section title="DNA Scanner" buttons={<DnaScannerButtons />}>
+    <Section title={t('ui.dna.scanner')} buttons={<DnaScannerButtons />}>
       <DnaScannerContent />
     </Section>
   );

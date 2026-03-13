@@ -3,6 +3,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   can_reclaim: BooleanLike;
@@ -11,21 +12,22 @@ type Data = {
 
 export const GulagItemReclaimer = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { can_reclaim, mobs = [] } = data;
 
   return (
     <Window width={325} height={400}>
       <Window.Content scrollable>
-        {mobs.length === 0 && <NoticeBox>No stored items</NoticeBox>}
+        {mobs.length === 0 && <NoticeBox>{t('ui.gulagitemreclaimer.no_stored_items')}</NoticeBox>}
         {mobs.length > 0 && (
-          <Section title="Stored Items">
+          <Section title={t('ui.gulagitemreclaimer.stored_items')}>
             <Table>
               {mobs.map((mob) => (
                 <Table.Row key={mob.mob}>
                   <Table.Cell>{mob.name}</Table.Cell>
                   <Table.Cell textAlign="right">
                     <Button
-                      content="Retrieve Items"
+                      content={t('ui.gulagitemreclaimer.retrieve_items')}
                       disabled={!can_reclaim}
                       onClick={() =>
                         act('release_items', {

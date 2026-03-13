@@ -8,6 +8,7 @@ import {
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Weather = {
   id: string;
@@ -30,6 +31,7 @@ function formatCharges(charges: number, max_charges: number) {
 }
 
 export const AnomalousWeatherTower = () => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const {
     core_charges,
@@ -62,7 +64,7 @@ export const AnomalousWeatherTower = () => {
           <Stack.Item>
             <Section fontFamily="Consolas, monospace">
               <Stack vertical align="center">
-                <Stack.Item fontSize="18px">Core charge</Stack.Item>
+                <Stack.Item fontSize="18px">{t('ui.anomalous_weather.core_charge')}</Stack.Item>
                 <Stack.Item
                   fontSize="24px"
                   color={chargeColor}
@@ -79,7 +81,7 @@ export const AnomalousWeatherTower = () => {
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Section title="Active Weather" fontFamily="Consolas, monospace">
+            <Section title={t('ui.anomalous_weather.active_weather')} fontFamily="Consolas, monospace">
               {active_weather_on_z.length > 0 ? (
                 active_weather_on_z.map((weather) => (
                   <Stack.Item key={weather.id}>
@@ -96,7 +98,7 @@ export const AnomalousWeatherTower = () => {
                           tooltip={
                             can_clear_weather
                               ? undefined
-                              : 'Weather inhibitors are recharging.'
+                              : t('ui.anomalous_weather.weather_inhibitors_recharging')
                           }
                         />
                       </Stack.Item>
@@ -105,14 +107,14 @@ export const AnomalousWeatherTower = () => {
                 ))
               ) : (
                 <Stack.Item>
-                  <NoticeBox>None</NoticeBox>
+                  <NoticeBox>{t('ui.common.none')}</NoticeBox>
                 </Stack.Item>
               )}
             </Section>
           </Stack.Item>
           <Stack.Item grow>
             <Section
-              title="Summon Weather"
+              title={t('ui.anomalous_weather.summon_weather')}
               fill
               fontFamily="Consolas, monospace"
             >
@@ -148,10 +150,10 @@ export const AnomalousWeatherTower = () => {
                     }
                     tooltip={
                       core_charges < weather_charge_cost
-                        ? 'Not enough charges to summon weather.'
+                        ? t('ui.anomalous_weather.not_enough_charges')
                         : can_summon_weather
                           ? undefined
-                          : 'Weather coils are recharging.'
+                          : t('ui.anomalous_weather.weather_coils_recharging')
                     }
                   />
                 </Stack.Item>

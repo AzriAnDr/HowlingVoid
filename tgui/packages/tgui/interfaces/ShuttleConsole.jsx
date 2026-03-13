@@ -11,9 +11,11 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const ShuttleConsole = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { type = 'shuttle', blind_drop } = props;
   const { authorization_required } = data;
   return (
@@ -33,14 +35,16 @@ export const ShuttleConsole = (props) => {
               <Icon name="minus-circle" />
             </Flex.Item>
             <Flex.Item mt={2} ml={2} color="bad">
-              {type === 'shuttle' ? 'SHUTTLE LOCKED' : 'BASE LOCKED'}
+              {type === 'shuttle'
+                ? t('ui.shuttle_console.shuttle_locked')
+                : t('ui.shuttle_console.base_locked')}
             </Flex.Item>
           </Flex>
           <Box fontSize="18px" mt={4}>
             <Button
               lineHeight="40px"
               icon="arrow-circle-right"
-              content="Request Authorization"
+              content={t('ui.shuttle_console.request_authorization')}
               color="bad"
               onClick={() => act('request')}
             />
@@ -74,6 +78,7 @@ const STATUS_COLOR_KEYS = {
 
 export const ShuttleConsoleContent = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { type, blind_drop } = props;
   const {
     status,
@@ -87,26 +92,30 @@ export const ShuttleConsoleContent = (props) => {
   return (
     <Section>
       <Box bold fontSize="26px" textAlign="center" fontFamily="monospace">
-        {timer_str || '00:00'}
+        {timer_str || t('ui.shuttle_console.default_timer')}
       </Box>
       <Box textAlign="center" fontSize="14px" mb={1}>
         <Box inline bold>
-          STATUS:
+          {t('ui.common.status')}:
         </Box>
         <Box inline color={STATUS_COLOR_KEYS[status] || 'bad'} ml={1}>
-          {status || 'Not Available'}
+          {status || t('ui.common.not_available')}
         </Box>
       </Box>
       <Section
-        title={type === 'shuttle' ? 'Shuttle Controls' : 'Base Launch Controls'}
+        title={
+          type === 'shuttle'
+            ? t('ui.shuttle_console.shuttle_controls')
+            : t('ui.shuttle_console.base_launch_controls')
+        }
         level={2}
       >
         <LabeledList>
-          <LabeledList.Item label="Location">
-            {docked_location || 'Not Available'}
+          <LabeledList.Item label={t('ui.shuttle_console.location')}>
+            {docked_location || t('ui.common.not_available')}
           </LabeledList.Item>
           <LabeledList.Item
-            label="Destination"
+            label={t('ui.shuttle_console.destination')}
             buttons={
               type !== 'shuttle' &&
               locations.length === 0 &&
@@ -115,7 +124,7 @@ export const ShuttleConsoleContent = (props) => {
                   color="bad"
                   icon="exclamation-triangle"
                   disabled={authorization_required || !blind_drop}
-                  content={'Blind Drop'}
+                  content={t('ui.shuttle_console.blind_drop')}
                   onClick={() => act('random')}
                 />
               )
@@ -123,7 +132,7 @@ export const ShuttleConsoleContent = (props) => {
           >
             {(locations.length === 0 && (
               <Box mb={1.7} color="bad">
-                Not Available
+                {t('ui.common.not_available')}
               </Box>
             )) ||
               (locations.length === 1 && (
@@ -139,7 +148,7 @@ export const ShuttleConsoleContent = (props) => {
                   disabled={locked || authorization_required}
                   selected={
                     getLocationNameById(locations, destination) ||
-                    'Select a Destination'
+                    t('ui.shuttle_console.select_destination')
                   }
                   onSelected={(value) =>
                     act('set_destination', {
@@ -152,7 +161,7 @@ export const ShuttleConsoleContent = (props) => {
         </LabeledList>
         <Button
           fluid
-          content="Depart"
+          content={t('ui.shuttle_console.depart')}
           disabled={
             !getLocationNameById(locations, destination) ||
             locked ||

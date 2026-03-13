@@ -14,6 +14,7 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 
 type GenericUplinkProps = {
   currency?: string | React.JSX.Element;
@@ -24,6 +25,7 @@ type GenericUplinkProps = {
 
 export const GenericUplink = (props: GenericUplinkProps) => {
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
   const {
     currency = 'cr',
     categories,
@@ -68,7 +70,11 @@ export const GenericUplink = (props: GenericUplinkProps) => {
                   lineHeight={2}
                   textAlign="center"
                   icon={compactMode ? 'maximize' : 'minimize'}
-                  tooltip={compactMode ? 'Detailed view' : 'Compact view'}
+                  tooltip={
+                    compactMode
+                      ? t('ui.uplink.detailed_view')
+                      : t('ui.uplink.compact_view')
+                  }
                   onClick={() => setCompactMode(!compactMode)}
                 />
               </Stack.Item>
@@ -78,7 +84,7 @@ export const GenericUplink = (props: GenericUplinkProps) => {
             <Input
               autoFocus
               value={searchText}
-              placeholder="Search..."
+              placeholder={t('ui.common.search_placeholder')}
               onChange={setSearchText}
               fluid
             />
@@ -109,8 +115,8 @@ export const GenericUplink = (props: GenericUplinkProps) => {
           {items.length === 0 ? (
             <NoticeBox>
               {searchText.length === 0
-                ? 'No items in this category.'
-                : 'No results found.'}
+                ? t('ui.uplink.no_items_in_this_category')
+                : t('ui.common.no_results_found')}
             </NoticeBox>
           ) : (
             <ItemList

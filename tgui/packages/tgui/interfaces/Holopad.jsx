@@ -11,9 +11,11 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const Holopad = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization();
   const { calling } = data;
   return (
     <Window width={440} height={245}>
@@ -23,13 +25,13 @@ export const Holopad = (props) => {
             <Flex.Item mr={2} mt={2}>
               <Icon name="phone-alt" rotation={25} />
             </Flex.Item>
-            <Flex.Item mr={2}>{'Dialing...'}</Flex.Item>
+            <Flex.Item mr={2}>{t('ui.holopad.dialing')}</Flex.Item>
           </Flex>
           <Box mt={2} textAlign="center" fontSize="24px">
             <Button
               lineHeight="40px"
               icon="times"
-              content="Hang Up"
+              content={t('ui.holopad.hang_up')}
               color="bad"
               onClick={() => act('hang_up')}
             />
@@ -45,6 +47,7 @@ export const Holopad = (props) => {
 
 const HolopadContent = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization();
   const {
     on_network,
     on_cooldown,
@@ -59,12 +62,14 @@ const HolopadContent = (props) => {
   return (
     <>
       <Section
-        title="Holopad"
+        title={t('ui.holopad.title')}
         buttons={
           <Button
             icon="bell"
             content={
-              on_cooldown ? "AI's Presence Requested" : "Request AI's Presence"
+              on_cooldown
+                ? t('ui.holopad.ai_presence_requested')
+                : t('ui.holopad.request_ai_presence')
             }
             disabled={!on_network || on_cooldown}
             onClick={() => act('AIrequest')}
@@ -72,10 +77,14 @@ const HolopadContent = (props) => {
         }
       >
         <LabeledList>
-          <LabeledList.Item label="Communicator">
+          <LabeledList.Item label={t('ui.holopad.communicator')}>
             <Button
               icon="phone-alt"
-              content={allowed ? 'Connect To Holopad' : 'Call Holopad'}
+              content={
+                allowed
+                  ? t('ui.holopad.connect_to_holopad')
+                  : t('ui.holopad.call_holopad')
+              }
               disabled={!on_network}
               onClick={() => act('holocall', { headcall: allowed })}
             />
@@ -83,15 +92,19 @@ const HolopadContent = (props) => {
           {holo_calls.map((call) => {
             return (
               <LabeledList.Item
-                label={call.connected ? 'Current Call' : 'Incoming Call'}
+                label={
+                  call.connected
+                    ? t('ui.holopad.current_call')
+                    : t('ui.holopad.incoming_call')
+                }
                 key={call.ref}
               >
                 <Button
                   icon={call.connected ? 'phone-slash' : 'phone-alt'}
                   content={
                     call.connected
-                      ? `Disconnect call from ${call.caller}`
-                      : `Answer call from ${call.caller}`
+                      ? `${t('ui.holopad.disconnect_call_from')} ${call.caller}`
+                      : `${t('ui.holopad.answer_call_from')} ${call.caller}`
                   }
                   color={call.connected ? 'bad' : 'good'}
                   disabled={!on_network}
@@ -108,7 +121,7 @@ const HolopadContent = (props) => {
             <LabeledList.Item key="reject">
               <Button
                 icon="phone-slash"
-                content="Reject incoming call(s)"
+                content={t('ui.holopad.reject_incoming_calls')}
                 color="bad"
                 onClick={() => act('rejectall')}
               />
@@ -117,51 +130,57 @@ const HolopadContent = (props) => {
         </LabeledList>
       </Section>
       <Section
-        title="Holodisk"
+        title={t('ui.holopad.holodisk')}
         buttons={
           <Button
             icon="eject"
-            content="Eject"
+            content={t('ui.common.eject')}
             disabled={!disk || replay_mode || record_mode}
             onClick={() => act('disk_eject')}
           />
         }
       >
-        {(!disk && <NoticeBox>No holodisk</NoticeBox>) || (
+        {(!disk && <NoticeBox>{t('ui.holopad.no_holodisk')}</NoticeBox>) || (
           <LabeledList>
-            <LabeledList.Item label="Disk Player">
+            <LabeledList.Item label={t('ui.holopad.disk_player')}>
               <Button
                 icon={replay_mode ? 'pause' : 'play'}
-                content={replay_mode ? 'Stop' : 'Replay'}
+                content={replay_mode ? t('ui.common.stop') : t('ui.holopad.replay')}
                 selected={replay_mode}
                 disabled={record_mode || !disk_record}
                 onClick={() => act('replay_mode')}
               />
               <Button
                 icon={'sync'}
-                content={loop_mode ? 'Looping' : 'Loop'}
+                content={
+                  loop_mode ? t('ui.holopad.looping') : t('ui.holopad.loop')
+                }
                 selected={loop_mode}
                 disabled={record_mode || !disk_record}
                 onClick={() => act('loop_mode')}
               />
               <Button
                 icon="exchange-alt"
-                content="Change Offset"
+                content={t('ui.holopad.change_offset')}
                 disabled={!replay_mode}
                 onClick={() => act('offset')}
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Recorder">
+            <LabeledList.Item label={t('ui.holopad.recorder')}>
               <Button
                 icon={record_mode ? 'pause' : 'video'}
-                content={record_mode ? 'End Recording' : 'Record'}
+                content={
+                  record_mode
+                    ? t('ui.holopad.end_recording')
+                    : t('ui.holopad.record')
+                }
                 selected={record_mode}
                 disabled={(disk_record && !record_mode) || replay_mode}
                 onClick={() => act('record_mode')}
               />
               <Button
                 icon="trash"
-                content="Clear Recording"
+                content={t('ui.holopad.clear_recording')}
                 color="bad"
                 disabled={!disk_record || replay_mode || record_mode}
                 onClick={() => act('record_clear')}

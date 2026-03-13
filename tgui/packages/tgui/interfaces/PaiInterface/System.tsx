@@ -1,6 +1,7 @@
 import { useBackend } from 'tgui/backend';
 import { Box, Button, LabeledList, Section, Stack } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../localization';
 import type { PaiData } from './types';
 
 export function SystemDisplay(props) {
@@ -64,6 +65,7 @@ function SystemWallpaper(props) {
  */
 function SystemInfo(props) {
   const { act, data } = useBackend<PaiData>();
+  const { t } = usePreferencesLocalization(data);
   const { screen_image_interface_icon, master_dna, master_name } = data;
 
   return (
@@ -74,28 +76,28 @@ function SystemInfo(props) {
             disabled={!master_dna}
             icon="dna"
             onClick={() => act('check dna')}
-            tooltip="Verifies your master's DNA. Must be carried in hand."
+            tooltip={t('ui.pai_interface.tooltip_verify_master_dna')}
           >
-            Verify
+            {t('ui.pai_interface.verify')}
           </Button>
           <Button
             icon={screen_image_interface_icon}
             onClick={() => act('change image')}
-            tooltip="Change your display image."
+            tooltip={t('ui.pai_interface.tooltip_change_display_image')}
           >
-            Display
+            {t('ui.pai_interface.display')}
           </Button>
         </>
       }
       fill
-      title="System Info"
+      title={t('ui.pai_interface.system_info')}
     >
       <LabeledList>
-        <LabeledList.Item label="Master">
-          {master_name || 'None.'}
+        <LabeledList.Item label={t('ui.pai_interface.master')}>
+          {master_name || t('ui.common.none')}
         </LabeledList.Item>
-        <LabeledList.Item color={master_dna ? 'red' : ''} label="DNA">
-          {master_dna || 'None.'}
+        <LabeledList.Item color={master_dna ? 'red' : ''} label={t('ui.pai_interface.dna')}>
+          {master_dna || t('ui.common.none')}
         </LabeledList.Item>
       </LabeledList>
     </Section>

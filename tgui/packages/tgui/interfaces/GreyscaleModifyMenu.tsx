@@ -16,6 +16,7 @@ import {
 import '../styles/interfaces/GreyscaleModifyMenu.scss';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type ColorEntry = {
   index: number;
@@ -71,10 +72,11 @@ const DirectionAbbreviation: Record<Direction, string> = {
 
 const ConfigDisplay = (props) => {
   const { act, data } = useBackend<GreyscaleMenuData>();
+  const { t } = usePreferencesLocalization(data);
   return (
-    <Section title="Designs">
+    <Section title={t('ui.greyscale.designs')}>
       <LabeledList>
-        <LabeledList.Item label="Design Type">
+        <LabeledList.Item label={t('ui.greyscale.design_type')}>
           <Button icon="cogs" onClick={() => act('select_config')} />
           <Input
             value={data.greyscale_config}
@@ -90,15 +92,16 @@ const ConfigDisplay = (props) => {
 
 const ColorDisplay = (props) => {
   const { act, data } = useBackend<GreyscaleMenuData>();
+  const { t } = usePreferencesLocalization(data);
   const colors = data.colors || [];
   return (
-    <Section title="Colors">
+    <Section title={t('ui.common.colors')}>
       <LabeledList>
-        <LabeledList.Item label="Full Color String">
+        <LabeledList.Item label={t('ui.greyscale.full_color_string')}>
           <Button
             icon="dice"
             onClick={() => act('random_all_colors')}
-            tooltip="Randomizes all color groups."
+            tooltip={t('ui.greyscale.randomize_all_color_groups')}
           />
           <Input
             value={colors.map((item) => item.value).join('')}
@@ -117,12 +120,12 @@ const ColorDisplay = (props) => {
             <Button
               icon="palette"
               onClick={() => act('pick_color', { color_index: item.index })}
-              tooltip="Brings up a color pick window to replace this color group."
+              tooltip={t('ui.greyscale.pick_replace_color_group')}
             />
             <Button
               icon="dice"
               onClick={() => act('random_color', { color_index: item.index })}
-              tooltip="Randomizes the color for this color group."
+              tooltip={t('ui.greyscale.randomize_color_group')}
             />
             <Input
               value={item.value}
@@ -169,10 +172,11 @@ const PreviewCompassSelect = (props) => {
 const SingleDirection = (props) => {
   const { dir } = props;
   const { data, act } = useBackend<GreyscaleMenuData>();
+  const { t } = usePreferencesLocalization(data);
   return (
     <Flex.Item grow={1} basis={0}>
       <Button
-        tooltip={`Sets the direction of the preview sprite to ${dir}`}
+        tooltip={`${t('ui.greyscale.set_preview_direction_prefix')} ${dir}`}
         disabled={`${dir}` === data.sprites_dir}
         textAlign="center"
         onClick={() => act('change_dir', { new_sprite_dir: dir })}
@@ -215,8 +219,9 @@ const extractIconHtml = (raw: unknown): string | null => {
 
 const IconStatesDisplay = (props) => {
   const { data, act } = useBackend<GreyscaleMenuData>();
+  const { t } = usePreferencesLocalization(data);
   return (
-    <Section title="Icon States">
+    <Section title={t('ui.greyscale.icon_states')}>
       <Flex>
         {data.sprites.icon_states.map((item) => (
           <Flex.Item key={item}>
@@ -327,8 +332,9 @@ const LoadingAnimation = () => {
 
 export const GreyscaleModifyMenu = (props) => {
   const { act, data } = useBackend<GreyscaleMenuData>();
+  const { t } = usePreferencesLocalization(data);
   return (
-    <Window title="Color Configuration" width={325} height={800}>
+    <Window title={t('ui.greyscale.color_configuration')} width={325} height={800}>
       <Window.Content scrollable>
         <Box className="GreyscaleModifyMenu">
           <ConfigDisplay />
@@ -342,7 +348,7 @@ export const GreyscaleModifyMenu = (props) => {
                   content={
                     <Icon name="file-image-o" spin={data.monitoring_files} />
                   }
-                  tooltip="Continuously checks files for changes and reloads when necessary. WARNING: Very expensive"
+                  tooltip={t('ui.greyscale.tooltip_toggle_mass_refresh')}
                   selected={data.monitoring_files}
                   onClick={() => act('toggle_mass_refresh')}
                   width={1.9}
@@ -350,14 +356,14 @@ export const GreyscaleModifyMenu = (props) => {
                 />
                 <Button
                   className="GreyscaleModifyMenu__ActionButton"
-                  content="Refresh Icon File"
-                  tooltip="Loads the json configuration and icon file fresh from disk. This is useful to avoid restarting the server to see changes. WARNING: Expensive"
+                  content={t('ui.greyscale.refresh_icon_file')}
+                  tooltip={t('ui.greyscale.tooltip_refresh_icon_file')}
                   onClick={() => act('refresh_file')}
                 />
                 <Button
                   className="GreyscaleModifyMenu__ActionButton"
-                  content="Save Icon File"
-                  tooltip="Saves the icon to a temp file in tmp/. This is useful if you want to use a generated icon elsewhere or just view a more accurate representation"
+                  content={t('ui.greyscale.save_icon_file')}
+                  tooltip={t('ui.greyscale.tooltip_save_icon_file')}
                   onClick={() => act('save_dmi')}
                 />
               </Flex.Item>
@@ -365,15 +371,15 @@ export const GreyscaleModifyMenu = (props) => {
             <Flex.Item>
               <Button
                 className="GreyscaleModifyMenu__ActionButton"
-                content="Apply"
-                tooltip="Applies changes made to the object this menu was created from."
+                content={t('ui.common.apply')}
+                tooltip={t('ui.greyscale.tooltip_apply')}
                 color="red"
                 onClick={() => act('apply')}
               />
               <Button.Checkbox
                 className="GreyscaleModifyMenu__ActionButton"
-                content="Full Preview"
-                tooltip="Generates and displays the full sprite generation process instead of just the final output."
+                content={t('ui.greyscale.full_preview')}
+                tooltip={t('ui.greyscale.tooltip_full_preview')}
                 disabled={!data.generate_full_preview && !data.unlocked}
                 checked={data.generate_full_preview}
                 onClick={() => act('toggle_full_preview')}

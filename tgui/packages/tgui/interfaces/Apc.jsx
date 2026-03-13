@@ -10,6 +10,7 @@ import {
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
+import { usePreferencesLocalization } from './localization';
 
 export const Apc = (props) => {
   return (
@@ -64,6 +65,7 @@ const malfMap = {
 
 const ApcContent = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const locked = data.locked && !data.siliconUser;
   const externalPowerStatus =
     powerStatusMap[data.externalPower] || powerStatusMap[0];
@@ -76,7 +78,7 @@ const ApcContent = (props) => {
     return (
       <NoticeBox info textAlign="center" mb={0}>
         <b>
-          <h3>SYSTEM FAILURE</h3>
+          <h3>{t('ui.apc.system_failure')}</h3>
         </b>
         I/O regulators have malfunctioned! <br />
         Awaiting system reboot.
@@ -86,8 +88,8 @@ const ApcContent = (props) => {
         <br />
         <Button
           icon="sync"
-          content="Reboot Now"
-          tooltip="Force an interface reset."
+          content={t('ui.apc.reboot_now')}
+          tooltip={t('ui.apc.force_interface_reset')}
           tooltipPosition="bottom"
           onClick={() => act('reboot')}
         />
@@ -100,10 +102,10 @@ const ApcContent = (props) => {
         siliconUser={data.remoteAccess || data.siliconUser}
         preventLocking={data.remoteAccess}
       />
-      <Section title="Power Status">
+      <Section title={t('ui.apc.power_status')}>
         <LabeledList>
           <LabeledList.Item
-            label="Main Breaker"
+            label={t('ui.apc.main_breaker')}
             color={externalPowerStatus.color}
             buttons={
               <Button
@@ -117,11 +119,11 @@ const ApcContent = (props) => {
           >
             [ {externalPowerStatus.externalPowerText} ]
           </LabeledList.Item>
-          <LabeledList.Item label="Power Cell">
+          <LabeledList.Item label={t('ui.apc.power_cell')}>
             <ProgressBar color="good" value={adjustedCellChange} />
           </LabeledList.Item>
           <LabeledList.Item
-            label="Charge Mode"
+            label={t('ui.apc.charge_mode')}
             color={chargingStatus.color}
             buttons={
               <Button
@@ -139,7 +141,7 @@ const ApcContent = (props) => {
           </LabeledList.Item>
         </LabeledList>
       </Section>
-      <Section title="Power Channels">
+      <Section title={t('ui.apc.power_channels')}>
         <LabeledList>
           {channelArray.map((channel) => {
             const { topicParams } = channel;
@@ -158,7 +160,7 @@ const ApcContent = (props) => {
                     </Box>
                     <Button
                       icon="sync"
-                      content="Auto"
+                      content={t('ui.common.auto')}
                       selected={
                         !locked &&
                         (channel.status === 1 || channel.status === 3)
@@ -168,14 +170,14 @@ const ApcContent = (props) => {
                     />
                     <Button
                       icon="power-off"
-                      content="On"
+                      content={t('ui.common.on')}
                       selected={!locked && channel.status === 2}
                       disabled={locked}
                       onClick={() => act('channel', topicParams.on)}
                     />
                     <Button
                       icon="times"
-                      content="Off"
+                      content={t('ui.common.off')}
                       selected={!locked && channel.status === 0}
                       disabled={locked}
                       onClick={() => act('channel', topicParams.off)}
@@ -187,13 +189,13 @@ const ApcContent = (props) => {
               </LabeledList.Item>
             );
           })}
-          <LabeledList.Item label="Total Load">
+          <LabeledList.Item label={t('ui.apc.total_load')}>
             <b>{data.totalLoad}</b>
           </LabeledList.Item>
         </LabeledList>
       </Section>
       <Section
-        title="Misc"
+        title={t('ui.common.misc')}
         buttons={
           !!data.siliconUser && (
             <>
@@ -207,7 +209,7 @@ const ApcContent = (props) => {
               )}
               <Button
                 icon="lightbulb-o"
-                content="Overload"
+                content={t('ui.apc.overload')}
                 onClick={() => act('overload')}
               />
             </>
@@ -216,10 +218,10 @@ const ApcContent = (props) => {
       >
         <LabeledList>
           <LabeledList.Item
-            label="Cover Lock"
+            label={t('ui.apc.cover_lock')}
             buttons={
               <Button
-                tooltip="APC cover can be pried open with a crowbar."
+                tooltip={t('ui.apc.cover_lock_tooltip')}
                 icon={data.coverLocked ? 'lock' : 'unlock'}
                 content={data.coverLocked ? 'Engaged' : 'Disengaged'}
                 disabled={locked}
@@ -228,10 +230,10 @@ const ApcContent = (props) => {
             }
           />
           <LabeledList.Item
-            label="Emergency Lighting"
+            label={t('ui.apc.emergency_lighting')}
             buttons={
               <Button
-                tooltip="Lights use internal power cell when there is no power available."
+                tooltip={t('ui.apc.emergency_lighting_tooltip')}
                 icon="lightbulb-o"
                 content={data.emergencyLights ? 'Enabled' : 'Disabled'}
                 disabled={locked}
@@ -240,10 +242,10 @@ const ApcContent = (props) => {
             }
           />
           <LabeledList.Item
-            label="Night Shift Lighting"
+            label={t('ui.apc.night_shift_lighting')}
             buttons={
               <Button
-                tooltip="Dim lights to reduce power consumption."
+                tooltip={t('ui.apc.night_shift_lighting_tooltip')}
                 icon="lightbulb-o"
                 content={data.nightshiftLights ? 'Enabled' : 'Disabled'}
                 disabled={data.disable_nightshift_toggle}

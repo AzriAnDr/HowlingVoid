@@ -4,6 +4,7 @@ import { Button, NoticeBox, Section, Stack } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 import type { NTOSData } from '../layouts/NtosWindow';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   authCard: string;
@@ -34,6 +35,7 @@ export const NtosSelfServe = (props) => {
 
 const SelfServePage = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     authCardTimeRemaining,
     authIDName,
@@ -63,7 +65,7 @@ const SelfServePage = (props) => {
         </Stack>
       )}
       {authIDName && (
-        <Section title="Punch Clock">
+        <Section title={t('ui.ntos_self_serve.punch_clock')}>
           <Stack wrap="wrap">
             <Stack.Item width="100%" mt={1} ml={0}>
               <Stack>
@@ -97,7 +99,7 @@ const SelfServePage = (props) => {
       )}
       {authIDName ? (
         !trimClockedOut || !!authCardHOPLocked || !!authCardTimeLocked ? (
-          <Section title="Assignment Information">
+          <Section title={t('ui.ntos_self_serve.assignment_information')}>
             <Stack wrap="wrap">
               {!trimClockedOut && (
                 <Stack.Item width="100%" mt={0} ml={0}>

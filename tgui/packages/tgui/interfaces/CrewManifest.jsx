@@ -3,6 +3,7 @@ import { classes } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const commandJobs = [
   'Head of Personnel',
@@ -15,12 +16,13 @@ const commandJobs = [
 ];
 
 export const CrewManifest = (props) => {
+  const { t } = usePreferencesLocalization();
   const {
     data: { manifest, positions },
   } = useBackend();
 
   return (
-    <Window title="Crew Manifest" width={350} height={500}>
+    <Window title={t('ui.crew_manifest.title')} width={350} height={500}>
       <Window.Content scrollable>
         {Object.entries(manifest).map(([dept, crew]) => (
           <Section
@@ -29,7 +31,7 @@ export const CrewManifest = (props) => {
             title={
               dept +
               (dept !== 'Misc'
-                ? ` (${positions[dept].open} positions open)`
+                ? ` (${positions[dept].open} ${t('ui.crew_manifest.positions_open')})`
                 : '')
             }
           >
@@ -54,12 +56,15 @@ export const CrewManifest = (props) => {
                     width="40px"
                   >
                     {positions[dept].exceptions.includes(crewMember.rank) && (
-                      <Tooltip content="No position limit" position="bottom">
+                      <Tooltip
+                        content={t('ui.crew_manifest.no_position_limit')}
+                        position="bottom"
+                      >
                         <Icon className="CrewManifest__Icon" name="infinity" />
                       </Tooltip>
                     )}
                     {crewMember.trim === 'Captain' && (
-                      <Tooltip content="Captain" position="bottom">
+                      <Tooltip content={t('ui.crew_manifest.captain')} position="bottom">
                         <Icon
                           className={classes([
                             'CrewManifest__Icon',
@@ -70,7 +75,10 @@ export const CrewManifest = (props) => {
                       </Tooltip>
                     )}
                     {commandJobs.includes(crewMember.trim) && (
-                      <Tooltip content="Member of command" position="bottom">
+                      <Tooltip
+                        content={t('ui.crew_manifest.member_of_command')}
+                        position="bottom"
+                      >
                         <Icon
                           className={classes([
                             'CrewManifest__Icon',

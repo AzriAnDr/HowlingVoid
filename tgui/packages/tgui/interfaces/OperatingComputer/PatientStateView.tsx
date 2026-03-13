@@ -12,6 +12,7 @@ import {
 import { capitalizeAll, capitalizeFirst } from 'tgui-core/string';
 import { useBackend, useSharedState } from '../../backend';
 import { type BodyZone, BodyZoneSelector } from '../common/BodyZoneSelector';
+import { usePreferencesLocalization } from '../localization';
 import { extractSurgeryName } from './helpers';
 import {
   ComputerTabs,
@@ -28,6 +29,7 @@ type PatientStateViewProps = {
 };
 export const PatientStateView = (props: PatientStateViewProps) => {
   const { data } = useBackend<OperatingComputerData>();
+  const { t } = usePreferencesLocalization(data);
   const { setTab, setSearchText, pinnedOperations, setPinnedOperations } =
     props;
 
@@ -36,7 +38,7 @@ export const PatientStateView = (props: PatientStateViewProps) => {
     return (
       <Section fill>
         <NoticeBox color="yellow" align="center">
-          No table detected
+          {t('ui.operating_computer.no_table_detected')}
         </NoticeBox>
       </Section>
     );
@@ -45,7 +47,7 @@ export const PatientStateView = (props: PatientStateViewProps) => {
     return (
       <Section fill>
         <NoticeBox color="red" align="center">
-          No patient detected
+          {t('ui.operating_computer.no_patient_detected')}
         </NoticeBox>
       </Section>
     );
@@ -81,16 +83,17 @@ type PatientStateMainStateViewProps = {
 
 const PatientStateMainStateView = (props: PatientStateMainStateViewProps) => {
   const { patient } = props;
+  const { t } = usePreferencesLocalization();
 
   return (
     <LabeledList>
-      <LabeledList.Item label="State" color={patient.statstate}>
+      <LabeledList.Item label={t('ui.operating_computer.state')} color={patient.statstate}>
         {patient.stat}
       </LabeledList.Item>
-      <LabeledList.Item label="Blood Type">
-        {patient.blood_type || 'Unable to determine blood type'}
+      <LabeledList.Item label={t('ui.operating_computer.blood_type')}>
+        {patient.blood_type || t('ui.operating_computer.unable_to_determine_blood_type')}
       </LabeledList.Item>
-      <LabeledList.Item label="Health">
+      <LabeledList.Item label={t('ui.operating_computer.health')}>
         <ProgressBar
           value={patient.health}
           minValue={patient.minHealth}
@@ -103,7 +106,7 @@ const PatientStateMainStateView = (props: PatientStateMainStateViewProps) => {
           />
         </ProgressBar>
       </LabeledList.Item>
-      <LabeledList.Item label="Blood Level">
+      <LabeledList.Item label={t('ui.operating_computer.blood_level')}>
         <ProgressBar
           value={patient.blood_level}
           minValue={0}
@@ -180,6 +183,7 @@ const PatientStateNextOperationsView = (
   props: PatientStateNextOperationsViewProps,
 ) => {
   const { data } = useBackend<OperatingComputerData>();
+  const { t } = usePreferencesLocalization(data);
   const { surgeries } = data;
   const { pinnedOperations, setPinnedOperations, setTab, setSearchText } =
     props;
@@ -188,7 +192,7 @@ const PatientStateNextOperationsView = (
     (operation) => operation.show_as_next,
   );
 
-  const allTools = ['all tools'].concat(
+  const allTools = [t('ui.operating_computer.all_tools')].concat(
     possible_next_operations
       .map((operation) => operation.tool_rec)
       .flatMap((tool) => tool.split(' / '))
@@ -222,13 +226,13 @@ const PatientStateNextOperationsView = (
 
   return (
     <Section
-      title="Possible Operations"
+      title={t('ui.operating_computer.possible_operations')}
       scrollable
       fill
       buttons={
         <Button
           icon="filter"
-          tooltip="Filter by recommended tool. Right click to reset."
+          tooltip={t('ui.operating_computer.filter_by_recommended_tool')}
           tooltipPosition="top"
           width="100px"
           ellipsis
@@ -248,7 +252,7 @@ const PatientStateNextOperationsView = (
         {possible_next_operations.length === 0 ? (
           <Stack.Item>
             <NoticeBox color="green" align="center">
-              No operations available
+              {t('ui.operating_computer.no_operations_available')}
             </NoticeBox>
           </Stack.Item>
         ) : (
@@ -269,26 +273,26 @@ const PatientStateNextOperationsView = (
                         {!!operation.priority && (
                           <Stack.Item color="orange">
                             <Icon name="exclamation" mr={1} />
-                            Recommended next step
+                            {t('ui.operating_computer.recommended_next_step')}
                           </Stack.Item>
                         )}
                         {pinnedOperations.includes(operation.name) && (
                           <Stack.Item color="yellow">
                             <Icon name="thumbtack" mr={1} />
-                            Pinned
+                            {t('ui.operating_computer.pinned')}
                           </Stack.Item>
                         )}
                         <Stack.Item>{operation.desc}</Stack.Item>
                         <Stack.Item italic fontSize="0.9rem">
-                          {`Left click ${
+                          {`${t('ui.common.left_click')} ${
                             pinnedOperations.includes(operation.name)
-                              ? 'unpins operation from'
-                              : 'pins operation to'
-                          } the top.`}
+                              ? t('ui.operating_computer.unpins_operation_from')
+                              : t('ui.operating_computer.pins_operation_to')
+                          } ${t('ui.operating_computer.the_top')}.`}
                         </Stack.Item>
                         {!!operation.show_in_list && (
                           <Stack.Item italic fontSize="0.9rem">
-                            Right click opens operation info.
+                            {t('ui.operating_computer.right_click_opens_operation_info')}
                           </Stack.Item>
                         )}
                       </Stack>

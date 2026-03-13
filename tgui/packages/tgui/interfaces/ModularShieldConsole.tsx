@@ -10,6 +10,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type GeneratorStats = {
   name: string;
@@ -27,12 +28,13 @@ type Data = {
 
 export const ModularShieldConsole = () => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { generators } = data;
   return (
-    <Window title="Modular Shield Console" width={450} height={275}>
+    <Window title={t('ui.modular_shield_console.title')} width={450} height={275}>
       <Window.Content scrollable>
         {generators.length === 0 ? (
-          <NoticeBox>No Generators Connected</NoticeBox>
+          <NoticeBox>{t('ui.modular_shield_console.no_generators_connected')}</NoticeBox>
         ) : (
           <Section minHeight="200px">
             <GeneratorTable />
@@ -45,16 +47,17 @@ export const ModularShieldConsole = () => {
 
 const GeneratorTable = () => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { generators } = data;
   return (
     <Table>
       <Table.Row>
-        <Table.Cell bold>Name</Table.Cell>
+        <Table.Cell bold>{t('ui.common.name')}</Table.Cell>
         <Table.Cell bold collapsing textAlign="center">
-          Status
+          {t('ui.common.status')}
         </Table.Cell>
         <Table.Cell bold textAlign="center">
-          Toggle
+          {t('ui.common.toggle')}
         </Table.Cell>
       </Table.Row>
       {generators.map((stat) => (
@@ -70,6 +73,7 @@ type GeneratorTableEntryProps = {
 
 const GeneratorTableEntry = (props: GeneratorTableEntryProps) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { GeneratorData } = props;
   const {
     name,
@@ -118,7 +122,7 @@ const GeneratorTableEntry = (props: GeneratorTableEntryProps) => {
           bold
           disabled={recovering}
           selected={active}
-          content={active ? 'On' : 'Off'}
+          content={active ? t('ui.common.on') : t('ui.common.off')}
           icon="power-off"
           onClick={() => act('toggle_shields', { id })}
         />

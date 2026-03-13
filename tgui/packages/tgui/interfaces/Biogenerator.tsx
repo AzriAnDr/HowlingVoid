@@ -15,6 +15,7 @@ import { type BooleanLike, classes } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   beaker: BooleanLike;
@@ -46,6 +47,7 @@ type Design = {
 
 export function Biogenerator(props) {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { beaker, beakerCurrentVolume, beakerMaxVolume, categories } = data;
 
   const [selectedCategory, setSelectedCategory] = useState(
@@ -96,6 +98,7 @@ export function Biogenerator(props) {
 
 function Controls() {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     beaker,
     beakerCurrentVolume,
@@ -111,7 +114,7 @@ function Controls() {
     <Section fill>
       <LabeledList>
         <LabeledList.Item
-          label="Biomass"
+          label={t('ui.biogenerator.biomass')}
           buttons={
             <Button
               width={7}
@@ -121,7 +124,7 @@ function Controls() {
               disabled={!can_process || processing}
               onClick={() => act('activate')}
             >
-              Generate
+              {t('ui.biogenerator.generate')}
             </Button>
           }
         >
@@ -137,13 +140,13 @@ function Controls() {
                 textShadow: '1px 1px 0 black',
               }}
             >
-              {`${parseFloat(biomass.toFixed(2))} units`}
+              {`${parseFloat(biomass.toFixed(2))} ${t('ui.common.units')}`}
             </Box>
           </ProgressBar>
         </LabeledList.Item>
         {!!beaker && (
           <LabeledList.Item
-            label="Container"
+            label={t('ui.biogenerator.container')}
             buttons={
               <Button
                 width={7}
@@ -152,7 +155,7 @@ function Controls() {
                 icon="eject"
                 onClick={() => act('eject')}
               >
-                Eject
+                {t('ui.common.eject')}
               </Button>
             }
           >
@@ -169,15 +172,15 @@ function Controls() {
                   textShadow: '1px 1px 0 black',
                 }}
               >
-                {`${beakerCurrentVolume} of ${beakerMaxVolume} units`}
+                {`${beakerCurrentVolume} ${t('ui.common.of')} ${beakerMaxVolume} ${t('ui.common.units')}`}
               </Box>
             </ProgressBar>
           </LabeledList.Item>
         )}
         {!beaker && (
-          <LabeledList.Item label="Container">
+          <LabeledList.Item label={t('ui.biogenerator.container')}>
             <NoticeBox m={0} height={2}>
-              No liquid container
+              {t('ui.biogenerator.no_liquid_container')}
             </NoticeBox>
           </LabeledList.Item>
         )}

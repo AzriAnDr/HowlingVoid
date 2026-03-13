@@ -2,6 +2,7 @@
 import { Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
+import { usePreferencesLocalization } from './localization';
 import type { Objective } from './common/Objectives';
 
 type Info = {
@@ -11,18 +12,21 @@ type Info = {
 
 export const Rules = (props) => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { antag_name } = data;
+  const specialRules = t('ui.antaginfo_rules.special_rules');
+  const specialRulesLink = t('ui.antaginfo_rules.special_rules_and_metaprotections');
   switch (antag_name) {
     case 'Abductor Agent':
     case 'Abductor Scientist':
     case 'Abductor Solo':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Abductors!_Station_Threat*2">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -31,11 +35,11 @@ export const Rules = (props) => {
     case 'Drifting Contractor':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Contractor!">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -44,11 +48,11 @@ export const Rules = (props) => {
     case 'Cortical Borer':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Cortical_Borer!_PERMANENT_MECHANICAL_STATE">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -57,11 +61,11 @@ export const Rules = (props) => {
     case 'Venus Human Trap':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Man_Eaters!_PERMANENT_MECHANICAL_STATE">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -70,11 +74,11 @@ export const Rules = (props) => {
     case 'Obsessed':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Obsessed!">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -83,11 +87,11 @@ export const Rules = (props) => {
     case 'Revenant':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Revenant!_PERMANENT_MECHANICAL_STATE">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -96,11 +100,11 @@ export const Rules = (props) => {
     case 'Space Dragon':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Space_Dragon!_PERMANENT_MECHANICAL_STATE">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -109,11 +113,11 @@ export const Rules = (props) => {
     case 'Space Pirate':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Space_Pirates!_Station_Threat*2">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -122,11 +126,11 @@ export const Rules = (props) => {
     case 'Blob':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Blob!_PERMANENT_MECHANICAL_STATE">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -135,11 +139,11 @@ export const Rules = (props) => {
     case 'Changeling':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Changeling!_Station_Threat">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -148,11 +152,11 @@ export const Rules = (props) => {
     case 'ClockCult':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Clockcult_(OPFOR)">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -161,11 +165,11 @@ export const Rules = (props) => {
     case 'AssaultOps':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Assault_Ops!">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -174,11 +178,11 @@ export const Rules = (props) => {
     case 'Heretic':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Heretic!">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -187,11 +191,11 @@ export const Rules = (props) => {
     case 'Malf AI':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Malf_AI!">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -200,11 +204,11 @@ export const Rules = (props) => {
     case 'Morph':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Morphling!_Station_Threat*2">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -213,11 +217,11 @@ export const Rules = (props) => {
     case 'Nightmare':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Nightmare!_Station_Threat">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -226,11 +230,11 @@ export const Rules = (props) => {
     case 'Ninja':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Space_Ninja">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -239,11 +243,11 @@ export const Rules = (props) => {
     case 'Wizard':
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Wizard!">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>
@@ -252,11 +256,11 @@ export const Rules = (props) => {
     default:
       return (
         <Stack vertical>
-          <Stack.Item bold>Special Rules:</Stack.Item>
+          <Stack.Item bold>{specialRules}</Stack.Item>
           <Stack.Item>
             {
               <a href="https://wiki.novasector13.com/index.php/Antagonist_Policy#Traitor!">
-                Special Rules and Metaprotections!
+                {specialRulesLink}
               </a>
             }
           </Stack.Item>

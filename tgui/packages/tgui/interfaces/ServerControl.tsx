@@ -9,6 +9,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   server_connected: BooleanLike;
@@ -40,13 +41,14 @@ type LogData = {
 
 export const ServerControl = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { server_connected, servers, consoles, logs } = data;
   if (!server_connected) {
     return (
       <Window width={575} height={450}>
         <Window.Content>
           <NoticeBox textAlign="center" danger>
-            Not connected to a Server. Please sync one using a multitool.
+            {t('ui.server_control.not_connected_to_server')}
           </NoticeBox>
         </Window.Content>
       </Window>
@@ -57,13 +59,13 @@ export const ServerControl = (props) => {
       <Window.Content scrollable>
         {!servers ? (
           <NoticeBox mt={2} info>
-            No servers found.
+            {t('ui.server_control.no_servers_found')}
           </NoticeBox>
         ) : (
           <Section>
             <Table textAlign="center">
               <Table.Row header>
-                <Table.Cell>Research Servers</Table.Cell>
+                <Table.Cell>{t('ui.server_control.research_servers')}</Table.Cell>
               </Table.Row>
               {servers.map((server) => (
                 <>
@@ -77,7 +79,11 @@ export const ServerControl = (props) => {
                     mt={1}
                     tooltip={server.server_details}
                     color={server.server_disabled ? 'bad' : 'good'}
-                    content={server.server_disabled ? 'Offline' : 'Online'}
+                    content={
+                      server.server_disabled
+                        ? t('ui.common.offline')
+                        : t('ui.common.online')
+                    }
                     fluid
                     textAlign="center"
                     onClick={() =>
@@ -94,13 +100,13 @@ export const ServerControl = (props) => {
 
         {!consoles ? (
           <NoticeBox mt={2} info>
-            No consoles found.
+            {t('ui.server_control.no_consoles_found')}
           </NoticeBox>
         ) : (
           <Section align="right">
             <Table textAlign="center">
               <Table.Row header>
-                <Table.Cell>Research Consoles</Table.Cell>
+                <Table.Cell>{t('ui.server_control.research_consoles')}</Table.Cell>
               </Table.Row>
               {consoles.map((console) => (
                 <>
@@ -110,14 +116,17 @@ export const ServerControl = (props) => {
                     className="candystripe"
                   />
                   <Table.Cell>
-                    {' '}
-                    {console.console_name} - Location:{' '}
-                    {console.console_location}{' '}
+                    {console.console_name} - {t('ui.common.location')}:{' '}
+                    {console.console_location}
                   </Table.Cell>
                   <Button
                     mt={1}
                     color={console.console_locked ? 'bad' : 'good'}
-                    content={console.console_locked ? 'LOCKED' : 'UNLOCKED'}
+                    content={
+                      console.console_locked
+                        ? t('ui.common.locked')
+                        : t('ui.common.unlocked')
+                    }
                     fluid
                     textAlign="center"
                     onClick={() =>
@@ -132,19 +141,19 @@ export const ServerControl = (props) => {
           </Section>
         )}
 
-        <Collapsible title="Research History">
+        <Collapsible title={t('ui.server_control.research_history')}>
           {!logs.length ? (
             <NoticeBox mt={2} info>
-              No history found.
+              {t('ui.server_control.no_history_found')}
             </NoticeBox>
           ) : (
             <Section>
               <Table>
                 <Table.Row header>
-                  <Table.Cell>Research Name</Table.Cell>
-                  <Table.Cell>Cost</Table.Cell>
-                  <Table.Cell>Researcher Name</Table.Cell>
-                  <Table.Cell>Console Location</Table.Cell>
+                  <Table.Cell>{t('ui.server_control.research_name')}</Table.Cell>
+                  <Table.Cell>{t('ui.common.cost')}</Table.Cell>
+                  <Table.Cell>{t('ui.server_control.researcher_name')}</Table.Cell>
+                  <Table.Cell>{t('ui.server_control.console_location')}</Table.Cell>
                 </Table.Row>
                 {logs.map((server_log) => (
                   <Table.Row

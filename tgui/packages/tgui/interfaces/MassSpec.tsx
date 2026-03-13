@@ -12,6 +12,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Reagent = {
   name: string;
@@ -45,6 +46,7 @@ const GRAPH_MAX_HEIGHT = 250;
 
 export const MassSpec = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     processing,
     lowerRange,
@@ -70,7 +72,7 @@ export const MassSpec = (props) => {
           </Dimmer>
         )}
         <Section
-          title="Mass Spectroscopy"
+          title={t('ui.mass_spec.mass_spectroscopy')}
           buttons={
             <Button
               icon="power-off"
@@ -79,17 +81,17 @@ export const MassSpec = (props) => {
               }
               tooltip={
                 !beaker_1_has_contents
-                  ? 'Missing input reagents!'
+                  ? t('ui.mass_spec.missing_input_reagents')
                   : !beaker2
-                    ? 'Missing an output beaker!'
+                    ? t('ui.mass_spec.missing_output_beaker')
                     : eta <= 0
-                      ? 'No work to be done'
-                      : 'Begin purifying'
+                      ? t('ui.mass_spec.no_work_to_be_done')
+                      : t('ui.mass_spec.begin_purifying')
               }
               tooltipPosition="left"
               onClick={() => act('activate')}
             >
-              Start
+              {t('ui.common.start')}
             </Button>
           }
         >
@@ -102,11 +104,11 @@ export const MassSpec = (props) => {
               maxAbsorbance={peakHeight}
               reagentPeaks={beaker1.contents}
             />
-          )) || <Box>Please insert an input beaker with reagents!</Box>}
+          )) || <Box>{t('ui.mass_spec.insert_input_beaker_with_reagents')}</Box>}
         </Section>
 
         <Section
-          title="Input beaker"
+          title={t('ui.mass_spec.input_beaker')}
           buttons={
             beaker1 ? (
               <>
@@ -114,7 +116,7 @@ export const MassSpec = (props) => {
                   {beaker1.currentVolume} / {beaker1.maxVolume} units
                 </Box>
                 <Button icon="eject" onClick={() => act('eject1')}>
-                  Eject
+                  {t('ui.common.eject')}
                 </Button>
               </>
             ) : (
@@ -125,12 +127,11 @@ export const MassSpec = (props) => {
                   opacity: hasBeakerInHand ? 1 : 0.5,
                 }}
                 tooltip={
-                  !hasBeakerInHand &&
-                  'You need to hold a container in your hand'
+                  !hasBeakerInHand && t('ui.common.need_container_in_hand')
                 }
                 tooltipPosition="bottom-start"
               >
-                Insert
+                {t('ui.common.insert')}
               </Button>
             )
           }
@@ -145,7 +146,7 @@ export const MassSpec = (props) => {
           )}
         </Section>
         <Section
-          title="Output beaker"
+          title={t('ui.mass_spec.output_beaker')}
           buttons={
             beaker2 ? (
               <>
@@ -153,7 +154,7 @@ export const MassSpec = (props) => {
                   {beaker2.currentVolume} / {beaker2.maxVolume} units
                 </Box>
                 <Button icon="eject" onClick={() => act('eject2')}>
-                  Eject
+                  {t('ui.common.eject')}
                 </Button>
               </>
             ) : (
@@ -164,12 +165,11 @@ export const MassSpec = (props) => {
                   opacity: hasBeakerInHand ? 1 : 0.5,
                 }}
                 tooltip={
-                  !hasBeakerInHand &&
-                  'You need to hold a container in your hand'
+                  !hasBeakerInHand && t('ui.common.need_container_in_hand')
                 }
                 tooltipPosition="bottom-start"
               >
-                Insert
+                {t('ui.common.insert')}
               </Button>
             )
           }
@@ -192,13 +192,15 @@ type ProfileProps = {
 };
 
 const BeakerMassProfile = (props: ProfileProps) => {
+  const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { lowerRange, upperRange, beaker } = props;
 
   return (
     <Box>
-      {(!beaker && <Box color="label">No beaker loaded.</Box>) ||
+      {(!beaker && <Box color="label">{t('ui.common.no_beaker_loaded')}</Box>) ||
         (beaker.contents.length === 0 && (
-          <Box color="label">Beaker is empty.</Box>
+          <Box color="label">{t('ui.common.beaker_is_empty')}</Box>
         )) || (
           <Table className="candystripe">
             <Table.Row>
@@ -263,7 +265,8 @@ type SpectroscopyProps = {
 };
 
 const MassSpectroscopy = (props: SpectroscopyProps) => {
-  const { act } = useBackend();
+  const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     lowerRange,
     centerValue,
@@ -375,7 +378,7 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
           font-size="17"
           font-weight="bold"
         >
-          <tspan>Absorbance (AU)</tspan>
+          <tspan>{t('ui.mass_spec.absorbance_au')}</tspan>
         </text>
         <line
           x1={base_width}

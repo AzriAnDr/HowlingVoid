@@ -10,6 +10,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const weaponlist = [
   'Fist Fight',
@@ -48,6 +49,7 @@ type Info = {
 
 export const SparringContract = (props) => {
   const { data, act } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const {
     set_weapon,
     set_area,
@@ -73,7 +75,7 @@ export const SparringContract = (props) => {
                 <Stack.Item>
                   <Stack fill>
                     <Stack.Item grow fontSize="16px">
-                      Weapons:
+                      {t('ui.sparring_contract.weapons')}
                     </Stack.Item>
                     <Stack.Item>
                       <Button
@@ -110,7 +112,7 @@ export const SparringContract = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Stack vertical>
-                <Stack.Item fontSize="16px">Arena:</Stack.Item>
+                <Stack.Item fontSize="16px">{t('ui.sparringcontract.arena')}</Stack.Item>
                 <Stack.Item>
                   <Dropdown
                     width="100%"
@@ -129,7 +131,7 @@ export const SparringContract = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Stack vertical>
-                <Stack.Item fontSize="16px">Stakes:</Stack.Item>
+                <Stack.Item fontSize="16px">{t('ui.sparringcontract.stakes')}</Stack.Item>
                 <Stack.Item>
                   <Dropdown
                     width="100%"
@@ -165,7 +167,7 @@ export const SparringContract = (props) => {
                   )) ||
                     left_sign}
                 </Stack.Item>
-                <Stack.Item fontSize="16px">VS</Stack.Item>
+                <Stack.Item fontSize="16px">{t('ui.sparringcontract.vs')}</Stack.Item>
                 <Stack.Item fontSize={right_sign !== 'none' && '14px'} grow>
                   {(right_sign === 'none' && (
                     <Button

@@ -5,6 +5,7 @@ import { clamp } from 'tgui-core/math';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import { GroupedContents } from './GroupedContents';
 import { RawContents } from './RawContents';
 import type { SearchItem } from './types';
@@ -15,6 +16,7 @@ type Data = {
 
 export function LootPanel(props) {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { contents = [] } = data;
 
   // limitations: items with different stack counts, charges etc.
@@ -58,7 +60,7 @@ export function LootPanel(props) {
         <Stack align="center">
           <Input
             onChange={setSearchText}
-            placeholder="Search items..."
+            placeholder={t('ui.loot_panel.search_items')}
             value={searchText}
           />
           <Button
@@ -66,7 +68,7 @@ export function LootPanel(props) {
             icon={grouping ? 'layer-group' : 'object-ungroup'}
             selected={grouping}
             onClick={() => setGrouping(!grouping)}
-            tooltip="Toggle Grouping"
+            tooltip={t('ui.loot_panel.toggle_grouping')}
           />
         </Stack>
       }

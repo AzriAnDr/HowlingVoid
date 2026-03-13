@@ -10,24 +10,31 @@ import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const BorerChem = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const borerTransferAmounts = data.borerTransferAmounts || [];
   return (
-    <Window width={565} height={400} title="Injector" theme="wizard">
+    <Window
+      width={565}
+      height={400}
+      title={t('ui.borerchem.injector')}
+      theme="wizard"
+    >
       <Window.Content scrollable>
-        <Section title="Status">
+        <Section title={t('ui.borerchem.status')}>
           <LabeledList>
-            <LabeledList.Item label="Storage">
+            <LabeledList.Item label={t('ui.borerchem.storage')}>
               <ProgressBar value={data.energy / data.maxEnergy}>
-                {`${toFixed(data.energy)} units`}
+                {`${toFixed(data.energy)} ${t('ui.common.units')}`}
               </ProgressBar>
             </LabeledList.Item>
           </LabeledList>
         </Section>
         <Section
-          title="Inject"
+          title={t('ui.borerchem.inject')}
           buttons={borerTransferAmounts.map((amount) => (
             <Button
               key={amount}

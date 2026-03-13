@@ -2,34 +2,41 @@ import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const OutfitManager = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { outfits } = data;
   return (
-    <Window title="Outfit Manager" width={300} height={300} theme="admin">
+    <Window
+      title={t('ui.outfit_manager.title')}
+      width={300}
+      height={300}
+      theme="admin"
+    >
       <Window.Content>
         <Section
           fill
           scrollable
-          title="Custom Outfit Manager"
+          title={t('ui.outfit_manager.custom_outfit_manager')}
           buttons={
             <>
               <Button
                 icon="file-upload"
-                tooltip="Load an outfit from a file"
+                tooltip={t('ui.outfit_manager.load_outfit_from_file')}
                 tooltipPosition="left"
                 onClick={() => act('load')}
               />
               <Button
                 icon="copy"
-                tooltip="Copy an already existing outfit"
+                tooltip={t('ui.outfit_manager.copy_existing_outfit')}
                 tooltipPosition="left"
                 onClick={() => act('copy')}
               />
               <Button
                 icon="plus"
-                tooltip="Create a new outfit"
+                tooltip={t('ui.outfit_manager.create_new_outfit')}
                 tooltipPosition="left"
                 onClick={() => act('new')}
               />
@@ -63,7 +70,7 @@ export const OutfitManager = (props) => {
                   <Stack.Item ml={0.5}>
                     <Button
                       icon="save"
-                      tooltip="Save this outfit to a file"
+                      tooltip={t('ui.outfit_manager.save_outfit_to_file')}
                       tooltipPosition="left"
                       onClick={() => act('save', { outfit: outfit.ref })}
                     />
@@ -72,7 +79,7 @@ export const OutfitManager = (props) => {
                     <Button
                       color="bad"
                       icon="trash-alt"
-                      tooltip="Delete this outfit"
+                      tooltip={t('ui.outfit_manager.delete_outfit')}
                       tooltipPosition="left"
                       onClick={() => act('delete', { outfit: outfit.ref })}
                     />

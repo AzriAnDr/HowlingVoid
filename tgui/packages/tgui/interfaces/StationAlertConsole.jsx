@@ -3,6 +3,7 @@ import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const StationAlertConsole = (props) => {
   const { data } = useBackend();
@@ -18,6 +19,7 @@ export const StationAlertConsole = (props) => {
 
 export const StationAlertConsoleContent = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { cameraView } = data;
 
   const sortingKey = {
@@ -39,7 +41,9 @@ export const StationAlertConsoleContent = (props) => {
         <Section key={category.name} title={`${category.name} Alarms`}>
           <ul>
             {category.alerts.length === 0 && (
-              <li className="color-good">Systems nominal</li>
+              <li className="color-good">
+                {t('ui.station_alert.systems_nominal')}
+              </li>
             )}
             {category.alerts.map((alert) => (
               <Stack key={alert.name} height="30px" align="baseline">

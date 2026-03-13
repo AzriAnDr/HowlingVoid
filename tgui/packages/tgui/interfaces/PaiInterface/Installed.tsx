@@ -2,8 +2,24 @@ import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Button, NoticeBox, Section, Stack } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../localization';
 import { DOOR_JACK, HOST_SCAN, PHOTO_MODE, SOFTWARE_DESC } from './constants';
 import type { PaiData } from './types';
+
+const softwareDescriptionKey = (name: string) =>
+  `ui.pai_interface.software_desc_${name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '')}`;
+
+const getSoftwareDescription = (
+  t: (key: string, fallback?: string) => string,
+  name: string,
+) =>
+  t(
+    softwareDescriptionKey(name),
+    SOFTWARE_DESC[name as keyof typeof SOFTWARE_DESC] ?? name,
+  );
 
 /**
  * Renders two sections: A section of buttons and
@@ -12,11 +28,14 @@ import type { PaiData } from './types';
  */
 export function InstalledDisplay(props) {
   const { data } = useBackend<PaiData>();
+  const { t } = usePreferencesLocalization(data);
   const { installed = [] } = data;
 
   const [currentSelection, setCurrentSelection] = useState('');
 
-  const title = !currentSelection ? 'Select a Program' : currentSelection;
+  const title = !currentSelection
+    ? t('ui.pai_interface.select_program')
+    : currentSelection;
 
   return (
     <Stack fill vertical>
@@ -24,7 +43,7 @@ export function InstalledDisplay(props) {
         <Section fill scrollable title={title}>
           {currentSelection && (
             <Stack fill vertical>
-              <Stack.Item>{SOFTWARE_DESC[currentSelection]}</Stack.Item>
+              <Stack.Item>{getSoftwareDescription(t, currentSelection)}</Stack.Item>
               <Stack.Item grow>
                 <SoftwareButtons currentSelection={currentSelection} />
               </Stack.Item>
@@ -33,9 +52,9 @@ export function InstalledDisplay(props) {
         </Section>
       </Stack.Item>
       <Stack.Item grow={2}>
-        <Section fill scrollable title="Installed Software">
+        <Section fill scrollable title={t('ui.pai_interface.installed_software')}>
           {!installed.length ? (
-            <NoticeBox>Nothing installed!</NoticeBox>
+            <NoticeBox>{t('ui.pai_interface.nothing_installed')}</NoticeBox>
           ) : (
             installed.map((software, index) => {
               return (
@@ -66,6 +85,7 @@ function SoftwareButtons(props: SoftwareButtonsProps) {
   const { currentSelection } = props;
 
   const { act, data } = useBackend<PaiData>();
+  const { t } = usePreferencesLocalization(data);
   const { door_jack, languages, master_name } = data;
 
   switch (currentSelection) {
@@ -76,25 +96,25 @@ function SoftwareButtons(props: SoftwareButtonsProps) {
             disabled={!!door_jack}
             icon="plug"
             onClick={() => act(currentSelection, { mode: DOOR_JACK.Cable })}
-            tooltip="Drops a cable. Insert into a compatible airlock."
+            tooltip={t('ui.pai_interface.tooltip_drops_cable')}
           >
-            Extend Cable
+            {t('ui.pai_interface.extend_cable')}
           </Button>
           <Button
             color="bad"
             disabled={!door_jack}
             icon="door-open"
             onClick={() => act(currentSelection, { mode: DOOR_JACK.Hack })}
-            tooltip="Begins overriding the airlock security protocols."
+            tooltip={t('ui.pai_interface.tooltip_override_airlock_protocols')}
           >
-            Hack Door
+            {t('ui.pai_interface.hack_door')}
           </Button>
           <Button
             disabled={!door_jack}
             icon="unlink"
             onClick={() => act(currentSelection, { mode: DOOR_JACK.Cancel })}
           >
-            Cancel
+            {t('ui.common.cancel')}
           </Button>
         </>
       );
@@ -104,17 +124,17 @@ function SoftwareButtons(props: SoftwareButtonsProps) {
           <Button
             icon="hand-holding-heart"
             onClick={() => act(currentSelection, { mode: HOST_SCAN.Target })}
-            tooltip="Must be held or scooped up to scan."
+            tooltip={t('ui.pai_interface.tooltip_must_be_held_to_scan')}
           >
-            Scan Holder
+            {t('ui.pai_interface.scan_holder')}
           </Button>
           <Button
             disabled={!master_name}
             icon="user-cog"
             onClick={() => act(currentSelection, { mode: HOST_SCAN.Master })}
-            tooltip="Scans any bound masters."
+            tooltip={t('ui.pai_interface.tooltip_scan_bound_masters')}
           >
-            Scan Master
+            {t('ui.pai_interface.scan_master')}
           </Button>
         </>
       );
@@ -124,23 +144,23 @@ function SoftwareButtons(props: SoftwareButtonsProps) {
           <Button
             icon="camera-retro"
             onClick={() => act(currentSelection, { mode: PHOTO_MODE.Camera })}
-            tooltip="Toggles the camera. Click an area to take a photo."
+            tooltip={t('ui.pai_interface.tooltip_toggle_camera')}
           >
-            Camera
+            {t('ui.pai_interface.camera')}
           </Button>
           <Button
             icon="print"
             onClick={() => act(currentSelection, { mode: PHOTO_MODE.Printer })}
-            tooltip="Gives a list of stored photos."
+            tooltip={t('ui.pai_interface.tooltip_stored_photos')}
           >
-            Printer
+            {t('ui.pai_interface.printer')}
           </Button>
           <Button
             icon="search-plus"
             onClick={() => act(currentSelection, { mode: PHOTO_MODE.Zoom })}
-            tooltip="Adjusts zoom level on future photographs."
+            tooltip={t('ui.pai_interface.tooltip_adjust_zoom')}
           >
-            Zoom
+            {t('ui.pai_interface.zoom')}
           </Button>
         </>
       );
@@ -151,7 +171,7 @@ function SoftwareButtons(props: SoftwareButtonsProps) {
           onClick={() => act(currentSelection)}
           disabled={!!languages}
         >
-          {!languages ? 'Install' : 'Installed'}
+          {!languages ? t('ui.common.install') : t('ui.pai_interface.installed')}
         </Button>
       );
     default:
@@ -159,9 +179,9 @@ function SoftwareButtons(props: SoftwareButtonsProps) {
         <Button
           icon="power-off"
           onClick={() => act(currentSelection)}
-          tooltip="Attempts to enable the module."
+          tooltip={t('ui.pai_interface.tooltip_attempt_enable_module')}
         >
-          Toggle
+          {t('ui.common.toggle')}
         </Button>
       );
   }

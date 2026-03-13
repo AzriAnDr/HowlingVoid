@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Section, Stack } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../localization';
 import { Window } from '../../layouts';
 import { Lookup } from './Lookup';
 import { RecipeLibrary } from './RecipeLibrary';
@@ -10,6 +11,7 @@ import type { Reaction } from './types';
 export const bookmarkedReactions = new Set<Reaction>();
 
 export function Reagents(props) {
+  const { t } = usePreferencesLocalization();
   const pageState = useState(1);
 
   return (
@@ -20,7 +22,7 @@ export function Reagents(props) {
             <Lookup />
           </Stack.Item>
           <Stack.Item>
-            <Section title="Tags">
+            <Section title={t('ui.reagents.tags')}>
               <TagBox pageState={pageState} />
             </Section>
           </Stack.Item>

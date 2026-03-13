@@ -12,6 +12,7 @@ import { createSearch, toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 import { SearchBar } from './common/SearchBar';
 
 type Recipe = {
@@ -108,6 +109,7 @@ const filterRecipeList = (
 
 export const StackCrafting = (_props) => {
   const { data } = useBackend<StackCraftingProps>();
+  const { t } = usePreferencesLocalization(data);
   const { amount, recipes = {} } = data;
 
   const [searchText, setSearchText] = useState('');
@@ -135,7 +137,7 @@ export const StackCrafting = (_props) => {
           {filteredRecipes ? (
             <RecipeListBox recipes={filteredRecipes} />
           ) : (
-            <NoticeBox>No recipes found.</NoticeBox>
+            <NoticeBox>{t('ui.stack_crafting.no_recipes_found')}</NoticeBox>
           )}
         </Section>
       </Window.Content>

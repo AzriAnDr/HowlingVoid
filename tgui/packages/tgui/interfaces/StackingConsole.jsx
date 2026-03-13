@@ -8,15 +8,17 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const StackingConsole = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { machine } = data;
   return (
     <Window width={320} height={340}>
       <Window.Content scrollable>
         {!machine ? (
-          <NoticeBox>No connected stacking machine</NoticeBox>
+          <NoticeBox>{t('ui.stacking_console.no_connected_stacking_machine')}</NoticeBox>
         ) : (
           <StackingConsoleContent />
         )}
@@ -27,6 +29,7 @@ export const StackingConsole = (props) => {
 
 export const StackingConsoleContent = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     input_direction,
     output_direction,
@@ -37,15 +40,15 @@ export const StackingConsoleContent = (props) => {
     <>
       <Section>
         <LabeledList>
-          <LabeledList.Item label="Stacking Amount">
-            {stacking_amount || 'Unknown'}
+          <LabeledList.Item label={t('ui.stacking_console.stacking_amount')}>
+            {stacking_amount || t('ui.common.unknown')}
           </LabeledList.Item>
           <LabeledList.Item
-            label="Input"
+            label={t('ui.common.input')}
             buttons={
               <Button
                 icon="rotate"
-                content="Rotate"
+                content={t('ui.common.rotate')}
                 onClick={() =>
                   act('rotate', {
                     input: 1,
@@ -57,11 +60,11 @@ export const StackingConsoleContent = (props) => {
             <Box style={{ textTransform: 'capitalize' }}>{input_direction}</Box>
           </LabeledList.Item>
           <LabeledList.Item
-            label="Output"
+            label={t('ui.common.output')}
             buttons={
               <Button
                 icon="rotate"
-                content="Rotate"
+                content={t('ui.common.rotate')}
                 onClick={() =>
                   act('rotate', {
                     input: 0,
@@ -76,9 +79,9 @@ export const StackingConsoleContent = (props) => {
           </LabeledList.Item>
         </LabeledList>
       </Section>
-      <Section title="Stored Materials">
+      <Section title={t('ui.stacking_console.stored_materials')}>
         {!contents.length ? (
-          <NoticeBox>No stored materials</NoticeBox>
+          <NoticeBox>{t('ui.stacking_console.no_stored_materials')}</NoticeBox>
         ) : (
           <LabeledList>
             {contents.map((sheet) => (
@@ -88,7 +91,7 @@ export const StackingConsoleContent = (props) => {
                 buttons={
                   <Button
                     icon="eject"
-                    content="Release"
+                    content={t('ui.common.release')}
                     onClick={() =>
                       act('release', {
                         type: sheet.type,
@@ -97,7 +100,7 @@ export const StackingConsoleContent = (props) => {
                   />
                 }
               >
-                {sheet.amount || 'Unknown'}
+                {sheet.amount || t('ui.common.unknown')}
               </LabeledList.Item>
             ))}
           </LabeledList>

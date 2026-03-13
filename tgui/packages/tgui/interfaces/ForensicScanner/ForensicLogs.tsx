@@ -1,6 +1,7 @@
 import { Box, Button, Icon, LabeledList, Section } from 'tgui-core/components';
 import { capitalizeFirst } from 'tgui-core/string';
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import type { DataEntry, ForensicScannerData } from './types';
 
 type ForensicLogsProps = {
@@ -12,11 +13,12 @@ type ForensicLogsProps = {
 
 export function ForensicLogs(props: ForensicLogsProps) {
   const { act, data } = useBackend<ForensicScannerData>();
+  const { t } = usePreferencesLocalization();
   const { categories } = data;
   const { dataEntries, scanTarget, scanTime, index } = props;
   return (
     <Section
-      title={`${capitalizeFirst(scanTarget)} scan at ${scanTime} `}
+      title={`${capitalizeFirst(scanTarget)} ${t('ui.forensic_scanner.scan_at')} ${scanTime} `}
       buttons={
         <Button
           icon="trash"
@@ -26,7 +28,7 @@ export function ForensicLogs(props: ForensicLogsProps) {
       }
     >
       {dataEntries.length === 0 ? (
-        <Box opacity={0.5}>No forensic traces found.</Box>
+        <Box opacity={0.5}>{t('ui.forensic_scanner.no_forensic_traces_found')}</Box>
       ) : (
         <LabeledList>
           {dataEntries.map((dataEntry) => {

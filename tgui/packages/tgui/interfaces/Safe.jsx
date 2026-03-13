@@ -4,6 +4,7 @@ import { Box, Button, Icon, Image, Section } from 'tgui-core/components';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const Safe = (properties) => {
   const { act, data } = useBackend();
@@ -111,10 +112,11 @@ const Contents = (properties) => {
 };
 
 const Help = (properties) => {
+  const { t } = usePreferencesLocalization();
   return (
     <Section
       className="Safe__help"
-      title="Safe opening instructions (because you all keep forgetting)"
+      title={t('ui.safe.opening_instructions_title')}
     >
       <Box>
         1. Turn the dial left to the first number.

@@ -12,6 +12,7 @@ import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   netsuit: string;
@@ -32,6 +33,7 @@ type Outfit = {
 
 export const NetpodOutfits = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { netsuit, collections = [] } = data;
   const [selectedType, setSelectedType] = useState(collections[0]);
   const [search, setSearch] = useState('');
@@ -44,21 +46,21 @@ export const NetpodOutfits = (props) => {
 
   const selected =
     selectedType.outfits?.find((outfit) => outfit.path === netsuit)?.name ??
-    'None';
+    t('ui.common.none');
 
   return (
-    <Window title="Net Pod" height={300} width={400}>
+    <Window title={t('ui.netpodoutfits.net_pod')} height={300} width={400}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow>
             <Section
               fill
-              title="Select an outfit"
+              title={t('ui.netpodoutfits.select_an_outfit')}
               buttons={
                 <Input
                   autoFocus
                   onChange={setSearch}
-                  placeholder="Search"
+                  placeholder={t('ui.netpodoutfits.search')}
                   value={search}
                 />
               }

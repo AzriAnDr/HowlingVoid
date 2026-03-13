@@ -1,4 +1,5 @@
 import { Box, Button, LabeledList } from 'tgui-core/components';
+import { usePreferencesLocalization } from '../localization';
 
 export type Gasmix = {
   name?: string;
@@ -23,6 +24,7 @@ type GasmixParserProps = {
 };
 
 export const GasmixParser = (props: GasmixParserProps) => {
+  const { t } = usePreferencesLocalization();
   const {
     gasmix,
     gasesOnClick,
@@ -115,7 +117,7 @@ export const GasmixParser = (props: GasmixParserProps) => {
           </LabeledList.Item>
         ))
       ) : (
-        <LabeledList.Item label="Gas Reactions">
+        <LabeledList.Item label={t('ui.common.gas_reactions')}>
           {reactions.length
             ? reactions.map((reaction, index) =>
                 reactionOnClick ? (

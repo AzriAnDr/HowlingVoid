@@ -1,6 +1,7 @@
 import { Box, Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { ObjectiveElement } from './ObjectiveElement';
 
 type PrimaryObjectiveMenuProps = {
@@ -10,14 +11,15 @@ type PrimaryObjectiveMenuProps = {
 
 export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
   const { primary_objectives, can_renegotiate } = props;
   return (
     <Section fill scrollable align="center">
       <Box my={4} bold fontSize={1.2} color="green">
-        WELCOME, AGENT.
+        {t('ui.uplink.welcome_agent')}
       </Box>
       <Box my={4} bold fontSize={1.2}>
-        Your Primary Objectives are as follows. Complete these at all costs.
+        {t('ui.uplink.primary_objectives_notice')}
       </Box>
       <Stack vertical>
         {primary_objectives.map((prim_obj, index) => (
@@ -33,17 +35,17 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
       {!!can_renegotiate && (
         <Box mt={3} mb={5} bold fontSize={1.2} align="center" color="white">
           <Button
-            content={'Renegotiate Contract'}
+            content={t('ui.uplink.renegotiate_contract')}
             tooltip={
-              'Replace your existing primary objectives with a custom one. This action can only be performed once.'
+              t('ui.uplink.renegotiate_contract_tooltip')
             }
             onClick={() => act('renegotiate_objectives')}
           />
         </Box>
       )}
       <Box my={4} fontSize={0.8}>
-        <Box>SyndOS Version 3.17</Box>
-        <Box color="green">Connection Secure</Box>
+        <Box>{t('ui.uplink.syndos_version_317')}</Box>
+        <Box color="green">{t('ui.uplink.connection_secure')}</Box>
       </Box>
     </Section>
   );

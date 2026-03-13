@@ -10,6 +10,7 @@ import {
 
 import { useBackend, useSharedState } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 const getMuleByRef = (mules, ref) => {
   return mules?.find((mule) => mule.mule_ref === ref);
@@ -17,16 +18,17 @@ const getMuleByRef = (mules, ref) => {
 
 export const NtosRoboControl = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const [tab_main, setTab_main] = useSharedState('tab_main', 1);
   const { bots, drones, id_owner, droneaccess, dronepingtypes } = data;
 
   return (
     <NtosWindow width={550} height={550}>
       <NtosWindow.Content scrollable>
-        <Section title="Robot Control Console">
+        <Section title={t('ui.ntos_robo.robot_control_console')}>
           <LabeledList>
-            <LabeledList.Item label="ID Card">{id_owner}</LabeledList.Item>
-            <LabeledList.Item label="Bots In Range">
+            <LabeledList.Item label={t('ui.ntos_robo.id_card')}>{id_owner}</LabeledList.Item>
+            <LabeledList.Item label={t('ui.ntos_robo.bots_in_range')}>
               {data.botcount}
             </LabeledList.Item>
           </LabeledList>
@@ -39,7 +41,7 @@ export const NtosRoboControl = (props) => {
               selected={tab_main === 1}
               onClick={() => setTab_main(1)}
             >
-              Bots
+              {t('ui.ntos_robo.tab_bots')}
             </Tabs.Tab>
             <Tabs.Tab
               icon="hammer"
@@ -47,7 +49,7 @@ export const NtosRoboControl = (props) => {
               selected={tab_main === 2}
               onClick={() => setTab_main(2)}
             >
-              Drones
+              {t('ui.ntos_robo.tab_drones')}
             </Tabs.Tab>
           </Tabs>
         </Stack.Item>
@@ -55,7 +57,7 @@ export const NtosRoboControl = (props) => {
           <Stack.Item>
             <Section>
               <LabeledList>
-                <LabeledList.Item label="Bots in range">
+                <LabeledList.Item label={t('ui.ntos_robo.bots_in_range')}>
                   {data.botcount}
                 </LabeledList.Item>
               </LabeledList>
@@ -70,18 +72,20 @@ export const NtosRoboControl = (props) => {
             <Section>
               <Button
                 icon="address-card"
-                tooltip="Grant/Remove Drone access to interact with machines and wires that would otherwise be deemed dangerous."
+                tooltip={t('ui.ntos_robo.tooltip_drone_access')}
                 color={droneaccess ? 'good' : 'bad'}
                 onClick={() => act('changedroneaccess')}
               >
-                {droneaccess ? 'Grant Drone Access' : 'Revoke Drone Access'}
+                {droneaccess
+                  ? t('ui.ntos_robo.grant_drone_access')
+                  : t('ui.ntos_robo.revoke_drone_access')}
               </Button>
-              <Box my={1}>Drone Pings</Box>
+              <Box my={1}>{t('ui.ntos_robo.drone_pings')}</Box>
               {dronepingtypes.map((ping_type) => (
                 <Button
                   key={ping_type}
                   icon="bullhorn"
-                  tooltip="Issue a drone ping."
+                  tooltip={t('ui.ntos_robo.tooltip_issue_drone_ping')}
                   onClick={() => act('ping_drones', { ping_type })}
                 >
                   {ping_type}
@@ -101,6 +105,7 @@ export const NtosRoboControl = (props) => {
 export const RobotInfo = (props) => {
   const { robot } = props;
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const mules = data.mules || [];
   // Get a mule object
   const mule = !!robot.mule_check && getMuleByRef(mules, robot.bot_ref);
@@ -118,7 +123,7 @@ export const RobotInfo = (props) => {
           <>
             <Button
               icon="play"
-              tooltip="Go to Destination."
+              tooltip={t('ui.ntos_robo.tooltip_go_destination')}
               onClick={() =>
                 act('go', {
                   robot: mule.mule_ref,
@@ -127,7 +132,7 @@ export const RobotInfo = (props) => {
             />
             <Button
               icon="pause"
-              tooltip="Stop Moving."
+              tooltip={t('ui.ntos_robo.tooltip_stop_moving')}
               onClick={() =>
                 act('stop', {
                   robot: mule.mule_ref,
@@ -136,7 +141,7 @@ export const RobotInfo = (props) => {
             />
             <Button
               icon="home"
-              tooltip="Travel Home."
+              tooltip={t('ui.ntos_robo.tooltip_travel_home')}
               tooltipPosition="bottom-start"
               onClick={() =>
                 act('home', {
@@ -151,20 +156,20 @@ export const RobotInfo = (props) => {
       <Stack>
         <Stack.Item grow={1} basis={0}>
           <LabeledList>
-            <LabeledList.Item label="Model">{robot.model}</LabeledList.Item>
-            <LabeledList.Item label="Location">{robot.locat}</LabeledList.Item>
-            <LabeledList.Item label="Status">{robot.mode}</LabeledList.Item>
+            <LabeledList.Item label={t('ui.ntos_robo.model')}>{robot.model}</LabeledList.Item>
+            <LabeledList.Item label={t('ui.ntos_robo.location')}>{robot.locat}</LabeledList.Item>
+            <LabeledList.Item label={t('ui.ntos_robo.status')}>{robot.mode}</LabeledList.Item>
             {mule && (
               <>
-                <LabeledList.Item label="Bot ID">{mule.id}</LabeledList.Item>
-                <LabeledList.Item label="Loaded Cargo">
-                  {mule.load || 'N/A'}
+                <LabeledList.Item label={t('ui.ntos_robo.bot_id')}>{mule.id}</LabeledList.Item>
+                <LabeledList.Item label={t('ui.ntos_robo.loaded_cargo')}>
+                  {mule.load || t('ui.common.not_available')}
                 </LabeledList.Item>
-                <LabeledList.Item label="Home">{mule.home}</LabeledList.Item>
-                <LabeledList.Item label="Destination">
-                  {mule.dest || 'N/A'}
+                <LabeledList.Item label={t('ui.ntos_robo.home')}>{mule.home}</LabeledList.Item>
+                <LabeledList.Item label={t('ui.ntos_robo.destination')}>
+                  {mule.dest || t('ui.common.not_available')}
                 </LabeledList.Item>
-                <LabeledList.Item label="Power">
+                <LabeledList.Item label={t('ui.ntos_robo.power')}>
                   <ProgressBar
                     value={mule.power}
                     minValue={0}
@@ -185,7 +190,7 @@ export const RobotInfo = (props) => {
             <>
               <Button
                 fluid
-                content="Set Destination"
+                content={t('ui.ntos_robo.set_destination')}
                 onClick={() =>
                   act('destination', {
                     robot: mule.mule_ref,
@@ -194,7 +199,7 @@ export const RobotInfo = (props) => {
               />
               <Button
                 fluid
-                content="Set ID"
+                content={t('ui.ntos_robo.set_id')}
                 onClick={() =>
                   act('setid', {
                     robot: mule.mule_ref,
@@ -203,7 +208,7 @@ export const RobotInfo = (props) => {
               />
               <Button
                 fluid
-                content="Set Home"
+                content={t('ui.ntos_robo.set_home')}
                 onClick={() =>
                   act('sethome', {
                     robot: mule.mule_ref,
@@ -212,7 +217,7 @@ export const RobotInfo = (props) => {
               />
               <Button
                 fluid
-                content="Unload Cargo"
+                content={t('ui.ntos_robo.unload_cargo')}
                 onClick={() =>
                   act('unload', {
                     robot: mule.mule_ref,
@@ -221,7 +226,7 @@ export const RobotInfo = (props) => {
               />
               <Button.Checkbox
                 fluid
-                content="Auto Return"
+                content={t('ui.ntos_robo.auto_return')}
                 checked={mule.autoReturn}
                 onClick={() =>
                   act('autoret', {
@@ -231,7 +236,7 @@ export const RobotInfo = (props) => {
               />
               <Button.Checkbox
                 fluid
-                content="Auto Pickup"
+                content={t('ui.ntos_robo.auto_pickup')}
                 checked={mule.autoPickup}
                 onClick={() =>
                   act('autopick', {
@@ -241,7 +246,7 @@ export const RobotInfo = (props) => {
               />
               <Button.Checkbox
                 fluid
-                content="Delivery Report"
+                content={t('ui.ntos_robo.delivery_report')}
                 checked={mule.reportDelivery}
                 onClick={() =>
                   act('report', {
@@ -255,7 +260,7 @@ export const RobotInfo = (props) => {
             <>
               <Button
                 fluid
-                content="Stop Patrol"
+                content={t('ui.ntos_robo.stop_patrol')}
                 onClick={() =>
                   act('patroloff', {
                     robot: robot.bot_ref,
@@ -264,7 +269,7 @@ export const RobotInfo = (props) => {
               />
               <Button
                 fluid
-                content="Start Patrol"
+                content={t('ui.ntos_robo.start_patrol')}
                 onClick={() =>
                   act('patrolon', {
                     robot: robot.bot_ref,
@@ -273,7 +278,7 @@ export const RobotInfo = (props) => {
               />
               <Button
                 fluid
-                content="Summon"
+                content={t('ui.ntos_robo.summon')}
                 onClick={() =>
                   act('summon', {
                     robot: robot.bot_ref,
@@ -282,7 +287,7 @@ export const RobotInfo = (props) => {
               />
               <Button
                 fluid
-                content="Eject PAi"
+                content={t('ui.ntos_robo.eject_pai')}
                 onClick={() =>
                   act('ejectpai', {
                     robot: robot.bot_ref,
@@ -300,6 +305,7 @@ export const RobotInfo = (props) => {
 export const DroneInfo = (props) => {
   const { drone } = props;
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const color = 'rgba(74, 59, 140, 1)';
 
   return (
@@ -312,9 +318,11 @@ export const DroneInfo = (props) => {
       <Stack>
         <Stack.Item grow={1} basis={0}>
           <LabeledList>
-            <LabeledList.Item label="Status">
+            <LabeledList.Item label={t('ui.ntos_robo.status')}>
               <Box color={drone.status ? 'bad' : 'good'}>
-                {drone.status ? 'Not Responding' : 'Nominal'}
+                {drone.status
+                  ? t('ui.ntos_robo.not_responding')
+                  : t('ui.ntos_robo.nominal')}
               </Box>
             </LabeledList.Item>
           </LabeledList>

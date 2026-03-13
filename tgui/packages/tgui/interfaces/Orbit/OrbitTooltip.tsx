@@ -1,4 +1,5 @@
 import { LabeledList, NoticeBox } from 'tgui-core/components';
+import { usePreferencesLocalization } from '../localization';
 
 import type { Antagonist, Observable } from './types';
 
@@ -11,6 +12,7 @@ type Props = {
 export function OrbitTooltip(props: Props) {
   const { item, realNameDisplay } = props;
   const { extra, full_name, health, job, mind_job } = item;
+  const { t } = usePreferencesLocalization();
 
   let antag;
   if ('antag' in item) {
@@ -18,14 +20,15 @@ export function OrbitTooltip(props: Props) {
   }
 
   const extraInfo = extra?.split(':');
-  const displayHealth = !!health && health >= 0 ? `${health}%` : 'Critical';
+  const displayHealth =
+    !!health && health >= 0 ? `${health}%` : t('ui.orbit.critical');
   const showAFK = 'client' in item && !item.client;
   const displayJob = realNameDisplay ? mind_job : job;
 
   return (
     <>
       <NoticeBox textAlign="center" nowrap info={showAFK}>
-        Last Known Data
+        {t('ui.orbit.last_known_data')}
       </NoticeBox>
       <LabeledList>
         {extraInfo ? (
@@ -35,22 +38,32 @@ export function OrbitTooltip(props: Props) {
         ) : (
           <>
             {!!full_name && (
-              <LabeledList.Item label="Real ID">{full_name}</LabeledList.Item>
+              <LabeledList.Item label={t('ui.orbit.real_id')}>
+                {full_name}
+              </LabeledList.Item>
             )}
             {!!displayJob && (
-              <LabeledList.Item label="Job">{displayJob}</LabeledList.Item>
+              <LabeledList.Item label={t('ui.common.job')}>
+                {displayJob}
+              </LabeledList.Item>
             )}
             {!!antag && (
-              <LabeledList.Item label="Threat">{antag}</LabeledList.Item>
+              <LabeledList.Item label={t('ui.orbit.threat')}>
+                {antag}
+              </LabeledList.Item>
             )}
             {!!health && (
-              <LabeledList.Item label="Health">
+              <LabeledList.Item label={t('ui.common.health')}>
                 {displayHealth}
               </LabeledList.Item>
             )}
           </>
         )}
-        {showAFK && <LabeledList.Item label="Status">Away</LabeledList.Item>}
+        {showAFK && (
+          <LabeledList.Item label={t('ui.common.status')}>
+            {t('ui.orbit.away')}
+          </LabeledList.Item>
+        )}
       </LabeledList>
     </>
   );

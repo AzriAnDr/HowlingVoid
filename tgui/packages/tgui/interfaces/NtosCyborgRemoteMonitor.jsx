@@ -11,6 +11,7 @@ import {
 
 import { useBackend, useSharedState } from '../backend';
 import { NtosWindow } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const NtosCyborgRemoteMonitor = (props) => {
   return (
@@ -22,31 +23,32 @@ export const NtosCyborgRemoteMonitor = (props) => {
   );
 };
 
-export const ProgressSwitch = (param) => {
+export const ProgressSwitch = (param, t) => {
   switch (param) {
     case -1:
       return '_';
     case 0:
-      return 'Connecting';
+      return t('ui.ntoscyborgremotemonitor.connecting');
     case 25:
-      return 'Starting Transfer';
+      return t('ui.ntoscyborgremotemonitor.starting_transfer');
     case 50:
-      return 'Downloading';
+      return t('ui.ntoscyborgremotemonitor.downloading');
     case 75:
-      return 'Downloading';
+      return t('ui.ntoscyborgremotemonitor.downloading');
     case 100:
-      return 'Formatting';
+      return t('ui.ntoscyborgremotemonitor.formatting');
   }
 };
 
 export const NtosCyborgRemoteMonitorContent = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const [tab_main, setTab_main] = useSharedState('tab_main', 1);
   const { card, cyborgs = [], DL_progress } = data;
   const storedlog = data.borglog || [];
 
   if (!cyborgs.length) {
-    return <NoticeBox>No cyborg units detected.</NoticeBox>;
+    return <NoticeBox>{t('ui.ntoscyborgremotemonitor.no_cyborg_units_detected')}</NoticeBox>;
   }
 
   return (
@@ -59,7 +61,7 @@ export const NtosCyborgRemoteMonitorContent = (props) => {
             selected={tab_main === 1}
             onClick={() => setTab_main(1)}
           >
-            Cyborgs
+            {t('ui.ntoscyborgremotemonitor.cyborgs')}
           </Tabs.Tab>
           <Tabs.Tab
             icon="clipboard"
@@ -67,7 +69,7 @@ export const NtosCyborgRemoteMonitorContent = (props) => {
             selected={tab_main === 2}
             onClick={() => setTab_main(2)}
           >
-            Stored Log File
+            {t('ui.ntoscyborgremotemonitor.stored_log_file')}
           </Tabs.Tab>
         </Tabs>
       </Stack.Item>
@@ -75,7 +77,11 @@ export const NtosCyborgRemoteMonitorContent = (props) => {
         <>
           {!card && (
             <Stack.Item>
-              <NoticeBox>Certain features require an ID card login.</NoticeBox>
+              <NoticeBox>
+                {t(
+                  'ui.ntoscyborgremotemonitor.certain_features_require_an_id_card_login',
+                )}
+              </NoticeBox>
             </Stack.Item>
           )}
           <Stack.Item grow={1}>
@@ -87,7 +93,7 @@ export const NtosCyborgRemoteMonitorContent = (props) => {
                   buttons={
                     <Button
                       icon="terminal"
-                      content="Send Message"
+                      content={t('ui.ntoscyborgremotemonitor.send_message')}
                       color="blue"
                       disabled={!card}
                       onClick={() =>
@@ -99,7 +105,7 @@ export const NtosCyborgRemoteMonitorContent = (props) => {
                   }
                 >
                   <LabeledList>
-                    <LabeledList.Item label="Status">
+                    <LabeledList.Item label={t('ui.ntoscyborgremotemonitor.status')}>
                       <Box
                         color={
                           cyborg.status
@@ -110,15 +116,15 @@ export const NtosCyborgRemoteMonitorContent = (props) => {
                         }
                       >
                         {cyborg.status
-                          ? 'Not Responding'
+                          ? t('ui.ntos_robo.not_responding')
                           : cyborg.locked_down
-                            ? 'Locked Down'
+                            ? t('ui.ntos_robotact.locked_down')
                             : cyborg.shell_discon
-                              ? 'Nominal/Disconnected'
-                              : 'Nominal'}
+                              ? t('ui.ntos_robotact.nominal_disconnected')
+                              : t('ui.ntos_robo.nominal')}
                       </Box>
                     </LabeledList.Item>
-                    <LabeledList.Item label="Condition">
+                    <LabeledList.Item label={t('ui.ntoscyborgremotemonitor.condition')}>
                       <Box
                         color={
                           cyborg.integ <= 25
@@ -129,15 +135,15 @@ export const NtosCyborgRemoteMonitorContent = (props) => {
                         }
                       >
                         {cyborg.integ === 0
-                          ? 'Hard Fault'
+                          ? t('ui.ntos_robotact.hard_fault')
                           : cyborg.integ <= 25
-                            ? 'Functionality Disrupted'
+                            ? t('ui.ntos_robotact.functionality_disrupted')
                             : cyborg.integ <= 75
-                              ? 'Functionality Impaired'
-                              : 'Operational'}
+                              ? t('ui.ntos_robotact.functionality_impaired')
+                              : t('ui.ntos_robotact.operational')}
                       </Box>
                     </LabeledList.Item>
-                    <LabeledList.Item label="Charge">
+                    <LabeledList.Item label={t('ui.ntoscyborgremotemonitor.charge')}>
                       <Box
                         color={
                           cyborg.charge <= 30
@@ -149,13 +155,13 @@ export const NtosCyborgRemoteMonitorContent = (props) => {
                       >
                         {typeof cyborg.charge === 'number'
                           ? `${cyborg.charge}%`
-                          : 'Not Found'}
+                          : t('ui.common.not_found')}
                       </Box>
                     </LabeledList.Item>
-                    <LabeledList.Item label="Model">
+                    <LabeledList.Item label={t('ui.ntoscyborgremotemonitor.model')}>
                       {cyborg.module}
                     </LabeledList.Item>
-                    <LabeledList.Item label="Upgrades">
+                    <LabeledList.Item label={t('ui.ntoscyborgremotemonitor.upgrades')}>
                       {cyborg.upgrades}
                     </LabeledList.Item>
                   </LabeledList>
@@ -169,9 +175,9 @@ export const NtosCyborgRemoteMonitorContent = (props) => {
         <>
           <Stack.Item>
             <Section>
-              Scan a cyborg to download stored logs.
+              {t('ui.ntoscyborgremotemonitor.scan_cyborg_to_download_logs')}
               <ProgressBar value={DL_progress / 100}>
-                {ProgressSwitch(DL_progress)}
+                {ProgressSwitch(DL_progress, t)}
               </ProgressBar>
             </Section>
           </Stack.Item>
@@ -189,3 +195,4 @@ export const NtosCyborgRemoteMonitorContent = (props) => {
     </Stack>
   );
 };
+

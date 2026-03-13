@@ -1,6 +1,7 @@
 import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { usePreferencesLocalization } from '../localization';
 import { ReagentLookup } from '../common/ReagentLookup';
 import { RecipeLookup } from '../common/RecipeLookup';
 import { bookmarkedReactions } from '.';
@@ -8,31 +9,34 @@ import type { ReagentsData } from './types';
 
 export function Lookup() {
   const { act, data } = useBackend<ReagentsData>();
+  const { t } = usePreferencesLocalization();
   const { beakerSync, reagent_mode_recipe, reagent_mode_reagent } = data;
 
   return (
     <Stack fill>
       <Stack.Item grow basis={0}>
         <Section
-          title="Recipe lookup"
+          title={t('ui.reagents.recipe_lookup')}
           minWidth="353px"
           buttons={
             <>
               <Button
                 icon="atom"
                 color={beakerSync ? 'green' : 'red'}
-                tooltip="When enabled the displayed reaction will automatically display ongoing reactions in the associated beaker."
+                tooltip={t(
+                  'ui.reagents.when_enabled_the_displayed_reaction_will_automatically_display_o',
+                )}
                 onClick={() => act('beaker_sync')}
               >
-                Beaker Sync
+                {t('ui.reagents.beaker_sync')}
               </Button>
               <Button
                 icon="search"
                 color="purple"
-                tooltip="Search for a recipe by product name"
+                tooltip={t('ui.reagents.search_for_a_recipe_by_product_name')}
                 onClick={() => act('search_recipe')}
               >
-                Search
+                {t('ui.common.search')}
               </Button>
               <Button
                 icon="times"
@@ -55,17 +59,17 @@ export function Lookup() {
       </Stack.Item>
       <Stack.Item grow basis={0}>
         <Section
-          title="Reagent lookup"
+          title={t('ui.reagents.reagent_lookup')}
           minWidth="300px"
           buttons={
             <>
               <Button
                 icon="search"
-                tooltip="Search for a reagent by name"
+                tooltip={t('ui.reagents.search_for_a_reagent_by_name')}
                 tooltipPosition="left"
                 onClick={() => act('search_reagents')}
               >
-                Search
+                {t('ui.common.search')}
               </Button>
               <Button
                 icon="times"

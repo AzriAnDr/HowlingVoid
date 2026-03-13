@@ -5,13 +5,15 @@ import { Box, Button, Icon, NoticeBox, Stack } from 'tgui-core/components';
 import { MedicalRecordTabs } from './RecordTabs';
 import { MedicalRecordView } from './RecordView';
 import type { MedicalRecordData } from './types';
+import { usePreferencesLocalization } from '../localization';
 
 export const MedicalRecords = (props) => {
   const { data } = useBackend<MedicalRecordData>();
+  const { t } = usePreferencesLocalization(data);
   const { authenticated } = data;
 
   return (
-    <Window title="Medical Records" width={750} height={550}>
+    <Window title={t('ui.medical_records.title')} width={750} height={550}>
       <Window.Content>
         <Stack fill>
           {!authenticated ? <UnauthorizedView /> : <AuthView />}
@@ -22,7 +24,8 @@ export const MedicalRecords = (props) => {
 };
 
 const UnauthorizedView = (props) => {
-  const { act } = useBackend<MedicalRecordData>();
+  const { act, data } = useBackend<MedicalRecordData>();
+  const { t } = usePreferencesLocalization(data);
 
   return (
     <Stack.Item grow>
@@ -38,9 +41,9 @@ const UnauthorizedView = (props) => {
         </Stack.Item>
         <Stack.Item>
           <NoticeBox align="right">
-            You are not logged in.
+            {t('ui.medical_records.not_logged_in')}
             <Button ml={2} icon="lock-open" onClick={() => act('login')}>
-              Login
+              {t('ui.common.login')}
             </Button>
           </NoticeBox>
         </Stack.Item>
@@ -50,7 +53,8 @@ const UnauthorizedView = (props) => {
 };
 
 const AuthView = (props) => {
-  const { act } = useBackend<MedicalRecordData>();
+  const { act, data } = useBackend<MedicalRecordData>();
+  const { t } = usePreferencesLocalization(data);
 
   return (
     <>
@@ -64,7 +68,7 @@ const AuthView = (props) => {
           </Stack.Item>
           <Stack.Item>
             <NoticeBox align="right" info>
-              Secure Your Workspace.
+              {t('ui.medical_records.secure_workspace')}
               <Button
                 align="right"
                 icon="lock"
@@ -72,7 +76,7 @@ const AuthView = (props) => {
                 ml={2}
                 onClick={() => act('logout')}
               >
-                Log Out
+                {t('ui.common.log_out')}
               </Button>
             </NoticeBox>
           </Stack.Item>

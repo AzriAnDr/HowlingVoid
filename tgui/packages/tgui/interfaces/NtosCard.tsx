@@ -14,6 +14,7 @@ import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 import type { NTOSData } from '../layouts/NtosWindow';
 import { AccessList } from './common/AccessList';
+import { usePreferencesLocalization } from './localization';
 
 type CardData = {
   has_trim: BooleanLike;
@@ -66,6 +67,7 @@ export const NtosCard = (props) => {
 };
 
 export const NtosCardContent = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const {
     authed_user,
@@ -93,15 +95,12 @@ export const NtosCardContent = (props) => {
       {!!modified_card && !!authed_user && (
         <Stack.Item>
           <Section
-            title="Templates"
+            title={t('ui.ntos_card.templates')}
             mt={1}
             buttons={
               <Button
                 icon="question-circle"
-                tooltip={
-                  'Will attempt to apply all access for the template to the ID card.\n' +
-                  'Does not use wildcards unless the template specifies them.'
-                }
+                tooltip={t('ui.ntos_card.templates_help')}
                 tooltipPosition="left"
               />
             }
@@ -109,7 +108,7 @@ export const NtosCardContent = (props) => {
             {modified_card.has_trim ? (
               <TemplateDropdown templates={templates} />
             ) : (
-              'Templates require a trim already applied to the card. Please use an ID Painter to apply a trim.'
+              t('ui.ntos_card.templates_require_trim')
             )}
           </Section>
         </Stack.Item>
@@ -129,8 +128,8 @@ export const NtosCardContent = (props) => {
                 showBasic={!!show_basic}
                 extraButtons={
                   <Button.Confirm
-                    content="Terminate Employment"
-                    confirmContent="Fire Employee?"
+                    content={t('ui.ntos_card.terminate_employment')}
+                    confirmContent={t('ui.ntos_card.fire_employee_question')}
                     color="bad"
                     onClick={() => act('PRG_terminate')}
                   />
@@ -151,6 +150,7 @@ export const NtosCardContent = (props) => {
 };
 
 const LoginPage = () => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const { authed_user, auth_card, is_holding_id } = data;
 
@@ -160,8 +160,8 @@ const LoginPage = () => {
         <Stack.Item grow>
           <NoticeBox info={!!authed_user}>
             {authed_user
-              ? `Login: ${authed_user}`
-              : 'Please log in to continue.'}
+              ? `${t('ui.ntos_card.login')}: ${authed_user}`
+              : t('ui.ntos_card.please_log_in_to_continue')}
           </NoticeBox>
         </Stack.Item>
         <Stack.Item width="100%">
@@ -178,7 +178,7 @@ const LoginPage = () => {
               >
                 {auth_card
                   ? `${auth_card.id_owner} (${auth_card.id_rank})`
-                  : 'Insert ID'}
+                  : t('ui.common.insert_id')}
               </Button>
             </Flex.Item>
             <Flex.Item>
@@ -189,7 +189,7 @@ const LoginPage = () => {
                   act(authed_user ? 'PRG_logout' : 'PRG_authenticate');
                 }}
               >
-                {authed_user ? 'Log Out' : 'Log In'}
+                {authed_user ? t('ui.ntos_card.log_out') : t('ui.ntos_card.log_in')}
               </Button>
             </Flex.Item>
           </Flex>
@@ -200,6 +200,7 @@ const LoginPage = () => {
 };
 
 const IdCardPage = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
   const { authed_user, auth_card, modified_card, is_holding_id } = data;
 
@@ -220,7 +221,7 @@ const IdCardPage = (props) => {
               >
                 {modified_card
                   ? `${modified_card.id_owner} (${modified_card.id_rank})`
-                  : 'Insert ID'}
+                  : t('ui.common.insert_id')}
               </Button>
             </Flex.Item>
             <Flex.Item>
@@ -229,7 +230,7 @@ const IdCardPage = (props) => {
                 disabled={!modified_card || !authed_user}
                 onClick={() => act('PRG_print')}
               >
-                Print Report
+                {t('ui.common.print_report')}
               </Button>
             </Flex.Item>
           </Flex>
@@ -238,7 +239,7 @@ const IdCardPage = (props) => {
       {!!(modified_card && authed_user) && (
         <>
           <Stack mt={1}>
-            <Stack.Item align="center">Details:</Stack.Item>
+            <Stack.Item align="center">{t('ui.ntos_card.details')}:</Stack.Item>
             <Stack.Item grow={1} mr={1} ml={1}>
               <Input
                 width="100%"
@@ -254,7 +255,7 @@ const IdCardPage = (props) => {
               <NumberInput
                 step={1}
                 value={modified_card.id_age || 0}
-                unit="Years"
+                unit={t('ui.common.years')}
                 minValue={17}
                 maxValue={85}
                 onChange={(value) => {
@@ -266,7 +267,7 @@ const IdCardPage = (props) => {
             </Stack.Item>
           </Stack>
           <Stack>
-            <Stack.Item align="center">Assignment:</Stack.Item>
+            <Stack.Item align="center">{t('ui.ntos_card.assignment')}:</Stack.Item>
             <Stack.Item grow={1} ml={1}>
               <Input
                 fluid
@@ -287,6 +288,7 @@ const IdCardPage = (props) => {
 };
 
 const TemplateDropdown = (props) => {
+  const { t } = usePreferencesLocalization();
   const { act } = useBackend<Data>();
   const { templates } = props;
 
@@ -299,7 +301,7 @@ const TemplateDropdown = (props) => {
       <Stack.Item grow>
         <Dropdown
           width="100%"
-          placeholder="Select a template..."
+          placeholder={t('ui.ntos_card.select_template')}
           options={templateKeys.map((path) => {
             return templates[path];
           })}
@@ -308,7 +310,7 @@ const TemplateDropdown = (props) => {
               name: sel,
             })
           }
-          selected="None"
+          selected={t('ui.common.none')}
         />
       </Stack.Item>
     </Stack>

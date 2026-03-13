@@ -8,9 +8,11 @@ import {
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { PortableBasicInfo } from './common/PortableAtmos';
+import { usePreferencesLocalization } from './localization';
 
 export const PortablePump = (props) => {
   const { act, data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     direction,
     connected,
@@ -20,14 +22,18 @@ export const PortablePump = (props) => {
     minPressure,
     maxPressure,
   } = data;
-  const pump_or_port = connected ? 'Port' : 'Pump';
-  const area_or_tank = holding ? 'Tank' : 'Area';
+  const pump_or_port = connected
+    ? t('ui.portablepump.port')
+    : t('ui.portablepump.pump');
+  const area_or_tank = holding
+    ? t('ui.portablepump.tank')
+    : t('ui.portablepump.area');
   return (
     <Window width={300} height={340}>
       <Window.Content>
         <PortableBasicInfo />
         <Section
-          title="Pumping"
+          title={t('ui.portablepump.pumping')}
           buttons={
             <Button
               content={
@@ -41,7 +47,7 @@ export const PortablePump = (props) => {
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Output">
+            <LabeledList.Item label={t('ui.portablepump.output')}>
               <NumberInput
                 value={targetPressure}
                 unit="kPa"
@@ -56,7 +62,7 @@ export const PortablePump = (props) => {
                 }
               />
             </LabeledList.Item>
-            <LabeledList.Item label="Presets">
+            <LabeledList.Item label={t('ui.portablepump.presets')}>
               <Button
                 icon="minus"
                 disabled={targetPressure === minPressure}

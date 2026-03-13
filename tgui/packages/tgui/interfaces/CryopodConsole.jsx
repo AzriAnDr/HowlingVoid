@@ -9,21 +9,22 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 export const CryopodConsole = (props) => {
+  const { t } = usePreferencesLocalization();
   const { data } = useBackend();
   const { account_name } = data;
 
-  const welcomeTitle = `Hello, ${account_name || '[REDACTED]'}!`;
+  const welcomeTitle = `${t('ui.cryopod.hello')}, ${account_name || t('ui.cryopod.redacted')}!`;
 
   return (
-    <Window title="Cryopod Console" width={420} height={480}>
+    <Window title={t('ui.cryopod.title')} width={420} height={480}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
             <Section title={welcomeTitle}>
-              This automated cryogenic freezing unit will safely store your
-              corporeal form until your next assignment.
+              {t('ui.cryopod.description')}
             </Section>
           </Stack.Item>
           <Stack.Item grow>
@@ -39,11 +40,12 @@ export const CryopodConsole = (props) => {
 };
 
 const CrewList = () => {
+  const { t } = usePreferencesLocalization();
   const { data } = useBackend();
   const { frozen_crew } = data;
 
   if (!frozen_crew?.length) {
-    return <NoticeBox>No stored crew!</NoticeBox>;
+    return <NoticeBox>{t('ui.cryopod.no_stored_crew')}</NoticeBox>;
   }
 
   return (
@@ -83,15 +85,16 @@ const CrewList = () => {
 };
 
 const ItemList = () => {
+  const { t } = usePreferencesLocalization();
   const { act, data } = useBackend();
   const { item_ref_list, item_ref_name, item_retrieval_allowed } = data;
 
   if (!item_retrieval_allowed) {
-    return <NoticeBox>You are not authorized for item management.</NoticeBox>;
+    return <NoticeBox>{t('ui.cryopod.not_authorized_item_management')}</NoticeBox>;
   }
 
   if (!item_ref_list?.length) {
-    return <NoticeBox>No stored items!</NoticeBox>;
+    return <NoticeBox>{t('ui.cryopod.no_stored_items')}</NoticeBox>;
   }
 
   return (
@@ -115,7 +118,7 @@ const ItemList = () => {
               <Stack.Item>
                 <Button
                   icon="exclamation-circle"
-                  content="Retrieve"
+                  content={t('ui.common.retrieve')}
                   color="bad"
                   onClick={() => act('item_get', { item_get: item })}
                 />

@@ -11,8 +11,10 @@ import { useBackend } from '../../backend';
 import { TraitTooltip } from '../SeedExtractor';
 import { Fallback } from './Fallback';
 import type { PlantAnalyzerData } from './types';
+import { usePreferencesLocalization } from '../localization';
 
 export function PlantAnalyzerGraft(props) {
+  const { t } = usePreferencesLocalization();
   const { data } = useBackend<PlantAnalyzerData>();
   const { graft_data } = data;
 
@@ -23,7 +25,7 @@ export function PlantAnalyzerGraft(props) {
 
   return (
     <Section
-      title={`Graft: ${capitalizeFirst(graft_data.name)}`}
+      title={`${t('ui.plant_analyzer.graft')}: ${capitalizeFirst(graft_data.name)}`}
       buttons={
         !!graft_data.graft_gene && (
           <TraitTooltip path={graft_data.graft_gene} trait_db={data.trait_db} />
@@ -42,7 +44,7 @@ export function PlantAnalyzerGraft(props) {
         </Stack.Item>
         <Stack.Item>
           <LabeledList>
-            <LabeledList.Item label="Endurance">
+            <LabeledList.Item label={t('ui.plant_analyzer.endurance')}>
               <ProgressBar
                 value={graft_data.endurance / 100}
                 ranges={{
@@ -55,7 +57,7 @@ export function PlantAnalyzerGraft(props) {
               </ProgressBar>
             </LabeledList.Item>
 
-            <LabeledList.Item label="Lifespan">
+            <LabeledList.Item label={t('ui.plant_analyzer.lifespan')}>
               <ProgressBar
                 value={graft_data.lifespan / 100}
                 ranges={{
@@ -68,7 +70,7 @@ export function PlantAnalyzerGraft(props) {
               </ProgressBar>
             </LabeledList.Item>
 
-            <LabeledList.Item label="Yield">
+            <LabeledList.Item label={t('ui.plant_analyzer.yield')}>
               <ProgressBar
                 value={graft_data.yield / 10}
                 ranges={{
@@ -81,7 +83,7 @@ export function PlantAnalyzerGraft(props) {
               </ProgressBar>
             </LabeledList.Item>
 
-            <LabeledList.Item label="Instability">
+            <LabeledList.Item label={t('ui.plant_analyzer.instability')}>
               <ProgressBar
                 value={graft_data.weed_chance}
                 maxValue={100}
@@ -95,16 +97,16 @@ export function PlantAnalyzerGraft(props) {
               </ProgressBar>
             </LabeledList.Item>
 
-            <LabeledList.Item label="Production">
-              {graft_data.production * data.cycle_seconds} seconds
+            <LabeledList.Item label={t('ui.plant_analyzer.production')}>
+              {graft_data.production * data.cycle_seconds} {t('ui.common.seconds')}
             </LabeledList.Item>
 
-            <LabeledList.Item label="Weeds">
+            <LabeledList.Item label={t('ui.plant_analyzer.weeds')}>
               {graft_data.weed_chance && graft_data.weed_rate
                 ? graft_data.weed_chance +
-                  '% chance to grow by ' +
+                  t('ui.plant_analyzer.weed_growth_chance_prefix') +
                   graft_data.weed_rate
-                : 'No weed growth'}
+                : t('ui.plant_analyzer.no_weed_growth')}
             </LabeledList.Item>
           </LabeledList>
         </Stack.Item>

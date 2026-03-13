@@ -4,6 +4,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
+import { usePreferencesLocalization } from './localization';
 import {
   type Objective,
   ObjectivePrintout,
@@ -21,6 +22,7 @@ type NinjaInfo = {
 
 export const AntagInfoNinja = (props) => {
   const { data } = useBackend<NinjaInfo>();
+  const { t } = usePreferencesLocalization(data);
   const { objectives, can_change_objective } = data;
   return (
     <Window width={550} height={450} theme="hackerman">
@@ -39,9 +41,10 @@ export const AntagInfoNinja = (props) => {
               {/* NOVA EDIT ADDITION START */}I am an elite operative executing
               a co-ordinated strike for the benefit of
               <br />
-              <span style={ninja_emphasis}>Cybersun Industries</span>!
-              {/*  I am an elite mercenary of the Spider Clan.
-              <br />A <span style={ninja_emphasis}> SPACE NINJA</span>! */}
+              <span style={ninja_emphasis}>
+                {t('ui.antaginfoninja.cybersun_industries')}
+              </span>
+              !
               {/* NOVA EDIT ADDITION END */}
             </Stack.Item>
             <Stack.Item textAlign="center" italic>
