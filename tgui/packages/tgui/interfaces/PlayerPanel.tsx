@@ -63,13 +63,13 @@ type Data = {
 
 const PAGES = [
   {
-    titleKey: 'ui.player_panel.page_general',
+    titleKey: 'ui.player_panel.tab_general',
     component: () => GeneralActions,
     color: 'green',
     icon: 'tools',
   },
   {
-    titleKey: 'ui.player_panel.page_mob',
+    titleKey: 'ui.player_panel.tab_mob',
     component: () => PhysicalActions,
     color: 'yellow',
     icon: 'bolt',
@@ -78,25 +78,25 @@ const PAGES = [
     },
   },
   {
-    titleKey: 'ui.player_panel.page_transform',
+    titleKey: 'ui.player_panel.tab_transform',
     component: () => TransformActions,
     color: 'orange',
     icon: 'exchange-alt',
   },
   {
-    titleKey: 'ui.player_panel.page_punish',
+    titleKey: 'ui.player_panel.tab_punish',
     component: () => PunishmentActions,
     color: 'red',
     icon: 'gavel',
   },
   {
-    titleKey: 'ui.player_panel.page_fun',
+    titleKey: 'ui.player_panel.tab_fun',
     component: () => FunActions,
     color: 'blue',
     icon: 'laugh',
   },
   {
-    titleKey: 'ui.player_panel.page_other',
+    titleKey: 'ui.player_panel.tab_other',
     component: () => OtherActions,
     color: 'blue',
     icon: 'crosshairs',

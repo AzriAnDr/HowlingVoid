@@ -443,7 +443,11 @@ export function getCharacterPreferencesLanguage(data: any): InterfaceLanguage {
   // Prefer top-level interface language because it's player-wide and authoritative.
   const candidates = [
     data?.interface_language,
+    data?.config?.interface_language,
     data?.game_preferences?.interface_language,
+    data?.preferences?.interface_language,
+    data?.client?.interface_language,
+    data?.config?.client?.interface_language,
     data?.character_preferences?.interface_language,
     data?.character_preferences?.game_preferences?.interface_language,
     data?.character_preferences?.non_contextual?.interface_language,
@@ -454,6 +458,15 @@ export function getCharacterPreferencesLanguage(data: any): InterfaceLanguage {
     if (detected) {
       return detected;
     }
+  }
+
+  // Final fallback for interfaces that do not receive language in payload.
+  // Keep this after backend candidates so user preference always wins.
+  const navigatorDetected = normalizeLanguage(
+    (globalThis as any)?.navigator?.language,
+  );
+  if (navigatorDetected) {
+    return navigatorDetected;
   }
 
   return 'english';
@@ -565,9 +578,14 @@ export function getPreferencesLocalization(data: unknown) {
 }
 
 export function usePreferencesLocalization(data?: unknown) {
-  const { data: backendData } = useBackend<PreferencesMenuData>();
-  const sourceData = data ?? backendData;
-  const resolved = getPreferencesLocalization(sourceData);
+  const backend = useBackend<PreferencesMenuData>();
+  const mergedSource = {
+    ...(backend.data as Record<string, unknown>),
+    ...((data as Record<string, unknown>) ?? {}),
+    config: backend.config,
+    client: backend.config?.client,
+  };
+  const resolved = getPreferencesLocalization(mergedSource);
   const { language } = resolved;
 
   const t = useCallback(
