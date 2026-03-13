@@ -284,7 +284,7 @@ export const FeatureTextInput = (
   const { t } = usePreferencesLocalization(data);
 
   if (!serverData) {
-    return <Box>{t('loading')}</Box>;
+    return <Box>{t('ui.character.loading')}</Box>;
   }
 
   return (

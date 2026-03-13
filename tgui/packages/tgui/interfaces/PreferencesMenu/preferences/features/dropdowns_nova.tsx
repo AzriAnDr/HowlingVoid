@@ -116,7 +116,7 @@ export function FeatureBloodTypeDropdownInput(props: ColorDropdownInputProps) {
       <Stack vertical>
         <Stack.Item>
           <Box mt={1} color="white">
-            <b>{t('blood_chemical_label')}</b> {chemical}
+            <b>{t('ui.character.blood_chemical_label')}</b> {chemical}
           </Box>
         </Stack.Item>
         {!!blurb && (

@@ -1,5 +1,6 @@
 /client
 	var/atom/movable/screen/map_view/cam_screen
+	var/mob/cam_follow_target
 
 ADMIN_VERB(view_player_camera, R_ADMIN, "Cuckold View", "Lets you see around another player in a separate window, useful for tracking players.", ADMIN_CATEGORY_MAIN)
 	if (!check_rights_for(user, R_ADMIN))
@@ -14,9 +15,8 @@ ADMIN_VERB(view_player_camera, R_ADMIN, "Cuckold View", "Lets you see around ano
 		choice_client.cam_screen = new
 		choice_client.cam_screen.generate_view("adminview[choice_client.ckey]_map")
 		choice_client.RegisterSignal(choice_client, COMSIG_QDELETING, TYPE_PROC_REF(/client, cleanup_player_camera_view))
-		if(choice_client.mob)
-			choice_client.RegisterSignal(choice_client.mob, COMSIG_MOB_CLIENT_MOVED, TYPE_PROC_REF(/client, update_view))
-			choice_client.RegisterSignal(choice_client.mob, COMSIG_MOB_SAY, TYPE_PROC_REF(/client, relay_camera_speech))
+		choice_client.RegisterSignal(choice_client, COMSIG_CLIENT_MOB_LOGIN, TYPE_PROC_REF(/client, on_camera_target_mob_login))
+	choice_client.set_camera_follow_target(choice_client.mob)
 
 	if (user.screen_maps["adminview[choice_client.ckey]"])
 		return
@@ -30,30 +30,55 @@ ADMIN_VERB(view_player_camera, R_ADMIN, "Cuckold View", "Lets you see around ano
 	if (cam_screen)
 		cam_screen.hide_from(source.mob)
 	UnregisterSignal(source, COMSIG_POPUP_CLEARED)
-	if(src.mob && (!cam_screen || !length(cam_screen.viewers_to_huds)))
-		UnregisterSignal(src.mob, COMSIG_MOB_CLIENT_MOVED)
-		UnregisterSignal(src.mob, COMSIG_MOB_SAY)
+	if(!cam_screen || !length(cam_screen.viewers_to_huds))
+		set_camera_follow_target(null)
 
 /client/proc/cleanup_player_camera_view()
 	SIGNAL_HANDLER
+	set_camera_follow_target(null)
 	if (cam_screen)
 		qdel(cam_screen)
 		cam_screen = null
-	if(src.mob)
-		UnregisterSignal(src.mob, COMSIG_MOB_CLIENT_MOVED)
-		UnregisterSignal(src.mob, COMSIG_MOB_SAY)
-	UnregisterSignal(src, COMSIG_QDELETING)
+	UnregisterSignal(src, list(COMSIG_QDELETING, COMSIG_CLIENT_MOB_LOGIN))
+
+/client/proc/on_camera_target_mob_login(client/source, mob/new_mob)
+	SIGNAL_HANDLER
+	set_camera_follow_target(new_mob)
+	update_view()
+
+/client/proc/set_camera_follow_target(mob/new_target)
+	if(cam_follow_target == new_target)
+		return
+	if(cam_follow_target)
+		UnregisterSignal(cam_follow_target, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_SAY))
+	cam_follow_target = new_target
+	if(cam_follow_target)
+		RegisterSignal(cam_follow_target, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/client, update_view))
+		RegisterSignal(cam_follow_target, COMSIG_MOB_SAY, TYPE_PROC_REF(/client, relay_camera_speech))
 
 /client/proc/update_view() // updates vis_contents for camera screen object
 	SIGNAL_HANDLER
 	if (!cam_screen)
 		return
+	var/atom/focus = cam_follow_target || src.mob
+	var/turf/focus_turf = get_turf(focus)
+	if(!focus_turf)
+		return
 
-	cam_screen.vis_contents.Cut()
-	for (var/turf/visible_turf in view(3, get_turf(src.mob)))
-		cam_screen.vis_contents += visible_turf
+	var/range = 3
+	var/turf/lowerleft = locate(
+		max(1, focus_turf.x - range),
+		max(1, focus_turf.y - range),
+		focus_turf.z,
+	)
+	var/turf/upperright = locate(
+		min(world.maxx, focus_turf.x + range),
+		min(world.maxy, focus_turf.y + range),
+		focus_turf.z,
+	)
+	cam_screen.vis_contents = block(lowerleft, upperright)
 
-/client/proc/relay_camera_speech(mob/living/source, list/speech_args)
+/client/proc/relay_camera_speech(mob/source, list/speech_args)
 	SIGNAL_HANDLER
 	if(!cam_screen || !length(cam_screen.viewers_to_huds))
 		return

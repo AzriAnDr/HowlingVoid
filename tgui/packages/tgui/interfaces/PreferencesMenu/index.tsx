@@ -60,11 +60,11 @@ function PrefsWindowInner(props) {
   switch (window) {
     case PrefsWindow.Character:
       content = <CharacterPreferenceWindow />;
-      title = t('window_character_preferences');
+      title = t('ui.character.window_character_preferences');
       break;
     case PrefsWindow.Game:
       content = <GamePreferenceWindow />;
-      title = t('window_game_preferences');
+      title = t('ui.character.window_game_preferences');
       break;
     case PrefsWindow.Keybindings:
       content = (
@@ -72,7 +72,7 @@ function PrefsWindowInner(props) {
           startingPage={GamePreferencesSelectedPage.Keybindings}
         />
       );
-      title = t('window_keybindings');
+      title = t('ui.character.window_keybindings');
       break;
     default:
       exhaustiveCheck(window);

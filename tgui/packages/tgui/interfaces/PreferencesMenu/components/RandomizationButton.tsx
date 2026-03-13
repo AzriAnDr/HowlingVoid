@@ -18,17 +18,17 @@ export function RandomizationButton(props: Props) {
 
   const options = [
     {
-      displayText: t('randomization_disabled'),
+      displayText: t('ui.character.randomization_disabled'),
       value: RandomSetting.Disabled,
     },
 
     {
-      displayText: t('randomization_always'),
+      displayText: t('ui.character.randomization_always'),
       value: RandomSetting.Enabled,
     },
 
     {
-      displayText: t('randomization_antag_only'),
+      displayText: t('ui.character.randomization_antag_only'),
       value: RandomSetting.AntagOnly,
     },
   ];
@@ -58,7 +58,7 @@ export function RandomizationButton(props: Props) {
       options={options}
       onSelected={setValue}
       menuWidth={20}
-      selected="None"
+      selected={t('ui.common.none')}
     />
   );
 }

@@ -45,23 +45,23 @@ const FOOD_ICONS = {
 };
 
 const FOOD_NAMES: Record<keyof typeof FOOD_ICONS, string> = {
-  [Food.Bugs]: 'food_bugs',
-  [Food.Cloth]: 'food_clothing',
-  [Food.Dairy]: 'food_dairy',
-  [Food.Fried]: 'food_fried',
-  [Food.Fruit]: 'food_fruit',
-  [Food.Gore]: 'food_gore',
-  [Food.Grain]: 'food_grain',
-  [Food.Gross]: 'food_gross',
-  [Food.Junkfood]: 'food_junk',
-  [Food.Meat]: 'food_meat',
-  [Food.Nuts]: 'food_nuts',
-  [Food.Raw]: 'food_raw',
-  [Food.Seafood]: 'food_seafood',
-  [Food.Stone]: 'food_rocks',
-  [Food.Sugar]: 'food_sugar',
-  [Food.Toxic]: 'food_toxic',
-  [Food.Vegetables]: 'food_vegetables',
+  [Food.Bugs]: 'ui.character.food_bugs',
+  [Food.Cloth]: 'ui.character.food_clothing',
+  [Food.Dairy]: 'ui.character.food_dairy',
+  [Food.Fried]: 'ui.character.food_fried',
+  [Food.Fruit]: 'ui.character.food_fruit',
+  [Food.Gore]: 'ui.character.food_gore',
+  [Food.Grain]: 'ui.character.food_grain',
+  [Food.Gross]: 'ui.character.food_gross',
+  [Food.Junkfood]: 'ui.character.food_junk',
+  [Food.Meat]: 'ui.character.food_meat',
+  [Food.Nuts]: 'ui.character.food_nuts',
+  [Food.Raw]: 'ui.character.food_raw',
+  [Food.Seafood]: 'ui.character.food_seafood',
+  [Food.Stone]: 'ui.character.food_rocks',
+  [Food.Sugar]: 'ui.character.food_sugar',
+  [Food.Toxic]: 'ui.character.food_toxic',
+  [Food.Vegetables]: 'ui.character.food_vegetables',
 };
 
 const IGNORE_UNLESS_LIKED: Set<Food> = new Set([
@@ -149,7 +149,7 @@ function Diet(props: DietProps) {
         <FoodList
           food={liked_food}
           icon="heart"
-          name={t('species_liked_food')}
+          name={t('ui.character.species_liked_food')}
           className="color-pink"
         />
       </Stack.Item>
@@ -158,7 +158,7 @@ function Diet(props: DietProps) {
         <FoodList
           food={disliked_food.filter(notIn(IGNORE_UNLESS_LIKED))}
           icon="thumbs-down"
-          name={t('species_disliked_food')}
+          name={t('ui.character.species_disliked_food')}
           className="color-red"
         />
       </Stack.Item>
@@ -167,7 +167,7 @@ function Diet(props: DietProps) {
         <FoodList
           food={toxic_food.filter(notIn(IGNORE_UNLESS_LIKED))}
           icon="biohazard"
-          name={t('species_toxic_food')}
+          name={t('ui.character.species_toxic_food')}
           className="color-olive"
         />
       </Stack.Item>
@@ -301,7 +301,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
           icon="arrow-left"
           onClick={props.handleClose}
         >
-          {t('species_go_back')}
+          {t('ui.character.species_go_back')}
         </Button>
       </Stack.Item>
 
@@ -351,7 +351,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                       `species_${speciesKey}_name`,
                       species.name,
                     ) +
-                    ` - ${t('species_nova_only_tooltip')}`;
+                    ` - ${t('ui.character.species_nova_only_tooltip')}`;
                   speciesPage = (
                     <Tooltip content={tooltipContent}>{speciesPage}</Tooltip>
                   );
@@ -384,7 +384,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                       {/* NOVA EDIT CHANGE START - Adds maxHeight, scrollable*/}
                       <Section
                         className="PreferencesMenu__Character__SpeciesSubsection"
-                        title={t('species_description')}
+                        title={t('ui.character.species_description')}
                         maxHeight="14vh"
                         scrollable
                       >
@@ -397,7 +397,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
 
                       <Section
                         className="PreferencesMenu__Character__SpeciesSubsection"
-                        title={t('species_features')}
+                        title={t('ui.character.species_features')}
                       >
                         <SpeciesPerks perks={currentSpecies.perks} />
                       </Section>
@@ -416,7 +416,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
               <Box mt={1}>
                 <Section
                   className="PreferencesMenu__Character__SpeciesLore"
-                  title={t('species_lore')}
+                  title={t('ui.character.species_lore')}
                 >
                   <BlockQuote /* NOVA EDIT START - scrollable lore */
                     overflowY="auto"

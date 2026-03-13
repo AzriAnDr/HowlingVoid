@@ -72,7 +72,7 @@ export const RotateCharacterButtons = (props) => {
         onClick={() => act('rotate', { backwards: false })}
         fontSize="22px"
         icon="redo"
-        tooltip={t('limbs_rotate_clockwise')}
+        tooltip={t('ui.character.limbs_rotate_clockwise')}
         tooltipPosition="bottom"
       />
       <Button
@@ -80,7 +80,7 @@ export const RotateCharacterButtons = (props) => {
         onClick={() => act('rotate', { backwards: true })}
         fontSize="22px"
         icon="undo"
-        tooltip={t('limbs_rotate_counter_clockwise')}
+        tooltip={t('ui.character.limbs_rotate_counter_clockwise')}
         tooltipPosition="bottom"
       />
     </Box>
@@ -92,7 +92,7 @@ export const Markings = (props) => {
   const { t, localizeDataLabelById } = usePreferencesLocalization();
   return (
     <Stack fill vertical>
-      <Stack.Item>{t('limbs_markings_label')}</Stack.Item>
+      <Stack.Item>{t('ui.character.limbs_markings_label')}</Stack.Item>
       {props.limb.markings.markings_list.map((marking, index) => (
         <Stack.Item key={marking.marking_id}>
           <Stack fill>
@@ -134,7 +134,7 @@ export const Markings = (props) => {
               <Button
                 className="PreferencesMenu__Augments__ActionButton"
                 color={marking.emissive ? 'good' : 'bad'}
-                tooltip={t('limbs_emissive_tooltip')}
+                tooltip={t('ui.character.limbs_emissive_tooltip')}
                 icon="lightbulb"
                 onClick={() =>
                   act('change_emissive', {
@@ -150,7 +150,7 @@ export const Markings = (props) => {
                 className="PreferencesMenu__Augments__ActionButton"
                 color="bad"
                 icon="minus"
-                tooltip={t('limbs_remove_marking_tooltip')}
+                tooltip={t('ui.character.limbs_remove_marking_tooltip')}
                 onClick={() =>
                   act('remove_marking', {
                     limb_slot: props.limb.slot,
@@ -167,7 +167,7 @@ export const Markings = (props) => {
           className="PreferencesMenu__Augments__ActionButton"
           color="good"
           icon="plus"
-          tooltip={t('limbs_add_marking_tooltip')}
+          tooltip={t('ui.character.limbs_add_marking_tooltip')}
           onClick={() => act('add_marking', { limb_slot: props.limb.slot })}
         />
       </Stack.Item>
@@ -217,7 +217,7 @@ export const AugmentationPage = (props) => {
           <Stack fill vertical>
             <Stack.Item>
               <Stack fill>
-                <Stack.Item>{t('limbs_augmentation_label')}</Stack.Item>
+                <Stack.Item>{t('ui.character.limbs_augmentation_label')}</Stack.Item>
                 <Stack.Item grow>
                   <Dropdown
                     className="PreferencesMenu__Augments__Dropdown"
@@ -252,7 +252,7 @@ export const AugmentationPage = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Stack fill vertical>
-                <Stack.Item>{t('limbs_style_label')}</Stack.Item>
+                <Stack.Item>{t('ui.character.limbs_style_label')}</Stack.Item>
                 <Stack.Item grow>
                   <Dropdown
                     className="PreferencesMenu__Augments__Dropdown"
@@ -344,7 +344,7 @@ export const LimbsPage = (props) => {
           className="PreferencesMenu__Augments__Panel"
           fill
           scrollable
-          title={t('limbs_markings_title')}
+          title={t('ui.character.limbs_markings_title')}
           height="197%"
         >
           <div>
@@ -353,7 +353,7 @@ export const LimbsPage = (props) => {
               width="100%"
               options={Object.values(markings)}
               selected={Object.values(markings)[1]}
-              placeholder={t('limbs_pick_preset')}
+              placeholder={t('ui.character.limbs_pick_preset')}
               onSelected={(value) => act('set_preset', { preset: value })}
             />
           </div>
@@ -367,7 +367,7 @@ export const LimbsPage = (props) => {
       <Stack.Item minWidth="33%">
         <Section
           className="PreferencesMenu__Augments__Panel"
-          title={t('limbs_character_preview')}
+          title={t('ui.character.limbs_character_preview')}
           fill
           align="center"
           height="197%"
@@ -383,7 +383,7 @@ export const LimbsPage = (props) => {
               className="PreferencesMenu__Augments__PointsSection"
               fill
               align="center"
-              title={t('limbs_quirk_points_balance')}
+              title={t('ui.character.limbs_quirk_points_balance')}
               style={{
                 marginTop: '3em',
               }}
@@ -412,7 +412,7 @@ export const LimbsPage = (props) => {
         <Section
           className="PreferencesMenu__Augments__Panel"
           fill
-          title={t('limbs_organs')}
+          title={t('ui.character.limbs_organs')}
           height="87%"
         >
           <Stack fill vertical>
@@ -425,7 +425,7 @@ export const LimbsPage = (props) => {
           className="PreferencesMenu__Augments__Panel"
           fill
           scrollable
-          title={t('limbs_augmentations')}
+          title={t('ui.character.limbs_augmentations')}
           height="107%"
         >
           {data.limbs_data.map((val) => (

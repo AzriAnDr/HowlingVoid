@@ -290,7 +290,7 @@ function QuirkPopper(props: QuirkPopperProps) {
           <Button
             selected={customizationExpanded}
             icon="cog"
-            tooltip={t('quirks_customize')}
+            tooltip={t('ui.character.quirks_customize')}
             style={{
               float: 'right',
             }}
@@ -427,14 +427,14 @@ function QuirkPage() {
 
     if (quirk.value > 0) {
       if (maxPositiveQuirks !== -1 && positiveQuirks >= maxPositiveQuirks) {
-        return t('quirks_no_more_positive');
+        return t('ui.character.quirks_no_more_positive');
       } else if (pointsEnabled && balance + quirk.value > 0) {
-        return t('quirks_need_negative_balance');
+        return t('ui.character.quirks_need_negative_balance');
       }
     }
     // NOVA EDIT START - Nova star quirks
     if (quirk.nova_stars_only && !data.is_nova_star) {
-      return t('quirks_need_nova_star');
+      return t('ui.character.quirks_need_nova_star');
     }
     // NOVA EDIT END
     const selectedQuirkNames = selectedQuirks.map((quirkKey) => {
@@ -451,7 +451,7 @@ function QuirkPage() {
           incompatibleQuirk !== quirk.name &&
           selectedQuirkNames.indexOf(incompatibleQuirk) !== -1
         ) {
-          return t('quirks_incompatible_with').replace(
+          return t('ui.character.quirks_incompatible_with').replace(
             '{quirk}',
             localizeDataLabelById(
               `quirk_${quirkKeyByName[incompatibleQuirk]}_name`,
@@ -462,7 +462,7 @@ function QuirkPage() {
       }
     }
     if (data.species_disallowed_quirks.includes(quirk.name)) {
-      return t('quirks_incompatible_with_species');
+      return t('ui.character.quirks_incompatible_with_species');
     }
     return;
   }
@@ -471,7 +471,7 @@ function QuirkPage() {
     const quirk = quirkInfo[quirkName];
 
     if (pointsEnabled && balance - quirk.value > 0) {
-      return t('quirks_remove_positive_first');
+      return t('ui.character.quirks_remove_positive_first');
     }
 
     return;
@@ -487,7 +487,7 @@ function QuirkPage() {
                 className="PreferencesMenu__Quirks__StatTitle PreferencesMenu__Quirks__AugmentsPointsTitle"
                 fontSize="1.3em"
               >
-                {t('quirks_positive')}
+                {t('ui.character.quirks_positive')}
               </Box>
             ) : (
               <Box mt={pointsEnabled ? 3.4 : 0} />
@@ -506,13 +506,13 @@ function QuirkPage() {
 
           <Stack.Item>
             <Box as="b" fontSize="1.6em">
-              {t('quirks_available')}
+              {t('ui.character.quirks_available')}
             </Box>
           </Stack.Item>
           <Stack.Item>
             <Input
               className="PreferencesMenu__Quirks__SearchInput"
-              placeholder={t('quirks_search_placeholder')}
+              placeholder={t('ui.character.quirks_search_placeholder')}
               width="200px"
               value={searchQuery}
               onChange={setSearchQuery}
@@ -590,7 +590,7 @@ function QuirkPage() {
                 className="PreferencesMenu__Quirks__StatTitle PreferencesMenu__Quirks__AugmentsPointsTitle"
                 fontSize="1.3em"
               >
-                {t('quirks_balance')}
+                {t('ui.character.quirks_balance')}
               </Box>
             ) : (
               <Box mt={maxPositiveQuirks > 0 ? 3.4 : 0} />
@@ -607,7 +607,7 @@ function QuirkPage() {
           </Stack.Item>
           <Stack.Item>
             <Box as="b" fontSize="1.6em">
-              {t('quirks_current')}
+              {t('ui.character.quirks_current')}
             </Box>
           </Stack.Item>
           <Stack.Item p={1.5} /> {/* Filler to better align the menu*/}
@@ -673,7 +673,7 @@ export function QuirkPersonalityPage() {
               align="center"
               fontSize="14px"
             >
-              {t('tab_quirks')}
+              {t('ui.character.tab_quirks')}
             </Button>
           </Stack.Item>
           <Stack.Item grow>
@@ -685,7 +685,7 @@ export function QuirkPersonalityPage() {
               align="center"
               fontSize="14px"
             >
-              {t('tab_personality')}
+              {t('ui.character.tab_personality')}
             </Button>
           </Stack.Item>
         </Stack>

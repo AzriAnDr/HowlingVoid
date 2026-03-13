@@ -1,35 +1,18 @@
-import keybindingsRu from './locales/keybindings.ru.json';
-
-type InterfaceLanguage = 'english' | 'russian';
+﻿import type { InterfaceLanguage } from '../localization';
 
 type Keybinding = {
   name: string;
   description?: string;
 };
 
-type KeybindingsRuJson = {
-  ui_text: {
-    unbound: string;
-    setNewOrEsc: string;
-    resetToDefaults: string;
-    resetAll: string;
-  };
-  names_by_id: Record<string, string>;
-  descriptions_by_id: Record<string, string>;
-};
+type TranslateFn = (key: string, fallback?: string) => string;
 
-const RU = keybindingsRu as KeybindingsRuJson;
-
-export function getKeybindingsUiText(language: InterfaceLanguage) {
-  if (language === 'russian') {
-    return RU.ui_text;
-  }
-
+export function getKeybindingsUiText(t: TranslateFn) {
   return {
-    unbound: 'Unbound',
-    setNewOrEsc: 'Set New / ESC to Clear',
-    resetToDefaults: 'Reset to Defaults',
-    resetAll: 'Reset all keybindings',
+    unbound: t('ui.game.keybindings.ui.unbound', 'Unbound'),
+    setNewOrEsc: t('ui.game.keybindings.ui.setNewOrEsc', 'Set New / ESC to Clear'),
+    resetToDefaults: t('ui.game.keybindings.ui.resetToDefaults', 'Reset to Defaults'),
+    resetAll: t('ui.game.keybindings.ui.resetAll', 'Reset all keybindings'),
   };
 }
 
@@ -38,15 +21,16 @@ export function localizeKeybinding(
   keybinding: Keybinding,
   category: string,
   language: InterfaceLanguage,
+  t: TranslateFn,
 ): Keybinding {
   if (language !== 'russian' || category === 'EMOTE') {
     return keybinding;
   }
 
-  const name = RU.names_by_id[keybindingId] ?? keybinding.name;
+  const name = t(`ui.game.keybinding.${keybindingId}.name`, keybinding.name);
   const description = keybinding.description?.trim();
   const localizedDescription = description
-    ? RU.descriptions_by_id[keybindingId] ?? description
+    ? t(`ui.game.keybinding.${keybindingId}.description`, description)
     : description;
 
   return {

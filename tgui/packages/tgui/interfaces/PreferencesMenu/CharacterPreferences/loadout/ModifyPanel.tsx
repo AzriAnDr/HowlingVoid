@@ -128,7 +128,7 @@ function LoadoutModifyButtons(props: ButtonsProps) {
       <Stack.Item>
         <LabeledList>
           {!!modifyItemDimmer.reskins && (
-            <LabeledList.Item label={t('loadout_styles')} verticalAlign="middle">
+            <LabeledList.Item label={t('ui.character.loadout_styles')} verticalAlign="middle">
               <Flex wrap width="100%">
                 {modifyItemDimmer.reskins.map((reskin) => (
                   <Flex.Item key={reskin.tooltip} mr={1} mb={1}>
@@ -277,7 +277,7 @@ export function LoadoutModifyDimmer(props: DimmerProps) {
                 act('close_greyscale_menu');
               }}
             >
-              {t('loadout_done')}
+              {t('ui.character.loadout_done')}
             </Button>
           </Stack>
         </Stack.Item>

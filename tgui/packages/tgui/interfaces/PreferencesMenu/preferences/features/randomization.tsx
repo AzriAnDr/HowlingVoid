@@ -33,20 +33,20 @@ export const random_body: Feature<RandomSetting> = {
                   setRandomToggle(false);
                 }}
               >
-                {t('randomize')}
+                {t('ui.common.randomize')}
               </Button>
             </Stack.Item>
 
             <Stack.Item>
               <Button color="red" onClick={() => setRandomToggle(false)}>
-                {t('cancel')}
+                {t('ui.common.cancel')}
               </Button>
             </Stack.Item>
           </>
         ) : (
           <Stack.Item>
             <Button onClick={() => setRandomToggle(true)}>
-              {t('randomize')}
+              {t('ui.common.randomize')}
             </Button>
           </Stack.Item>
         )}

@@ -97,7 +97,7 @@ export function SideDropdown(props: Props) {
     onClick,
     onSelected,
     options = [],
-    placeholder = t('side_dropdown_select_placeholder'),
+    placeholder = t('ui.character.side_dropdown_select_placeholder'),
     selected,
     width = 15,
   } = props;
@@ -163,7 +163,7 @@ export function SideDropdown(props: Props) {
           <div ref={innerRef} className="Dropdown__menu">
             {options.length === 0 ? (
               <div className="Dropdown__menu--entry">
-                {t('side_dropdown_no_options')}
+                {t('ui.character.side_dropdown_no_options')}
               </div>
             ) : (
               options.map((option) => {

@@ -9,8 +9,10 @@ import { Box, Dropdown, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { capitalizeFirst } from 'tgui-core/string';
 import type { PreferencesMenuData } from '../../types';
-import { usePreferencesLocalization } from '../../localization';
-import dropdownsRu from './locales/dropdowns.ru.json';
+import {
+  localizeDataLabelById,
+  usePreferencesLocalization,
+} from '../../localization';
 
 import type {
   Feature,
@@ -43,18 +45,16 @@ type DropdownEntry = {
   value: string | number;
 };
 
-const RU_DROPDOWN_TEXT = dropdownsRu as Record<string, string>;
-
 export function translateDropdownText(
+  sourceId: string,
   text: ReactNode,
   language: 'english' | 'russian',
 ): ReactNode {
-  if (language !== 'russian' || typeof text !== 'string') {
+  if (typeof text !== 'string') {
     return text;
   }
 
-  const translated = RU_DROPDOWN_TEXT[text.trim().toLowerCase()];
-  return translated || text;
+  return localizeDataLabelById(language, sourceId, text);
 }
 
 function capitalizeDropdownDisplayText(text: ReactNode): ReactNode {
@@ -73,7 +73,7 @@ export function generateOptions(
     const displayTextRaw: ReactNode = serverData.display_names
       ? serverData.display_names[choice]
       : capitalizeFirst(choice);
-    const displayText = translateDropdownText(displayTextRaw, language);
+    const displayText = translateDropdownText(choice, displayTextRaw, language);
 
     newOptions.push({
       displayText,
@@ -114,7 +114,7 @@ export function FeatureDropdownInputCore(
   const { language } = usePreferencesLocalization(data);
 
   const displayTextRaw = serverData?.display_names?.[value] || String(value);
-  const displayText = translateDropdownText(displayTextRaw, language);
+  const displayText = translateDropdownText(value, displayTextRaw, language);
 
   return (
     <Dropdown
@@ -148,6 +148,7 @@ export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
         ? serverData.display_names?.[choice]
         : capitalizeFirst(choice);
       let displayText: ReactNode = translateDropdownText(
+        choice,
         displayTextRaw,
         language,
       );
@@ -182,7 +183,7 @@ export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
   }, [serverData]);
 
   const displayTextRaw = serverData?.display_names?.[value] || String(value);
-  const displayText = translateDropdownText(displayTextRaw, language);
+  const displayText = translateDropdownText(value, displayTextRaw, language);
 
   return (
     <Dropdown
@@ -197,4 +198,3 @@ export function FeatureIconnedDropdownInput(props: IconnedDropdownInputProps) {
     />
   );
 }
-

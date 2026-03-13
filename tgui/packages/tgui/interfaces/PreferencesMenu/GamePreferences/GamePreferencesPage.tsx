@@ -1,4 +1,4 @@
-import { binaryInsertWith } from 'common/collections';
+﻿import { binaryInsertWith } from 'common/collections';
 import { sortBy } from 'es-toolkit';
 import { type ReactNode, useState } from 'react';
 import { useBackend } from 'tgui/backend';
@@ -99,7 +99,7 @@ export function GamePreferencesPage(props) {
           ) : (
             <Box as="b" color="red">
               {t(
-                'game_preference_not_filled_out',
+                'ui.game.game_preference_not_filled_out',
               )}
             </Box>
           )}
@@ -151,3 +151,4 @@ export function GamePreferencesPage(props) {
     />
   );
 }
+

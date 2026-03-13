@@ -1,33 +1,15 @@
-import { useCallback } from 'react';
+﻿import { useCallback } from 'react';
 import { useBackend } from 'tgui/backend';
 
 import type { PreferencesMenuData } from '../types';
 import { features } from '../preferences/features';
-import dataLabelsEn from './locales/data_labels.en.json';
-import dataLabelsRu from './locales/data_labels.ru.json';
-import featureLabelsEn from './locales/feature_labels.en.json';
-import featureLabelsRu from './locales/feature_labels.ru.json';
 import uiEn from '../../locales/ui.en.json';
 import uiRu from '../../locales/ui.ru.json';
-import uiCharacterEn from './locales/ui.character.en.json';
-import uiCharacterRu from './locales/ui.character.ru.json';
-import uiGameEn from './locales/ui.game.en.json';
-import uiGameRu from './locales/ui.game.ru.json';
-import gameFeaturesRu from '../GamePreferences/locales/features.ru.json';
 
 export type InterfaceLanguage = 'english' | 'russian';
 
-const EN_UI_BY_KEY = {
-  ...(uiEn as Record<string, string>),
-  ...(uiCharacterEn as Record<string, string>),
-  ...(uiGameEn as Record<string, string>),
-} as Record<string, string>;
-
-const RU_UI_BY_KEY = {
-  ...(uiRu as Record<string, string>),
-  ...(uiCharacterRu as Record<string, string>),
-  ...(uiGameRu as Record<string, string>),
-} as Record<string, string>;
+const EN_UI_BY_KEY = uiEn as Record<string, string>;
+const RU_UI_BY_KEY = uiRu as Record<string, string>;
 
 const UI_BY_LANGUAGE: Record<InterfaceLanguage, Record<string, string>> = {
   english: EN_UI_BY_KEY,
@@ -35,10 +17,10 @@ const UI_BY_LANGUAGE: Record<InterfaceLanguage, Record<string, string>> = {
 };
 
 const GENDER_TEXT_KEY_BY_ID: Record<string, string> = {
-  male: 'gender_male_pronouns',
-  female: 'gender_female_pronouns',
-  plural: 'gender_plural_pronouns',
-  neuter: 'gender_neuter_pronouns',
+  male: 'ui.character.gender_male_pronouns',
+  female: 'ui.character.gender_female_pronouns',
+  plural: 'ui.character.gender_plural_pronouns',
+  neuter: 'ui.character.gender_neuter_pronouns',
 };
 
 // Feature IDs can differ from the normalized label ID.
@@ -173,28 +155,6 @@ const CHARACTER_FEATURE_ID_ALIASES: Record<string, string> = {
   facial_hairstyle: 'facial_hairstyle',
 };
 
-const DATA_LABELS_EN = dataLabelsEn as Record<string, string>;
-const DATA_LABELS_RU = dataLabelsRu as Record<string, string>;
-const FEATURE_LABELS_EN = featureLabelsEn as Record<string, string>;
-const FEATURE_LABELS_RU = featureLabelsRu as Record<string, string>;
-
-const DATA_LABELS_BY_LANGUAGE: Record<InterfaceLanguage, Record<string, string>> = {
-  english: DATA_LABELS_EN,
-  russian: DATA_LABELS_RU,
-};
-
-const FEATURE_LABELS_BY_LANGUAGE: Record<InterfaceLanguage, Record<string, string>> = {
-  english: FEATURE_LABELS_EN,
-  russian: FEATURE_LABELS_RU,
-};
-
-type GameFeaturesRuJson = {
-  feature_names_by_id?: Record<string, string>;
-  feature_descriptions_by_id?: Record<string, string>;
-};
-
-const GAME_FEATURES_RU = gameFeaturesRu as GameFeaturesRuJson;
-
 function toDataId(value: string): string {
   const normalized = (value ?? '')
     .toString()
@@ -322,32 +282,15 @@ function deriveCharacterFeatureIdCandidates(featureId: string): string[] {
   return candidates;
 }
 
-function resolveFeatureKey(
-  language: InterfaceLanguage,
+function resolveCharacterFeatureKey(
   featureId: string,
   suffix: 'name' | 'description',
-  fallback?: string,
-): string {
+): string | null {
   for (const candidate of deriveCharacterFeatureIdCandidates(featureId)) {
-    const key = `feature.${candidate}.${suffix}`;
-    const translated =
-      FEATURE_LABELS_BY_LANGUAGE[language][key] ??
-      FEATURE_LABELS_BY_LANGUAGE.english[key];
-    if (translated) {
-      return translated;
-    }
+    return `ui.character.feature.${candidate}.${suffix}`;
   }
 
-  if (
-    suffix === 'description' &&
-    toDataId(fallback ?? '') === 'emissive_parts_glow_in_the_dark'
-  ) {
-    return language === 'russian'
-      ? 'Эмиссивные части светятся в темноте.'
-      : 'Emissive parts glow in the dark.';
-  }
-
-  return fallback ?? `feature.${toDataId(featureId)}.${suffix}`;
+  return null;
 }
 
 function translateUi(
@@ -477,7 +420,8 @@ export function localizeCharacterFeatureNameById(
   featureId: string,
   fallback?: string,
 ): string {
-  return resolveFeatureKey(language, featureId, 'name', fallback);
+  const key = resolveCharacterFeatureKey(featureId, 'name');
+  return key ? translateUi(language, key, fallback ?? featureId) : (fallback ?? featureId);
 }
 
 export function localizeCharacterFeatureDescriptionById(
@@ -485,7 +429,8 @@ export function localizeCharacterFeatureDescriptionById(
   featureId: string,
   fallback?: string,
 ): string {
-  return resolveFeatureKey(language, featureId, 'description', fallback);
+  const key = resolveCharacterFeatureKey(featureId, 'description');
+  return key ? translateUi(language, key, fallback ?? '') : (fallback ?? '');
 }
 
 export function localizeDataLabelById(
@@ -494,9 +439,8 @@ export function localizeDataLabelById(
   fallback?: string,
 ): string {
   for (const candidate of deriveDataIdCandidates(id)) {
-    const localized =
-      DATA_LABELS_BY_LANGUAGE[language][candidate] ??
-      DATA_LABELS_BY_LANGUAGE.english[candidate];
+    const key = `ui.character.data.${candidate}`;
+    const localized = UI_BY_LANGUAGE[language][key] ?? EN_UI_BY_KEY[key];
     if (localized) {
       return localized;
     }
@@ -518,14 +462,7 @@ export function localizeGameFeatureNameById(
   featureId: string,
   fallback?: string,
 ): string {
-  if (language === 'russian') {
-    const localized = GAME_FEATURES_RU.feature_names_by_id?.[featureId];
-    if (localized) {
-      return localized;
-    }
-  }
-
-  return fallback ?? featureId;
+  return translateUi(language, `ui.game.feature.${featureId}.name`, fallback ?? featureId);
 }
 
 export function localizeGameFeatureDescriptionById(
@@ -533,14 +470,11 @@ export function localizeGameFeatureDescriptionById(
   featureId: string,
   fallback?: string,
 ): string | undefined {
-  if (language === 'russian') {
-    const localized = GAME_FEATURES_RU.feature_descriptions_by_id?.[featureId];
-    if (localized) {
-      return localized;
-    }
-  }
-
-  return fallback;
+  return translateUi(
+    language,
+    `ui.game.feature.${featureId}.description`,
+    fallback,
+  );
 }
 
 export function localizeGender(
@@ -646,3 +580,4 @@ export function usePreferencesLocalization(data?: unknown) {
     localizeDataLabelById: localizeDataLabelByIdForLanguage,
   };
 }
+

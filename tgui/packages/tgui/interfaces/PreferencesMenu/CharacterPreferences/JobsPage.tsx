@@ -93,10 +93,10 @@ function PriorityHeaders() {
   return (
     <Stack>
       <Stack.Item grow />
-      <Stack.Item className={className}>{t('jobs_off')}</Stack.Item>
-      <Stack.Item className={className}>{t('jobs_low')}</Stack.Item>
-      <Stack.Item className={className}>{t('jobs_medium')}</Stack.Item>
-      <Stack.Item className={className}>{t('jobs_high')}</Stack.Item>
+      <Stack.Item className={className}>{t('ui.character.jobs_off')}</Stack.Item>
+      <Stack.Item className={className}>{t('ui.character.jobs_low')}</Stack.Item>
+      <Stack.Item className={className}>{t('ui.character.jobs_medium')}</Stack.Item>
+      <Stack.Item className={className}>{t('ui.character.jobs_high')}</Stack.Item>
     </Stack>
   );
 }
@@ -125,7 +125,7 @@ function PriorityButtons(props: PriorityButtonsProps) {
       {isOverflow ? (
         <>
           <PriorityButton
-            name={t('jobs_off')}
+            name={t('ui.character.jobs_off')}
             modifier="off"
             color="light-grey"
             enabled={!priority}
@@ -133,7 +133,7 @@ function PriorityButtons(props: PriorityButtonsProps) {
           />
 
           <PriorityButton
-            name={t('jobs_on')}
+            name={t('ui.character.jobs_on')}
             color="green"
             enabled={!!priority}
             onClick={createSetPriority(JobPriority.High)}
@@ -142,7 +142,7 @@ function PriorityButtons(props: PriorityButtonsProps) {
       ) : (
         <>
           <PriorityButton
-            name={t('jobs_off')}
+            name={t('ui.character.jobs_off')}
             modifier="off"
             color="light-grey"
             enabled={!priority}
@@ -150,21 +150,21 @@ function PriorityButtons(props: PriorityButtonsProps) {
           />
 
           <PriorityButton
-            name={t('jobs_low')}
+            name={t('ui.character.jobs_low')}
             color="red"
             enabled={priority === JobPriority.Low}
             onClick={createSetPriority(JobPriority.Low)}
           />
 
           <PriorityButton
-            name={t('jobs_medium')}
+            name={t('ui.character.jobs_medium')}
             color="yellow"
             enabled={priority === JobPriority.Medium}
             onClick={createSetPriority(JobPriority.Medium)}
           />
 
           <PriorityButton
-            name={t('jobs_high')}
+            name={t('ui.character.jobs_high')}
             color="green"
             enabled={priority === JobPriority.High}
             onClick={createSetPriority(JobPriority.High)}
@@ -213,9 +213,9 @@ function JobRow(props: JobRowProps) {
           <Stack.Item grow textAlign="right">
             <b>
               {hoursNeeded}
-              {t('jobs_hours_suffix')}
+              {t('ui.character.jobs_hours_suffix')}
             </b>{' '}
-            {t('jobs_as')}{' '}
+            {t('ui.character.jobs_as')}{' '}
             {localizeDataLabelById(
               `experience_type_${experience_type}`,
               experience_type,
@@ -227,9 +227,9 @@ function JobRow(props: JobRowProps) {
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
         <Stack.Item grow textAlign="right">
-          <b>{daysLeft}</b> {t('jobs_day')}
-          {daysLeft === 1 ? '' : t('jobs_day_plural_suffix')}{' '}
-          {t('jobs_left')}
+          <b>{daysLeft}</b> {t('ui.character.jobs_day')}
+          {daysLeft === 1 ? '' : t('ui.character.jobs_day_plural_suffix')}{' '}
+          {t('ui.character.jobs_left')}
         </Stack.Item>
       </Stack>
     );
@@ -237,7 +237,7 @@ function JobRow(props: JobRowProps) {
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
         <Stack.Item grow textAlign="right">
-          <b>{t('jobs_banned')}</b>
+          <b>{t('ui.character.jobs_banned')}</b>
         </Stack.Item>
       </Stack>
     );
@@ -245,7 +245,7 @@ function JobRow(props: JobRowProps) {
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
         <Stack.Item grow textAlign="right">
-          <b>{t('jobs_nova_stars_only')}</b>
+          <b>{t('ui.character.jobs_nova_stars_only')}</b>
         </Stack.Item>
       </Stack>
     );
@@ -256,7 +256,7 @@ function JobRow(props: JobRowProps) {
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
         <Stack.Item grow textAlign="right">
-          <b>{t('jobs_bad_species')}</b>
+          <b>{t('ui.character.jobs_bad_species')}</b>
         </Stack.Item>
       </Stack>
     );
@@ -375,18 +375,18 @@ function JoblessRoleDropdown() {
 
   const options = [
     {
-      displayText: t('jobs_join_as_role_if_unavailable').replace(
+      displayText: t('ui.character.jobs_join_as_role_if_unavailable').replace(
         '{role}',
         overflowRoleName,
       ),
       value: JoblessRole.BeOverflow,
     },
     {
-      displayText: t('jobs_join_as_random_if_unavailable'),
+      displayText: t('ui.character.jobs_join_as_random_if_unavailable'),
       value: JoblessRole.BeRandomJob,
     },
     {
-      displayText: t('jobs_return_to_lobby_if_unavailable'),
+      displayText: t('ui.character.jobs_return_to_lobby_if_unavailable'),
       value: JoblessRole.ReturnToLobby,
     },
   ];

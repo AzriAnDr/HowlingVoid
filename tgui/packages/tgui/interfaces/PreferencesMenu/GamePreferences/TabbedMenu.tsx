@@ -1,7 +1,6 @@
 ﻿import { type ComponentProps, type ReactNode, useRef } from 'react';
 import { Button, type Flex, Input, Section, Stack } from 'tgui-core/components';
 import { usePreferencesLocalization } from '../localization';
-import categoriesRu from './locales/categories.ru.json';
 
 type TabbedMenuProps = {
   categoryEntries: [string, ReactNode[]][];
@@ -16,17 +15,10 @@ export function TabbedMenu(props: TabbedMenuProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const categoryRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const { t } = usePreferencesLocalization();
-  const language = props.interfaceLanguage ?? 'english';
-
-  const categoryTranslations: Record<string, string> =
-    language === 'russian'
-      ? (categoriesRu as Record<string, string>)
-      : {};
-
   const translateCategory = (category: string) =>
-    categoryTranslations[category] || category;
+    t(`ui.game.category.${category.toLowerCase()}`, category);
 
-  const searchPlaceholder = t('search_placeholder');
+  const searchPlaceholder = t('ui.game.search_placeholder');
 
   return (
     <Stack
@@ -112,5 +104,6 @@ export function TabbedMenu(props: TabbedMenuProps) {
     </Stack>
   );
 }
+
 
 

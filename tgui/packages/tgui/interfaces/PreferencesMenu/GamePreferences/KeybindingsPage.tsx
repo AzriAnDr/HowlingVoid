@@ -47,10 +47,6 @@ type KeybindingsPageState = {
   rebindingHotkey?: [string, number];
 };
 
-function getLanguage(data: PreferencesMenuData): InterfaceLanguage {
-  return getPreferencesLocalization(data).language;
-}
-
 function isStandardKey(event: KeyboardEvent): boolean {
   return (
     event.key !== KEY.Alt &&
@@ -231,6 +227,7 @@ function getKeybindingNodes(
   getKeybindingOnClick: (keybindingId: string, slot: number) => () => void,
   text: ReturnType<typeof getKeybindingsUiText>,
   language: InterfaceLanguage,
+  t: (key: string, fallback?: string) => string,
 ) {
   return sortKeybindings(Object.entries(input))
     .map(([keybindingId, keybinding]) => {
@@ -239,6 +236,7 @@ function getKeybindingNodes(
         keybinding,
         category,
         language,
+        t,
       );
       if (
         searchText &&
@@ -429,7 +427,8 @@ export class KeybindingsPage extends Component<any, KeybindingsPageState> {
   }
 
   getTypingHotkey(keybindingId: string, slot: number): string | undefined {
-    const text = getKeybindingsUiText(this.currentLanguage);
+    const { data } = useBackend<PreferencesMenuData>();
+    const text = getKeybindingsUiText(getPreferencesLocalization(data).t);
     const { lastKeyboardEvent, rebindingHotkey } = this.state;
 
     if (!rebindingHotkey) {
@@ -474,9 +473,10 @@ export class KeybindingsPage extends Component<any, KeybindingsPageState> {
 
   render() {
     const { act, data } = useBackend<PreferencesMenuData>();
-    const language = getLanguage(data);
+    const localization = getPreferencesLocalization(data);
+    const language = localization.language;
     this.currentLanguage = language;
-    const text = getKeybindingsUiText(language);
+    const text = getKeybindingsUiText(localization.t);
     const keybindings = this.state.keybindings;
 
     if (!keybindings) {
@@ -514,6 +514,7 @@ export class KeybindingsPage extends Component<any, KeybindingsPageState> {
                       this.getKeybindingOnClick.bind(this),
                       text,
                       language,
+                      localization.t,
                     ),
                   ];
                 },

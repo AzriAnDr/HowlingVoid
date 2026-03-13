@@ -50,7 +50,7 @@ export function KnownLanguage(props: { language: Language }) {
             })
           }
         >
-          {t('language_understand')}
+          {t('ui.character.language_understand')}
         </Button>
         <Button
           className="PreferencesMenu__Languages__ActionButton"
@@ -61,7 +61,7 @@ export function KnownLanguage(props: { language: Language }) {
               ? t(
                   'language_forget_speak_keep_understand',
                 )
-              : t('language_learn_speak')
+              : t('ui.character.language_learn_speak')
           }
           onClick={() =>
             act(
@@ -72,10 +72,10 @@ export function KnownLanguage(props: { language: Language }) {
             )
           }
         >
-          {t('language_can')}{' '}
+          {t('ui.character.language_can')}{' '}
           {props.language.speaking
-            ? t('language_speak_inline')
-            : t('language_only_understand')}
+            ? t('ui.character.language_speak_inline')
+            : t('ui.character.language_only_understand')}
         </Button>
       </Section>
     </Stack.Item>
@@ -128,7 +128,7 @@ export function UnknownLanguage(props: { language: Language }) {
             act('speak_language', { language_name: props.language.name })
           }
         >
-          {t('language_speak_action')}
+          {t('ui.character.language_speak_action')}
         </Button>
         <Button
           className="PreferencesMenu__Languages__ActionButton"
@@ -141,7 +141,7 @@ export function UnknownLanguage(props: { language: Language }) {
             act('understand_language', { language_name: props.language.name })
           }
         >
-          {t('language_understand')}
+          {t('ui.character.language_understand')}
         </Button>
       </Section>
     </Stack.Item>
@@ -158,18 +158,18 @@ export function LanguagesPage() {
         {t(
           'languages_intro_learn_points',
         )}{' '}
-        <b>{t('linguist')}</b>{' '}
+        <b>{t('ui.character.linguist')}</b>{' '}
         {t(
           'neutral_quirk_extra_point',
         )}
         <br />
-        {t('languages_may_be_either')}{' '}
-        <b>{t('spoken_and_understood')}</b>{' '}
-        {t('language_or')}{' '}
-        <b>{t('just_understood')}</b>
+        {t('ui.character.languages_may_be_either')}{' '}
+        <b>{t('ui.character.spoken_and_understood')}</b>{' '}
+        {t('ui.character.language_or')}{' '}
+        <b>{t('ui.character.just_understood')}</b>
         <br />
-        {t('one_language_is_worth')}{' '}
-        <b>{t('one_point')}</b>{' '}
+        {t('ui.character.one_language_is_worth')}{' '}
+        <b>{t('ui.character.one_point')}</b>{' '}
         {t(
           'language_points_even_if_understood_only',
         )}
@@ -188,7 +188,7 @@ export function LanguagesPage() {
             title={
               <Box fontSize="150%">
                 {data.unselected_languages.length}{' '}
-                {t('available_languages')}
+                {t('ui.character.available_languages')}
               </Box>
             }
           >
@@ -204,7 +204,7 @@ export function LanguagesPage() {
             title={
               <Box fontSize="150%">
                 {data.selected_languages.length}/{data.total_language_points}{' '}
-                {t('known_languages')}
+                {t('ui.character.known_languages')}
               </Box>
             }
           >

@@ -99,11 +99,11 @@ function AntagSelection(props: AntagSelectionProps) {
       buttons={
         <>
           <Button color="good" onClick={() => enableAntags(antagonistKeys)}>
-            {t('antags_enable_all')}
+            {t('ui.character.antags_enable_all')}
           </Button>
 
           <Button color="bad" onClick={() => disableAntags(antagonistKeys)}>
-            {t('antags_disable_all')}
+            {t('ui.character.antags_disable_all')}
           </Button>
         </>
       }
@@ -148,7 +148,7 @@ function AntagSelection(props: AntagSelectionProps) {
                   <Tooltip
                     content={
                       isBanned
-                        ? t('antags_banned_tooltip').replace(
+                        ? t('ui.character.antags_banned_tooltip').replace(
                             '{name}',
                             localizeDataLabelById(
                               `antag_${antagonist.key}_name`,
@@ -198,7 +198,7 @@ function AntagSelection(props: AntagSelectionProps) {
 
                       {daysLeft > 0 && (
                         <Box className="antagonist-days-left">
-                          <b>{daysLeft}</b> {t('antags_days_left')}
+                          <b>{daysLeft}</b> {t('ui.character.antags_days_left')}
                         </Box>
                       )}
                     </Box>
@@ -220,17 +220,17 @@ export function AntagsPage() {
   return (
     <Box className="PreferencesMenu__Antags">
       <AntagSelection
-        name={t('antags_roundstart')}
+        name={t('ui.character.antags_roundstart')}
         antagonists={antagsByCategory.get(Category.Roundstart)!}
       />
 
       <AntagSelection
-        name={t('antags_midround')}
+        name={t('ui.character.antags_midround')}
         antagonists={antagsByCategory.get(Category.Midround)!}
       />
 
       <AntagSelection
-        name={t('antags_latejoin')}
+        name={t('ui.character.antags_latejoin')}
         antagonists={antagsByCategory.get(Category.Latejoin)!}
       />
     </Box>

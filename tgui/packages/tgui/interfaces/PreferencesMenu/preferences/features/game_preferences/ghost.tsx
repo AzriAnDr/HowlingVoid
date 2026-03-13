@@ -62,6 +62,7 @@ function GhostFormInput(
 
   for (const [name, displayName] of Object.entries(displayNames)) {
     const localizedDisplayName = translateDropdownText(
+      name,
       displayName,
       language,
     );

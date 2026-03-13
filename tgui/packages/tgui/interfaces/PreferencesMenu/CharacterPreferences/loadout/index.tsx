@@ -64,7 +64,7 @@ export function LoadoutPage(props) {
   // NOVA EDIT END
 
   if (!serverData) {
-    return <NoticeBox>{t('loading')}</NoticeBox>;
+    return <NoticeBox>{t('ui.character.loading')}</NoticeBox>;
   }
 
   return (
@@ -93,7 +93,7 @@ export function LoadoutPage(props) {
                     {t(
                       `loadout_preset_action_${(managingPreset || '').toLowerCase()}`,
                     )}{' '}
-                    {t('loadout_preset')}
+                    {t('ui.character.loadout_preset')}
                   </Flex.Item>
                   {managingPreset === 'Add' && (
                     <Flex.Item ml="6px" mt="4px">
@@ -118,7 +118,7 @@ export function LoadoutPage(props) {
               </Stack.Item>
               <Stack.Item width="100%" height="20px">
                 <Input
-                  placeholder={t('loadout_maximum_24_characters')}
+                  placeholder={t('ui.character.loadout_maximum_24_characters')}
                   width="100%"
                   maxLength={24}
                   onChange={(value) => onType(value)}
@@ -141,7 +141,7 @@ export function LoadoutPage(props) {
                       setManagingPreset(null);
                     }}
                   >
-                    {t('loadout_done')}
+                    {t('ui.character.loadout_done')}
                   </Button>
                 </Stack>
               </Stack.Item>
@@ -200,7 +200,7 @@ export function LoadoutPage(props) {
                 className="PreferencesMenu__Loadout__SearchInput"
                 width="210px"
                 onChange={setSearchLoadout}
-                placeholder={t('loadout_search_item')}
+                placeholder={t('ui.character.loadout_search_item')}
                 value={searchLoadout}
               />
             </Stack.Item>
@@ -296,7 +296,7 @@ function LoadoutTabs(props: LoadoutTabsProps) {
                         icon="plus"
                         color="good"
                       >
-                        {t('loadout_add_new')}
+                        {t('ui.character.loadout_add_new')}
                       </Button>
                     </Stack.Item>
                     <Stack.Item ml={12.5}>
@@ -312,8 +312,8 @@ function LoadoutTabs(props: LoadoutTabsProps) {
                         tooltip={
                           data.character_preferences.misc.loadout_index ===
                           'Default'
-                            ? t('loadout_cant_delete_default')
-                            : t('loadout_delete_current_entry')
+                            ? t('ui.character.loadout_cant_delete_default')
+                            : t('ui.character.loadout_delete_current_entry')
                         }
                         onClick={() => act('remove_loadout_preset')}
                       />
@@ -339,10 +339,10 @@ function LoadoutTabs(props: LoadoutTabsProps) {
             className="PreferencesMenu__Loadout__CatalogSection"
             title={
               searching ? (
-                t('loadout_search_results')
+                t('ui.character.loadout_search_results')
               ) : (
                 <Stack align="center">
-                  <Stack.Item>{t('loadout_catalog')}</Stack.Item>
+                  <Stack.Item>{t('ui.character.loadout_catalog')}</Stack.Item>
                   {!!activeCategory?.category_info && (
                     <Stack.Item ml={1}>
                       <Box italic opacity={0.85}>
@@ -374,7 +374,7 @@ function LoadoutTabs(props: LoadoutTabsProps) {
           </Section>
         ) : (
           <Section className="PreferencesMenu__Loadout__CatalogSection" fill>
-            <Box>{t('loadout_no_contents_selected_tab')}</Box>
+            <Box>{t('ui.character.loadout_no_contents_selected_tab')}</Box>
           </Section>
         )}
       </Stack.Item>
@@ -465,7 +465,7 @@ function LoadoutSelectedSection(props: LoadoutSelectedSectionProps) {
   return (
     <Section
       className="PreferencesMenu__Loadout__SelectedSection"
-      title={t('loadout_selected_items')}
+      title={t('ui.character.loadout_selected_items')}
       scrollable
       fill
       buttons={
@@ -475,10 +475,10 @@ function LoadoutSelectedSection(props: LoadoutSelectedSectionProps) {
           color="red"
           align="center"
           disabled={!loadout_list || Object.keys(loadout_list).length === 0}
-          tooltip={t('loadout_clear_all_tooltip')}
+          tooltip={t('ui.character.loadout_clear_all_tooltip')}
           onClick={() => act('clear_all_items')}
         >
-          {t('loadout_clear_all')}
+          {t('ui.character.loadout_clear_all')}
         </Button.Confirm>
       }
     >
@@ -507,7 +507,7 @@ function LoadoutPreviewSection() {
     <Section
       className="PreferencesMenu__Loadout__PreviewSection"
       fill
-      title={t('loadout_preview')}
+      title={t('ui.character.loadout_preview')}
       buttons={
         <Button.Checkbox
           className="PreferencesMenu__Loadout__ActionButton"
@@ -515,7 +515,7 @@ function LoadoutPreviewSection() {
           checked={data.job_clothes}
           onClick={() => act('toggle_job_clothes')}
         >
-          {t('loadout_job_clothes')}
+          {t('ui.character.loadout_job_clothes')}
         </Button.Checkbox>
       }
     >

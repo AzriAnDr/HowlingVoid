@@ -219,7 +219,7 @@ export function LoadoutTabDisplay(props: TabProps) {
   if (!category) {
     return (
       <NoticeBox>
-        {t('loadout_erroneous_category')}
+        {t('ui.character.loadout_erroneous_category')}
       </NoticeBox>
     );
   }
@@ -255,7 +255,7 @@ export function SearchDisplay(props: SearchProps) {
     .sort((a, b) => (a.name > b.name ? 1 : -1));
 
   if (validLoadoutItems.length === 0) {
-    return <NoticeBox>{t('loadout_no_items_found')}</NoticeBox>;
+    return <NoticeBox>{t('ui.character.loadout_no_items_found')}</NoticeBox>;
   }
 
   return <ItemListDisplay items={validLoadoutItems} />;

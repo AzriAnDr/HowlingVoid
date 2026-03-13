@@ -24,7 +24,7 @@ function UIStyleInput(
   const { icons } = serverData;
 
   if (!icons) {
-    return <Box color="red">{t('ui_style_no_icons')}</Box>;
+    return <Box color="red">{t('ui.character.ui_style_no_icons')}</Box>;
   }
 
   const choices = Object.fromEntries(

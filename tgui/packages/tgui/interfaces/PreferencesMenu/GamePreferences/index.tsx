@@ -74,7 +74,7 @@ export function GamePreferenceWindow(props: Props) {
               }
               onClick={() => setCurrentPage(GamePreferencesSelectedPage.Settings)}
             >
-              {t('game_settings')}
+              {t('ui.game.game_settings')}
             </Button>
           </Stack.Item>
 
@@ -94,7 +94,7 @@ export function GamePreferenceWindow(props: Props) {
                 setCurrentPage(GamePreferencesSelectedPage.Keybindings)
               }
             >
-              {t('game_keybindings')}
+              {t('ui.game.game_keybindings')}
             </Button>
           </Stack.Item>
         </Stack>

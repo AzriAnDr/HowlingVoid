@@ -31,7 +31,7 @@ function getButtonColors(
     return {
       backgroundColor: 'rgba(64, 34, 34, 0.5)',
       borderColor: 'darkred',
-      tooltip: t('personality_cannot_select_with').replace(
+      tooltip: t('ui.character.personality_cannot_select_with').replace(
         '{personality}',
         String(invalid),
       ),
@@ -41,7 +41,7 @@ function getButtonColors(
     return {
       backgroundColor: 'rgba(64, 64, 64, 0.5)',
       borderColor: '#666666',
-      tooltip: t('personality_maximum_reached'),
+      tooltip: t('ui.character.personality_maximum_reached'),
     };
   }
   if (selected) {
@@ -223,7 +223,7 @@ function isIncompatible(
               `personality_${selectedTypePath}_name`,
               getPersonalityName(allPersonalities, selectedTypePath),
             )) ||
-          t('personality_unknown')
+          t('ui.character.personality_unknown')
         );
       }
     }
@@ -281,7 +281,7 @@ function getAllSelectedPersonalitiesString(
     }
   }
   if (personalityNames.length === 0) {
-    return t('personality_none_selected');
+    return t('ui.character.personality_none_selected');
   }
   personalityNames.sort((a, b) => (a < b ? -1 : 1));
   let finalString = '';
@@ -296,10 +296,10 @@ function getAllSelectedPersonalitiesString(
       if (finalString[finalString.length - 1] !== ' ') {
         finalString += ' ';
       }
-      finalString += `${t('personality_and')} `;
+      finalString += `${t('ui.character.personality_and')} `;
     }
   }
-  return t('personality_you_are').replace(
+  return t('ui.character.personality_you_are').replace(
     '{personality}',
     finalString,
   );
@@ -360,7 +360,7 @@ export function PersonalityPage() {
               <Box className="PreferencesMenu__Personality__Counter" p={0.5}>
                 {selectedPersonalities?.length || 0} /{' '}
                 {data.max_personalities === -1
-                  ? t('personality_infinity')
+                  ? t('ui.character.personality_infinity')
                   : data.max_personalities}
               </Box>
             </Flex.Item>
@@ -387,7 +387,7 @@ export function PersonalityPage() {
                 <Flex.Item>
                   <Icon name="exclamation-triangle" mr={1} />
                 </Flex.Item>
-                <Flex.Item>{t('personality_mood_disabled')}</Flex.Item>
+                <Flex.Item>{t('ui.character.personality_mood_disabled')}</Flex.Item>
               </Flex>
             </NoticeBox>
           </Stack.Item>
@@ -396,7 +396,7 @@ export function PersonalityPage() {
           <Input
             className="PreferencesMenu__Personality__Search"
             fluid
-            placeholder={t('personality_search_placeholder')}
+            placeholder={t('ui.character.personality_search_placeholder')}
             value={searchQuery}
             onChange={(v) => setSearchQuery(v)}
           />
