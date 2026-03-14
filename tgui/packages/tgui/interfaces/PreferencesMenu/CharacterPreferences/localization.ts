@@ -1,4 +1,4 @@
-﻿import { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useBackend } from 'tgui/backend';
 
 import type { PreferencesMenuData } from '../types';
@@ -155,6 +155,47 @@ const CHARACTER_FEATURE_ID_ALIASES: Record<string, string> = {
   facial_hairstyle: 'facial_hairstyle',
 };
 
+const DATA_LABEL_ID_ALIASES: Record<string, string> = {
+  a_form_of_hybrid_encoded_language_employed_by_the_biomechanical_vox_species_characterized_by_sounding_extremely_annoying_and_irritating_to_those_who_don_t_recognize_it_it_usually_requires_an_implant_to_be_spoken_in_its_entirety:
+    'language_desc_vox_hybrid_encoded',
+  a_melodic_and_complex_language_spoken_by_slimes_some_of_the_notes_are_inaudible_to_humans:
+    'language_desc_slime_melodic',
+  a_popular_non_human_language_that_finds_extensive_use_by_various_types_of_anthropomorphic_invertebrates_it_consists_of_complex_flutters_chittering_antenna_movements_and_sparse_guttural_syllables:
+    'language_desc_invertebrate_flutters',
+  a_primarily_nonverbal_language_comprised_of_body_movements_gesticulation_and_sign_language_with_only_intermittent_warbles_other_vocalizations_it_s_almost_completely_incomprehensible_without_its_somatic_components:
+    'language_desc_nonverbal_somatic',
+  a_rough_informal_tongue_used_as_a_last_resort_when_attempts_to_establish_dialogue_in_more_proper_languages_fail_and_no_automatic_translators_are_available_it_relies_heavily_on_tone_body_language_signing_and_a_multitude_of_creole_loanwords_while_its_use_has_fallen_severely_over_the_years_it_s_still_practiced_by_a_quantity_of_frontier_crews_and_favored_by_the_free_trade_union:
+    'language_desc_frontier_trade_pidgin',
+  a_somewhat_simple_language_consisting_of_heavily_articulate_barks_growls_yapping_and_combined_movements_of_the_tail_and_ears_it_s_natively_spoken_by_the_vulpkanin_although_certain_groups_of_gene_modders_have_adopted_it_as_a_secondary_form_of_communication_its_parlance_has_been_loosely_compared_to_the_germanic_language_group:
+    'language_desc_vulpkanin_barks',
+  also_popularly_known_as_konjin_this_language_group_formally_regarded_as_orbital_sino_tibetan_is_a_result_of_a_genetic_relationship_between_chinese_tibetan_burmese_and_other_human_languages_of_similar_characteristics_that_was_first_proposed_in_the_early_19th_century_and_is_extremely_popular_even_in_the_space_age_originating_from_asia_this_group_of_tongues_is_the_second_most_spoken_by_human_and_human_derived_populations_since_the_birth_of_sol_common_and_was_a_primary_contender_to_be_the_sol_federation_s_official_language_many_loanwords_idioms_and_cultural_relics_of_japanese_ryukyuan_korean_and_other_societies_have_managed_to_persist_within_it_especially_in_the_daily_lives_of_speakers_coming_from_martian_cities:
+    'language_desc_orbital_sino_tibetan',
+  an_elaborate_mix_of_various_slavic_languages_with_similar_properties_that_has_long_since_become_the_official_language_of_the_hc_with_a_steady_amount_of_relevance_in_solfed_colonies_with_slavic_descendants_and_various_types_of_trading_posts_and_spaceports_across_human_space_it_even_managed_to_find_a_niche_in_communication_with_other_species:
+    'language_desc_hc_slavic_mix',
+  an_evolved_streamlined_form_of_semitic_tongues_that_come_from_the_middle_east_primarily_arabic_despite_its_ancient_origins_it_s_still_spoken_by_many_cultures_and_colonies_that_came_from_the_arab_league_and_general_middle_eastern_regions:
+    'language_desc_streamlined_semitic',
+  the_very_structurally_loose_creole_tongue_of_the_teshari_host_to_hundreds_of_dialects_almost_different_enough_to_resemble_their_own_languages_originally_developed_on_sirisai_schechi_has_made_its_way_across_the_teshari_diaspora_as_a_commonly_agreed_upon_way_for_entirely_different_packs_to_communicate:
+    'language_desc_teshari_schechi',
+  popularly_known_as_skrellian_by_foreigners_this_newly_discovered_language_that_the_skrell_employ_follows_no_traditional_speech_patterns_it_relies_on_various_differently_pitched_warbles_and_low_frequency_sound_to_construct_different_sentences_and_is_nearly_inaudible_to_non_skrell_and_anyone_lacking_an_appropriate_implant:
+    'language_desc_skrell_warbles',
+  overly_complicated_and_with_a_turbulent_history_this_tongue_comprised_of_short_form_speech_mixed_with_growls_and_meows_is_native_to_the_tajara_due_to_the_size_of_their_empire_countless_dialects_and_different_idioms_exist_making_a_simple_uniform_way_to_teach_this_language_almost_impossible_after_first_contact_humans_describe_this_tongue_as_sounding_somewhat_similar_to_old_scandinavian_languages_in_some_form_or_another_it_s_rarely_seen_spoken_by_those_not_native_to_taj_though_certain_genemodder_groups_have_picked_up_a_form_of_the_tongue:
+    'language_desc_tajara_shortform',
+  translating_to_the_song_of_the_king_this_language_was_custom_made_in_agurkhral_to_allow_those_with_little_education_including_aliens_to_better_integrate_into_azulean_society_it_s_easy_to_learn_as_a_result_and_is_characterised_by_hard_consonants_followed_by_soft_vowel_strings_an_underwater_element_exists_featuring_great_emphasis_on_close_physical_proximity_variations_in_pitch_high_frequency_sounds_and_clicking_this_part_may_require_genemods_for_non_azulean_speakers:
+    'language_desc_azulean_song_of_the_king',
+  and_when_contact_was_established_the_admiral_waved_at_the_screen_and_said_mi_parolas_la_lingvon_de_la_homines_i_speak_the_language_of_mankind_a_simplified_mix_of_esperanto_and_modern_latin_and_the_only_recognized_official_language_of_the_sol_federation_this_peculiar_constructed_language_became_popular_during_solfed_s_earliest_days_and_was_almost_entirely_overtaken_by_other_popular_tongues_it_became_widespread_through_heavy_handed_political_maneuvering_with_the_help_of_corporate_bureaucrats_and_other_undesirables_nowadays_it_s_a_near_universal_tongue_and_a_must_know_for_any_sentient_being_that_plans_to_leap_forward_into_space:
+    'language_desc_sol_common_esperanto_latin',
+  spoken_colloquially_by_the_mothfolk_of_va_lumla_the_early_iteration_of_mothic_emerged_when_fueljacks_relied_on_their_receptors_for_simple_one_worded_pheromones_to_communicate_and_navigate_the_often_fatal_maintenance_tunnels_sprawled_throughout_the_fleet_the_moths_developed_gesticulation_through_antennas_and_wings_to_convey_deeper_intent_with_mandibles_providing_emotional_context_through_clicks_and_trills_after_first_contact_human_speakers_managed_to_achieve_a_similar_effect_from_clicking_their_tongue_to_roof_and_steer_the_tone_with_the_width_of_their_mouth_while_using_their_hands_in_place_of_antennas_it_is_informally_spoken_deploying_many_slangs_and_shorthands_from_common_has_phonetic_resemblance_to_italian:
+    'language_desc_mothic_colloquial',
+  plutonian_franco_castillian_is_a_constructed_romance_language_that_was_developed_early_on_in_the_sol_federation_s_colonization_history_out_of_necessity_for_communication_between_its_first_plutonian_colonists_it_heavily_borrows_from_spanish_and_french_with_minor_influence_from_other_tongues_the_likes_of_italian_and_portuguese_despite_coming_off_as_elegant_it_carries_a_heavy_amount_of_slang_and_idioms_correlated_to_certain_criminal_groups_today_it_stands_heavily_ingrained_in_the_planet_s_culture_and_almost_every_citizen_will_speak_at_least_some_of_it_on_top_of_sol:
+    'language_desc_plutonian_franco_castillian',
+  where_shadekin_have_a_language_rooted_in_empathy_there_are_still_subtle_tones_and_syllables_that_are_as_delicate_as_the_emotions_that_shadekin_normally_communicate_with:
+    'language_desc_shadekin_empathic_tones',
+  shadekin_seem_to_always_know_what_the_others_are_thinking_this_is_probably_why:
+    'language_desc_shadekin_shared_thought',
+  the_official_language_of_the_spinward_stellar_coalition_as_inherited_from_the_third_soviet_union:
+    'language_desc_spinward_official',
+};
+
 function toDataId(value: string): string {
   const normalized = (value ?? '')
     .toString()
@@ -189,6 +230,19 @@ function deriveDataIdCandidates(id: string): string[] {
   const normalized = toDataId(id);
   const candidates = new Set<string>([normalized]);
 
+  const addWithAlias = (value: string) => {
+    if (!value) {
+      return;
+    }
+    candidates.add(value);
+    const alias = DATA_LABEL_ID_ALIASES[value];
+    if (alias) {
+      candidates.add(alias);
+    }
+  };
+
+  addWithAlias(normalized);
+
   const stripPrefix = (value: string) => {
     for (const prefix of DATA_ID_PREFIXES) {
       const token = `${prefix}_`;
@@ -201,25 +255,25 @@ function deriveDataIdCandidates(id: string): string[] {
 
   const withoutPrefix = stripPrefix(normalized);
   if (withoutPrefix && withoutPrefix !== normalized) {
-    candidates.add(withoutPrefix);
+    addWithAlias(withoutPrefix);
   }
 
   if (normalized.endsWith('_name')) {
     const nameBase = normalized.slice(0, -'_name'.length);
-    candidates.add(nameBase);
-    candidates.add(stripPrefix(nameBase));
+    addWithAlias(nameBase);
+    addWithAlias(stripPrefix(nameBase));
   } else if (normalized.endsWith('_choice')) {
     const choiceBase = normalized.slice(0, -'_choice'.length);
-    candidates.add(choiceBase);
-    candidates.add(stripPrefix(choiceBase));
+    addWithAlias(choiceBase);
+    addWithAlias(stripPrefix(choiceBase));
   } else if (normalized.endsWith('_option')) {
     const optionBase = normalized.slice(0, -'_option'.length);
-    candidates.add(optionBase);
-    candidates.add(stripPrefix(optionBase));
+    addWithAlias(optionBase);
+    addWithAlias(stripPrefix(optionBase));
   } else if (normalized.endsWith('_preference')) {
     const preferenceBase = normalized.slice(0, -'_preference'.length);
-    candidates.add(preferenceBase);
-    candidates.add(stripPrefix(preferenceBase));
+    addWithAlias(preferenceBase);
+    addWithAlias(stripPrefix(preferenceBase));
   }
 
   return [...candidates];
