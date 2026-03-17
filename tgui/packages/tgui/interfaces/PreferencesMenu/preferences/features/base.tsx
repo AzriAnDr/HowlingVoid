@@ -146,17 +146,25 @@ export function createDropdownInput<T extends string | number = string>(
 ): FeatureValue<T> {
   return (props: FeatureValueProps<T>) => {
     const { handleSetValue, value } = props;
+    const { data } = useBackend<PreferencesMenuData>();
+    const { localizeDataLabelById } = usePreferencesLocalization(data);
+    const selectedValue = String(value);
 
     return (
       <Dropdown
         className="PreferencesMenu__Character__FieldDropdown"
-        selected={choices[value] as string}
+        selected={selectedValue}
         onSelected={handleSetValue}
         width="100%"
         options={sortChoices(Object.entries(choices)).map(
           ([dataValue, label]) => {
+            const fallbackText =
+              typeof label === 'string' ? label : String(dataValue);
             return {
-              displayText: label,
+              displayText:
+                typeof label === 'string'
+                  ? localizeDataLabelById(fallbackText, fallbackText)
+                  : label,
               value: dataValue,
             };
           },
@@ -377,5 +385,3 @@ export const FeatureTriBoolInput = (props: FeatureValueProps<boolean[]>) => {
   );
 };
 // NOVA EDIT ADDITION END
-
-

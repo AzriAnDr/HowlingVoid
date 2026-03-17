@@ -42,7 +42,7 @@ export function KnownLanguage(props: { language: Language }) {
           color="bad"
           icon="brain"
           tooltip={t(
-            'language_forget_understand_warning',
+            'ui.character.language_forget_understand_warning',
           )}
           onClick={() =>
             act('forget_understand_language', {
@@ -59,7 +59,7 @@ export function KnownLanguage(props: { language: Language }) {
           tooltip={
             props.language.speaking
               ? t(
-                  'language_forget_speak_keep_understand',
+                  'ui.character.language_forget_speak_keep_understand',
                 )
               : t('ui.character.language_learn_speak')
           }
@@ -122,7 +122,7 @@ export function UnknownLanguage(props: { language: Language }) {
           color={!noPoints ? 'good' : 'grey'}
           icon="comment"
           tooltip={t(
-            'language_learn_speak_understand',
+            'ui.character.language_learn_speak_understand',
           )}
           onClick={() =>
             act('speak_language', { language_name: props.language.name })
@@ -135,7 +135,7 @@ export function UnknownLanguage(props: { language: Language }) {
           color={!!noPoints && 'grey'}
           icon="brain"
           tooltip={t(
-            'language_learn_understand_only',
+            'ui.character.language_learn_understand_only',
           )}
           onClick={() =>
             act('understand_language', { language_name: props.language.name })
@@ -156,11 +156,11 @@ export function LanguagesPage() {
     <Box className="PreferencesMenu__Languages">
       <Section textAlign="center">
         {t(
-          'languages_intro_learn_points',
+          'ui.character.languages_intro_learn_points',
         )}{' '}
         <b>{t('ui.character.linguist')}</b>{' '}
         {t(
-          'neutral_quirk_extra_point',
+          'ui.character.neutral_quirk_extra_point',
         )}
         <br />
         {t('ui.character.languages_may_be_either')}{' '}
@@ -171,15 +171,15 @@ export function LanguagesPage() {
         {t('ui.character.one_language_is_worth')}{' '}
         <b>{t('ui.character.one_point')}</b>{' '}
         {t(
-          'language_points_even_if_understood_only',
+          'ui.character.language_points_even_if_understood_only',
         )}
         <br />
         {t(
-          'languages_sol_common_requirement',
+          'ui.character.languages_sol_common_requirement',
         )}{' '}
         <br />
         {t(
-          'language_toggle_speech_free',
+          'ui.character.language_toggle_speech_free',
         )}
       </Section>
       <Stack>

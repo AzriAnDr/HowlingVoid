@@ -340,11 +340,52 @@ function resolveCharacterFeatureKey(
   featureId: string,
   suffix: 'name' | 'description',
 ): string | null {
+  let fallbackKey: string | null = null;
   for (const candidate of deriveCharacterFeatureIdCandidates(featureId)) {
-    return `ui.character.feature.${candidate}.${suffix}`;
+    const key = `ui.character.feature.${candidate}.${suffix}`;
+    if (!fallbackKey) {
+      fallbackKey = key;
+    }
+    if (key in EN_UI_BY_KEY || key in RU_UI_BY_KEY) {
+      return key;
+    }
   }
 
-  return null;
+  return fallbackKey;
+}
+
+function deriveGameFeatureIdCandidates(featureId: string): string[] {
+  const normalizedId = toDataId(featureId);
+  const candidates: string[] = [];
+  const pushUnique = (value: string) => {
+    if (value && !candidates.includes(value)) {
+      candidates.push(value);
+    }
+  };
+
+  pushUnique(normalizedId);
+
+  const registryFeature = features[featureId];
+  if (registryFeature?.name) {
+    pushUnique(toDataId(registryFeature.name));
+  }
+
+  return candidates;
+}
+
+function resolveGameFeatureKey(
+  featureId: string,
+  suffix: 'name' | 'description',
+): string {
+  let fallback = `ui.game.feature.${toDataId(featureId)}.${suffix}`;
+  for (const candidate of deriveGameFeatureIdCandidates(featureId)) {
+    const key = `ui.game.feature.${candidate}.${suffix}`;
+    fallback = key;
+    if (key in EN_UI_BY_KEY || key in RU_UI_BY_KEY) {
+      return key;
+    }
+  }
+  return fallback;
 }
 
 function translateUi(
@@ -516,7 +557,11 @@ export function localizeGameFeatureNameById(
   featureId: string,
   fallback?: string,
 ): string {
-  return translateUi(language, `ui.game.feature.${featureId}.name`, fallback ?? featureId);
+  return translateUi(
+    language,
+    resolveGameFeatureKey(featureId, 'name'),
+    fallback ?? featureId,
+  );
 }
 
 export function localizeGameFeatureDescriptionById(
@@ -526,7 +571,7 @@ export function localizeGameFeatureDescriptionById(
 ): string | undefined {
   return translateUi(
     language,
-    `ui.game.feature.${featureId}.description`,
+    resolveGameFeatureKey(featureId, 'description'),
     fallback,
   );
 }
@@ -634,4 +679,3 @@ export function usePreferencesLocalization(data?: unknown) {
     localizeDataLabelById: localizeDataLabelByIdForLanguage,
   };
 }
-

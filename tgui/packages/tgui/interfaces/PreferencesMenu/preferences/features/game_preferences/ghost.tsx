@@ -47,7 +47,7 @@ function GhostFormInput(
     return (
       <Box color="red">
         {t(
-          'ghost_no_display_names_for_ghost_form',
+          'ui.game.ghost_no_display_names_for_ghost_form',
           'No display names for ghost_form!',
         )}
       </Box>
