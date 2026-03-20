@@ -1,8 +1,8 @@
 {
 	"version": 1,
-	"map_name": "Barstation",
-	"map_path": "map_files/Barstation",
-	"map_file": "barstation.dmm",
+	"map_name": "Athlantis",
+	"map_path": "map_files/Athlantis",
+	"map_file": "athlantis.dmm",
 	"shuttles": {
 		"emergency": "emergency_kilo",
 		"ferry": "ferry_kilo",
