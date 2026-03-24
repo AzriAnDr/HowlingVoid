@@ -98,3 +98,8 @@ endmap
 map oceanpubby
     votable
 endmap
+
+map border_station
+	minplayers 30
+	votable
+endmap
