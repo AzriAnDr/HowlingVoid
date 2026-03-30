@@ -185,9 +185,7 @@ export function Experiment(props: ExperimentProps) {
     <Box
       m={1}
       key={ref}
-      className={
-        'ExperimentConfigure__ExperimentPanel' + (selected ? '--selected' : '')
-      }
+      className={`ExperimentConfigure__ExperimentPanel${selected ? '--selected' : ''}`}
     >
       <ExperimentTitleElement
         selected={!!selected}

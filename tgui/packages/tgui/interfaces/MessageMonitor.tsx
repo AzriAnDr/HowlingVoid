@@ -12,7 +12,6 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { usePreferencesLocalization } from './localization';
 
 enum Screen {
   Main,
@@ -52,7 +51,6 @@ type Message = {
 
 const RequestLogsScreen = (props) => {
   const { act, data } = useBackend<Data>();
-  const { t } = usePreferencesLocalization(data);
   const { requests = [] } = data;
   return (
     <Stack fill vertical>
@@ -60,10 +58,10 @@ const RequestLogsScreen = (props) => {
         <Section
           fill
           scrollable
-          title={t('ui.message_monitor.requests')}
+          title="Requests"
           buttons={
             <Button
-              content={t('ui.message_monitor.main_menu')}
+              content="Main Menu"
               icon="home"
               onClick={() => act('return_home')}
             />
@@ -71,11 +69,11 @@ const RequestLogsScreen = (props) => {
         >
           <Table>
             <Table.Row header>
-              <Table.Cell>{t('ui.common.delete')}</Table.Cell>
-              <Table.Cell>{t('ui.common.message')}</Table.Cell>
-              <Table.Cell>{t('ui.message_monitor.stamp')}</Table.Cell>
-              <Table.Cell>{t('ui.common.department')}</Table.Cell>
-              <Table.Cell>{t('ui.message_monitor.authentication')}</Table.Cell>
+              <Table.Cell>Delete</Table.Cell>
+              <Table.Cell>Message</Table.Cell>
+              <Table.Cell>Stamp</Table.Cell>
+              <Table.Cell>Department</Table.Cell>
+              <Table.Cell>Authentication</Table.Cell>
             </Table.Row>
             {requests?.map((request) => (
               <Table.Row key={request.ref} className="candystripe">
@@ -101,7 +99,6 @@ const RequestLogsScreen = (props) => {
 
 const MessageLogsScreen = (props) => {
   const { act, data } = useBackend<Data>();
-  const { t } = usePreferencesLocalization(data);
   const { messages = [] } = data;
   return (
     <Stack fill vertical>
@@ -109,10 +106,10 @@ const MessageLogsScreen = (props) => {
         <Section
           fill
           scrollable
-          title={t('ui.message_monitor.stored_messages')}
+          title="Stored Messages"
           buttons={
             <Button
-              content={t('ui.message_monitor.main_menu')}
+              content="Main Menu"
               icon="home"
               onClick={() => act('return_home')}
             />
@@ -120,10 +117,10 @@ const MessageLogsScreen = (props) => {
         >
           <Table>
             <Table.Row header>
-              <Table.Cell>{t('ui.common.delete')}</Table.Cell>
-              <Table.Cell>{t('ui.common.sender')}</Table.Cell>
-              <Table.Cell>{t('ui.common.recipient')}</Table.Cell>
-              <Table.Cell>{t('ui.common.message')}</Table.Cell>
+              <Table.Cell>Delete</Table.Cell>
+              <Table.Cell>Sender</Table.Cell>
+              <Table.Cell>Recipient</Table.Cell>
+              <Table.Cell>Message</Table.Cell>
             </Table.Row>
             {messages?.map((message) => (
               <Table.Row key={message.ref} className="candystripe">
@@ -173,7 +170,6 @@ const MainScreenAuth = (props: AuthScreenProps) => {
   const { auth_password, setPassword } = props;
 
   const { act, data } = useBackend<Data>();
-  const { t } = usePreferencesLocalization(data);
   const { status, is_malf } = data;
 
   return (
@@ -183,22 +179,22 @@ const MainScreenAuth = (props: AuthScreenProps) => {
           <Input
             value={auth_password}
             onChange={setPassword}
-            placeholder={t('ui.common.password')}
+            placeholder="Password"
           />
           <Button
-            content={t('ui.common.logout')}
+            content={'Logout'}
             onClick={() => act('auth', { auth_password: auth_password })}
           />
           <Button
             icon={status ? 'power-off' : 'times'}
-            content={status ? t('ui.common.on') : t('ui.common.off')}
+            content={status ? 'ON' : 'OFF'}
             color={status ? 'green' : 'red'}
             onClick={() => act('turn_server')}
           />
           {is_malf === 1 && (
             <Button
               icon="terminal"
-              content={t('ui.common.hack')}
+              content="Hack"
               color="red"
               disabled
               onClick={() => act('hack')}
@@ -208,64 +204,61 @@ const MainScreenAuth = (props: AuthScreenProps) => {
       </Stack.Item>
       <Table>
         <Table.Row header>
-          <Table.Cell>{t('ui.common.option')}</Table.Cell>
-          <Table.Cell>{t('ui.common.description')}</Table.Cell>
+          <Table.Cell>Option</Table.Cell>
+          <Table.Cell>Description</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>
             <Button
-              content={t('ui.message_monitor.view_message_logs')}
+              content={'View Message Logs'}
               onClick={() => act('view_message_logs')}
             />
           </Table.Cell>
-          <Table.Cell>{t('ui.message_monitor.shows_all_messages')}</Table.Cell>
+          <Table.Cell>Shows all messages that have been sent</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>
             <Button
-              content={t('ui.message_monitor.view_request_console_logs')}
+              content={'View Request Console Logs'}
               onClick={() => act('view_request_logs')}
             />
           </Table.Cell>
           <Table.Cell>
-            {t('ui.message_monitor.shows_all_request_orders')}
+            Shows all orders that were made in the cargo department
           </Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>
-            <Button
-              content={t('ui.message_monitor.clear_message_logs')}
+            <Button.Confirm
+              content={'Clear Message Logs'}
               onClick={() => act('clear_message_logs')}
             />
           </Table.Cell>
-          <Table.Cell>{t('ui.message_monitor.clears_message_logs')}</Table.Cell>
+          <Table.Cell>Clears message logs</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>
-            <Button
-              content={t('ui.message_monitor.clear_request_console_logs')}
+            <Button.Confirm
+              content={'Clear Request Console Logs'}
               onClick={() => act('clear_request_logs')}
             />
           </Table.Cell>
-          <Table.Cell>{t('ui.message_monitor.clears_request_console_logs')}</Table.Cell>
+          <Table.Cell>Clears request console logs</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>
-            <Button
-              content={t('ui.message_monitor.set_custom_key')}
-              onClick={() => act('set_key')}
-            />
+            <Button content={'Set Custom Key'} onClick={() => act('set_key')} />
           </Table.Cell>
-          <Table.Cell>{t('ui.message_monitor.changes_decryption_key')}</Table.Cell>
+          <Table.Cell>Changes decryption key</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>
             <Button
-              content={t('ui.message_monitor.send_admin_message')}
+              content={'Send Admin Message'}
               onClick={() => act('send_fake_message')}
             />
           </Table.Cell>
-          <Table.Cell>{t('ui.message_monitor.sends_custom_message')}</Table.Cell>
+          <Table.Cell>Sends a custom message to the user&apos;s PDA</Table.Cell>
         </Table.Row>
       </Table>
     </>
@@ -280,7 +273,6 @@ type AuthScreenProps = {
 const MainScreenNotAuth = (props: AuthScreenProps) => {
   const { auth_password, setPassword } = props;
   const { act, data } = useBackend<Data>();
-  const { t } = usePreferencesLocalization(data);
   const { status, is_malf } = data;
 
   return (
@@ -290,10 +282,10 @@ const MainScreenNotAuth = (props: AuthScreenProps) => {
           <Input
             value={auth_password}
             onChange={setPassword}
-            placeholder={t('ui.common.password')}
+            placeholder="Password"
           />
           <Button onClick={() => act('auth', { auth_password: auth_password })}>
-            {t('ui.message_monitor.auth')}
+            Auth
           </Button>
           <Button
             icon={status ? 'power-off' : 'times'}
@@ -301,30 +293,30 @@ const MainScreenNotAuth = (props: AuthScreenProps) => {
             disabled
             onClick={() => act('turn_server')}
           >
-            {status ? t('ui.common.on') : t('ui.common.off')}
+            {status ? 'ON' : 'OFF'}
           </Button>
           {!!is_malf && (
             <Button color="red" onClick={() => act('hack')}>
-              {t('ui.common.hack')}
+              Hack
             </Button>
           )}
         </Section>
       </Stack.Item>
       <Stack.Item grow>
-        <Section fill scrollable title={t('ui.message_monitor.choose_option')}>
+        <Section fill scrollable title="Choose Option">
           <Table>
             <Table.Row header>
-              <Table.Cell>{t('ui.common.option')}</Table.Cell>
-              <Table.Cell>{t('ui.common.description')}</Table.Cell>
+              <Table.Cell>Option</Table.Cell>
+              <Table.Cell>Description</Table.Cell>
             </Table.Row>
             <Table.Row>
               <Table.Cell>
                 <Button
-                  content={t('ui.message_monitor.link_server')}
+                  content={'Link Server'}
                   onClick={() => act('link_server')}
                 />
               </Table.Cell>
-              <Table.Cell>{t('ui.message_monitor.connects_to_server')}</Table.Cell>
+              <Table.Cell>Connects to the server</Table.Cell>
             </Table.Row>
           </Table>
         </Section>
@@ -358,7 +350,6 @@ const MainScreen = (props) => {
 
 export const MessageMonitor = (props) => {
   const { act, data } = useBackend<Data>();
-  const { t } = usePreferencesLocalization(data);
   const {
     screen,
     error_message,
@@ -394,19 +385,20 @@ export const MessageMonitor = (props) => {
                 )}
               </Stack.Item>
               <label>
-                {t('ui.message_monitor.regulation_514_notice')}
+                Reg. #514 forbids sending messages to a Head of Staff containing
+                Erotic Rendering Properties.
               </label>
             </>
           ) : (
             <>
               <Stack.Item>
                 <NoticeBox color="red">
-                  {t('ui.message_monitor.server_not_found')}
+                  Server not found, click button to scan the network
                 </NoticeBox>
               </Stack.Item>
               <Stack.Item>
                 <Button
-                  content={t('ui.message_monitor.connect_to_server')}
+                  content="Connect to server"
                   onClick={() => act('connect_server')}
                 />
               </Stack.Item>

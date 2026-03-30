@@ -4,7 +4,6 @@ import { Button, Section, Stack } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import type { CssColor } from '../constants';
 import { Window } from '../layouts';
-import { usePreferencesLocalization } from './localization';
 
 type Data = {
   left: string[];
@@ -18,8 +17,7 @@ type Props = {
 };
 
 export const ChemFilterPane = (props: Props) => {
-  const { act, data } = useBackend();
-  const { t } = usePreferencesLocalization(data);
+  const { act } = useBackend();
   const { title, list, buttonColor } = props;
   const titleKey = title.toLowerCase();
 
@@ -29,7 +27,6 @@ export const ChemFilterPane = (props: Props) => {
       minHeight="240px"
       buttons={
         <Button
-          content={t('ui.chem_filter.add_reagent')}
           icon="plus"
           color={buttonColor}
           onClick={() =>
@@ -37,7 +34,9 @@ export const ChemFilterPane = (props: Props) => {
               which: titleKey,
             })
           }
-        />
+        >
+          Add Reagent
+        </Button>
       }
     >
       {list.map((filter) => (
@@ -45,14 +44,15 @@ export const ChemFilterPane = (props: Props) => {
           <Button
             fluid
             icon="minus"
-            content={filter}
             onClick={() =>
               act('remove', {
                 which: titleKey,
                 reagent: filter,
               })
             }
-          />
+          >
+            {filter}
+          </Button>
         </Fragment>
       ))}
     </Section>
@@ -61,7 +61,6 @@ export const ChemFilterPane = (props: Props) => {
 
 export const ChemFilter = (props) => {
   const { data } = useBackend<Data>();
-  const { t } = usePreferencesLocalization(data);
   const { left = [], right = [] } = data;
 
   return (
@@ -69,18 +68,10 @@ export const ChemFilter = (props) => {
       <Window.Content scrollable>
         <Stack>
           <Stack.Item grow>
-            <ChemFilterPane
-              title={t('ui.common.left')}
-              list={left}
-              buttonColor="yellow"
-            />
+            <ChemFilterPane title="Right" list={right} buttonColor="red" />
           </Stack.Item>
           <Stack.Item grow>
-            <ChemFilterPane
-              title={t('ui.common.right')}
-              list={right}
-              buttonColor="red"
-            />
+            <ChemFilterPane title="Left" list={left} buttonColor="yellow" />
           </Stack.Item>
         </Stack>
       </Window.Content>

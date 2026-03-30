@@ -164,13 +164,13 @@ export const ChemRecipeDebug = (props) => {
                     </LabeledList.Item>
                   </LabeledList>
                 </Stack.Item>
-                <Stack.Item>
+                <Stack.Item ml="20px">
                   <LabeledList>
                     <LabeledList.Item
                       label={
                         <Box
                           style={{
-                            transform: 'translate(0%, -50%)',
+                            transform: 'translate(0%, -15%)',
                           }}
                         >
                           {t('ui.chem_recipe_debug.temp_mode')}
@@ -215,12 +215,13 @@ export const ChemRecipeDebug = (props) => {
                     </LabeledList.Item>
                   </LabeledList>
                 </Stack.Item>
-                <Stack.Item ml="0px">
+                <Stack.Item ml="20px">
                   <LabeledList>
                     <LabeledList.Item label={t('ui.chem_recipe_debug.force_ph')}>
                       <Button.Checkbox
                         checked={use_forced_ph}
                         onClick={() => act('toggle_forced_ph')}
+                        ml="20px"
                       >
                         {use_forced_ph ? t('ui.common.disable') : t('ui.common.enable')}
                       </Button.Checkbox>
@@ -249,7 +250,7 @@ export const ChemRecipeDebug = (props) => {
                     </LabeledList.Item>
                   </LabeledList>
                 </Stack.Item>
-                <Stack.Item ml="10px">
+                <Stack.Item ml="20px">
                   <LabeledList>
                     <LabeledList.Item label={t('ui.chem_recipe_debug.force_purity')}>
                       <Button.Checkbox
@@ -317,7 +318,7 @@ export const ChemRecipeDebug = (props) => {
                       label={
                         <Box
                           style={{
-                            transform: 'translate(0%, -50%)',
+                            transform: 'translate(0%, -10%)',
                           }}
                         >
                           {t('ui.common.direction')}
@@ -382,7 +383,7 @@ export const ChemRecipeDebug = (props) => {
                       label={
                         <Box
                           style={{
-                            transform: 'translate(0%, -50%)',
+                            transform: 'translate(0%, -10%)',
                             width: '57px',
                           }}
                         >
