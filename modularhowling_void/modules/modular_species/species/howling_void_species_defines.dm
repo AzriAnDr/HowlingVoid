@@ -33,7 +33,7 @@
 // ==========================================
 // PODPERSON: WATER RESERVE
 // ==========================================
-#define POD_WATER_RESERVE_MAX BLOOD_VOLUME_MAXIMUM
+#define POD_WATER_RESERVE_MAX 2000
 
 #define POD_WATER_START_VOLUME 1200
 #define POD_WATER_DRAIN_PER_SECOND 0.05

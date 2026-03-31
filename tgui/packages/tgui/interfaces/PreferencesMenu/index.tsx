@@ -90,4 +90,3 @@ function PrefsWindowInner(props) {
     </Window>
   );
 }
-

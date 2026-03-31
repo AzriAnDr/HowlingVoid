@@ -10,6 +10,7 @@ export type InterfaceLanguage = 'english' | 'russian';
 
 const EN_UI_BY_KEY = uiEn as Record<string, string>;
 const RU_UI_BY_KEY = uiRu as Record<string, string>;
+const INTERFACE_LANGUAGE_STORAGE_KEY = 'howling_void.interface_language';
 
 const UI_BY_LANGUAGE: Record<InterfaceLanguage, Record<string, string>> = {
   english: EN_UI_BY_KEY,
@@ -206,6 +207,39 @@ function toDataId(value: string): string {
     .replace(/^_+|_+$/g, '');
 
   return normalized || 'unknown';
+}
+
+function rememberInterfaceLanguage(language: InterfaceLanguage) {
+  try {
+    (globalThis as any).__HOWLING_INTERFACE_LANGUAGE = language;
+  } catch {
+    // Ignore write failures in restricted environments.
+  }
+
+  try {
+    globalThis?.localStorage?.setItem(INTERFACE_LANGUAGE_STORAGE_KEY, language);
+  } catch {
+    // Ignore storage failures such as disabled localStorage.
+  }
+}
+
+function getRememberedInterfaceLanguage(): InterfaceLanguage | null {
+  const rememberedGlobal = normalizeLanguage(
+    (globalThis as any)?.__HOWLING_INTERFACE_LANGUAGE,
+  );
+  if (rememberedGlobal) {
+    return rememberedGlobal;
+  }
+
+  const rememberedStored = normalizeLanguage(
+    globalThis?.localStorage?.getItem(INTERFACE_LANGUAGE_STORAGE_KEY),
+  );
+  if (rememberedStored) {
+    rememberInterfaceLanguage(rememberedStored);
+    return rememberedStored;
+  }
+
+  return null;
 }
 
 const DATA_ID_PREFIXES = [
@@ -494,8 +528,14 @@ export function getCharacterPreferencesLanguage(data: any): InterfaceLanguage {
   for (const raw of candidates) {
     const detected = extractLanguage(raw);
     if (detected) {
+      rememberInterfaceLanguage(detected);
       return detected;
     }
+  }
+
+  const rememberedLanguage = getRememberedInterfaceLanguage();
+  if (rememberedLanguage) {
+    return rememberedLanguage;
   }
 
   // Final fallback for interfaces that do not receive language in payload.
@@ -504,6 +544,7 @@ export function getCharacterPreferencesLanguage(data: any): InterfaceLanguage {
     (globalThis as any)?.navigator?.language,
   );
   if (navigatorDetected) {
+    rememberInterfaceLanguage(navigatorDetected);
     return navigatorDetected;
   }
 

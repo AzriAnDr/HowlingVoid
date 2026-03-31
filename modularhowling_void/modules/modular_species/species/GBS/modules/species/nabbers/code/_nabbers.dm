@@ -160,42 +160,42 @@
 
 	perk_descriptions += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-		SPECIES_PERK_ICON = "dna",
+		SPECIES_PERK_ICON = FA_ICON_SHIRT,
 		SPECIES_PERK_NAME = "Serpent body",
 		SPECIES_PERK_DESC = "GAS possess serpent-like bodies and cannot wear most human clothes.",
 	))
 
 	perk_descriptions += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-		SPECIES_PERK_ICON = "dna",
+		SPECIES_PERK_ICON = FA_ICON_SHIELD,
 		SPECIES_PERK_NAME = "Robust chitin",
 		SPECIES_PERK_DESC = "GAS possess durable chitinous exoskeletons and can withstand a lot of brute damage.",
 	))
 
 	perk_descriptions += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-		SPECIES_PERK_ICON = "star-of-life",
+		SPECIES_PERK_ICON = FA_ICON_FIRE,
 		SPECIES_PERK_NAME = "Extreme heat weakness",
 		SPECIES_PERK_DESC = "GAS is afraid of fire. High temperatures and open flames suffocate them and deal massive damage..",
 	))
 
 	perk_descriptions += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-		SPECIES_PERK_ICON = "user-plus",
+		SPECIES_PERK_ICON = FA_ICON_EYE,
 		SPECIES_PERK_NAME = "Welder eyelids",
 		SPECIES_PERK_DESC = "GAS can close their second pair of eyelids to protect their eyes from welder flash.",
 	))
 
 	perk_descriptions += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-		SPECIES_PERK_ICON = "user-plus",
+		SPECIES_PERK_ICON = FA_ICON_SCISSORS,
 		SPECIES_PERK_NAME = "Mantis arms",
 		SPECIES_PERK_DESC = "GAS possesses a second pair of arms with massive sharp mantis blades. They can have only one pair active at a time and need to pump blood between them.",
 	))
 
 	perk_descriptions += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-		SPECIES_PERK_ICON = "user-plus",
+		SPECIES_PERK_ICON = FA_ICON_EYE_SLASH,
 		SPECIES_PERK_NAME = "Camoufage",
 		SPECIES_PERK_DESC = "GAS can blend in with their surroundings and become transparent to hide from danger.",
 	))

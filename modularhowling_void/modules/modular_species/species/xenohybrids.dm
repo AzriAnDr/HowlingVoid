@@ -242,7 +242,6 @@
 	button_icon_state = "alien_plant"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
-	panel = "Alien"
 	click_to_activate = TRUE
 	cooldown_time = 1 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_IMMOBILE | AB_CHECK_INCAPACITATED

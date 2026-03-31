@@ -195,15 +195,6 @@ export function LoadoutPage(props) {
                   ))}
               </Tabs>
             </Stack.Item>
-            <Stack.Item>
-              <Input
-                className="PreferencesMenu__Loadout__SearchInput"
-                width="210px"
-                onChange={setSearchLoadout}
-                placeholder={t('ui.character.loadout_search_item')}
-                value={searchLoadout}
-              />
-            </Stack.Item>
           </Stack>
         </Section>
       </Stack.Item>
@@ -212,6 +203,7 @@ export function LoadoutPage(props) {
           loadout_tabs={loadout_tabs}
           currentTab={selectedTabName}
           currentSearch={searchLoadout}
+          setCurrentSearch={setSearchLoadout}
           modifyItemDimmer={modifyItemDimmer}
           setModifyItemDimmer={setModifyItemDimmer}
           setManagingPreset={setManagingPreset} // NOVA EDIT ADDITION: Multiple loadout presets
@@ -225,6 +217,7 @@ type LoadoutTabsProps = {
   loadout_tabs: LoadoutCategory[];
   currentTab: string;
   currentSearch: string;
+  setCurrentSearch: (value: string) => void;
   modifyItemDimmer: LoadoutItem | null;
   setModifyItemDimmer: (dimmer: LoadoutItem | null) => void;
   setManagingPreset: (string) => void; // NOVA EDIT ADDITION: Multiple loadout presets
@@ -235,6 +228,7 @@ function LoadoutTabs(props: LoadoutTabsProps) {
     loadout_tabs,
     currentTab,
     currentSearch,
+    setCurrentSearch,
     modifyItemDimmer,
     setModifyItemDimmer,
     setManagingPreset, // NOVA EDIT ADDITION: Multiple loadout presets
@@ -338,23 +332,36 @@ function LoadoutTabs(props: LoadoutTabsProps) {
           <Section
             className="PreferencesMenu__Loadout__CatalogSection"
             title={
-              searching ? (
-                t('ui.character.loadout_search_results')
-              ) : (
-                <Stack align="center">
-                  <Stack.Item>{t('ui.character.loadout_catalog')}</Stack.Item>
-                  {!!activeCategory?.category_info && (
-                    <Stack.Item ml={1}>
-                      <Box italic opacity={0.85}>
-                        {localizeDataLabelById(
-                          `loadout_category_info_${activeCategory.name}`,
-                          activeCategory.category_info,
-                        )}
-                      </Box>
-                    </Stack.Item>
+              <Stack fill align="center">
+                <Stack.Item grow>
+                  {searching ? (
+                    t('ui.character.loadout_search_results')
+                  ) : (
+                    <Stack align="center">
+                      <Stack.Item>{t('ui.character.loadout_catalog')}</Stack.Item>
+                      {!!activeCategory?.category_info && (
+                        <Stack.Item ml={1}>
+                          <Box italic opacity={0.85}>
+                            {localizeDataLabelById(
+                              `loadout_category_info_${activeCategory.name}`,
+                              activeCategory.category_info,
+                            )}
+                          </Box>
+                        </Stack.Item>
+                      )}
+                    </Stack>
                   )}
-                </Stack>
-              )
+                </Stack.Item>
+                <Stack.Item>
+                  <Input
+                    className="PreferencesMenu__Loadout__SearchInput"
+                    width="210px"
+                    onChange={setCurrentSearch}
+                    placeholder={t('ui.character.loadout_search_item')}
+                    value={currentSearch}
+                  />
+                </Stack.Item>
+              </Stack>
             }
             fill
             scrollable
@@ -373,7 +380,26 @@ function LoadoutTabs(props: LoadoutTabsProps) {
             </Stack>
           </Section>
         ) : (
-          <Section className="PreferencesMenu__Loadout__CatalogSection" fill>
+          <Section
+            className="PreferencesMenu__Loadout__CatalogSection"
+            title={
+              <Stack fill align="center">
+                <Stack.Item grow>
+                  {t('ui.character.loadout_catalog')}
+                </Stack.Item>
+                <Stack.Item>
+                  <Input
+                    className="PreferencesMenu__Loadout__SearchInput"
+                    width="210px"
+                    onChange={setCurrentSearch}
+                    placeholder={t('ui.character.loadout_search_item')}
+                    value={currentSearch}
+                  />
+                </Stack.Item>
+              </Stack>
+            }
+            fill
+          >
             <Box>{t('ui.character.loadout_no_contents_selected_tab')}</Box>
           </Section>
         )}

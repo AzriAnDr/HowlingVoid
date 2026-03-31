@@ -592,13 +592,13 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 // AUGUST
 
 /datum/holiday/ukraine
-	name = "День независимости Малоруссии"
+	name = "День независимости Украины"
 	begin_month = AUGUST
 	begin_day = 24
 	holiday_colors = list(COLOR_TRUE_BLUE, COLOR_TANGERINE_YELLOW)
 
 /datum/holiday/ukraine/getStationPrefix()
-	return pick("Киевская", "Малорусская", "Новоросская", "Слабожанщинская", "Галичинская")
+	return pick("Киевская", "Украинская", "Новоросская", "Слабожанщинская", "Галичинская", "Волынская", "Подольская", "Закарпатская")
 
 // SEPTEMBER
 

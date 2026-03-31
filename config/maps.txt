@@ -103,3 +103,15 @@ map border_station
 	minplayers 30
 	votable
 endmap
+
+map athlantis
+	votable
+endmap
+
+map kurchatovsk
+	votable
+endmap
+
+map waterkilostation
+	votable
+endmap

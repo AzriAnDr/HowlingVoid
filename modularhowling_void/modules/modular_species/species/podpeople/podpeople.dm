@@ -1,8 +1,8 @@
-/datum/species/pod/podweak
+/datum/species/pod
 	/// Species-granted rooted intake action tracked for cleanup.
 	var/tmp/list/species_rooted_intake_action = list()
 
-/datum/species/pod/podweak/on_species_gain(mob/living/carbon/human/H, datum/species/old_species, pref_load, regenerate_icons, replace_missing)
+/datum/species/pod/on_species_gain(mob/living/carbon/human/H, datum/species/old_species, pref_load, regenerate_icons, replace_missing)
 	. = ..()
 	if(!istype(H))
 		return
@@ -31,7 +31,7 @@
 	new_intake.Grant(H)
 	species_rooted_intake_action[H] = new_intake
 
-/datum/species/pod/podweak/on_species_loss(mob/living/carbon/human/H, datum/species/new_species, pref_load)
+/datum/species/pod/on_species_loss(mob/living/carbon/human/H, datum/species/new_species, pref_load)
 	. = ..()
 	if(!istype(H))
 		return
@@ -51,7 +51,7 @@
 	H.default_blood_volume = BLOOD_VOLUME_NORMAL
 	H.set_blood_volume(min(H.get_blood_volume(), BLOOD_VOLUME_NORMAL))
 
-/datum/species/pod/podweak/proc/get_status_tab_item(mob/living/source, list/items)
+/datum/species/pod/proc/get_status_tab_item(mob/living/source, list/items)
 	SIGNAL_HANDLER
 
 	if(!hv_is_podweak_human(source))
@@ -59,7 +59,7 @@
 
 	items += "Current water level: [round(source.get_blood_volume())]/[POD_WATER_RESERVE_MAX]"
 
-/datum/species/pod/podweak/spec_life(mob/living/carbon/human/H, seconds_per_tick)
+/datum/species/pod/spec_life(mob/living/carbon/human/H, seconds_per_tick)
 	. = ..()
 	if(H.stat != CONSCIOUS)
 		return
@@ -191,7 +191,7 @@
 	desc = "Root yourself in place and draw water from the floor under you."
 	button_icon = 'icons/mob/spacevines.dmi'
 	button_icon_state = "Light1"
-	cooldown_time = 20 SECONDS
+	cooldown_time = 5 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS
 
 /datum/action/cooldown/pod_rooted_intake/Activate(atom/target)
@@ -234,6 +234,7 @@
 	alert_type = null
 	var/turf/anchored_turf
 	var/list/spawned_roots = list()
+	var/root_lock_expires = 0
 
 /datum/status_effect/pod_rooted_intake_active/on_apply()
 	. = ..()
@@ -241,14 +242,30 @@
 		return FALSE
 
 	anchored_turf = get_turf(owner)
+	root_lock_expires = world.time + 1.5 SECONDS
+	RegisterSignal(owner, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(on_owner_try_move))
 	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, REF(src))
 	spawn_roots(anchored_turf)
 	return TRUE
 
 /datum/status_effect/pod_rooted_intake_active/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
 	clear_spawned_roots()
 	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, REF(src))
 	return ..()
+
+/datum/status_effect/pod_rooted_intake_active/proc/on_owner_try_move(mob/living/source, atom/new_loc, direct)
+	SIGNAL_HANDLER
+
+	if(!istype(source) || !anchored_turf)
+		return
+
+	if(world.time < root_lock_expires)
+		source.balloon_alert(source, "roots hold you")
+		return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE
+
+	if(get_turf(source) == anchored_turf)
+		source.remove_status_effect(/datum/status_effect/pod_rooted_intake_active)
 
 /datum/status_effect/pod_rooted_intake_active/tick(seconds_between_ticks)
 	var/mob/living/carbon/human/podperson = owner
@@ -352,7 +369,19 @@
 	alpha = rand(185, 240)
 	transform = turn(matrix(), pick(0, 90, 180, 270))
 
-/datum/species/pod/podweak/create_pref_unique_perks()
+/datum/species/pod/prepare_human_for_preview(mob/living/carbon/human/podperson)
+	podperson.dna.features[FEATURE_MUTANT_COLOR] = "#886600"
+	podperson.dna.mutant_bodyparts[FEATURE_POD_HAIR] = build_mutant_part("Rose", list("#cc3355", "#5c8f2f", "#5c8f2f"))
+	regenerate_organs(podperson, src, visual_only = TRUE)
+	podperson.update_body(TRUE)
+
+/datum/species/pod/podweak/prepare_human_for_preview(mob/living/carbon/human/podperson)
+	podperson.dna.features[FEATURE_MUTANT_COLOR] = "#6f8a34"
+	podperson.dna.mutant_bodyparts[FEATURE_POD_HAIR] = build_mutant_part("Ivy", list(COLOR_VIBRANT_LIME, "#7fbf3f", "#48611c"))
+	regenerate_organs(podperson, src, visual_only = TRUE)
+	podperson.update_body(TRUE)
+
+/datum/species/pod/create_pref_unique_perks()
 	. = ..()
 	. += list(
 		list(

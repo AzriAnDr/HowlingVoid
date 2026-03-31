@@ -75,6 +75,8 @@
 	fatally_errored = FALSE
 	// Build window options
 	var/options = "file=[id].html;can_minimize=0;auto_format=0;titlebar=0;can_resize=0;"
+	if(locked_by?.window_size)
+		options += "size=[locked_by.window_size[1]]x[locked_by.window_size[2]];"
 	// Generate page html
 	var/html = SStgui.basehtml
 	html = replacetextEx(html, "\[tgui:windowId]", id)

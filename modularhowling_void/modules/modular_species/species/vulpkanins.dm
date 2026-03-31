@@ -131,13 +131,13 @@
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = FA_ICON_HEADPHONES_SIMPLE,
+			SPECIES_PERK_ICON = FA_ICON_WIND,
 			SPECIES_PERK_NAME = "Keen Smell",
 			SPECIES_PERK_DESC = "Vulps have an excellent sense of smell. You can sniff for fresh nearby trails, track who left prints, and even detect reagents in containers.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
-			SPECIES_PERK_ICON = FA_ICON_ANGRY,
+			SPECIES_PERK_ICON = FA_ICON_DOG,
 			SPECIES_PERK_NAME = "Fur",
 			SPECIES_PERK_DESC = "You handle cold well, but heat is harder for you. Also, fur burns very well.",
 		),
@@ -162,4 +162,3 @@
 	)
 
 	return to_add
-

@@ -4,6 +4,7 @@ import { formatMoney } from 'tgui-core/format';
 import { classes } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   icons: string[];
@@ -60,6 +61,7 @@ const pickRandom = <T extends unknown>(items: T[]) => {
 
 export const SlotMachine = () => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { icons, cost, reels, balance } = data;
   const spinning = data.working === 1;
 
@@ -84,10 +86,10 @@ export const SlotMachine = () => {
           <Stack.Item grow={1}>
             <Section
               fill
-              title="Balance"
+              title={t('ui.common.balance')}
               buttons={
                 <Button onClick={() => act('payout')} disabled={balance <= 0}>
-                  Refund
+                  {t('ui.slot_machine.refund')}
                 </Button>
               }
             >
@@ -106,7 +108,7 @@ export const SlotMachine = () => {
                 onClick={() => act('spin')}
                 disabled={spinning || balance < cost}
               >
-                Spin!
+                {t('ui.slot_machine.spin')}
               </Button>
             </Section>
           </Stack.Item>
@@ -125,48 +127,17 @@ const getBannerPages = () => [
   BannerStats,
 ];
 
-const BANNER_TEXTS = [
-  'SPIN! SPIN!',
-  'WARMED UP!',
-  'HOT SLOTS',
-  'SPIN & WIN!',
-  'BELIEVE IT!',
-  'ZERO 2 HERO!',
-  'JUST ONE MORE',
-  'SPIN OF FATE',
-  'BONUS TIME!',
-  'BORN TO SPIN!',
-  'NICE SPIN!',
-  'NO SPIN NO WIN',
-  'BET & FORGET',
-  'HONK 4 LUCK',
-  'DEBT 4 LIFE',
-  'SPINGULARITY',
-  'SPIN CITY',
-  'BURN & EARN',
-  'JACKPOT SOON!',
-  'WIN THE DAY!',
-  'FORTUNE CALLS',
-  'INSTANT GOLD!',
-  'DREAM BIGGER!',
-  'WINNERS ONLY!',
-  'SPIN IS LIFE',
-  'BIG ONE SOON!',
-  'LUCKY SPIN!',
-  'CASH OUT? NO!',
-];
-
-const WINNING_TEXTS = [
-  null,
-  'FREE SPINS!',
-  'PRIZE!',
-  'BIG PRIZE!',
-  'JACKPOT!!!',
-];
-
 const Banner = () => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const [page, setPage] = useState(0);
+  const winningTexts = [
+    null,
+    t('ui.slot_machine.free_spins'),
+    t('ui.slot_machine.prize'),
+    t('ui.slot_machine.big_prize'),
+    t('ui.slot_machine.jackpot_banner'),
+  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -175,7 +146,7 @@ const Banner = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const winningText = WINNING_TEXTS[data.winning];
+  const winningText = winningTexts[data.winning];
   if (winningText) {
     return (
       <Section className={'SlotMachine__Banner SlotMachine__Banner--winning'}>
@@ -199,13 +170,44 @@ type BannerTitleProps = {
 
 const BannerTitle = (props: BannerTitleProps) => {
   const { data } = useBackend<Data>();
-  const defaultText = useRef(pickRandom(BANNER_TEXTS));
+  const { t } = usePreferencesLocalization(data);
+  const bannerTexts = [
+    t('ui.slot_machine.spin_spin'),
+    t('ui.slot_machine.warmed_up'),
+    t('ui.slot_machine.hot_slots'),
+    t('ui.slot_machine.spin_and_win'),
+    t('ui.slot_machine.believe_it'),
+    t('ui.slot_machine.zero_to_hero'),
+    t('ui.slot_machine.just_one_more'),
+    t('ui.slot_machine.spin_of_fate'),
+    t('ui.slot_machine.bonus_time'),
+    t('ui.slot_machine.born_to_spin'),
+    t('ui.slot_machine.nice_spin'),
+    t('ui.slot_machine.no_spin_no_win'),
+    t('ui.slot_machine.bet_and_forget'),
+    t('ui.slot_machine.honk_for_luck'),
+    t('ui.slot_machine.debt_for_life'),
+    t('ui.slot_machine.spingularity'),
+    t('ui.slot_machine.spin_city'),
+    t('ui.slot_machine.burn_and_earn'),
+    t('ui.slot_machine.jackpot_soon'),
+    t('ui.slot_machine.win_the_day'),
+    t('ui.slot_machine.fortune_calls'),
+    t('ui.slot_machine.instant_gold'),
+    t('ui.slot_machine.dream_bigger'),
+    t('ui.slot_machine.winners_only'),
+    t('ui.slot_machine.spin_is_life'),
+    t('ui.slot_machine.big_one_soon'),
+    t('ui.slot_machine.lucky_spin'),
+    t('ui.slot_machine.cash_out_no'),
+  ];
+  const defaultText = useRef(pickRandom(bannerTexts));
   let text = props.text;
   if (!text) {
     if (data.balance <= 0) {
-      text = 'INSERT COIN';
+      text = t('ui.slot_machine.insert_coin');
     } else if (data.balance <= 5) {
-      text = 'ONE LAST SPIN';
+      text = t('ui.slot_machine.one_last_spin');
     } else {
       text = defaultText.current;
     }
@@ -222,19 +224,20 @@ const BannerTitle = (props: BannerTitleProps) => {
 
 const BannerOnlyFewCreds = () => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const variant = useRef(pickRandom([0, 1]));
 
   if (variant.current === 1) {
     return (
       <div>
-        For only{' '}
+        {t('ui.slot_machine.for_only')}{' '}
         <Blink interval={200} time={200}>
           <b>{data.cost}</b>
         </Blink>{' '}
         credit{pluralS(data.cost)}!
         <br />
         <Box inline fontSize={'12px'}>
-          You can fix all your problems!
+          {t('ui.slot_machine.fix_all_your_problems')}
         </Box>
       </div>
     );
@@ -242,22 +245,23 @@ const BannerOnlyFewCreds = () => {
 
   return (
     <div>
-      Only{' '}
+      {t('ui.slot_machine.only')}{' '}
       <Blink interval={200} time={200}>
         <b>{data.cost}</b>
       </Blink>{' '}
-      credit{pluralS(data.cost)} for a chance
+      credit{pluralS(data.cost)} {t('ui.slot_machine.for_a_chance')}
       <br />
-      to win <b>big</b>!
+      {t('ui.slot_machine.to_win')} <b>{t('ui.slot_machine.big')}</b>!
     </div>
   );
 };
 
 const BannerPrizeMoney = () => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   return (
     <div>
-      Available prize money:
+      {t('ui.slot_machine.available_prize_money')}
       <br />
       <b>
         {data.money} credit{pluralS(data.money)}
@@ -268,9 +272,10 @@ const BannerPrizeMoney = () => {
 
 const BannerJackpot = () => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   return (
     <div>
-      Current jackpot:
+      {t('ui.slot_machine.current_jackpot')}
       <br />
       <b>
         {data.money + data.jackpot} credit{pluralS(data.money + data.jackpot)}!
@@ -281,16 +286,17 @@ const BannerJackpot = () => {
 
 const BannerStats = () => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   return (
     <div>
       <Box inline fontSize={'13px'}>
-        So far people have spun{' '}
+        {t('ui.slot_machine.so_far_people_have_spun')}{' '}
         <b>
           {data.plays} time{pluralS(data.plays)}
         </b>
       </Box>
       <br />
-      and won{' '}
+      {t('ui.slot_machine.and_won')}{' '}
       <b>
         {data.jackpots} jackpot{pluralS(data.jackpots)}!
       </b>

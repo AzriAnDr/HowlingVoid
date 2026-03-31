@@ -2,6 +2,7 @@ import { LabeledList, NumberInput } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type Data = {
   chem_temp: number;
@@ -10,20 +11,25 @@ type Data = {
   acclimate_state: string;
 };
 
-const States = ['Filling', 'Heating', 'Cooling', 'Emptying'] as const;
-
 export const ChemAcclimator = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { chem_temp, target_temperature, max_volume, acclimate_state } = data;
+  const states = [
+    t('ui.chem_acclimator.filling'),
+    t('ui.chem_acclimator.heating'),
+    t('ui.chem_acclimator.cooling'),
+    t('ui.chem_acclimator.emptying'),
+  ] as const;
 
   return (
     <Window width={320} height={130}>
       <Window.Content>
         <LabeledList>
-          <LabeledList.Item label="Current Temperature">
+          <LabeledList.Item label={t('ui.chem_acclimator.current_temperature')}>
             {chem_temp} K
           </LabeledList.Item>
-          <LabeledList.Item label="Target Temperature">
+          <LabeledList.Item label={t('ui.chem_acclimator.target_temperature')}>
             <NumberInput
               value={target_temperature}
               unit="K"
@@ -39,7 +45,7 @@ export const ChemAcclimator = (props) => {
               }
             />
           </LabeledList.Item>
-          <LabeledList.Item label="Buffer">
+          <LabeledList.Item label={t('ui.chem_acclimator.buffer')}>
             <NumberInput
               value={max_volume}
               unit="u"
@@ -55,8 +61,8 @@ export const ChemAcclimator = (props) => {
               }
             />
           </LabeledList.Item>
-          <LabeledList.Item label="Current State">
-            {States[acclimate_state]}
+          <LabeledList.Item label={t('ui.chem_acclimator.current_state')}>
+            {states[acclimate_state] || acclimate_state}
           </LabeledList.Item>
         </LabeledList>
       </Window.Content>

@@ -21,7 +21,11 @@ export function InteractionPanel() {
   const { self, use_subtler, erp_interaction, has_erp_interaction } = data;
 
   return (
-    <Window width={500} height={600} title={`Interact - ${self}`}>
+    <Window
+      width={500}
+      height={600}
+      title={`${t('ui.interaction_panel.title')} - ${self}`}
+    >
       <Window.Content scrollable>
         {!!erp_interaction && !!has_erp_interaction && (
           <Section>
@@ -41,7 +45,7 @@ export function InteractionPanel() {
                 }
                 tooltip={t('ui.interaction_panel.subtler_tooltip')}
               >
-                Use Subtler
+                {t('ui.interaction_panel.use_subtler')}
               </Button.Checkbox>
             </LabeledList>
           </Section>

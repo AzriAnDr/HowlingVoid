@@ -4,15 +4,6 @@
 *
 */
 
-
-/datum/loadout_item/shoes/workboots_toeless
-	name = "Toeless Work Boots"
-	item_path = /obj/item/clothing/shoes/workboots/toeless
-
-/datum/loadout_item/shoes/jackboots_toeless
-	name = "Toeless Jackboots"
-	item_path = /obj/item/clothing/shoes/jackboots/toeless
-
 /datum/loadout_item/shoes/jackboots_tall
 	name = "Tall Jackboots"
 	item_path = /obj/item/clothing/shoes/jackboots/tall

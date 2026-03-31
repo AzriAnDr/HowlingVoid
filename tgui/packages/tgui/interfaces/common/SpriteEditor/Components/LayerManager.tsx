@@ -4,6 +4,7 @@ import { Box, Button, Icon, Input, Section, Stack } from 'tgui-core/components';
 import type { BooleanStyleMap, StringStyleMap } from 'tgui-core/ui';
 import { Dir, type InlineStyle, type SpriteData } from '../Types/types';
 import { AdvancedCanvas } from './AdvancedCanvas';
+import { usePreferencesLocalization } from '../../../localization';
 
 export type LayerManagerProps = {
   data: SpriteData;
@@ -19,6 +20,7 @@ const dirIcons = ['arrow-down', 'arrow-up', 'arrow-right', 'arrow-left'];
 
 export const LayerManager = (props: LayerManagerProps) => {
   const { act } = useBackend();
+  const { t } = usePreferencesLocalization();
   const {
     data,
     selectedDir,
@@ -44,11 +46,11 @@ export const LayerManager = (props: LayerManagerProps) => {
     <Box {...rest}>
       <Section
         fill
-        title="Layers"
+        title={t('ui.sprite_editor.layers')}
         buttons={
           <Button
             icon="plus"
-            tooltip="Add Layer"
+            tooltip={t('ui.sprite_editor.add_layer')}
             onClick={() =>
               act('spriteEditorCommand', {
                 command: 'transaction',
@@ -149,7 +151,7 @@ export const LayerManager = (props: LayerManagerProps) => {
                     <Stack.Item>
                       <Button
                         icon="arrow-up"
-                        tooltip="Move Up"
+                        tooltip={t('ui.common.move_up')}
                         disabled={i === layerCount - 1}
                         onClick={() =>
                           act('spriteEditorCommand', {
@@ -166,7 +168,7 @@ export const LayerManager = (props: LayerManagerProps) => {
                     <Stack.Item>
                       <Button
                         icon="arrow-down"
-                        tooltip="Move Down"
+                        tooltip={t('ui.common.move_down')}
                         disabled={i === 0}
                         onClick={() =>
                           act('spriteEditorCommand', {
@@ -183,7 +185,7 @@ export const LayerManager = (props: LayerManagerProps) => {
                     <Stack.Item>
                       <Button
                         icon="layer-group"
-                        tooltip="Flatten"
+                        tooltip={t('ui.sprite_editor.flatten')}
                         disabled={i === 0}
                         onClick={() =>
                           act('spriteEditorCommand', {
@@ -200,7 +202,7 @@ export const LayerManager = (props: LayerManagerProps) => {
                     <Stack.Item>
                       <Button.Confirm
                         icon="xmark"
-                        tooltip="Delete"
+                        tooltip={t('ui.common.delete')}
                         confirmIcon="xmark"
                         disabled={layerCount === 1}
                         onClick={() =>

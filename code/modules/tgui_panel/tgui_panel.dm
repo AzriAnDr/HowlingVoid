@@ -80,6 +80,7 @@
 					"ckey" = client.ckey,
 					"address" = client.address,
 					"computer_id" = client.computer_id,
+					"interface_language" = client.prefs.read_preference(/datum/preference/choiced/interface_language),
 				),
 				"window" = list(
 					"locked" = FALSE,

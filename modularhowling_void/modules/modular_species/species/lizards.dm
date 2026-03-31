@@ -123,6 +123,19 @@
 /datum/movespeed_modifier/lizard_grab_speedboost
 	multiplicative_slowdown = -2
 
+/proc/hv_can_species_autotomy_tail(mob/living/carbon/human/human)
+	return istype(human?.dna?.species, /datum/species/lizard) || istype(human?.dna?.species, /datum/species/unathi)
+
+/proc/hv_get_species_tail_regen_type(mob/living/carbon/human/human)
+	var/default_tail_type = /obj/item/organ/tail/lizard
+	var/datum/mutant_bodypart/tail_part = human?.dna?.mutant_bodyparts[FEATURE_TAIL]
+	if(!tail_part || tail_part.name == SPRITE_ACCESSORY_NONE)
+		return default_tail_type
+
+	var/list/tail_accessories = SSaccessories.sprite_accessories[FEATURE_TAIL]
+	var/datum/sprite_accessory/tails/tail_sprite = tail_accessories?[tail_part.name]
+	return tail_sprite?.organ_type || default_tail_type
+
 
 // Venomous bite
 /datum/action/cooldown/mob_cooldown/venomous_bite/lizard
@@ -274,7 +287,8 @@
 	if(H.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL))
 		return FALSE
 
-	var/obj/item/organ/tail/lizard/new_tail = new()
+	var/tail_type = hv_get_species_tail_regen_type(H)
+	var/obj/item/organ/tail/new_tail = new tail_type()
 	if(!new_tail.Insert(H))
 		qdel(new_tail)
 		to_chat(H, span_warning("Your tail fails to regrow."))
@@ -302,7 +316,7 @@
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = FA_ICON_HAND_SPARKLES,
+			SPECIES_PERK_ICON = FA_ICON_RECYCLE,
 			SPECIES_PERK_NAME = "Regrow Limbs",
 			SPECIES_PERK_DESC = "You can regenerate missing limbs by spending nutrition.",
 		),

@@ -62,7 +62,7 @@
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-		SPECIES_PERK_ICON = FA_ICON_WAND_MAGIC_SPARKLES,
+		SPECIES_PERK_ICON = FA_ICON_SPIDER,
 		SPECIES_PERK_NAME = "Web Surfer",
 		SPECIES_PERK_DESC = "Insectoids receive a movement speed bonus while standing on webbing, letting them control fights around prepared zones.",
 	))

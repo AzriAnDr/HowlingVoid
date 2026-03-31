@@ -63,12 +63,12 @@
 		|| istype(tool, /obj/item/reagent_containers/spray/pestspray) \
 		|| istype(tool, /obj/item/hatchet) \
 		|| istype(tool, /obj/item/stack/medical/bone_gel) \
-		|| istype(tool, /obj/item/stack/sticky_tape) \
+		|| istype(tool, /obj/item/stack/medical/wrap/sticky_tape) \
 		|| istype(tool, /obj/item/organ) \
 		|| istype(tool, /obj/item/bodypart) \
 		|| (tool.tool_behaviour in list(TOOL_DRILL, TOOL_BONESET, TOOL_HEMOSTAT, TOOL_WIRECUTTER, TOOL_SCREWDRIVER, TOOL_CROWBAR))
 
-/datum/species/pod/podweak/proc/adjust_operations_for_podweak_target(atom/movable/operating_on, mob/living/surgeon, list/possible_operations)
+/datum/species/pod/proc/adjust_operations_for_podweak_target(atom/movable/operating_on, mob/living/surgeon, list/possible_operations)
 	SIGNAL_HANDLER
 
 	if(!hv_get_podweak_from_operation_target(operating_on))
@@ -252,9 +252,9 @@
 	implements = list(
 		TOOL_BONESET = 1,
 		/obj/item/stack/medical/bone_gel = 1,
-		/obj/item/stack/sticky_tape/surgical = 1,
-		/obj/item/stack/sticky_tape/super = 2,
-		/obj/item/stack/sticky_tape = 3.33,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical = 1,
+		/obj/item/stack/medical/wrap/sticky_tape/super = 2,
+		/obj/item/stack/medical/wrap/sticky_tape = 3.33,
 	)
 
 /datum/surgery_operation/limb/repair_hairline/podweak/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, tool, operated_zone)
@@ -270,9 +270,9 @@
 	rnd_desc = "Reset a severe branch fracture before final repair."
 	implements = list(
 		TOOL_BONESET = 1,
-		/obj/item/stack/sticky_tape/surgical = 1.66,
-		/obj/item/stack/sticky_tape/super = 2.5,
-		/obj/item/stack/sticky_tape = 5,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical = 1.66,
+		/obj/item/stack/medical/wrap/sticky_tape/super = 2.5,
+		/obj/item/stack/medical/wrap/sticky_tape = 5,
 	)
 
 /datum/surgery_operation/limb/reset_compound/podweak/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, tool, operated_zone)
@@ -288,9 +288,9 @@
 	rnd_desc = "Reconstruct a reset branch fracture using graft-safe methods."
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
-		/obj/item/stack/sticky_tape/surgical = 1,
-		/obj/item/stack/sticky_tape/super = 2,
-		/obj/item/stack/sticky_tape = 3.33,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical = 1,
+		/obj/item/stack/medical/wrap/sticky_tape/super = 2,
+		/obj/item/stack/medical/wrap/sticky_tape = 3.33,
 	)
 
 /datum/surgery_operation/limb/repair_compound/podweak/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, tool, operated_zone)
@@ -323,9 +323,9 @@
 	rnd_desc = "Repair severe structural damage in the pod crown."
 	implements = list(
 		/obj/item/stack/medical/bone_gel = 1,
-		/obj/item/stack/sticky_tape/surgical = 1,
-		/obj/item/stack/sticky_tape/super = 2,
-		/obj/item/stack/sticky_tape = 3.33,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical = 1,
+		/obj/item/stack/medical/wrap/sticky_tape/super = 2,
+		/obj/item/stack/medical/wrap/sticky_tape = 3.33,
 	)
 
 /datum/surgery_operation/limb/repair_cranium/podweak/snowflake_check_availability(atom/movable/operating_on, mob/living/surgeon, tool, operated_zone)

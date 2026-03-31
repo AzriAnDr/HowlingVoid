@@ -89,21 +89,22 @@
 
 /datum/species/shadekin/prepare_human_for_preview(mob/living/carbon/human/shadekin)
 	var/main_color = "#222222"
-	var/secondary_color = "#505050"
-	var/tertiary_color = "#3f3f3f"
+	var/secondary_color = "#383838"
+	var/tertiary_color = "#383838"
 	shadekin.dna.features[FEATURE_MUTANT_COLOR] = main_color
 	shadekin.dna.features[FEATURE_MUTANT_COLOR_TWO] = secondary_color
 	shadekin.dna.features[FEATURE_MUTANT_COLOR_THREE] = tertiary_color
 
-	shadekin.dna.features[FEATURE_SNOUT] = SPRITE_ACCESSORY_NONE
-	shadekin.dna.features[FEATURE_TAIL] = "Shade"
-	shadekin.dna.features[FEATURE_LEGS] = NORMAL_LEGS
-	shadekin.dna.mutant_bodyparts[FEATURE_EARS] = shadekin.dna.species.build_mutant_part("Shade Ears", list(main_color, secondary_color, tertiary_color))
-	shadekin.dna.mutant_bodyparts[FEATURE_SNOUT] = shadekin.dna.species.build_mutant_part(SPRITE_ACCESSORY_NONE, list(main_color, secondary_color, tertiary_color))
-	shadekin.dna.mutant_bodyparts[FEATURE_TAIL] = shadekin.dna.species.build_mutant_part("Shade", list(main_color, secondary_color, tertiary_color))
-	shadekin.eye_color_left = "#c4c400"
-	shadekin.eye_color_right = "#c4c400"
+	shadekin.dna.mutant_bodyparts[FEATURE_EARS] = build_mutant_part("Shade Ears", list(main_color, secondary_color, tertiary_color))
+	shadekin.dna.mutant_bodyparts[FEATURE_SNOUT] = build_mutant_part(SPRITE_ACCESSORY_NONE, list(main_color, secondary_color, tertiary_color))
+	shadekin.dna.mutant_bodyparts[FEATURE_TAIL] = build_mutant_part("Shade", list(main_color, secondary_color, tertiary_color))
+	shadekin.set_eye_color("#5ec7e4")
 	regenerate_organs(shadekin, src, visual_only = TRUE)
+	for(var/obj/item/bodypart/bodypart as anything in shadekin.bodyparts)
+		bodypart.skin_tone = ""
+		bodypart.species_color = main_color
+		bodypart.update_draw_color()
+	apply_supplementary_body_changes(shadekin, null, TRUE)
 	shadekin.update_body(TRUE)
 
 /datum/species/shadekin/get_species_description()
@@ -115,63 +116,3 @@
     return list(
         "It is unclear when exactly Shadekin first spawned, though it is assumedly a relatively recent development."
     )
-
-/obj/item/organ/brain/shadekin
-	name = "shadekin brain"
-	desc = "A mysterious brain."
-	icon = 'icons/obj/medical/organs/organs.dmi'
-	icon_state = "brain-x-d"
-	var/applied_status = /datum/status_effect/shadekin_regeneration
-
-/obj/item/organ/brain/shadekin/on_life(seconds_per_tick, times_fired)
-	. = ..()
-	var/turf/owner_turf = owner.loc
-	if(!isturf(owner_turf))
-		return
-	var/light_amount = owner_turf.get_lumcount()
-
-	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark and additional speed
-		owner.apply_status_effect(applied_status)
-		owner.remove_movespeed_modifier(/datum/movespeed_modifier/light_averse)
-		owner.add_movespeed_modifier(/datum/movespeed_modifier/dark_affinity)
-		owner.add_actionspeed_modifier(/datum/actionspeed_modifier/hands_of_darkness)
-	else
-		owner.add_movespeed_modifier(/datum/movespeed_modifier/light_averse)
-		owner.remove_movespeed_modifier(/datum/movespeed_modifier/dark_affinity)
-		owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/hands_of_darkness)
-
-/datum/status_effect/shadekin_regeneration
-	id = "shadekin_regeneration"
-	duration = 2 SECONDS
-	status_type = STATUS_EFFECT_REFRESH
-	alert_type = /atom/movable/screen/alert/status_effect/shadekin_regeneration
-
-/datum/status_effect/shadekin_regeneration/on_apply()
-	. = ..()
-	if (!.)
-		return FALSE
-	heal_owner()
-	return TRUE
-
-/datum/status_effect/shadekin_regeneration/refresh(effect)
-	. = ..()
-	heal_owner()
-
-/datum/status_effect/shadekin_regeneration/proc/heal_owner()
-	owner.heal_overall_damage(brute = 0.5, burn = 0.5, required_bodytype = BODYTYPE_ORGANIC)
-	if(owner.health < owner.maxHealth)
-		new /obj/effect/temp_visual/heal(get_turf(owner), COLOR_EFFECT_HEAL_RED)
-
-/atom/movable/screen/alert/status_effect/shadekin_regeneration
-	name = "Dark Regeneration"
-	desc = "Feeling the tug of home on your fur, some of its soothing warmth comes to ease your burdens."
-	icon_state = "lightless"
-
-/datum/movespeed_modifier/light_averse
-	multiplicative_slowdown = 0.25
-
-/datum/movespeed_modifier/dark_affinity
-	multiplicative_slowdown = -0.2
-
-/datum/actionspeed_modifier/hands_of_darkness
-	multiplicative_slowdown = -0.25

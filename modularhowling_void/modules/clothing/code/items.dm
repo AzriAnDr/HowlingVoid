@@ -4,21 +4,6 @@
 *
 */
 
-/obj/item/clothing/shoes/jackboots/toeless
-	name = "toe-less jackboots"
-	desc = "Modified pair of jackboots, particularly friendly to those species whose toes hold claws."
-	icon = 'modularhowling_void/modules/clothing/icons/obj/shoes.dmi'
-	icon_state = "jackboots-toeless"
-	worn_icon = 'modularhowling_void/modules/clothing/icons/mob/shoes.dmi'
-	worn_icon_digi = 'modularhowling_void/modules/clothing/icons/mob/shoes_digi.dmi'
-
-/obj/item/clothing/shoes/workboots/toeless
-	name = "toe-less workboots"
-	desc = "A pair of toe-less work boots designed for use in industrial settings. Modified for species whose toes have claws."
-	icon = 'modularhowling_void/modules/clothing/icons/obj/shoes.dmi'
-	icon_state = "workboots-toeless"
-	worn_icon = 'modularhowling_void/modules/clothing/icons/mob/shoes.dmi'
-	worn_icon_digi = 'modularhowling_void/modules/clothing/icons/mob/shoes_digi.dmi'
 
 /obj/item/clothing/shoes/jackboots/tall
 	name = "tall jackboots"

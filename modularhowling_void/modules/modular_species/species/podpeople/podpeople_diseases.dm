@@ -1,8 +1,8 @@
-/datum/species/pod/podweak
+/datum/species/pod
 	/// Per-mob accumulated plant-pathogen exposure for realistic infection timing.
 	var/tmp/list/plant_disease_exposure = list()
 
-/datum/species/pod/podweak/proc/try_contract_plant_disease(mob/living/carbon/human/podperson, seconds_per_tick)
+/datum/species/pod/proc/try_contract_plant_disease(mob/living/carbon/human/podperson, seconds_per_tick)
 	if(!istype(podperson) || podperson.stat == DEAD)
 		return
 	if(has_pod_plant_disease(podperson))
@@ -93,7 +93,7 @@
 		else
 			to_chat(podperson, span_warning("Your plant body shows signs of infection."))
 
-/datum/species/pod/podweak/proc/has_pod_plant_disease(mob/living/carbon/human/podperson)
+/datum/species/pod/proc/has_pod_plant_disease(mob/living/carbon/human/podperson)
 	if(!istype(podperson))
 		return FALSE
 
@@ -103,12 +103,12 @@
 
 	return FALSE
 
-/datum/species/pod/podweak/proc/reset_plant_disease_exposure(mob/living/carbon/human/podperson)
+/datum/species/pod/proc/reset_plant_disease_exposure(mob/living/carbon/human/podperson)
 	if(!istype(podperson))
 		return
 	plant_disease_exposure[podperson] = 0
 
-/datum/species/pod/podweak/proc/has_plantbgone_in_body(mob/living/carbon/human/podperson)
+/datum/species/pod/proc/has_plantbgone_in_body(mob/living/carbon/human/podperson)
 	if(!istype(podperson))
 		return FALSE
 	if(podperson.reagents?.has_reagent(/datum/reagent/toxin/plantbgone/weedkiller, check_subtypes = TRUE))
@@ -118,18 +118,18 @@
 		return TRUE
 	return FALSE
 
-/datum/species/pod/podweak/proc/has_dirty_hydro_tray_nearby(mob/living/carbon/human/podperson)
+/datum/species/pod/proc/has_dirty_hydro_tray_nearby(mob/living/carbon/human/podperson)
 	for(var/obj/machinery/hydroponics/tray in range(1, podperson))
 		if(tray.pestlevel >= 5 || tray.weedlevel >= 5 || tray.toxic >= 30)
 			return TRUE
 	return FALSE
 
-/datum/species/pod/podweak/proc/has_mold_nearby(mob/living/carbon/human/podperson)
+/datum/species/pod/proc/has_mold_nearby(mob/living/carbon/human/podperson)
 	if(locate(/obj/structure/mold) in range(2, podperson))
 		return TRUE
 	return FALSE
 
-/datum/species/pod/podweak/proc/has_ants_on_turf(mob/living/carbon/human/podperson)
+/datum/species/pod/proc/has_ants_on_turf(mob/living/carbon/human/podperson)
 	var/turf/current_turf = get_turf(podperson)
 	if(!istype(current_turf))
 		return FALSE
@@ -137,7 +137,7 @@
 		return TRUE
 	return FALSE
 
-/datum/species/pod/podweak/proc/has_heavy_pests_nearby(mob/living/carbon/human/podperson)
+/datum/species/pod/proc/has_heavy_pests_nearby(mob/living/carbon/human/podperson)
 	for(var/obj/machinery/hydroponics/tray in range(POD_PLANT_HEAVY_PESTS_RANGE, podperson))
 		if(tray.pestlevel >= 8)
 			return TRUE

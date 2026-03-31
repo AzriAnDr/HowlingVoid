@@ -382,10 +382,10 @@
 			if(src_tail && !(src_tail.wag_flags & WAG_WAGGING))
 				emote("wag")
 		//NOVA EDIT ADDITION END
-//Howling void addittion
+	//Howling void addittion
 	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && !isnull(src.get_organ_by_type(/obj/item/organ/tail)))
 		var/obj/item/organ/tail/tail = src.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
-		if(istype(tail, /obj/item/organ/tail/lizard))
+		if(hv_can_species_autotomy_tail(src) && istype(tail, /obj/item/organ/tail))
 			helper.visible_message(
 				span_danger("[helper] pulls on [src]'s tail... and it rips off!"),
 				null,

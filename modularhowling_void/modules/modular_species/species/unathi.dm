@@ -118,6 +118,19 @@
 	else if (new_state == GRAB_PASSIVE && unathi.has_movespeed_modifier(/datum/movespeed_modifier/lizard_grab_speedboost))
 		unathi.remove_movespeed_modifier(/datum/movespeed_modifier/lizard_grab_speedboost)
 
+/datum/species/unathi/prepare_human_for_preview(mob/living/carbon/human/unathi_preview)
+	var/main_color = "#6f8b3d"
+	var/secondary_color = "#d1b06a"
+	unathi_preview.dna.features[FEATURE_MUTANT_COLOR] = main_color
+	unathi_preview.dna.features[FEATURE_MUTANT_COLOR_TWO] = secondary_color
+	unathi_preview.dna.features[FEATURE_MUTANT_COLOR_THREE] = secondary_color
+	unathi_preview.dna.mutant_bodyparts[FEATURE_TAIL] = build_mutant_part("Smooth", list(main_color, main_color, main_color))
+	unathi_preview.dna.mutant_bodyparts[FEATURE_SNOUT] = build_mutant_part("Sharp + Light", list(main_color, main_color, main_color))
+	unathi_preview.dna.mutant_bodyparts[FEATURE_HORNS] = build_mutant_part("Curled", list(secondary_color, secondary_color, secondary_color))
+	unathi_preview.dna.features[FEATURE_LEGS] = NORMAL_LEGS
+	regenerate_organs(unathi_preview, src, visual_only = TRUE)
+	unathi_preview.update_body(TRUE)
+
 /datum/species/unathi/create_pref_unique_perks()
 	. = ..()
 	. += list(
@@ -135,7 +148,7 @@
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = FA_ICON_HAND_SPARKLES,
+			SPECIES_PERK_ICON = FA_ICON_RECYCLE,
 			SPECIES_PERK_NAME = "Regrow Limbs",
 			SPECIES_PERK_DESC = "You can regenerate missing limbs by spending nutrition.",
 		),

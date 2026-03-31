@@ -95,6 +95,8 @@
 		return FALSE
 	opened_at = world.time
 	window.acquire_lock(src)
+	if(window_size && window.is_ready())
+		winset(user.client, window.id, "size=[window_size[1]]x[window_size[2]]")
 	if(!window.is_ready())
 		window.initialize(
 			strict_mode = TRUE,
@@ -280,6 +282,7 @@
 			"ckey" = user.client.ckey,
 			"address" = user.client.address,
 			"computer_id" = user.client.computer_id,
+			"interface_language" = user.client.prefs.read_preference(/datum/preference/choiced/interface_language),
 		),
 		"user" = list(
 			"name" = "[user]",

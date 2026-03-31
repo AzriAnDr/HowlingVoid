@@ -149,9 +149,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return
 
 	ui = SStgui.try_update_ui(user, src, ui)
+	if(ui)
+		if(current_window == PREFERENCE_TAB_CHARACTER_PREFERENCES && character_preview_view)
+			character_preview_view.hide_from(user)
+			character_preview_view.update_body()
+			character_preview_view.display_to(user, ui.window)
+		return
 	if(!ui)
 		character_preview_view = create_character_preview_view(user)
-		ui = new(user, src, "PreferencesMenu")
+		ui = new(user, src, "PreferencesMenu", null, 1080, 920)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 		character_preview_view.display_to(user, ui.window)

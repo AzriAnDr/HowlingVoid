@@ -187,13 +187,13 @@
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = FA_ICON_EYE_DROPPER,
+			SPECIES_PERK_ICON = FA_ICON_EYE_LOW_VISION,
 			SPECIES_PERK_NAME = "Tajaran Eyes",
 			SPECIES_PERK_DESC = "Better low-light vision, but higher sensitivity to bright light.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = FA_ICON_CAT,
+			SPECIES_PERK_ICON = FA_ICON_PAW,
 			SPECIES_PERK_NAME = "Hunter Instinct",
 			SPECIES_PERK_DESC = "Tajarans have strong reflexes and can dodge attacks.",
 		),
@@ -205,7 +205,7 @@
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = FA_ICON_HEADPHONES_SIMPLE,
+			SPECIES_PERK_ICON = FA_ICON_WIND,
 			SPECIES_PERK_NAME = "Hunter Smell",
 			SPECIES_PERK_DESC = "Can sniff fresh traces and track prints.",
 		),
@@ -223,7 +223,7 @@
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
-			SPECIES_PERK_ICON = FA_ICON_ANGRY,
+			SPECIES_PERK_ICON = FA_ICON_CAT,
 			SPECIES_PERK_NAME = "Fur",
 			SPECIES_PERK_DESC = "Handles cold better, handles heat worse.",
 		),
@@ -235,7 +235,7 @@
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
-			SPECIES_PERK_ICON = FA_ICON_ANGRY,
+			SPECIES_PERK_ICON = FA_ICON_TOOTH,
 			SPECIES_PERK_NAME = "Biter :3",
 			SPECIES_PERK_DESC = "Tajarans can bite.",
 		),
@@ -247,7 +247,7 @@
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = FA_ICON_ANGRY,
+			SPECIES_PERK_ICON = FA_ICON_REPEAT,
 			SPECIES_PERK_NAME = "Nine Lives",
 			SPECIES_PERK_DESC = "After enough deaths, death becomes permanent.",
 		),
