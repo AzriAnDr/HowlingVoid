@@ -14,33 +14,6 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { usePreferencesLocalization } from './localization';
 
-const TAB2NAME = [
-  {
-    titleKey: 'ui.secrets.tab_debugging',
-    blurbKey: 'ui.secrets.blurb_debugging',
-    gauge: 5,
-    component: DebuggingTab,
-  },
-  {
-    titleKey: 'ui.secrets.tab_helpful',
-    blurbKey: 'ui.secrets.blurb_helpful',
-    gauge: 25,
-    component: HelpfulTab,
-  },
-  {
-    titleKey: 'ui.secrets.tab_fun',
-    blurbKey: 'ui.secrets.blurb_fun',
-    gauge: 75,
-    component: FunTab,
-  },
-  {
-    titleKey: 'ui.secrets.tab_fun_for_you',
-    blurbKey: 'ui.secrets.blurb_fun_for_you',
-    gauge: 95,
-    component: FunForYouTab,
-  },
-];
-
 const lineHeightNormal = 2.79;
 const buttonWidthNormal = 12.9;
 const lineHeightDebug = 6.09;
@@ -649,6 +622,33 @@ const FunForYouTab = (props) => {
     </Stack>
   );
 };
+
+const TAB2NAME = [
+  {
+    titleKey: 'ui.secrets.tab_debugging',
+    blurbKey: 'ui.secrets.blurb_debugging',
+    gauge: 5,
+    component: DebuggingTab,
+  },
+  {
+    titleKey: 'ui.secrets.tab_helpful',
+    blurbKey: 'ui.secrets.blurb_helpful',
+    gauge: 25,
+    component: HelpfulTab,
+  },
+  {
+    titleKey: 'ui.secrets.tab_fun',
+    blurbKey: 'ui.secrets.blurb_fun',
+    gauge: 75,
+    component: FunTab,
+  },
+  {
+    titleKey: 'ui.secrets.tab_fun_for_you',
+    blurbKey: 'ui.secrets.blurb_fun_for_you',
+    gauge: 95,
+    component: FunForYouTab,
+  },
+];
 
 export const Secrets = (props) => {
   const { act, data } = useBackend();
