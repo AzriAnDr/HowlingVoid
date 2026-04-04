@@ -32727,6 +32727,13 @@
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/storage)
+"kpR" = (
+/obj/item/stack/cable_coil,
+/obj/structure/sign/warning/radiation/directional/east,
+/turf/open/misc/ocean,
+/area/station/asteroid{
+	name = "Ocean"
+	})
 "kpS" = (
 /obj/structure/railing{
 	dir = 1
@@ -35159,6 +35166,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
+"lci" = (
+/obj/item/stack/cable_coil,
+/obj/structure/sign/warning/radiation/directional/west,
+/turf/open/misc/ocean,
+/area/station/asteroid{
+	name = "Ocean"
+	})
 "lck" = (
 /obj/structure/chair{
 	dir = 1
@@ -35986,11 +36000,6 @@
 /turf/open/floor/plating/airless,
 /area/station/maintenance/disposal/incinerator)
 "lqE" = (
-/obj/machinery/power/solar_control{
-	dir = 8;
-	id = "forestarboard";
-	name = "Starboard Bow Solar Control"
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -36000,6 +36009,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
 "lqM" = (
@@ -44426,11 +44439,6 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/starboard)
 "oft" = (
-/obj/machinery/power/solar_control{
-	dir = 8;
-	id = "aftstarboard";
-	name = "Starboard Quarter Solar Control"
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -44439,6 +44447,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
 "ofx" = (
@@ -55601,6 +55613,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"rKW" = (
+/obj/structure/sign/warning/radiation/directional/east,
+/turf/open/misc/ocean,
+/area/station/asteroid{
+	name = "Ocean"
+	})
 "rKY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -61203,6 +61221,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
+"ttp" = (
+/obj/structure/sign/warning/radiation/directional/west,
+/turf/open/misc/ocean,
+/area/station/asteroid{
+	name = "Ocean"
+	})
 "ttt" = (
 /obj/machinery/vending/games,
 /obj/effect/turf_decal/delivery,
@@ -66469,11 +66493,6 @@
 	name = "Ocean"
 	})
 "vdJ" = (
-/obj/machinery/power/solar_control{
-	dir = 4;
-	id = "aftport";
-	name = "Port Quarter Solar Control"
-	},
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/warning/vacuum/external/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -66484,6 +66503,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
 "vdK" = (
@@ -72963,6 +72986,10 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
+/obj/item/stamp/granted{
+	pixel_y = 5;
+	pixel_x = -4
+	},
 /obj/item/stamp/head/hos,
 /turf/open/floor/carpet/red,
 /area/station/command/heads_quarters/hos)
@@ -74654,6 +74681,13 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"xBH" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/sign/warning/radiation/directional/east,
+/turf/open/misc/ocean,
+/area/station/asteroid{
+	name = "Ocean"
+	})
 "xBI" = (
 /turf/closed/wall/rust,
 /area/station/maintenance/port/fore)
@@ -75005,6 +75039,7 @@
 	name = "Tuna";
 	real_name = "Tuna"
 	},
+/obj/structure/sign/warning/radiation/directional/west,
 /turf/open/misc/ocean,
 /area/station/asteroid{
 	name = "Ocean"
@@ -90292,11 +90327,11 @@ hLH
 hLH
 hLH
 hLH
-hLH
+ttp
 ogA
 uKy
 ogA
-hLH
+ttp
 hLH
 hLH
 hLH
@@ -91255,7 +91290,7 @@ xGI
 pEv
 tpp
 dUX
-gEw
+lci
 hLH
 hLH
 btv
@@ -118322,11 +118357,11 @@ gap
 hLH
 hLH
 hLH
-kOZ
+xBH
 pEv
 vvo
 dUX
-hLH
+rKW
 hLH
 hLH
 uyD
@@ -121579,11 +121614,11 @@ hLH
 kOZ
 uyD
 hLH
-gEw
+kpR
 pEv
 bKl
 dUX
-hLH
+rKW
 kOZ
 hLH
 fYy
