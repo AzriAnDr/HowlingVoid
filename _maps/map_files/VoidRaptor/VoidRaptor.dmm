@@ -42799,9 +42799,8 @@
 	pixel_x = -7;
 	pixel_y = 9
 	},
-/obj/item/stamp{
-	pixel_x = -7;
-	pixel_y = 1
+/obj/item/stamp/granted{
+	pixel_x = -6
 	},
 /turf/open/floor/carpet/black,
 /area/station/command/heads_quarters/qm)
@@ -54227,9 +54226,8 @@
 	pixel_x = -7;
 	pixel_y = 9
 	},
-/obj/item/stamp{
-	pixel_x = -7;
-	pixel_y = 1
+/obj/item/stamp/granted{
+	pixel_x = -6
 	},
 /turf/open/floor/carpet/executive,
 /area/station/command/heads_quarters/hop)
