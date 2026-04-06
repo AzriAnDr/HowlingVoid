@@ -117,7 +117,7 @@
 		/mob/living/proc/emote_bubble,
 		/mob/living/proc/emote_pop,
 		/mob/living/proc/emote_meow,
-		/mob/living/proc/emote_meow1,
+		/mob/living/proc/emote_maow,
 		/mob/living/proc/emote_hiss1,
 		/mob/living/proc/emote_chitter,
 		/mob/living/proc/emote_snore,
@@ -753,10 +753,10 @@
 	set category = "Emotes+"
 	usr.emote("meow", intentional = TRUE)
 
-/mob/living/proc/emote_meow1()
-	set name = "> Meows!"
+/mob/living/proc/emote_maow()
+	set name = "> Maow"
 	set category = "Emotes+"
-	usr.emote("meow1", intentional = TRUE)
+	usr.emote("maow", intentional = TRUE)
 
 /mob/living/proc/emote_hiss1()
 	set name = "> Hiss"

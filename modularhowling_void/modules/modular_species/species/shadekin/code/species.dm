@@ -63,8 +63,18 @@
 		FEATURE_LEGS = MUTPART_BLUEPRINT(NORMAL_LEGS, is_randomizable = FALSE, is_feature = TRUE),
 	)
 
+/datum/species/shadekin/proc/sync_ear_feature(mob/living/carbon/human/target)
+	var/datum/mutant_bodypart/ears = target.dna.mutant_bodyparts[FEATURE_EARS]
+	if(isnull(ears))
+		target.dna.mutant_bodyparts[FEATURE_EARS] = build_mutant_part(SPRITE_ACCESSORY_NONE)
+		target.dna.features[FEATURE_EARS] = SPRITE_ACCESSORY_NONE
+		return
+
+	target.dna.features[FEATURE_EARS] = ears.name || SPRITE_ACCESSORY_NONE
+
 /datum/species/shadekin/apply_supplementary_body_changes(mob/living/carbon/human/target, datum/preferences/preferences, visuals_only = FALSE)
 	. = ..()
+	sync_ear_feature(target)
 	var/datum/mutant_bodypart/ears = target.dna.mutant_bodyparts[FEATURE_EARS]
 	if(!ears || ears.name == SPRITE_ACCESSORY_NONE)
 		return
@@ -86,6 +96,11 @@
 	features[FEATURE_SNOUT] = SPRITE_ACCESSORY_NONE
 	features[FEATURE_LEGS] = NORMAL_LEGS
 	return features
+
+/datum/species/shadekin/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons = TRUE, replace_missing = TRUE)
+	sync_ear_feature(human_who_gained_species)
+	. = ..()
+	sync_ear_feature(human_who_gained_species)
 
 /datum/species/shadekin/prepare_human_for_preview(mob/living/carbon/human/shadekin)
 	var/main_color = "#222222"

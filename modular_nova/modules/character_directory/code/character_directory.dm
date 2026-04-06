@@ -11,6 +11,12 @@ GLOBAL_LIST_EMPTY(name_to_appearance)
 	savefile_key = "show_in_directory"
 	savefile_identifier = PREFERENCE_PLAYER
 
+/datum/preference/toggle/show_in_directory/is_accessible(datum/preferences/preferences)
+	return FALSE
+
+/datum/preference/toggle/show_in_directory/deserialize(input, datum/preferences/preferences)
+	return TRUE
+
 // The advertisement that you show to people looking through the directory
 /datum/preference/text/character_ad
 	savefile_key = "character_ad"
@@ -160,7 +166,7 @@ GLOBAL_LIST_EMPTY(name_to_appearance)
 
 	// Collect the user's own preferences for the top of the UI
 	if (user?.client?.prefs)
-		data["personalVisibility"] = READ_PREFS(user, toggle/show_in_directory)
+		data["personalVisibility"] = TRUE
 		data["personalAttraction"] = READ_PREFS(user, choiced/attraction)
 		data["personalGender"] = READ_PREFS(user, choiced/display_gender)
 		data["personalErpTag"] = READ_PREFS(user, choiced/erp_status)
@@ -203,9 +209,6 @@ GLOBAL_LIST_EMPTY(name_to_appearance)
 
 	// We want the directory to display only alive players, not observers or people in the lobby
 	for(var/mob/mob in GLOB.alive_player_list)
-		// Skip people who are opted out
-		if(!READ_PREFS(mob, toggle/show_in_directory))
-			continue
 		// Just in case ?
 		if(QDELETED(mob))
 			continue

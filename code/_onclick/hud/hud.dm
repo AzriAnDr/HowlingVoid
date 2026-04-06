@@ -461,6 +461,9 @@ GLOBAL_LIST_INIT(available_erp_ui_styles, list(
 /datum/hud/proc/hidden_inventory_update()
 	return
 
+/datum/hud/proc/extra_inventory_update(mob/viewer)
+	return
+
 /datum/hud/proc/persistent_inventory_update(mob/viewer)
 	if(!mymob)
 		return

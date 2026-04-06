@@ -76,11 +76,15 @@
 #define PENIS_MAX_GIRTH_NORMAL_SIZED 15
 #define PENIS_DEFAULT_GIRTH 5 // a lil big but not by much
 #define PENIS_MIN_LENGTH 1
-#define PENIS_MAX_LENGTH 86
+#define PENIS_MAX_LENGTH 30
 #define PENIS_DEFAULT_LENGTH 6 //still a lil long but not insane
 
 #define TESTICLES_MIN_SIZE 0
-#define TESTICLES_MAX_SIZE 8
+#define TESTICLES_MAX_SIZE 3
+#define BUTT_MIN_SIZE 1
+#define BUTT_MAX_SIZE 2
+#define BELLY_MIN_SIZE 1
+#define BELLY_MAX_SIZE 3
 
 #define SHEATH_NONE	SPRITE_ACCESSORY_NONE
 #define SHEATH_NORMAL "Sheath"
@@ -119,6 +123,8 @@
 #define FEATURE_TESTICLES "testicles"
 #define FEATURE_BREASTS "breasts"
 #define FEATURE_ANUS "anus"
+#define FEATURE_BUTT "butt"
+#define FEATURE_BELLY "belly"
 
 
 #define MANDATORY_FEATURE_LIST list(\
@@ -145,6 +151,12 @@
 	"vagina_uses_skincolor" = TRUE,\
 	"breasts_uses_skintones" = TRUE,\
 	"breasts_uses_skincolor" = TRUE,\
+	"butt_size" = BUTT_MIN_SIZE,\
+	"butt_uses_skintones" = TRUE,\
+	"butt_uses_skincolor" = TRUE,\
+	"belly_size" = BELLY_MIN_SIZE,\
+	"belly_uses_skintones" = TRUE,\
+	"belly_uses_skincolor" = TRUE,\
 )
 
 #define AROUSAL_CANT 0

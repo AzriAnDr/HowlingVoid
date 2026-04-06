@@ -2,6 +2,7 @@
 import { Box, Button, Icon, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../../backend';
+import { usePreferencesLocalization } from '../../localization';
 
 type LewdSlot = {
     img: string;
@@ -18,6 +19,7 @@ interface LewdItemsTabPropsData {
 
 export const LewdItemsTab = ({searchText}: LewdItemsTabPropsData) => {
   const { act, data } = useBackend<LewdSlot>();
+  const { t } = usePreferencesLocalization(data);
   const {
     lewd_slots = [],
     ref_self,
@@ -27,7 +29,12 @@ export const LewdItemsTab = ({searchText}: LewdItemsTabPropsData) => {
   const searchLower = searchText.toLowerCase();
 
   const filteredSlots = lewd_slots.filter((slot) => {
+    const localizedSlotName = t(
+      `ui.interaction_panel.body_part.${slot.name}`,
+      slot.name,
+    );
     return (
+      localizedSlotName.toLowerCase().includes(searchLower) ||
       slot.name.toLowerCase().includes(searchLower) ||
       (slot.item_name?.toLowerCase().includes(searchLower))
     );
@@ -38,6 +45,10 @@ export const LewdItemsTab = ({searchText}: LewdItemsTabPropsData) => {
         {filteredSlots.length > 0 && (
             <Stack fill>
                 {filteredSlots.map((slot) => {
+                const localizedSlotName = t(
+                  `ui.interaction_panel.body_part.${slot.name}`,
+                  slot.name,
+                );
                 return (
                     <Stack.Item key={slot.name}>
                     <Button
@@ -49,7 +60,7 @@ export const LewdItemsTab = ({searchText}: LewdItemsTabPropsData) => {
                         })
                         }
                         color="pink"
-                        tooltip={`${slot.name}${slot.item_name ? ` - ${slot.item_name}` : ''}`}
+                        tooltip={`${localizedSlotName}${slot.item_name ? ` - ${slot.item_name}` : ''}`}
                     >
                         <Box
                         style={{

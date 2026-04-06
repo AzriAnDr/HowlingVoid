@@ -8,8 +8,12 @@
 	var/interact_next = 0
 	/// Whether or not we are using subtler for lewd interactions.
 	var/use_subtler = TRUE
+	/// Max ERP custom subtler message length.
+	var/erp_subtle_max_length = 2048
 	/// Whether or not we have an erp interaction available to us right now
 	var/has_erp_interaction = FALSE
+	/// Active auto-repeat interactions keyed by interaction + target ref.
+	var/list/auto_interaction_info = list()
 
 /datum/component/interactable/Initialize(...)
 	if(QDELETED(parent))
@@ -41,8 +45,10 @@
 	UnregisterSignal(parent, COMSIG_CLICK_CTRL_SHIFT)
 
 /datum/component/interactable/Destroy(force)
+	STOP_PROCESSING(SSprocessing, src)
 	self = null
 	interactions = null
+	auto_interaction_info = null
 	return ..()
 
 /datum/component/interactable/proc/open_interaction_menu(datum/source, mob/user)
@@ -55,17 +61,92 @@
 	return CLICK_ACTION_SUCCESS
 
 /datum/component/interactable/proc/can_interact(datum/interaction/interaction, mob/living/carbon/human/target)
-	if(!interaction.allow_act(target, self))
+	var/mob/living/carbon/human/actual_target = interaction.usage == INTERACTION_SELF ? target : self
+	if(!interaction.allow_act(target, actual_target))
 		return FALSE
-	if(interaction.lewd && !target.client?.prefs?.read_preference(/datum/preference/toggle/erp))
+	if(interaction.lewd && !actual_target.client?.prefs?.read_preference(/datum/preference/toggle/erp))
 		return FALSE
-	if(!interaction.distance_allowed && !target.Adjacent(self))
+	if(interaction.usage != INTERACTION_SELF && !interaction.distance_allowed && !target.Adjacent(actual_target))
 		return FALSE
 	if(interaction.category == INTERACTION_CAT_HIDE)
 		return FALSE
-	if(self == target && interaction.usage == INTERACTION_OTHER)
+	if(actual_target == target && interaction.usage == INTERACTION_OTHER)
 		return FALSE
 	return TRUE
+
+/datum/component/interactable/proc/build_auto_interaction_key(datum/interaction/interaction, mob/living/carbon/human/target)
+	if(!interaction || !target)
+		return null
+	return "[interaction.get_interaction_id()]_target_[REF(target)]"
+
+/datum/component/interactable/proc/get_auto_interaction_stat_value(mob/living/carbon/human/target, stat_name)
+	if(!target)
+		return 0
+	switch(stat_name)
+		if("pleasure")
+			return target.pleasure
+		if("pain")
+			return target.pain
+		else
+			return target.arousal
+
+/datum/component/interactable/proc/auto_interaction_thresholds_met(mob/living/carbon/human/target, list/thresholds)
+	if(!target || !islist(thresholds) || !length(thresholds))
+		return FALSE
+	for(var/stat_name in thresholds)
+		var/threshold_value = clamp(text2num("[thresholds[stat_name]]"), 1, AROUSAL_LIMIT)
+		if(get_auto_interaction_stat_value(target, stat_name) >= threshold_value)
+			return TRUE
+	return FALSE
+
+/datum/component/interactable/process(seconds_per_tick)
+	if(!length(auto_interaction_info))
+		return PROCESS_KILL
+
+	for(var/interaction_key in auto_interaction_info.Copy())
+		var/list/entry = auto_interaction_info[interaction_key]
+		if(!islist(entry))
+			auto_interaction_info -= interaction_key
+			continue
+
+		var/interaction_id = entry["interaction_id"]
+		var/datum/interaction/interaction = GLOB.interaction_instances[interaction_id]
+		var/mob/living/carbon/human/target = locate(entry["target"])
+		var/datum/component/interactable/target_component = target?.GetComponent(/datum/component/interactable)
+		if(!interaction || QDELETED(target) || !target_component?.can_interact(interaction, self))
+			auto_interaction_info -= interaction_key
+			continue
+
+		var/mob/living/carbon/human/threshold_target = interaction.usage == INTERACTION_SELF ? self : target
+		var/list/thresholds = entry["thresholds"]
+		var/duration_limit_seconds = clamp(text2num("[entry["duration_limit_seconds"]]"), 0, 60)
+		var/started_at = text2num("[entry["started_at"]]")
+		if(duration_limit_seconds > 0 && world.time >= started_at + (duration_limit_seconds SECONDS))
+			auto_interaction_info -= interaction_key
+			continue
+		if(auto_interaction_thresholds_met(threshold_target, thresholds))
+			auto_interaction_info -= interaction_key
+			continue
+
+		if(world.time < text2num("[entry["next_interaction"]]"))
+			continue
+
+		interaction.act(self, target, !!entry["use_subtler"])
+
+		if(auto_interaction_thresholds_met(threshold_target, thresholds))
+			auto_interaction_info -= interaction_key
+			continue
+		if(duration_limit_seconds > 0 && world.time >= started_at + (duration_limit_seconds SECONDS))
+			auto_interaction_info -= interaction_key
+			continue
+
+		var/interval_seconds = clamp(text2num("[entry["speed"]]"), INTERACTION_SPEED_MIN / (1 SECONDS), INTERACTION_SPEED_MAX / (1 SECONDS))
+		entry["next_interaction"] = world.time + (interval_seconds SECONDS)
+
+	if(!length(auto_interaction_info))
+		return PROCESS_KILL
+
+	return
 
 /// UI Control
 /datum/component/interactable/ui_interact(mob/user, datum/tgui/ui)
@@ -88,8 +169,14 @@
 /datum/component/interactable/ui_data(mob/user)
 	var/list/data = list()
 	var/list/descriptions = list()
+	var/list/interaction_names = list()
+	var/list/translation_keys = list()
+	var/list/description_translation_keys = list()
+	var/list/category_translation_keys = list()
 	var/list/categories = list()
+	var/list/erp_categories = list()
 	var/list/colors = list()
+	var/list/interaction_usages = list()
 
 	has_erp_interaction = FALSE
 
@@ -101,34 +188,68 @@
 			has_erp_interaction = TRUE
 
 		var/category = interaction.category
-		var/list/category_list = categories[category]
+		var/interaction_id = interaction.get_interaction_id()
+		var/list/category_map = interaction.lewd ? erp_categories : categories
+		var/list/category_list = category_map[category]
 
 		if (isnull(category_list))
 			category_list = list()
-			categories[category] = category_list
+			category_map[category] = category_list
+			var/category_translation_key = interaction.get_ui_category_translation_key()
+			if(length(category_translation_key))
+				category_translation_keys[category] = category_translation_key
 
-		category_list += interaction.name
+		category_list += interaction_id
 
-		descriptions[interaction.name] = interaction.description
-		colors[interaction.name] = interaction.color
+		interaction_names[interaction_id] = interaction.name
+		descriptions[interaction_id] = interaction.description
+		var/translation_key = interaction.get_ui_translation_key()
+		var/description_translation_key = interaction.get_ui_description_translation_key()
+		if(length(translation_key))
+			translation_keys[interaction_id] = translation_key
+		if(length(description_translation_key))
+			description_translation_keys[interaction_id] = description_translation_key
+		colors[interaction_id] = interaction.color
+		interaction_usages[interaction_id] = interaction.usage
 
 	// Sort category contents once
 	for (var/category in categories)
 		categories[category] = sort_list(categories[category])
+	for (var/category in erp_categories)
+		erp_categories[category] = sort_list(erp_categories[category])
 
 	// Build and sort category names
 	data["categories"] = sort_list(assoc_to_keys(categories))
 	data["interactions"] = categories
+	data["erp_categories"] = sort_list(assoc_to_keys(erp_categories))
+	data["erp_interactions"] = erp_categories
+	data["interaction_names"] = interaction_names
 	data["descriptions"] = descriptions
+	data["translation_keys"] = translation_keys
+	data["description_translation_keys"] = description_translation_keys
+	data["category_translation_keys"] = category_translation_keys
 	data["colors"] = colors
+	data["interaction_usages"] = interaction_usages
+	data["auto_interaction_speed_values"] = list(
+		INTERACTION_SPEED_MIN / (1 SECONDS),
+		INTERACTION_SPEED_MAX / (1 SECONDS),
+	)
 
 	data["ref_user"] = REF(user)
 	data["ref_self"] = REF(self)
 	data["self"] = self.name
+	data["user_name"] = user?.name
+	data["target_name"] = self.name
+	data["interface_language"] = user?.client?.prefs?.read_preference(/datum/preference/choiced/interface_language)
 	data["block_interact"] = interact_next >= world.time
 	data["use_subtler"] = use_subtler
+	data["erp_subtle_max_length"] = erp_subtle_max_length
 	data["erp_interaction"] = self.client?.prefs?.read_preference(/datum/preference/toggle/erp)
 	data["has_erp_interaction"] = has_erp_interaction
+	var/datum/component/interactable/user_component = user?.GetComponent(/datum/component/interactable)
+	data["auto_interaction_info"] = user_component?.auto_interaction_info || list()
+	data["erp_preferences"] = build_erp_preferences_data(user)
+	data["content_preferences"] = list()
 
 	var/mob/living/carbon/human/human_user = user
 
@@ -147,6 +268,7 @@
 		data["pleasure"] = user_pleasure
 		data["arousal"] = user_arousal
 		data["pain"] = user_pain
+		data["user_body_exposure"] = build_body_exposure_data(human_user)
 
 
 	// self - the one who the interaction component belongs to, aka who it's opened on (confusing var name yep)
@@ -154,6 +276,7 @@
 		data["theirPleasure"] = self.pleasure
 		data["theirArousal"] = self.arousal
 		data["theirPain"] = self.pain
+		data["target_body_exposure"] = build_body_exposure_data(self)
 
 	var/list/parts = list()
 
@@ -187,6 +310,152 @@
 		"img" = (item && can_lewd_strip(source, target, name)) ? icon2base64(icon(item.icon, item.icon_state, SOUTH, 1)) : null
 		)
 
+/datum/component/interactable/proc/build_body_exposure_data(mob/living/carbon/human/target)
+	var/list/entries = list()
+	var/list/part_keys = list(
+		"chest",
+		"groin",
+		"hands",
+		"feet",
+		"mouth",
+		"ears",
+		"eyes",
+		"cap",
+		"snout",
+		"horns",
+		"frills",
+		"fluff",
+		"moth_antennae",
+		"neck_accessory",
+		"skrell_hair",
+		"synth_antenna",
+		"breasts",
+		"penis",
+		"vagina",
+		"anus",
+		"butt",
+		"belly",
+		"spines",
+		"tail",
+		"wings",
+		"taur",
+		"xeno_head",
+		"xenodorsal",
+	)
+
+	for(var/part_key in part_keys)
+		var/list/entry = build_exposure_entry(part_key, target.get_lewd_part_state(part_key))
+		if(entry)
+			entries += list(entry)
+
+	return entries
+
+/datum/component/interactable/proc/build_exposure_entry(part, state)
+	if(isnull(state))
+		return null
+
+	return list(
+		"part" = part,
+		"state" = state,
+	)
+
+/datum/component/interactable/proc/build_erp_preferences_data(mob/living/carbon/human/user)
+	var/list/specs = list(
+		list("id" = "erp_pref", "name" = "ERP Interaction", "description" = "Allows ERP interactions and lets other players know you are open to them.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp),
+		list("id" = "erp_sounds_pref", "name" = "ERP Sounds", "description" = "Hear sounds from ERP interactions and stimuli.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp/sounds),
+		list("id" = "autoemote_pref", "name" = "Auto Emote", "description" = "Automatically emote from the arousal system.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp/autoemote),
+		list("id" = "autocum_pref", "name" = "Autocum", "description" = "Automatically climax when the arousal system decides you should.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp/autocum),
+		list("id" = "aphro_pref", "name" = "Aphrodisiacs", "description" = "Allow the effects of aphrodisiacs.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp/aphro),
+		list("id" = "erp_sexuality_pref", "name" = "ERP Content Boundaries", "description" = "Controls what ERP content you see. None shows all content.", "type" = "choice", "category" = "ERP", "path" = /datum/preference/choiced/erp_sexuality, "choices" = list("Gay", "Straight", "None")),
+		list("id" = "sextoy_sounds_pref", "name" = "Sex Toy Sounds", "description" = "Hear sounds from sex toys.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp/sex_toy_sounds),
+		list("id" = "master_erp_pref", "name" = "Show ERP Preferences", "description" = "Shows or hides ERP-related preferences.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/master_erp_preferences),
+		list("id" = "gender_change_pref", "name" = "Forced Gender Change", "description" = "Allow forced gender change effects.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp/gender_change),
+		list("id" = "new_genitalia_growth_pref", "name" = "ERP New Genitalia Growth", "description" = "Allow growth of new genitalia.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp/new_genitalia_growth),
+		list("id" = "sextoy_pref", "name" = "Sex Toy Interaction", "description" = "Allows interaction with sex toys.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp/sex_toy),
+		list("id" = "penis_enlargement_pref", "name" = "Penis Enlargement", "description" = "Allow penis enlargement effects.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp/penis_enlargement),
+		list("id" = "genitalia_removal_pref", "name" = "ERP Genitalia Removal", "description" = "Allow removal of existing genitalia.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp/genitalia_removal),
+		list("id" = "penis_shrinkage_pref", "name" = "Penis Shrinkage", "description" = "Allow penis shrinkage effects.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp/penis_shrinkage),
+		list("id" = "erp_status_pref", "name" = "ERP Status", "description" = "Your general ERP role/status preference.", "type" = "choice", "category" = "ERP", "path" = /datum/preference/choiced/erp_status, "choices" = GLOB.preference_entries[/datum/preference/choiced/erp_status].init_possible_values()),
+		list("id" = "erp_status_mechanical_pref", "name" = "ERP Mechanical Status", "description" = "Your preference for ERP with mechanical consequences.", "type" = "choice", "category" = "ERP", "path" = /datum/preference/choiced/erp_status_mechanics, "choices" = GLOB.preference_entries[/datum/preference/choiced/erp_status_mechanics].init_possible_values()),
+		list("id" = "erp_status_noncon_pref", "name" = "ERP Non-Con Status", "description" = "Your preference for non-consensual ERP themes.", "type" = "choice", "category" = "ERP", "path" = /datum/preference/choiced/erp_status_nc, "choices" = GLOB.preference_entries[/datum/preference/choiced/erp_status_nc].init_possible_values()),
+		list("id" = "erp_status_hypnosis_pref", "name" = "ERP Hypnosis Status", "description" = "Your preference for hypnosis-related ERP content.", "type" = "choice", "category" = "ERP", "path" = /datum/preference/choiced/erp_status_hypno, "choices" = GLOB.preference_entries[/datum/preference/choiced/erp_status_hypno].init_possible_values()),
+		list("id" = "erp_status_vore_pref", "name" = "ERP Vore Status", "description" = "Your preference for vore-related ERP content.", "type" = "choice", "category" = "ERP", "path" = /datum/preference/choiced/erp_status_v, "choices" = GLOB.preference_entries[/datum/preference/choiced/erp_status_v].init_possible_values()),
+	)
+	return build_preferences_data_from_specs(user, specs)
+
+/datum/component/interactable/proc/build_preferences_data_from_specs(mob/living/carbon/human/user, list/specs)
+	var/list/entries = list()
+	var/datum/preferences/preferences = user?.client?.prefs
+	if(!preferences)
+		return entries
+
+	for(var/list/spec as anything in specs)
+		var/pref_path = spec["path"]
+		if(!pref_path)
+			continue
+
+		entries += list(list(
+			"id" = spec["id"],
+			"name" = spec["name"],
+			"description" = spec["description"],
+			"type" = spec["type"],
+			"category" = spec["category"],
+			"value" = preferences.read_preference(pref_path),
+			"choices" = spec["choices"],
+		))
+
+	return entries
+
+/datum/component/interactable/proc/get_interaction_preference_path(pref_id)
+	switch(pref_id)
+		if("master_erp_pref")
+			return /datum/preference/toggle/master_erp_preferences
+		if("erp_pref")
+			return /datum/preference/toggle/erp
+		if("erp_sounds_pref")
+			return /datum/preference/toggle/erp/sounds
+		if("subtler_sound")
+			return /datum/preference/toggle/subtler_sound
+		if("sextoy_pref")
+			return /datum/preference/toggle/erp/sex_toy
+		if("sextoy_sounds_pref")
+			return /datum/preference/toggle/erp/sex_toy_sounds
+		if("autocum_pref")
+			return /datum/preference/toggle/erp/autocum
+		if("autoemote_pref")
+			return /datum/preference/toggle/erp/autoemote
+		if("bimbofication_pref")
+			return /datum/preference/toggle/erp/bimbofication
+		if("aphro_pref")
+			return /datum/preference/toggle/erp/aphro
+		if("breast_enlargement_pref")
+			return /datum/preference/toggle/erp/breast_enlargement
+		if("breast_shrinkage_pref")
+			return /datum/preference/toggle/erp/breast_shrinkage
+		if("penis_enlargement_pref")
+			return /datum/preference/toggle/erp/penis_enlargement
+		if("penis_shrinkage_pref")
+			return /datum/preference/toggle/erp/penis_shrinkage
+		if("erp_status_pref")
+			return /datum/preference/choiced/erp_status
+		if("erp_status_mechanical_pref")
+			return /datum/preference/choiced/erp_status_mechanics
+		if("erp_status_noncon_pref")
+			return /datum/preference/choiced/erp_status_nc
+		if("erp_status_hypnosis_pref")
+			return /datum/preference/choiced/erp_status_hypno
+		if("erp_status_vore_pref")
+			return /datum/preference/choiced/erp_status_v
+		if("gender_change_pref")
+			return /datum/preference/toggle/erp/gender_change
+		if("genitalia_removal_pref")
+			return /datum/preference/toggle/erp/genitalia_removal
+		if("new_genitalia_growth_pref")
+			return /datum/preference/toggle/erp/new_genitalia_growth
+		if("erp_sexuality_pref")
+			return /datum/preference/choiced/erp_sexuality
+	return null
+
 /datum/component/interactable/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
@@ -199,13 +468,109 @@
 		use_subtler = !use_subtler
 		return TRUE
 
+	if(action == "set_preference")
+		var/mob/living/carbon/human/user = ui.user
+		var/datum/preferences/preferences = user?.client?.prefs
+		var/pref_id = params["preference_id"]
+		var/pref_path = get_interaction_preference_path(pref_id)
+		if(!preferences || !pref_path)
+			return FALSE
+
+		var/datum/preference/preference = GLOB.preference_entries[pref_path]
+		if(!preference)
+			return FALSE
+
+		var/value
+		if(ispath(pref_path, /datum/preference/choiced))
+			value = params["value"]
+		else
+			value = text2num("[params["value"]]") ? TRUE : FALSE
+
+		return preferences.update_preference(preference, value)
+
+	if(action == "send_subtle_message")
+		var/mob/living/carbon/human/user = ui.user
+		var/message = trim(html_encode(params["message"] || ""), erp_subtle_max_length)
+		if(!length(message))
+			return FALSE
+
+		user.emote(
+			use_subtler ? "subtler" : "subtle",
+			type_override = /datum/emote/living/subtler::emote_type | EMOTE_LEWD,
+			message = message,
+			intentional = TRUE,
+		)
+		return TRUE
+
+	if(action == "auto_interaction")
+		var/mob/living/carbon/human/user = ui.user
+		var/datum/component/interactable/user_component = user?.GetComponent(/datum/component/interactable)
+		if(!user_component)
+			return FALSE
+
+		if(params["stop_all"])
+			user_component.auto_interaction_info.Cut()
+			STOP_PROCESSING(SSprocessing, user_component)
+			return TRUE
+
+		var/datum/interaction/interaction = GLOB.interaction_instances[params["interaction"]]
+		if(!interaction)
+			return FALSE
+
+		var/mob/living/carbon/human/panel_target = locate(params["selfref"])
+		if(!panel_target)
+			return FALSE
+
+		var/mob/living/carbon/human/actual_target = interaction.usage == INTERACTION_SELF ? user : panel_target
+		var/interaction_key = user_component.build_auto_interaction_key(interaction, actual_target)
+		if(!interaction_key)
+			return FALSE
+
+		if(params["action"] == "stop")
+			user_component.auto_interaction_info -= interaction_key
+			if(!length(user_component.auto_interaction_info))
+				STOP_PROCESSING(SSprocessing, user_component)
+			return TRUE
+
+		var/datum/component/interactable/target_component = actual_target.GetComponent(/datum/component/interactable)
+		if(!target_component?.can_interact(interaction, user))
+			return FALSE
+
+		var/interval_seconds = clamp(text2num("[params["speed"]]"), INTERACTION_SPEED_MIN / (1 SECONDS), INTERACTION_SPEED_MAX / (1 SECONDS))
+		var/list/thresholds = list()
+		if(text2num("[params["threshold_pleasure_enabled"]]"))
+			thresholds["pleasure"] = clamp(text2num("[params["threshold_pleasure_value"]]"), 1, AROUSAL_LIMIT)
+		if(text2num("[params["threshold_arousal_enabled"]]"))
+			thresholds["arousal"] = clamp(text2num("[params["threshold_arousal_value"]]"), 1, AROUSAL_LIMIT)
+		if(text2num("[params["threshold_pain_enabled"]]"))
+			thresholds["pain"] = clamp(text2num("[params["threshold_pain_value"]]"), 1, AROUSAL_LIMIT)
+		var/duration_limit_seconds = 0
+		if(text2num("[params["duration_enabled"]]"))
+			duration_limit_seconds = clamp(text2num("[params["duration_value"]]"), 1, 60)
+
+		user_component.auto_interaction_info[interaction_key] = list(
+			"interaction_id" = interaction.get_interaction_id(),
+			"speed" = interval_seconds,
+			"target" = REF(actual_target),
+			"target_name" = actual_target.name,
+			"started_at" = world.time,
+			"next_interaction" = world.time + (interval_seconds SECONDS),
+			"thresholds" = thresholds,
+			"duration_limit_seconds" = duration_limit_seconds,
+			"use_subtler" = !!use_subtler,
+		)
+		START_PROCESSING(SSprocessing, user_component)
+		return TRUE
+
 	if(params["interaction"])
 		var/interaction_id = params["interaction"]
-		if(GLOB.interaction_instances[interaction_id])
+		var/datum/interaction/interaction = GLOB.interaction_instances[interaction_id]
+		if(interaction)
 			var/mob/living/carbon/human/user = locate(params["userref"])
-			if(!can_interact(GLOB.interaction_instances[interaction_id], user))
+			var/mob/living/carbon/human/interaction_target = interaction.usage == INTERACTION_SELF ? user : locate(params["selfref"])
+			if(!can_interact(interaction, user))
 				return FALSE
-			GLOB.interaction_instances[interaction_id].act(user, locate(params["selfref"]), use_subtler)
+			interaction.act(user, interaction_target, use_subtler)
 			var/datum/component/interactable/interaction_component = user.GetComponent(/datum/component/interactable)
 			interaction_component.interact_last = world.time
 			interact_next = interaction_component.interact_last + INTERACTION_COOLDOWN
@@ -282,18 +647,14 @@
 
 	switch(slot_index)
 		if(ORGAN_SLOT_NIPPLES)
-			var/chest_exposed = target.has_breasts(required_state = REQUIRE_GENITAL_EXPOSED)
-			if(!chest_exposed)
-				chest_exposed = target.is_topless() // for when we don't have breasts
-
-			return chest_exposed
+			return target.get_lewd_part_state("nipples") == "open"
 
 		if(ORGAN_SLOT_PENIS)
-			return target.has_penis(required_state = REQUIRE_GENITAL_EXPOSED)
+			return target.get_lewd_part_state("penis") == "open"
 		if(ORGAN_SLOT_VAGINA)
-			return target.has_vagina(required_state = REQUIRE_GENITAL_EXPOSED)
+			return target.get_lewd_part_state("vagina") == "open"
 		if(ORGAN_SLOT_ANUS)
-			return target.has_anus(required_state = REQUIRE_GENITAL_EXPOSED)
+			return target.get_lewd_part_state("anus") == "open"
 
 /// Decides if a player should be able to insert or remove an item from a provided lewd slot_index.
 /datum/component/interactable/proc/is_toy_compatible(obj/item/clothing/sextoy/item, slot_index)

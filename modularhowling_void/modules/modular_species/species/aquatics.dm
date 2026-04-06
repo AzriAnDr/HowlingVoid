@@ -189,6 +189,7 @@
 	return FALSE
 
 /datum/species/aquatic/proc/on_nose_boop(mob/living/carbon/human/source, mob/living/carbon/helper)
+	SIGNAL_HANDLER
 	if(!source?.is_location_accessible(BODY_ZONE_PRECISE_MOUTH))
 		return
 

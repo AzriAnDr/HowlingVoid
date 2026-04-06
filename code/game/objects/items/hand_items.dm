@@ -576,9 +576,19 @@
 	damage = 0 // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
 	var/silent_blown = FALSE
+	var/list/kiss_sounds = list(
+		'modular_nova/modules/modular_items/lewd_items/sounds/kiss1.ogg',
+		'modular_nova/modules/modular_items/lewd_items/sounds/kiss2.ogg',
+		'modular_nova/modules/modular_items/lewd_items/sounds/kiss3.ogg',
+		'modular_nova/modules/modular_items/lewd_items/sounds/kiss4.ogg',
+		'modular_nova/modules/modular_items/lewd_items/sounds/kiss5.ogg',
+	)
 
 /obj/projectile/kiss/Initialize(mapload)
 	. = ..()
+	var/selected_sound = pick(kiss_sounds)
+	hitsound = selected_sound
+	hitsound_wall = selected_sound
 	AddComponent(/datum/component/parriable_projectile)
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)

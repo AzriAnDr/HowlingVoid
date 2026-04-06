@@ -115,6 +115,12 @@
 /datum/dna_block/feature/mutant/anus
 	feature_key = FEATURE_ANUS
 
+/datum/dna_block/feature/mutant/butt
+	feature_key = FEATURE_BUTT
+
+/datum/dna_block/feature/mutant/belly
+	feature_key = FEATURE_BELLY
+
 /datum/dna_block/feature/mutant/breasts
 	feature_key = FEATURE_BREASTS
 

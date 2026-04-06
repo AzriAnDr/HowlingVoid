@@ -6,6 +6,7 @@ import { sendAct } from 'tgui/events/act';
 import {
   Box,
   Button,
+  Collapsible,
   Floating,
   Input,
   LabeledList,
@@ -44,6 +45,122 @@ const CLOTHING_SIDEBAR_ROWS = 13.4; // NOVA EDIT CHANGE - ORIGINAL:  9
 const CLOTHING_SELECTION_CELL_SIZE = 48;
 const CLOTHING_SELECTION_WIDTH = 5.4;
 const CLOTHING_SELECTION_MULTIPLIER = 5.2;
+const GENITAL_FEATURE_IDS = new Set([
+  'allow_genitals_toggle',
+  'feature_anus',
+  'feature_belly',
+  'belly_size',
+  'belly_skin_tone',
+  'belly_skin_color',
+  'belly_color',
+  'belly_emissive',
+  'feature_breasts',
+  'feature_butt',
+  'butt_size',
+  'butt_skin_tone',
+  'butt_skin_color',
+  'butt_color',
+  'butt_emissive',
+  'feature_penis',
+  'feature_testicles',
+  'feature_vagina',
+  'feature_womb',
+  'balls_size',
+]);
+
+const GENITAL_FEATURE_PREFIXES = [
+  'penis_',
+  'testicles_',
+  'vagina_',
+  'breasts_',
+];
+
+const NON_HUMAN_FEATURE_IDS = new Set([
+  'caps_toggle',
+  'feature_caps',
+  'ears_toggle',
+  'feature_ears',
+  'fluff_toggle',
+  'feature_fluff',
+  'frills_toggle',
+  'feature_frills',
+  'horns_toggle',
+  'feature_horns',
+  'digitigrade_legs',
+  'feature_leg_type',
+  'moth_antennae_toggle',
+  'feature_moth_antennae',
+  'neck_acc_toggle',
+  'feature_neck_acc',
+  'skrell_hair_toggle',
+  'feature_skrell_hair',
+  'snout_toggle',
+  'feature_snout',
+  'spines_toggle',
+  'feature_spines',
+  'ipc_antenna_toggle',
+  'feature_ipc_antenna',
+  'tail_toggle',
+  'feature_tail',
+  'taur_toggle',
+  'feature_taur',
+  'naga_sole',
+  'wings_toggle',
+  'feature_wings',
+  'xenohead_toggle',
+  'feature_xenohead',
+  'xenodorsal_toggle',
+  'feature_xenodorsal',
+]);
+
+const NON_HUMAN_FEATURE_PREFIXES = [
+  'caps_',
+  'ears_',
+  'fluff_',
+  'frills_',
+  'horns_',
+  'moth_antennae_',
+  'neck_acc_',
+  'skrell_hair_',
+  'snout_',
+  'spines_',
+  'ipc_antenna_',
+  'tail_',
+  'taur_',
+  'xenohead_',
+  'xenodorsal_',
+  'feature_caps',
+  'feature_ears',
+  'feature_fluff',
+  'feature_frills',
+  'feature_horns',
+  'feature_leg_type',
+  'feature_moth_antennae',
+  'feature_neck_acc',
+  'feature_skrell_hair',
+  'feature_snout',
+  'feature_spines',
+  'feature_ipc_antenna',
+  'feature_tail',
+  'feature_taur',
+  'feature_wings',
+  'feature_xenohead',
+  'feature_xenodorsal',
+];
+
+function isGenitalFeature(featureId: string) {
+  return (
+    GENITAL_FEATURE_IDS.has(featureId) ||
+    GENITAL_FEATURE_PREFIXES.some((prefix) => featureId.startsWith(prefix))
+  );
+}
+
+function isNonHumanFeature(featureId: string) {
+  return (
+    NON_HUMAN_FEATURE_IDS.has(featureId) ||
+    NON_HUMAN_FEATURE_PREFIXES.some((prefix) => featureId.startsWith(prefix))
+  );
+}
 
 type CharacterControlsProps = {
   t: (key: string, fallback?: string) => string;
@@ -525,8 +642,7 @@ type MainPageProps = {
 
 export function MainPage(props: MainPageProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { t, localizeCharacterDataById } =
-    usePreferencesLocalization(data);
+  const { t, localizeCharacterDataById } = usePreferencesLocalization(data);
 
   const [deleteCharacterPopupOpen, setDeleteCharacterPopupOpen] =
     useState(false);
@@ -542,6 +658,23 @@ export function MainPage(props: MainPageProps) {
   const contextualPreferences =
     data.character_preferences.secondary_features || [];
 
+  const generalAppearancePreferences = Object.fromEntries(
+    Object.entries(contextualPreferences).filter(
+      ([featureId]) =>
+        !isGenitalFeature(featureId) && !isNonHumanFeature(featureId),
+    ),
+  );
+  const nonHumanAppearancePreferences = Object.fromEntries(
+    Object.entries(contextualPreferences).filter(([featureId]) =>
+      isNonHumanFeature(featureId),
+    ),
+  );
+  const genitalAppearancePreferences = Object.fromEntries(
+    Object.entries(contextualPreferences).filter(([featureId]) =>
+      isGenitalFeature(featureId),
+    ),
+  );
+
   const mainFeatures = [
     ...Object.entries(data.character_preferences.clothing ?? {}),
     ...Object.entries(data.character_preferences.features ?? {}),
@@ -555,6 +688,28 @@ export function MainPage(props: MainPageProps) {
     Object.fromEntries(mainFeatures),
     serverData,
     randomBodyEnabled,
+  );
+
+  const contextualRandomizations = getRandomization(
+    contextualPreferences,
+    serverData,
+    randomBodyEnabled,
+  );
+  const generalAppearanceRandomizations = Object.fromEntries(
+    Object.entries(contextualRandomizations).filter(
+      ([featureId]) =>
+        !isGenitalFeature(featureId) && !isNonHumanFeature(featureId),
+    ),
+  );
+  const nonHumanAppearanceRandomizations = Object.fromEntries(
+    Object.entries(contextualRandomizations).filter(([featureId]) =>
+      isNonHumanFeature(featureId),
+    ),
+  );
+  const genitalAppearanceRandomizations = Object.fromEntries(
+    Object.entries(contextualRandomizations).filter(([featureId]) =>
+      isGenitalFeature(featureId),
+    ),
   );
 
   const nonContextualPreferences = {
@@ -581,15 +736,42 @@ export function MainPage(props: MainPageProps) {
   switch (currentPrefPage) {
     case PrefPage.Visual:
       prefPageContents = (
-        <PreferenceList
-          randomizations={getRandomization(
-            contextualPreferences,
-            serverData,
-            randomBodyEnabled,
+        <Stack vertical fill>
+          <Stack.Item>
+            <Collapsible open title={t('ui.character.general_appearance')}>
+              <PreferenceList
+                randomizations={generalAppearanceRandomizations}
+                preferences={generalAppearancePreferences}
+                maxHeight="auto"
+              />
+            </Collapsible>
+          </Stack.Item>
+          {!!Object.keys(nonHumanAppearancePreferences).length && (
+            <Stack.Item>
+              <Collapsible open title={t('ui.character.non_human_parts')}>
+                <PreferenceList
+                  randomizations={nonHumanAppearanceRandomizations}
+                  preferences={nonHumanAppearancePreferences}
+                  maxHeight="auto"
+                />
+              </Collapsible>
+            </Stack.Item>
           )}
-          preferences={contextualPreferences}
-          maxHeight="auto"
-        />
+          {!!Object.keys(genitalAppearancePreferences).length && (
+            <Stack.Item>
+              <Collapsible
+                open
+                title={t('ui.character.sexual_characteristics')}
+              >
+                <PreferenceList
+                  randomizations={genitalAppearanceRandomizations}
+                  preferences={genitalAppearancePreferences}
+                  maxHeight="auto"
+                />
+              </Collapsible>
+            </Stack.Item>
+          )}
+        </Stack>
       );
       break;
     case PrefPage.Profile:

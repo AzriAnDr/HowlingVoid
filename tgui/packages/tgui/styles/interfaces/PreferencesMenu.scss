@@ -1389,8 +1389,7 @@ $department_map: (
         inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
     }
 
-    .Button.PreferencesMenu__Character__SpeciesBackButton,
-    .Button.PreferencesMenu__Character__SpeciesBackButton .Button__content {
+    .Button.PreferencesMenu__Character__SpeciesBackButton {
       border: 1px solid hsla(210, 14%, 35%, 0.6) !important;
       border-radius: 7px !important;
       background: linear-gradient(
@@ -1403,6 +1402,15 @@ $department_map: (
       box-shadow:
         inset 0 1px 0 hsla(0, 0%, 100%, 0.09),
         inset 0 -1px 0 hsla(0, 0%, 0%, 0.15) !important;
+    }
+
+    .Button.PreferencesMenu__Character__SpeciesBackButton .Button__content {
+      border: 0 !important;
+      border-radius: inherit !important;
+      background: transparent !important;
+      background-color: transparent !important;
+      color: inherit !important;
+      box-shadow: none !important;
     }
 
     .Button.PreferencesMenu__Character__SpeciesBackButton:hover,

@@ -5,6 +5,7 @@
 
 	/// Assoc list of stringified HUMAN_HEIGHT_### defines to string. Passed into CHOICED_PREFERENCE_DISPLAY_NAMES.
 	var/static/list/height_scaling_strings = list(
+		"[HUMAN_HEIGHT_SHORTEST]" = "Shortest",
 		"[HUMAN_HEIGHT_SHORT]" = "Short",
 		"[HUMAN_HEIGHT_MEDIUM]" = "Medium",
 		"[HUMAN_HEIGHT_TALL]" = "Tall",
@@ -20,6 +21,7 @@
 
 /datum/preference/choiced/height_scaling/init_possible_values()
 	return list(
+		HUMAN_HEIGHT_SHORTEST,
 		HUMAN_HEIGHT_SHORT, 
 		HUMAN_HEIGHT_MEDIUM, 
 		HUMAN_HEIGHT_TALL, 
