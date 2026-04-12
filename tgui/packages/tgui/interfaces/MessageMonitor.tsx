@@ -359,6 +359,7 @@ const MainScreen = (props) => {
 
 export const MessageMonitor = (props) => {
   const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     screen,
     error_message,

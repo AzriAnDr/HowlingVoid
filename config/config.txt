@@ -380,7 +380,7 @@ PREFERENCE_MAP_VOTING 1
 
 ## AUTOADMIN
 ## The default admin rank
-AUTOADMIN_RANK Game Master
+AUTOADMIN_RANK Белый кардинал
 
 ## Uncomment to automatically give that admin rank to all players
 #AUTOADMIN

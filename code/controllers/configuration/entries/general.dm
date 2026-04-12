@@ -4,7 +4,7 @@
 
 /// the rank given to autoadmins
 /datum/config_entry/string/autoadmin_rank
-	default = "Game Master"
+	default = "Белый кардинал"
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/flag/auto_deadmin_always
