@@ -2,7 +2,7 @@ import { Component, createRef, type RefObject } from 'react';
 import { Box, Button, Flex, Section, TextArea } from 'tgui-core/components';
 
 import { useBackend, useLocalState } from '../../backend';
-import { usePreferencesLocalization } from '../localization';
+import { getPreferencesLocalization } from '../localization';
 import { TEXTAREA_INPUT_HEIGHT } from './constants';
 import { PreviewView } from './Preview';
 import { PaperSheetStamper } from './Stamper';
@@ -39,7 +39,7 @@ export class PrimaryView extends Component {
 
   render() {
     const { act, data } = useBackend<PaperContext>();
-    const { t } = usePreferencesLocalization(data);
+    const { t } = getPreferencesLocalization(data);
     const {
       raw_text_input,
       raw_field_input,
