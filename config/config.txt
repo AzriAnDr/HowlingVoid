@@ -20,13 +20,13 @@ $include map_vote.txt
 # There are various options which are hard-locked for security reasons.
 
 ## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
-SERVERNAME 【RU】 Howling Void 18+ Русскоязычный МРП-ХРП
+SERVERNAME 【RU】Howling Void 18+ Русскоязычный МРП-ХРП
 
 ## Server tagline: This will appear right below the server's title.
-# SERVERTAGLINE A generic TG-based server
+SERVERTAGLINE 【RU】Howling Void 18+ | Modified Nova SectorTG Russian MRP-HRP server hosted by ALOHADAWN
 
 ## Discord Link: This is the link to Nova Sector's discord server
-# DISCORD_LINK https://discord.gg/novasector
+DISCORD_LINK https://discord.gg/qVHJ4AuW4C
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
 # SERVERSQLNAME tgstation
@@ -35,13 +35,13 @@ SERVERNAME 【RU】 Howling Void 18+ Русскоязычный МРП-ХРП
 ## STATIONNAME Space Station 13
 
 ## Put on byond hub: Uncomment this to put your server on the byond hub.
-#HUB
+HUB
 
 ## Once the server population reaches this number, it will be taken off the byond hub. 0 disables.
 #MAX_HUB_POP 100
 
 ## Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
-LOBBY_COUNTDOWN 60
+LOBBY_COUNTDOWN 144
 
 ## Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
 ROUND_END_COUNTDOWN 120
@@ -145,13 +145,13 @@ VOTE_PERIOD 600
 ## 0 = Cannot respawn (default)
 ## 1 = Can respawn
 ## 2 = Can respawn if choosing a different character
-ALLOW_RESPAWN 1
+ALLOW_RESPAWN 2
 
 ## Respawn delay (deciseconds), which doesn't allow to return to lobby
 RESPAWN_DELAY 0
 
 ## set a hosted by name for unix platforms
-HOSTEDBY Yournamehere
+HOSTEDBY ALOHADAWN
 
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting).
 ## You probably want this enabled for a production server.
@@ -192,7 +192,7 @@ IPINTEL_REJECT_BAD
 #USEWHITELIST
 
 ## The address shown for the game server in the TGS check command
-# PUBLIC_ADDRESS ss13.example.com:2506
+PUBLIC_ADDRESS 2.26.52.116:1337
 
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 ## Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
@@ -206,7 +206,7 @@ IPINTEL_REJECT_BAD
 # WIKIURL https://wiki.novasector13.com/wiki
 
 ## Rules address
-# RULESURL https://wiki.novasector13.com/wiki/Policies
+RULESURL https://alohadawn.github.io/HowlingVoidRules/
 
 ## Github address
 # GITHUBURL https://github.com/NovaSector/NovaSector
@@ -226,7 +226,7 @@ IPINTEL_REJECT_BAD
 # GAMELOGURL
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
-# BANAPPEALS http://justanotherday.example.com
+BANAPPEALS https://discord.com/channels/1399667370267508748/1420154988985843752
 
 ## Config URL - Intended for servers that have a repository/public folder/etc. that show off the config that they are running
 # CONFIGURL https://github.com/tgstation-operations/server-config
