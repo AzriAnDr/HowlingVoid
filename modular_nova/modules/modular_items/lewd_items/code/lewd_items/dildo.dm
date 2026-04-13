@@ -273,7 +273,7 @@ GLOBAL_LIST_INIT(dildo_colors, list(//mostly neon colors
 	righthand_file = 'modular_nova/modules/modular_items/lewd_items/icons/mob/lewd_inhands/lewd_inhand_right.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	lewd_slot_flags = LEWD_SLOT_ANUS | LEWD_SLOT_VAGINA
-	actions_types = list(/datum/action/item_action/take_dildo)
+	actions_types = list(/datum/action/item_action/take_dildo, /datum/action/item_action/remove_dildo)
 	change_sprite = FALSE
 	/// If one end of the toy is in your hand
 	var/end_in_hand = FALSE
@@ -312,6 +312,15 @@ GLOBAL_LIST_INIT(dildo_colors, list(//mostly neon colors
 	if(istype(dildo))
 		dildo.can_take_in_hand()
 
+/datum/action/item_action/remove_dildo
+	name = "Remove the double dildo from yourself"
+	desc = "Pull the double dildo out of yourself and drop it."
+
+/datum/action/item_action/remove_dildo/Trigger(trigger_flags)
+	var/obj/item/clothing/sextoy/dildo/double_dildo/dildo = target
+	if(istype(dildo))
+		dildo.can_remove_from_self()
+
 /// A check to make sure the user can actually take one end in their hand
 /obj/item/clothing/sextoy/dildo/double_dildo/proc/can_take_in_hand()
 	var/mob/living/carbon/human/user = usr
@@ -321,6 +330,32 @@ GLOBAL_LIST_INIT(dildo_colors, list(//mostly neon colors
 		to_chat(user, span_warning("You can't use [src] from this angle!"))
 	else
 		to_chat(user, span_warning("You need to equip [src] before you can use it!"))
+
+/obj/item/clothing/sextoy/dildo/double_dildo/proc/can_remove_from_self()
+	var/mob/living/carbon/human/user = usr
+	if(!istype(user))
+		return
+
+	var/slot_name = null
+	if(src == user.vagina)
+		slot_name = ORGAN_SLOT_VAGINA
+	else if(src == user.anus)
+		slot_name = ORGAN_SLOT_ANUS
+
+	if(!slot_name)
+		to_chat(user, span_warning("You need to have [src] inserted before you can remove it!"))
+		return
+
+	if(other_end)
+		QDEL_NULL(other_end)
+	end_in_hand = FALSE
+	user.visible_message(
+		span_notice("[user] slowly pulls [src] out of [user.p_them()]self."),
+		span_notice("You slowly pull [src] out of yourself.")
+	)
+	user.dropItemToGround(src, force = TRUE)
+	user.vars[slot_name] = null
+	user.update_inv_lewd()
 
 //dumb way to fix organs overlapping with toys, but WHY NOT. Find a better way if you're not lazy as me.
 /obj/item/clothing/sextoy/dildo/double_dildo/lewd_equipped(mob/living/carbon/human/user, slot)

@@ -40,6 +40,10 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 	var/list/user_required_parts = list()
 	/// What parts do they need(IMPORTANT TO GET IT TO THE CORRECT DEFINE, ORGAN SLOT)?
 	var/list/target_required_parts = list()
+	/// What parts must exist on the user, even if covered by clothing?
+	var/list/user_required_any_parts = list()
+	/// What parts must exist on the target, even if covered by clothing?
+	var/list/target_required_any_parts = list()
 	/// The amount of pleasure the target receives from this interaction.
 	/// Can be a fixed number or a list(min, max).
 	var/target_pleasure = 0
@@ -226,9 +230,19 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 			if(user.get_lewd_part_state(thing) != "open")
 				return FALSE
 
+	if(user_required_any_parts.len)
+		for(var/thing in user_required_any_parts)
+			if(isnull(user.get_lewd_part_state(thing)))
+				return FALSE
+
 	if(target_required_parts.len)
 		for(var/thing in target_required_parts)
 			if(target.get_lewd_part_state(thing) != "open")
+				return FALSE
+
+	if(target_required_any_parts.len)
+		for(var/thing in target_required_any_parts)
+			if(isnull(target.get_lewd_part_state(thing)))
 				return FALSE
 
 	if(length(user_required_item_paths) && !get_matching_held_item(user))
@@ -418,6 +432,7 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 
 	user_messages = sanitize_islist(json["user_messages"], list())
 	user_required_parts = sanitize_islist(json["user_required_parts"], list())
+	user_required_any_parts = sanitize_islist(json["user_required_any_parts"], list())
 	user_required_item_paths = sanitize_islist(json["user_required_item_paths"], list())
 	user_blocked_item_paths = sanitize_islist(json["user_blocked_item_paths"], list())
 	user_arousal = load_effect_value(json["user_arousal"])
@@ -425,6 +440,7 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 	user_pain = load_effect_value(json["user_pain"])
 	target_messages = sanitize_islist(json["target_messages"], list())
 	target_required_parts = sanitize_islist(json["target_required_parts"], list())
+	target_required_any_parts = sanitize_islist(json["target_required_any_parts"], list())
 	target_required_item_slots = sanitize_islist(json["target_required_item_slots"], list())
 	target_required_item_paths = sanitize_islist(json["target_required_item_paths"], list())
 	target_blocked_item_paths = sanitize_islist(json["target_blocked_item_paths"], list())
@@ -457,6 +473,7 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 		"color" = color,
 		"user_messages" = user_messages,
 		"user_required_parts" = user_required_parts,
+		"user_required_any_parts" = user_required_any_parts,
 		"user_required_item_paths" = user_required_item_paths,
 		"user_blocked_item_paths" = user_blocked_item_paths,
 		"user_arousal" = user_arousal,
@@ -464,6 +481,7 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 		"user_pain" = user_pain,
 		"target_messages" = target_messages,
 		"target_required_parts" = target_required_parts,
+		"target_required_any_parts" = target_required_any_parts,
 		"target_required_item_slots" = target_required_item_slots,
 		"target_required_item_paths" = target_required_item_paths,
 		"target_blocked_item_paths" = target_blocked_item_paths,
@@ -550,11 +568,13 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 
 		interaction.user_messages = sanitize_islist(ijson["user_messages"], list())
 		interaction.user_required_parts = sanitize_islist(ijson["user_required_parts"], list())
+		interaction.user_required_any_parts = sanitize_islist(ijson["user_required_any_parts"], list())
 		interaction.user_arousal = sanitize_integer(ijson["user_arousal"], 0, 100, 0)
 		interaction.user_pleasure = sanitize_integer(ijson["user_pleasure"], 0, 100, 0)
 		interaction.user_pain = sanitize_integer(ijson["user_pain"], 0, 100, 0)
 		interaction.target_messages = sanitize_islist(ijson["target_messages"], list())
 		interaction.target_required_parts = sanitize_islist(ijson["target_required_parts"], list())
+		interaction.target_required_any_parts = sanitize_islist(ijson["target_required_any_parts"], list())
 		interaction.target_arousal = sanitize_integer(ijson["target_arousal"], 0, 100, 0)
 		interaction.target_pleasure = sanitize_integer(ijson["target_pleasure"], 0, 100, 0)
 		interaction.target_pain = sanitize_integer(ijson["target_pain"], 0, 100, 0)

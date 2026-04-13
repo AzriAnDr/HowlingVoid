@@ -1507,6 +1507,62 @@
 	parent_type = /datum/interaction/howling_extra
 	color = "pink"
 
+/datum/interaction/howling_item_inserted/dildo
+	category = "Dildo"
+	category_translation_key = "ui.interaction_panel.category.toy.dildo"
+	target_required_item_slots = list("vagina", "anus")
+	target_required_item_paths = list(/obj/item/clothing/sextoy/dildo)
+	target_blocked_item_paths = list(
+		/obj/item/clothing/sextoy/dildo/custom_dildo,
+		/obj/item/clothing/sextoy/dildo/double_dildo,
+	)
+	sound_use = TRUE
+	sound_range = 1
+	sound_possible = list('modular_nova/modules/modular_items/lewd_items/sounds/champ_fingering.ogg')
+
+/datum/interaction/howling_item_inserted/dildo/rock
+	name = "Rock Inserted Dildo"
+	translation_key = "ui.interaction_panel.interaction.toy.dildo.inserted_rock.name"
+	description = "Work the dildo already seated inside them."
+	description_translation_key = "ui.interaction_panel.interaction.toy.dildo.inserted_rock.description"
+	message = list(
+		"rocks %ITEM% inside %TARGET% in slow, deliberate motions.",
+		"works %ITEM% back and forth while it stays buried inside %TARGET%.",
+		"presses %ITEM% deeper into %TARGET% with each measured thrust."
+	)
+	user_arousal = list(2, 4)
+	target_pleasure = list(4, 6)
+	target_arousal = list(4, 6)
+
+/datum/interaction/howling_item_inserted/dildo/pull
+	name = "Tease Inserted Dildo"
+	translation_key = "ui.interaction_panel.interaction.toy.dildo.inserted_pull.name"
+	description = "Draw the dildo nearly free before easing it back in."
+	description_translation_key = "ui.interaction_panel.interaction.toy.dildo.inserted_pull.description"
+	message = list(
+		"draws %ITEM% almost free from %TARGET% before pressing it back in.",
+		"teases %TARGET% by working %ITEM% out to the edge and sliding it back deep.",
+		"lets %ITEM% drag at %TARGET%'s entrance before sinking it back inside."
+	)
+	user_arousal = list(2, 4)
+	target_pleasure = list(3, 5)
+	target_arousal = list(4, 6)
+	target_pain = list(0, 2)
+
+/datum/interaction/howling_item_inserted/dildo/grind
+	name = "Grind On Inserted Dildo"
+	translation_key = "ui.interaction_panel.interaction.toy.dildo.inserted_grind.name"
+	description = "Grind them down around the dildo already inside."
+	description_translation_key = "ui.interaction_panel.interaction.toy.dildo.inserted_grind.description"
+	message = list(
+		"grinds %TARGET% down around %ITEM%.",
+		"works %TARGET%'s body around the shape of %ITEM% inside them.",
+		"presses %TARGET% into %ITEM% and makes them ride out every inch."
+	)
+	user_arousal = list(2, 4)
+	target_pleasure = list(4, 6)
+	target_arousal = list(4, 6)
+
 /datum/interaction/howling_item_inserted/plug
 	category = "Buttplug"
 	category_translation_key = "ui.interaction_panel.category.toy.buttplug"
@@ -1894,6 +1950,50 @@
 	user_arousal = list(2, 4)
 	target_pleasure = list(4, 6)
 	target_arousal = list(4, 6)
+
+/datum/interaction/howling_item_self_inserted/double_dildo
+	parent_type = /datum/interaction/howling_item_inserted/double_dildo
+	usage = INTERACTION_SELF
+
+/datum/interaction/howling_item_self_inserted/double_dildo/rock
+	name = "Rock Double Dildo Inside Yourself"
+	translation_key = "ui.interaction_panel.interaction.toy.double_dildo.self_rock.name"
+	description = "Work the double dildo already seated inside you."
+	description_translation_key = "ui.interaction_panel.interaction.toy.double_dildo.self_rock.description"
+	message = list(
+		"rocks %ITEM% inside themself.",
+		"works their hips against %ITEM% in slow, hungry motions.",
+		"keeps %ITEM% moving inside themself until their body trembles."
+	)
+	user_pleasure = list(4, 6)
+	user_arousal = list(5, 7)
+
+/datum/interaction/howling_item_self_inserted/double_dildo/pull
+	name = "Draw Double Dildo To Your Edge"
+	translation_key = "ui.interaction_panel.interaction.toy.double_dildo.self_pull.name"
+	description = "Pull the double dildo almost free before easing it back into yourself."
+	description_translation_key = "ui.interaction_panel.interaction.toy.double_dildo.self_pull.description"
+	message = list(
+		"draws %ITEM% almost out before sinking back down on it.",
+		"teases themself by working %ITEM% to the edge and taking it again.",
+		"pulls %ITEM% to the brink before easing it into themself once more."
+	)
+	user_pleasure = list(3, 5)
+	user_arousal = list(4, 6)
+	user_pain = list(0, 2)
+
+/datum/interaction/howling_item_self_inserted/double_dildo/grind
+	name = "Grind Yourself On Double Dildo"
+	translation_key = "ui.interaction_panel.interaction.toy.double_dildo.self_grind.name"
+	description = "Grind yourself down on the double dildo."
+	description_translation_key = "ui.interaction_panel.interaction.toy.double_dildo.self_grind.description"
+	message = list(
+		"grinds themself down on %ITEM%.",
+		"rolls their hips against %ITEM% in needy little circles.",
+		"works themself against %ITEM% until they shiver."
+	)
+	user_pleasure = list(4, 6)
+	user_arousal = list(5, 7)
 
 /datum/interaction/howling_item/custom_dildo
 	category = "Custom Dildo"

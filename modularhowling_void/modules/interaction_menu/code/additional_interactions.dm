@@ -603,7 +603,7 @@
 	description = "Caress their chest."
 	category = "Chest"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("chest")
+	target_required_any_parts = list("chest")
 	message = list(
 		"caresses %TARGET%'s chest with warm hands.",
 		"glides their touch over %TARGET%'s chest.",
@@ -620,7 +620,7 @@
 	description = "Stroke their chest."
 	category = "Chest"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("chest")
+	target_required_any_parts = list("chest")
 	message = list(
 		"strokes over %TARGET%'s chest in unhurried passes.",
 		"runs their hands across %TARGET%'s chest.",
@@ -637,7 +637,7 @@
 	description = "Massage their chest and ribs."
 	category = "Chest"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("chest")
+	target_required_any_parts = list("chest")
 	message = list(
 		"massages %TARGET%'s chest with steady pressure.",
 		"works their hands over %TARGET%'s chest and ribs.",
@@ -1405,7 +1405,7 @@
 	description = "Caress their groin."
 	category = "Groin"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("groin")
+	target_required_any_parts = list("groin")
 	message = list(
 		"caresses %TARGET%'s groin with teasing touches.",
 		"lets their hand drift over %TARGET%'s groin.",
@@ -1422,7 +1422,7 @@
 	description = "Stroke their groin with your hand."
 	category = "Groin"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("groin")
+	target_required_any_parts = list("groin")
 	message = list(
 		"strokes %TARGET%'s groin.",
 		"runs their hand teasingly over %TARGET%'s groin.",
@@ -1439,7 +1439,7 @@
 	description = "Massage their groin gently."
 	category = "Groin"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("groin")
+	target_required_any_parts = list("groin")
 	message = list(
 		"gently massages %TARGET%'s groin.",
 		"works careful pressure into %TARGET%'s inner groin.",
@@ -1490,7 +1490,7 @@
 	description = "Cup their groin in your hand."
 	category = "Groin"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("groin")
+	target_required_any_parts = list("groin")
 	message = list(
 		"cups %TARGET%'s groin in their hand.",
 		"palms %TARGET%'s groin with a warm, steady touch.",
@@ -1507,7 +1507,7 @@
 	description = "Trace your fingers over their groin."
 	category = "Groin"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("groin")
+	target_required_any_parts = list("groin")
 	message = list(
 		"traces slow fingertips over %TARGET%'s groin.",
 		"draws a teasing line of touch across %TARGET%'s groin.",
@@ -1523,7 +1523,7 @@
 	name = "Rub Their Groin"
 	description = "Rub against their groin."
 	category = "Groin"
-	target_required_parts = list("groin")
+	target_required_any_parts = list("groin")
 	message = list(
 		"rubs against %TARGET%'s groin.",
 		"presses close and grinds lightly against %TARGET%'s groin.",
@@ -1539,7 +1539,7 @@
 	name = "Hold Close At Their Groin"
 	description = "Hold them close at the groin."
 	category = "Groin"
-	target_required_parts = list("groin")
+	target_required_any_parts = list("groin")
 	message = list(
 		"holds %TARGET% close with their body pressed at the groin.",
 		"draws %TARGET% in until their groins meet.",
@@ -1555,7 +1555,7 @@
 	name = "Tease Groin"
 	description = "Tease their groin all over."
 	category = "Groin"
-	target_required_parts = list("groin")
+	target_required_any_parts = list("groin")
 	message = list(
 		"teases %TARGET%'s groin with slow, deliberate attention.",
 		"keeps their focus lingering on %TARGET%'s groin.",
@@ -2287,7 +2287,7 @@
 	description = "Grope their ass."
 	category = "Butt"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("butt")
+	target_required_any_parts = list("butt")
 	message = list(
 		"gropes %TARGET%'s ass.",
 		"squeezes %TARGET%'s butt.",
@@ -2304,7 +2304,7 @@
 	description = "Let your hands roam over their ass."
 	category = "Butt"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("butt")
+	target_required_any_parts = list("butt")
 	message = list(
 		"caresses %TARGET%'s ass with wandering hands.",
 		"lets their palms drift over %TARGET%'s rear.",
@@ -2321,7 +2321,7 @@
 	description = "Work a slow massage into their ass."
 	category = "Butt"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("butt")
+	target_required_any_parts = list("butt")
 	message = list(
 		"massages %TARGET%'s ass with both hands.",
 		"kneads %TARGET%'s rear in slow circles.",
@@ -2339,7 +2339,7 @@
 	description = "Knead their ass in both hands."
 	category = "Butt"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("butt")
+	target_required_any_parts = list("butt")
 	message = list(
 		"kneads %TARGET%'s ass with eager hands.",
 		"works both palms into %TARGET%'s cheeks with a slow squeeze.",
@@ -2356,7 +2356,7 @@
 	description = "Squeeze their ass."
 	category = "Butt"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("butt")
+	target_required_any_parts = list("butt")
 	message = list(
 		"squeezes %TARGET%'s ass hard in both hands.",
 		"gives %TARGET%'s butt a firm, possessive squeeze.",
@@ -2368,12 +2368,30 @@
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
+/datum/interaction/howling_extra/pinch_ass
+	name = "Pinch Their Ass"
+	description = "Pinch their ass through whatever they're wearing."
+	category = "Butt"
+	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
+	target_required_any_parts = list("butt")
+	message = list(
+		"pinches %TARGET%'s ass through the fabric.",
+		"catches a cheek of %TARGET%'s ass in a quick pinch.",
+		"gives %TARGET%'s rear a teasing pinch."
+	)
+	sound_use = TRUE
+	sound_range = 1
+	sound_possible = list('sound/effects/emotes/assslap.ogg')
+	user_arousal = list(1, 3)
+	target_arousal = list(2, 4)
+	target_pain = list(0, 1)
+
 /datum/interaction/howling_extra/rub_ass
 	name = "Rub Their Ass"
 	description = "Rub your hands over their ass."
 	category = "Butt"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("butt")
+	target_required_any_parts = list("butt")
 	message = list(
 		"rubs their hands over %TARGET%'s ass in lingering passes.",
 		"slides their palms across %TARGET%'s rear.",
@@ -2407,7 +2425,7 @@
 	description = "Take hold of their hips."
 	category = "Butt"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("butt")
+	target_required_any_parts = list("butt")
 	message = list(
 		"takes hold of %TARGET%'s hips and keeps them close.",
 		"plants their hands on %TARGET%'s hips with a possessive grip.",
@@ -2424,7 +2442,7 @@
 	description = "Drag them in by the ass."
 	category = "Butt"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("butt")
+	target_required_any_parts = list("butt")
 	message = list(
 		"grabs %TARGET%'s ass and pulls them in closer.",
 		"hooks both hands over %TARGET%'s rear and tugs them flush against their body.",
@@ -2513,7 +2531,7 @@
 	description = "Grope their breasts."
 	category = "Breasts"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("breasts")
+	target_required_any_parts = list("breasts")
 	message = list(
 		"gropes %TARGET%'s breasts.",
 		"cups %TARGET%'s chest in their hands.",
@@ -4310,6 +4328,11 @@
 	user_arousal = list(2, 4)
 	target_arousal = list(1, 3)
 
+/datum/interaction/howling_extra/breastfeed/allow_act(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!..())
+		return FALSE
+	return user.has_lactating_breasts(REQUIRE_GENITAL_EXPOSED)
+
 /datum/interaction/howling_extra/boobjob
 	name = "Give Boobjob"
 	description = "Pleasure them with your breasts."
@@ -4506,7 +4529,7 @@
 	description = "Let your hands wander over their breasts."
 	category = "Breasts"
 	user_required_parts = list("hands")
-	target_required_parts = list("breasts")
+	target_required_any_parts = list("breasts")
 	message = list(
 		"caresses %TARGET%'s breasts with wandering hands.",
 		"lets their palms glide over %TARGET%'s breasts.",
@@ -4526,7 +4549,7 @@
 	description = "Knead and massage their breasts."
 	category = "Breasts"
 	user_required_parts = list("hands")
-	target_required_parts = list("breasts")
+	target_required_any_parts = list("breasts")
 	message = list(
 		"massages %TARGET%'s breasts in slow circles.",
 		"kneads %TARGET%'s breasts with careful pressure.",
@@ -4547,7 +4570,7 @@
 	description = "Cup their breasts in your hands."
 	category = "Breasts"
 	user_required_parts = list("hands")
-	target_required_parts = list("breasts")
+	target_required_any_parts = list("breasts")
 	message = list(
 		"cups %TARGET%'s breasts in both hands.",
 		"holds %TARGET%'s breasts with an appreciative squeeze.",
@@ -4564,7 +4587,7 @@
 	description = "Rub your hands over their breasts."
 	category = "Breasts"
 	user_required_parts = list("hands")
-	target_required_parts = list("breasts")
+	target_required_any_parts = list("breasts")
 	message = list(
 		"rubs their hands over %TARGET%'s breasts.",
 		"slides their palms across %TARGET%'s breasts in lingering passes.",
@@ -5031,7 +5054,7 @@
 	description = "Caress their thighs slowly."
 	category = "Thighs"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("thighs")
+	target_required_any_parts = list("thighs")
 	message = list(
 		"caresses %TARGET%'s thighs with slow hands.",
 		"lets their touch drift over %TARGET%'s thighs.",
@@ -5048,7 +5071,7 @@
 	description = "Stroke their thighs."
 	category = "Thighs"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("thighs")
+	target_required_any_parts = list("thighs")
 	message = list(
 		"strokes slowly along %TARGET%'s thighs.",
 		"runs their hands over %TARGET%'s thighs in teasing passes.",
@@ -5150,7 +5173,7 @@
 	description = "Squeeze their thighs."
 	category = "Thighs"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("thighs")
+	target_required_any_parts = list("thighs")
 	message = list(
 		"squeezes %TARGET%'s thighs firmly.",
 		"closes their hands around %TARGET%'s thighs in a slow squeeze.",
@@ -5199,7 +5222,7 @@
 	name = "Rub Their Thighs"
 	description = "Rub against their thighs."
 	category = "Thighs"
-	target_required_parts = list("thighs")
+	target_required_any_parts = list("thighs")
 	message = list(
 		"rubs slowly against %TARGET%'s thighs.",
 		"presses close and grinds teasingly against %TARGET%'s thighs.",
@@ -5332,6 +5355,54 @@
 	target_pleasure = list(6, 8)
 	user_arousal = list(10, 12)
 	target_arousal = list(10, 12)
+
+/datum/interaction/howling_extra/double_dildo_scissor
+	name = "Scissor With Double Dildo"
+	description = "Use a double dildo to keep both pussies filled while you scissor together."
+	category = "Vagina"
+	user_required_parts = list("vagina")
+	target_required_parts = list("vagina")
+	user_required_item_paths = list(/obj/item/clothing/sextoy/dildo/double_dildo)
+	message = list(
+		"guides %ITEM% between both pussies and scissors against %TARGET% with it.",
+		"works one end of %ITEM% into %TARGET% and the other against themself as they grind together.",
+		"uses %ITEM% to keep both sexes filled while scissoring against %TARGET%."
+	)
+	sound_use = TRUE
+	sound_range = 1
+	sound_possible = list(
+		'modular_nova/modules/modular_items/lewd_items/sounds/squelch1.ogg',
+		'modular_nova/modules/modular_items/lewd_items/sounds/squelch2.ogg',
+		'modular_nova/modules/modular_items/lewd_items/sounds/squelch3.ogg'
+	)
+	user_pleasure = list(6, 8)
+	target_pleasure = list(6, 8)
+	user_arousal = list(10, 12)
+	target_arousal = list(10, 12)
+
+/datum/interaction/howling_extra/double_dildo_scissor_ride
+	name = "Ride Double Dildo In Scissors"
+	description = "Ride harder in scissors while the double dildo keeps both of you filled."
+	category = "Vagina"
+	user_required_parts = list("vagina")
+	target_required_parts = list("vagina")
+	user_required_item_paths = list(/obj/item/clothing/sextoy/dildo/double_dildo)
+	message = list(
+		"rides %ITEM% between them and %TARGET% in a desperate scissoring grind.",
+		"locks up with %TARGET% and rides %ITEM% harder between both pussies.",
+		"grinds fast against %TARGET%, using %ITEM% to thrust into both of them at once."
+	)
+	sound_use = TRUE
+	sound_range = 1
+	sound_possible = list(
+		'modular_nova/modules/modular_items/lewd_items/sounds/squelch1.ogg',
+		'modular_nova/modules/modular_items/lewd_items/sounds/squelch2.ogg',
+		'modular_nova/modules/modular_items/lewd_items/sounds/squelch3.ogg'
+	)
+	user_pleasure = list(7, 9)
+	target_pleasure = list(7, 9)
+	user_arousal = list(11, 13)
+	target_arousal = list(11, 13)
 
 /datum/interaction/howling_extra/fuck
 	name = "Fuck"
@@ -5781,7 +5852,7 @@
 	description = "Slap their ass."
 	category = "Hands"
 	interaction_requires = list(INTERACTION_REQUIRE_SELF_HAND)
-	target_required_parts = list("butt")
+	target_required_any_parts = list("butt")
 	message = list(
 		"slaps %TARGET% right on the ass.",
 		"spanks %TARGET%'s ass.",
@@ -6306,7 +6377,7 @@
 	description = "Slap their ass with your tail."
 	category = "Tail"
 	user_required_parts = list("tail")
-	target_required_parts = list("butt")
+	target_required_any_parts = list("butt")
 	message = list(
 		"smacks %TARGET%'s ass with their tail.",
 		"lands a sharp tail-slap on %TARGET%'s butt.",
@@ -6324,7 +6395,7 @@
 	description = "Caress their ass with your tail."
 	category = "Tail"
 	user_required_parts = list("tail")
-	target_required_parts = list("butt")
+	target_required_any_parts = list("butt")
 	message = list(
 		"caresses %TARGET%'s ass with their tail.",
 		"strokes %TARGET%'s rear with a slow sweep of their tail.",

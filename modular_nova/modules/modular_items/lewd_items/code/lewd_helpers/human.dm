@@ -131,6 +131,22 @@
 		else
 			return TRUE
 
+/// Returns true if the human has breasts and lactation is enabled. Accepts any of the `REQUIRE_GENITAL_` defines.
+/mob/living/carbon/human/proc/has_lactating_breasts(required_state = REQUIRE_GENITAL_ANY)
+	var/obj/item/organ/genital/breasts/genital = get_organ_slot(ORGAN_SLOT_BREASTS)
+	if(!genital || !genital.lactates)
+		return FALSE
+
+	switch(required_state)
+		if(REQUIRE_GENITAL_ANY)
+			return TRUE
+		if(REQUIRE_GENITAL_EXPOSED)
+			return genital.visibility_preference == GENITAL_ALWAYS_SHOW || is_topless()
+		if(REQUIRE_GENITAL_UNEXPOSED)
+			return genital.visibility_preference != GENITAL_ALWAYS_SHOW && !is_topless()
+		else
+			return TRUE
+
 /// Returns true if the human has an accessible anus for the parameter. Accepts any of the `REQUIRE_GENITAL_` defines.
 /mob/living/carbon/human/proc/has_anus(required_state = REQUIRE_GENITAL_ANY)
 	if(issilicon(src))

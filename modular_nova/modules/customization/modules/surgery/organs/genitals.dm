@@ -595,7 +595,8 @@
 
 /datum/bodypart_overlay/mutant/genital/butt
 	feature_key = ORGAN_SLOT_BUTT
-	layers = EXTERNAL_ADJACENT | EXTERNAL_FRONT
+	// Keep the butt visible, but stop it from visually sitting on top of exposed tails.
+	layers = EXTERNAL_FRONT_UNDER_CLOTHES | EXTERNAL_BEHIND
 
 /datum/bodypart_overlay/mutant/genital/butt/get_global_feature_list()
 	return SSaccessories.sprite_accessories[ORGAN_SLOT_BUTT]

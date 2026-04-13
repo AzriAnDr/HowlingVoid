@@ -129,6 +129,9 @@
 	name = "security miniskirt"
 	desc = "This miniskirt was originally featured in a gag calendar, but entered official use once they realized its potential for arid climates."
 	icon_state = "miniskirt"
+	body_parts_covered = GROIN|LEGS
+	can_adjust = FALSE
+	female_sprite_flags = FEMALE_UNIFORM_NO_BREASTS
 
 /obj/item/clothing/under/rank/security/nova/skirt/mini/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_miniskirt)
