@@ -6853,7 +6853,7 @@
 "tWC" = (/obj/effect/turf_decal/siding/wood{dir = 4},/turf/open/floor/wood/tile,/area/station/commons/dorms/room2)
 "tWN" = (/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,/obj/machinery/light/floor,/obj/structure/cable,/turf/open/floor/iron,/area/station/hallway/secondary/command)
 "tXb" = (/obj/structure/disposalpipe/segment{dir = 9},/turf/open/floor/iron,/area/station/hallway/primary/forestarboardhall)
-"tXk" = (/obj/structure/table/wood,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/turf/open/floor/carpet/royalblack,/area/station/service/chapel/office)
+"tXk" = (/obj/structure/table/wood,/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,/obj/item/book/bible,/turf/open/floor/carpet/royalblack,/area/station/service/chapel/office)
 "tXH" = (/obj/structure/table/wood,/obj/item/cigarette/pipe,/obj/item/clothing/mask/fakemoustache,/obj/effect/turf_decal/siding/wood{dir = 8},/turf/open/floor/wood/tile,/area/station/service/theater)
 "tXI" = (/obj/effect/turf_decal/siding/wideplating/corner{dir = 4},/turf/open/floor/iron/herringbone,/area/station/commons/fitness/recreation/entertainment)
 "tXT" = (/obj/structure/cable,/obj/structure/cable,/obj/machinery/power/rtg/advanced,/turf/open/floor/iron/submarine_vents,/area/station/solars/port/fore)

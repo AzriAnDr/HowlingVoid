@@ -2223,12 +2223,6 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/station/common/laser_tag)
-"aIQ" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/station/hallway/secondary/exit/departure_lounge)
 "aIU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
@@ -14453,9 +14447,6 @@
 /obj/structure/stairs/east,
 /obj/structure/railing{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
 	},
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
@@ -127844,7 +127835,7 @@ uDG
 nqW
 ejG
 ibC
-aIQ
+uDG
 cNF
 rYB
 qww
@@ -128101,7 +128092,7 @@ uDG
 uDG
 uDG
 uDG
-aIQ
+uDG
 atb
 ioz
 qww
