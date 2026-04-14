@@ -1,5 +1,6 @@
 // THIS IS A NOVA SECTOR UI FILE
-import { useState } from 'react';
+import { storage } from 'common/storage';
+import { useEffect, useMemo, useState } from 'react';
 import { useBackend } from '../../backend';
 import type { BooleanLike } from 'tgui-core/react';
 import {
@@ -36,6 +37,11 @@ type Interaction = {
   erp_interaction: BooleanLike;
   use_subtler: BooleanLike;
   erp_subtle_max_length: number;
+  ref_self?: string;
+  ref_user?: string;
+  self?: string;
+  user_name?: string;
+  target_name?: string;
   categories: string[];
   interactions: Record<string, string[]>;
   erp_categories: string[];
@@ -51,18 +57,100 @@ export const MainContent = () => {
   const [activeTab, setActiveTab] = useState('interactions');
   const [showCategories, setShowCategories] = useState(true);
   const [subtleMessage, setSubtleMessage] = useState('');
+  const [draftReady, setDraftReady] = useState(false);
   const { act, data } = useBackend<Interaction>();
   const { t } = usePreferencesLocalization(data);
   const {
     erp_interaction,
     use_subtler,
     erp_subtle_max_length = 2048,
+    ref_self,
+    ref_user,
+    self,
+    user_name,
+    target_name,
     categories = [],
     interactions = {},
     erp_categories = [],
     erp_interactions = {},
     erp_preferences = [],
   } = data;
+
+  const stableDraftTarget = target_name || self || 'unknown';
+  const stableDraftUser = user_name || 'unknown';
+  const subtleDraftKey = useMemo(
+    () => `interaction-panel-subtle-draft:${stableDraftUser}:${stableDraftTarget}`,
+    [stableDraftTarget, stableDraftUser],
+  );
+  const legacySubtleDraftKey = useMemo(
+    () => `interaction-panel-subtle-draft:${ref_user || 'unknown'}:${ref_self || 'unknown'}`,
+    [ref_self, ref_user],
+  );
+
+  const readDraftFromLocalStorage = () => {
+    try {
+      return window.localStorage?.getItem(subtleDraftKey) || '';
+    } catch {
+      return '';
+    }
+  };
+
+  const writeDraftToLocalStorage = (value: string) => {
+    try {
+      if (value.length) {
+        window.localStorage?.setItem(subtleDraftKey, value);
+      } else {
+        window.localStorage?.removeItem(subtleDraftKey);
+      }
+    } catch {
+      // Ignore local storage failures and fall back to TGUI storage.
+    }
+  };
+
+  useEffect(() => {
+    let cancelled = false;
+    setDraftReady(false);
+
+    const loadDraft = async () => {
+      const immediateDraft = readDraftFromLocalStorage();
+      const storedDraft =
+        immediateDraft ||
+        (await storage.get(subtleDraftKey)) ||
+        (await storage.get(legacySubtleDraftKey)) ||
+        '';
+      if (cancelled) {
+        return;
+      }
+      if (storedDraft && legacySubtleDraftKey !== subtleDraftKey) {
+        writeDraftToLocalStorage(String(storedDraft));
+        storage.set(subtleDraftKey, String(storedDraft));
+        storage.remove(legacySubtleDraftKey);
+      }
+      setSubtleMessage(String(storedDraft).slice(0, erp_subtle_max_length));
+      setDraftReady(true);
+    };
+
+    loadDraft();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [legacySubtleDraftKey, subtleDraftKey, erp_subtle_max_length]);
+
+  useEffect(() => {
+    if (!draftReady) {
+      return;
+    }
+
+    writeDraftToLocalStorage(subtleMessage);
+
+    if (subtleMessage.length) {
+      storage.set(subtleDraftKey, subtleMessage);
+      return;
+    }
+
+    storage.remove(subtleDraftKey);
+  }, [draftReady, subtleDraftKey, subtleMessage]);
 
   const availableTabs = [
     {
@@ -156,9 +244,18 @@ export const MainContent = () => {
                   <Section
                     title={t('ui.interaction_panel.custom_subtle_title')}
                     buttons={(
-                      <Box color="label">
-                        {subtleMessage.length}/{erp_subtle_max_length}
-                      </Box>
+                      <Stack align="center" spacing={1}>
+                        <Stack.Item>
+                          <Box color="label">
+                            {t('ui.interaction_panel.custom_subtle_draft_saved')}
+                          </Box>
+                        </Stack.Item>
+                        <Stack.Item>
+                          <Box color="label">
+                            {subtleMessage.length}/{erp_subtle_max_length}
+                          </Box>
+                        </Stack.Item>
+                      </Stack>
                     )}
                   >
                     <Stack vertical>
@@ -202,6 +299,8 @@ export const MainContent = () => {
                               message: subtleMessage,
                             });
                             setSubtleMessage('');
+                            writeDraftToLocalStorage('');
+                            storage.remove(subtleDraftKey);
                           }}
                         >
                           {t('ui.interaction_panel.custom_subtle_send_message')}

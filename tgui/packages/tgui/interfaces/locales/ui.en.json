@@ -3538,6 +3538,7 @@
 	"ui.interaction_panel.arousal": "Arousal",
 	"ui.interaction_panel.pain": "Pain",
 	"ui.interaction_panel.custom_subtle_title": "ERP Subtle",
+	"ui.interaction_panel.custom_subtle_draft_saved": "Draft autosaved",
 	"ui.interaction_panel.custom_subtle_placeholder": "Write a subtle ERP message...",
 	"ui.interaction_panel.custom_subtle_send": "Send Subtle",
 	"ui.interaction_panel.custom_subtle_send_antighost": "Send Anti-Ghost Subtler",

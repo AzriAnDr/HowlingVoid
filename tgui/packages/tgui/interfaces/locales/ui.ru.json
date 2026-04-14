@@ -3538,6 +3538,7 @@
 	"ui.interaction_panel.arousal": "Возбуждение",
 	"ui.interaction_panel.pain": "Боль",
 	"ui.interaction_panel.custom_subtle_title": "ERP-сабтл",
+	"ui.interaction_panel.custom_subtle_draft_saved": "Черновик сохранён",
 	"ui.interaction_panel.custom_subtle_placeholder": "Введите скрытое ERP-сообщение...",
 	"ui.interaction_panel.custom_subtle_send": "Отправитшь сабтл",
 	"ui.interaction_panel.custom_subtle_send_antighost": "Отправить антигост-сабтл",
