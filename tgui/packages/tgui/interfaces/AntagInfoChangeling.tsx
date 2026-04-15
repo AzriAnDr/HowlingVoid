@@ -12,6 +12,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
+import { usePreferencesLocalization } from './localization';
 import {
   type Objective,
   ObjectivePrintout,
@@ -107,7 +108,8 @@ export const AntagInfoChangeling = (props) => {
 };
 
 const IntroductionSection = (props) => {
-  const { act, data } = useBackend<Info>();
+  const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const {
     true_name,
     hive_name,
@@ -118,13 +120,13 @@ const IntroductionSection = (props) => {
   return (
     <Section
       fill
-      title="Intro"
+      title={t('ui.antaginfochangeling.intro')}
       style={{ overflowY: 'auto' }}
       buttons={
         <Button
           icon="dna"
           tooltipPosition="left"
-          tooltip={`Absorbed DNA`}
+          tooltip="Absorbed DNA"
           color="purple"
         >
           {absorbed_dna}
@@ -142,7 +144,7 @@ const IntroductionSection = (props) => {
             objectiveFollowup={
               <ReplaceObjectivesButton
                 can_change_objective={can_change_objective}
-                button_title={'Evolve New Directives'}
+                button_title="Evolve New Directives"
                 button_colour={'green'}
               />
             }
@@ -154,25 +156,26 @@ const IntroductionSection = (props) => {
 };
 
 const AbilitiesSection = () => {
-  const { act, data } = useBackend<Info>();
+  const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { true_name } = data;
   return (
-    <Section fill title="Abilities">
+    <Section fill title={t('ui.antaginfochangeling.abilities')}>
       <Stack fill>
         <Stack.Item grow>
           <Stack fill vertical>
             <Stack.Item textColor="label" grow>
               Your
-              <span style={absorbstyle}>&ensp;Absorb DNA</span> ability allows
+              <span style={absorbstyle}>&ensp;{t('ui.antaginfochangeling.absorb_dna')}</span> ability allows
               you to steal the DNA and memories of a victim. The
-              <span style={absorbstyle}>&ensp;Extract DNA Sting</span> ability
+              <span style={absorbstyle}>&ensp;{t('ui.antaginfochangeling.extract_dna_sting')}</span> ability
               also steals the DNA of a victim, and is undetectable, but does not
               grant you their memories or speech patterns.
             </Stack.Item>
             <Stack.Divider />
             <Stack.Item textColor="label" grow>
               Your
-              <span style={revivestyle}>&ensp;Reviving Stasis</span> ability
+              <span style={revivestyle}>&ensp;{t('ui.antaginfochangeling.reviving_stasis')}</span> ability
               allows you to revive. It means nothing short of a complete body
               destruction can stop you! Obviously, this is loud and so should
               not be done in front of people you are not planning on silencing.
@@ -184,7 +187,7 @@ const AbilitiesSection = () => {
           <Stack fill vertical>
             <Stack.Item textColor="label" grow>
               Your
-              <span style={transformstyle}>&ensp;Transform</span> ability allows
+              <span style={transformstyle}>&ensp;{t('ui.antaginfochangeling.transform')}</span> ability allows
               you to change into the form of those you have collected DNA from,
               lethally and nonlethally. It will also mimic (NOT REAL CLOTHING)
               the clothing they were wearing for every slot you have open.
@@ -192,7 +195,7 @@ const AbilitiesSection = () => {
             <Stack.Divider />
             <Stack.Item textColor="label" grow>
               The
-              <span style={storestyle}>&ensp;Cellular Emporium</span> is where
+              <span style={storestyle}>&ensp;{t('ui.antaginfochangeling.cellular_emporium')}</span> is where
               you purchase more abilities beyond your starting kit. You have 10
               genetic points to spend on abilities and you are able to readapt
               after absorbing a body, refunding your points for different kits.
@@ -214,10 +217,10 @@ const AbilitiesSection = () => {
             <Stack.Divider />
             <Stack.Item textColor="label" grow>
               All Changelings, regardless of origin, are linked together by the{' '}
-              <span style={hivemindstyle}>hivemind</span>. You may communicate
+              <span style={hivemindstyle}>{t('ui.antaginfochangeling.hivemind_2')}</span>. You may communicate
               to other Changelings under your mental alias,{' '}
               <span style={hivemindstyle}>{true_name}</span>, by starting a
-              message with <span style={hivemindstyle}>:g</span>. Work together,
+              message with <span style={hivemindstyle}>{t('ui.antaginfochangeling.hive_chat_prefix')}</span>. Work together,
               and you will bring the station to new heights of terror.
             </Stack.Item>
           </Stack>
@@ -228,12 +231,14 @@ const AbilitiesSection = () => {
 };
 
 const BetrayalWarning = (props) => {
+  const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   return (
     <NoticeBox danger>
       Other Changelings are strong allies, but some Changelings may betray you.
       Changelings grow in power greatly by absorbing their kind, and getting
       absorbed by another Changeling will leave you as a{' '}
-      <span style={fallenstyle}>Fallen Changeling</span>. There is no greater
+      <span style={fallenstyle}>{t('ui.antaginfochangeling.fallen_changeling')}</span>. There is no greater
       humiliation.
     </NoticeBox>
   );
@@ -241,6 +246,7 @@ const BetrayalWarning = (props) => {
 
 const MemoriesSection = (props) => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { memories } = data;
   const [selectedMemory, setSelectedMemory] = useState(
     (!!memories && memories[0]) || null,
@@ -255,7 +261,7 @@ const MemoriesSection = (props) => {
     <Section
       fill
       scrollable={!!memories && !!memories.length}
-      title="Stolen Memories"
+      title={t('ui.antaginfochangeling.stolen_memories')}
       buttons={
         <Button
           icon="info"
@@ -269,7 +275,7 @@ const MemoriesSection = (props) => {
       }
     >
       {(!!memories && !memories.length && (
-        <Dimmer fontSize="20px">Absorb a victim first!</Dimmer>
+        <Dimmer fontSize="20px">{t('ui.antaginfochangeling.absorb_a_victim_first')}</Dimmer>
       )) || (
         <Stack vertical>
           <Stack.Item>
@@ -291,15 +297,16 @@ const MemoriesSection = (props) => {
 
 const VictimPatternsSection = (props) => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { stolen_antag_info } = data;
   return (
     <Section
       fill
       scrollable={!!stolen_antag_info}
-      title="Additional Stolen Information"
+      title={t('ui.antaginfochangeling.additional_stolen_information')}
     >
       {(!!stolen_antag_info && stolen_antag_info) || (
-        <Dimmer fontSize="20px">Absorb a victim first!</Dimmer>
+        <Dimmer fontSize="20px">{t('ui.antaginfochangeling.absorb_a_victim_first')}</Dimmer>
       )}
     </Section>
   );
