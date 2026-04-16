@@ -1,11 +1,24 @@
 <!-- Most valid html will work in here, but you have to use URL links for images. -->
 
 <hr>
-<h1 style='text-decoration: underline;'>Добро пожаловать на Howling Void!</h1>
-Это ролевой сервер с возможностью играть на фурри, где мы ценим свободу отыгрыша, атмосферу и<br>самое главное — людей, которые делают это место уютным.<br><br>
-✨ Здесь важны <b><font color='#FFFF66'>отзывчивость</font></b>, <b><font color='#7FFFD4'>открытость</font></b>, <b><font color='#FFCC99'>взаимоуважение</font></b> и <b><font color='#99CCFF'>осознанность</font></b>.<br>
-Мы верим, что при соблюдении эти простых вещей мы добьёмся максимально возможного комфорта.<br><br>
-💬 <i>Администрация всегда открыта к диалогу и прислушивается к сообществу.</i><br>
-Мы хотим, чтобы каждый чувствовал себя частью этого сообщества.<br><br>
-Все мы здесь ради отдыха, новых историй и хорошего настроения. ✨
+<h2 style='margin: 4px 0 8px 0; text-decoration: underline; color: #d88a8a;'>Добро пожаловать на Howling Void!</h2>
+
+<b>Howling Void</b> — русскоязычный MRP-HRP сервер Space Station 13 с возможностью играть на фурри,<br>
+где ценятся <b><font color='#f0d36d'>свобода ролевой игры</font></b>, <b><font color='#9fc7ff'>атмосфера</font></b> и <b><font color='#d7b3ff'>люди</font></b>, которые делают проект живым и уютным.<br><br>
+
+Здесь важны <b><font color='#ffe27a'>доверие</font></b>, <b><font color='#8ff0d1'>взаимоуважение</font></b>, <b><font color='#ffcf99'>добросовестное взаимодействие</font></b> и <b><font color='#9fc7ff'>осознанный отыгрыш</font></b>.<br>
+Каждый участник сообщества влияет на общую атмосферу, поэтому мы ожидаем уважения друг к другу как в игре, так и вне её.<br><br>
+
+<i><font color='#c8c8c8'>Мы поддерживаем свободу игры и общения, пока она не разрушает атмосферу, не мешает окружающим и не превращает ролевой процесс в хаос ради хаоса.</font></i><br><br>
+
+Администрация открыта к конструктивному диалогу, предложениям и критике.<br>
+Проект развивается вместе с сообществом, сохраняя собственный характер и направление.<br><br>
+
+<b><font color='#d88a8a'>Полезные ссылки:</font></b><br>
+<font color='#cccccc'>Discord:</font> <a href="https://discord.gg/qVHJ4AuW4C">discord.gg/qVHJ4AuW4C</a>
+<font color='#cccccc'>Правила:</font> <a href="https://alohadawn.github.io/HowlingVoidRules/">HowlingVoid Rules</a>
+<font color='#cccccc'>GitHub:</font> <a href="https://github.com/alohadawn/HowlingVoid">github.com/alohadawn/HowlingVoid</a>
+
+Все мы здесь ради отдыха, сильных историй, атмосферной игры и хорошего времени.<br>
+<b><font color='#d88a8a'>В бездне нам всем будет комфортно.</font></b>
 <hr>
