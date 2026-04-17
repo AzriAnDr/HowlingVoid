@@ -164,6 +164,8 @@
 /datum/supply_pack/companies/mags_and_ammo/scar
 	contains = list(/obj/item/ammo_box/magazine/scar)
 	cost = 100
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
 /*
 /datum/supply_pack/companies/mags_and_ammo/p90
 	contains = list(/obj/item/ammo_box/magazine/p90)
