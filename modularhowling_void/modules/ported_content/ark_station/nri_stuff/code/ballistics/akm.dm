@@ -30,7 +30,7 @@
 /// INTEQ NEW
 /obj/item/gun/ballistic/automatic/akm/modern
 	name = "\improper KAR-19 carbine"
-	desc = "An upgraded version of the KR-Q, InteQ assault rifles. It has a shorter firing delay and better reliability."
+	desc = "An upgraded version of the KAR, InteQ assault rifles. It has a shorter firing delay and better reliability."
 	icon_state = "akm_modern"
 	inhand_icon_state = "akm"
 	worn_icon_state = "akm"
@@ -40,7 +40,7 @@
 /// INTEQ CIV
 /obj/item/gun/ballistic/automatic/akm/civvie
 	name = "\improper Sabel carbine"
-	desc = "Civilian version of the KR-Q-12 assault rifles produced by InteQ."
+	desc = "Civilian version of the KAR-12 assault rifles produced by InteQ."
 	icon_state = "akm_civ"
 	inhand_icon_state = "akm_civ"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/akm/civvie
@@ -64,7 +64,7 @@
 
 /// AMMO ///
 /obj/item/ammo_box/magazine/akm
-	name = "KR-Q magazine"
+	name = "KAR magazine"
 	desc = "a banana-shaped double-stack magazine able to hold 30 rounds of 5.6mm ammo."
 	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_items.dmi'
 	icon_state = "akm"
@@ -74,7 +74,7 @@
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 
 /obj/item/ammo_box/magazine/akm/ricochet
-	name = "KR-Q magazine (MATCH)"
+	name = "KAR magazine (MATCH)"
 	desc = "a banana-shaped double-stack magazine able to hold 30 rounds of 5.6mm ammo. Contains highly ricocheting ammunition."
 	icon_state = "akm_ricochet"
 	ammo_type = /obj/item/ammo_casing/realistic/a762x39/ricochet
@@ -86,26 +86,26 @@
 	ammo_type = /obj/item/ammo_casing/realistic/a762x39/fire
 
 /obj/item/ammo_box/magazine/akm/ap
-	name = "KR-Q magazine (ARMOR PIERCING)"
+	name = "KAR magazine (ARMOR PIERCING)"
 	desc = "a banana-shaped double-stack magazine able to hold 30 rounds of 5.6mm ammo. Contains armor-piercing ammunition."
 	icon_state = "akm_ap"
 	ammo_type = /obj/item/ammo_casing/realistic/a762x39/ap
 
 /obj/item/ammo_box/magazine/akm/emp
-	name = "KR-Q magazine (EMP)"
+	name = "KAR magazine (EMP)"
 	desc = "a banana-shaped double-stack magazine able to hold 30 rounds of 5.6mm ammo. Contains ion ammunition, good for disrupting electronics and wrecking mechas."
 	icon_state = "akm_emp"
 	ammo_type = /obj/item/ammo_casing/realistic/a762x39/emp
 
 /obj/item/ammo_box/magazine/akm/rubber
-	name = "KR-Q magazine (RUBBER)"
+	name = "KAR magazine (RUBBER)"
 	desc = "a banana-shaped double-stack magazine able to hold 30 rounds of 5.6mm ammo. Contains less-than-lethal rubber ammunition."
 	icon_state = "akm_rubber"
 	ammo_type = /obj/item/ammo_casing/realistic/a762x39/civilian/rubber
 
 /obj/item/ammo_box/magazine/akm/banana
-	name = "KR-Q extended magazine"
-	desc = "a banana-shaped double-stack magazine able to hold 45 rounds of 5.6x40mm ammunition. It's meant to be used on a light machine gun, but it's just a longer KR-Q magazine."
+	name = "KAR extended magazine"
+	desc = "a banana-shaped double-stack magazine able to hold 45 rounds of 5.6x40mm ammunition. It's meant to be used on a light machine gun, but it's just a longer KAR magazine."
 	max_ammo = 45
 
 /obj/item/ammo_box/magazine/akm/civvie
