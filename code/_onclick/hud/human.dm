@@ -19,9 +19,12 @@
 	if(usr.hud_used.inventory_shown && targetmob.hud_used)
 		usr.hud_used.inventory_shown = FALSE
 		usr.client.screen -= targetmob.hud_used.toggleable_inventory
+		usr.client.screen -= targetmob.hud_used.toggleable_sub_inventory
 	else
 		usr.hud_used.inventory_shown = TRUE
 		usr.client.screen += targetmob.hud_used.toggleable_inventory
+		if(usr.hud_used.sub_inventory_shown)
+			usr.client.screen += targetmob.hud_used.toggleable_sub_inventory
 
 	targetmob.hud_used.hidden_inventory_update(usr)
 	update_appearance()
@@ -293,7 +296,25 @@
 	ammo_counter = new /atom/movable/screen/ammo_counter(null, src) //NOVA EDIT ADDITION
 	infodisplay += ammo_counter //NOVA EDIT ADDITION
 
-	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
+	//HOWLING VOID ADDITION START: sub inventory
+	inv_box = new /atom/movable/screen/human/toggle/sub(null, src) //Обязательная часть - кнопка для открытия расширенного инвентаря
+	inv_box.icon = ui_style
+	inv_box.screen_loc = ui_sub_inventory
+	toggleable_inventory += inv_box
+
+	inv_box = new /atom/movable/screen/inventory(null, src) //Это чисто для примера как оно добавляется на экран. Поменяй на то, что нужно тебе
+	inv_box.name = "DEBUG"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "gloves"
+	inv_box.icon_full = "template"
+	inv_box.screen_loc = ui_sub_inventory_debug
+	inv_box.slot_id = ITEM_SLOT_HEAD
+	toggleable_sub_inventory += inv_box
+	//HOWLING VOID ADDITION END
+
+	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory \
+			+ toggleable_sub_inventory //HOWLING VOID ADDITION
+		))
 		if(inv.slot_id)
 			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
 			inv.update_appearance()
@@ -331,7 +352,9 @@
 		if(eyes?.no_glasses)
 			blocked_slots |= ITEM_SLOT_EYES
 
-	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
+	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory \
+			+ toggleable_sub_inventory //HOWLING VOID ADDITION
+		))
 		if(!inv.slot_id)
 			continue
 		inv.alpha = (blocked_slots & inv.slot_id) ? 128 : initial(inv.alpha)
@@ -371,6 +394,11 @@
 		if(H.head)
 			H.head.screen_loc = ui_head
 			screenmob.client.screen += H.head
+		/* HOWLING VOID ADDITION START: sub inventory Я не уверен нужно ли это, может быть бесполезной хернёй. Насколько я понял оно нужно для отображения предметов в слотах, если нет - смело удаляй.
+		screenmob.client.screen
+		if(screenmob.hud_used.sub_inventory_shown) //HOWLING VOID ADDITION
+			hidden_sub_inventory_update(screenmob)
+		 HOWLING VOID ADDITION END */
 	else
 		if(H.shoes)
 			screenmob.client.screen -= H.shoes
@@ -390,6 +418,8 @@
 			screenmob.client.screen -= H.wear_neck
 		if(H.head)
 			screenmob.client.screen -= H.head
+		//if(screenmob.hud_used.sub_inventory_shown && screenmob.hud_used.hud_shown) //HOWLING VOID ADDITION  Это тоже может быть бесполезным
+			//hidden_sub_inventory_update(screenmob)
 
 /datum/hud/human/persistent_inventory_update(mob/viewer)
 	if(!mymob)

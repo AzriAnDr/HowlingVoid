@@ -48,6 +48,7 @@ GLOBAL_LIST_INIT(available_erp_ui_styles, list(
 	var/hud_version = HUD_STYLE_STANDARD //Current displayed version of the HUD
 	var/inventory_shown = FALSE //Equipped item inventory
 	var/hotkey_ui_hidden = FALSE //This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
+	var/sub_inventory_shown = FALSE //HOWLING VOID ADDITION
 
 	var/atom/movable/screen/ammo_counter //NOVA EDIT ADDITION
 	var/atom/movable/screen/alien_plasma_display
@@ -126,6 +127,8 @@ GLOBAL_LIST_INIT(available_erp_ui_styles, list(
 	/// They typically use * in their render target. They exist solely so we can reuse them,
 	/// and avoid needing to make changes to all idk 300 consumers if we want to change the appearance
 	var/list/asset_refs_for_reuse = list()
+
+	var/list/toggleable_sub_inventory = list() //HOWLING VOID ADDITION: под-инвентарь
 
 /datum/hud/New(mob/owner)
 	mymob = owner
@@ -261,6 +264,7 @@ GLOBAL_LIST_INIT(available_erp_ui_styles, list(
 
 	QDEL_LIST(toggleable_inventory)
 	QDEL_LIST(hotkeybuttons)
+	QDEL_LIST(toggleable_sub_inventory) //HOWLING VOID ADDITION
 	throw_icon = null
 	resist_icon = null
 	QDEL_LIST(infodisplay)
@@ -366,6 +370,8 @@ GLOBAL_LIST_INIT(available_erp_ui_styles, list(
 				screenmob.client.screen += static_inventory
 			if(toggleable_inventory.len && screenmob.hud_used && screenmob.hud_used.inventory_shown)
 				screenmob.client.screen += toggleable_inventory
+			if(toggleable_sub_inventory.len && screenmob.hud_used && screenmob.hud_used.sub_inventory_shown) //HOWLING VOID ADDITION
+				screenmob.client.screen += toggleable_sub_inventory
 			if(hotkeybuttons.len && !hotkey_ui_hidden)
 				screenmob.client.screen += hotkeybuttons
 			if(infodisplay.len)
@@ -383,6 +389,8 @@ GLOBAL_LIST_INIT(available_erp_ui_styles, list(
 				screenmob.client.screen -= static_inventory
 			if(toggleable_inventory.len)
 				screenmob.client.screen -= toggleable_inventory
+			if(toggleable_sub_inventory.len) //HOWLING VOID ADDITION
+				screenmob.client.screen -= toggleable_sub_inventory
 			if(hotkeybuttons.len)
 				screenmob.client.screen -= hotkeybuttons
 			if(infodisplay.len)
@@ -405,6 +413,8 @@ GLOBAL_LIST_INIT(available_erp_ui_styles, list(
 				screenmob.client.screen -= static_inventory
 			if(toggleable_inventory.len)
 				screenmob.client.screen -= toggleable_inventory
+			if(toggleable_sub_inventory.len) //HOWLING VOID ADDITION
+				screenmob.client.screen -= toggleable_sub_inventory
 			if(hotkeybuttons.len)
 				screenmob.client.screen -= hotkeybuttons
 			if(infodisplay.len)
@@ -473,7 +483,9 @@ GLOBAL_LIST_INIT(available_erp_ui_styles, list(
 	if (initial(ui_style) || ui_style == new_ui_style)
 		return
 
-	for(var/atom/item in static_inventory + toggleable_inventory + hotkeybuttons + infodisplay + always_visible_inventory + inv_slots)
+	for(var/atom/item in static_inventory + toggleable_inventory + hotkeybuttons + infodisplay + always_visible_inventory + inv_slots \
+			+ toggleable_sub_inventory //HOWLING VOID ADDITION
+		)
 		if (item.icon == ui_style)
 			item.icon = new_ui_style
 

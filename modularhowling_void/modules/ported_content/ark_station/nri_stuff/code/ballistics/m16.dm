@@ -34,7 +34,7 @@
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 
 /obj/item/ammo_box/magazine/m16/vintage
-	name = "outdated .277 magazine"
+	name = "m61 short magazine"
 	desc = "A double-stack solid magazine that looks rather dated. Holds 20 rounds of .277 Aestus."
 	icon = 'modularhowling_void/modules/ported_content/ark_station/nri_stuff/icons/guns/gunsgalore_items.dmi'
 	icon_state = "m16"

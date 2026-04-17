@@ -33,6 +33,7 @@
 /datum/supply_pack/companies/ballistics/sol_fed/longarm/scar
 	contains = list(/obj/item/gun/ballistic/automatic/scar)
 	cost = 3000
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
 /datum/supply_pack/companies/ballistics/sol_fed/longarm/m16
 	contains = list(/obj/item/gun/ballistic/automatic/m16)
@@ -41,6 +42,7 @@
 /datum/supply_pack/companies/ballistics/sol_fed/longarm/m16modern
 	contains = list(/obj/item/gun/ballistic/automatic/m16/modern)
 	cost = 3200
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
 /datum/supply_pack/companies/ballistics/sol_fed/longarm/mp5
 	contains = list(/obj/item/gun/ballistic/automatic/mp5)
