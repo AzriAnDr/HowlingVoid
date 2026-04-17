@@ -1,0 +1,11 @@
+{
+    "ui.character.species_description":  "Описание",
+    "ui.character.species_disliked_food":  "Нелюбимая еда",
+    "ui.character.species_features":  "Особенности",
+    "ui.character.species_go_back":  "Назад",
+    "ui.character.species_liked_food":  "Любимая еда",
+    "ui.character.species_lore":  "Лор",
+    "ui.character.species_nova_only_tooltip":  "ТОЛЬКО NOVA STARS",
+    "ui.character.species_toxic_food":  "Токсичная еда",
+    "ui.character.species":  "Раса"
+}

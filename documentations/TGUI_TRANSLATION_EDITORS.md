@@ -6,11 +6,11 @@ This document is for those who edit interface texts, but do not write code.
 
 Main file of the Russian interface:
 
-- `tgui/packages/tgui/interfaces/locales/ui.ru.json`
+- `tgui/packages/tgui/interfaces/locales/ui.*.ru.json`
 
 English original (for meaning):
 
-- `tgui/packages/tgui/interfaces/locales/ui.en.json`
+- `tgui/packages/tgui/interfaces/locales/ui.*.en.json`
 
 Important:
 
@@ -36,7 +36,7 @@ Where:
 - if text of the form `ui.something.key` appears in the interface, that is the key
 - if the key is not visible, ask a developer to provide the key
 
-3. Open `ui.ru.json` and find the key with search (`Ctrl+F`).
+3. Open the matching `ui.*.ru.json` file and find the key with search (`Ctrl+F`).
 4. Fix only the Russian value.
 5. Save the file.
 
@@ -50,7 +50,7 @@ Where:
 
 Before saving, check:
 
-1. The meaning matches the English line in `ui.en.json`.
+1. The meaning matches the English line in the matching `ui.*.en.json`.
 2. The text is natural for a Russian UI.
 3. No translit and no encoding garbage.
 4. No extra spaces at the beginning/end of the line.
@@ -62,7 +62,7 @@ Before saving, check:
 
 1. You see `????` or `пїЅ...`:
 
-- replace the line with normal Russian text by meaning from `ui.en.json`
+- replace the line with normal Russian text by meaning from the matching `ui.*.en.json`
 
 2. English is still left in Russian (`"Open"`, `"Status"`, ...):
 

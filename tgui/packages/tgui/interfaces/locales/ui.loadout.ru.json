@@ -1,0 +1,20 @@
+{
+    "ui.character.loadout_add_new":  "Добавить пресет",
+    "ui.character.loadout_cant_delete_default":  "Невозможно удалить стандартный пресет лодаута.",
+    "ui.character.loadout_catalog":  "Каталог",
+    "ui.character.loadout_clear_all":  "Очистить все",
+    "ui.character.loadout_clear_all_tooltip":  "Очищает ВСЕ выбранные предметы из всех категорий.",
+    "ui.character.loadout_delete_current_entry":  "Удалить текущий пресет лодаута.",
+    "ui.character.loadout_done":  "Готово",
+    "ui.character.loadout_erroneous_category":  "Обнаружена ошибочная категория! Это баг, пожалуйста, сообщите о нём.",
+    "ui.character.loadout_job_clothes":  "Рабочая одежда",
+    "ui.character.loadout_maximum_24_characters":  "Максимум 24 символа",
+    "ui.character.loadout_no_contents_selected_tab":  "Для выбранной вкладки нет содержимого.",
+    "ui.character.loadout_no_items_found":  "Предметы не найдены!",
+    "ui.character.loadout_preset":  "Пресет лодаута",
+    "ui.character.loadout_preview":  "Превью",
+    "ui.character.loadout_search_item":  "Поиск предмета...",
+    "ui.character.loadout_search_results":  "Результаты поиска",
+    "ui.character.loadout_selected_items":  "Предметы",
+    "ui.character.loadout_styles":  "Стили"
+}

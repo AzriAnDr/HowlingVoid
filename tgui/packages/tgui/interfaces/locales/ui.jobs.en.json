@@ -1,0 +1,18 @@
+{
+    "ui.character.jobs_as":  "as",
+    "ui.character.jobs_bad_species":  "Bad species",
+    "ui.character.jobs_banned":  "Banned",
+    "ui.character.jobs_day":  "day",
+    "ui.character.jobs_day_plural_suffix":  "s",
+    "ui.character.jobs_high":  "High",
+    "ui.character.jobs_hours_suffix":  "h",
+    "ui.character.jobs_join_as_random_if_unavailable":  "Join as a random job if unavailable",
+    "ui.character.jobs_join_as_role_if_unavailable":  "Join as {role} if unavailable",
+    "ui.character.jobs_left":  "left",
+    "ui.character.jobs_low":  "Low",
+    "ui.character.jobs_medium":  "Medium",
+    "ui.character.jobs_nova_stars_only":  "Nova Stars Only",
+    "ui.character.jobs_off":  "Off",
+    "ui.character.jobs_on":  "On",
+    "ui.character.jobs_return_to_lobby_if_unavailable":  "Return to lobby if unavailable"
+}

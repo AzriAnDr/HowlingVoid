@@ -3,7 +3,7 @@
 Документ для двух ролей:
 
 - разработчик интерфейса (добавляет/меняет ключи в коде)
-- переводчик/редактор (правит формулировки в `ui.ru.json`)
+- переводчик/редактор (правит формулировки в `ui.*.ru.json`)
 
 Английская версия: `documentation/TGUI_LOCALIZATION.md`
 Практический гайд для редакторов перевода: `documentation/TGUI_TRANSLATION_EDITORS.ru.md`
@@ -11,8 +11,17 @@
 ## 1) Где что лежит
 
 - Ключи UI:
-  - `tgui/packages/tgui/interfaces/locales/ui.en.json`
-  - `tgui/packages/tgui/interfaces/locales/ui.ru.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.common.en.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.character.en.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.jobs.en.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.species.en.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.loadout.en.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.game.en.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.keybindings.en.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.admin.en.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.data.en.json`
+  - аналогичный набор файлов для `*.ru.json`
+  - агрегируются в `tgui/packages/tgui/interfaces/locales/index.ts`
 - Общий вызов локализации в интерфейсах:
   - `tgui/packages/tgui/interfaces/localization.ts`
   - внутри используется `usePreferencesLocalization(...).t(...)`
@@ -21,7 +30,7 @@
 
 1. Любой видимый текст в интерфейсе должен идти через `t("ui.*")`.
 2. Не использовать `t("English text")` как ключ.
-3. Новый ключ добавляется сразу в `ui.en.json` и `ui.ru.json`.
+3. Новый ключ добавляется сразу в соответствующие EN/RU locale-файлы одного домена.
 4. Не локализовать backend-значения:
 
 - `act(...)` action names
@@ -35,7 +44,7 @@
 
 ## 3) Правила для переводчика/редактора
 
-1. Править только значения в `ui.ru.json`, ключи не трогать.
+1. Править только значения в соответствующем `ui.*.ru.json`, ключи не трогать.
 2. Сохранять смысл EN-строки, но писать естественно для русскоязычного UI.
 3. Избегать англицизмов без необходимости.
 
@@ -58,13 +67,13 @@
 - есть ли ключ в обоих файлах
 - адекватна ли RU-формулировка
 
-3. Исправить RU-значение в `ui.ru.json`.
+3. Исправить RU-значение в нужном `ui.*.ru.json`.
 
 ## 5) Если в UI показываются сырые ключи (`ui.*`)
 
 Проверить по порядку:
 
-1. Ключ существует в `ui.en.json` и `ui.ru.json`.
+1. Ключ существует в соответствующих EN/RU locale-файлах.
 2. Компонент реально вызывает `t('ui...')`, а не выводит строку напрямую.
 3. Для конкретного окна корректно определяется язык интерфейса.
 4. Перезапущен клиент/пересобран TGUI (исключить старый кэш бандла).
@@ -77,7 +86,7 @@
 
 ## 7) Как добавить новый язык (например DE/PL)
 
-Английский словарь (`ui.en.json`) считается базовым источником смысла.
+Английские locale-файлы (`ui.*.en.json`) считаются базовым источником смысла.
 
 Шаги:
 
@@ -86,7 +95,7 @@
 - `tgui/packages/tgui/interfaces/locales/ui.de.json`
 - или `tgui/packages/tgui/interfaces/locales/ui.pl.json`
 
-2. Скопировать в него полный набор ключей из `ui.en.json` (ключи должны совпадать 1:1).
+2. Скопировать в него полный набор ключей из всех EN locale-файлов или из агрегированного словаря (ключи должны совпадать 1:1).
 
 3. Перевести только значения, ключи не менять.
 

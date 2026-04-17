@@ -528,6 +528,16 @@ function LoadoutPreviewSection() {
   const { act, data } = useBackend<LoadoutManagerData>();
   const { t, localizeDataLabelById } =
     usePreferencesLocalization(data);
+  const previewDropdownOptions = data.preview_options.map((option) => ({
+    value: option,
+    displayText: data.preview_option_ids?.[option]
+      ? localizeDataLabelById(data.preview_option_ids[option], option)
+      : localizeDataLabelById(`preview_option_${option}`, option),
+  }));
+  const selectedPreviewText =
+    previewDropdownOptions.find(
+      (option) => option.value === data.preview_selection,
+    )?.displayText ?? data.preview_selection;
 
   return (
     <Section
@@ -561,16 +571,9 @@ function LoadoutPreviewSection() {
             <Stack.Item>
               <Dropdown
                 className="PreferencesMenu__Loadout__Dropdown"
+                displayText={selectedPreviewText}
                 selected={data.preview_selection}
-                options={data.preview_options.map((option) => ({
-                  value: option,
-                  displayText: data.preview_option_ids?.[option]
-                    ? localizeDataLabelById(
-                        data.preview_option_ids[option],
-                        option,
-                      )
-                    : localizeDataLabelById(`preview_option_${option}`, option),
-                }))}
+                options={previewDropdownOptions}
                 onSelected={(value) =>
                   act('update_preview', {
                     updated_preview: value,

@@ -119,6 +119,18 @@ type LoadoutGroup = {
   title: string;
 };
 
+function getLoadoutGroupKey(groupTitle: string): string {
+  const normalized = (groupTitle ?? '')
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/[:]/g, '')
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+
+  return `ui.character.data.${normalized || 'unknown'}`;
+}
+
 function sortByGroup(items: LoadoutItem[]): LoadoutGroup[] {
   const groups: LoadoutGroup[] = [];
 
@@ -139,7 +151,7 @@ function sortByGroup(items: LoadoutItem[]): LoadoutGroup[] {
 
 export function ItemListDisplay(props: ListProps) {
   const { data } = useBackend<LoadoutManagerData>();
-  const { localizeDataLabelById } = usePreferencesLocalization(data);
+  const { t, localizeDataLabelById } = usePreferencesLocalization(data);
   const loadout_list = data.character_preferences.misc.loadout_lists.loadout; // NOVA EDIT CHANGE: Multiple loadout presets: ORIGINAL: const { loadout_list } = data.character_preferences.misc;
   const itemGroups = sortByGroup(props.items);
 
@@ -153,9 +165,12 @@ export function ItemListDisplay(props: ListProps) {
               <>
                 <Stack.Item mt={-1.5} mb={-0.8} ml={1.5}>
                   <h3 color="grey">
-                    {localizeDataLabelById(
-                      `loadout_group_${group.title}`,
-                      group.title,
+                    {t(
+                      getLoadoutGroupKey(group.title),
+                      localizeDataLabelById(
+                        `loadout_group_${group.title}`,
+                        group.title,
+                      ),
                     )}
                   </h3>
                 </Stack.Item>

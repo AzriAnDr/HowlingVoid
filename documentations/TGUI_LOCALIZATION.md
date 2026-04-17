@@ -8,8 +8,17 @@ For non-technical Russian translation editors, see:
 
 - Visible UI text must use semantic keys: `t("ui.*")`
 - Shared locale dictionaries:
-  - `tgui/packages/tgui/interfaces/locales/ui.en.json`
-  - `tgui/packages/tgui/interfaces/locales/ui.ru.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.common.en.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.character.en.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.jobs.en.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.species.en.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.loadout.en.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.game.en.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.keybindings.en.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.admin.en.json`
+  - `tgui/packages/tgui/interfaces/locales/ui.data.en.json`
+  - same file set for `*.ru.json`
+  - aggregated in `tgui/packages/tgui/interfaces/locales/index.ts`
 - Shared localization entrypoint:
   - `tgui/packages/tgui/interfaces/localization.ts`
   - re-exporting `tgui/packages/tgui/interfaces/PreferencesMenu/localization.ts`
@@ -42,7 +51,7 @@ For non-technical Russian translation editors, see:
 
 4. Keep strict EN/RU parity:
 
-- any new `ui.*` key added to `ui.en.json` must be added to `ui.ru.json`
+- any new `ui.*` key added to an EN locale file must be added to the matching RU locale file
 - key sets must stay identical
 
 ## Runtime Language Resolution
@@ -67,7 +76,7 @@ Expected sources include:
 ## Migration Checklist (Per Batch/Cluster)
 
 1. Replace visible literals with `t("ui.*")`.
-2. Add missing keys to both locale files.
+2. Add missing keys to both matching locale files.
 3. Validate key parity.
 
 4. Re-scan migrated files for remaining real visible literals.
@@ -76,14 +85,14 @@ Expected sources include:
 
 If UI shows raw keys like `ui.some.key`:
 
-1. Check key exists in `ui.en.json` and `ui.ru.json`.
+1. Check which domain file owns the key and verify it exists in both EN and RU variants.
 2. Check component uses `usePreferencesLocalization(...)` and `t(...)`.
 3. Check runtime language is resolved (payload/config/client path).
 4. Rebuild/restart TGUI to clear stale bundle/cache.
 
 ## Adding New Languages (DE/PL/etc.)
 
-English (`ui.en.json`) is the canonical meaning source.
+English locale files (`ui.*.en.json`) are the canonical meaning source.
 
 Steps:
 
@@ -92,7 +101,7 @@ Steps:
 - `tgui/packages/tgui/interfaces/locales/ui.de.json`
 - or `tgui/packages/tgui/interfaces/locales/ui.pl.json`
 
-2. Copy the full key set from `ui.en.json` (keys must be 1:1 identical).
+2. Copy the full key set from all EN locale files or from the aggregated locale output (keys must be 1:1 identical).
 
 3. Translate values only. Do not rename keys.
 

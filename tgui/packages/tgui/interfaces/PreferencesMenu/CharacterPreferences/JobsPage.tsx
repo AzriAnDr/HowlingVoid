@@ -21,6 +21,33 @@ function sortJobs(entries: [string, Job][], head?: string) {
   ]);
 }
 
+function normalizeJobLocalizationId(value: string) {
+  return (value ?? '')
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/[:]/g, '')
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+}
+
+function getJobLocalizationCandidates(name: string) {
+  const normalized = normalizeJobLocalizationId(name);
+  const candidates = [normalized];
+
+  const legacyAliases: Record<string, string> = {
+    bridge_officer: 'bridge_assistant',
+    service_guard: 'bouncer',
+  };
+
+  const legacy = legacyAliases[normalized];
+  if (legacy) {
+    candidates.push(legacy);
+  }
+
+  return candidates;
+}
+
 const PRIORITY_BUTTON_SIZE = '18px';
 
 type PriorityButtonProps = {
@@ -201,6 +228,53 @@ function JobRow(props: JobRowProps) {
   const altTitleSelected = data.job_alt_titles[name]
     ? data.job_alt_titles[name]
     : name;
+  const jobLocalizationCandidates = getJobLocalizationCandidates(name);
+  const translateJobKey = (
+    suffix: string,
+    fallback: string,
+    extraCandidates?: string[],
+  ) => {
+    const missing = '__HOWLING_MISSING_TRANSLATION__';
+    const candidates = extraCandidates ?? jobLocalizationCandidates;
+
+    for (const candidate of candidates) {
+      const translated = t(`ui.character.data.job_${candidate}_${suffix}`, missing);
+      if (translated !== missing) {
+        return translated;
+      }
+    }
+
+    return fallback;
+  };
+  const localizeJobTitle = (title: string) => {
+    if (title === name) {
+      return translateJobKey(
+        'name',
+        localizeDataLabelById(`job_${name}_name`, title),
+      );
+    }
+
+    const normalizedTitle = normalizeJobLocalizationId(title);
+    const suffix = `alt_title_${normalizedTitle}`;
+
+    return translateJobKey(
+      suffix,
+      localizeDataLabelById(`job_${name}_alt_title_${title}`, title),
+      jobLocalizationCandidates,
+    );
+  };
+  const altTitleOptions = job.alt_titles?.map((title) => {
+    const localizedTitle = localizeJobTitle(title);
+    return {
+      value: localizedTitle,
+      displayText: localizedTitle,
+      rawValue: title,
+    };
+  });
+  const selectedAltTitleText = altTitleOptions?.find(
+    (option) => option.rawValue === altTitleSelected,
+  )?.displayText
+    ?? localizeJobTitle(altTitleSelected);
 
   let rightSide: ReactNode;
 
@@ -274,9 +348,12 @@ function JobRow(props: JobRowProps) {
     <Stack.Item className={className} height="100%" mt={0}>
       <Stack fill align="center">
         <Tooltip
-          content={localizeDataLabelById(
-            `job_${name}_description`,
-            job.description,
+          content={translateJobKey(
+            'description',
+            localizeDataLabelById(
+              `job_${name}_description`,
+              job.description,
+            ),
           )}
           position="bottom-start"
         >
@@ -288,23 +365,26 @@ function JobRow(props: JobRowProps) {
             }}
           >
             {!job.alt_titles ? (
-              localizeDataLabelById(`job_${name}_name`, name)
+              translateJobKey(
+                'name',
+                localizeDataLabelById(`job_${name}_name`, name),
+              )
             ) : (
               <Dropdown
                 className="PreferencesMenu__Character__JobsDropdown"
                 width="100%"
-                options={job.alt_titles.map((title) => ({
-                  value: title,
-                  displayText:
-                    localizeDataLabelById(
-                      `job_${name}_alt_title_${title}`,
-                      title,
-                    ),
-                }))}
-                selected={altTitleSelected}
-                onSelected={(value) =>
-                  act('set_job_title', { job: name, new_title: value })
-                }
+                displayText={selectedAltTitleText}
+                options={altTitleOptions}
+                selected={selectedAltTitleText}
+                onSelected={(value) => {
+                  const selectedOption = altTitleOptions?.find(
+                    (option) => option.value === value,
+                  );
+                  act('set_job_title', {
+                    job: name,
+                    new_title: selectedOption?.rawValue ?? value,
+                  });
+                }}
               />
             )}
           </Stack.Item>
@@ -443,4 +523,3 @@ export function JobsPage() {
     </>
   );
 }
-

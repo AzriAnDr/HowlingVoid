@@ -1,0 +1,18 @@
+{
+    "ui.character.jobs_as":  "как",
+    "ui.character.jobs_bad_species":  "Не подходящий вид",
+    "ui.character.jobs_banned":  "Запрещено",
+    "ui.character.jobs_day":  "день",
+    "ui.character.jobs_day_plural_suffix":  "а",
+    "ui.character.jobs_high":  "Высокий",
+    "ui.character.jobs_hours_suffix":  "ч",
+    "ui.character.jobs_join_as_random_if_unavailable":  "Если недоступно, зайти на случайную роль",
+    "ui.character.jobs_join_as_role_if_unavailable":  "Если недоступно, зайти как {role}",
+    "ui.character.jobs_left":  "осталось",
+    "ui.character.jobs_low":  "Низкий",
+    "ui.character.jobs_medium":  "Средний",
+    "ui.character.jobs_nova_stars_only":  "Только Nova Stars",
+    "ui.character.jobs_off":  "Выкл",
+    "ui.character.jobs_on":  "Вкл",
+    "ui.character.jobs_return_to_lobby_if_unavailable":  "Если недоступно, вернуться в лобби"
+}

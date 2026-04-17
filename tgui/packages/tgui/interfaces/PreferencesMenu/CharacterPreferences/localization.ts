@@ -3,8 +3,7 @@ import { useBackend } from 'tgui/backend';
 
 import type { PreferencesMenuData } from '../types';
 import { features } from '../preferences/features';
-import uiEn from '../../locales/ui.en.json';
-import uiRu from '../../locales/ui.ru.json';
+import { uiEn, uiRu } from '../../locales';
 
 export type InterfaceLanguage = 'english' | 'russian';
 
@@ -263,6 +262,8 @@ const DATA_ID_PREFIXES = [
   'antag',
   'limb',
   'organ',
+  'loadout_tab',
+  'loadout_category_info',
   'loadout_item',
   'loadout_group',
   'experience_type',
@@ -288,6 +289,18 @@ function deriveDataIdCandidates(id: string): string[] {
   };
 
   addWithAlias(normalized);
+
+  const addPatternAlias = (prefix: string, replacement: string) => {
+    if (normalized.startsWith(prefix)) {
+      addWithAlias(`${replacement}${normalized.slice(prefix.length)}`);
+    }
+  };
+
+  // Job titles can diverge from their historical datum ids.
+  // Keep these bridges so renamed jobs still resolve old translation keys.
+  addPatternAlias('job_bridge_officer_', 'job_bridge_assistant_');
+  addPatternAlias('job_service_guard_', 'job_bouncer_');
+  addPatternAlias('job_medical_doctor_alt_title_', 'job_doctor_alt_title_');
 
   const stripPrefix = (value: string) => {
     for (const prefix of DATA_ID_PREFIXES) {

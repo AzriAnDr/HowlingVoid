@@ -16,8 +16,7 @@ import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { sendAct as act } from '../events/act';
 import { Window } from '../layouts';
-import uiEn from './locales/ui.en.json';
-import uiRu from './locales/ui.ru.json';
+import { uiEn, uiRu } from './locales';
 
 const UI_EN = uiEn;
 const UI_RU = uiRu;

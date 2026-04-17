@@ -1,0 +1,20 @@
+{
+    "ui.character.loadout_add_new":  "Add New Loadout",
+    "ui.character.loadout_cant_delete_default":  "Can\u0027t delete the default loadout entry.",
+    "ui.character.loadout_catalog":  "Catalog",
+    "ui.character.loadout_clear_all":  "Clear All",
+    "ui.character.loadout_clear_all_tooltip":  "Clears ALL selected items from all categories.",
+    "ui.character.loadout_delete_current_entry":  "Delete the current loadout entry.",
+    "ui.character.loadout_done":  "Done",
+    "ui.character.loadout_erroneous_category":  "Erroneous category detected! This is a bug, please report it.",
+    "ui.character.loadout_job_clothes":  "Job Clothes",
+    "ui.character.loadout_maximum_24_characters":  "Maximum of 24 characters long",
+    "ui.character.loadout_no_contents_selected_tab":  "No contents for selected tab.",
+    "ui.character.loadout_no_items_found":  "No items found!",
+    "ui.character.loadout_preset":  "Loadout Preset",
+    "ui.character.loadout_preview":  "Preview",
+    "ui.character.loadout_search_item":  "Search for an item...",
+    "ui.character.loadout_search_results":  "Search results",
+    "ui.character.loadout_selected_items":  "Selected Items",
+    "ui.character.loadout_styles":  "Styles"
+}
