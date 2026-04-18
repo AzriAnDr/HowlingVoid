@@ -220,6 +220,17 @@ function toDataId(value: string): string {
   return normalized || 'unknown';
 }
 
+function toCasePreservingDataId(value: string): string {
+  const normalized = (value ?? '')
+    .toString()
+    .trim()
+    .replace(/[:]/g, '')
+    .replace(/[^a-zA-Z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+
+  return normalized || 'unknown';
+}
+
 function rememberInterfaceLanguage(language: InterfaceLanguage) {
   try {
     (globalThis as any).__HOWLING_INTERFACE_LANGUAGE = language;
@@ -275,6 +286,7 @@ const DATA_ID_PREFIXES = [
 
 function deriveDataIdCandidates(id: string): string[] {
   const normalized = toDataId(id);
+  const casePreserving = toCasePreservingDataId(id);
   const candidates = new Set<string>([normalized]);
 
   const addWithAlias = (value: string) => {
@@ -289,6 +301,9 @@ function deriveDataIdCandidates(id: string): string[] {
   };
 
   addWithAlias(normalized);
+  if (casePreserving !== normalized) {
+    addWithAlias(casePreserving);
+  }
 
   const addPatternAlias = (prefix: string, replacement: string) => {
     if (normalized.startsWith(prefix)) {

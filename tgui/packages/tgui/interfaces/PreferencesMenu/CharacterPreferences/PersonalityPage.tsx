@@ -21,6 +21,31 @@ type ButtonData = {
   tooltip: string | null;
 };
 
+function sanitizePersonalityPath(path: string): string {
+  return (path ?? '')
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/[:]/g, '')
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+}
+
+function translatePersonalityField(
+  t: (key: string, fallback?: string) => string,
+  personalityPath: string,
+  suffix:
+    | 'name'
+    | 'description'
+    | 'pos_gameplay_description'
+    | 'neg_gameplay_description'
+    | 'neut_gameplay_description',
+  fallback?: string,
+): string {
+  const pathId = sanitizePersonalityPath(personalityPath);
+  return t(`ui.character.data.personality_${pathId}_${suffix}`, fallback);
+}
+
 function getButtonColors(
   selected: boolean | undefined,
   invalid: boolean | string | null | undefined,
@@ -68,7 +93,7 @@ type ButtonProps = {
 
 function PersonalityButton(props: ButtonProps) {
   const { personality, selected, invalid, disabled, onClick } = props;
-  const { t, localizeDataLabelById } = usePreferencesLocalization();
+  const { t } = usePreferencesLocalization();
 
   const { backgroundColor, borderColor, tooltip } = getButtonColors(
     selected,
@@ -109,8 +134,10 @@ function PersonalityButton(props: ButtonProps) {
             paddingLeft: '0.5em',
           }}
         >
-          {localizeDataLabelById(
-            `personality_${personality.path}_name`,
+          {translatePersonalityField(
+            t,
+            personality.path,
+            'name',
             personality.name,
           )}
         </Stack.Item>
@@ -127,8 +154,10 @@ function PersonalityButton(props: ButtonProps) {
             paddingLeft: '0.5em',
           }}
         >
-          {localizeDataLabelById(
-            `personality_${personality.path}_description`,
+          {translatePersonalityField(
+            t,
+            personality.path,
+            'description',
             personality.description,
           )}
         </Stack.Item>
@@ -140,8 +169,10 @@ function PersonalityButton(props: ButtonProps) {
             style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}
           >
             +{' '}
-            {localizeDataLabelById(
-              `personality_${personality.path}_pos_gameplay_description`,
+            {translatePersonalityField(
+              t,
+              personality.path,
+              'pos_gameplay_description',
               personality.pos_gameplay_description,
             )}
           </Stack.Item>
@@ -157,8 +188,10 @@ function PersonalityButton(props: ButtonProps) {
             }}
           >
             -{' '}
-            {localizeDataLabelById(
-              `personality_${personality.path}_neg_gameplay_description`,
+            {translatePersonalityField(
+              t,
+              personality.path,
+              'neg_gameplay_description',
               personality.neg_gameplay_description,
             )}
           </Stack.Item>
@@ -174,8 +207,10 @@ function PersonalityButton(props: ButtonProps) {
             }}
           >
             +/-{' '}
-            {localizeDataLabelById(
-              `personality_${personality.path}_neut_gameplay_description`,
+            {translatePersonalityField(
+              t,
+              personality.path,
+              'neut_gameplay_description',
               personality.neut_gameplay_description,
             )}
           </Stack.Item>
@@ -207,7 +242,6 @@ function isIncompatible(
   allPersonalities: Personality[],
   selectedPersonalities: string[] | null,
   personalityIncompatibilities: Record<string, string[]>,
-  localizeDataLabelById: (id: string, fallback?: string) => string,
   t: (key: string, fallback?: string) => string,
 ): string | null {
   if (!selectedPersonalities || !personality.groups) return null;
@@ -219,8 +253,10 @@ function isIncompatible(
       if (personalityIncompatibilities[group].includes(selectedTypePath)) {
         return (
           (getPersonalityName(allPersonalities, selectedTypePath) &&
-            localizeDataLabelById(
-              `personality_${selectedTypePath}_name`,
+            translatePersonalityField(
+              t,
+              selectedTypePath,
+              'name',
               getPersonalityName(allPersonalities, selectedTypePath),
             )) ||
           t('ui.character.personality_unknown')
@@ -267,15 +303,16 @@ function getPersonalityName(
 function getAllSelectedPersonalitiesString(
   allPersonalities: Personality[],
   selectedPersonalities: string[] | null,
-  localizeDataLabelById: (id: string, fallback?: string) => string,
   t: (key: string, fallback?: string) => string,
 ) {
   const personalityNames: string[] = [];
   for (const personality of allPersonalities) {
     if (selectedPersonalities?.includes(personality.path)) {
       personalityNames.push(personality.name);
-      personalityNames[personalityNames.length - 1] = localizeDataLabelById(
-        `personality_${personality.path}_name`,
+      personalityNames[personalityNames.length - 1] = translatePersonalityField(
+        t,
+        personality.path,
+        'name',
         personality.name,
       );
     }
@@ -307,7 +344,7 @@ function getAllSelectedPersonalitiesString(
 
 export function PersonalityPage() {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const { t, localizeDataLabelById } = usePreferencesLocalization(data);
+  const { t } = usePreferencesLocalization(data);
 
   const server_data = useServerPrefs();
   if (!server_data) return;
@@ -352,7 +389,6 @@ export function PersonalityPage() {
               {getAllSelectedPersonalitiesString(
                 personalities,
                 selectedPersonalities,
-                localizeDataLabelById,
                 t,
               )}
             </Flex.Item>
@@ -419,7 +455,6 @@ export function PersonalityPage() {
                       personalities,
                       selectedPersonalities,
                       personalityIncompatibilities,
-                      localizeDataLabelById,
                       t,
                     )}
                     disabled={isDisabled(

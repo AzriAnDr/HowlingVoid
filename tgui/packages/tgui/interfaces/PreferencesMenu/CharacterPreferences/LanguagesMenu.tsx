@@ -4,14 +4,33 @@ import { BlockQuote, Box, Button, Section, Stack } from 'tgui-core/components';
 import type { Language, PreferencesMenuData } from '../types';
 import { usePreferencesLocalization } from './localization';
 
-function getLanguageDataKey(
+function normalizeLanguageDataId(value: string) {
+  return (value ?? '')
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/[:]/g, '')
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+}
+
+function getLanguageDataKeyCandidates(
   language: Language,
   suffix: 'name' | 'description',
 ) {
-  return (
-    language[`${suffix}_id` as 'name_id' | 'description_id'] ??
-    `language_${language.icon}_${suffix}`
-  );
+  const explicitId = language[`${suffix}_id` as 'name_id' | 'description_id'];
+  if (explicitId) {
+    return [explicitId];
+  }
+
+  const normalizedName = normalizeLanguageDataId(language.name);
+  const normalizedIcon = normalizeLanguageDataId(language.icon);
+
+  return [
+    `language_${normalizedName}_${suffix}`,
+    `language_${normalizedIcon}_${suffix}`,
+    `language_${language.icon}_${suffix}`,
+  ];
 }
 
 function getLocalizedLanguageField(
@@ -21,14 +40,26 @@ function getLocalizedLanguageField(
   suffix: 'name' | 'description',
   fallback: string,
 ) {
-  const key = getLanguageDataKey(language, suffix);
   const missing = '__HOWLING_MISSING_TRANSLATION__';
-  const translated = t(`ui.character.data.${key}`, missing);
-  if (translated !== missing) {
-    return translated;
+
+  for (const key of getLanguageDataKeyCandidates(language, suffix)) {
+    const translated = t(`ui.character.data.${key}`, missing);
+    if (translated !== missing) {
+      return translated;
+    }
+
+    const localized = localizeDataLabelById(key, missing);
+    if (localized !== missing) {
+      return localized;
+    }
   }
 
-  return localizeDataLabelById(key, fallback);
+  const localizedFallback = localizeDataLabelById(fallback, missing);
+  if (localizedFallback !== missing) {
+    return localizedFallback;
+  }
+
+  return fallback;
 }
 
 export function KnownLanguage(props: { language: Language }) {

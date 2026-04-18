@@ -64,6 +64,81 @@ type QuirkProps = {
   quirkActionLocked: boolean;
 };
 
+function sanitizeQuirkLocalizationId(value: string) {
+  return (value ?? '').replace(/[^a-zA-Z0-9]/g, '');
+}
+
+function looksLikeRawQuirkKey(value?: string) {
+  return !!value && /^quirk_[a-z0-9_]+_(name|description)$/i.test(value);
+}
+
+function humanizeQuirkKey(quirkKey: string) {
+  return (quirkKey ?? '')
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function getQuirkLocalizationCandidates(
+  quirkKey: string,
+  quirkName: string,
+  suffix: 'name' | 'description',
+) {
+  const candidates: string[] = [];
+  const pushUnique = (value: string) => {
+    if (value && !candidates.includes(value)) {
+      candidates.push(value);
+    }
+  };
+
+  pushUnique(`quirk_${quirkKey}_${suffix}`);
+  pushUnique(`quirk_${quirkKey.toLowerCase()}_${suffix}`);
+
+  const sanitizedName = sanitizeQuirkLocalizationId(quirkName);
+  if (sanitizedName) {
+    pushUnique(`quirk_${sanitizedName}_${suffix}`);
+    pushUnique(`quirk_${sanitizedName.toLowerCase()}_${suffix}`);
+  }
+
+  return candidates;
+}
+
+function translateQuirkField(
+  t: (key: string) => string,
+  localizeDataLabelById: (id: string, fallback?: string) => string,
+  quirkKey: string,
+  quirkName: string,
+  suffix: 'name' | 'description',
+  fallback?: string,
+) {
+  const safeFallback =
+    suffix === 'name'
+      ? looksLikeRawQuirkKey(fallback)
+        ? humanizeQuirkKey(quirkKey)
+        : fallback || humanizeQuirkKey(quirkKey)
+      : looksLikeRawQuirkKey(fallback)
+        ? ''
+        : fallback;
+
+  for (const candidate of getQuirkLocalizationCandidates(
+    quirkKey,
+    quirkName,
+    suffix,
+  )) {
+    const uiKey = `ui.character.data.${candidate}`;
+    const translated = t(uiKey);
+    if (translated !== uiKey) {
+      return translated;
+    }
+
+    const localized = localizeDataLabelById(candidate);
+    if (localized !== candidate) {
+      return localized;
+    }
+  }
+
+  return localizeDataLabelById(`quirk_${quirkKey}_${suffix}`, safeFallback);
+}
+
 function QuirkList(props: QuirkProps & QuirkListProps) {
   const {
     quirks = [],
@@ -102,7 +177,7 @@ type QuirkDisplayProps = {
 function QuirkDisplay(props: QuirkDisplayProps) {
   const { quirk, quirkKey, handleClick, selected, quirkActionLocked } = props;
   const { icon, value, name, description, customizable, failTooltip } = quirk;
-  const { localizeDataLabelById } = usePreferencesLocalization();
+  const { t, localizeDataLabelById } = usePreferencesLocalization();
 
   const [customizationExpanded, setCustomizationExpanded] = useState(false);
 
@@ -176,7 +251,14 @@ function QuirkDisplay(props: QuirkDisplayProps) {
               >
                 <Stack.Item grow basis="content">
                   <b>
-                    {localizeDataLabelById(`quirk_${quirkKey}_name`, name)}
+                    {translateQuirkField(
+                      t,
+                      localizeDataLabelById,
+                      quirkKey,
+                      name,
+                      'name',
+                      name,
+                    )}
                   </b>
                 </Stack.Item>
 
@@ -194,8 +276,12 @@ function QuirkDisplay(props: QuirkDisplayProps) {
                 padding: '3px',
               }}
             >
-              {localizeDataLabelById(
-                `quirk_${quirkKey}_description`,
+              {translateQuirkField(
+                t,
+                localizeDataLabelById,
+                quirkKey,
+                name,
+                'description',
                 description,
               )}
               {!!customizable && (

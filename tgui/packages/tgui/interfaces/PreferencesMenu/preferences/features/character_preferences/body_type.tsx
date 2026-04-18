@@ -1,4 +1,5 @@
 import { Gender } from '../../gender';
+import { usePreferencesLocalization } from '../../../localization';
 import type { FeatureChoiced } from '../base';
 import {
   type DropdownInputProps,
@@ -12,8 +13,10 @@ export const body_type: FeatureChoiced = {
 };
 
 function FeatureBodyTypeDropdownInput(props: DropdownInputProps) {
+  const { language } = usePreferencesLocalization();
+
   return FeatureDropdownInputCore(props, (serverData, setDropdownOptions) => {
-    let options = generateOptions(serverData);
+    let options = generateOptions(serverData, language);
 
     const current_gender = props.character_preferences.misc.gender;
     if (current_gender !== Gender.Male && current_gender !== Gender.Female) {
