@@ -193,7 +193,7 @@ ROUNDSTART_AWAY
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
-GATEWAY_DELAY 6000
+GATEWAY_DELAY 9000
 
 ## Overrides to gateway delay for specific away mission start points.
 GATEWAY_DELAYS_BY_ID AWAYSTART_BEACH 6000
