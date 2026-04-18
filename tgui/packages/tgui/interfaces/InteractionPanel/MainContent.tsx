@@ -57,6 +57,7 @@ export const MainContent = () => {
   const [activeTab, setActiveTab] = useState('interactions');
   const [showCategories, setShowCategories] = useState(true);
   const [subtleMessage, setSubtleMessage] = useState('');
+  const [savedDraft, setSavedDraft] = useState('');
   const [draftReady, setDraftReady] = useState(false);
   const { act, data } = useBackend<Interaction>();
   const { t } = usePreferencesLocalization(data);
@@ -107,6 +108,19 @@ export const MainContent = () => {
     }
   };
 
+  const persistDraft = (value: string) => {
+    const nextValue = String(value || '').slice(0, erp_subtle_max_length);
+    writeDraftToLocalStorage(nextValue);
+    setSavedDraft(nextValue);
+
+    if (nextValue.length) {
+      storage.set(subtleDraftKey, nextValue);
+      return;
+    }
+
+    storage.remove(subtleDraftKey);
+  };
+
   useEffect(() => {
     let cancelled = false;
     setDraftReady(false);
@@ -126,7 +140,7 @@ export const MainContent = () => {
         storage.set(subtleDraftKey, String(storedDraft));
         storage.remove(legacySubtleDraftKey);
       }
-      setSubtleMessage(String(storedDraft).slice(0, erp_subtle_max_length));
+      setSavedDraft(String(storedDraft).slice(0, erp_subtle_max_length));
       setDraftReady(true);
     };
 
@@ -136,21 +150,6 @@ export const MainContent = () => {
       cancelled = true;
     };
   }, [legacySubtleDraftKey, subtleDraftKey, erp_subtle_max_length]);
-
-  useEffect(() => {
-    if (!draftReady) {
-      return;
-    }
-
-    writeDraftToLocalStorage(subtleMessage);
-
-    if (subtleMessage.length) {
-      storage.set(subtleDraftKey, subtleMessage);
-      return;
-    }
-
-    storage.remove(subtleDraftKey);
-  }, [draftReady, subtleDraftKey, subtleMessage]);
 
   const availableTabs = [
     {
@@ -245,11 +244,17 @@ export const MainContent = () => {
                     title={t('ui.interaction_panel.custom_subtle_title')}
                     buttons={(
                       <Stack align="center" spacing={1}>
-                        <Stack.Item>
-                          <Box color="label">
-                            {t('ui.interaction_panel.custom_subtle_draft_saved')}
-                          </Box>
-                        </Stack.Item>
+                        {!!savedDraft.length && (
+                          <Stack.Item>
+                            <Button
+                              color="transparent"
+                              tooltip={t('ui.interaction_panel.custom_subtle_draft_saved')}
+                          onClick={() => setSubtleMessage(savedDraft)}
+                            >
+                              {t('ui.interaction_panel.custom_subtle_draft_saved')}
+                            </Button>
+                          </Stack.Item>
+                        )}
                         <Stack.Item>
                           <Box color="label">
                             {subtleMessage.length}/{erp_subtle_max_length}
@@ -282,10 +287,13 @@ export const MainContent = () => {
                           value={subtleMessage}
                           placeholder={t('ui.interaction_panel.custom_subtle_placeholder')}
                           onChange={(value) =>
-                            setSubtleMessage(
-                              String(value || '').slice(0, erp_subtle_max_length),
-                            )
-                          }
+                            {
+                              const nextValue = String(value || '').slice(0, erp_subtle_max_length);
+                              setSubtleMessage(nextValue);
+                              if (draftReady) {
+                                persistDraft(nextValue);
+                              }
+                            }}
                         />
                       </Stack.Item>
                       <Stack.Item>
@@ -299,8 +307,7 @@ export const MainContent = () => {
                               message: subtleMessage,
                             });
                             setSubtleMessage('');
-                            writeDraftToLocalStorage('');
-                            storage.remove(subtleDraftKey);
+                            persistDraft('');
                           }}
                         >
                           {t('ui.interaction_panel.custom_subtle_send_message')}
