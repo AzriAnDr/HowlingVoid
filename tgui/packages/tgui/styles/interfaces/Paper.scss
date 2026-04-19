@@ -15,4 +15,67 @@
     word-break: break-word;
     word-wrap: break-word;
   }
+
+  &__QuickInsertPanel {
+    background: #d8cfb3;
+    border: 1px solid #8d7f58;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 35%);
+  }
+
+  &__QuickInsertTitle {
+    color: #3f3214;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  &__QuickInsertRow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  &__QuickInsertLabel {
+    color: #5b4a21;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  &__QuickInsertDivider {
+    border-top: 1px solid rgb(92 74 33 / 30%);
+  }
+
+  &__QuickInsertButton {
+    background: #f6edc8;
+    border: 1px solid #8d7f58;
+    border-radius: 3px;
+    color: #2f2410;
+    font-size: 0.9rem;
+    font-weight: 600;
+    min-height: 1.9rem;
+    padding: 0.15rem 0.45rem;
+  }
+
+  &__QuickInsertButton:hover,
+  &__QuickInsertButton:focus {
+    background: #fff5d6;
+    color: #1f1708;
+  }
+
+  &__QuickInsertDropdown {
+    min-width: 10rem;
+    color: #2f2410;
+  }
+
+  &__QuickInsertDropdown .Dropdown__button {
+    color: #2f2410;
+  }
+
+  &__QuickInsertDropdown .Dropdown__selected-text,
+  &__QuickInsertDropdown .Dropdown__arrow {
+    color: #2f2410;
+  }
 }

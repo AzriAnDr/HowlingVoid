@@ -22,9 +22,6 @@ type FieldCreationReturn = {
   text: string;
 };
 
-// Regex that finds [____] fields.
-const fieldRegex: RegExp = /\[((?:_+))\]/gi;
-
 /**
  * Real-time text preview section. When not editing, this is simply
  * the component that builds and renders the final HTML output.
@@ -358,6 +355,25 @@ export class PreviewView extends Component<PreviewViewProps> {
     return ctx.measureText(text).width;
   };
 
+  getFieldDisplayText = (rawContents: string): string => {
+    const { data } = useBackend<PaperContext>();
+    const { user_name } = data;
+
+    switch (rawContents.toLowerCase()) {
+      case '%sign':
+      case '%s':
+        return user_name || 'Signature';
+      case '%date':
+      case '%d':
+        return '19/04';
+      case '%time':
+      case '%t':
+        return '18:10';
+      default:
+        return rawContents;
+    }
+  };
+
   // Replaces all [______] fields in raw text with fully formed <input ...>
   // field replacements.
   createFields = (
@@ -372,33 +388,40 @@ export class PreviewView extends Component<PreviewViewProps> {
     const { data } = useBackend<PaperContext>();
     const { raw_field_input } = data;
 
-    const ret_text = rawText.replace(fieldRegex, (match, p1) => {
-      const width = this.textWidth(match, font, fontSize);
-      const matchingData = raw_field_input?.find(
-        (e) => e.field_index === `${counter}`,
-      );
-      if (matchingData) {
-        return this.createFilledInputField(
-          matchingData,
-          p1.length,
+    const ret_text = rawText.replace(
+      /\[((?:_+)|%(?:s(?:ign)?|d(?:ate)?|t(?:ime)?))\]/gi,
+      (match, p1) => {
+        const displayText = this.getFieldDisplayText(p1);
+        const width = Math.max(
+          this.textWidth(match, font, fontSize),
+          this.textWidth(`[${displayText}]`, font, fontSize) + 12,
+        );
+        const matchingData = raw_field_input?.find(
+          (e) => e.field_index === `${counter}`,
+        );
+        if (matchingData) {
+          return this.createFilledInputField(
+            matchingData,
+            p1,
+            width,
+            font,
+            fontSize,
+            color,
+            paperColor,
+            this.createIDHeader(counter++),
+          );
+        }
+        return this.createInputField(
+          p1,
           width,
           font,
           fontSize,
           color,
-          paperColor,
           this.createIDHeader(counter++),
+          forceReadonlyFields,
         );
-      }
-      return this.createInputField(
-        p1.length,
-        width,
-        font,
-        fontSize,
-        color,
-        this.createIDHeader(counter++),
-        forceReadonlyFields,
-      );
-    });
+      },
+    );
 
     return {
       nextCounter: counter,
@@ -408,7 +431,7 @@ export class PreviewView extends Component<PreviewViewProps> {
 
   // Builds an <input> field from the supplied props.
   createInputField = (
-    length: number,
+    rawContents: string,
     width: number,
     font: string,
     fontSize: number,
@@ -423,6 +446,9 @@ export class PreviewView extends Component<PreviewViewProps> {
 
     const fontColor = held_item_details?.color || color;
     const fontFace = held_item_details?.font || font;
+    const isTokenField = rawContents.startsWith('%');
+    const displayText = this.getFieldDisplayText(rawContents);
+    const fieldLength = Math.max(rawContents.length, displayText.length);
 
     // Do we have this ID in our cache?
     let input = this.enabledInputFieldCache[id];
@@ -450,9 +476,12 @@ export class PreviewView extends Component<PreviewViewProps> {
     input.style.minWidth = `${width}px`;
     input.style.maxWidth = `${width}px`;
 
-    input.maxLength = Math.min(max_input_field_length, length);
-    input.size = length;
+    input.maxLength = Math.min(max_input_field_length, fieldLength);
+    input.size = fieldLength;
     input.disabled = readOnly;
+    if (isTokenField) {
+      input.defaultValue = rawContents;
+    }
 
     if (!readOnly) {
       this.enabledInputFieldCache[id] = input;
@@ -467,7 +496,7 @@ export class PreviewView extends Component<PreviewViewProps> {
   // just using it as a convenient way to build the HTML output.
   createFilledInputField = (
     field: FieldInput,
-    length: number,
+    rawContents: string,
     width: number,
     font: string,
     fontSize: number,
@@ -492,8 +521,8 @@ export class PreviewView extends Component<PreviewViewProps> {
     input.style.maxWidth = `${width}px`;
     input.style.backgroundColor = paperColor;
     input.id = id;
-    input.maxLength = Math.min(max_input_field_length, length);
-    input.size = length;
+    input.maxLength = Math.min(max_input_field_length, rawContents.length);
+    input.size = rawContents.length;
     input.defaultValue = fieldData.raw_text;
     input.disabled = true;
 

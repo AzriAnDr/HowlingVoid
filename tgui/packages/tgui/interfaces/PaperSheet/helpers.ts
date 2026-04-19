@@ -1,5 +1,7 @@
 import { InteractionType, type WritingImplement } from './types';
 
+const FIELD_PATTERN = /^\[((?:_+)|%(?:s(?:ign)?|d(?:ate)?|t(?:ime)?))\]/i;
+
 export function canEdit(heldItemDetails?: WritingImplement): boolean {
   if (!heldItemDetails) {
     return false;
@@ -14,14 +16,19 @@ type TokenizerReturn = {
 };
 
 export function tokenizer(src: string): TokenizerReturn | undefined {
-  const rule = /^\[_+\]/;
-  const match = src.match(rule);
+  const match = src.match(FIELD_PATTERN);
   if (match) {
     return {
       type: 'inputField',
       raw: match[0],
     };
   }
+}
+
+export function getPaperFields(src = ''): string[] {
+  const fieldRegex =
+    /\[((?:_+)|%(?:s(?:ign)?|d(?:ate)?|t(?:ime)?))\]/gi;
+  return Array.from(src.matchAll(fieldRegex), (match) => match[1]);
 }
 
 // Override function, any links and images should
