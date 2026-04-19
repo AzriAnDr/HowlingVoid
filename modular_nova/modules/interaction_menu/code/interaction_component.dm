@@ -647,14 +647,14 @@
 
 	switch(slot_index)
 		if(ORGAN_SLOT_NIPPLES)
-			return target.get_lewd_part_state("nipples") == "open"
+			return target.has_breasts(REQUIRE_GENITAL_EXPOSED)
 
 		if(ORGAN_SLOT_PENIS)
-			return target.get_lewd_part_state("penis") == "open"
+			return target.has_penis(REQUIRE_GENITAL_EXPOSED)
 		if(ORGAN_SLOT_VAGINA)
-			return target.get_lewd_part_state("vagina") == "open"
+			return target.has_vagina(REQUIRE_GENITAL_EXPOSED)
 		if(ORGAN_SLOT_ANUS)
-			return target.get_lewd_part_state("anus") == "open"
+			return target.has_anus(REQUIRE_GENITAL_EXPOSED)
 
 /// Decides if a player should be able to insert or remove an item from a provided lewd slot_index.
 /datum/component/interactable/proc/is_toy_compatible(obj/item/clothing/sextoy/item, slot_index)

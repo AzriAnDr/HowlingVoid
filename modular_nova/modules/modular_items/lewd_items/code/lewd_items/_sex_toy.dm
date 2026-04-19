@@ -29,9 +29,10 @@
 
 	current_equipped_slot = slot
 
-	// Give out actions our item has to people who equip it.
+	// Lewd slots are not normal inventory slots, so standard item-action slot checks
+	// treat them as "not equipped" and strip the buttons. Grant directly here instead.
 	for(var/datum/action/action as anything in actions)
-		give_item_action(action, user)
+		action.Grant(user)
 
 /obj/item/clothing/sextoy/dropped(mob/user)
 	..()
