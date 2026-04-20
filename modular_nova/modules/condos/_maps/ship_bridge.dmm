@@ -141,6 +141,10 @@
 	dir = 1
 	},
 /area/misc/condo)
+"v" = (
+/obj/machinery/room_controller,
+/turf/closed/wall/r_wall,
+/area/misc/condo)
 "w" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
@@ -411,7 +415,7 @@ q
 q
 q
 g
-q
+v
 q
 q
 q

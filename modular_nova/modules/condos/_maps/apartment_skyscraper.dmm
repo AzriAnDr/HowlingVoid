@@ -654,6 +654,18 @@
 "eA" = (
 /turf/closed/indestructible/hoteldoor/fakedoor,
 /area/misc/condo)
+"eJ" = (
+/obj/structure/decorative{
+	icon_state = "siding_plain_end";
+	icon = 'icons/turf/decals.dmi';
+	base_icon_state = "elevatorshaft";
+	color = "#36373a";
+	dir = 4;
+	anchored = 1
+	},
+/obj/machinery/room_controller,
+/turf/closed/wall,
+/area/misc/condo)
 "eK" = (
 /obj/effect/abstract/marker{
 	icon = 'modular_nova/master_files/icons/obj/skyscraper/rain.dmi';
@@ -7913,7 +7925,7 @@ vQ
 xa
 RH
 Uj
-hA
+eJ
 Cu
 AJ
 "}

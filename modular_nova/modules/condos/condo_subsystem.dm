@@ -63,6 +63,9 @@ SUBSYSTEM_DEF(condos)
 			to_chat(user, span_warning("Condo [condo_number] error. Unable to find condo reservation!"))
 			return FALSE
 
+		if(!can_access_active_room(target_active_condo, user))
+			return FALSE
+
 		do_sparks(3, FALSE, get_turf(user))
 
 		var/turf/condo_bottom_left = target_active_condo.bottom_left_turfs[1]
@@ -80,6 +83,32 @@ SUBSYSTEM_DEF(condos)
 	to_chat(user, span_warning("Condo [condo_number] error. Mystery failure!"))
 	return FALSE
 
+/datum/controller/subsystem/condos/proc/can_access_active_room(datum/turf_reservation/condo/target_active_condo, mob/user)
+	if(!target_active_condo || !user)
+		return FALSE
+
+	var/turf/condo_bottom_left = target_active_condo.bottom_left_turfs[1]
+	if(!condo_bottom_left)
+		return FALSE
+
+	var/area/current_area = get_area(condo_bottom_left)
+	if(!current_area)
+		return TRUE
+
+	var/obj/machinery/room_controller/controller = GLOB.room_controller_by_area[current_area]
+	if(!controller)
+		return TRUE
+
+	if(!controller.room_owner_name)
+		controller.assign_owner(user)
+		return TRUE
+
+	if(controller.can_enter_room(user))
+		return TRUE
+
+	to_chat(user, span_warning("Access denied. Room [controller.room_number || current_area.name] is private."))
+	return FALSE
+
 /// No condo was found on the number we input - create a new reservation, load our template, assign it in active_condos - and warp our user to the landing zone
 /datum/controller/subsystem/condos/proc/create_and_enter_condo(condo_number, datum/map_template/condo/our_condo, mob/user, parent_object)
 	if(active_condos["[condo_number]"])
@@ -93,6 +122,8 @@ SUBSYSTEM_DEF(condos)
 	condo_reservation.condo_template = our_condo
 	active_condos["[condo_number]"] = condo_reservation
 	link_condo_turfs(condo_reservation, condo_number, parent_object)
+	assign_condo_owner(condo_reservation, user)
+	SStgui.update_uis(parent_object)
 	do_sparks(3, FALSE, get_turf(user))
 	user.forceMove(locate(
 		bottom_left.x + our_condo.landing_zone_x_offset,
@@ -109,6 +140,10 @@ SUBSYSTEM_DEF(condos)
 	current_area.condo_number = condo_number
 	current_area.reservation = current_reservation
 
+	for(var/turf/room_turf as anything in current_reservation.reserved_turfs)
+		for(var/obj/machinery/room_controller/controller in room_turf)
+			controller.apply_dynamic_room_number(condo_number)
+
 	for(var/turf/closed/indestructible/hoteldoor/door in current_reservation.reserved_turfs)
 		door.parentSphere = parent_object
 		door.desc = "The door to this condo. \
@@ -118,3 +153,13 @@ SUBSYSTEM_DEF(condos)
 			[span_info("Alt-Click to look through the peephole.")]"
 	for(var/turf/open/space/bluespace/bluespace_turf in current_reservation.reserved_turfs)
 		bluespace_turf.parentSphere = parent_object
+
+/datum/controller/subsystem/condos/proc/assign_condo_owner(datum/turf_reservation/condo/current_reservation, mob/user)
+	if(!current_reservation || !user)
+		return
+
+	for(var/turf/room_turf as anything in current_reservation.reserved_turfs)
+		for(var/obj/machinery/room_controller/controller in room_turf)
+			if(controller.room_owner_name)
+				continue
+			controller.assign_owner(user)

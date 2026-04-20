@@ -197,6 +197,10 @@
 "P" = (
 /turf/open/floor/iron/freezer,
 /area/misc/condo)
+"R" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/normal_wall,
+/area/misc/condo)
 "S" = (
 /obj/machinery/door/airlock/bathroom{
 	name = "Restroom"
@@ -292,7 +296,7 @@ K
 W
 W
 S
-W
+R
 W
 "}
 (9,1,1) = {"

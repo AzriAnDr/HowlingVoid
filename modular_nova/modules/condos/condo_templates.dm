@@ -4,9 +4,14 @@ Due to some fuckery with how these templates work; the bottom left turf of your 
 */
 
 /datum/map_template/condo
+	/// Public category shown in the condo teleporter UI.
+	var/category = "Condo"
 	/// Offset from the bottom-left turf of your condo. Said turf MUST touch the rest of your condo due to how these templates are loaded; including in /area/.
 	var/landing_zone_x_offset
 	var/landing_zone_y_offset
+
+/datum/map_template/condo/proc/get_public_name()
+	return replacetext(name, "Condo - ", "")
 
 /// Keep these alphabetical.
 

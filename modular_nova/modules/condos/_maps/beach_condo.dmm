@@ -269,6 +269,10 @@
 "JK" = (
 /turf/open/water/beach,
 /area/misc/condo)
+"Ke" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/wood,
+/area/misc/condo)
 "LM" = (
 /obj/structure/chair/sofa/left{
 	dir = 1
@@ -503,7 +507,7 @@ ii
 jr
 xW
 yu
-xW
+Ke
 dP
 dP
 "}

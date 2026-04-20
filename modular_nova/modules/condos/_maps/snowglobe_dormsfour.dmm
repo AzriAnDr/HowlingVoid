@@ -116,6 +116,10 @@
 /obj/structure/drain,
 /turf/open/floor/iron/freezer,
 /area/misc/condo)
+"G" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/normal_wall,
+/area/misc/condo)
 "H" = (
 /obj/effect/turf_decal/trimline/dark/filled/line{
 	dir = 5
@@ -298,7 +302,7 @@ W
 z
 x
 I
-d
+G
 "}
 (8,1,1) = {"
 K

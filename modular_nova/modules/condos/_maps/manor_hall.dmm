@@ -87,6 +87,10 @@
 	},
 /turf/open/floor/stone,
 /area/misc/condo)
+"pa" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/sandstone,
+/area/misc/condo)
 "pI" = (
 /obj/effect/turf_decal/siding/wideplating_new{
 	dir = 9
@@ -454,7 +458,7 @@ gf
 ix
 Pk
 Pk
-gf
+pa
 gf
 "}
 (11,1,1) = {"

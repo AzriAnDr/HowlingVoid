@@ -309,4 +309,3 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			return FALSE
 
 	return potential_poi.validate()
-

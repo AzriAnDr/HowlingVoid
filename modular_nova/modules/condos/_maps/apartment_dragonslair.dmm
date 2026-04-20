@@ -37,6 +37,10 @@
 /obj/structure/bed/pillow_large,
 /turf/open/floor/carpet/purple,
 /area/misc/condo)
+"aT" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/riveted/boss,
+/area/misc/condo)
 "aZ" = (
 /obj/effect/turf_decal/trimline/dark/corner{
 	alpha = 255;
@@ -4346,7 +4350,7 @@ Us
 Ct
 Ct
 vE
-Ct
+aT
 Oo
 Pi
 vs

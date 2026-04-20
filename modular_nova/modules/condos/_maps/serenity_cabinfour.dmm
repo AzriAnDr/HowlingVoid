@@ -112,6 +112,10 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/wood/large,
 /area/misc/condo)
+"O" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/normal_wall,
+/area/misc/condo)
 "Q" = (
 /obj/structure/fireplace,
 /obj/effect/turf_decal/siding/thinplating/dark,
@@ -187,7 +191,7 @@ B
 s
 Z
 F
-r
+O
 "}
 (6,1,1) = {"
 r

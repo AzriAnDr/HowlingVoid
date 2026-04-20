@@ -127,6 +127,10 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/iron/kitchen,
 /area/misc/condo)
+"gD" = (
+/obj/machinery/room_controller,
+/turf/closed/wall,
+/area/misc/condo)
 "gQ" = (
 /obj/structure/chair/sofa/corp/corner,
 /obj/machinery/light/warm/directional/east,
@@ -664,7 +668,7 @@ oZ
 md
 Ix
 Mp
-xT
+gD
 lU
 lU
 xT

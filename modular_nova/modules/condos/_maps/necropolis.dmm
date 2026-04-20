@@ -397,6 +397,10 @@
 	},
 /turf/open/indestructible/boss/air,
 /area/misc/condo)
+"SV" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/riveted/boss,
+/area/misc/condo)
 "SY" = (
 /obj/structure/stone_tile/center/cracked,
 /obj/structure/stone_tile/surrounding_tile/burnt{
@@ -460,7 +464,7 @@ nw
 nw
 "}
 (2,1,1) = {"
-gk
+SV
 pV
 Hg
 gk

@@ -102,6 +102,10 @@
 /obj/structure/flora/tree/jungle/style_2,
 /turf/open/misc/grass/jungle/station,
 /area/misc/condo)
+"W" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/iron,
+/area/misc/condo)
 "X" = (
 /turf/cordon,
 /area/misc/condo)
@@ -264,7 +268,7 @@ g
 S
 n
 n
-O
+W
 "}
 (10,1,1) = {"
 X

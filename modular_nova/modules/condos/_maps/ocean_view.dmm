@@ -168,6 +168,10 @@
 /obj/effect/planetary_turf_atmos_helper,
 /turf/closed/indestructible/reinforced,
 /area/misc/condo)
+"Q" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/reinforced,
+/area/misc/condo)
 "S" = (
 /turf/open/floor/iron/dark/textured_edge,
 /area/misc/condo)
@@ -325,7 +329,7 @@ C
 y
 y
 y
-c
+Q
 "}
 (8,1,1) = {"
 a

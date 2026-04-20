@@ -67,6 +67,10 @@
 /obj/structure/sign/poster/contraband/syndicate_pistol/directional/north,
 /turf/open/floor/plating,
 /area/misc/condo)
+"lc" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/normal_wall,
+/area/misc/condo)
 "mb" = (
 /turf/closed/indestructible/fakedoor/maintenance,
 /area/misc/condo)
@@ -495,7 +499,7 @@ DC
 DC
 DC
 DC
-DC
+lc
 DC
 aJ
 "}

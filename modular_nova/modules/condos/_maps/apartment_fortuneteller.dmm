@@ -1105,6 +1105,7 @@
 	icon_state = "siding_thinplating_corner";
 	dir = 1
 	},
+/obj/machinery/room_controller,
 /turf/closed/indestructible/stone,
 /area/misc/condo)
 "Hx" = (

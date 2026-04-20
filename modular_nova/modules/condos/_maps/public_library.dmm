@@ -262,6 +262,10 @@
 /obj/structure/curtain/cloth/fancy,
 /turf/closed/wall/mineral/stone,
 /area/misc/condo)
+"Nl" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/wood,
+/area/misc/condo)
 "QG" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -441,7 +445,7 @@ bn
 bn
 rA
 Wu
-EF
+Nl
 "}
 (8,1,1) = {"
 fB

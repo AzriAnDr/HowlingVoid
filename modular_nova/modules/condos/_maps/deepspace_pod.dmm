@@ -493,6 +493,10 @@
 	dir = 4
 	},
 /area/misc/condo)
+"yd" = (
+/obj/machinery/room_controller,
+/turf/closed/wall/r_wall/plastitanium/nodiagonal,
+/area/misc/condo)
 "yz" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
@@ -1230,7 +1234,7 @@ Bq
 Ct
 Tt
 Lt
-lm
+yd
 "}
 (8,1,1) = {"
 fn

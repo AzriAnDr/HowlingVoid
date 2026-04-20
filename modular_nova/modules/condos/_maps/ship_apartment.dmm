@@ -737,6 +737,10 @@
 	dir = 4
 	},
 /area/misc/condo)
+"pq" = (
+/obj/machinery/room_controller,
+/turf/closed/wall/r_wall/plastitanium/syndicate/nodiagonal,
+/area/misc/condo)
 "pV" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark/corner{
 	dir = 1
@@ -3006,7 +3010,7 @@ mj
 ds
 mj
 mj
-mj
+pq
 mF
 mj
 "}

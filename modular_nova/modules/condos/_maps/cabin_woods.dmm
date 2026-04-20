@@ -2,6 +2,10 @@
 "as" = (
 /turf/open/floor/wood,
 /area/misc/condo)
+"bf" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/rock,
+/area/misc/condo)
 "eK" = (
 /obj/structure/flora/rock/pile/jungle/style_4,
 /turf/open/floor/grass,
@@ -443,7 +447,7 @@ as
 Xi
 To
 nC
-PB
+bf
 "}
 (5,1,1) = {"
 PB

@@ -297,6 +297,10 @@
 "Xl" = (
 /turf/open/water/jungle,
 /area/misc/condo)
+"ZV" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/rock,
+/area/misc/condo)
 
 (1,1,1) = {"
 GA
@@ -308,7 +312,7 @@ Jo
 Jo
 Jo
 Jo
-Jo
+ZV
 tO
 tO
 tO

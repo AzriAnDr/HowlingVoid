@@ -8005,6 +8005,7 @@
 #include "modular_nova\modules\condos\condo_subsystem.dm"
 #include "modular_nova\modules\condos\condo_teleporter.dm"
 #include "modular_nova\modules\condos\condo_templates.dm"
+#include "code\game\machinery\room_controller.dm"
 #include "modular_nova\modules\connecting_computer\code\_computer.dm"
 #include "modular_nova\modules\connecting_computer\code\connectable_component.dm"
 #include "modular_nova\modules\connecting_computer\code\non_connecting_computers.dm"

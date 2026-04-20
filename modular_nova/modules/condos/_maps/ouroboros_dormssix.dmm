@@ -67,6 +67,10 @@
 /obj/effect/spawner/random/structure/closet_private,
 /turf/open/floor/iron,
 /area/misc/condo)
+"U" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/normal_wall,
+/area/misc/condo)
 
 (1,1,1) = {"
 C
@@ -78,7 +82,7 @@ f
 "}
 (2,1,1) = {"
 a
-a
+U
 R
 P
 K

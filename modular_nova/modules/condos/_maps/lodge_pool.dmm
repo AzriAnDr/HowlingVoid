@@ -166,6 +166,10 @@
 "I" = (
 /turf/closed/indestructible/hoteldoor/fakedoor,
 /area/misc/condo)
+"J" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/wood,
+/area/misc/condo)
 "L" = (
 /obj/effect/spawner/liquids_spawner,
 /obj/machinery/light/directional/west,
@@ -425,7 +429,7 @@ C
 B
 C
 C
-c
+J
 "}
 (11,1,1) = {"
 W

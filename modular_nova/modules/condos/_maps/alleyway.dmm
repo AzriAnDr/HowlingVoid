@@ -106,6 +106,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/misc/asteroid/moon,
 /area/misc/condo)
+"V" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/iron,
+/area/misc/condo)
 "X" = (
 /obj/effect/turf_decal/siding/thinplating_new/terracotta{
 	dir = 1
@@ -193,7 +197,7 @@ f
 g
 f
 f
-f
+V
 A
 a
 B

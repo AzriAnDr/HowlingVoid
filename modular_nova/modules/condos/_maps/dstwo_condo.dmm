@@ -191,6 +191,10 @@
 /obj/structure/closet/secure_closet/personal,
 /turf/open/floor/mineral/plastitanium/red,
 /area/misc/condo)
+"wO" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/syndicate,
+/area/misc/condo)
 "xD" = (
 /obj/structure/table,
 /obj/machinery/light/directional/south,
@@ -558,7 +562,7 @@ mI
 kU
 zj
 Zk
-Wn
+wO
 an
 "}
 (10,1,1) = {"

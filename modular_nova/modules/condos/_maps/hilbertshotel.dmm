@@ -72,6 +72,10 @@
 /obj/machinery/microwave,
 /turf/open/indestructible/dark,
 /area/misc/condo)
+"jy" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/hotelwall,
+/area/misc/condo)
 "lb" = (
 /obj/structure/bed/double,
 /obj/effect/spawner/random/bedsheet/any/double,
@@ -396,7 +400,7 @@ cW
 cW
 ez
 ez
-ez
+jy
 ez
 rq
 ez

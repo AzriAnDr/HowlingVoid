@@ -23,6 +23,10 @@
 /obj/effect/spawner/liquids_spawner,
 /turf/open/floor/iron/pool,
 /area/misc/condo)
+"eC" = (
+/obj/machinery/room_controller,
+/turf/closed/indestructible/hotelwall,
+/area/misc/condo)
 "eQ" = (
 /obj/machinery/oven,
 /turf/open/floor/wood,
@@ -494,7 +498,7 @@ SE
 sk
 sl
 yC
-yC
+eC
 yC
 yC
 fA

@@ -44,5 +44,7 @@
 	for(var/turf/turf_to_empty as anything in reservation.reserved_turfs) //remove this once clearing turf reservations is actually reliable
 		turf_to_empty.empty()
 	SScondos.active_condos -= "[condo_number]"
+	if(parent_object)
+		SStgui.update_uis(parent_object)
 	parent_object = null
 	QDEL_NULL(reservation)

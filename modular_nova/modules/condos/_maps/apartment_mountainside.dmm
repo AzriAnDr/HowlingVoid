@@ -478,6 +478,10 @@
 	},
 /turf/open/floor/carpet/neon/simple/purple,
 /area/misc/condo)
+"cY" = (
+/obj/machinery/room_controller,
+/turf/closed/wall/mineral/stone,
+/area/misc/condo)
 "db" = (
 /turf/open/floor/black{
 	name = "air";
@@ -9100,7 +9104,7 @@ Pv
 MO
 bG
 EB
-MO
+cY
 MO
 MO
 MO
