@@ -492,6 +492,85 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	tainted_character_profiles = TRUE
 	switch_to_slot(closest_slot, usr)
 
+/datum/preferences/proc/export_current_slot()
+	var/list/save_data = savefile.get_entry("character[default_slot]")
+	if(!save_data)
+		tgui_alert(usr, "No character to export!", "Export Character")
+		return
+
+	var/list/export_data = list()
+	export_data["character_data"] = save_data
+	export_data["export_version"] = 2
+
+	export_data["key_bindings"] = key_bindings
+
+	var/list/game_prefs = list()
+	for(var/preference_type in GLOB.preference_entries)
+		var/datum/preference/preference = GLOB.preference_entries[preference_type]
+		if(preference.savefile_identifier != PREFERENCE_PLAYER)
+			continue
+		if(is_admin_only_preference(preference))
+			continue
+		var/pref_value = read_preference(preference.type)
+		if(!isnull(pref_value))
+			game_prefs[preference.savefile_key] = preference.serialize(pref_value)
+	export_data["game_preferences"] = game_prefs
+
+	export_data["toggles"] = toggles
+	export_data["chat_toggles"] = chat_toggles
+	export_data["be_special"] = be_special
+
+	var/time_string = time2text(world.timeofday, "MMM_DD_YYYY_hh-mm-ss", TIMEZONE_UTC)
+	var/file_name = "[parent.ckey]_character_[default_slot]_[time_string].json"
+	var/temp_path = "data/preferences_export_working_directory/[file_name]"
+
+	if(!text2file(json_encode(export_data, JSON_PRETTY_PRINT), temp_path))
+		tgui_alert(usr, "Failed to export character!", "Export Character")
+		return
+
+	to_chat(usr, span_notice("Sending you [file_name], this may take a moment..."))
+	DIRECT_OUTPUT(usr, ftp(file(temp_path), file_name))
+	fdel(temp_path)
+
+/datum/preferences/proc/is_admin_only_preference(datum/preference/preference)
+	if(istype(preference, /datum/preference/color/asay_color))
+		return TRUE
+	if(istype(preference, /datum/preference/choiced/brief_outfit))
+		return TRUE
+	if(istype(preference, /datum/preference/toggle/bypass_deadmin_in_centcom))
+		return TRUE
+	if(istype(preference, /datum/preference/toggle/ghost_roles_as_admin))
+		return TRUE
+	if(istype(preference, /datum/preference/toggle/comms_notification))
+		return TRUE
+	if(istype(preference, /datum/preference/toggle/auto_deadmin_on_ready_or_latejoin))
+		return TRUE
+	return FALSE
+
+/datum/preferences/proc/import_current_slot()
+	var/import_file = input(usr, "Select a character export file (.json)", "Import Character") as null|file
+	if(!import_file)
+		return
+
+	var/list/data
+	try
+		data = json_decode(file2text(import_file))
+	catch(var/exception/e)
+		tgui_alert(usr, "The supplied file contains errors: [e]", "Import Character")
+		return
+
+	if(!islist(data))
+		tgui_alert(usr, "No valid data found in file!", "Import Character")
+		return
+
+	var/datum/preference_importer/importer = new(src, data)
+	if(!importer.has_valid_data())
+		tgui_alert(usr, "No character data found in file!", "Import Character")
+		qdel(importer)
+		return
+
+	importer.ui_interact(usr)
+
 /datum/preferences/proc/sanitize_be_special(list/input_be_special)
 	var/list/output = list()
 

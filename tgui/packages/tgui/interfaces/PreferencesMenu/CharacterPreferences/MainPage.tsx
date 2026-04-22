@@ -801,9 +801,9 @@ export function MainPage(props: MainPageProps) {
             align="center"
             fluid
             icon="file-import"
-            onClick={() => act('import_preferences')}
+            onClick={() => act('import_character')}
           >
-            {t('ui.character.import_preferences')}
+            {t('ui.character.import_preferences', 'IMPORT PREFERENCES')}
           </Button>
         </Stack.Item>
         <Stack.Item grow>
@@ -814,7 +814,7 @@ export function MainPage(props: MainPageProps) {
             icon="file-export"
             onClick={() => act('export_preferences')}
           >
-            {t('ui.character.export_preferences')}
+            {t('ui.character.export_preferences', 'EXPORT PREFERENCES')}
           </Button>
         </Stack.Item>
       </Stack>

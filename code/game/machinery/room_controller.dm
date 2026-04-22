@@ -443,7 +443,7 @@ GLOBAL_LIST_EMPTY(room_controller_by_area)
 	linked_doors.Cut()
 
 /obj/machinery/room_controller/emp_act(severity)
-	return
+	. = ..()
 
 /obj/machinery/room_controller/proc/transfer_ownership(mob/user, target_name)
 	if(!target_name)

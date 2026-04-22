@@ -12,6 +12,7 @@ GLOBAL_LIST_EMPTY(name_to_appearance)
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/toggle/show_in_directory/is_accessible(datum/preferences/preferences)
+	..() // Required by SHOULD_CALL_PARENT
 	return FALSE
 
 /datum/preference/toggle/show_in_directory/deserialize(input, datum/preferences/preferences)

@@ -6,6 +6,8 @@
 /datum/bodypart_overlay/mutant
 	/// Alpha value associated to the overlay, to be inherited from the parent limb.
 	var/alpha = ALPHA_OPAQUE
+	/// Cached human owner used for MOD-related cache keys.
+	var/mob/living/carbon/human/cached_human_owner
 	/// An associative list of color indexes (i.e. "1") to boolean that says
 	/// whether or not that color should get an emissive overlay. Can be null.
 	var/list/emissive_eligibility_by_color_index
@@ -61,6 +63,7 @@
 	. += "[get_feature_key_for_overlay()]"
 
 	. += cache_key_extra_information // We can do it like this because it's meant to be a list of strings anyway. BYOND list operations actually being useful for once.
+	append_mod_hardlight_cache_key(.)
 
 	if(islist(draw_color))
 		for(var/sub_color in draw_color)
@@ -79,6 +82,41 @@
 	return .
 
 
+/datum/bodypart_overlay/mutant/proc/get_active_mod_hardlight_control(mob/living/carbon/human/human_owner = cached_human_owner)
+	if(!modsuit_affected || !istype(human_owner))
+		return null
+
+	return sprite_datum?.get_mod_hardlight_control(human_owner)
+
+
+/datum/bodypart_overlay/mutant/proc/append_coloration_cache_key(list/cache_key, coloration)
+	if(isnull(coloration))
+		return
+	if(islist(coloration))
+		for(var/color_value in coloration)
+			cache_key += "[color_value]"
+		return
+	cache_key += "[coloration]"
+
+
+/datum/bodypart_overlay/mutant/proc/append_mod_hardlight_cache_key(list/cache_key)
+	var/obj/item/mod/control/modsuit_control = get_active_mod_hardlight_control()
+	if(!modsuit_control)
+		return
+
+	cache_key += "MOD"
+	if(modsuit_control.color || modsuit_control.cached_color_filter)
+		cache_key += "MOD_COLOR"
+		append_coloration_cache_key(cache_key, modsuit_control.color)
+		if(modsuit_control.cached_color_filter)
+			cache_key += "MOD_FILTER"
+			cache_key += "[modsuit_control.cached_color_filter["space"]]"
+			append_coloration_cache_key(cache_key, modsuit_control.cached_color_filter["color"])
+		return
+
+	cache_key += "[modsuit_control.theme?.hardlight_theme]"
+
+
 /**
  * Helper to fetch the `feature_key` of the bodypart_overlay, so that it can be
  * overriden in the cases where `feature_key` is not what we want to use here.
@@ -91,6 +129,7 @@
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/human = bodypart_owner.owner
+	cached_human_owner = istype(human) ? human : null
 	if(!istype(human))
 		return TRUE
 	return !isnull(sprite_datum) && !sprite_datum.is_hidden(human)
@@ -111,14 +150,14 @@
 	var/index = 1
 
 	var/mob/living/carbon/human/owner = limb?.owner
+	var/obj/item/mod/control/modsuit_control = get_active_mod_hardlight_control(owner)
 	var/mutable_appearance/mod_overlay
-	var/icon/custom_mod_icon = sprite_datum.get_custom_mod_icon(owner)
 
 	cache_key_extra_information = list()
 	last_built_icon_states = list()
 
-	if(custom_mod_icon)
-		mod_overlay = get_singular_image(image_layer = image_layer, owner = owner, icon_override = custom_mod_icon)
+	if(modsuit_control)
+		mod_overlay = get_singular_image(image_layer = image_layer, owner = owner, icon_override = sprite_datum.build_mod_hardlight_icon(modsuit_control))
 
 	switch(sprite_datum.color_src)
 		if(USE_MATRIXED_COLORS)
@@ -133,7 +172,7 @@
 				index++
 
 				if(mod_overlay)
-					mod_overlay.add_overlay(sprite_datum.get_custom_mod_icon(owner, color_layer_image))
+					mod_overlay.add_overlay(sprite_datum.build_mod_hardlight_icon(modsuit_control, color_layer_image))
 
 		else
 			var/mutable_appearance/image_to_return = get_singular_image(build_icon_state(gender, image_layer), image_layer, owner)
@@ -141,15 +180,18 @@
 			overlay_indexes_to_color += index
 
 			if(mod_overlay)
-				mod_overlay.add_overlay(sprite_datum.get_custom_mod_icon(owner, image_to_return))
+				mod_overlay.add_overlay(sprite_datum.build_mod_hardlight_icon(modsuit_control, image_to_return))
 
 	if(sprite_datum.has_inner)
 		returned_images += get_singular_image(build_icon_state(gender, image_layer, feature_key_suffix = "inner"), image_layer, owner)
 
 	// Gets the icon_state of a single or matrix colored accessory and overlays it with a texture
 	if(mod_overlay)
+		if(modsuit_control.color)
+			mod_overlay.color = modsuit_control.color
+		if(modsuit_control.cached_color_filter)
+			mod_overlay = filter_appearance_recursive(mod_overlay, modsuit_control.cached_color_filter)
 		returned_images += mod_overlay
-		cache_key_extra_information += "MOD"
 
 	return returned_images
 
@@ -280,16 +322,8 @@
  * * status - boolean of whether or not this overlay should currently be under the
  * effect of MODsuit overlays.
  */
-/datum/bodypart_overlay/mutant/proc/set_modsuit_status(status)
-	if(!modsuit_affected)
-		return
-
-	// Honestly refactor this later if it's not actually useful for anything else ever (which is likely going to be the case).
-	if(status)
-		LAZYADD(cache_key_extra_information, "MOD")
-		return
-
-	LAZYREMOVE(cache_key_extra_information, "MOD")
+/datum/bodypart_overlay/mutant/proc/set_modsuit_status(status, obj/item/mod/control/modsuit_control)
+	return
 
 
 #undef MAX_MATRIXED_COLORS
