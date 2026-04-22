@@ -214,6 +214,14 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 	new /datum/job_report_menu(src, usr)
 
+/client/proc/export_preferences()
+	set name = "Export Preferences"
+	set desc = "Export your current preferences to a file."
+	set category = "OOC"
+
+	ASSERT(prefs, "User attempted to export preferences while preferences were null!")
+	prefs.savefile.export_json_to_client(usr, ckey)
+
 // Ignore verb
 /client/verb/select_ignore()
 	set name = "Ignore"
@@ -459,15 +467,6 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	set hidden = TRUE
 
 	init_verbs()
-
-/client/proc/export_preferences()
-	set name = "Export Preferences"
-	set desc = "Export your current preferences to a file."
-	set category = "OOC"
-
-	ASSERT(prefs, "User attempted to export preferences while preferences were null!") // what the fuck
-
-	prefs.savefile.export_json_to_client(usr, ckey)
 
 /client/verb/map_vote_tally_count()
 	set name = "Show Map Vote Tallies"

@@ -575,3 +575,9 @@
 /datum/sprite_accessory/snouts/mammal/acrador/normal_4/alt
 	name = "Acrador 4 (Normal) (Alt)"
 	icon_state = "acrador_4_alt"
+
+/datum/sprite_accessory/snouts/sarathi
+	icon = 'modular_nova/master_files/icons/mob/sprite_accessory/snouts.dmi'
+	color_src = USE_MATRIXED_COLORS
+	name = "Sarathi"
+	icon_state = "sarathi"

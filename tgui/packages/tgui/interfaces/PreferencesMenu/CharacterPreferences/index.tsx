@@ -115,16 +115,20 @@ export function CharacterPreferenceWindow(props) {
   return (
     <Stack vertical fill className="PreferencesMenu__Character">
       <Stack.Item>
-        <CharacterProfiles
-          activeSlot={data.active_slot - 1}
-          t={t}
-          onClick={(slot) => {
-            act('change_slot', {
-              slot: slot + 1,
-            });
-          }}
-          profiles={data.character_profiles}
-        />
+        <Stack align="center">
+          <Stack.Item grow>
+            <CharacterProfiles
+              activeSlot={data.active_slot - 1}
+              t={t}
+              onClick={(slot) => {
+                act('change_slot', {
+                  slot: slot + 1,
+                });
+              }}
+              profiles={data.character_profiles}
+            />
+          </Stack.Item>
+        </Stack>
       </Stack.Item>
       {!data.content_unlocked && (
         <Stack.Item align="center">

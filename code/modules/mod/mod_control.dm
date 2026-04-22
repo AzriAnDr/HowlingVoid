@@ -754,6 +754,7 @@
 	for(var/obj/item/part as anything in get_parts(all = TRUE))
 		part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		part.add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
+	wearer?.update_body_parts(TRUE)
 	wearer?.regenerate_icons()
 
 /obj/item/mod/control/proc/on_exit(datum/source, atom/movable/part, direction)

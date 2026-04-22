@@ -963,12 +963,11 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 /client/proc/add_verbs_from_config()
 	if (interviewee)
 		return
+	add_verb(src, /client/proc/export_preferences)
 	if(CONFIG_GET(flag/see_own_notes))
 		add_verb(src, /client/proc/self_notes)
 	if(CONFIG_GET(flag/use_exp_tracking))
 		add_verb(src, /client/proc/self_playtime)
-	if(!CONFIG_GET(flag/forbid_preferences_export))
-		add_verb(src, /client/proc/export_preferences)
 	// NOVA EDIT ADDITION START
 	if(CONFIG_GET(flag/enable_relays))
 		add_verb(src, /client/proc/connect_to_relay)
