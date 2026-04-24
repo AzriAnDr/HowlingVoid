@@ -129,6 +129,214 @@
 
 	return species_preference.deserialize(species_raw, target_prefs)
 
+/datum/preference_importer/proc/extract_legacy_import_label(raw_value)
+	if(!istext(raw_value))
+		return null
+
+	var/text_value = trim(raw_value)
+	var/list/segments = splittext(text_value, "||")
+	if(length(segments))
+		text_value = trim(segments[1])
+
+	segments = splittext(text_value, "::")
+	if(length(segments))
+		text_value = trim(segments[1])
+
+	return text_value
+
+/datum/preference_importer/proc/normalize_import_match_text(raw_value)
+	var/text_value = extract_legacy_import_label(raw_value)
+	if(!istext(text_value))
+		return null
+
+	text_value = lowertext(text_value)
+	text_value = replacetext(text_value, "(alt)", "")
+	text_value = replacetext(text_value, "(alternate)", "")
+	text_value = replacetext(text_value, " ", "")
+	text_value = replacetext(text_value, "-", "")
+	text_value = replacetext(text_value, "_", "")
+	text_value = replacetext(text_value, "'", "")
+	text_value = replacetext(text_value, "\"", "")
+	text_value = replacetext(text_value, ",", "")
+	text_value = replacetext(text_value, ".", "")
+	text_value = replacetext(text_value, "(", "")
+	text_value = replacetext(text_value, ")", "")
+
+	return text_value
+
+/datum/preference_importer/proc/find_closest_text_match(list/candidates, raw_value)
+	var/text_value = extract_legacy_import_label(raw_value)
+	if(!istext(text_value) || !length(text_value))
+		return null
+
+	var/lowercase_value = lowertext(text_value)
+	for(var/candidate in candidates)
+		if(istext(candidate) && lowertext(candidate) == lowercase_value)
+			return candidate
+
+	var/normalized_value = normalize_import_match_text(text_value)
+	if(!length(normalized_value))
+		return null
+
+	var/best_candidate = null
+	var/best_score = null
+	for(var/candidate in candidates)
+		if(!istext(candidate))
+			continue
+
+		var/normalized_candidate = normalize_import_match_text(candidate)
+		if(!length(normalized_candidate))
+			continue
+
+		if(normalized_candidate == normalized_value)
+			return candidate
+
+		if(findtext(normalized_candidate, normalized_value) || findtext(normalized_value, normalized_candidate))
+			var/score = abs(length(normalized_candidate) - length(normalized_value))
+			if(isnull(best_score) || score < best_score)
+				best_candidate = candidate
+				best_score = score
+
+	return best_candidate
+
+/datum/preference_importer/proc/find_closest_choice_value(datum/preference/choiced/preference, raw_value)
+	if(!istype(preference) || !istext(raw_value))
+		return null
+
+	return find_closest_text_match(preference.get_choices(), raw_value)
+
+/datum/preference_importer/proc/resolve_choice_import_value(datum/preference/choiced/preference, raw_value)
+	if(!istype(preference))
+		return null
+
+	if(istext(raw_value))
+		var/matched_choice = find_closest_text_match(preference.get_choices(), raw_value)
+		if(!isnull(matched_choice) && preference.is_valid(matched_choice, target_prefs))
+			return matched_choice
+
+		var/list/serialized_choices = preference.get_choices_serialized()
+		var/matched_serialized_choice = find_closest_text_match(serialized_choices, raw_value)
+		if(!isnull(matched_serialized_choice))
+			var/matched_deserialized_choice = preference.deserialize(matched_serialized_choice, target_prefs)
+			if(!isnull(matched_deserialized_choice) && preference.is_valid(matched_deserialized_choice, target_prefs))
+				return matched_deserialized_choice
+
+	var/deserialized = preference.deserialize(raw_value, target_prefs)
+	if(!isnull(deserialized) && preference.is_valid(deserialized, target_prefs))
+		return deserialized
+
+	return null
+
+/datum/preference_importer/proc/get_import_body_marking_features(list/char_data)
+	var/list/features = list()
+
+	var/datum/preference/tri_color/mutant_colors/mutant_colors_pref = GLOB.preference_entries[/datum/preference/tri_color/mutant_colors]
+	if(mutant_colors_pref)
+		var/list/mutant_colors = mutant_colors_pref.deserialize(char_data[mutant_colors_pref.savefile_key], target_prefs)
+		if(islist(mutant_colors))
+			features[FEATURE_MUTANT_COLOR] = mutant_colors[1]
+			features[FEATURE_MUTANT_COLOR_TWO] = mutant_colors[2]
+			features[FEATURE_MUTANT_COLOR_THREE] = mutant_colors[3]
+
+	var/datum/preference/choiced/skin_tone/skin_tone_pref = GLOB.preference_entries[/datum/preference/choiced/skin_tone]
+	if(skin_tone_pref)
+		var/skin_tone = skin_tone_pref.deserialize(char_data[skin_tone_pref.savefile_key], target_prefs)
+		if(!isnull(skin_tone))
+			features[FEATURE_SKIN_COLOR] = skintone2hex(skin_tone)
+
+	return features
+
+/datum/preference_importer/proc/build_body_markings_from_legacy_preset(raw_value, list/char_data)
+	if(!istext(raw_value))
+		return null
+
+	var/preset_name = find_closest_text_match(GLOB.body_marking_sets, raw_value)
+	if(!preset_name)
+		return null
+
+	var/datum/body_marking_set/marking_set = GLOB.body_marking_sets[preset_name]
+	var/datum/species/species_type = get_character_species(char_data)
+	if(!marking_set || !species_type)
+		return null
+
+	return assemble_body_markings_from_set(marking_set, get_import_body_marking_features(char_data), species_type)
+
+/datum/preference_importer/proc/sanitize_imported_body_markings(markings_value, list/char_data)
+	if(islist(markings_value))
+		var/list/sanitized_markings = list()
+		for(var/zone in markings_value)
+			if(!istext(zone) || !islist(GLOB.body_markings_per_limb[zone]))
+				continue
+
+			var/list/zone_markings = SANITIZE_LIST(markings_value[zone])
+			var/list/allowed_markings = GLOB.body_markings_per_limb[zone]
+			var/list/sanitized_zone_markings = list()
+			for(var/marking_name in zone_markings)
+				var/matched_marking = marking_name
+				if(!(matched_marking in allowed_markings))
+					matched_marking = find_closest_text_match(allowed_markings, marking_name)
+				if(!matched_marking)
+					continue
+
+				var/marking_data = zone_markings[marking_name]
+				var/marking_color = null
+				var/marking_emissive = FALSE
+				if(islist(marking_data))
+					marking_color = sanitize_hexcolor(marking_data[1])
+					marking_emissive = !!sanitize_integer(marking_data[2])
+				else
+					marking_color = sanitize_hexcolor(marking_data)
+
+				if(!marking_color)
+					marking_color = "#ffffff"
+
+				sanitized_zone_markings[matched_marking] = list(marking_color, marking_emissive)
+
+			if(length(sanitized_zone_markings))
+				sanitized_markings[zone] = sanitized_zone_markings
+
+		return target_prefs.update_markings(sanitized_markings)
+
+	var/list/legacy_markings = build_body_markings_from_legacy_preset(markings_value, char_data)
+	if(!length(legacy_markings) && islist(char_data))
+		legacy_markings = build_body_markings_from_legacy_preset(char_data["feature_body_markings"], char_data)
+
+	if(length(legacy_markings))
+		return target_prefs.update_markings(legacy_markings)
+
+	return list()
+
+/datum/preference_importer/proc/infer_missing_mutant_toggles(list/sanitized)
+	if(!islist(sanitized))
+		return
+
+	for(var/preference_type in GLOB.preference_entries)
+		var/datum/preference/choiced/mutant_choice/mutant_choice_pref = GLOB.preference_entries[preference_type]
+		if(!istype(mutant_choice_pref))
+			continue
+
+		if(isnull(sanitized[mutant_choice_pref.savefile_key]))
+			continue
+
+		var/datum/preference/toggle/mutant_toggle/toggle_pref = GLOB.preference_entries[mutant_choice_pref.type_to_check]
+		if(!toggle_pref || !isnull(sanitized[toggle_pref.savefile_key]))
+			continue
+
+		var/choice_value = mutant_choice_pref.deserialize(sanitized[mutant_choice_pref.savefile_key], target_prefs)
+		if(isnull(choice_value))
+			continue
+
+		if(choice_value == mutant_choice_pref.create_default_value())
+			continue
+
+		if(choice_value == SPRITE_ACCESSORY_NONE)
+			continue
+
+		if(mutant_choice_pref.relevant_mutant_bodypart && !is_factual_sprite_accessory(mutant_choice_pref.relevant_mutant_bodypart, choice_value))
+			continue
+
+		sanitized[toggle_pref.savefile_key] = TRUE
+
 /datum/preference_importer/proc/sanitize_character_import_data(list/char_data)
 	if(!islist(char_data))
 		return list()
@@ -140,6 +348,15 @@
 			continue
 		var/raw_value = char_data[preference.savefile_key]
 		if(isnull(raw_value))
+			continue
+
+		if(istype(preference, /datum/preference/choiced))
+			var/datum/preference/choiced/choiced_preference = preference
+			var/resolved_choice = resolve_choice_import_value(choiced_preference, raw_value)
+			if(!isnull(resolved_choice))
+				sanitized[choiced_preference.savefile_key] = choiced_preference.serialize(resolved_choice)
+			else
+				sanitized -= choiced_preference.savefile_key
 			continue
 
 		var/deserialized = preference.deserialize(raw_value, target_prefs)
@@ -165,8 +382,11 @@
 		else
 			sanitized["all_quirks"] = list()
 
-	if("body_markings" in sanitized)
-		sanitized["body_markings"] = SANITIZE_LIST(sanitized["body_markings"])
+	sanitized["body_markings"] = sanitize_imported_body_markings(char_data["body_markings"], char_data)
+	sanitized -= "body_markings_toggle"
+	sanitized -= "feature_body_markings"
+	sanitized -= "body_markings_color"
+	sanitized -= "body_markings_emissive"
 	if("mutant_bodyparts" in sanitized)
 		sanitized["mutant_bodyparts"] = SANITIZE_LIST(sanitized["mutant_bodyparts"])
 	if("features" in sanitized)
@@ -181,6 +401,8 @@
 		sanitized["alt_job_titles"] = SANITIZE_LIST(sanitized["alt_job_titles"])
 	if("be_special" in sanitized)
 		sanitized["be_special"] = target_prefs.sanitize_be_special(SANITIZE_LIST(sanitized["be_special"]))
+
+	infer_missing_mutant_toggles(sanitized)
 
 	return sanitized
 
@@ -298,6 +520,7 @@
 	var/list/char_data = get_selected_character_data()
 	if(!char_data || !target_prefs || !target_prefs.parent)
 		return
+	var/list/preview_data = sanitize_character_import_data(char_data)
 
 	var/list/original_cache = target_prefs.value_cache
 	var/list/original_body_markings = target_prefs.body_markings
@@ -307,16 +530,25 @@
 	var/original_preview_pref = target_prefs.preview_pref
 
 	target_prefs.value_cache = list()
-	target_prefs.body_markings = SANITIZE_LIST(char_data["body_markings"])
-	target_prefs.augments = SANITIZE_LIST(char_data["augments"])
-	target_prefs.augment_limb_styles = SANITIZE_LIST(char_data["augment_limb_styles"])
-	target_prefs.all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(char_data["all_quirks"]), target_prefs.augments, get_character_species(char_data))
+	target_prefs.body_markings = sanitize_imported_body_markings(preview_data["body_markings"], preview_data)
+	target_prefs.augments = SANITIZE_LIST(preview_data["augments"])
+	target_prefs.augment_limb_styles = SANITIZE_LIST(preview_data["augment_limb_styles"])
+	target_prefs.all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(preview_data["all_quirks"]), target_prefs.augments, get_character_species(preview_data))
 	target_prefs.preview_pref = preview_mode
 
 	for(var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if(preference.savefile_identifier != PREFERENCE_CHARACTER)
 			continue
-		var/value = preference.read(char_data, target_prefs)
+		var/value = preference.read(preview_data, target_prefs)
+		if(istype(preference, /datum/preference/choiced))
+			var/raw_value = preview_data[preference.savefile_key]
+			if(istext(raw_value))
+				var/datum/preference/choiced/choiced_preference = preference
+				var/matched_choice = find_closest_choice_value(choiced_preference, raw_value)
+				if(!isnull(matched_choice) && choiced_preference.is_valid(matched_choice, target_prefs))
+					value = matched_choice
+		if(isnull(value))
+			value = preference.create_informed_default_value(target_prefs)
 		if(!isnull(value))
 			target_prefs.value_cache[preference.type] = value
 
