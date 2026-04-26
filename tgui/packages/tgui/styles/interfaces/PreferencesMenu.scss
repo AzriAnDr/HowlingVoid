@@ -586,6 +586,8 @@ $department_map: (
       border: 1px solid hsla(36, 20%, 54%, 0.22);
       border-radius: 10px;
       padding: 6px;
+      min-height: 0;
+      overflow: hidden;
       background: linear-gradient(
         180deg,
         hsla(220, 17%, 18%, 0.7) 0%,
@@ -772,6 +774,13 @@ $department_map: (
       .Button:hover {
         border-color: hsla(39, 58%, 61%, 0.65) !important;
       }
+
+      min-height: 0;
+      overflow: hidden;
+
+      > .Stack {
+        min-height: 0;
+      }
     }
 
     &__FieldDropdown,
@@ -866,6 +875,12 @@ $department_map: (
         border: 0 !important;
         background: transparent !important;
       }
+    }
+
+    &__PrefContent {
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
     }
 
     &__VisualSlots .Button {

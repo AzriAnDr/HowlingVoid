@@ -1089,7 +1089,13 @@ export function MainPage(props: MainPageProps) {
                 </PageButton>
               </Stack.Item>
             </Stack>
-            {prefPageContents}
+            <Stack.Item
+              className="PreferencesMenu__Character__PrefContent"
+              grow
+              basis={0}
+            >
+              {prefPageContents}
+            </Stack.Item>
           </Stack>
         </Stack.Item>
         {/* NOVA EDIT ADDITION END: Swappable pref menus */}
