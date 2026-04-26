@@ -14,3 +14,4 @@ maslin_ = Разработчик
 l4rever = Разработчик
 RalseiDreemuurr = Разработчик
 Morskoi_kot = Разработчик
+Krokok = Разработчик
