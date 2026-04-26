@@ -24,6 +24,8 @@
 
   const introOverlay = document.querySelector('.intro-overlay');
   const menuWrapper = document.querySelector('.menu-wrapper');
+  const menuList = document.querySelector('.menu-list');
+  const menuDivider = document.querySelector('.menu-divider');
 
   const bloodFlash = document.querySelector('.blood-flash');
   const whiteFlash = document.querySelector('.white-flash');
@@ -35,8 +37,68 @@
   const fisheyeLens = document.querySelector('.fisheye-lens');
 
   const menuTitleBlock = document.querySelector('.menu-title');
+  const menuTitleMain = document.querySelector('.menu-title-main');
+  const menuTitleSmall = document.querySelector('.menu-title-small');
+  const menuTitleSmallGhost = document.querySelector('.menu-title-small-ghost');
+  const menuTitleSub = document.querySelector('.menu-title-sub');
+  const menuTitleSubGhost = document.querySelector('.menu-title-sub-ghost');
+  const whisperLayer = document.querySelector('.whisper-layer');
 
   const FEAR_VARIANTS = ['menu-fear-v1', 'menu-fear-v2', 'menu-fear-v3'];
+
+  const AUDIO_FADE_IN_MS = 2000;
+  const HOVER_SOUND_VOLUME = 0.1;
+  const SELECT_SOUND_VOLUME = 0.06;
+  const HOVER_THROTTLE_MS = 80;
+  const FEAR_CYCLE_INTERVAL_MS = 230;
+
+  const BODY_SHAKE_MS = 400;
+  const BLOOD_FLASH_MS = 110;
+  const CROSS_BEAT_MS = 260;
+  const CROSS_HARD_BEAT_DELAY_MS = 120;
+  const CROSS_HARD_BEAT_MS = 220;
+  const CROSS_FOG_MS = 500;
+  const CROSS_HARD_FOG_MS = 420;
+  const FISHEYE_WARP_MS = 800;
+  const FISHEYE_BURST_START_MS = 19000;
+  const FISHEYE_BURST_COUNT = 5;
+  const FISHEYE_BURST_BASE_DELAY_MS = 80;
+  const FISHEYE_BURST_STEP_MS = 220;
+  const FISHEYE_BURST_RANDOM_MS = 120;
+  const FISHEYE_LOOP_MIN_DELAY_MS = 450;
+  const FISHEYE_LOOP_RANDOM_DELAY_MS = 600;
+  const FISHEYE_EXTRA_GAP_BASE_MS = 140;
+  const FISHEYE_EXTRA_GAP_RANDOM_MS = 160;
+
+  const RIFF_AT_SEC = 4.74;
+  const CHAPTER_AT_SEC = 9.74;
+  const RIFF_END_INTRO_DELAY_MS = 200;
+  const RIFF_TITLE_RELEASE_MS = 12500;
+  const HARD_GLITCH_MS = 9000;
+  const CHAPTER_WHITE_FLASH_MS = 500;
+  const CHAPTER_SHADER_MS = 6000;
+  const CHAPTER_MENU_REVEAL_DELAY_MS = 6000;
+  const START_OVERLAY_REMOVE_MS = 600;
+
+  const BEAT_PATTERN = [
+    0.31, 0.62, 2.27, 2.44, 2.6, 2.89, 3.69, 3.85, 4.0, 4.19, 4.41, 4.74, 8.32,
+    8.47, 9.74, 9.75, 9.92, 10.09, 10.26, 10.43, 10.6, 10.77, 10.91, 11.08,
+    11.25, 11.42, 11.59, 11.76, 11.93, 11.94, 11.95, 11.96, 11.97, 11.98, 11.99,
+    12.0, 12.1, 12.27, 12.44, 12.61, 12.78, 12.95, 13.12, 13.29, 13.46, 13.63,
+    13.8, 13.97, 14.14, 14.31, 14.48, 14.55, 14.77, 14.92, 15.08, 15.23, 15.38,
+    15.53, 15.68, 15.84, 15.97, 16.12, 16.28, 16.42, 16.55, 16.71, 16.87, 17.02,
+    17.18, 17.33, 17.48, 17.64, 17.81, 17.98, 18.15, 18.35, 18.49, 18.65, 18.81,
+    18.97,
+  ];
+  const IMPACT_TIMES = [
+    0.31, 0.62, 2.27, 2.44, 2.6, 2.89, 3.69, 3.85, 4.0, 4.19, 4.41, 4.43, 4.46,
+    4.47,
+  ];
+
+  const WHISPER_MIN_DELAY_MS = 20;
+  const WHISPER_MAX_DELAY_MS = 300;
+  const WHISPER_INTRO_WAIT_MS = 800;
+  const WHISPER_SPAWN_CHANCE = 0.85;
 
   // ===============================
   // STATE + CLEANUP
@@ -44,6 +106,12 @@
   let activeIndex = 0;
   let introEnded = false;
   let started = false;
+  let whispersStarted = false;
+  let crossBeatsScheduled = false;
+  let impactBeatsScheduled = false;
+  let fisheyeScheduled = false;
+  let fadeToken = 0;
+  let lastHoverTime = 0;
 
   const controller = new AbortController();
   const { signal } = controller;
@@ -65,7 +133,6 @@
     return id;
   };
 
-  let fadeToken = 0;
   function fadeBgmTo(targetVolume, duration = 1200) {
     if (!bgm) return;
 
@@ -90,8 +157,12 @@
   // ===============================
   const fearTimers = new WeakMap();
 
-  function applyRandomFearVariant(el) {
+  function clearFearVariant(el) {
     FEAR_VARIANTS.forEach((cls) => el.classList.remove(cls));
+  }
+
+  function applyRandomFearVariant(el) {
+    clearFearVariant(el);
     const v = FEAR_VARIANTS[Math.floor(Math.random() * FEAR_VARIANTS.length)];
     el.classList.add(v);
   }
@@ -119,7 +190,7 @@
     };
 
     tick();
-    const id = iset(tick, 230);
+    const id = iset(tick, FEAR_CYCLE_INTERVAL_MS);
     fearTimers.set(item, id);
   }
 
@@ -132,16 +203,15 @@
     });
   }
 
-  let lastHoverTime = 0;
   function playHover() {
     const now = Date.now();
-    if (now - lastHoverTime < 80) return;
+    if (now - lastHoverTime < HOVER_THROTTLE_MS) return;
     lastHoverTime = now;
 
     if (!hoverSound) return;
     try {
       hoverSound.currentTime = 0;
-      hoverSound.volume = 0.1;
+      hoverSound.volume = HOVER_SOUND_VOLUME;
       hoverSound.play().catch(() => {});
     } catch {}
   }
@@ -150,7 +220,7 @@
     if (!selectSound) return;
     try {
       selectSound.currentTime = 0;
-      selectSound.volume = 0.06;
+      selectSound.volume = SELECT_SOUND_VOLUME;
       selectSound.play().catch(() => {});
     } catch {}
   }
@@ -174,23 +244,29 @@
   // ===============================
   function triggerImpactFX() {
     document.body.classList.add('body-shake');
-    tset(() => document.body.classList.remove('body-shake'), 400);
+    tset(() => document.body.classList.remove('body-shake'), BODY_SHAKE_MS);
 
     if (bloodFlash) {
       bloodFlash.classList.add('blood-flash--active');
-      tset(() => bloodFlash.classList.remove('blood-flash--active'), 110);
+      tset(
+        () => bloodFlash.classList.remove('blood-flash--active'),
+        BLOOD_FLASH_MS,
+      );
     }
   }
 
   function triggerCrossBeat(intensity = 'normal') {
     if (crossEl) {
       crossEl.classList.add('inverted-cross--beat');
-      tset(() => crossEl.classList.remove('inverted-cross--beat'), 260);
+      tset(
+        () => crossEl.classList.remove('inverted-cross--beat'),
+        CROSS_BEAT_MS,
+      );
     }
 
     if (crossFog) {
       crossFog.classList.add('cross-fog--boost');
-      tset(() => crossFog.classList.remove('cross-fog--boost'), 500);
+      tset(() => crossFog.classList.remove('cross-fog--boost'), CROSS_FOG_MS);
     }
 
     if (intensity === 'hard') {
@@ -198,13 +274,19 @@
         if (!started) return;
         if (crossEl) {
           crossEl.classList.add('inverted-cross--beat');
-          tset(() => crossEl.classList.remove('inverted-cross--beat'), 220);
+          tset(
+            () => crossEl.classList.remove('inverted-cross--beat'),
+            CROSS_HARD_BEAT_MS,
+          );
         }
         if (crossFog) {
           crossFog.classList.add('cross-fog--boost');
-          tset(() => crossFog.classList.remove('cross-fog--boost'), 420);
+          tset(
+            () => crossFog.classList.remove('cross-fog--boost'),
+            CROSS_HARD_FOG_MS,
+          );
         }
-      }, 120);
+      }, CROSS_HARD_BEAT_DELAY_MS);
     }
   }
 
@@ -216,14 +298,17 @@
     fisheyeLens.classList.add('fisheye-lens--active');
 
     document.body.classList.add('fisheye-warp');
-    tset(() => document.body.classList.remove('fisheye-warp'), 800);
+    tset(() => document.body.classList.remove('fisheye-warp'), FISHEYE_WARP_MS);
   }
 
-  function triggerFisheyeBurst(times = 5) {
+  function triggerFisheyeBurst(times = FISHEYE_BURST_COUNT) {
     if (!fisheyeLens) return;
 
     for (let i = 0; i < times; i++) {
-      const delay = 80 + i * 220 + Math.random() * 120;
+      const delay =
+        FISHEYE_BURST_BASE_DELAY_MS +
+        i * FISHEYE_BURST_STEP_MS +
+        Math.random() * FISHEYE_BURST_RANDOM_MS;
       tset(() => triggerFisheyeOnce(), delay);
     }
   }
@@ -240,151 +325,118 @@
     startWhispers();
   }
 
-  function revealMenuNow() {
-    endIntro();
+  function revealSupportTitles() {
+    menuTitleSmall?.classList.add('menu-title-small--reveal');
+    menuTitleSmallGhost?.classList.add('menu-title-small-ghost--anim');
+    menuTitleSub?.classList.add('menu-title-sub--reveal');
+    menuTitleSubGhost?.classList.add('menu-title-sub-ghost--anim');
+  }
 
-    const small = document.querySelector('.menu-title-small');
-    const smallGhost = document.querySelector('.menu-title-small-ghost');
-    const sub = document.querySelector('.menu-title-sub');
-    const subGhost = document.querySelector('.menu-title-sub-ghost');
-    const menuList = document.querySelector('.menu-list');
-    const menuDivider = document.querySelector('.menu-divider');
-    const mainTitle = document.querySelector('.menu-title-main');
-
-    small?.classList.add('menu-title-small--reveal');
-    smallGhost?.classList.add('menu-title-small-ghost--anim');
-    sub?.classList.add('menu-title-sub--reveal');
-    subGhost?.classList.add('menu-title-sub-ghost--anim');
-
+  function revealMenuList() {
     menuList?.classList.add('menu-list--visible');
     menuDivider?.classList.add('menu-divider--visible');
+  }
 
-    if (mainTitle) {
-      mainTitle.style.opacity = '1';
-      mainTitle.style.transform = 'translateY(0)';
-      mainTitle.classList.add('menu-title-main--idle');
-    }
+  function settleMainTitle() {
+    if (!menuTitleMain) return;
+
+    menuTitleMain.style.opacity = '1';
+    menuTitleMain.style.transform = 'translateY(0)';
+    menuTitleMain.classList.add('menu-title-main--idle');
+  }
+
+  function revealMenuNow() {
+    endIntro();
+    revealSupportTitles();
+    revealMenuList();
+    settleMainTitle();
   }
 
   // ===============================
   // AUDIO + SCHEDULING
   // ===============================
-  let crossBeatsScheduled = false;
-  let impactBeatsScheduled = false;
-  let fisheyeScheduled = false;
+  function runRiffBeat() {
+    triggerCrossBeat('hard');
+    triggerImpactFX();
+
+    if (menuTitleBlock) {
+      menuTitleBlock.classList.add('menu-title--riff');
+      tset(() => {
+        menuTitleBlock.classList.remove('menu-title--riff');
+        settleMainTitle();
+      }, RIFF_TITLE_RELEASE_MS);
+    }
+
+    document.body.classList.add('hard-glitch');
+    noiseOverlay?.classList.add('noise-overlay--hard');
+    tset(() => {
+      document.body.classList.remove('hard-glitch');
+      noiseOverlay?.classList.remove('noise-overlay--hard');
+    }, HARD_GLITCH_MS);
+
+    if (!introEnded) tset(endIntro, RIFF_END_INTRO_DELAY_MS);
+  }
+
+  function runChapterBeat() {
+    if (whiteFlash) {
+      whiteFlash.classList.add('white-flash--active');
+      tset(
+        () => whiteFlash.classList.remove('white-flash--active'),
+        CHAPTER_WHITE_FLASH_MS,
+      );
+    }
+
+    triggerCrossBeat('hard');
+    document.body.classList.add('post-flash-shader');
+    tset(() => {
+      document.body.classList.remove('post-flash-shader');
+    }, CHAPTER_SHADER_MS);
+
+    revealSupportTitles();
+
+    tset(() => {
+      document.body.classList.add('void-shader');
+      revealMenuList();
+    }, CHAPTER_MENU_REVEAL_DELAY_MS);
+  }
+
+  function runBeatAt(timeSec) {
+    if (!started) return;
+
+    if (Math.abs(timeSec - RIFF_AT_SEC) < 0.001) {
+      runRiffBeat();
+      return;
+    }
+
+    if (Math.abs(timeSec - CHAPTER_AT_SEC) < 0.001) {
+      runChapterBeat();
+      return;
+    }
+
+    triggerCrossBeat();
+  }
+
+  function scheduleTimeline(times, callback) {
+    if (!bgm) return;
+    const startTime = bgm.currentTime || 0;
+
+    times.forEach((timeSec) => {
+      tset(() => callback(timeSec), Math.max(0, (timeSec - startTime) * 1000));
+    });
+  }
 
   function scheduleCrossBeats() {
     if (!bgm || crossBeatsScheduled) return;
     crossBeatsScheduled = true;
-
-    const beatPattern = [
-      0.31, 0.62, 2.27, 2.44, 2.6, 2.89, 3.69, 3.85, 4.0, 4.19, 4.41, 4.74,
-      8.32, 8.47, 9.74, 9.75, 9.92, 10.09, 10.26, 10.43, 10.6, 10.77, 10.91,
-      11.08, 11.25, 11.42, 11.59, 11.76, 11.93, 11.94, 11.95, 11.96, 11.97,
-      11.98, 11.99, 12.0, 12.1, 12.27, 12.44, 12.61, 12.78, 12.95, 13.12, 13.29,
-      13.46, 13.63, 13.8, 13.97, 14.14, 14.31, 14.48, 14.55, 14.77, 14.92,
-      15.08, 15.23, 15.38, 15.53, 15.68, 15.84, 15.97, 16.12, 16.28, 16.42,
-      16.55, 16.71, 16.87, 17.02, 17.18, 17.33, 17.48, 17.64, 17.81, 17.98,
-      18.15, 18.35, 18.49, 18.65, 18.81, 18.97,
-    ];
-
-    const RIFF = 4.74;
-    const CHAPTER = 9.74;
-    const startTime = bgm.currentTime || 0;
-
-    beatPattern.forEach((t) => {
-      const delay = Math.max(0, (t - startTime) * 1000);
-
-      tset(() => {
-        if (!started) return;
-
-        const isRiff = Math.abs(t - RIFF) < 0.001;
-        const isChapter = Math.abs(t - CHAPTER) < 0.001;
-
-        if (isRiff) {
-          triggerCrossBeat('hard');
-          triggerImpactFX();
-
-          if (menuTitleBlock) {
-            menuTitleBlock.classList.add('menu-title--riff');
-
-            tset(() => {
-              menuTitleBlock.classList.remove('menu-title--riff');
-              const main = menuTitleBlock.querySelector('.menu-title-main');
-              if (main) {
-                main.style.opacity = '1';
-                main.style.transform = 'translateY(0)';
-                main.classList.add('menu-title-main--idle');
-              }
-            }, 12500);
-          }
-
-          document.body.classList.add('hard-glitch');
-          noiseOverlay?.classList.add('noise-overlay--hard');
-          tset(() => {
-            document.body.classList.remove('hard-glitch');
-            noiseOverlay?.classList.remove('noise-overlay--hard');
-          }, 9000);
-
-          if (!introEnded) tset(endIntro, 200);
-          return;
-        }
-
-        if (isChapter) {
-          if (whiteFlash) {
-            whiteFlash.classList.add('white-flash--active');
-            tset(() => whiteFlash.classList.remove('white-flash--active'), 500);
-          }
-
-          triggerCrossBeat('hard');
-
-          document.body.classList.add('post-flash-shader');
-          tset(() => {
-            document.body.classList.remove('post-flash-shader');
-          }, 6000);
-
-          const small = document.querySelector('.menu-title-small');
-          const smallGhost = document.querySelector('.menu-title-small-ghost');
-          small?.classList.add('menu-title-small--reveal');
-          smallGhost?.classList.add('menu-title-small-ghost--anim');
-
-          const sub = document.querySelector('.menu-title-sub');
-          const subGhost = document.querySelector('.menu-title-sub-ghost');
-          sub?.classList.add('menu-title-sub--reveal');
-          subGhost?.classList.add('menu-title-sub-ghost--anim');
-
-          tset(() => {
-            document.body.classList.add('void-shader');
-            const menuList = document.querySelector('.menu-list');
-            const menuDivider = document.querySelector('.menu-divider');
-            menuList?.classList.add('menu-list--visible');
-            menuDivider?.classList.add('menu-divider--visible');
-          }, 6000);
-
-          return;
-        }
-
-        triggerCrossBeat();
-      }, delay);
-    });
+    scheduleTimeline(BEAT_PATTERN, runBeatAt);
   }
 
   function scheduleBeatImpacts() {
     if (!bgm || impactBeatsScheduled) return;
     impactBeatsScheduled = true;
-
-    const impactTimes = [
-      0.31, 0.62, 2.27, 2.44, 2.6, 2.89, 3.69, 3.85, 4.0, 4.19, 4.41, 4.43,
-      4.46, 4.47,
-    ];
-    const startTime = bgm.currentTime || 0;
-
-    impactTimes.forEach((t) => {
-      const delay = Math.max(0, (t - startTime) * 1000);
-      tset(() => {
-        if (!started) return;
-        triggerImpactFX();
-      }, delay);
+    scheduleTimeline(IMPACT_TIMES, () => {
+      if (!started) return;
+      triggerImpactFX();
     });
   }
 
@@ -398,7 +450,9 @@
         return;
       }
 
-      const baseDelay = 450 + Math.random() * 600;
+      const baseDelay =
+        FISHEYE_LOOP_MIN_DELAY_MS +
+        Math.random() * FISHEYE_LOOP_RANDOM_DELAY_MS;
 
       tset(() => {
         if (!started) {
@@ -411,7 +465,9 @@
         if (Math.random() < 0.55) {
           const extraCount = 2 + Math.floor(Math.random() * 3);
           for (let i = 1; i <= extraCount; i++) {
-            const gap = 140 + Math.random() * 160;
+            const gap =
+              FISHEYE_EXTRA_GAP_BASE_MS +
+              Math.random() * FISHEYE_EXTRA_GAP_RANDOM_MS;
             tset(() => {
               if (!started) return;
               triggerFisheyeBurst();
@@ -423,7 +479,7 @@
       }, baseDelay);
     };
 
-    tset(queueNextBurst, 19000);
+    tset(queueNextBurst, FISHEYE_BURST_START_MS);
   }
 
   function startBgm() {
@@ -448,7 +504,7 @@
     const p = bgm.play();
 
     const afterPlay = () => {
-      fadeBgmTo(getConfiguredMenuVolume(), 2000);
+      fadeBgmTo(getConfiguredMenuVolume(), AUDIO_FADE_IN_MS);
       afterStart();
     };
 
@@ -582,11 +638,8 @@
     'MOGEKO',
   ];
 
-  let whispersStarted = false;
-
   function spawnWhisperWord() {
-    const layer = document.querySelector('.whisper-layer');
-    if (!layer) return;
+    if (!whisperLayer) return;
 
     const el = document.createElement('span');
     el.className = 'whisper-word';
@@ -661,7 +714,7 @@
     el.style.setProperty('--wrot', rot + 'deg');
     el.style.setProperty('--wdur', duration + 'ms');
 
-    layer.appendChild(el);
+    whisperLayer.appendChild(el);
     el.addEventListener('animationend', () => el.remove(), { once: true });
   }
 
@@ -669,18 +722,17 @@
     if (whispersStarted) return;
     whispersStarted = true;
 
-    const minDelay = 20;
-    const maxDelay = 300;
-
     const loop = () => {
       if (!introEnded) {
-        tset(loop, 800);
+        tset(loop, WHISPER_INTRO_WAIT_MS);
         return;
       }
 
-      if (Math.random() < 0.85) spawnWhisperWord();
+      if (Math.random() < WHISPER_SPAWN_CHANCE) spawnWhisperWord();
 
-      const next = minDelay + Math.random() * (maxDelay - minDelay);
+      const next =
+        WHISPER_MIN_DELAY_MS +
+        Math.random() * (WHISPER_MAX_DELAY_MS - WHISPER_MIN_DELAY_MS);
       tset(loop, next);
     };
 
@@ -699,7 +751,7 @@
 
     if (startOverlay) {
       startOverlay.classList.add('start-overlay--hidden');
-      tset(() => startOverlay.remove(), 600);
+      tset(() => startOverlay.remove(), START_OVERLAY_REMOVE_MS);
     }
 
     crossOverlay?.classList.add('inverted-cross-overlay--visible');
@@ -723,15 +775,13 @@
     tset(() => {
       if (!started) return;
       triggerFisheyeOnce();
-    }, 19000);
+    }, FISHEYE_BURST_START_MS);
   }
 
   // ===============================
   // INIT + EVENTS
   // ===============================
-  if (menuItems.length) setActiveItem(0);
-
-  menuItems.forEach((item, index) => {
+  function bindMenuItemEvents(item, index) {
     item.addEventListener(
       'mouseenter',
       () => {
@@ -765,26 +815,38 @@
       },
       { signal },
     );
-  });
+  }
 
-  startButton?.addEventListener('click', startExperience, { signal });
+  function initMenu() {
+    if (menuItems.length) setActiveItem(0);
+    menuItems.forEach(bindMenuItemEvents);
+    startButton?.addEventListener('click', startExperience, { signal });
+  }
+
+  initMenu();
 
   // ===============================
   // TEARDOWN
   // ===============================
-  window.__menuChapterTeardown = () => {
-    controller.abort();
-
+  function clearScheduledWork() {
     timeouts.forEach((id) => clearTimeout(id));
     intervals.forEach((id) => clearInterval(id));
-
     fadeToken++;
+  }
 
+  function resetMenuState() {
     menuItems.forEach((item) => stopFearCycle(item));
     started = false;
     introEnded = false;
+    whispersStarted = false;
     fisheyeScheduled = false;
     crossBeatsScheduled = false;
     impactBeatsScheduled = false;
+  }
+
+  window.__menuChapterTeardown = () => {
+    controller.abort();
+    clearScheduledWork();
+    resetMenuState();
   };
 })();

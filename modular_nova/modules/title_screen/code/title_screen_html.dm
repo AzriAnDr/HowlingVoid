@@ -94,13 +94,17 @@ GLOBAL_LIST_EMPTY(startup_messages)
 		var/current_ready_text = ready == PLAYER_READY_TO_PLAY ? "READY: ON" : "READY: OFF"
 		var/menu_music_enabled = client.prefs.read_preference(/datum/preference/toggle/menu_music_enabled)
 		var/menu_music_volume = clamp(client.prefs.read_preference(/datum/preference/numeric/volume/sound_menu_music_volume), 0, 100)
+		var/current_interface_language = client.prefs.read_preference(/datum/preference/choiced/interface_language)
 		var/menu_chapters_url = SSassets.transport.get_asset_url("menuChapters.js")
 		var/iron_heart_css_url = SSassets.transport.get_asset_url("ironHeart.css")
 		var/iron_heart_js_url = SSassets.transport.get_asset_url("ironHeart.js")
 		var/jesus_wept_css_url = SSassets.transport.get_asset_url("jesusWept.css")
 		var/jesus_wept_js_url = SSassets.transport.get_asset_url("jesusWept.js")
+		var/cross_to_bear_css_url = SSassets.transport.get_asset_url("crossToBear.css")
+		var/cross_to_bear_js_url = SSassets.transport.get_asset_url("crossToBear.js")
 		var/iron_heart_audio_url = SSassets.transport.get_asset_url("iron_heart.ogg")
 		var/jesus_wept_audio_url = SSassets.transport.get_asset_url("jesus_wept.ogg")
+		var/cross_to_bear_audio_url = SSassets.transport.get_asset_url("cross_to_bear.ogg")
 		var/select_audio_url = SSassets.transport.get_asset_url("buttonclickrelease.ogg")
 
 		dat = {"
@@ -197,7 +201,7 @@ GLOBAL_LIST_EMPTY(startup_messages)
 						<li class=\"menu-item\" data-action=\"observe\"><a class=\"menu-link\" href='byond://?src=[text_ref(src)];observe=1'><span class=\"menu-label\">OBSERVE</span></a></li>
 						<li class=\"menu-item\" data-action=\"manifest\"><a class=\"menu-link\" href='byond://?src=[text_ref(src)];view_manifest=1'><span class=\"menu-label\">CREW MANIFEST</span></a></li>
 						<li class=\"menu-item\" data-action=\"character-directory\"><a class=\"menu-link\" href='byond://?src=[text_ref(src)];view_directory=1'><span class=\"menu-label\">CHARACTER DIRECTORY</span></a></li>
-						<li class=\"menu-item\" data-action=\"character-setup\"><a class=\"menu-link\" href='byond://?src=[text_ref(src)];character_setup=1'><span class=\"menu-label\">SETUP CHARACTER: <span id=\"character_slot\">[current_character_name]</span></span></a></li>
+						<li class=\"menu-item\" data-action=\"character-setup\"><a class=\"menu-link\" href='byond://?src=[text_ref(src)];character_setup=1'><span class=\"menu-label\">SETUP CHARACTER</span></a></li>
 						<li class=\"menu-item\" data-action=\"game-options\"><a class=\"menu-link\" href='byond://?src=[text_ref(src)];game_options=1'><span class=\"menu-label\">GAME OPTIONS</span></a></li>
 						<li class=\"menu-item\" data-action=\"be-antagonist\"><a id=\"be_antag\" class=\"menu-link\" href='byond://?src=[text_ref(src)];toggle_antag=1'><span class=\"menu-label\">[current_antag_text]</span></a></li>
 		"}
@@ -209,6 +213,7 @@ GLOBAL_LIST_EMPTY(startup_messages)
 					</ul>
 				</div>
 
+				<span id=\"character_slot\" style=\"display:none\">[current_character_name]</span>
 				<audio id=\"select-sound\" src=\"[select_audio_url]\" preload=\"auto\"></audio>
 				<audio id=\"bgm\" src=\"\" preload=\"auto\"></audio>
 
@@ -223,6 +228,7 @@ GLOBAL_LIST_EMPTY(startup_messages)
 					}
 
 					function set_round_started() {
+						window.__HOWLING_ROUND_STARTED = true;
 						var join_href = "byond://?src=[text_ref(src)];late_join=1";
 						var join_anchor = null;
 						var menu_items = document.querySelectorAll(".menu-item");
@@ -350,27 +356,44 @@ GLOBAL_LIST_EMPTY(startup_messages)
 						if(isNaN(parsed)) {
 							parsed = 0;
 						}
+						if(parsed > 0) {
+							window.__HOWLING_MENU_SETTINGS.musicEnabled = true;
+						}
 						window.__HOWLING_MENU_SETTINGS.musicVolume = Math.max(0, Math.min(1, parsed / 100));
 						apply_menu_music_settings();
+					}
+
+					function set_menu_language(language) {
+						window.__HOWLING_MENU_SETTINGS = window.__HOWLING_MENU_SETTINGS || {};
+						var normalized = String(language || "") === "russian" ? "russian" : "english";
+						window.__HOWLING_MENU_SETTINGS.interfaceLanguage = normalized;
+						window.__HOWLING_INTERFACE_LANGUAGE = normalized;
 					}
 
 					function append_terminal_text() {}
 					function update_loading_progress() {}
 				</script>
 				<script>
+					window.__HOWLING_MENU_SRC = "[text_ref(src)]";
+					window.__HOWLING_ROUND_STARTED = [SSticker && SSticker.current_state > GAME_STATE_PREGAME ? "true" : "false"];
 					window.__HOWLING_MENU_SETTINGS = {
 						musicEnabled: [menu_music_enabled ? "true" : "false"],
 						musicVolume: [menu_music_volume] / 100,
+						interfaceLanguage: "[current_interface_language]",
 						introAccepted: false
 					};
+					window.__HOWLING_INTERFACE_LANGUAGE = "[current_interface_language]";
 					window.__HOWLING_MENU_ASSETS = {
 						"menuChapters.js": "[menu_chapters_url]",
 						"ironHeart.css": "[iron_heart_css_url]",
 						"ironHeart.js": "[iron_heart_js_url]",
 						"jesusWept.css": "[jesus_wept_css_url]",
 						"jesusWept.js": "[jesus_wept_js_url]",
+						"crossToBear.css": "[cross_to_bear_css_url]",
+						"crossToBear.js": "[cross_to_bear_js_url]",
 						"iron_heart.ogg": "[iron_heart_audio_url]",
 						"jesus_wept.ogg": "[jesus_wept_audio_url]",
+						"cross_to_bear.ogg": "[cross_to_bear_audio_url]",
 						"buttonclickrelease.ogg": "[select_audio_url]"
 					};
 				</script>

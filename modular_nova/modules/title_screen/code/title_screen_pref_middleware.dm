@@ -19,3 +19,8 @@
 	if(preference == "menu_music_enabled" || preference == "sound_menu_music_volume")
 		var/mob/dead/new_player/new_player = user
 		new_player.update_menu_music_settings()
+		return
+
+	if(preference == "interface_language")
+		var/mob/dead/new_player/language_new_player = user
+		language_new_player.update_interface_language_setting()

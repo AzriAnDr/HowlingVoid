@@ -23,6 +23,20 @@ body {
 	color: #f4efe5;
 }
 
+body[data-chapter="jesusWept"] {
+	--menu-chrome-fg: rgba(246, 226, 202, 0.82);
+	--menu-chrome-bg: rgba(8, 0, 0, 0.38);
+	--menu-chrome-border: 1px solid rgba(180, 30, 30, 0.36);
+	--menu-chrome-shadow:
+		0 0 26px rgba(130, 0, 0, 0.24),
+		inset 0 0 18px rgba(255, 230, 200, 0.04);
+	--menu-chrome-accent: #9f1717;
+	--menu-chrome-name-fg: rgba(255, 238, 214, 0.88);
+	--menu-chrome-name-shadow:
+		0 0 12px rgba(150, 0, 0, 0.46),
+		0 0 28px rgba(0, 0, 0, 0.9);
+}
+
 /* ================================
    NOISE + VIGNETTE
 ================================ */

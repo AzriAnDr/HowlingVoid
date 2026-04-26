@@ -12,6 +12,35 @@
 	if(client.interviewee)
 		return FALSE
 
+	if(href_list["set_menu_music_volume"])
+		var/datum/preferences/preferences = client.prefs
+		if(!preferences)
+			return
+
+		var/menu_music_volume = clamp(text2num(href_list["set_menu_music_volume"]), 0, 100)
+		preferences.update_preference(GLOB.preference_entries[/datum/preference/numeric/volume/sound_menu_music_volume], menu_music_volume)
+		if(menu_music_volume > 0)
+			preferences.update_preference(GLOB.preference_entries[/datum/preference/toggle/menu_music_enabled], TRUE)
+		preferences.update_data_for_all_viewers()
+		preferences.update_static_data(src, always_instant = TRUE)
+		preferences.save_preferences()
+		update_menu_music_settings()
+		return
+
+	if(href_list["set_interface_language"])
+		var/datum/preferences/preferences = client.prefs
+		if(!preferences)
+			return
+
+		var/interface_language = href_list["set_interface_language"]
+		if(!(interface_language in list("english", "russian")))
+			return
+
+		preferences.write_preference(GLOB.preference_entries[/datum/preference/choiced/interface_language], interface_language)
+		preferences.update_static_data(src, always_instant = TRUE)
+		update_interface_language_setting()
+		return
+
 	if(href_list["observe"])
 		play_lobby_button_sound()
 		make_me_an_observer()
@@ -98,6 +127,7 @@
 	if(href_list["title_is_ready"])
 		title_screen_is_ready = TRUE
 		update_menu_music_settings()
+		update_interface_language_setting()
 		if(SSticker && SSticker.current_state > GAME_STATE_PREGAME)
 			client << output(1, "nova_title_browser:set_round_started")
 		return
@@ -162,6 +192,16 @@
 	client << output(menu_music_enabled, "nova_title_browser:set_menu_music_enabled")
 	client << output(menu_music_volume, "nova_title_browser:set_menu_music_volume")
 
+/mob/dead/new_player/proc/update_interface_language_setting()
+	if(!client)
+		return
+
+	var/datum/preferences/preferences = client.prefs
+	if(!preferences)
+		return
+
+	client << output(preferences.read_preference(/datum/preference/choiced/interface_language), "nova_title_browser:set_menu_language")
+
 /datum/asset/simple/lobby
 	assets = list(
 		"FixedsysExcelsior3.01Regular.ttf" = 'html/browser/FixedsysExcelsior3.01Regular.ttf',
@@ -173,11 +213,14 @@
 		"menuChapters.js" = 'modularhowling_void/code/html_menu/menuChapters.js',
 		"ironHeart.js" = 'modularhowling_void/code/html_menu/ironHeart.js',
 		"jesusWept.js" = 'modularhowling_void/code/html_menu/jesusWept.js',
+		"crossToBear.js" = 'modularhowling_void/code/html_menu/crossToBear.js',
 		"ironHeart.css" = 'modularhowling_void/code/html_menu/ironHeart.css',
 		"jesusWept.css" = 'modularhowling_void/code/html_menu/jesusWept.css',
+		"crossToBear.css" = 'modularhowling_void/code/html_menu/crossToBear.css',
 		"buttonclickrelease.ogg" = 'modularhowling_void/code/html_menu/buttonclickrelease.ogg',
 		"iron_heart.ogg" = 'modularhowling_void/code/html_menu/iron_heart.ogg',
 		"jesus_wept.ogg" = 'modularhowling_void/code/html_menu/jesus_wept.ogg',
+		"cross_to_bear.ogg" = 'modularhowling_void/code/html_menu/cross_to_bear.ogg',
 	)
 // Howling Void Edit end
 
@@ -193,7 +236,9 @@
 		winset(client, "status_bar", "is-visible=true")
 
 /mob/dead/new_player/proc/play_lobby_button_sound()
-	SEND_SOUND(src, sound('modular_nova/master_files/sound/effects/save.ogg'))
+	var/sound/button_sound = sound('modular_nova/master_files/sound/effects/save.ogg')
+	button_sound.volume = 25
+	SEND_SOUND(src, button_sound)
 
 /**
  * Allows the player to select a server to join from any loaded servers.

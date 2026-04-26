@@ -51,6 +51,20 @@ body {
 	animation: ihBackdropFlow 14s ease-in-out infinite;
 }
 
+body[data-chapter="ironHeart"] {
+	--menu-chrome-fg: rgba(214, 231, 248, 0.82);
+	--menu-chrome-bg: rgba(5, 10, 16, 0.5);
+	--menu-chrome-border: 1px solid rgba(132, 191, 255, 0.28);
+	--menu-chrome-shadow:
+		0 0 26px rgba(80, 150, 230, 0.18),
+		inset 0 0 18px rgba(206, 232, 255, 0.05);
+	--menu-chrome-accent: #84bfff;
+	--menu-chrome-name-fg: rgba(226, 238, 252, 0.9);
+	--menu-chrome-name-shadow:
+		0 0 14px rgba(132, 191, 255, 0.4),
+		0 0 30px rgba(0, 0, 0, 0.95);
+}
+
 @keyframes ihBackdropFlow {
 	0%,
 	100% {
