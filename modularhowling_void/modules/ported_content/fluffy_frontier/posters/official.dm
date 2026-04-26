@@ -1,13 +1,8 @@
-/obj/structure/sign/poster/official/ff_contest
-	name = "I Low U"
-	desc = "That tantalising smell of flowers and shawarma..... You've hardly seen him in person, but he definitely sees you."
-	icon_state = "i_low_u"
-	icon = 'modularhowling_void/modules/ported_content/fluffy_frontier/posters/poster_contest.dmi'
-
 /obj/structure/sign/poster/official/ff_contest/hot_ice
 	name = "Hot Ice!"
 	desc = "Make it, Sell it, Use it, ...Burn it? I hope everything will be ok with Atmos after this."
 	icon_state = "hot_ice"
+	icon = 'modularhowling_void/modules/ported_content/fluffy_frontier/posters/poster_contest.dmi'
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/ff_contest/hot_ice, 32)
 
@@ -24,13 +19,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/ff_contest/i_low
 	icon_state = "dumayte"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/ff_contest/dumayte, 32)
-
-/obj/structure/sign/poster/official/ff_contest/literally_2564
-	name = "Literally 2564"
-	desc = "Just like a George Lowell novel."
-	icon_state = "literally_2564"
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/ff_contest/literally_2564, 32)
 
 /obj/structure/sign/poster/official/ff_contest/think
 	name = "Think..."
@@ -279,7 +267,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/ff_contest/lazy_
 
 /obj/structure/sign/poster/official/ff_contest/centcom_nadzor
 	name = "CentComNadzor"
-	desc = "Use PDAs only for work-related matters. Do not trust scam emails. CentComNadzor is protecting your personal data and SOP!"
+	desc = "Use PDAs only for work-related matters. Do not trust scam emails. CentComNadzor is protecting your personal data and SOP! However, looking at this poster, you say with a sigh, Office of faggots..."
 	icon_state = "centcom_nadzor"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/ff_contest/centcom_nadzor, 32)
