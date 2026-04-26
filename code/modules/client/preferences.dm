@@ -66,6 +66,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///What outfit typepaths we've favorited in the SelectEquipment menu
 	var/list/favorite_outfits = list()
 
+	///Statpanel verbs marked as favorites by this player
+	var/list/statpanel_favorites = list()
+
 	/// A preview of the current character
 	var/atom/movable/screen/map_view/char_preview/character_preview_view
 

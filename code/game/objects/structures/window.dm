@@ -723,6 +723,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	anchored = FALSE
 
 /obj/structure/window/plasma/fulltile
+	name = "full tile plasma window"
 	icon = 'icons/obj/smooth_structures/plasma_window.dmi' //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
 	icon_state = "plasma_window-0"
 	base_icon_state = "plasma_window"
@@ -740,6 +741,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	anchored = FALSE
 
 /obj/structure/window/reinforced/plasma/fulltile
+	name = "full tile reinforced plasma window"
 	icon = 'icons/obj/smooth_structures/rplasma_window.dmi' //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
 	icon_state = "rplasma_window-0"
 	base_icon_state = "rplasma_window"

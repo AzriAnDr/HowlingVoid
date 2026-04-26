@@ -35,6 +35,8 @@
 #define RCD_UPGRADE_ANTI_INTERRUPT (1 << 4)
 /// Upgrade to disable delay multiplier when building multiple structures
 #define RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN (1 << 5)
+/// CE-exclusive upgrade for building secure constructions (high-security airlocks, vault doors, plasteel walls)
+#define RCD_UPGRADE_SECURE_CONSTRUCTIONS (1 << 6)
 /// All upgrades packed in 1 flag
 #define RCD_ALL_UPGRADES (RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_SILO_LINK | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN)
 /// Upgrades for the Rapid Pipe Dispenser to unwrench pipes

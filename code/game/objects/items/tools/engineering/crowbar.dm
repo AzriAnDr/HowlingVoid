@@ -270,6 +270,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 
+/obj/item/crowbar/power/ce
+	toolspeed = 0.35
+
 /obj/item/crowbar/power/paramedic
 	name = "jaws of recovery"
 	desc = "A specialized version of the jaws of life, primarily to be used by paramedics to recover the injured and the recently deceased. Rather than a cutting arm, this tool has a bonesetting apparatus. \

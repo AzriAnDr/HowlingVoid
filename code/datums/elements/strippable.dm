@@ -57,6 +57,13 @@
 	if (!isnull(should_strip_proc_path) && !call(source, should_strip_proc_path)(user))
 		return
 
+	// Do not open strip menu when user is in combat/harm mode
+	// Cyborgs are excluded here because they have inverted logic above (they need combat mode ON to strip instead of buckling)
+	if(isliving(user) && !iscyborg(user))
+		var/mob/living/living_user = user
+		if(living_user.combat_mode)
+			return
+
 	// Snowflake for mob scooping
 	if (isliving(source))
 		var/mob/living/mob = source

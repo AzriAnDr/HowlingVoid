@@ -260,7 +260,7 @@
 	rcd_results[RCD_DESIGN_MODE] = mode
 	rcd_results[RCD_DESIGN_PATH] = rcd_design_path
 
-	var/delay = rcd_results["delay"] * delay_mod
+	var/delay = rcd_results["delay"] * (rcd_results["ignore_delay_mod"] ? 1 : delay_mod)
 	if (
 		!(construction_upgrades & RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN) \
 			&& !rcd_results[RCD_RESULT_BYPASS_FREQUENT_USE_COOLDOWN] \
@@ -358,6 +358,10 @@
 			continue
 		if(sub_category == "Furniture" && !(construction_upgrades & RCD_UPGRADE_FURNISHING))
 			continue
+		if(sub_category == "Secure Airlocks" && !(construction_upgrades & RCD_UPGRADE_SECURE_CONSTRUCTIONS))
+			continue
+		if(sub_category == "Secure Structures" && !(construction_upgrades & RCD_UPGRADE_SECURE_CONSTRUCTIONS))
+			continue
 
 		var/list/designs = list() //initialize all designs under this category
 		for(var/list/design as anything in target_category)
@@ -414,6 +418,10 @@
 				return TRUE
 			//You can't select designs from the Furniture category if you don't have the furnishing upgrade installed.
 			if(category == "Furniture" && !(construction_upgrades & RCD_UPGRADE_FURNISHING))
+				return TRUE
+			if(category_name == "Secure Airlocks" && !(construction_upgrades & RCD_UPGRADE_SECURE_CONSTRUCTIONS))
+				return TRUE
+			if(category_name == "Secure Structures" && !(construction_upgrades & RCD_UPGRADE_SECURE_CONSTRUCTIONS))
 				return TRUE
 
 			//use UI params to set variables
@@ -520,12 +528,27 @@
 	construction_upgrades = RCD_ALL_UPGRADES
 
 /obj/item/construction/rcd/ce
+	parent_type = /obj/item/construction/rcd/combat/ce
+
+/obj/item/construction/rcd/combat/ce
 	name = "professional RCD"
 	desc = "A higher-end model of the rapid construction device, prefitted with improved cooling and disruption prevention. Provided to the chief engineer."
-	icon_state = "cercd"
-	inhand_icon_state = "cercd"
-	construction_upgrades = RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
-	matter = 160
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "rcd"
+	worn_icon_state = "RCD"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	max_matter = 320
+	matter = 320
+	construction_upgrades = RCD_ALL_UPGRADES | RCD_UPGRADE_SECURE_CONSTRUCTIONS
+	delay_mod = 0.25
+	color = list(
+		0.3, 0.3, 0.7, 0.0,
+		1.0, 1.0, 0.2, 0.0,
+		-0.2, 0.0, 1.0, 0.0,
+		0.0, 0.0, 0.0, 1.0,
+		0.0, 0.0, 0.0, 0.0,
+	)
 
 /obj/item/construction/rcd/combat
 	name = "industrial RCD"
@@ -540,7 +563,7 @@
 	name = "admin RCD"
 	max_matter = INFINITY
 	matter = INFINITY
-	construction_upgrades = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
+	construction_upgrades = (RCD_ALL_UPGRADES | RCD_UPGRADE_SECURE_CONSTRUCTIONS) & ~RCD_UPGRADE_SILO_LINK
 	delay_mod = 0.1
 
 // Ranged RCD

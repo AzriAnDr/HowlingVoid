@@ -62,6 +62,8 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 	var/guaranteed_side_tier2
 	/// Knowledge guaranteed to show up in the third draft
 	var/guaranteed_side_tier3
+	/// Knowledge guaranteed to show up in the fourth draft (T5 pool). Defaults to Ashen Passage for all non-ash paths.
+	var/guaranteed_side_tier4 = /datum/heretic_knowledge/spell/ash_passage
 
 
 /datum/heretic_knowledge_tree_column/proc/get_ui_data(datum/antagonist/heretic/our_heretic, category)
@@ -246,15 +248,17 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 		knowledge_tier4,
 	)
 
-	// Every path can have a guaranteed option that will show up in the first 3 drafts (Otherwise we just run as normal)
+	// Every path can have a guaranteed option that will show up in the first 4 drafts (Otherwise we just run as normal)
 	var/datum/heretic_knowledge/guaranteed_draft_t1 = heretic_path.guaranteed_side_tier1
 	var/datum/heretic_knowledge/guaranteed_draft_t2 = heretic_path.guaranteed_side_tier2
 	var/datum/heretic_knowledge/guaranteed_draft_t3 = heretic_path.guaranteed_side_tier3
+	var/datum/heretic_knowledge/guaranteed_draft_t4 = heretic_path.guaranteed_side_tier4
 
 	var/list/guaranteed_drafts = list(
 		guaranteed_draft_t1,
 		guaranteed_draft_t2,
 		guaranteed_draft_t3,
+		guaranteed_draft_t4,
 	)
 
 	var/list/shop_unlock_order = list(
@@ -305,6 +309,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 		),
 		list(
 			"parent_knowledge" = knowledge_tier4,
+			"guaranteed_knowledge" = guaranteed_draft_t4,
 			"probabilities" = list("1" = 0, "2" = 0, "3" = 0, "4" = 0, "5" = 100),
 			HKT_DEPTH = HKT_DEPTH_DRAFT_4,
 		)

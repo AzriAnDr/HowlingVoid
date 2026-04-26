@@ -14,7 +14,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_NORMAL
-	force = 20
+	force = 25
 	throwforce = 10
 	wound_bonus = 5
 	exposed_wound_bonus = 15
@@ -33,6 +33,9 @@
 /obj/item/melee/sickly_blade/examine(mob/user)
 	. = ..()
 	if(!check_usability(user))
+		return
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+	if(heretic_datum?.unlimited_blades)
 		return
 
 	. += span_notice("You can shatter the blade to teleport to a random, (mostly) safe location by <b>activating it in-hand</b>.")
@@ -94,6 +97,20 @@
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target, src)
+
+/obj/item/melee/sickly_blade/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(user.has_status_effect(/datum/status_effect/realignment))
+		user.balloon_alert(user, "cannot attack while realigning")
+		return TRUE
+	if(IS_HERETIC_OR_MONSTER(user) && HAS_TRAIT(user, TRAIT_PACIFISM))
+		var/list/pacifism_sources = list() + GET_TRAIT_SOURCES(user, TRAIT_PACIFISM)
+		for(var/source in pacifism_sources)
+			REMOVE_TRAIT(user, TRAIT_PACIFISM, source)
+		var/result = ..()
+		for(var/source in pacifism_sources)
+			ADD_TRAIT(user, TRAIT_PACIFISM, source)
+		return result
+	return ..()
 
 /obj/item/melee/sickly_blade/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, interacting_with, src)

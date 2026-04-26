@@ -208,6 +208,9 @@
 /turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_TURF)
+			if(the_rcd.rcd_design_path == /turf/closed/wall/r_wall)
+				var/fixed_time = istype(the_rcd, /obj/item/construction/rcd/combat/ce)
+				return list("delay" = 3 SECONDS, "cost" = 32, "ignore_delay_mod" = fixed_time)
 			var/obj/structure/girder/girder = locate() in src
 			if(girder)
 				return girder.rcd_vals(user, the_rcd)
@@ -230,11 +233,21 @@
 			else if(the_rcd.rcd_design_path  == /obj/structure/window/reinforced)
 				cost = 6
 				delay = 2.5 SECONDS
+			else if(ispath(the_rcd.rcd_design_path, /obj/structure/window/reinforced/plasma))
+				cost = 12
+				delay = 4 SECONDS
+			else if(ispath(the_rcd.rcd_design_path, /obj/structure/window/plasma))
+				cost = 8
+				delay = 3 SECONDS
 			return rcd_result_with_memory(
 				list("delay" = delay, "cost" = cost),
 				src, RCD_MEMORY_WINDOWGRILLE,
 			)
 		if(RCD_AIRLOCK)
+			if(ispath(the_rcd.rcd_design_path, /obj/machinery/door/airlock/vault))
+				return list("delay" = 10 SECONDS, "cost" = 32)
+			if(ispath(the_rcd.rcd_design_path, /obj/machinery/door/airlock/highsecurity))
+				return list("delay" = 7 SECONDS, "cost" = 24)
 			if(ispath(the_rcd.rcd_design_path, /obj/machinery/door/airlock/glass))
 				return list("delay" = 5 SECONDS, "cost" = 20)
 			else
@@ -270,6 +283,9 @@
 /turf/open/floor/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_TURF)
+			if(rcd_data[RCD_DESIGN_PATH] == /turf/closed/wall/r_wall)
+				place_on_top(/turf/closed/wall/r_wall)
+				return TRUE
 			var/obj/structure/girder/girder = locate() in src
 			if(girder)
 				return girder.rcd_act(user, the_rcd, rcd_data)
@@ -291,7 +307,7 @@
 				WD.set_anchored(TRUE)
 				return TRUE
 
-			//build grills to deal with full tile windows
+			//build grills to deal with full tile windows, including plasma variants
 			grille = new(src)
 			grille.set_anchored(TRUE)
 			return TRUE

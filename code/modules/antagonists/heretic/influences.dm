@@ -1,6 +1,8 @@
 
 /// The number of influences spawned per heretic
-#define NUM_INFLUENCES_PER_HERETIC 5
+#define NUM_INFLUENCES_PER_HERETIC 4
+/// Maximum number of influences that can exist at once
+#define MAX_INFLUENCES 8
 
 /**
  * #Reality smash tracker
@@ -38,10 +40,12 @@
 	var/how_many_can_we_make = 0
 	for(var/heretic_number in 1 to length(tracked_heretics))
 		how_many_can_we_make += max(NUM_INFLUENCES_PER_HERETIC - heretic_number + 1, 1)
+	// Cap the maximum number of influences.
+	how_many_can_we_make = min(how_many_can_we_make, MAX_INFLUENCES)
 
 	var/location_sanity = 0
-	while((length(smashes) + num_drained) < how_many_can_we_make && location_sanity < 100)
-		var/turf/chosen_location = get_safe_random_station_turf_equal_weight()
+	while(length(smashes) < how_many_can_we_make && location_sanity < 100)
+		var/turf/chosen_location = get_safe_random_station_turf_equal_weight(include_maintenance = TRUE)
 
 		// We don't want them close to each other - at least 1 tile of separation
 		var/list/nearby_things = range(1, chosen_location)
@@ -100,59 +104,6 @@
 /obj/effect/visible_heretic_influence/proc/show_presence()
 	animate(src, alpha = 255, time = 15 SECONDS)
 
-/obj/effect/visible_heretic_influence/attack_hand(mob/living/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	if(!ishuman(user))
-		return
-
-	if(IS_HERETIC(user))
-		to_chat(user, span_boldwarning("You know better than to tempt forces out of your control!"))
-		return TRUE
-
-	var/mob/living/carbon/human/human_user = user
-	var/obj/item/bodypart/their_poor_arm = human_user.get_active_hand()
-	if (!their_poor_arm)
-		return TRUE
-
-	if(prob(25))
-		to_chat(human_user, span_userdanger("An otherwordly presence tears and atomizes your [their_poor_arm.name] as you try to touch the hole in the very fabric of reality!"))
-		if (their_poor_arm.dismember())
-			their_poor_arm.forceMove(src) // stored for later fishage
-	else
-		to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails, trying to latch onto existence itself!"))
-	return TRUE
-
-/obj/effect/visible_heretic_influence/attack_tk(mob/user)
-	if(!ishuman(user))
-		return
-
-	. = COMPONENT_CANCEL_ATTACK_CHAIN
-
-	if(IS_HERETIC(user))
-		to_chat(user, span_boldwarning("You know better than to tempt forces out of your control!"))
-		return
-
-	var/mob/living/carbon/human/human_user = user
-
-	// You see, these tendrils are psychic. That's why you can't see them. Definitely not laziness. Just psychic. The character can feel but not see them.
-	// Because they're psychic. Yeah.
-	if(human_user.can_block_magic(MAGIC_RESISTANCE_MIND))
-		visible_message(span_danger("Psychic endrils lash out from [src], batting ineffectively at [user]'s head."))
-		return
-
-	// A very elaborate way to suicide
-	visible_message(span_userdanger("Psychic tendrils lash out from [src], psychically grabbing onto [user]'s psychically sensitive mind and tearing [user.p_their()] head off!"))
-	var/obj/item/bodypart/head/head = human_user.get_bodypart(BODY_ZONE_HEAD)
-	if(head?.dismember())
-		head.forceMove(src) // stored for later fishage
-	else
-		human_user.gib(DROP_ALL_REMAINS)
-	human_user.investigate_log("has died from using telekinesis on a heretic influence.", INVESTIGATE_DEATHS)
-	var/datum/effect_system/reagents_explosion/explosion = new(get_turf(human_user), 1, 1, 1)
-	explosion.start(src)
-
 /obj/effect/visible_heretic_influence/examine(mob/living/user)
 	. = ..()
 	. += span_hypnophrase(pick_list(HERETIC_INFLUENCE_FILE, "examine"))
@@ -161,7 +112,6 @@
 
 	. += span_userdanger("Your mind burns as you stare at the tear!")
 	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 10, 190)
-	user.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/effect/heretic_influence
 	name = "reality smash"
@@ -279,6 +229,7 @@
 /obj/effect/heretic_influence/proc/generate_name()
 	name = "\improper" + pick_list(HERETIC_INFLUENCE_FILE, "prefix") + " " + pick_list(HERETIC_INFLUENCE_FILE, "postfix")
 
+#undef MAX_INFLUENCES
 #undef NUM_INFLUENCES_PER_HERETIC
 
 /// Hud used for heretics to see influences

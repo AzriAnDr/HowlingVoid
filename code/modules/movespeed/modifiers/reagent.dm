@@ -43,3 +43,6 @@
 
 /datum/movespeed_modifier/reagent/nooartrium
 	multiplicative_slowdown = 2
+
+/datum/movespeed_modifier/reagent/cosmic_dust
+	multiplicative_slowdown = 1

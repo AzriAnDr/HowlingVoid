@@ -261,6 +261,20 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			parsed_favs += path
 	favorite_outfits = unique_list(parsed_favs)
 
+	//statpanel favorites
+	statpanel_favorites = savefile.get_entry("statpanel_favorites", statpanel_favorites)
+
+	var/list/cleaned_statpanel_favorites = list()
+	for(var/favorite in statpanel_favorites)
+		if(!istext(favorite))
+			continue
+		var/cleaned = trim(favorite, STATPANEL_FAVORITE_MAX_LENGTH)
+		cleaned = sanitize_text(cleaned, "")
+		if(!length(cleaned))
+			continue
+		cleaned_statpanel_favorites += cleaned
+	statpanel_favorites = unique_list(cleaned_statpanel_favorites)
+
 	// Custom hotkeys
 	key_bindings = savefile.get_entry("key_bindings")
 
@@ -346,6 +360,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	savefile.set_entry("key_bindings", key_bindings)
 	savefile.set_entry("hearted_until", (hearted_until > world.realtime ? hearted_until : null))
 	savefile.set_entry("favorite_outfits", favorite_outfits)
+	savefile.set_entry("statpanel_favorites", statpanel_favorites)
 	savefile.save()
 	return TRUE
 

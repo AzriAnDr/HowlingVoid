@@ -69,7 +69,11 @@
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	user.AddComponentFrom(REF(src), /datum/component/empathy, seen_it = TRUE, visible_info = ALL, self_empath = FALSE, sense_dead = FALSE, sense_whisper = TRUE, smite_target = FALSE)
+	user.AddComponentFrom(REF(src), /datum/component/empathy)
+
+/datum/heretic_knowledge/limited_amount/starting/base_moon/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	user.RemoveComponentSource(REF(src), /datum/component/empathy)
 
 /datum/heretic_knowledge/limited_amount/starting/base_moon/on_mansus_grasp(mob/living/source, mob/living/target)
 	. = ..()
@@ -101,9 +105,7 @@
 	name = "Moonlight Amulet"
 	desc = "Allows you to transmute 2 sheets of glass, a heart and a tie to create a Moonlight Amulet. \
 			If the item is used on someone with low sanity they go berserk attacking everyone, \
-			if their sanity isn't low enough it decreases their mood. \
-			Wearing this will grant you the ability to see heathens through walls and make your blades harmless, they will instead directly attack their mind. \
-			Provides thermal vision and doubles the brain regen of a moon heretic while worn."
+			if their sanity isn't low enough it decreases their mood."
 	gain_text = "At the head of the parade he stood, the moon condensed into one mass, a reflection of the soul."
 
 	required_atoms = list(
@@ -143,8 +145,7 @@
 
 /datum/heretic_knowledge/blade_upgrade/moon
 	name = "Moonlight Blade"
-	desc = "Your blade now deals brain damage, causes  random hallucinations and does sanity damage. \
-			Deals more brain damage if your victim is insane or unconscious."
+	desc = "Your blade now deals brain damage, causes  random hallucinations and does sanity damage."
 	gain_text = "His wit was sharp as a blade, cutting through the lie to bring us joy."
 
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
@@ -154,19 +155,23 @@
 	if(source == target || !isliving(target))
 		return
 
-	if(target.can_block_magic(MAGIC_RESISTANCE_MOON))
+	if(target.can_block_magic(MAGIC_RESISTANCE_MIND))
 		return
 
+	target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 10, 100)
 	target.cause_hallucination( \
 			get_random_valid_hallucination_subtype(/datum/hallucination/body), \
 			"upgraded path of moon blades", \
 		)
 	target.emote(pick("giggle", "laugh"))
-	target.mob_mood?.adjust_sanity(-10)
-	if(target.stat == CONSCIOUS && target.mob_mood?.sanity >= SANITY_NEUTRAL)
-		target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 10)
-		return
-	target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 25)
+	if(target.mob_mood)
+		target.mob_mood.adjust_sanity(-10)
+
+	var/datum/status_effect/heretic_passive/moon/moon_passive = source.has_status_effect(/datum/status_effect/heretic_passive/moon)
+	if(moon_passive?.passive_level >= 3)
+		var/obj/item/organ/brain/source_brain = source.get_organ_slot(ORGAN_SLOT_BRAIN)
+		if(source_brain)
+			source_brain.apply_organ_damage(-5)
 
 /datum/heretic_knowledge/spell/moon_ringleader
 	name = "Ringleaders Rise"

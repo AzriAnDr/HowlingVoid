@@ -14,6 +14,15 @@ GLOBAL_LIST_INIT(rcd_designs, list(
 			list(RCD_DESIGN_MODE = RCD_STRUCTURE, RCD_DESIGN_PATH = /obj/structure/girder),
 		),
 
+		// CE-exclusive: plasteel (reinforced) walls and plasma windows - requires RCD_UPGRADE_SECURE_CONSTRUCTIONS
+		"Secure Structures" = list(
+			list(RCD_DESIGN_MODE = RCD_TURF, RCD_DESIGN_PATH = /turf/closed/wall/r_wall),
+			list(RCD_DESIGN_MODE = RCD_WINDOWGRILLE, RCD_DESIGN_PATH = /obj/structure/window/plasma),
+			list(RCD_DESIGN_MODE = RCD_WINDOWGRILLE, RCD_DESIGN_PATH = /obj/structure/window/plasma/fulltile),
+			list(RCD_DESIGN_MODE = RCD_WINDOWGRILLE, RCD_DESIGN_PATH = /obj/structure/window/reinforced/plasma),
+			list(RCD_DESIGN_MODE = RCD_WINDOWGRILLE, RCD_DESIGN_PATH = /obj/structure/window/reinforced/plasma/fulltile),
+		),
+
 		//Computers & Machine Frames
 		"Machines" = list(
 			list(RCD_DESIGN_MODE = RCD_STRUCTURE, RCD_DESIGN_PATH = /obj/structure/frame/machine/secured),
@@ -84,6 +93,12 @@ GLOBAL_LIST_INIT(rcd_designs, list(
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/maintenance/external),
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/hatch),
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/maintenance_hatch),
+		),
+
+		// CE-exclusive: reinforced and vault airlocks - requires RCD_UPGRADE_SECURE_CONSTRUCTIONS
+		"Secure Airlocks" = list(
+			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/highsecurity),
+			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/vault),
 		),
 	),
 

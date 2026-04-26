@@ -37,6 +37,179 @@ var menu = document.getElementById("menu");
 var statcontentdiv = document.getElementById("statcontent");
 var storedimages = [];
 var split_admin_tabs = false;
+var favorites = [];
+var contextVerb = null;
+var contextMenu = document.createElement("div");
+contextMenu.className = "context-menu";
+var contextItem = document.createElement("div");
+contextItem.className = "context-menu-item";
+contextMenu.appendChild(contextItem);
+document.body.appendChild(contextMenu);
+
+function hide_context_menu() {
+  contextMenu.style.display = "none";
+}
+
+function show_context_menu(x, y, command) {
+  contextVerb = command;
+  contextItem.textContent = favorites.includes(command)
+    ? "Remove from Favorites"
+    : "Add to Favorites";
+  contextItem.onclick = function () {
+    if (favorites.includes(contextVerb)) {
+      remove_favorite(contextVerb);
+    } else {
+      add_favorite(contextVerb);
+    }
+    hide_context_menu();
+  };
+  contextMenu.style.left = x + "px";
+  contextMenu.style.top = y + "px";
+  contextMenu.style.display = "block";
+}
+
+document.addEventListener("click", hide_context_menu);
+
+function make_context_menu(command) {
+  return function (e) {
+    e.preventDefault();
+    show_context_menu(e.pageX, e.pageY, command);
+  };
+}
+
+function add_favorite(command) {
+  if (!command) {
+    return;
+  }
+  if (!favorites.includes(command)) {
+    favorites.push(command);
+  }
+  Byond.sendMessage("Add-Favorite", { command: command });
+  if (current_tab == "Favorites") {
+    draw_favorites();
+  }
+}
+
+function remove_favorite(command) {
+  if (!command) {
+    return;
+  }
+  var index = favorites.indexOf(command);
+  if (index > -1) {
+    favorites.splice(index, 1);
+  }
+  Byond.sendMessage("Remove-Favorite", { command: command });
+  if (current_tab == "Favorites") {
+    draw_favorites();
+  }
+}
+
+function draw_favorites() {
+  statcontentdiv.textContent = "";
+  if (!favorites.length) {
+    var empty = document.createElement("div");
+    empty.className = "favorites-empty";
+    empty.textContent = "No favorites yet. Right-click a verb to add it here, then drag to reorder.";
+    statcontentdiv.appendChild(empty);
+    return;
+  }
+  var table = document.createElement("div");
+  table.className = "grid-container favorites-grid";
+  for (var i = 0; i < favorites.length; i++) {
+    var command = favorites[i];
+    var a = document.createElement("a");
+    a.href = "#";
+    a.onclick = make_verb_onclick(command.replace(/\s/g, "-"));
+    a.oncontextmenu = make_context_menu(command);
+    a.className = "grid-item";
+    a.draggable = true;
+    a.setAttribute("data-fav", command);
+    a.ondragstart = make_fav_dragstart(command);
+    a.ondragover = make_fav_dragover(command);
+    a.ondragleave = fav_dragleave;
+    a.ondrop = make_fav_drop(command);
+    a.ondragend = fav_dragend;
+    var t = document.createElement("span");
+    t.textContent = command;
+    t.className = "grid-item-text";
+    a.appendChild(t);
+    table.appendChild(a);
+  }
+  document.getElementById("statcontent").appendChild(table);
+}
+
+var fav_dragged = null;
+
+function clear_fav_drag_markers() {
+  var items = document.querySelectorAll(".favorites-grid .grid-item");
+  for (var i = 0; i < items.length; i++) {
+    items[i].classList.remove("dragging");
+    items[i].classList.remove("drop-target");
+  }
+}
+
+function mark_dragged_favorite(command) {
+  var items = document.querySelectorAll(".favorites-grid .grid-item");
+  for (var i = 0; i < items.length; i++) {
+    if (items[i].getAttribute("data-fav") === command) {
+      items[i].classList.add("dragging");
+      return;
+    }
+  }
+}
+
+function make_fav_dragstart(command) {
+  return function (e) {
+    fav_dragged = command;
+    clear_fav_drag_markers();
+    this.classList.add("dragging");
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", command);
+  };
+}
+
+function make_fav_dragover(command) {
+  return function (e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    if (fav_dragged && command !== fav_dragged) {
+      clear_fav_drag_markers();
+      this.classList.add("drop-target");
+      mark_dragged_favorite(fav_dragged);
+    }
+  };
+}
+
+function fav_dragleave() {
+  this.classList.remove("drop-target");
+}
+
+function make_fav_drop(targetCommand) {
+  return function (e) {
+    e.preventDefault();
+    clear_fav_drag_markers();
+    if (!fav_dragged || fav_dragged === targetCommand) {
+      fav_dragged = null;
+      return;
+    }
+    var draggedIndex = favorites.indexOf(fav_dragged);
+    var targetIndex = favorites.indexOf(targetCommand);
+    if (draggedIndex === -1 || targetIndex === -1) {
+      fav_dragged = null;
+      return;
+    }
+    favorites.splice(draggedIndex, 1);
+    favorites.splice(targetIndex, 0, fav_dragged);
+    Byond.sendMessage("Reorder-Favorites", { order: favorites.slice() });
+    fav_dragged = null;
+    draw_favorites();
+  };
+}
+
+function fav_dragend() {
+  fav_dragged = null;
+  clear_fav_drag_markers();
+}
 
 // Any BYOND commands that could result in the client's focus changing go through this
 // to ensure that when we relinquish our focus, we don't do it after the result of
@@ -67,7 +240,9 @@ function createStatusTab(name) {
   button.textContent = name;
   button.className = "button";
   //ORDERING ALPHABETICALLY
-  button.style.order = { Status: 1, MC: 2 }[name] || name.charCodeAt(0);
+  button.style.order =
+    { Status: 1, Favorites: 2, MC: 3, Tickets: 4 }[name] ||
+    name.charCodeAt(0);
   //END ORDERING
   menu.appendChild(button);
   SendTabToByond(name);
@@ -221,6 +396,8 @@ function tab_change(tab) {
   statcontentdiv.className = "statcontent";
   if (tab == "Status") {
     draw_status();
+  } else if (tab == "Favorites") {
+    draw_favorites();
   } else if (tab == "MC") {
     draw_mc();
   } else if (verb_tabs_thingy) {
@@ -678,6 +855,7 @@ function draw_verbs(cat) {
       var a = document.createElement("a");
       a.href = "#";
       a.onclick = make_verb_onclick(command.replace(/\s/g, "-"));
+      a.oncontextmenu = make_context_menu(command);
       a.className = "grid-item";
       var t = document.createElement("span");
       t.textContent = command;
@@ -780,6 +958,8 @@ function add_verb_list(payload) {
 document.addEventListener("mouseup", restoreFocus);
 document.addEventListener("keyup", restoreFocus);
 
+addPermanentTab("Favorites");
+
 if (!current_tab) {
   addPermanentTab("Status");
   tab_change("Status");
@@ -788,6 +968,17 @@ if (!current_tab) {
 window.onload = function () {
   Byond.sendMessage("Update-Verbs");
 };
+
+Byond.subscribeTo("update_favorites", function (payload) {
+  if (Array.isArray(payload)) {
+    favorites = payload.slice();
+  } else {
+    favorites = [];
+  }
+  if (current_tab == "Favorites") {
+    draw_favorites();
+  }
+});
 
 Byond.subscribeTo("remove_verb_list", function (v) {
   var to_remove = v;

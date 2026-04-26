@@ -19,6 +19,12 @@
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", silicon_image)
 	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
 
+/obj/effect/heretic_rune/add_fingerprint(...)
+	return
+
+/obj/effect/heretic_rune/add_fingerprint_list(...)
+	return
+
 /obj/effect/heretic_rune/examine(mob/user)
 	. = ..()
 	if(!IS_HERETIC(user))
@@ -175,9 +181,12 @@
 	if(length(stack_reqs))
 		for(var/obj/item/stack/nearby_stack in atoms_in_range)
 			for(var/stack_path in stack_reqs)
+				if(stack_reqs[stack_path] <= 0)
+					continue // Already have enough of this type
 				if(!istype(nearby_stack, stack_path) && (!islist(stack_path) || !is_type_in_list(nearby_stack, stack_path)))
 					continue
 				var/amount_to_give = min(nearby_stack.amount, stack_reqs[stack_path])
+				stack_reqs[stack_path] -= amount_to_give
 				var/obj/item/stack/our_stack = locate(nearby_stack.merge_type) in selected_atoms
 				if(!our_stack)
 					our_stack = nearby_stack.split_stack(amount = amount_to_give)

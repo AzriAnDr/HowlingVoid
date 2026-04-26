@@ -128,9 +128,18 @@
 /obj/machinery/power/rtg/debug
 	name = "debug " + parent_type::name
 	desc = "You really shouldn't be seeing this if you're not a coder or jannie."
-	power_gen = 20 KILO WATTS
+	power_gen = 2 MEGA WATTS
 	circuit = null
 	affected_by_parts = FALSE
+
+/obj/machinery/power/rtg/debug/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
+	return NONE
+
+/obj/machinery/power/rtg/debug/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
+	return NONE
+
+/obj/machinery/power/rtg/debug/default_pry_open(obj/item/crowbar, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE)
+	return NONE
 
 /obj/machinery/power/rtg/lavaland
 	name = "lava powered " + parent_type::name

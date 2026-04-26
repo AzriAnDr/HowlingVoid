@@ -3026,6 +3026,29 @@
 	target.material_flags = applied_material_flags
 	target.set_custom_materials(metal_dat)
 
+/datum/reagent/cosmic_dust
+	name = "Cosmic Dust"
+	description = "A shimmering dust suffused with cosmic energy. When introduced to a living body it causes profound disorientation, spatial confusion, and severe disruption of motor control."
+	color = "#8B4FBF"
+	taste_description = "the void between stars"
+	metabolization_rate = 2.5 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+
+/datum/reagent/cosmic_dust/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/cosmic_dust)
+
+/datum/reagent/cosmic_dust/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/cosmic_dust)
+
+/datum/reagent/cosmic_dust/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(SPT_PROB(20, seconds_per_tick))
+		affected_mob.adjust_confusion(8 SECONDS)
+	if(SPT_PROB(15, seconds_per_tick))
+		shake_camera(affected_mob, 4, 3)
+
 /datum/reagent/gravitum
 	name = "Gravitum"
 	description = "A rare kind of null fluid, capable of temporarily removing all weight of whatever it touches." //i dont even

@@ -170,6 +170,15 @@
 				)
 	crate_name= "bluespace artillery parts crate"
 
+/datum/supply_pack/engineering/bluespace_shield_generator
+	name = "Bluespace Shield Field Generator Parts"
+	desc = "Unlock the potential of advanced protective systems with this experimental bluespace shield generator. It projects a station-wide hull barrier capable of resisting breaches and other large-scale threats."
+	cost = 35000
+	order_flags = ORDER_SPECIAL
+	access_view = ACCESS_COMMAND
+	contains = list(/obj/item/circuitboard/machine/bluespace_shield_generator)
+	crate_name = "bluespace shield field generator circuitboard"
+
 /datum/supply_pack/engineering/dna_vault
 	name = "DNA Vault Parts"
 	desc = "Secure the longevity of the current state of humanity within this massive \

@@ -8,6 +8,19 @@
 	list_reagents = list(/datum/reagent/eldritch = 50)
 	can_lid = FALSE
 
+/obj/item/reagent_containers/cup/beaker/eldritch/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/reagent_containers/cup/beaker/eldritch/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/reagent_containers/cup/beaker/eldritch/process(seconds_per_tick)
+	if(reagents.total_volume >= reagents.maximum_volume)
+		return
+	reagents.add_reagent(/datum/reagent/eldritch, seconds_per_tick * 0.5)
+
 // Unique bottle that lets you instantly draw blood from a victim
 /obj/item/reagent_containers/cup/phylactery
 	name = "phylactery of damnation"

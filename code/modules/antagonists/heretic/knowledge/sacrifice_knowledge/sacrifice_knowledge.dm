@@ -32,10 +32,8 @@
 	/// Evil organs we can put in people
 	var/static/list/grantable_organs = list(
 		/obj/item/organ/appendix/corrupt,
-		/obj/item/organ/eyes/corrupt,
 		/obj/item/organ/heart/corrupt,
 		/obj/item/organ/liver/corrupt,
-		/obj/item/organ/lungs/corrupt,
 		/obj/item/organ/stomach/corrupt,
 		/obj/item/organ/tongue/corrupt,
 	)
@@ -131,10 +129,12 @@
 			continue
 		if(possible_target.current.stat == DEAD)
 			continue
-		// NOVA EDIT ADDITION BEGIN - Antag opt-in (Only security and command can be targetted)
-		if (!CONFIG_GET(flag/disable_antag_opt_in_preferences) && !possible_target.assigned_role?.heretic_sac_target)
+		if(HAS_TRAIT(possible_target, TRAIT_MIND_TEMPORARILY_GONE))
 			continue
-		// NOVA EDIT ADDITION END
+		if(is_centcom_level(possible_target.current.z))
+			continue
+		if(HAS_TRAIT(possible_target.current, TRAIT_NO_HERETIC_TARGET))
+			continue
 
 		valid_targets += possible_target
 
@@ -164,15 +164,12 @@
 			valid_targets -= sec_mind
 			break
 
-	// NOVA CHANGE START - ORIGINAL -- Antag Opt In (Only sec and command may be targetted if config is set as 0)
 	// Third target, someone in their department.
-	if(CONFIG_GET(flag/disable_antag_opt_in_preferences))
-		for(var/datum/mind/department_mind as anything in shuffle(valid_targets))
-			if(department_mind.assigned_role?.departments_bitflags & user.mind.assigned_role?.departments_bitflags)
-				final_targets += department_mind
-				valid_targets -= department_mind
-				break
-	// NOVA EDIT CHANGE END
+	for(var/datum/mind/department_mind as anything in shuffle(valid_targets))
+		if(department_mind.assigned_role?.departments_bitflags & user.mind.assigned_role?.departments_bitflags)
+			final_targets += department_mind
+			valid_targets -= department_mind
+			break
 
 	// Now grab completely random targets until we'll full
 	var/target_sanity = 0
@@ -217,6 +214,7 @@
 	var/datum/antagonist/cult/cultist_datum = GET_CULTIST(sacrifice)
 	// Heads give 3 points, cultists give 1 point (and a special reward), normal sacrifices give 2 points.
 	heretic_datum.total_sacrifices++
+	check_sacrifice_total(user, heretic_datum)
 	if((sac_job_flag & JOB_HEAD_OF_STAFF))
 		heretic_datum.adjust_knowledge_points(3)
 		heretic_datum.high_value_sacrifices++
@@ -249,6 +247,19 @@
 		return
 
 	sacrifice.apply_status_effect(/datum/status_effect/heretic_curse, user)
+
+
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/check_sacrifice_total(mob/living/user, datum/antagonist/heretic/heretic_datum)
+	var/datum/objective/minor_sacrifice/sac_objective = locate() in heretic_datum.objectives
+	if(!sac_objective)
+		return
+	if(heretic_datum.total_sacrifices == (sac_objective.target_amount - 2))
+		priority_announce(
+			text = "High levels of eldri[generate_heretic_text()] energy detected - Threat levels elevated stop [generate_heretic_text(4)][user.real_name][generate_heretic_text(4)] at all costs. station loss imminent!",
+			title = generate_heretic_text(),
+			sound = 'sound/music/antag/heretic/void_lore.ogg',
+			color_override = "purple",
+		)
 
 
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/grant_reward(mob/living/user, mob/living/sacrifice, turf/loc)

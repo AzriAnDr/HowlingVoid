@@ -1,9 +1,11 @@
 /datum/action/cooldown/spell/touch/star_touch
 	name = "Star Touch"
-	desc = "Can be used to apply a star mark to a target. \
-		If your victim is already star marked, tethers you to your target with a cosmic ray. \
-		If the tether remains unbroken for 8 seconds, they will be put to sleep and teleported to you. \
-		Star Touch can also remove Cosmic Runes, or teleport you to your Star Gazer when used in hand."
+	desc = "Manifests cosmic fields on tiles next to you while marking the victim with a star mark \
+		or consuming an already present star mark to put them to sleep for 4 seconds. \
+		Injects 10 units of cosmic dust into the victim. \
+		They will then be linked to you with a cosmic ray, burning them for up to a minute, or \
+		until they can escape your sight. Star Touch can also remove Cosmic Runes, or teleport you \
+		to your Star Gazer when used on yourself."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
@@ -34,11 +36,12 @@
 	)
 
 /datum/action/cooldown/spell/touch/star_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
-	if(!victim.has_status_effect(/datum/status_effect/star_mark))
+	if(victim.has_status_effect(/datum/status_effect/star_mark))
+		victim.apply_effect(4 SECONDS, effecttype = EFFECT_UNCONSCIOUS)
+		victim.remove_status_effect(/datum/status_effect/star_mark)
+	else
 		victim.apply_status_effect(/datum/status_effect/star_mark, caster)
-		return TRUE
-	victim.remove_status_effect(/datum/status_effect/star_mark)
-	victim.adjust_drowsiness(8 SECONDS)
+	victim.reagents?.add_reagent(/datum/reagent/cosmic_dust, 10)
 	for(var/turf/cast_turf as anything in get_turfs(victim))
 		create_cosmic_field(cast_turf, caster)
 	caster.apply_status_effect(/datum/status_effect/cosmic_beam, victim)
@@ -48,7 +51,7 @@
 	var/list/target_turfs = list(get_turf(owner))
 	var/range = ascended ? 2 : 1
 	var/list/directions = list(turn(owner.dir, 90), turn(owner.dir, 270))
-	for (var/direction in directions)
+	for (var/direction as anything in directions)
 		for (var/i in 1 to range)
 			target_turfs += get_ranged_target_turf(owner, direction, i)
 	return target_turfs
@@ -81,15 +84,6 @@
 		effects_we_clear = list(/obj/effect/cosmic_rune), \
 	)
 
-/obj/item/melee/touch_attack/star_touch/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	. = ..()
-	if(!isliving(interacting_with))
-		return
-	var/mob/living/living_target = interacting_with
-	if(get_dist(living_target, user) > 3)
-		return
-	return melee_attack_chain(user, living_target, modifiers)
-
 /*
  * Callback for effect_remover component.
  */
@@ -97,17 +91,7 @@
 	new /obj/effect/temp_visual/cosmic_rune_fade(get_turf(target))
 	var/datum/action/cooldown/spell/touch/star_touch/star_touch_spell = spell_which_made_us?.resolve()
 	star_touch_spell?.spell_feedback(user)
-	if(!QDELETED(star_touch_spell))
-		qdel(star_touch_spell)
-	var/datum/action/cooldown/spell/cosmic_rune/rune_spell = locate() in user.actions
-	var/obj/effect/cosmic_rune/first_rune = rune_spell.first_rune.resolve()
-	var/obj/effect/cosmic_rune/second_rune = rune_spell.second_rune.resolve()
-	if(!QDELETED(first_rune))
-		new /obj/effect/temp_visual/cosmic_rune_fade(get_turf(first_rune))
-		QDEL_NULL(first_rune)
-	if(!QDELETED(second_rune))
-		new /obj/effect/temp_visual/cosmic_rune_fade(get_turf(second_rune))
-		QDEL_NULL(second_rune)
+	remove_hand_with_no_refund(user)
 
 /obj/item/melee/touch_attack/star_touch/ignition_effect(atom/to_light, mob/user)
 	. = span_rose("[user] effortlessly snaps [user.p_their()] fingers near [to_light], igniting it with cosmic energies. Fucking badass!")
@@ -136,8 +120,8 @@
 /datum/status_effect/cosmic_beam
 	id = "cosmic_beam"
 	tick_interval = 0.2 SECONDS
-	duration = 8 SECONDS
-	status_type = STATUS_EFFECT_NO_TICK
+	duration = 1 MINUTES
+	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	/// Stores the current beam target
 	var/mob/living/current_target
@@ -151,30 +135,11 @@
 	var/active = FALSE
 	/// The storage for the beam
 	var/datum/beam/current_beam = null
-	/// The timer for the teleport effect
-	var/teleport_timer
-	/// The effect trail that we add to our victim
-	var/cosmic_effect_trail
-	/// Whether the teleport was successful or not
-	var/successful_teleport = FALSE
 
 /datum/status_effect/cosmic_beam/on_creation(mob/living/new_owner, mob/living/current_target)
-	cosmic_effect_trail = cosmic_trail_based_on_passive(new_owner)
+	src.current_target = current_target
 	start_beam(current_target, new_owner)
 	return ..()
-
-/datum/status_effect/cosmic_beam/on_remove()
-	if(current_target && get_dist(owner, current_target) <= max_range)
-		yoink_victim()
-		successful_teleport = TRUE
-	lose_target()
-	return ..()
-
-/// Puts the victim to sleep and teleports them to the casters' location
-/datum/status_effect/cosmic_beam/proc/yoink_victim()
-	current_target.apply_effect(8 SECONDS, effecttype = EFFECT_UNCONSCIOUS)
-	do_teleport(current_target, owner, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE)
-	current_target.apply_status_effect(/datum/status_effect/star_mark)
 
 /datum/status_effect/cosmic_beam/be_replaced()
 	if(active)
@@ -182,12 +147,28 @@
 		active = FALSE
 	return ..()
 
+/datum/status_effect/cosmic_beam/tick(seconds_between_ticks)
+	if(!current_target)
+		lose_target()
+		return
+
+	if(world.time <= last_check+check_delay)
+		return
+
+	last_check = world.time
+
+	if(!los_check(owner, current_target))
+		QDEL_NULL(current_beam)
+		return
+
+	if(current_target)
+		on_beam_tick(current_target)
+
 
 /**
  * Proc that always is called when we want to end the beam and makes sure things are cleaned up, see beam_died()
  */
 /datum/status_effect/cosmic_beam/proc/lose_target()
-	deltimer(teleport_timer)
 	if(active)
 		QDEL_NULL(current_beam)
 		active = FALSE
@@ -202,10 +183,7 @@
  */
 /datum/status_effect/cosmic_beam/proc/beam_died()
 	SIGNAL_HANDLER
-	if(successful_teleport)
-		return
-	to_chat(owner, span_warning("Your cosmic tether to [current_target] has been broken!"))
-	active = FALSE
+	to_chat(owner, span_warning("You lose control of the beam!"))
 	lose_target()
 	duration = 0
 
@@ -219,24 +197,24 @@
 
 	current_target = target
 	active = TRUE
-	current_beam = user.Beam(current_target, icon_state = "cosmic_beam", maxdistance = max_range, beam_type = /obj/effect/ebeam/cosmic)
+	current_beam = user.Beam(current_target, icon_state="cosmic_beam", time = 1 MINUTES, maxdistance = max_range, beam_type = /obj/effect/ebeam/cosmic)
 	RegisterSignal(current_beam, COMSIG_QDELETING, PROC_REF(beam_died))
-	RegisterSignal(current_target, COMSIG_QDELETING, PROC_REF(beam_died))
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 	if(current_target)
-		on_beam_hit(current_target, user)
+		on_beam_hit(current_target)
 
 /// What to add when the beam connects to a target
-/datum/status_effect/cosmic_beam/proc/on_beam_hit(mob/living/target, mob/living/user)
-	if(isstargazer(target))
-		return
-	ADD_TRAIT(target, TRAIT_NO_TELEPORT, REF(src))
-	target.AddElement(cosmic_effect_trail, /obj/effect/forcefield/cosmic_field/star_touch)
+/datum/status_effect/cosmic_beam/proc/on_beam_hit(mob/living/target)
+	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
+		target.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
+
+/// What to process when the beam is connected to a target
+/datum/status_effect/cosmic_beam/proc/on_beam_tick(mob/living/target)
+	if(target.adjust_fire_loss(3, updating_health = FALSE))
+		target.updatehealth()
 
 /// What to remove when the beam disconnects from a target
 /datum/status_effect/cosmic_beam/proc/on_beam_release(mob/living/target)
-	if(isstargazer(target))
-		return
-	REMOVE_TRAIT(target, TRAIT_NO_TELEPORT, REF(src))
-	target.RemoveElement(cosmic_effect_trail, /obj/effect/forcefield/cosmic_field/star_touch)
+	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
+		target.RemoveElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)

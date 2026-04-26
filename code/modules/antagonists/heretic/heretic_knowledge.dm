@@ -356,6 +356,72 @@
 	return TRUE
 
 /**
+ * A knowledge subtype for heretic knowledge
+ * that applies a mark on use.
+ *
+ * A heretic can only learn one /mark type knowledge.
+ */
+/datum/heretic_knowledge/mark
+	abstract_type = /datum/heretic_knowledge/mark
+	cost = 2
+	/// The status effect typepath we apply on people on mansus grasp.
+	var/datum/status_effect/eldritch/mark_type
+
+/datum/heretic_knowledge/mark/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	RegisterSignals(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_LIONHUNTER_ON_HIT), PROC_REF(on_mansus_grasp))
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
+
+/datum/heretic_knowledge/mark/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
+	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
+
+/**
+ * Signal proc for [COMSIG_HERETIC_MANSUS_GRASP_ATTACK].
+ *
+ * Whenever we cast mansus grasp on someone, apply our mark.
+ */
+/datum/heretic_knowledge/mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
+	SIGNAL_HANDLER
+
+	create_mark(source, target)
+
+/**
+ * Signal proc for [COMSIG_HERETIC_BLADE_ATTACK].
+ *
+ * Whenever we attack someone with our blade, attempt to trigger any marks on them.
+ */
+/datum/heretic_knowledge/mark/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	SIGNAL_HANDLER
+
+	if(!isliving(target))
+		return
+	trigger_mark(source, target)
+
+/**
+ * Creates the mark status effect on our target.
+ * This proc handles the instatiate and the application of the station effect,
+ * and returns the /datum/status_effect instance that was made.
+ *
+ * Can be overriden to set or pass in additional vars of the status effect.
+ */
+/datum/heretic_knowledge/mark/proc/create_mark(mob/living/source, mob/living/target)
+	if(target.stat == DEAD)
+		return
+	return target.apply_status_effect(mark_type)
+
+/**
+ * Handles triggering the mark on the target.
+ *
+ * If there is no mark, returns FALSE. Returns TRUE if a mark was triggered.
+ */
+/datum/heretic_knowledge/mark/proc/trigger_mark(mob/living/source, mob/living/target)
+	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
+	if(!istype(mark))
+		return FALSE
+
+	mark.on_effect()
+	return TRUE
+
+/**
  * A knowledge subtype for heretic knowledge that
  * upgrades their sickly blade, either on melee or range.
  *

@@ -2,6 +2,11 @@
 /datum/storage/utility_belt
 	max_total_storage = 21
 
+/// Chief engineer's toolbelt - one extra slot for the bolter wrench
+/datum/storage/utility_belt/chief
+	max_slots = 8
+	max_total_storage = 24
+
 /datum/storage/utility_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(GLOB.tool_items + list(

@@ -44,6 +44,17 @@
 	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
 	/// A static list of all paths we can take and related info for the UI
 	var/static/list/path_info = list()
+	/// List for flavouring the heretic's roundend screen
+	var/static/list/heretic_path_lore = list(
+		PATH_RUST = "path_rust",
+		PATH_FLESH = "path_flesh",
+		PATH_ASH = "path_ash",
+		PATH_VOID = "path_void",
+		PATH_BLADE = "path_blade",
+		PATH_COSMIC = "path_cosmic",
+		PATH_LOCK = "path_lock",
+		PATH_MOON = "path_moon",
+	)
 	/// Assoc list of [typepath] = [knowledge instance]. A list of all knowledge this heretic's reserached.
 	var/list/researched_knowledge = list()
 	/// Lazy assoc list of [refs to humans] to [image previews of the human]. Humans that we have as sacrifice targets.
@@ -115,23 +126,33 @@
 	else if(ispath(knowledge,/datum/heretic_knowledge/spell))
 		var/datum/heretic_knowledge/spell/spell_knowledge = knowledge
 		var/datum/action/result_action = spell_knowledge.action_to_add
-		icon_path = result_action.button_icon
-		icon_state = result_action.button_icon_state
+		if(result_action)
+			icon_path = initial(result_action.button_icon)
+			icon_state = initial(result_action.button_icon_state)
 
 	//if the knowledge is a summon, use the mob sprite
 	else if(ispath(knowledge,/datum/heretic_knowledge/summon))
 		var/datum/heretic_knowledge/summon/summon_knowledge = knowledge
 		var/mob/living/result_mob = summon_knowledge.mob_to_summon
-		icon_path = result_mob.icon
-		icon_state = result_mob.icon_state
+		if(result_mob)
+			icon_path = initial(result_mob.icon)
+			icon_state = initial(result_mob.icon_state)
+
+	//if the knowledge is an eldritch mark, use the mark sprite
+	else if(ispath(knowledge,/datum/heretic_knowledge/mark))
+		var/datum/heretic_knowledge/mark/mark_knowledge = knowledge
+		var/datum/status_effect/eldritch/mark_effect = mark_knowledge.mark_type
+		if(mark_effect)
+			icon_path = initial(mark_effect.effect_icon)
+			icon_state = initial(mark_effect.effect_icon_state)
 
 	//if the knowledge is an ascension, use the achievement sprite
 	else if(ispath(knowledge,/datum/heretic_knowledge/ultimate))
 		var/datum/heretic_knowledge/ultimate/ascension_knowledge = knowledge
 		var/datum/award/achievement/misc/achievement = ascension_knowledge.ascension_achievement
 		if(!isnull(achievement))
-			icon_path = achievement.icon
-			icon_state = achievement.icon_state
+			icon_path = initial(achievement.icon)
+			icon_state = initial(achievement.icon_state)
 
 	var/list/result_parameters = list()
 	result_parameters["icon"] = icon_path
@@ -178,7 +199,25 @@
 	data["objectives"] = get_objectives()
 	data["can_change_objective"] = can_assign_self_objectives
 
-	data["paths"] = path_info
+	// Create a copy of path_info and update passive data for selected path
+	var/list/paths_data = list()
+	for(var/list/path_data in path_info)
+		var/list/path_copy = path_data.Copy()
+		paths_data += list(path_copy)
+
+	// Update passive data for selected path with current passive_level
+	if(heretic_path)
+		for(var/list/path_data in paths_data)
+			if(path_data["route"] == heretic_path.route)
+				var/datum/status_effect/heretic_passive/passive = new heretic_path.start.eldritch_passive()
+				path_data["passive"] = list(
+					"name" = passive.name,
+					"description" = passive.passive_descriptions.Copy(),
+				)
+				qdel(passive)
+				break
+
+	data["paths"] = paths_data
 	data["passive_level"] = passive_level
 
 	data["total_sacrifices"] = total_sacrifices
@@ -265,36 +304,44 @@
 
 	return data
 
-/datum/antagonist/heretic/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
-
-	switch(action)
-		if("research")
-			var/datum/heretic_knowledge/researched_path = text2path(params["path"])
-			if(!ispath(researched_path, /datum/heretic_knowledge))
-				CRASH("Heretic attempted to learn non-heretic_knowledge path! (Got: [researched_path || "invalid path"])")
-			var/shop_category = params["category"]
-			if(!researchable_knowledge(researched_path, shop_category))
-				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn knowledge they can't learn!")
-				CRASH("Heretic attempted to learn knowledge they can't learn! (Got: [researched_path])")
-			if(ispath(researched_path, /datum/heretic_knowledge/ultimate) & can_ascend() != HERETIC_CAN_ASCEND)
-				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn ascension knowledge without completing objectives!")
-				CRASH("Heretic attempted to learn a final knowledge despite not being able to ascend!")
-
-
-			if(!purchase_knowledge(researched_path, shop_category))
-				return FALSE
-			update_data_for_all_viewers()
-			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
-			return TRUE
-
 /datum/antagonist/heretic/proc/researchable_knowledge(datum/heretic_knowledge/knowledge_path, shop_category = HERETIC_KNOWLEDGE_TREE)
 	var/list/knowledge_info = heretic_shops[shop_category][knowledge_path]
 	if(knowledge_info[HKT_ID] in get_researchable_knowledge())
 		return TRUE
 	return FALSE
+
+/datum/antagonist/heretic/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+
+	if(action != "research")
+		return
+
+	var/requested_path = params["path"]
+	var/datum/heretic_knowledge/researched_path = text2path(requested_path)
+	if(!ispath(researched_path, /datum/heretic_knowledge))
+		var/path_text = "invalid path"
+		if(researched_path)
+			path_text = "[researched_path]"
+		CRASH("Heretic attempted to learn non-heretic_knowledge path! (Got: [path_text])")
+
+	var/shop_category = params["category"]
+	if(!researchable_knowledge(researched_path, shop_category))
+		message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn knowledge they can't learn!")
+		CRASH("Heretic attempted to learn knowledge they can't learn! (Got: [researched_path])")
+
+	if(ispath(researched_path, /datum/heretic_knowledge/ultimate) && can_ascend() != HERETIC_CAN_ASCEND)
+		var/reason = can_ascend()
+		to_chat(owner.current, span_boldwarning("You cannot research this knowledge yet: [reason]"))
+		return FALSE
+
+	if(!purchase_knowledge(researched_path, shop_category))
+		return FALSE
+
+	update_data_for_all_viewers()
+	log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
+	return TRUE
 
 /datum/antagonist/heretic/submit_player_objective(retain_existing = FALSE, retain_escape = TRUE, force = FALSE)
 	if (isnull(owner) || isnull(owner.current))
@@ -310,28 +357,28 @@
 	return ..()
 
 /datum/antagonist/heretic/ui_status(mob/user, datum/ui_state/state)
-	if(isnull(owner.current) || owner.current.stat == DEAD) // If the owner is dead, we can't show the UI.
-		return UI_UPDATE
+	if(user.stat == DEAD)
+		return UI_CLOSE
 	return ..()
 
 /datum/antagonist/heretic/get_preview_icon()
-	var/datum/universal_icon/icon = render_preview_outfit(preview_outfit)
+	var/icon/icon = render_preview_outfit(preview_outfit)
 
-	// MOTHBLOCKS TODO: Copied and pasted from cult, make this its own proc
+	// MOTHBLOCKS TOOD: Copied and pasted from cult, make this its own proc
 
 	// The sickly blade is 64x64, but getFlatIcon crunches to 32x32.
 	// So I'm just going to add it in post, screw it.
 
 	// Center the dude, because item icon states start from the center.
 	// This makes the image 64x64.
-	icon.crop(-15, -15, 48, 48)
+	icon.Crop(-15, -15, 48, 48)
 
-	var/obj/item/melee/sickly_blade/blade_type = /obj/item/melee/sickly_blade
-	var/datum/universal_icon/blade_icon = uni_icon(blade_type::lefthand_file, blade_type::inhand_icon_state)
-	icon.blend_icon(blade_icon, ICON_OVERLAY)
+	var/obj/item/melee/sickly_blade/blade = new
+	icon.Blend(icon(blade.lefthand_file, blade.inhand_icon_state), ICON_OVERLAY)
+	qdel(blade)
 
 	// Move the guy back to the bottom left, 32x32.
-	icon.crop(17, 17, 48, 48)
+	icon.Crop(17, 17, 48, 48)
 
 	return finish_preview_icon(icon)
 
@@ -785,6 +832,7 @@
 
 /datum/antagonist/heretic/roundend_report()
 	var/list/parts = list()
+	var/cultiewin = TRUE
 
 	//var/succeeded = TRUE // NOVA EDIT REMOVAL
 
@@ -794,6 +842,7 @@
 	if(length(objectives))
 		var/count = 1
 		for(var/datum/objective/objective as anything in objectives)
+			var/completed = objective.check_completion()
 			// NOVA EDIT START - No greentext
 			/*
 			if(!objective.check_completion())
@@ -802,6 +851,8 @@
 			*/
 			parts += "<b>Objective #[count]</b>: [objective.explanation_text]"
 			// NOVA EDIT END - No greentext
+			if(!completed)
+				cultiewin = FALSE
 			count++
 	// NOVA EDIT START - No greentext
 	/*
@@ -828,6 +879,7 @@
 		string_of_knowledge += knowledge.name
 
 	parts += english_list(string_of_knowledge)
+	parts += get_flavor(cultiewin, ascended, heretic_path?.route)
 
 	return parts.Join("<br>")
 
