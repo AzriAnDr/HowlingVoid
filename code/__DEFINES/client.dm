@@ -13,3 +13,6 @@
 
 /// Aghosting AND APPERANTLY STEALTHMINNING sets your ckey/key == "@[old_key]" because it hates me. this detects that
 #define IS_FAKE_KEY(key) (key && key[1] == "@")
+
+/// Maximum length for a stored statpanel favorite verb name.
+#define STATPANEL_FAVORITE_MAX_LENGTH 128

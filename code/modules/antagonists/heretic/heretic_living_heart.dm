@@ -147,13 +147,13 @@
 	// If we DO have a last tracked name, we skip the radial if they right click the action.
 	if(isnull(last_tracked_name) || !right_clicked)
 		radial_open = TRUE
+			// Keep proximity checks disabled so phased heretics can still pick a target.
 		last_tracked_name = show_radial_menu(
 			owner,
 			owner,
 			choosable_targets,
 			custom_check = CALLBACK(src, PROC_REF(check_menu)),
 			radius = 40,
-			require_near = TRUE,
 			tooltips = TRUE,
 		)
 		radial_open = FALSE
@@ -269,8 +269,9 @@
 /atom/movable/screen/navigate_arrow/Initialize(mapload, datum/hud/hud_owner, turf/tracked_turf, arrow_color)
 	. = ..()
 	var/mob/owner = get_mob()
-	if (owner)
-		animate(src, transform = matrix(get_angle(owner, tracked_turf), MATRIX_ROTATE), 0.2 SECONDS)
+	var/turf/source_turf = get_turf(owner)
+	if(source_turf)
+		animate(src, transform = matrix(get_angle(source_turf, tracked_turf), MATRIX_ROTATE), 0.2 SECONDS)
 	screen_loc = around_player
 	color = arrow_color
 	if (hud)

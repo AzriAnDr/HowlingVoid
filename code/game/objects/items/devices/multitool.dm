@@ -139,6 +139,13 @@
 	SEND_SIGNAL(src, COMSIG_MULTITOOL_REMOVE_BUFFER, source)
 	buffer = null
 
+/obj/item/multitool/silo_linked
+
+/obj/item/multitool/silo_linked/Initialize(mapload)
+	. = ..()
+	if(GLOB.ore_silo_default)
+		set_buffer(GLOB.ore_silo_default)
+
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
 
 /obj/item/multitool/ai_detect

@@ -14,7 +14,7 @@
 	button_icon_state = "among_sheep"
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 5 MINUTES
+	cooldown_time = 2 MINUTES
 
 	invocation = "D'M'N XP'NS'N!"
 	invocation_type = INVOCATION_SHOUT
@@ -31,16 +31,22 @@
 	var/list/banished_airlocks = list()
 	/// Timer before the effects of the spell ends. It's a variable here so we can end it prematurely
 	var/revert_timer
+	/// Absolute world.time when revert_effects is scheduled to fire
+	var/revert_end_time
+	/// Set to TRUE once revert_effects has started, to prevent double-invocation
+	var/reverting = FALSE
 	/// Reference to the arena so we can clear it if we need to
-	var/ongoing_arena
+	var/obj/effect/abstract/heretic_arena/ongoing_arena
 
 /datum/action/cooldown/spell/wolves_among_sheep/cast(atom/cast_on)
 	. = ..()
+	reverting = FALSE
 	center_turf = get_turf(owner)
 	playsound(center_turf,'sound/machines/airlock/airlockopen.ogg', 750, TRUE)
 	to_transform = list()
 	new /obj/effect/heretic_rune/big(center_turf)
 	addtimer(CALLBACK(src, PROC_REF(create_arena), center_turf), 1 SECONDS)
+	revert_end_time = world.time + 61 SECONDS
 	revert_timer = addtimer(CALLBACK(src, PROC_REF(revert_effects)), 61 SECONDS, TIMER_STOPPABLE) // 1 second to spread out, 60 seconds to fight
 
 	// Loop to make the spreading floor effect before finalizing our arena
@@ -94,10 +100,15 @@
 
 /// Sets up the proximity monitor which handles things that are within the area and leave once they get someone to crit
 /datum/action/cooldown/spell/wolves_among_sheep/proc/create_arena(turf/target)
-	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION)), PROC_REF(on_caster_crit))
+	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_LIVING_DEATH), PROC_REF(on_caster_crit))
 
 	// This is where most of the funcionality of the spell is
 	ongoing_arena = new /obj/effect/abstract/heretic_arena(target, max_range, 60 SECONDS, owner)
+	ongoing_arena.linked_spell = src
+	// Sync revert_timer with the arena's actual end_time so they are always aligned
+	deltimer(revert_timer)
+	revert_end_time = ongoing_arena.end_time
+	revert_timer = addtimer(CALLBACK(src, PROC_REF(revert_effects)), revert_end_time - world.time, TIMER_STOPPABLE)
 	RegisterSignal(ongoing_arena, COMSIG_QDELETING, PROC_REF(on_arena_delete))
 
 /// Clears the timer if the arena is deleted
@@ -107,15 +118,34 @@
 	ongoing_arena = null
 	revert_effects()
 
-/// If the caster goes into crit, the arena falls apart right away
+/// Extends the revert timer by the given delay (already computed as remaining arena time)
+/datum/action/cooldown/spell/wolves_among_sheep/proc/extend_revert_timer(new_delay)
+	if(QDELETED(src))
+		return
+	deltimer(revert_timer)
+	revert_end_time = world.time + new_delay
+	revert_timer = addtimer(CALLBACK(src, PROC_REF(revert_effects)), new_delay, TIMER_STOPPABLE)
+
+/// If the caster goes into unconsciousness, dies, or worse, the arena falls apart right away.
+/// Soft crit is ignored - the heretic can still fight through it, and healing can oscillate
+/// the stat in and out of soft crit, causing premature arena collapse otherwise.
+/// Also registered to COMSIG_LIVING_DEATH to catch the case where the caster dies while already
+/// in soft crit (TRAIT_CRITICAL_CONDITION already present, so SIGNAL_ADDTRAIT won't re-fire).
 /datum/action/cooldown/spell/wolves_among_sheep/proc/on_caster_crit()
 	SIGNAL_HANDLER
+	if(istype(owner, /mob/living))
+		var/mob/living/owner_mob = owner
+		if(owner_mob.stat <= SOFT_CRIT)
+			return // Still conscious enough to fight - don't collapse the arena
 	deltimer(revert_timer)
 	revert_effects()
 
 /// Undoes our changes
 /datum/action/cooldown/spell/wolves_among_sheep/proc/revert_effects()
-	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION)))
+	if(reverting)
+		return
+	reverting = TRUE
+	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_LIVING_DEATH))
 	for(var/iterator in 1 to greatest_dist)
 		var/backwards_iterator = greatest_dist - iterator + 1 //We go backwards
 		if(!to_transform["[backwards_iterator]"])

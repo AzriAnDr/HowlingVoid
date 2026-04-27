@@ -176,6 +176,72 @@ img {
   background-color: #dfdfdf;
 }
 
+.favorites-grid .grid-item {
+  width: 50%;
+  color: #204d15;
+}
+
+.favorites-grid {
+  margin: -0.25em;
+}
+
+.favorites-grid .grid-item-text {
+  border: 1px solid rgba(58, 115, 45, 0.22);
+  background-color: rgba(65, 144, 48, 0.16);
+  color: #204d15;
+}
+
+.favorites-grid .grid-item:hover,
+.favorites-grid .grid-item:active {
+  color: #204d15;
+}
+
+.favorites-grid .grid-item:hover .grid-item-text {
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: rgba(65, 144, 48, 0.24);
+}
+
+.favorites-grid .grid-item:active .grid-item-text {
+  background-color: rgba(65, 144, 48, 0.3);
+}
+
+.favorites-grid .grid-item.dragging {
+  opacity: 0.65;
+}
+
+.favorites-grid .grid-item.drop-target .grid-item-text {
+  border-color: rgba(112, 191, 91, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(112, 191, 91, 0.45);
+}
+
+.favorites-empty {
+  margin: 0.1em;
+  padding: 0.5em 0.66em;
+  border: 1px dashed #a7c79b;
+  border-radius: 0.25em;
+  background-color: #f7fbf4;
+  color: #335126;
+  line-height: 1.4;
+}
+
+.context-menu {
+  position: absolute;
+  display: none;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  z-index: 1000;
+}
+
+.context-menu-item {
+  padding: 0.5em 1em;
+  cursor: pointer;
+}
+
+.context-menu-item:hover {
+  background-color: #ececec;
+}
+
 @media only screen and (min-width: 300px) {
   .grid-item {
     width: 50%;
@@ -270,4 +336,46 @@ body.dark {
 
 .dark .grid-item:active .grid-item-text {
   background-color: #313131;
+}
+
+.dark .favorites-grid .grid-item,
+.dark .favorites-grid .grid-item:hover,
+.dark .favorites-grid .grid-item:active {
+  color: #c8e2bb;
+}
+
+.dark .favorites-grid .grid-item-text {
+  border-color: rgba(92, 148, 72, 0.3);
+  background: rgba(70, 128, 55, 0.22);
+  color: #d9efcf;
+  box-shadow: none;
+}
+
+.dark .favorites-grid .grid-item:hover .grid-item-text {
+  background: rgba(80, 145, 63, 0.3);
+}
+
+.dark .favorites-grid .grid-item:active .grid-item-text {
+  background: rgba(80, 145, 63, 0.38);
+}
+
+.dark .favorites-grid .grid-item.drop-target .grid-item-text {
+  border-color: rgba(180, 233, 141, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(180, 233, 141, 0.35);
+}
+
+.dark .favorites-empty {
+  background-color: #182015;
+  border-color: #35542c;
+  color: #d4e7c9;
+}
+
+.dark .context-menu {
+  background-color: #151515;
+  color: #b2c4dd;
+  border: 1px solid #363636;
+}
+
+.dark .context-menu-item:hover {
+  background-color: #252525;
 }

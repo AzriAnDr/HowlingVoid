@@ -1,3 +1,12 @@
+/datum/heretic_knowledge/spell/realignment
+	name = "Realignment"
+	desc = "Grants you Realignment, a spell that will rapidly realign your body for a short period. \
+		During this process, you will rapidly regenerate stamina, become immune to stuns, knockdowns and sleep, however, you will be unable to attack. \
+		This spell can be cast in rapid succession, but doing so will increase the cooldown."
+	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
+	action_to_add = /datum/action/cooldown/spell/realignment
+	cost = 2
+
 /datum/heretic_knowledge_tree_column/blade
 	route = PATH_BLADE
 	ui_bgr = "node_blade"
@@ -31,7 +40,7 @@
 		"Your Mansus Grasp will stun your opponent if they are attacked from behind or while they are prone. This also locks them in the room they are in until the mark is detonated. Triggering the mark will grant you a orbiting knife that will protect you from one melee or ranged attack.",
 		"You have the highest blade cap out of all paths (A total of 4). But since they require silver or titanium to craft, you might be strapped for ingredients if the miners aren't doing their job. If you need materials, shuttle walls and seats are a source of titanium metal, and surgery tables a source of silver.",
 		"You are highly reliant on approaching opponents in melee. Slips, bolas and beartraps are your worst enemy. You can counteract slips by crafting a pair of Greaves Of The Prophet, or remove restraints with Ashen Passage.",
-		"Realignment will pull you out of stuns and knockdowns, but also pacifies you for the duration.",
+		"Realignment will pull you out of stuns and knockdowns and grant full stun immunity for the duration, but also pacifies you so you cannot attack.",
 		"With Empowered Blades, your offensive power grows considerably. You are able to fight with dual-wielded blades, and can empower them by activating your Mansus Grasp while wielding your blades. Your blades also deal additional damage to objects, silicons and mechs.",
 		"Maintaining a good offense also creates a good defense. With orbiting blades, you are able to block additional incoming attacks.",
 		"With Furious Steel, you can not only produce several knives for defensive purposes, but throw them by clicking with an empty hand. This gives you additional ranged power in a pinch.",
@@ -61,7 +70,7 @@
 		list(/obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/mineral/titanium) = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/dark)
-	limit = 4 // It's the blade path, it's a given
+	limit = 4
 	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
 	research_tree_icon_state = "dark_blade"
 	mark_type = /datum/status_effect/eldritch/blade
@@ -73,7 +82,6 @@
 	if(!check_behind(source, target))
 		return
 
-	// We're officially behind them, apply effects
 	target.AdjustParalyzed(1.5 SECONDS)
 	target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	target.balloon_alert(source, "backstab!")
@@ -92,85 +100,6 @@
 	if(!.)
 		return
 	source.apply_status_effect(/datum/status_effect/protective_blades, 60 SECONDS, 1, 20, 0 SECONDS)
-
-/datum/heretic_knowledge/spell/realignment
-	name = "Realignment"
-	desc = "Grants you Realignment a spell that wil realign your body rapidly for a short period. \
-		During this process, you will rapidly regenerate stamina and quickly recover from stuns, however, you will be unable to attack. \
-		This spell can be cast in rapid succession, but doing so will increase the cooldown."
-	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
-	action_to_add = /datum/action/cooldown/spell/realignment
-	cost = 2
-
-/// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
-#define BLOOD_FLOW_PER_SEVEIRTY -1
-
-/datum/heretic_knowledge/duel_stance
-	name = "Stance of the Torn Champion"
-	desc = "Grants resilience to blood loss from wounds and immunity to having your limbs dismembered. \
-		Additionally, when damaged below 50% of your maximum health, \
-		you gain increased resistance to gaining wounds and resistance to slowdown."
-	gain_text = "In time, it was he who stood alone among the bodies of his former comrades, awash in blood, none of it his own. \
-		He was without rival, equal, or purpose."
-	cost = 2
-	research_tree_icon_path = 'icons/effects/blood.dmi'
-	research_tree_icon_state = "suitblood"
-	research_tree_icon_dir = SOUTH
-	drafting_tier = 5
-	/// Whether we're currently in duelist stance, gaining certain buffs (low health)
-	var/in_duelist_stance = FALSE
-
-/datum/heretic_knowledge/duel_stance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	ADD_TRAIT(user, TRAIT_NODISMEMBER, type)
-	RegisterSignal(user, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	RegisterSignal(user, COMSIG_CARBON_GAIN_WOUND, PROC_REF(on_wound_gain))
-	RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_update))
-
-	on_health_update(user) // Run this once, so if the knowledge is learned while hurt it activates properly
-
-/datum/heretic_knowledge/duel_stance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	REMOVE_TRAIT(user, TRAIT_NODISMEMBER, type)
-	if(in_duelist_stance)
-		user.remove_traits(list(TRAIT_HARDLY_WOUNDED), type)
-		if(isliving(user))
-			var/mob/living/living_mob = user
-			living_mob.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown, TRUE)
-
-	UnregisterSignal(user, list(COMSIG_ATOM_EXAMINE, COMSIG_CARBON_GAIN_WOUND, COMSIG_LIVING_HEALTH_UPDATE))
-
-/datum/heretic_knowledge/duel_stance/proc/on_examine(mob/living/source, mob/user, list/examine_list)
-	SIGNAL_HANDLER
-
-	var/obj/item/held_item = source.get_active_held_item()
-	if(in_duelist_stance)
-		examine_list += span_warning("[source] looks unnaturally poised[held_item?.force >= 15 ? " and ready to strike out":""].")
-
-/datum/heretic_knowledge/duel_stance/proc/on_wound_gain(mob/living/source, datum/wound/gained_wound, obj/item/bodypart/limb)
-	SIGNAL_HANDLER
-
-	if(gained_wound.blood_flow <= 0)
-		return
-
-	gained_wound.adjust_blood_flow(gained_wound.severity * BLOOD_FLOW_PER_SEVEIRTY)
-
-/datum/heretic_knowledge/duel_stance/proc/on_health_update(mob/living/source)
-	SIGNAL_HANDLER
-
-	if(in_duelist_stance && source.health > source.maxHealth * 0.5)
-		source.balloon_alert(source, "exited duelist stance")
-		in_duelist_stance = FALSE
-		source.remove_traits(list(TRAIT_HARDLY_WOUNDED), type)
-		source.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown, TRUE)
-		return
-
-	if(!in_duelist_stance && source.health <= source.maxHealth * 0.5)
-		source.balloon_alert(source, "entered duelist stance")
-		in_duelist_stance = TRUE
-		ADD_TRAIT(source, TRAIT_HARDLY_WOUNDED, type)
-		source.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown, TRUE)
-		return
-
-#undef BLOOD_FLOW_PER_SEVEIRTY
 
 /datum/heretic_knowledge/armor/blade
 	desc = "Allows you to transmute a table (or a suit), a mask and a sheet of titanium or silver to create a Shattered Panoply. \

@@ -1,3 +1,3 @@
-// Allow to pick reroll ritual for free. Still needs to do a ritual with standard ingredients to reroll targets
+// Keep reroll target ritual cost aligned with core heretic behavior.
 /datum/heretic_knowledge/reroll_targets
 	cost = 0

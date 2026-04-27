@@ -45,6 +45,7 @@
 	guaranteed_side_tier3 = /datum/heretic_knowledge/summon/ashy
 	blade = /datum/heretic_knowledge/blade_upgrade/ash
 	knowledge_tier4 = /datum/heretic_knowledge/spell/flame_birth
+	guaranteed_side_tier4 = null // ash_passage is already tier1 for this path
 	ascension = /datum/heretic_knowledge/ultimate/ash_final
 
 /datum/heretic_knowledge/limited_amount/starting/base_ash

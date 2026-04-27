@@ -92,12 +92,12 @@
 		if("set_goal")
 			if(!contained_id)
 				return
-			var/new_goal = text2num(params["value"])
+			var/new_goal = params["value"]
 			if(!isnum(new_goal))
 				return
 			if(!new_goal)
 				new_goal = default_goal
-			contained_id.goal = clamp(new_goal, 0, 1000) //maximum 1000 points
+			contained_id.goal = clamp(new_goal, 0, 1000000) //maximum 1000000 points
 			return TRUE
 		if("toggle_open")
 			if(teleporter.locked)

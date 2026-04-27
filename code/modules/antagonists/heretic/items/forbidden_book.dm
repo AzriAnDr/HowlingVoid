@@ -11,7 +11,7 @@
 	/// Helps determine the icon state of this item when it's used on self.
 	var/book_open = FALSE
 	/// How fast we can drain influences
-	var/drain_speed = 5 SECONDS
+	var/drain_speed = 10 SECONDS
 	/// How fast we can draw runes
 	var/draw_speed = 8 SECONDS
 
@@ -79,7 +79,7 @@
 	desc = "A hideous, ragged book covered in separately-blinking eyes, all of them staring at you. You have no idea how to hold this thing, and to be honest you're not sure if you want to."
 	base_icon_state = "book_morbus"
 	icon_state = "book_morbus"
-	drain_speed = 2.5 SECONDS
+	drain_speed = 7 SECONDS
 	draw_speed = 5 SECONDS
 	/// List of mobs we've cursed with transmutation. When the codex is destroyed all those curses become undone
 	var/list/transmuted_victims = list()
@@ -125,13 +125,13 @@
 		if(!istype(usable_reagent, /datum/reagent/blood))
 			continue
 		blood_samples += usable_reagent.data["blood_DNA"]
-	if(isnull(blood_samples))
+	if(!length(blood_samples))
 		user.balloon_alert(user, "no blood!")
 		return ITEM_INTERACT_BLOCKING
 
 	var/curse_type = curse_list[selected_curse]
 	var/datum/heretic_knowledge/curse/to_cast = new curse_type
-	to_cast.recipe_snowflake_check(user, list(held_offhand), loc = get_turf(user))
+	to_cast.recipe_snowflake_check(user, list(src, held_offhand), loc = get_turf(user))
 	to_cast.on_finished_recipe(user, list(src, held_offhand), loc = get_turf(user))
 	return ITEM_INTERACT_SUCCESS
 

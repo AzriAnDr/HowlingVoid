@@ -13,3 +13,6 @@
 #define MOVESPEED_ID_MOB_WALK_RUN "mob_walk_run"
 
 #define MOVESPEED_ID_MIDAS_BLIGHT "midas_blight_debuff"
+
+/// Slowdown applied to non-heretic arena participants. Has IGNORE_NOSLOW to bypass TRAIT_IGNORESLOWDOWN.
+#define MOVESPEED_ID_HERETIC_ARENA "heretic_arena_slowdown"

@@ -622,6 +622,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// `do_teleport` will not allow this atom to teleport
 #define TRAIT_NO_TELEPORT "no-teleport"
+/// Blocks use of movement-focused abilities (teleports, dashes, shapeshifts, etc.).
+#define TRAIT_MOBILITY_ABILITIES_BLOCKED "mobility_abilities_blocked"
 /// This atom is a secluded location, which is counted as out of bounds.
 /// Anything that enters this atom's contents should react if it wants to stay in bounds.
 #define TRAIT_SECLUDED_LOCATION "secluded_loc"
@@ -996,6 +998,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ALLOW_HERETIC_CASTING "allow_heretic_casting"
 /// Designates a heart as a living heart for a heretic.
 #define TRAIT_LIVING_HEART "living_heart"
+/// Mobs with this trait cannot be selected as heretic sacrifice targets.
+#define TRAIT_NO_HERETIC_TARGET "no_heretic_target"
 /// Trait given to all participants in a heretic arena
 #define TRAIT_ELDRITCH_ARENA_PARTICIPANT "eldritch_arena_participant"
 /// Trait given to heretic summons, making them immune to heretic spells

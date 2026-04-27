@@ -50,29 +50,32 @@
 	icon_state = "utility_ce"
 	inhand_icon_state = "utility_ce"
 	worn_icon_state = "utility_ce"
+	storage_type = /datum/storage/utility_belt/chief
 
 /obj/item/storage/belt/utility/chief/full
 	preload = TRUE
 
 /obj/item/storage/belt/utility/chief/full/PopulateContents()
-	SSwardrobe.provide_type(/obj/item/screwdriver/power, src)
-	SSwardrobe.provide_type(/obj/item/crowbar/power, src)
+	SSwardrobe.provide_type(/obj/item/screwdriver/power/ce, src)
+	SSwardrobe.provide_type(/obj/item/crowbar/power/ce, src)
 	SSwardrobe.provide_type(/obj/item/weldingtool/experimental, src)
 	SSwardrobe.provide_type(/obj/item/multitool, src)
 	SSwardrobe.provide_type(/obj/item/stack/cable_coil, src)
 	SSwardrobe.provide_type(/obj/item/extinguisher/mini, src)
 	SSwardrobe.provide_type(/obj/item/analyzer, src)
+	SSwardrobe.provide_type(/obj/item/wrench/bolter/ce, src)
 	//much roomier now that we've managed to remove two tools
 
 /obj/item/storage/belt/utility/chief/full/get_types_to_preload()
 	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
-	to_preload += /obj/item/screwdriver/power
-	to_preload += /obj/item/crowbar/power
+	to_preload += /obj/item/screwdriver/power/ce
+	to_preload += /obj/item/crowbar/power/ce
 	to_preload += /obj/item/weldingtool/experimental
 	to_preload += /obj/item/multitool
 	to_preload += /obj/item/stack/cable_coil
 	to_preload += /obj/item/extinguisher/mini
 	to_preload += /obj/item/analyzer
+	to_preload += /obj/item/wrench/bolter/ce
 	return to_preload
 
 /obj/item/storage/belt/utility/full/PopulateContents()

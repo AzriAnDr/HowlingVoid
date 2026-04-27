@@ -97,7 +97,9 @@
 			MiddleClickOn(A, params)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(LAZYACCESS(modifiers, CTRL_CLICK)) // ctrl+alt combination
+			CtrlAltClickOn(A)
+		else if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			AltClickSecondaryOn(A)
 		else
 			AltClickOn(A)

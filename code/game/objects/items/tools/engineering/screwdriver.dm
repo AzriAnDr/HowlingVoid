@@ -153,6 +153,9 @@
 	playsound(loc, 'sound/items/tools/drill_use.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
+/obj/item/screwdriver/power/ce
+	toolspeed = 0.35
+
 /obj/item/screwdriver/cyborg
 	name = "automated screwdriver"
 	desc = "A powerful automated screwdriver, designed to be both precise and quick."

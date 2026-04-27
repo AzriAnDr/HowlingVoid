@@ -270,9 +270,6 @@
 	if(!iscarbon(user))
 		return
 
-	if(!can_refresh && user.has_status_effect(status_effect))
-		return
-
 	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
 
 	if(!IS_HERETIC_OR_MONSTER(user))
@@ -280,6 +277,10 @@
 		user.reagents?.add_reagent(/datum/reagent/eldritch, 10)
 		user.adjust_disgust(50)
 		qdel(src)
+		return TRUE
+
+	if(!can_refresh && user.has_status_effect(status_effect))
+		balloon_alert(user, "already active!")
 		return TRUE
 
 	to_chat(user, span_notice("You drink the viscous liquid from [src], causing the glass to dematerialize."))

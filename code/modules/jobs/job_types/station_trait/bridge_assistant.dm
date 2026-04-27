@@ -79,4 +79,5 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	l_pocket = /obj/item/gun/energy/e_gun/mini
 	r_pocket = /obj/item/assembly/flash/handheld
+	implants = list(/obj/item/implant/mindshield)
 	pda_slot = ITEM_SLOT_BACK

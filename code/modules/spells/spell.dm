@@ -85,6 +85,8 @@
 	var/smoke_type
 	/// The amount of smoke to create on cast. This is a range, so a value of 5 will create enough smoke to cover everything within 5 steps.
 	var/smoke_amt = 0
+	/// If TRUE, this spell is considered mobility-related and can be blocked by mobility suppression effects.
+	var/mobility_ability = FALSE
 
 /datum/action/cooldown/spell/Grant(mob/grant_to)
 	// If our spell is mind-bound, we only wanna grant it to our mind
@@ -154,6 +156,11 @@
 		CRASH("[type] - can_cast_spell called on a spell without an owner!")
 
 	if(SEND_SIGNAL(src, COMSIG_SPELL_CAN_CAST_CHECK, feedback) & SPELL_CANCEL_CAST)
+		return FALSE
+
+	if(mobility_ability && HAS_TRAIT(owner, "mobility_abilities_blocked"))
+		if(feedback)
+			to_chat(owner, span_warning("You can't use mobility abilities right now!"))
 		return FALSE
 
 	// Certain spells are not allowed on the centcom zlevel

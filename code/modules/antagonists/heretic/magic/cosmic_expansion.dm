@@ -33,6 +33,7 @@
 		if(cast_on == nearby_mob || cast_on.buckled == nearby_mob || IS_HERETIC_OR_MONSTER(nearby_mob) || cast_on == summoner?.resolve())
 			continue
 		nearby_mob.apply_status_effect(/datum/status_effect/star_mark, cast_on)
+		nearby_mob.reagents?.add_reagent(/datum/reagent/cosmic_dust, 25)
 	if (ascended && length(summon_type))
 		for(var/turf/cast_turf as anything in get_turfs(get_turf(cast_on)))
 			create_cosmic_field(cast_turf, owner, summon_type[1])

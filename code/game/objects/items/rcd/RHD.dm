@@ -1,6 +1,8 @@
 //RAPID HANDHELD DEVICE. the base for all rapid devices
 
 #define SILO_USE_AMOUNT (SHEET_MATERIAL_AMOUNT / 4)
+#define PLASMA_SILO_MULTIPLIER 15
+#define DIAMOND_SILO_MULTIPLIER 70
 
 /obj/item/construction
 	name = "not for ingame use"
@@ -77,6 +79,21 @@
 		return silo_mats.mat_container.get_material_amount(/datum/material/iron) / SILO_USE_AMOUNT
 	return 0
 
+/obj/item/construction/proc/get_silo_glass()
+	if(silo_link && silo_mats.mat_container && !silo_mats.on_hold())
+		return silo_mats.mat_container.get_material_amount(/datum/material/glass) / SILO_USE_AMOUNT
+	return 0
+
+/obj/item/construction/proc/get_silo_plasma()
+	if(silo_link && silo_mats.mat_container && !silo_mats.on_hold())
+		return silo_mats.mat_container.get_material_amount(/datum/material/plasma) * PLASMA_SILO_MULTIPLIER / SILO_USE_AMOUNT
+	return 0
+
+/obj/item/construction/proc/get_silo_diamond()
+	if(silo_link && silo_mats.mat_container && !silo_mats.on_hold())
+		return silo_mats.mat_container.get_material_amount(/datum/material/diamond) * DIAMOND_SILO_MULTIPLIER / SILO_USE_AMOUNT
+	return 0
+
 ///returns local matter units available. overridden by rcd borg to return power units available
 /obj/item/construction/proc/get_matter(mob/user)
 	return matter
@@ -88,7 +105,16 @@
 		. += "Remote storage link state: [silo_link ? "[silo_mats.on_hold() ? "ON HOLD" : "ON"]" : "OFF"]."
 		var/iron = get_silo_iron()
 		if(iron)
-			. += "Remote connection has iron in equivalent to [iron] RCD unit\s." //1 matter for 1 floor tile, as 4 tiles are produced from 1 iron
+			. += "Remote connection has iron in equivalent to [iron] RCD unit\s."
+		var/glass = get_silo_glass()
+		if(glass)
+			. += "Remote connection has glass in equivalent to [glass] RCD unit\s."
+		var/plasma = get_silo_plasma()
+		if(plasma)
+			. += "Remote connection has plasma in equivalent to [plasma] RCD unit\s."
+		var/diamond = get_silo_diamond()
+		if(diamond)
+			. += "Remote connection has diamonds in equivalent to [diamond] RCD unit\s."
 
 /obj/item/construction/Destroy()
 	QDEL_NULL(spark_system)
@@ -206,13 +232,47 @@
 			if(user)
 				balloon_alert(user, "permission denied!")
 			return FALSE
-		if(!silo_mats.mat_container.has_enough_of_material(/datum/material/iron, amount * SILO_USE_AMOUNT))
+		var/needed = amount * SILO_USE_AMOUNT
+		var/iron_have = silo_mats.mat_container.get_material_amount(/datum/material/iron)
+		var/glass_have = silo_mats.mat_container.get_material_amount(/datum/material/glass)
+		var/plasma_have = silo_mats.mat_container.get_material_amount(/datum/material/plasma) * PLASMA_SILO_MULTIPLIER
+		var/diamond_have = silo_mats.mat_container.get_material_amount(/datum/material/diamond) * DIAMOND_SILO_MULTIPLIER
+		if((iron_have + glass_have + plasma_have + diamond_have) < needed)
 			if(user)
 				balloon_alert(user, "not enough silo material!")
 			return FALSE
 		if(!dry_run)
-			amount = silo_mats.use_materials(list(/datum/material/iron = SILO_USE_AMOUNT), multiplier = amount, action = "RESTOCKED", name = "x restocked an RCD", user_data = ID_DATA(user))
+			var/remaining = needed
+			var/iron_to_use = min(iron_have, remaining)
+			remaining -= iron_to_use
+
+			var/glass_to_use = 0
+			if(remaining > 0)
+				glass_to_use = min(glass_have, remaining)
+				remaining -= glass_to_use
+
+			var/plasma_to_use = 0
+			if(remaining > 0)
+				var/plasma_needed_raw = ceil(remaining / PLASMA_SILO_MULTIPLIER)
+				plasma_to_use = min(silo_mats.mat_container.get_material_amount(/datum/material/plasma), plasma_needed_raw)
+				remaining -= plasma_to_use * PLASMA_SILO_MULTIPLIER
+
+			var/diamond_to_use = 0
+			if(remaining > 0)
+				var/diamond_needed_raw = ceil(remaining / DIAMOND_SILO_MULTIPLIER)
+				diamond_to_use = min(silo_mats.mat_container.get_material_amount(/datum/material/diamond), diamond_needed_raw)
+				remaining -= diamond_to_use * DIAMOND_SILO_MULTIPLIER
+
+			if(iron_to_use > 0)
+				silo_mats.use_materials(list(/datum/material/iron = iron_to_use), action = "RESTOCKED", name = "x restocked an RCD", user_data = ID_DATA(user))
+			if(glass_to_use > 0)
+				silo_mats.use_materials(list(/datum/material/glass = glass_to_use), action = "RESTOCKED", name = "x restocked an RCD", user_data = ID_DATA(user))
+			if(plasma_to_use > 0)
+				silo_mats.use_materials(list(/datum/material/plasma = plasma_to_use), action = "RESTOCKED", name = "x restocked an RCD", user_data = ID_DATA(user))
+			if(diamond_to_use > 0)
+				silo_mats.use_materials(list(/datum/material/diamond = diamond_to_use), action = "RESTOCKED", name = "x restocked an RCD", user_data = ID_DATA(user))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+			return amount
 	return dry_run ? TRUE : amount
 
 /obj/item/construction/ui_static_data(mob/user)
@@ -225,7 +285,11 @@
 	var/list/data = list()
 
 	//matter in the rcd
-	var/total_matter = ((construction_upgrades & RCD_UPGRADE_SILO_LINK) && silo_link) ? get_silo_iron() : get_matter(user)
+	var/total_matter
+	if((construction_upgrades & RCD_UPGRADE_SILO_LINK) && silo_link)
+		total_matter = get_silo_iron() + get_silo_glass() + get_silo_plasma() + get_silo_diamond()
+	else
+		total_matter = get_matter(user)
 	if(!total_matter)
 		total_matter = 0
 	data["matterLeft"] = total_matter

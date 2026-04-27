@@ -400,7 +400,7 @@
 	passive_descriptions = list(
 		"Can no longer develop brain traumas, passively regenerates brain health, (this bonus is halved in combat).",
 		"Sleep immunity, increases the ratio at which your brain damage regenerates.",
-		"Mind gate and Ringleader's rise will channel the moon amulet effects, further inreases brain regeneration."
+		"Mind gate and Ringleader's rise will channel the moon amulet effects, further increases brain regeneration. Dealing brain damage to others heals your own brain for 50% of the damage dealt."
 	)
 	/// Built-in moon amulet which channels through your spells
 	var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet
@@ -413,12 +413,14 @@
 
 /datum/status_effect/heretic_passive/moon/on_apply()
 	. = ..()
-	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(!our_brain)
-		return
-	ADD_TRAIT(our_brain, TRAIT_BRAIN_TRAUMA_IMMUNITY, REF(src))
 	owner.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
+	RegisterSignal(owner, COMSIG_CARBON_GAIN_TRAUMA, PROC_REF(block_trauma))
+
+/// Blocks all brain traumas from being applied
+/datum/status_effect/heretic_passive/moon/proc/block_trauma(mob/living/carbon/source, datum/brain_trauma/trauma, resilience)
+	SIGNAL_HANDLER
+	return COMSIG_CARBON_BLOCK_TRAUMA
 
 /// Saves world.time when we are attacked by anything
 /datum/status_effect/heretic_passive/moon/proc/on_attacked(mob/victim, atom/attacker)
@@ -427,9 +429,11 @@
 
 /datum/status_effect/heretic_passive/moon/tick(seconds_between_ticks)
 	. = ..()
-	var/healing_amount = ((world.time > last_attack + combat_lockout) ? -1 * passive_level * seconds_between_ticks : -2 * passive_level * seconds_between_ticks)
+	var/out_of_combat_heal = (passive_level == HERETIC_LEVEL_FINAL ? 14 : (passive_level == HERETIC_LEVEL_UPGRADE ? 8 : 4))
+	var/in_combat_heal = (passive_level == HERETIC_LEVEL_FINAL ? 18 : (passive_level == HERETIC_LEVEL_UPGRADE ? 14 : 8))
+	var/healing_amount = ((world.time > last_attack + combat_lockout) ? -out_of_combat_heal : -in_combat_heal) * seconds_between_ticks
 	if(heretic_datum.ascended)
-		healing_amount = -15 * seconds_between_ticks
+		healing_amount = -40 * seconds_between_ticks
 	if(!amulet_equipped)
 		healing_amount *= 0.5 // Half healing if you dont have the moon amulet
 	owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, healing_amount)
@@ -451,11 +455,10 @@
 
 /datum/status_effect/heretic_passive/moon/on_remove()
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(!our_brain)
-		return ..()
-	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_TRAUMA_IMMUNITY, REF(src))
+	if(our_brain)
+		REMOVE_TRAIT(our_brain, TRAIT_BRAIN_TRAUMA_IMMUNITY, REF(src))
 	REMOVE_TRAIT(owner, TRAIT_SLEEPIMMUNE, REF(src))
-	UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)
+	UnregisterSignal(owner, list(COMSIG_ATOM_WAS_ATTACKED, COMSIG_CARBON_GAIN_TRAUMA))
 	QDEL_NULL(amulet)
 	return ..()
 

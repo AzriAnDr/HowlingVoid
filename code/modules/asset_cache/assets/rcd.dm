@@ -29,6 +29,16 @@
 					else if(path == /obj/structure/window/fulltile || path == /obj/structure/window/reinforced/fulltile)
 						sprite_icon = uni_icon(initial(path.icon), initial(path.icon_state))
 						sprite_icon.blend_icon(uni_icon('icons/obj/structures.dmi', "grille"), ICON_UNDERLAY)
+					else if(path == /obj/structure/window/plasma)
+						sprite_icon = uni_icon(initial(path.icon), initial(path.icon_state))
+					else if(path == /obj/structure/window/plasma/fulltile)
+						sprite_icon = uni_icon(initial(path.icon), initial(path.icon_state))
+						sprite_icon.blend_icon(uni_icon('icons/obj/structures.dmi', "grille"), ICON_UNDERLAY)
+					else if(path == /obj/structure/window/reinforced/plasma)
+						sprite_icon = uni_icon(initial(path.icon), initial(path.icon_state))
+					else if(path == /obj/structure/window/reinforced/plasma/fulltile)
+						sprite_icon = uni_icon(initial(path.icon), initial(path.icon_state))
+						sprite_icon.blend_icon(uni_icon('icons/obj/structures.dmi', "grille"), ICON_UNDERLAY)
 
 				//icons for solid airlocks have an added solid overlay on top of their glass icons
 				else if(ispath(path, /obj/machinery/door/airlock))

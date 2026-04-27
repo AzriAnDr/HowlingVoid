@@ -18,6 +18,9 @@
 		"includes": [
 			"**",
 			"!**/node_modules",
+			"!html/statbrowser.js",
+			"!html/statbrowser.css",
+			"!html/statbrowser.html",
 			"!tgui/public",
 			"tgui/public/tgui.html",
 			"!tgui/packages/tgui-setup/helpers.js",

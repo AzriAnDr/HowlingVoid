@@ -138,3 +138,6 @@
 	inhand_icon_state = "bolter_wrench"
 	icon_angle = -90
 	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/wrench/bolter/ce
+	toolspeed = 0.5

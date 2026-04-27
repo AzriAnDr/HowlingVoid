@@ -34,7 +34,10 @@
 			MiddleClickOn(A, params)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK))
-		base_click_alt(A)
+		if(LAZYACCESS(modifiers, CTRL_CLICK))
+			CtrlAltClickOn(A)
+		else
+			base_click_alt(A)
 		return
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		CtrlClickOn(A)

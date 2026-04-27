@@ -185,6 +185,20 @@
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/bluespace_shield_generator
+	name = "Bluespace Shield Field Generator"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/bluespace_shield_generator
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 100,
+		/obj/item/stack/ore/bluespace_crystal = 50,
+		/datum/stock_part/capacitor/tier4 = 10,
+		/datum/stock_part/scanning_module/tier4 = 10,
+		/datum/stock_part/micro_laser/tier4 = 10,
+		/datum/stock_part/servo/tier4 = 10,
+		/datum/stock_part/matter_bin/tier4 = 10,
+	)
+
 /obj/item/circuitboard/machine/modular_shield_generator/gate
 	name = "Modular Shield Gate"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

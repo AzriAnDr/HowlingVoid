@@ -83,6 +83,12 @@
 			else if(the_rcd.rcd_design_path  == /obj/structure/window/reinforced/fulltile)
 				cost = 12
 				delay = 4 SECONDS
+			else if(the_rcd.rcd_design_path == /obj/structure/window/plasma/fulltile)
+				cost = 16
+				delay = 5 SECONDS
+			else if(the_rcd.rcd_design_path == /obj/structure/window/reinforced/plasma/fulltile)
+				cost = 24
+				delay = 7 SECONDS
 			if(!cost)
 				return FALSE
 

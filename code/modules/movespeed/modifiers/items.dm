@@ -35,3 +35,10 @@
 /datum/movespeed_modifier/binocs_wielded
 	multiplicative_slowdown = 1.5
 
+/// Imposed by a DRAGnet hardlight trap while snared
+/datum/movespeed_modifier/dragnet_trap
+	movetypes = GROUND
+	multiplicative_slowdown = 4
+	variable = TRUE
+	flags = IGNORE_NOSLOW
+

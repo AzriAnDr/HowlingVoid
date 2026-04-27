@@ -162,6 +162,13 @@
 /atom/movable/screen/click_catcher/IsAutoclickable()
 	return TRUE
 
+/// Track mouse position for weapons that need real-time cursor tracking
+/client/MouseMove(object, location, control, params)
+	mouseParams = params
+	mouse_location_ref = WEAKREF(location)
+	mouse_object_ref = WEAKREF(object)
+	return ..()
+
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 	var/list/modifiers = params2list(params)
 	if (LAZYACCESS(modifiers, MIDDLE_CLICK))

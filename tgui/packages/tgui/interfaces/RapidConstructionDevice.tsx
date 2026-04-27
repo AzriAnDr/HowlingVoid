@@ -149,6 +149,8 @@ const DesignSection = (props) => {
               transform:
                 design.title === 'full tile window' ||
                 design.title === 'full tile reinforced window' ||
+                design.title === 'full tile plasma window' ||
+                design.title === 'full tile reinforced plasma window' ||
                 design.title === 'catwalk'
                   ? 'scale(0.7)'
                   : 'scale(1.0)',

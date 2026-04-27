@@ -27,10 +27,12 @@
 	)
 	tips = list(
 		"Your Mansus Grasp will mark your opponent with a star mark, as well as leave a mark that, when detonated, will teleport your opponent back to the place where the mark was applied and briefly paralyze them.",
+		"At passive level 3, your Mansus Grasp can reach targets up to 2 tiles away - use this to apply marks and stun from a safe distance.",
 		"Your cosmic runes can quickly teleport you from two different locations instantly. Beware, however; non-heretics are also able to travel through them. Be creative and have your opponents teleport right into a trap. They come out star marked!",
 		"When standing on top of a cosmic rune, you can click on yourself with a empty hand to activate it.",
 		"Star marked opponents cannot cross your cosmic fields willingly. But they can be dragged through!",
 		"Star Blast is both a jaunt ability as well as a disabling tool. Use it to catch several people in your cosmic fields at once.",
+		"Your cosmic blade can strike star marked targets from up to 3 tiles away - combine this with Cosmic Expansion to dominate fights at range.",
 		"Star Touch will prevent your target from teleporting away. Should they fail to break the tether, they will be put to sleep and then teleport to your feet.",
 		"It's Always a good idea to leave one cosmic rune near your ritual rune, it will allow you to quickly kidnap your targets to sacrifice them.",
 	)
@@ -69,6 +71,7 @@
 
 	to_chat(target, span_danger("A cosmic ring appeared above your head!"))
 	target.apply_status_effect(/datum/status_effect/star_mark, source)
+	target.reagents?.add_reagent(/datum/reagent/cosmic_dust, 10)
 	create_cosmic_field(get_turf(source), source)
 
 /datum/heretic_knowledge/spell/cosmic_runes
@@ -85,7 +88,8 @@
 /datum/heretic_knowledge/spell/star_blast
 	name = "Star Blast"
 	desc = "Fires a projectile that moves very slowly, raising a short-lived wall of cosmic fields where it goes. \
-		Anyone hit by the projectile will receive burn damage, a knockdown, and give people in a three tile range a star mark."
+		Anyone hit by the projectile will receive burn damage, a knockdown, and give people in a three tile range a star mark. \
+		Each marked creature nearby also receives 10 units of cosmic dust."
 	gain_text = "The Beast was behind me now at all times, with each sacrifice words of affirmation coursed through me."
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
 	cost = 2
@@ -106,7 +110,7 @@
 
 /datum/heretic_knowledge/spell/star_touch
 	name = "Star Touch"
-	desc = "Grants you Star Touch, a spell which places a star mark upon your target \
+	desc = "Grants you Star Touch, a spell which places a star mark upon your target, injects 10 units of cosmic dust, \
 		and creates a cosmic field at your feet and to the turfs next to you. Targets which already have a star mark \
 		will be forced to sleep for 4 seconds. When the victim is hit it also creates a beam that burns them. \
 		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
@@ -117,7 +121,8 @@
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
-	desc = "Your blade now star marks your victims, and allows you to attack star marked heathens from further away. \
+	desc = "Your blade now star marks your victims, injects 5 units of cosmic dust per hit (including corpses), \
+		and allows you to attack star marked heathens from up to 3 tiles away. \
 		Your attacks will chain bonus damage to up to two previous victims. \
 		The combo is reset after two seconds without making an attack, or if you attack someone already marked. \
 		If you combo three attacks you will receive a cosmic trail and increase your combo timer up to ten seconds."
@@ -142,7 +147,7 @@
 	/// The hits we have on a mob with a mind.
 	var/combo_counter = 0
 	/// How much further we can hit people, modified by ascension
-	var/max_attack_range = 2
+	var/max_attack_range = 3
 
 /datum/heretic_knowledge/blade_upgrade/cosmic/on_ranged_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	. = ..()
@@ -154,6 +159,7 @@
 /datum/heretic_knowledge/blade_upgrade/cosmic/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(source == target || !isliving(target))
 		return
+	target.reagents?.add_reagent(/datum/reagent/cosmic_dust, 5)
 	target.apply_status_effect(/datum/status_effect/star_mark, source)
 	if(combo_timer)
 		deltimer(combo_timer)
@@ -218,7 +224,7 @@
 /datum/heretic_knowledge/ultimate/cosmic_final
 	name = "Creators's Gift"
 	desc = "The ascension ritual of the Path of Cosmos. \
-		Bring 3 corpses with a star mark to a transmutation rune to complete the ritual. \
+		Bring 3 dead, unconscious, or critically injured bodies saturated with cosmic dust to a transmutation rune to complete the ritual. \
 		When completed, you become the owner of a Star Gazer. \
 		You will be able to command the Star Gazer with Alt+click. \
 		You can also give it commands through speech. \
@@ -247,11 +253,11 @@
 	var/static/list/stargazer_traits = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTCOLD, TRAIT_RESISTHEAT, TRAIT_BOMBIMMUNE, TRAIT_XRAY_VISION)
 
 /datum/heretic_knowledge/ultimate/cosmic_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
-	. = ..()
-	if(!.)
+	if(ismonkey(sacrifice))
 		return FALSE
-
-	return sacrifice.has_status_effect(/datum/status_effect/star_mark)
+	if(sacrifice.stat != DEAD && sacrifice.stat != UNCONSCIOUS && sacrifice.stat != SOFT_CRIT && sacrifice.stat != HARD_CRIT)
+		return FALSE
+	return sacrifice.has_reagent(/datum/reagent/cosmic_dust)
 
 /datum/heretic_knowledge/ultimate/cosmic_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
@@ -268,6 +274,7 @@
 	star_gazer_mob.health = INFINITY
 	user.AddComponent(/datum/component/death_linked, star_gazer_mob)
 	star_gazer_mob.AddComponent(/datum/component/obeys_commands, star_gazer_commands, radial_menu_offset = list(30,0), radial_menu_lifetime = 15 SECONDS, radial_relative_to_user = TRUE)
+	star_gazer_mob.AddComponent(/datum/component/damage_aura, range = 7, burn_damage = 0.5, simple_damage = 0.5, immune_factions = list(FACTION_HERETIC), current_owner = user)
 	star_gazer_mob.befriend(user)
 	var/datum/action/cooldown/open_mob_commands/commands_action = new /datum/action/cooldown/open_mob_commands()
 	commands_action.Grant(user, star_gazer_mob)
