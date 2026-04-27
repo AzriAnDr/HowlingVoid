@@ -37,9 +37,10 @@ type PTLData = {
 export const PowerTransmissionLaser = () => {
 	const { data } = useBackend<PTLData>();
 	const { total_earnings, total_energy } = data;
+	const windowWidth = 420;
 
 	return (
-		<Window title="Power Transmission Laser" width={320} height={500}>
+		<Window title="Power Transmission Laser" width={windowWidth} height={500}>
 			<Window.Content>
 				<Status />
 				<InputControls />
@@ -58,6 +59,8 @@ export const PowerTransmissionLaser = () => {
 const Status = () => {
 	const { data } = useBackend<PTLData>();
 	const { max_capacity, held_power, input_total, max_grid_load } = data;
+	const reserveFill = max_capacity > 0 ? held_power / max_capacity : 0;
+	const gridFill = Math.min(input_total, Math.max(0, max_capacity - held_power)) / (max_grid_load || 1);
 
 	return (
 		<Section title="Status">
@@ -74,7 +77,7 @@ const Status = () => {
 					average: [0.5, 0.8],
 					bad: [-Infinity, 0.5],
 				}}
-				value={held_power / max_capacity}
+				value={reserveFill}
 			/>
 			<LabeledList>
 				<LabeledList.Item label="Grid Saturation" />
@@ -86,7 +89,7 @@ const Status = () => {
 					average: [0.5, 0.8],
 					bad: [-Infinity, 0.5],
 				}}
-				value={Math.min(input_total, max_capacity - held_power) / (max_grid_load || 1)}
+				value={gridFill}
 			/>
 		</Section>
 	);
@@ -172,9 +175,10 @@ const OutputControls = () => {
 				<LabeledList.Item
 					label="Laser Circuit"
 					buttons={
-						<Stack>
+						<Stack fill wrap="wrap">
 							<Stack.Item>
 								<Button
+									fluid
 									icon="crosshairs"
 									color={target === '' ? 'green' : 'red'}
 									onClick={() => act('target')}>
@@ -183,6 +187,7 @@ const OutputControls = () => {
 							</Stack.Item>
 							<Stack.Item>
 								<Button
+									fluid
 									icon="power-off"
 									color={firing ? 'green' : 'red'}
 									disabled={!firing && held_power < 10 ** 6}

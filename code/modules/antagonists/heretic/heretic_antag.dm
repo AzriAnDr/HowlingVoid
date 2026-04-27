@@ -824,9 +824,14 @@
 
 /datum/antagonist/heretic/proc/adjust_knowledge_points(amount, update = TRUE)
 	knowledge_points = max(0, knowledge_points + amount) // Don't allow negative knowledge points
+	var/previous_knowledge = knowledge_gained
 	knowledge_gained += max(0, amount)
+	if(knowledge_gained >= 10 && previous_knowledge < 10)
+		if(passive_level < 2)
+			SEND_SIGNAL(src, COMSIG_HERETIC_PASSIVE_UPGRADE_FIRST)
 	if(knowledge_gained > points_to_aura && !unlimited_blades)
 		disable_blade_breaking()
+	update_heretic_aura()
 	if(update)
 		update_data_for_all_viewers()
 
