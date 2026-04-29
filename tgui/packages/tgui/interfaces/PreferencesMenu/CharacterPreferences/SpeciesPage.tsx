@@ -268,6 +268,7 @@ function SpeciesPerks(props: SpeciesPerksProps) {
 
 type SpeciesPageInnerProps = {
   handleClose: () => void;
+  previewDirection: string;
   species: ServerData['species'];
 };
 
@@ -405,10 +406,18 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                   </Stack.Item>
 
                   <Stack.Item width="30%">
-                    <CharacterPreview
-                      id={data.character_preview_view}
-                      height="100%"
-                    />
+                    <div className="PreferencesMenu__Character__PreviewFrame PreferencesMenu__Character__PreviewFrame--medium">
+                      <CharacterPreview
+                        animationMap={data.character_preview_animations}
+                        direction={props.previewDirection}
+                        imageMap={data.character_preview_urls}
+                        imageUrl={data.character_preview_url}
+                        height="100%"
+                        width="100%"
+                        onClick={() => act('open_preview_window')}
+                        title="Open expanded preview"
+                      />
+                    </div>
                   </Stack.Item>
                 </Stack>
               </Box>
@@ -450,6 +459,7 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
 
 type SpeciesPageProps = {
   closeSpecies: () => void;
+  previewDirection: string;
 };
 
 export function SpeciesPage(props: SpeciesPageProps) {
@@ -461,6 +471,7 @@ export function SpeciesPage(props: SpeciesPageProps) {
   return (
     <SpeciesPageInner
       handleClose={props.closeSpecies}
+      previewDirection={props.previewDirection}
       species={serverData.species}
     />
   );

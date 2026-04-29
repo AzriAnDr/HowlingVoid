@@ -237,6 +237,8 @@ There are several things that need to be remembered:
 			mutant_override = TRUE
 	// NOVA EDIT ADDITION END
 	var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null) // NOVA EDIT CHANGE - ORIGINAL: var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file)
+	if(isnull(gloves_overlay))
+		return
 
 	var/feature_y_offset = 0
 	//needs to be typed, hand_bodyparts can have nulls

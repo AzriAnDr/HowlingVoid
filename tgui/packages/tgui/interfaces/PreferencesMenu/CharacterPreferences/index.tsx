@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
-import { Box, Dropdown, Flex, Stack } from 'tgui-core/components'; // NOVA EDIT CHANGE - ORIGINAL: import { Button, Stack } from 'tgui-core/components';
+import { Box, Button, Dropdown, Flex, Stack } from 'tgui-core/components'; // NOVA EDIT CHANGE - ORIGINAL: import { Button, Stack } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
 import { PageButton } from '../components/PageButton';
@@ -28,6 +28,23 @@ enum Page {
   Limbs,
   Languages,
   // NOVA EDIT ADDITION END
+}
+
+const PREVIEW_DIRECTION_CYCLE = ['south', 'west', 'north', 'east'];
+const PREVIEW_ITEM_ANIMATIONS_LABEL = 'Animate Preview Items';
+const PREVIEW_ITEM_ANIMATIONS_TOOLTIP =
+  'Toggles animated item sprites in character previews. Enabling this can significantly reduce performance.';
+
+function rotatePreviewDirection(direction: string | null, step: -1 | 1) {
+  // Match BYOND turn(dir, -90) ordering so local rotation mirrors server behavior.
+  const currentDirection = (direction || PREVIEW_DIRECTION_CYCLE[0]).toLowerCase();
+  const currentIndex = PREVIEW_DIRECTION_CYCLE.indexOf(currentDirection);
+  const safeIndex = currentIndex >= 0 ? currentIndex : 0;
+  const nextIndex =
+    (safeIndex + step + PREVIEW_DIRECTION_CYCLE.length) %
+    PREVIEW_DIRECTION_CYCLE.length;
+
+  return PREVIEW_DIRECTION_CYCLE[nextIndex];
 }
 
 type ProfileProps = {
@@ -70,6 +87,15 @@ export function CharacterPreferenceWindow(props) {
   const { t } = usePreferencesLocalization(data);
 
   const [currentPage, setCurrentPage] = useState(Page.Main);
+  const [previewDirection, setPreviewDirection] = useState(
+    data.character_preview_direction || PREVIEW_DIRECTION_CYCLE[0],
+  );
+
+  const rotatePreview = (step: -1 | 1) => {
+    setPreviewDirection((currentDirection) =>
+      rotatePreviewDirection(currentDirection, step),
+    );
+  };
 
   let pageContents;
 
@@ -82,13 +108,20 @@ export function CharacterPreferenceWindow(props) {
       break;
     case Page.Main:
       pageContents = (
-        <MainPage openSpecies={() => setCurrentPage(Page.Species)} />
+        <MainPage
+          openSpecies={() => setCurrentPage(Page.Species)}
+          previewDirection={previewDirection}
+          rotatePreview={rotatePreview}
+        />
       );
 
       break;
     case Page.Species:
       pageContents = (
-        <SpeciesPage closeSpecies={() => setCurrentPage(Page.Main)} />
+        <SpeciesPage
+          closeSpecies={() => setCurrentPage(Page.Main)}
+          previewDirection={previewDirection}
+        />
       );
 
       break;
@@ -97,11 +130,21 @@ export function CharacterPreferenceWindow(props) {
       break;
 
     case Page.Loadout:
-      pageContents = <LoadoutPage />;
+      pageContents = (
+        <LoadoutPage
+          previewDirection={previewDirection}
+          rotatePreview={rotatePreview}
+        />
+      );
       break;
     // NOVA EDIT ADDITION START
     case Page.Limbs:
-      pageContents = <LimbsPage />;
+      pageContents = (
+        <LimbsPage
+          previewDirection={previewDirection}
+          rotatePreview={rotatePreview}
+        />
+      );
       break;
     case Page.Languages:
       pageContents = <LanguagesPage />;
@@ -137,6 +180,24 @@ export function CharacterPreferenceWindow(props) {
           </Box>
         </Stack.Item>
       )}
+      <Stack.Item>
+        <Stack align="center">
+          <Stack.Item>
+            <Button.Checkbox
+              className={`PreferencesMenu__Toggle ${
+                data.preview_item_animations_enabled
+                  ? 'PreferencesMenu__Toggle--checked'
+                  : ''
+              }`}
+              checked={!!data.preview_item_animations_enabled}
+              tooltip={PREVIEW_ITEM_ANIMATIONS_TOOLTIP}
+              onClick={() => act('toggle_preview_item_animations')}
+            >
+              {PREVIEW_ITEM_ANIMATIONS_LABEL}
+            </Button.Checkbox>
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
       <Stack.Divider />
       <Stack.Item className="PreferencesMenu__Character__TopTabs">
         <Stack fill>

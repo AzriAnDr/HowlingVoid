@@ -2605,8 +2605,8 @@ $department_map: (
 }
 
 .PreferencesMenu .PreferencesMenu__Character__Sidebar {
-  flex: 0 0 286px;
-  min-width: 286px;
+  flex: 0 0 332px;
+  min-width: 332px;
   box-sizing: border-box;
 }
 
@@ -2625,8 +2625,36 @@ $department_map: (
 }
 
 .PreferencesMenu .PreferencesMenu__Character__PreviewCell {
-  min-height: 360px;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.PreferencesMenu .PreferencesMenu__Character__PreviewFrame {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 320px;
+  min-width: 0;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  margin: 0 auto;
+  position: relative;
+}
+
+.PreferencesMenu .PreferencesMenu__Character__PreviewFrame > * {
+  position: absolute;
+  inset: 0;
+}
+
+.PreferencesMenu .PreferencesMenu__Character__PreviewFrame--medium {
+  max-width: 320px;
+  margin: 0 auto;
 }
 
 .PreferencesMenu

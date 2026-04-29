@@ -15,7 +15,7 @@ import { useServerPrefs } from '../useServerPrefs';
 import { usePreferencesLocalization } from './localization';
 
 const getQuirkBalanceLikeQuirksPage = (data, serverData) => {
-  let fallbackBalance = -data.quirks_balance;
+  const fallbackBalance = -data.quirks_balance;
 
   if (
     !serverData ||
@@ -62,14 +62,15 @@ const getAugmentsBudgetBalance = (data, serverData) => {
   return balance;
 };
 
-export const RotateCharacterButtons = (props) => {
-  const { act } = useBackend<PreferencesMenuData>();
+export const RotateCharacterButtons = (props: {
+  rotatePreview: (step: -1 | 1) => void;
+}) => {
   const { t } = usePreferencesLocalization();
   return (
     <Box mt={1}>
       <Button
         className="PreferencesMenu__Augments__ActionButton"
-        onClick={() => act('rotate', { backwards: false })}
+        onClick={() => props.rotatePreview(1)}
         fontSize="22px"
         icon="redo"
         tooltip={t('ui.character.limbs_rotate_clockwise')}
@@ -77,7 +78,7 @@ export const RotateCharacterButtons = (props) => {
       />
       <Button
         className="PreferencesMenu__Augments__ActionButton"
-        onClick={() => act('rotate', { backwards: true })}
+        onClick={() => props.rotatePreview(-1)}
         fontSize="22px"
         icon="undo"
         tooltip={t('ui.character.limbs_rotate_counter_clockwise')}
@@ -330,7 +331,10 @@ export const OrganPage = (props) => {
   );
 };
 
-export const LimbsPage = (props) => {
+export const LimbsPage = (props: {
+  previewDirection: string;
+  rotatePreview: (step: -1 | 1) => void;
+}) => {
   const { data } = useBackend<PreferencesMenuData>();
   const { act } = useBackend<PreferencesMenuData>();
   const { t } = usePreferencesLocalization(data);
@@ -372,12 +376,19 @@ export const LimbsPage = (props) => {
           align="center"
           height="197%"
         >
-          <CharacterPreview
-            id={data.character_preview_view}
-            height="25%"
-            width="100%"
-          />
-          <RotateCharacterButtons />
+          <div className="PreferencesMenu__Character__PreviewFrame PreferencesMenu__Character__PreviewFrame--medium">
+            <CharacterPreview
+              animationMap={data.character_preview_animations}
+              direction={props.previewDirection}
+              imageMap={data.character_preview_urls}
+              imageUrl={data.character_preview_url}
+              height="100%"
+              width="100%"
+              onClick={() => act('open_preview_window')}
+              title="Open expanded preview"
+            />
+          </div>
+          <RotateCharacterButtons rotatePreview={props.rotatePreview} />
           {data.quirk_points_enabled ? (
             <Section
               className="PreferencesMenu__Augments__PointsSection"

@@ -1149,8 +1149,8 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	if(!stat_panel)
 		return
 	var/list/favorites = list()
-	if(prefs && islist(prefs.statpanel_favorites))
-		for(var/favorite in prefs.statpanel_favorites)
+	if(prefs)
+		for(var/favorite in prefs.get_statpanel_favorites())
 			if(!istext(favorite))
 				continue
 			favorites += favorite
@@ -1239,11 +1239,10 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 			command = sanitize_text(command, "")
 			if(!length(command))
 				return
-			if(!islist(prefs.statpanel_favorites))
-				prefs.statpanel_favorites = list()
-			if(!(command in prefs.statpanel_favorites))
-				prefs.statpanel_favorites += command
-				prefs.statpanel_favorites = unique_list(prefs.statpanel_favorites)
+			var/list/current_favorites = prefs.get_statpanel_favorites()
+			if(!(command in current_favorites))
+				current_favorites += command
+				prefs.set_statpanel_favorites(unique_list(current_favorites))
 				prefs.save_preferences()
 			send_statpanel_favorites()
 			return
@@ -1253,31 +1252,34 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 				return
 			var/to_remove = trim(raw_remove, STATPANEL_FAVORITE_MAX_LENGTH)
 			to_remove = sanitize_text(to_remove, "")
-			if(!length(to_remove) || !islist(prefs.statpanel_favorites))
+			var/list/current_favorites = prefs.get_statpanel_favorites()
+			if(!length(to_remove) || !length(current_favorites))
 				send_statpanel_favorites()
 				return
-			if(to_remove in prefs.statpanel_favorites)
-				prefs.statpanel_favorites -= to_remove
+			if(to_remove in current_favorites)
+				current_favorites -= to_remove
+				prefs.set_statpanel_favorites(current_favorites)
 				prefs.save_preferences()
 			send_statpanel_favorites()
 			return
 		if("Reorder-Favorites")
 			var/list/new_order = payload?["order"]
-			if(!islist(new_order) || !prefs || !islist(prefs.statpanel_favorites))
+			if(!islist(new_order) || !prefs)
 				return
-			if(!length(new_order) || length(new_order) != length(prefs.statpanel_favorites))
+			var/list/current_favorites = prefs.get_statpanel_favorites()
+			if(!length(new_order) || length(new_order) != length(current_favorites))
 				return
 			var/list/validated = list()
 			for(var/entry in new_order)
 				if(!istext(entry))
 					return
 				var/cleaned = sanitize_text(trim(entry, STATPANEL_FAVORITE_MAX_LENGTH), "")
-				if(!length(cleaned) || !(cleaned in prefs.statpanel_favorites))
+				if(!length(cleaned) || !(cleaned in current_favorites))
 					return
 				if(cleaned in validated)
 					return
 				validated += cleaned
-			prefs.statpanel_favorites = validated
+			prefs.set_statpanel_favorites(validated)
 			prefs.save_preferences()
 			send_statpanel_favorites()
 			return

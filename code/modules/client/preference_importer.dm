@@ -413,8 +413,6 @@
 		ui = new(user, src, "PreferenceImporter")
 		ui.set_autoupdate(FALSE)
 		ui.open()
-		if(preview_view)
-			preview_view.display_to(user, ui.window)
 
 /datum/preference_importer/ui_state(mob/user)
 	return GLOB.always_state
@@ -456,6 +454,11 @@
 	data["import_game_prefs"] = import_game_prefs
 	data["export_version"] = export_version
 	data["import_character"] = import_character
+	data["preview_animations"] = preview_view?.get_preview_animations(user)
+	data["preview_direction"] = dir2text(preview_view?.dir || SOUTH)
+	data["preview_url"] = preview_view?.get_preview_url(user)
+	data["preview_urls"] = preview_view?.get_preview_urls(user)
+	data["preview_item_animations_enabled"] = !!target_prefs?.preview_item_animations_enabled
 	data["preview_map"] = preview_view?.assigned_map
 	data["preview_mode"] = preview_mode
 	data["preview_options"] = list(PREVIEW_PREF_LOADOUT, PREVIEW_PREF_UNDERWEAR, PREVIEW_PREF_NAKED, PREVIEW_PREF_NAKED_AROUSED)
@@ -503,6 +506,19 @@
 				update_preview(ui.user)
 			return TRUE
 
+		if("toggle_preview_item_animations")
+			if(target_prefs)
+				target_prefs.preview_item_animations_enabled = !target_prefs.preview_item_animations_enabled
+			preview_view?.clear_preview_assets()
+			if(preview_view)
+				preview_view.preview_asset_dirty = TRUE
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("open_preview_window")
+			open_preview_window(ui.user)
+			return TRUE
+
 		if("confirm_import")
 			perform_import(ui.user)
 			ui.close()
@@ -513,8 +529,26 @@
 			return TRUE
 
 /datum/preference_importer/ui_close(mob/user)
+	if(length(open_uis) > 1)
+		return
+
 	cleanup_preview()
 	QDEL_IN(src, 1)
+
+/datum/preference_importer/proc/open_preview_window(mob/user)
+	if(!user || target_prefs?.parent != user.client)
+		return FALSE
+
+	preview_view?.preload_preview_assets(user)
+
+	for(var/datum/tgui/open_ui as anything in open_uis)
+		if(open_ui.user == user && open_ui.interface == "CharacterPreviewWindow")
+			return TRUE
+
+	var/datum/tgui/ui = new(user, src, "CharacterPreviewWindow", "Character Preview", 700, 760)
+	ui.open()
+	ui.set_autoupdate(TRUE)
+	return TRUE
 
 /datum/preference_importer/proc/update_preview(mob/user)
 	var/list/char_data = get_selected_character_data()
@@ -556,10 +590,11 @@
 		var/dummy_key = user.ckey ? "import_preview_[user.ckey]" : null
 		preview_view = new(null, target_prefs, dummy_key)
 		preview_view.preferences = target_prefs
-		preview_view.generate_view("import_preview_[REF(preview_view)]")
 		preview_view.show_job_clothes = FALSE
 
 	preview_view.update_body()
+	if(user && target_prefs?.parent == user.client)
+		preview_view.preload_preview_assets(user)
 
 	target_prefs.value_cache = original_cache
 	target_prefs.body_markings = original_body_markings

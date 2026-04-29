@@ -150,6 +150,12 @@
 			"label": "dm: build - tgstation.dme"
 		},
 		{
+			"label": "dm: refresh diagnostics",
+			"group": "build",
+			"dependsOn": "dm: build - tgstation.dme",
+			"dependsOrder": "sequence"
+		},
+		{
 			"command": "${command:dreammaker.reparse}",
 			"group": "build",
 			"label": "dm: reparse"

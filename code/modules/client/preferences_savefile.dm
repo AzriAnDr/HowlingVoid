@@ -262,7 +262,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	favorite_outfits = unique_list(parsed_favs)
 
 	//statpanel favorites
-	statpanel_favorites = savefile.get_entry("statpanel_favorites", statpanel_favorites)
+	var/list/statpanel_favorites = savefile.get_entry("statpanel_favorites", get_statpanel_favorites())
 
 	var/list/cleaned_statpanel_favorites = list()
 	for(var/favorite in statpanel_favorites)
@@ -273,7 +273,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(!length(cleaned))
 			continue
 		cleaned_statpanel_favorites += cleaned
-	statpanel_favorites = unique_list(cleaned_statpanel_favorites)
+	set_statpanel_favorites(unique_list(cleaned_statpanel_favorites))
 
 	// Custom hotkeys
 	key_bindings = savefile.get_entry("key_bindings")
@@ -360,7 +360,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	savefile.set_entry("key_bindings", key_bindings)
 	savefile.set_entry("hearted_until", (hearted_until > world.realtime ? hearted_until : null))
 	savefile.set_entry("favorite_outfits", favorite_outfits)
-	savefile.set_entry("statpanel_favorites", statpanel_favorites)
+	savefile.set_entry("statpanel_favorites", get_statpanel_favorites())
 	savefile.save()
 	return TRUE
 
