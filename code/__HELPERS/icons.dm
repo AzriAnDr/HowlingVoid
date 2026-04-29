@@ -465,7 +465,7 @@ world
 		var/list/icon_dimensions = get_icon_dimensions(curicon)
 		var/icon_width = icon_dimensions["width"]
 		var/icon_height = icon_dimensions["height"]
-		if(icon_width != 32 || icon_height != 32)
+		if(icon_width > 0 && icon_height > 0 && (icon_width != 32 || icon_height != 32))
 			flat.Scale(icon_width, icon_height)
 
 	if(!base_icon_dir)
@@ -540,9 +540,9 @@ world
 
 			if (
 				addX1 != flatX1 \
-				&& addX2 != flatX2 \
-				&& addY1 != flatY1 \
-				&& addY2 != flatY2 \
+				|| addX2 != flatX2 \
+				|| addY1 != flatY1 \
+				|| addY2 != flatY2 \
 			)
 				// Resize the flattened icon so the new icon fits
 				flat.Crop(
@@ -553,8 +553,8 @@ world
 				)
 
 				flatX1 = addX1
-				flatX2 = addY1
-				flatY1 = addX2
+				flatX2 = addX2
+				flatY1 = addY1
 				flatY2 = addY2
 
 			// Blend the overlay into the flattened icon

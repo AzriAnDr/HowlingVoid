@@ -265,6 +265,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 	feature_key = FEATURE_MOTH_ANTENNAE
 	dyable = TRUE
+	color_source = ORGAN_COLOR_OVERRIDE
 	///Accessory datum of the burn sprite
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_antennae/burnt_off
 	///Are we burned? If so we draw differently
@@ -280,6 +281,12 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 
 /datum/bodypart_overlay/mutant/antennae/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEANTENNAE)
+
+/datum/bodypart_overlay/mutant/antennae/get_global_feature_list()
+	return SSaccessories.sprite_accessories[FEATURE_MOTH_ANTENNAE]
+
+/datum/bodypart_overlay/mutant/antennae/override_color(rgb_value)
+	return draw_color
 
 ///The leafy hair of a podperson
 /obj/item/organ/pod_hair

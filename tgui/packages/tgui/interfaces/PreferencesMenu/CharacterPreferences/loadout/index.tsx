@@ -30,7 +30,10 @@ import type {
 import { ItemIcon, LoadoutTabDisplay, SearchDisplay } from './ItemDisplay';
 import { LoadoutModifyDimmer } from './ModifyPanel';
 
-export function LoadoutPage(props) {
+export function LoadoutPage(props: {
+  previewDirection: string;
+  rotatePreview: (step: -1 | 1) => void;
+}) {
   const serverData = useServerPrefs();
   const loadout_tabs = (serverData?.loadout.loadout_tabs || []).filter(
     (tab) => tab.name?.toLowerCase() !== 'erotic',
@@ -206,6 +209,8 @@ export function LoadoutPage(props) {
           setCurrentSearch={setSearchLoadout}
           modifyItemDimmer={modifyItemDimmer}
           setModifyItemDimmer={setModifyItemDimmer}
+          previewDirection={props.previewDirection}
+          rotatePreview={props.rotatePreview}
           setManagingPreset={setManagingPreset} // NOVA EDIT ADDITION: Multiple loadout presets
         />
       </Stack.Item>
@@ -220,6 +225,8 @@ type LoadoutTabsProps = {
   setCurrentSearch: (value: string) => void;
   modifyItemDimmer: LoadoutItem | null;
   setModifyItemDimmer: (dimmer: LoadoutItem | null) => void;
+  previewDirection: string;
+  rotatePreview: (step: -1 | 1) => void;
   setManagingPreset: (string) => void; // NOVA EDIT ADDITION: Multiple loadout presets
 };
 
@@ -231,6 +238,8 @@ function LoadoutTabs(props: LoadoutTabsProps) {
     setCurrentSearch,
     modifyItemDimmer,
     setModifyItemDimmer,
+    previewDirection,
+    rotatePreview,
     setManagingPreset, // NOVA EDIT ADDITION: Multiple loadout presets
   } = props;
   const activeCategory = loadout_tabs.find((curTab) => {
@@ -244,10 +253,11 @@ function LoadoutTabs(props: LoadoutTabsProps) {
     <Stack className="PreferencesMenu__Loadout__Body" fill>
       <Stack.Item align="center" width="250px" height="100%">
         <Stack vertical fill>
-          <Stack.Item
-            height="50%" // NOVA EDIT: Better loadout pref: ORIGINAL: 60%
-          >
-            <LoadoutPreviewSection />
+          <Stack.Item height="390px">
+            <LoadoutPreviewSection
+              previewDirection={previewDirection}
+              rotatePreview={rotatePreview}
+            />
           </Stack.Item>
           {/* NOVA EDIT ADDITION START: Multiple loadout presets */}
           <Stack.Item>
@@ -524,7 +534,10 @@ function LoadoutSelectedSection(props: LoadoutSelectedSectionProps) {
   );
 }
 
-function LoadoutPreviewSection() {
+function LoadoutPreviewSection(props: {
+  previewDirection: string;
+  rotatePreview: (step: -1 | 1) => void;
+}) {
   const { act, data } = useBackend<LoadoutManagerData>();
   const { t, localizeDataLabelById } =
     usePreferencesLocalization(data);
@@ -556,12 +569,19 @@ function LoadoutPreviewSection() {
       }
     >
       <Stack vertical fill>
-        <Stack.Item grow align="center">
-          <CharacterPreview
-            height="100%"
-            width="240px"
-            id={data.character_preview_view}
-          />{' '}
+        <Stack.Item align="center" width="100%">
+          <div className="PreferencesMenu__Character__PreviewFrame PreferencesMenu__Character__PreviewFrame--medium">
+            <CharacterPreview
+              animationMap={data.character_preview_animations}
+              direction={props.previewDirection}
+              imageMap={data.character_preview_urls}
+              height="100%"
+              width="100%"
+              imageUrl={data.character_preview_url}
+              onClick={() => act('open_preview_window')}
+              title="Open expanded preview"
+            />
+          </div>{' '}
           {/* NOVA EDIT CHANGE - ORIGINAL: <CharacterPreview height="100%" id={data.character_preview_view} /> */}
         </Stack.Item>
         <Stack.Divider />
@@ -586,22 +606,14 @@ function LoadoutPreviewSection() {
               <Button
                 className="PreferencesMenu__Loadout__ActionButton"
                 icon="chevron-left"
-                onClick={() =>
-                  act('rotate_dummy', {
-                    dir: 'left',
-                  })
-                }
+                onClick={() => props.rotatePreview(1)}
               />
             </Stack.Item>
             <Stack.Item>
               <Button
                 className="PreferencesMenu__Loadout__ActionButton"
                 icon="chevron-right"
-                onClick={() =>
-                  act('rotate_dummy', {
-                    dir: 'right',
-                  })
-                }
+                onClick={() => props.rotatePreview(-1)}
               />
             </Stack.Item>
           </Stack>

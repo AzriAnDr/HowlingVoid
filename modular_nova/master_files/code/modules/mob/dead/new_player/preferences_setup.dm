@@ -60,4 +60,5 @@
 
 	mannequin.dna.update_body_size()
 	mannequin.update_body()
+	mannequin.regenerate_icons()
 	return mannequin.appearance

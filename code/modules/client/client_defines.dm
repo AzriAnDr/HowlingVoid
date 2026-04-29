@@ -11,6 +11,10 @@
  * All client topic calls go through [/client/Topic] first, so a lot of our specialised
  * topic handling starts here
  */
+/datum/preferences
+	///Statpanel verbs marked as favorites by this player
+	var/list/statpanel_favorites = list()
+
 /client
 
 	/**

@@ -222,6 +222,20 @@ export type CharacterPreferencesData = {
 
 export type PreferencesMenuData = {
   character_preview_view: string;
+  preview_item_animations_enabled: BooleanLike;
+  character_preview_animations: Record<
+    string,
+    {
+      delays: number[] | null;
+      frames: number;
+      height: number;
+      rewind: BooleanLike;
+      width: number;
+    } | null
+  > | null;
+  character_preview_direction: string | null;
+  character_preview_url: string | null;
+  character_preview_urls: Record<string, string | null> | null;
   character_profiles: (string | null)[];
 
   character_preferences: CharacterPreferencesData;

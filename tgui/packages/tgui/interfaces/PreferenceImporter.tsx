@@ -12,7 +12,6 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { usePreferencesLocalization } from './localization';
 import { Window } from '../layouts';
 import { CharacterPreview } from './common/CharacterPreview';
 
@@ -40,13 +39,25 @@ type PreferenceImporterData = {
   import_character: BooleanLike;
   export_version: number;
   preview_map: string;
+  preview_animations: Record<
+    string,
+    {
+      delays: number[] | null;
+      frames: number;
+      height: number;
+      rewind: BooleanLike;
+      width: number;
+    } | null
+  > | null;
+  preview_direction: string | null;
+  preview_url: string | null;
+  preview_urls: Record<string, string | null> | null;
   preview_mode: string;
   preview_options: string[];
 };
 
 export function PreferenceImporter() {
   const { act, data } = useBackend<PreferenceImporterData>();
-  const { t, localizeCharacterDataById } = usePreferencesLocalization(data);
 
   const {
     characters,
@@ -60,7 +71,10 @@ export function PreferenceImporter() {
     import_game_prefs,
     import_character,
     export_version,
-    preview_map,
+    preview_animations,
+    preview_url,
+    preview_urls,
+    preview_direction,
     preview_mode,
     preview_options,
   } = data;
@@ -70,29 +84,28 @@ export function PreferenceImporter() {
   );
 
   return (
-    <Window
-      title={t('ui.character.preference_importer.window_title', 'Import Character')}
-      width={1000}
-      height={760}
-    >
-      <Window.Content scrollable>
+    <Window title="Import Character" width={1000} height={700}>
+      <Window.Content>
         <Stack>
-          <Stack.Item width="225px">
-            <Section
-              title={t('ui.character.preference_importer.preview', 'Preview')}
-              textAlign="center"
-            >
+          <Stack.Item width="340px">
+            <Section title="Preview" textAlign="center">
               <Stack vertical align="center" justify="center">
                 <Stack.Item>
-                  {preview_map ? (
+                  {preview_url ? (
                     <CharacterPreview
-                      height="280px"
-                      width="225px"
-                      id={preview_map}
+                      animationMap={preview_animations}
+                      height="320px"
+                      width="320px"
+                      direction={preview_direction}
+                      imageMap={preview_urls}
+                      imageUrl={preview_url}
+                      onClick={() => act('open_preview_window')}
+                      title="Open expanded preview"
                     />
                   ) : (
                     <Box
-                      height="280px"
+                      height="320px"
+                      width="320px"
                       style={{
                         display: 'flex',
                         alignItems: 'center',
@@ -102,10 +115,7 @@ export function PreferenceImporter() {
                       <Box color="label" italic>
                         <Icon name="user-slash" size={3} />
                         <br />
-                        {t(
-                          'ui.character.preference_importer.no_preview',
-                          'No preview available',
-                        )}
+                        No preview available
                       </Box>
                     </Box>
                   )}
@@ -120,13 +130,7 @@ export function PreferenceImporter() {
                 <Stack.Item mt={0.5}>
                   <Dropdown
                     selected={preview_mode}
-                    options={(preview_options || []).map((option) => ({
-                      value: option,
-                      displayText: localizeCharacterDataById(
-                        `preview_option_${option}`,
-                        option,
-                      ),
-                    }))}
+                    options={preview_options || []}
                     onSelected={(value: string) =>
                       act('set_preview_mode', { mode: value })
                     }
@@ -140,12 +144,7 @@ export function PreferenceImporter() {
             <Stack vertical>
               {characters.length > 1 && (
                 <Stack.Item>
-                  <Section
-                    title={t(
-                      'ui.character.preference_importer.select_character',
-                      'Select Character',
-                    )}
-                  >
+                  <Section title="Select Character">
                     <Stack vertical>
                       {characters.map((character) => (
                         <Stack.Item key={character.index}>
@@ -173,12 +172,7 @@ export function PreferenceImporter() {
               )}
 
               <Stack.Item>
-                <Section
-                  title={t(
-                    'ui.character.preference_importer.import_to_slot',
-                    'Import to Slot',
-                  )}
-                >
+                <Section title="Import to Slot">
                   <Box
                     style={{
                       maxHeight: '250px',
@@ -205,31 +199,26 @@ export function PreferenceImporter() {
                                   ? undefined
                                   : 'transparent'
                             }
-                            onClick={() => act('select_slot', { slot: slot.index })}
+                            onClick={() =>
+                              act('select_slot', { slot: slot.index })
+                            }
                           >
                             <Flex>
                               <Flex.Item grow>
-                                {t('ui.character.preference_importer.slot', 'Slot')}{' '}
-                                {slot.index}:
+                                Slot {slot.index}:
                                 {slot.occupied ? (
                                   <b> {slot.name}</b>
                                 ) : (
                                   <Box as="span" color="label" italic>
                                     {' '}
-                                    {t(
-                                      'ui.character.preference_importer.empty',
-                                      'Empty',
-                                    )}
+                                    Empty
                                   </Box>
                                 )}
                               </Flex.Item>
                               {slot.index === active_slot && (
                                 <Flex.Item>
                                   <Box as="span" color="label" fontSize="10px">
-                                    {t(
-                                      'ui.character.preference_importer.active',
-                                      '(active)',
-                                    )}
+                                    (active)
                                   </Box>
                                 </Flex.Item>
                               )}
@@ -243,18 +232,10 @@ export function PreferenceImporter() {
               </Stack.Item>
 
               <Stack.Item>
-                <Section
-                  title={t(
-                    'ui.character.preference_importer.import_options',
-                    'Import Options',
-                  )}
-                >
+                <Section title="Import Options">
                   <LabeledList>
                     <LabeledList.Item
-                      label={t(
-                        'ui.character.preference_importer.character_data',
-                        'Character Data',
-                      )}
+                      label="Character Data"
                       buttons={
                         <Button
                           icon={import_character ? 'toggle-on' : 'toggle-off'}
@@ -262,74 +243,48 @@ export function PreferenceImporter() {
                           color={import_character ? 'good' : 'bad'}
                           onClick={() => act('toggle_character')}
                         >
-                          {import_character
-                            ? t(
-                                'ui.character.preference_importer.import',
-                                'Import',
-                              )
-                            : t('ui.character.preference_importer.skip', 'Skip')}
+                          {import_character ? 'Import' : 'Skip'}
                         </Button>
                       }
                     >
-                      {t(
-                        'ui.character.preference_importer.character_data_description',
-                        'Appearance, species, name, quirks and slot data.',
-                      )}
+                      Appearance, species, name, quirks and slot data.
                     </LabeledList.Item>
                     {has_keybindings ? (
                       <LabeledList.Item
-                        label={t(
-                          'ui.character.preference_importer.keybindings',
-                          'Keybindings',
-                        )}
+                        label="Keybindings"
                         buttons={
                           <Button
-                            icon={import_keybindings ? 'toggle-on' : 'toggle-off'}
+                            icon={
+                              import_keybindings ? 'toggle-on' : 'toggle-off'
+                            }
                             selected={!!import_keybindings}
                             color={import_keybindings ? 'good' : 'bad'}
                             onClick={() => act('toggle_keybindings')}
                           >
-                            {import_keybindings
-                              ? t(
-                                  'ui.character.preference_importer.import',
-                                  'Import',
-                                )
-                              : t('ui.character.preference_importer.skip', 'Skip')}
+                            {import_keybindings ? 'Import' : 'Skip'}
                           </Button>
                         }
                       >
-                        {t(
-                          'ui.character.preference_importer.found_in_file',
-                          'Found in file',
-                        )}
+                        Found in file
                       </LabeledList.Item>
                     ) : null}
                     {has_game_prefs ? (
                       <LabeledList.Item
-                        label={t(
-                          'ui.character.preference_importer.game_preferences',
-                          'Game Preferences',
-                        )}
+                        label="Game Preferences"
                         buttons={
                           <Button
-                            icon={import_game_prefs ? 'toggle-on' : 'toggle-off'}
+                            icon={
+                              import_game_prefs ? 'toggle-on' : 'toggle-off'
+                            }
                             selected={!!import_game_prefs}
                             color={import_game_prefs ? 'good' : 'bad'}
                             onClick={() => act('toggle_game_prefs')}
                           >
-                            {import_game_prefs
-                              ? t(
-                                  'ui.character.preference_importer.import',
-                                  'Import',
-                                )
-                              : t('ui.character.preference_importer.skip', 'Skip')}
+                            {import_game_prefs ? 'Import' : 'Skip'}
                           </Button>
                         }
                       >
-                        {t(
-                          'ui.character.preference_importer.found_in_file',
-                          'Found in file',
-                        )}
+                        Found in file
                       </LabeledList.Item>
                     ) : null}
                   </LabeledList>
@@ -338,12 +293,14 @@ export function PreferenceImporter() {
 
               {export_version < 2 && (
                 <Stack.Item>
-                  <Box color="average" fontSize="11px" italic textAlign="center">
-                    <Icon name="info-circle" />{' '}
-                    {t(
-                      'ui.character.preference_importer.old_export_warning',
-                      'Old export format detected. Re-export for keybindings and game settings.',
-                    )}
+                  <Box
+                    color="average"
+                    fontSize="11px"
+                    italic
+                    textAlign="center"
+                  >
+                    <Icon name="info-circle" /> Old export format detected.
+                    Re-export for keybindings and game settings.
                   </Box>
                 </Stack.Item>
               )}
@@ -359,7 +316,7 @@ export function PreferenceImporter() {
                       color="bad"
                       onClick={() => act('cancel')}
                     >
-                      {t('ui.character.cancel', 'Cancel')}
+                      Cancel
                     </Button>
                   </Stack.Item>
                   <Stack.Item grow>
@@ -369,10 +326,7 @@ export function PreferenceImporter() {
                       color="good"
                       onClick={() => act('confirm_import')}
                     >
-                      {t(
-                        'ui.character.preference_importer.import_to_slot_action',
-                        'Import to Slot {slot}',
-                      ).replace('{slot}', String(target_slot))}
+                      Import to Slot {target_slot}
                     </Button>
                   </Stack.Item>
                 </Stack>

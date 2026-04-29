@@ -41,6 +41,7 @@ import { VocalsInput, VoiceInput } from './vocals'; // NOVA EDIT ADDITION
 
 const CLOTHING_CELL_SIZE = 48;
 const CLOTHING_SIDEBAR_ROWS = 13.4; // NOVA EDIT CHANGE - ORIGINAL:  9
+const PREVIEW_TOOLTIP = 'Open expanded preview';
 
 const CLOTHING_SELECTION_CELL_SIZE = 48;
 const CLOTHING_SELECTION_WIDTH = 5.4;
@@ -259,11 +260,8 @@ type ChoicedSelectionProps = {
 };
 
 function ChoicedSelection(props: ChoicedSelectionProps) {
-  const {
-    t,
-    localizeFeatureById,
-    localizeCharacterDataById,
-  } = usePreferencesLocalization();
+  const { t, localizeFeatureById, localizeCharacterDataById } =
+    usePreferencesLocalization();
   const { catalog, supplementalFeature, supplementalValue } = props;
   const [searchText, setSearchText] = useState('');
 
@@ -526,11 +524,8 @@ type PreferenceListProps = {
 };
 
 export function PreferenceList(props: PreferenceListProps) {
-  const {
-    localizeFeatureById,
-    localizeFeatureDescriptionById,
-    t,
-  } = usePreferencesLocalization();
+  const { localizeFeatureById, localizeFeatureDescriptionById, t } =
+    usePreferencesLocalization();
   const { preferences, randomizations, maxHeight, children } = props;
 
   return (
@@ -638,6 +633,8 @@ export function getRandomization(
 
 type MainPageProps = {
   openSpecies: () => void;
+  previewDirection: string;
+  rotatePreview: (step: -1 | 1) => void;
 };
 
 export function MainPage(props: MainPageProps) {
@@ -862,10 +859,7 @@ export function MainPage(props: MainPageProps) {
                 t={t}
                 gender={data.character_preferences.misc.gender}
                 handleOpenSpecies={props.openSpecies}
-                handleRotate={(value) => {
-                  // NOVA EDIT CHANGE - Original: handleRotate={() => {
-                  act('rotate', { backwards: value }); // NOVA EDIT CHANGE - Original: act('rotate');
-                }}
+                handleRotate={(value) => props.rotatePreview(value ? -1 : 1)}
                 setGender={createSetPreference(act, 'gender')}
                 showGender={
                   currentSpeciesData ? !!currentSpeciesData.sexes : true
@@ -884,15 +878,19 @@ export function MainPage(props: MainPageProps) {
               />
             </Stack.Item>
 
-            <Stack.Item
-              className="PreferencesMenu__Character__PreviewCell"
-              grow
-            >
-              <CharacterPreview
-                width="100%"
-                height="100%"
-                id={data.character_preview_view}
-              />
+            <Stack.Item className="PreferencesMenu__Character__PreviewCell">
+              <div className="PreferencesMenu__Character__PreviewFrame">
+                <CharacterPreview
+                  animationMap={data.character_preview_animations}
+                  direction={props.previewDirection}
+                  imageMap={data.character_preview_urls}
+                  height="100%"
+                  width="100%"
+                  imageUrl={data.character_preview_url}
+                  onClick={() => act('open_preview_window')}
+                  title={PREVIEW_TOOLTIP}
+                />
+              </div>
             </Stack.Item>
 
             {/* NOVA EDIT ADDITION START */}
@@ -941,9 +939,9 @@ export function MainPage(props: MainPageProps) {
                   (serverData?.background_state.choice_ids?.[
                     data.character_preferences.misc.background_state
                   ] ??
-                    serverData?.background_state_ids?.[
-                      data.character_preferences.misc.background_state
-                    ])
+                  serverData?.background_state_ids?.[
+                    data.character_preferences.misc.background_state
+                  ])
                     ? localizeCharacterDataById(
                         (serverData?.background_state.choice_ids?.[
                           data.character_preferences.misc.background_state
@@ -1089,13 +1087,7 @@ export function MainPage(props: MainPageProps) {
                 </PageButton>
               </Stack.Item>
             </Stack>
-            <Stack.Item
-              className="PreferencesMenu__Character__PrefContent"
-              grow
-              basis={0}
-            >
-              {prefPageContents}
-            </Stack.Item>
+            {prefPageContents}
           </Stack>
         </Stack.Item>
         {/* NOVA EDIT ADDITION END: Swappable pref menus */}
