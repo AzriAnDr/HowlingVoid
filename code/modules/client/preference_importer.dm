@@ -454,10 +454,10 @@
 	data["import_game_prefs"] = import_game_prefs
 	data["export_version"] = export_version
 	data["import_character"] = import_character
-	data["preview_animations"] = preview_view?.get_preview_animations(user)
 	data["preview_direction"] = dir2text(preview_view?.dir || SOUTH)
 	data["preview_url"] = preview_view?.get_preview_url(user)
 	data["preview_urls"] = preview_view?.get_preview_urls(user)
+	data["preview_animations"] = preview_view?.get_preview_animations(user)
 	data["preview_item_animations_enabled"] = !!target_prefs?.preview_item_animations_enabled
 	data["preview_map"] = preview_view?.assigned_map
 	data["preview_mode"] = preview_mode
@@ -515,6 +515,15 @@
 			SStgui.update_uis(src)
 			return TRUE
 
+		if("prime_preview_direction")
+			var/requested_direction = text2dir(params["direction"])
+			if(!requested_direction)
+				requested_direction = SOUTH
+			preview_view?.setDir(requested_direction)
+			preview_view?.get_preview_url(ui.user, requested_direction)
+			SStgui.update_uis(src)
+			return TRUE
+
 		if("open_preview_window")
 			open_preview_window(ui.user)
 			return TRUE
@@ -538,8 +547,6 @@
 /datum/preference_importer/proc/open_preview_window(mob/user)
 	if(!user || target_prefs?.parent != user.client)
 		return FALSE
-
-	preview_view?.preload_preview_assets(user)
 
 	for(var/datum/tgui/open_ui as anything in open_uis)
 		if(open_ui.user == user && open_ui.interface == "CharacterPreviewWindow")

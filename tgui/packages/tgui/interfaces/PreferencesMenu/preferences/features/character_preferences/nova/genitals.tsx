@@ -6,6 +6,7 @@ import {
   type FeatureChoicedServerData,
   FeatureNumberInput,
   type FeatureNumeric,
+  FeatureSliderInput,
   type FeatureToggle,
   FeatureTriBoolInput,
   FeatureTriColorInput,
@@ -275,7 +276,7 @@ export const belly_emissive: Feature<boolean[]> = {
 
 export const body_size: FeatureNumeric = {
   name: 'Body Size',
-  component: FeatureNumberInput,
+  component: FeatureSliderInput,
 };
 
 export const erp_status_pref: FeatureChoiced = {
