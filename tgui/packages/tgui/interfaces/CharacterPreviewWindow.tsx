@@ -106,11 +106,12 @@ export function CharacterPreviewWindow() {
               <Stack.Item>
                 <Button
                   icon="undo"
-                  onClick={() =>
-                    setPreviewDirection((currentDirection) =>
-                      rotatePreviewDirection(currentDirection, 1),
-                    )
-                  }
+                  onClick={() => {
+                    const nextDirection = rotatePreviewDirection(previewDirection, 1);
+                    act('prime_preview_direction', {
+                      direction: nextDirection,
+                    });
+                  }}
                 >
                   Rotate Left
                 </Button>
@@ -118,11 +119,12 @@ export function CharacterPreviewWindow() {
               <Stack.Item>
                 <Button
                   icon="repeat"
-                  onClick={() =>
-                    setPreviewDirection((currentDirection) =>
-                      rotatePreviewDirection(currentDirection, -1),
-                    )
-                  }
+                  onClick={() => {
+                    const nextDirection = rotatePreviewDirection(previewDirection, -1);
+                    act('prime_preview_direction', {
+                      direction: nextDirection,
+                    });
+                  }}
                 >
                   Rotate Right
                 </Button>

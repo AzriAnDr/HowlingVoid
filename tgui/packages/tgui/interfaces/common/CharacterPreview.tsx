@@ -31,7 +31,7 @@ function preloadPreviewUrl(url: string) {
 }
 
 export const CharacterPreview = (props: {
-  width?: string; // NOVA EDIT
+  width?: string;
   height: string;
   id?: string | null;
   animationMap?: Record<string, PreviewAnimationData | null> | null;
@@ -41,7 +41,6 @@ export const CharacterPreview = (props: {
   onClick?: (() => void) | null;
   title?: string;
 }) => {
-  // NOVA EDIT
   const {
     animationMap,
     width = '272px',
@@ -53,15 +52,24 @@ export const CharacterPreview = (props: {
     title,
   } = props;
   const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const lastSettledPreviewRef = useRef<{
+    animation: PreviewAnimationData | null;
+    imageUrl: string | null;
+  }>({
+    animation: null,
+    imageUrl: null,
+  });
   const [currentFrame, setCurrentFrame] = useState(0);
   const [resolvedImageDimensions, setResolvedImageDimensions] = useState<{
     width: number;
     height: number;
   } | null>(null);
+
   const normalizedDirection = useMemo(
     () => normalizePreviewDirection(direction),
     [direction],
   );
+
   const resolvedImageUrl = useMemo(() => {
     if (normalizedDirection && imageMap?.[normalizedDirection]) {
       return imageMap[normalizedDirection];
@@ -73,6 +81,7 @@ export const CharacterPreview = (props: {
 
     return imageUrl;
   }, [direction, imageMap, imageUrl, normalizedDirection]);
+
   const resolvedAnimation = useMemo(() => {
     if (normalizedDirection && animationMap?.[normalizedDirection]) {
       return animationMap[normalizedDirection];
@@ -84,39 +93,75 @@ export const CharacterPreview = (props: {
 
     return null;
   }, [animationMap, direction, normalizedDirection]);
-  const animationSignature = useMemo(
-    () => JSON.stringify(resolvedAnimation),
-    [resolvedAnimation],
+
+  const selectedDirectionImageUrl =
+    (normalizedDirection && imageMap?.[normalizedDirection]) ||
+    (direction && imageMap?.[direction]) ||
+    null;
+
+  const selectedDirectionAnimation =
+    (normalizedDirection && animationMap?.[normalizedDirection]) ||
+    (direction && animationMap?.[direction]) ||
+    null;
+
+  const shouldDeferDirectionSwap = Boolean(
+    selectedDirectionImageUrl && animationMap && !selectedDirectionAnimation,
   );
+
+  const renderedImageUrl = shouldDeferDirectionSwap
+    ? lastSettledPreviewRef.current.imageUrl
+    : resolvedImageUrl;
+
+  const renderedAnimation = shouldDeferDirectionSwap
+    ? lastSettledPreviewRef.current.animation
+    : resolvedAnimation;
+
+  useEffect(() => {
+    if (!resolvedImageUrl || shouldDeferDirectionSwap) {
+      return;
+    }
+
+    lastSettledPreviewRef.current = {
+      animation: resolvedAnimation,
+      imageUrl: resolvedImageUrl,
+    };
+  }, [resolvedAnimation, resolvedImageUrl, shouldDeferDirectionSwap]);
+
+  const animationSignature = useMemo(
+    () => JSON.stringify(renderedAnimation),
+    [renderedAnimation],
+  );
+
   const animationAspectRatio = useMemo(() => {
-    const frameCount = Math.max(Number(resolvedAnimation?.frames) || 1, 1);
+    const frameCount = Math.max(Number(renderedAnimation?.frames) || 1, 1);
     const width = Math.max(
-      Number(resolvedAnimation?.width)
-        ? Number(resolvedAnimation?.width)
+      Number(renderedAnimation?.width)
+        ? Number(renderedAnimation?.width)
         : Number(resolvedImageDimensions?.width)
           ? Number(resolvedImageDimensions?.width) / frameCount
           : 1,
       1,
     );
     const height = Math.max(
-      Number(resolvedAnimation?.height) || Number(resolvedImageDimensions?.height) || 1,
+      Number(renderedAnimation?.height) || Number(resolvedImageDimensions?.height) || 1,
       1,
     );
 
     return `${width} / ${height}`;
-  }, [resolvedAnimation, resolvedImageDimensions]);
+  }, [renderedAnimation, resolvedImageDimensions]);
+
   const animationViewportStyle = useMemo(() => {
-    const frameCount = Math.max(Number(resolvedAnimation?.frames) || 1, 1);
+    const frameCount = Math.max(Number(renderedAnimation?.frames) || 1, 1);
     const frameWidth = Math.max(
-      Number(resolvedAnimation?.width)
-        ? Number(resolvedAnimation?.width)
+      Number(renderedAnimation?.width)
+        ? Number(renderedAnimation?.width)
         : Number(resolvedImageDimensions?.width)
           ? Number(resolvedImageDimensions?.width) / frameCount
           : 1,
       1,
     );
     const frameHeight = Math.max(
-      Number(resolvedAnimation?.height) || Number(resolvedImageDimensions?.height) || 1,
+      Number(renderedAnimation?.height) || Number(resolvedImageDimensions?.height) || 1,
       1,
     );
     const frameRatio = Math.max(frameWidth / frameHeight, 1 / 1024);
@@ -132,10 +177,10 @@ export const CharacterPreview = (props: {
       width: `${Math.min(frameRatio * 100, 100)}%`,
       height: '100%',
     };
-  }, [resolvedAnimation, resolvedImageDimensions]);
+  }, [renderedAnimation, resolvedImageDimensions]);
 
   useEffect(() => {
-    if (!resolvedImageUrl) {
+    if (!renderedImageUrl) {
       setResolvedImageDimensions(null);
       return;
     }
@@ -163,7 +208,7 @@ export const CharacterPreview = (props: {
     };
 
     previewImage.addEventListener('load', updateDimensions);
-    previewImage.src = resolvedImageUrl;
+    previewImage.src = renderedImageUrl;
 
     if (previewImage.complete) {
       updateDimensions();
@@ -173,13 +218,17 @@ export const CharacterPreview = (props: {
       cancelled = true;
       previewImage.removeEventListener('load', updateDimensions);
     };
-  }, [resolvedImageUrl]);
+  }, [renderedImageUrl]);
 
   useEffect(() => {
     const urlsToPreload = new Set<string>();
 
     if (resolvedImageUrl) {
       urlsToPreload.add(resolvedImageUrl);
+    }
+
+    if (renderedImageUrl) {
+      urlsToPreload.add(renderedImageUrl);
     }
 
     if (imageMap) {
@@ -195,20 +244,20 @@ export const CharacterPreview = (props: {
     for (const url of urlsToPreload) {
       preloadPreviewUrl(url);
     }
-  }, [imageMap, resolvedImageUrl]);
+  }, [imageMap, renderedImageUrl, resolvedImageUrl]);
 
   useEffect(() => {
     setCurrentFrame(0);
 
-    if (!resolvedAnimation || !resolvedImageUrl || resolvedAnimation.frames <= 1) {
+    if (!renderedAnimation || !renderedImageUrl || renderedAnimation.frames <= 1) {
       return;
     }
 
-    const frameCount = resolvedAnimation.frames;
-    const delays = resolvedAnimation.delays?.length
-      ? resolvedAnimation.delays
+    const frameCount = renderedAnimation.frames;
+    const delays = renderedAnimation.delays?.length
+      ? renderedAnimation.delays
       : Array.from({ length: frameCount }, () => 1);
-    const frameSequence = resolvedAnimation.rewind && frameCount > 1
+    const frameSequence = renderedAnimation.rewind && frameCount > 1
       ? [
           ...Array.from({ length: frameCount }, (_, index) => index),
           ...Array.from(
@@ -242,10 +291,10 @@ export const CharacterPreview = (props: {
         clearTimeout(timeoutId);
       }
     };
-  }, [animationSignature, resolvedImageUrl]);
+  }, [animationSignature, renderedImageUrl]);
 
   useEffect(() => {
-    if (!id || resolvedImageUrl) {
+    if (!id || renderedImageUrl) {
       return;
     }
 
@@ -280,12 +329,12 @@ export const CharacterPreview = (props: {
       }
       resizeObserver?.disconnect();
     };
-  }, [props.height, id, resolvedImageUrl, width]);
+  }, [id, renderedImageUrl]);
 
   const interactive = !!onClick;
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (!onClick) {
+    if (!interactive || !onClick) {
       return;
     }
 
@@ -294,7 +343,7 @@ export const CharacterPreview = (props: {
       onClick();
     }
   };
-  // NOVA EDIT END
+
   return (
     <div
       ref={wrapperRef}
@@ -314,12 +363,12 @@ export const CharacterPreview = (props: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: resolvedImageUrl ? 'black' : undefined,
+        backgroundColor: renderedImageUrl ? 'black' : undefined,
         cursor: interactive ? 'zoom-in' : undefined,
       }}
     >
-      {resolvedImageUrl ? (
-        resolvedAnimation && resolvedAnimation.frames > 1 ? (
+      {renderedImageUrl ? (
+        renderedAnimation && renderedAnimation.frames > 1 ? (
           <div
             style={{
               width: '100%',
@@ -345,15 +394,15 @@ export const CharacterPreview = (props: {
             >
               <img
                 alt=""
-                src={resolvedImageUrl}
+                src={renderedImageUrl}
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  width: `${resolvedAnimation.frames * 100}%`,
+                  width: `${renderedAnimation.frames * 100}%`,
                   height: '100%',
                   display: 'block',
                   imageRendering: 'pixelated',
-                  transform: `translateX(-${currentFrame * (100 / resolvedAnimation.frames)}%)`,
+                  transform: `translateX(-${currentFrame * (100 / renderedAnimation.frames)}%)`,
                 }}
               />
             </div>
@@ -361,7 +410,7 @@ export const CharacterPreview = (props: {
         ) : (
           <img
             alt=""
-            src={resolvedImageUrl}
+            src={renderedImageUrl}
             style={{
               width: '100%',
               height: '100%',
@@ -373,7 +422,7 @@ export const CharacterPreview = (props: {
         )
       ) : id ? (
         <ByondUi
-          width="100%" // NOVA EDIT
+          width="100%"
           height="100%"
           params={{
             id,

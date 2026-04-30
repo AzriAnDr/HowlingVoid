@@ -1087,7 +1087,16 @@ export function MainPage(props: MainPageProps) {
                 </PageButton>
               </Stack.Item>
             </Stack>
-            {prefPageContents}
+            <Stack.Item
+              grow
+              style={{
+                minHeight: 0,
+                overflowY: 'auto',
+                overflowX: 'hidden',
+              }}
+            >
+              {prefPageContents}
+            </Stack.Item>
           </Stack>
         </Stack.Item>
         {/* NOVA EDIT ADDITION END: Swappable pref menus */}

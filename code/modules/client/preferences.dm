@@ -169,8 +169,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character_preview_view = create_character_preview_view(user)
 	else
 		character_preview_view.update_body()
-	if(user && user.client == parent)
-		character_preview_view?.preload_preview_assets(user)
 	ui = new(user, src, "PreferencesMenu", null, 1080, 920)
 	ui.set_autoupdate(FALSE)
 	ui.open()
@@ -197,10 +195,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	data["positive_quirk_count"] = GetPositiveQuirkCount()
 	data["interface_language"] = read_preference(/datum/preference/choiced/interface_language) // Howling Void edit
 	//NOVA EDIT ADDITION END
-	data["character_preview_animations"] = character_preview_view?.get_preview_animations(user)
 	data["character_preview_direction"] = dir2text(character_preview_view?.dir || SOUTH)
 	data["character_preview_url"] = character_preview_view?.get_preview_url(user)
 	data["character_preview_urls"] = character_preview_view?.get_preview_urls(user)
+	data["character_preview_animations"] = character_preview_view?.get_preview_animations(user)
 	data["preview_item_animations_enabled"] = preview_item_animations_enabled
 	data["preview_animations"] = data["character_preview_animations"]
 	data["preview_direction"] = data["character_preview_direction"]
@@ -352,6 +350,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			SStgui.update_uis(src)
 			return TRUE
 
+		if("prime_preview_direction")
+			var/requested_direction = text2dir(params["direction"])
+			if(!requested_direction)
+				requested_direction = SOUTH
+			character_preview_view?.setDir(requested_direction)
+			character_preview_view?.get_preview_url(usr, requested_direction)
+			SStgui.update_uis(src)
+			return TRUE
+
 		if("open_preview_window")
 			open_preview_window(usr)
 			return TRUE
@@ -439,8 +446,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/open_preview_window(mob/user)
 	if(!user || user.client != parent)
 		return FALSE
-
-	character_preview_view?.preload_preview_assets(user)
 
 	for(var/datum/tgui/open_ui as anything in open_uis)
 		if(open_ui.user == user && open_ui.interface == "CharacterPreviewWindow")
@@ -629,6 +634,99 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	return icon('icons/blanks/32x32.dmi', "nothing")
 
+/atom/movable/screen/map_view/char_preview/proc/get_preview_flat_appearance_bounds(appearance_to_measure)
+	if(isnull(appearance_to_measure))
+		return null
+
+	var/mutable_appearance/render_appearance = new /mutable_appearance(appearance_to_measure)
+	if(render_appearance.alpha <= 0)
+		return null
+
+	var/base_width = ICON_SIZE_X
+	var/base_height = ICON_SIZE_Y
+	if(render_appearance.icon)
+		var/list/base_dimensions = get_icon_dimensions(render_appearance.icon)
+		if(isnum(base_dimensions["width"]) && base_dimensions["width"] > 0)
+			base_width = base_dimensions["width"]
+		if(isnum(base_dimensions["height"]) && base_dimensions["height"] > 0)
+			base_height = base_dimensions["height"]
+
+	var/flat_x1 = 1
+	var/flat_x2 = base_width
+	var/flat_y1 = 1
+	var/flat_y2 = base_height
+
+	for(var/layer_appearance as anything in render_appearance.underlays)
+		var/mutable_appearance/underlay = new /mutable_appearance(layer_appearance)
+		if(underlay.alpha <= 0)
+			continue
+		if(underlay.plane != FLOAT_PLANE && underlay.plane != render_appearance.plane)
+			continue
+		var/list/underlay_bounds = get_preview_flat_appearance_bounds(underlay)
+		if(!islist(underlay_bounds))
+			continue
+		flat_x1 = min(flat_x1, underlay.pixel_x + underlay.pixel_w + 1)
+		flat_x2 = max(flat_x2, underlay.pixel_x + underlay.pixel_w + underlay_bounds["width"])
+		flat_y1 = min(flat_y1, underlay.pixel_y + underlay.pixel_z + 1)
+		flat_y2 = max(flat_y2, underlay.pixel_y + underlay.pixel_z + underlay_bounds["height"])
+
+	for(var/layer_appearance as anything in render_appearance.overlays)
+		var/mutable_appearance/overlay = new /mutable_appearance(layer_appearance)
+		if(overlay.alpha <= 0)
+			continue
+		if(overlay.plane != FLOAT_PLANE && overlay.plane != render_appearance.plane)
+			continue
+		var/list/overlay_bounds = get_preview_flat_appearance_bounds(overlay)
+		if(!islist(overlay_bounds))
+			continue
+		flat_x1 = min(flat_x1, overlay.pixel_x + overlay.pixel_w + 1)
+		flat_x2 = max(flat_x2, overlay.pixel_x + overlay.pixel_w + overlay_bounds["width"])
+		flat_y1 = min(flat_y1, overlay.pixel_y + overlay.pixel_z + 1)
+		flat_y2 = max(flat_y2, overlay.pixel_y + overlay.pixel_z + overlay_bounds["height"])
+
+	return list(
+		"x1" = flat_x1,
+		"x2" = flat_x2,
+		"y1" = flat_y1,
+		"y2" = flat_y2,
+		"width" = flat_x2 - flat_x1 + 1,
+		"height" = flat_y2 - flat_y1 + 1,
+		"base_width" = base_width,
+		"base_height" = base_height,
+	)
+
+/atom/movable/screen/map_view/char_preview/proc/pixel_scale_preview_icon(icon/source_icon, target_width, target_height)
+	if(!isicon(source_icon))
+		return null
+
+	target_width = max(round(target_width), 1)
+	target_height = max(round(target_height), 1)
+
+	var/source_width = source_icon.Width()
+	var/source_height = source_icon.Height()
+	if(source_width <= 0 || source_height <= 0)
+		return null
+	if(source_width == target_width && source_height == target_height)
+		return icon(source_icon)
+
+	var/icon/scaled_icon = icon('icons/blanks/32x32.dmi', "nothing")
+	scaled_icon.Scale(target_width, target_height)
+
+	for(var/x in 1 to target_width)
+		var/source_x = clamp(round(((x - 0.5) * source_width / target_width) + 0.5), 1, source_width)
+		for(var/y in 1 to target_height)
+			var/source_y = clamp(round(((y - 0.5) * source_height / target_height) + 0.5), 1, source_height)
+			var/pixel = source_icon.GetPixel(source_x, source_y)
+			if(!pixel)
+				continue
+			if(length(pixel) == 7)
+				pixel += "ff"
+			if(length(pixel) >= 9 && copytext(pixel, 8, 10) == "00")
+				continue
+			scaled_icon.DrawBox(pixel, x, y)
+
+	return scaled_icon
+
 /atom/movable/screen/map_view/char_preview/proc/scale_preview_body_icon(icon/body_icon)
 	if(!isicon(body_icon))
 		return null
@@ -641,6 +739,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/body_dimensions = get_icon_dimensions(body_icon)
 	var/scaled_width = max(CEILING(body_dimensions["width"] * body_scale, 1), 1)
 	var/scaled_height = max(CEILING(body_dimensions["height"] * body_scale * height_scale, 1), 1)
+	if(scaled_width < body_dimensions["width"] || scaled_height < body_dimensions["height"])
+		return pixel_scale_preview_icon(body_icon, scaled_width, scaled_height)
 	var/icon/scaled_icon = icon(body_icon)
 	scaled_icon.Scale(scaled_width, scaled_height)
 	return scaled_icon
@@ -652,7 +752,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/icon/body_icon = getFlatIcon(body, defdir = preview_dir, no_anim = no_anim)
 	return scale_preview_body_icon(body_icon)
 
-/atom/movable/screen/map_view/char_preview/proc/composite_preview_icon(icon/body_icon)
+/atom/movable/screen/map_view/char_preview/proc/composite_preview_icon(icon/body_icon, list/body_bounds = null)
 	if(!isicon(body_icon))
 		return null
 
@@ -666,16 +766,28 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/output_width = output_dimensions["width"]
 
 	var/offset_x = round((output_width - body_dimensions["width"]) * 0.5) + 1
+	if(islist(body_bounds))
+		var/body_scale = get_preview_body_size_scale()
+		var/base_width = max(CEILING(body_bounds["base_width"] * body_scale, 1), 1)
+		var/left_extension = max(CEILING((1 - body_bounds["x1"]) * body_scale, 1), 0)
+		var/desired_root_left = round((output_width - base_width) * 0.5) + 1
+		offset_x = desired_root_left - left_extension
+		var/min_offset_x = min(1, output_width - body_dimensions["width"] + 1)
+		var/max_offset_x = max(1, output_width - body_dimensions["width"] + 1)
+		offset_x = clamp(offset_x, min_offset_x, max_offset_x)
 	output_icon.Blend(body_icon, ICON_OVERLAY, offset_x, 1)
 	return output_icon
 
 /atom/movable/screen/map_view/char_preview/proc/build_preview_icon(preview_dir = dir, no_anim = TRUE)
 	var/icon/body_icon
+	var/list/body_bounds
 	if(no_anim)
-		body_icon = build_body_preview_frame_icon(preview_dir, 0)
+		var/list/body_frame_data = build_body_preview_frame_data(preview_dir, 0)
+		body_icon = body_frame_data?["icon"]
+		body_bounds = body_frame_data?["bounds"]
 	else
 		body_icon = build_body_preview_icon(preview_dir, no_anim)
-	return composite_preview_icon(body_icon)
+	return composite_preview_icon(body_icon, body_bounds)
 
 /atom/movable/screen/map_view/char_preview/proc/get_preview_icon_metadata(icon/preview_icon)
 	if(!isicon(preview_icon))
@@ -1120,8 +1232,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(seen_signatures[signature])
 			break
 
-		frame_times += next_time
 		seen_signatures[signature] = TRUE
+		frame_times += next_time
 
 	if(!length(composite_delays))
 		return list(
@@ -1169,6 +1281,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return frame_appearance
 
 /atom/movable/screen/map_view/char_preview/proc/build_body_preview_frame_icon(preview_dir = dir, elapsed_time = 0, skip_refresh = FALSE)
+	var/list/frame_data = build_body_preview_frame_data(preview_dir, elapsed_time, skip_refresh)
+	return frame_data?["icon"]
+
+/atom/movable/screen/map_view/char_preview/proc/build_body_preview_frame_data(preview_dir = dir, elapsed_time = 0, skip_refresh = FALSE)
 	if(!skip_refresh && !refresh_preview_appearance(preview_dir))
 		return null
 
@@ -1177,19 +1293,25 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		return null
 
 	var/icon/frame_icon = getFlatIcon(frame_appearance, defdir = preview_dir, no_anim = TRUE)
-	return scale_preview_body_icon(frame_icon)
+	return list(
+		"icon" = scale_preview_body_icon(frame_icon),
+		"bounds" = get_preview_flat_appearance_bounds(frame_appearance),
+	)
 
 /atom/movable/screen/map_view/char_preview/proc/build_preview_strip(preview_dir = dir, list/frame_times)
 	if(!islist(frame_times) || !length(frame_times))
 		return null
 
+	var/static/max_preview_strip_dimension = 2048
+
 	if(!refresh_preview_appearance(preview_dir))
 		return null
 
-	var/icon/first_frame_body_icon = build_body_preview_frame_icon(preview_dir, frame_times[1], TRUE)
+	var/list/first_frame_data = build_body_preview_frame_data(preview_dir, frame_times[1], TRUE)
+	var/icon/first_frame_body_icon = first_frame_data?["icon"]
 	if(!isicon(first_frame_body_icon))
 		return null
-	var/icon/first_frame_icon = composite_preview_icon(first_frame_body_icon)
+	var/icon/first_frame_icon = composite_preview_icon(first_frame_body_icon, first_frame_data?["bounds"])
 	if(!isicon(first_frame_icon))
 		return null
 
@@ -1197,22 +1319,35 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/frame_dimensions = get_icon_dimensions(first_frame_icon)
 	var/frame_width = frame_dimensions["width"]
 	var/frame_height = frame_dimensions["height"]
+	var/strip_width = frame_width * frame_count
+
+	if(frame_width <= 0 || frame_height <= 0)
+		return null
+	if(strip_width > max_preview_strip_dimension)
+		var/max_frame_count = max(round(max_preview_strip_dimension / frame_width), 1)
+		frame_times = frame_times.Copy(1, max_frame_count + 1)
+		frame_count = length(frame_times)
+		strip_width = frame_width * frame_count
+	if(strip_width > max_preview_strip_dimension || frame_height > max_preview_strip_dimension)
+		return null
 
 	var/icon/strip_icon = icon('icons/blanks/32x32.dmi', "nothing")
-	strip_icon.Scale(frame_width * frame_count, frame_height)
+	strip_icon.Scale(strip_width, frame_height)
 
 	for(var/frame_index in 1 to frame_count)
 		var/elapsed_time = frame_times[frame_index]
-		var/icon/frame_body_icon = frame_index == 1 ? first_frame_body_icon : build_body_preview_frame_icon(preview_dir, elapsed_time, TRUE)
+		var/list/frame_data = frame_index == 1 ? first_frame_data : build_body_preview_frame_data(preview_dir, elapsed_time, TRUE)
+		var/icon/frame_body_icon = frame_data?["icon"]
 		if(!isicon(frame_body_icon))
 			return null
-		var/icon/frame_icon = frame_index == 1 ? first_frame_icon : composite_preview_icon(frame_body_icon)
+		var/icon/frame_icon = frame_index == 1 ? first_frame_icon : composite_preview_icon(frame_body_icon, frame_data?["bounds"])
 		if(!isicon(frame_icon))
 			return null
 		strip_icon.Blend(frame_icon, ICON_OVERLAY, ((frame_index - 1) * frame_width) + 1, 1)
 
 	return list(
 		"icon" = strip_icon,
+		"frames" = frame_count,
 		"width" = frame_width,
 		"height" = frame_height,
 	)
@@ -1281,10 +1416,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						"height" = static_dimensions["height"],
 					)
 				else
+					var/actual_frame_count = max(strip_data["frames"], 1)
+					var/list/output_delays = null
+					if(islist(delays) && length(delays))
+						output_delays = copy_preview_delay_list(delays.Copy(1, actual_frame_count + 1))
 					output_icon = strip_data["icon"]
 					output_animation_data = list(
-						"frames" = frame_count,
-						"delays" = islist(delays) && length(delays) ? copy_preview_delay_list(delays) : null,
+						"frames" = actual_frame_count,
+						"delays" = output_delays,
 						"rewind" = FALSE,
 						"width" = strip_data["width"],
 						"height" = strip_data["height"],
@@ -1326,13 +1465,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return preview_asset_urls[direction_key]
 
 /atom/movable/screen/map_view/char_preview/proc/get_preview_urls(mob/target)
-	if(!preload_preview_assets(target) || isnull(preview_asset_urls))
+	if(isnull(preview_asset_urls))
 		return null
 
 	return preview_asset_urls.Copy()
 
 /atom/movable/screen/map_view/char_preview/proc/get_preview_animations(mob/target)
-	if(!preload_preview_assets(target) || isnull(preview_animation_data))
+	if(isnull(preview_animation_data))
 		return null
 
 	return preview_animation_data.Copy()

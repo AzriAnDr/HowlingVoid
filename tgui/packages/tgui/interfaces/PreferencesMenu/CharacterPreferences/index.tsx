@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Dropdown, Flex, Stack } from 'tgui-core/components'; // NOVA EDIT CHANGE - ORIGINAL: import { Button, Stack } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
@@ -91,10 +91,18 @@ export function CharacterPreferenceWindow(props) {
     data.character_preview_direction || PREVIEW_DIRECTION_CYCLE[0],
   );
 
+  useEffect(() => {
+    setPreviewDirection(data.character_preview_direction || PREVIEW_DIRECTION_CYCLE[0]);
+  }, [data.character_preview_direction]);
+
   const rotatePreview = (step: -1 | 1) => {
-    setPreviewDirection((currentDirection) =>
-      rotatePreviewDirection(currentDirection, step),
-    );
+    setPreviewDirection((currentDirection) => {
+      const nextDirection = rotatePreviewDirection(currentDirection, step);
+      act('prime_preview_direction', {
+        direction: nextDirection,
+      });
+      return currentDirection;
+    });
   };
 
   let pageContents;
