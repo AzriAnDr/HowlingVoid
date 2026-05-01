@@ -1,7 +1,8 @@
 // NOVA EDIT ADDITION START
 // Local defines for now, TODO: put these in their own file with the rest of the offset defines
 #define NOVA_UNDERWEAR_UNDERSHIRT_LAYER (UNIFORM_LAYER + 0.01)
-#define NOVA_BRA_SOCKS_LAYER (UNIFORM_LAYER + 0.02)
+#define NOVA_BRA_LAYER (UNIFORM_LAYER + 0.015)
+#define NOVA_SOCKS_LAYER (UNIFORM_LAYER + 0.02)
 // NOVA EDIT ADDITION END
 /// List of roundstart races' their species_id's
 GLOBAL_LIST_EMPTY(roundstart_races)
@@ -583,7 +584,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return equip_delay_self_check(I, H, bypass_equip_delay_self)
 
 	if(slot & ITEM_SLOT_EXTRA)
-		if(no_equip_flags & slot && !(I.is_mod_shell_component() && (modsuit_slot_exceptions & slot)))
+		if((no_equip_flags & slot) == slot && !(I.is_mod_shell_component() && (modsuit_slot_exceptions & slot)))
 			if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 				return FALSE
 
@@ -596,6 +597,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		switch(slot)
 			if(ITEM_SLOT_WRISTS)
 				if(H.num_hands < 2)
+					return FALSE
+				return equip_delay_self_check(I, H, bypass_equip_delay_self)
+			if(ITEM_SLOT_HAND)
+				if(!istype(I, /obj/item/clothing/gloves/ring))
+					return FALSE
+				if(H.num_hands < 1)
 					return FALSE
 				return equip_delay_self_check(I, H, bypass_equip_delay_self)
 			if(ITEM_SLOT_UNDERWEAR)

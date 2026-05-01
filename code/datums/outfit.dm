@@ -219,6 +219,8 @@
 
 	if(suit_store)
 		EQUIP_OUTFIT_ITEM(suit_store, ITEM_SLOT_SUITSTORE)
+	if(hand_accessory)
+		EQUIP_OUTFIT_ITEM(hand_accessory, ITEM_SLOT_HAND)
 	if(wrists)
 		EQUIP_OUTFIT_ITEM(wrists, ITEM_SLOT_WRISTS)
 
@@ -392,6 +394,8 @@
 		glasses = H.glasses.type
 	if(H.belt)
 		belt = H.belt.type
+	if(H.hand_accessory)
+		hand_accessory = H.hand_accessory.type
 	if(H.wrists)
 		wrists = H.wrists.type
 	if(H.undershirt && H.undershirt != "Nude")
@@ -407,7 +411,7 @@
 // NOVA EDIT ADDITION END
 /// Return a list of all the types that are required to disguise as this outfit type
 /datum/outfit/proc/get_chameleon_disguise_info()
-	var/list/types = list(uniform, suit, back, belt, gloves, shoes, head, mask, neck, ears, glasses, id, l_pocket, r_pocket, suit_store, r_hand, l_hand)
+	var/list/types = list(uniform, suit, back, belt, gloves, hand_accessory, shoes, head, mask, neck, ears, glasses, id, l_pocket, r_pocket, suit_store, r_hand, l_hand)
 	types += chameleon_extras
 	types += skillchips
 	list_clear_nulls(types)
@@ -440,6 +444,7 @@
 	preload += ears
 	preload += glasses
 	preload += gloves
+	preload += hand_accessory
 	preload += head
 	preload += mask
 	preload += neck
@@ -492,6 +497,7 @@
 	.["box"] = box
 	.["implants"] = implants
 	.["accessory"] = accessory
+	.["hand_accessory"] = hand_accessory
 	.["wrists"] = wrists
 
 /// Copy most vars from another outfit to this one
@@ -526,6 +532,7 @@
 	box = target.box
 	implants = target.implants
 	accessory = target.accessory
+	hand_accessory = target.hand_accessory
 	wrists = target.wrists
 
 /// Prompt the passed in mob client to download this outfit as a json blob
@@ -586,6 +593,7 @@
 		if(imptype)
 			implants += imptype
 	accessory = text2path(outfit_data["accessory"])
+	hand_accessory = text2path(outfit_data["hand_accessory"])
 	wrists = text2path(outfit_data["wrists"])
 	return TRUE
 

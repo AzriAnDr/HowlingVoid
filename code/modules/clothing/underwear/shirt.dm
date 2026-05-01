@@ -19,6 +19,7 @@
 	else
 		human.undershirt = "Nude"
 	human.update_underwear(FALSE)
+	human.update_body_parts()
 
 /obj/item/clothing/underwear/shirt/dropped(mob/living/user)
 	. = ..()
@@ -29,6 +30,7 @@
 		return
 	human.undershirt = "Nude"
 	human.update_underwear(FALSE)
+	human.update_body_parts()
 
 /obj/item/clothing/underwear/shirt/bra
 	name = "bra"
@@ -51,6 +53,7 @@
 	else
 		human.bra = "Nude"
 	human.update_underwear(FALSE)
+	human.update_body_parts()
 
 /obj/item/clothing/underwear/shirt/bra/dropped(mob/living/user)
 	. = ..()
@@ -61,3 +64,4 @@
 		return
 	human.bra = "Nude"
 	human.update_underwear(FALSE)
+	human.update_body_parts()

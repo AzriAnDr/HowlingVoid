@@ -18,6 +18,7 @@
 	else
 		human.underwear = "Nude"
 	human.update_underwear(FALSE)
+	human.update_body_parts()
 
 /obj/item/clothing/underwear/briefs/dropped(mob/living/user)
 	. = ..()
@@ -28,3 +29,4 @@
 		return
 	human.underwear = "Nude"
 	human.update_underwear(FALSE)
+	human.update_body_parts()

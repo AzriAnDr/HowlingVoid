@@ -7,6 +7,28 @@
 
 ///Updates every item slot passed into it.
 /mob/proc/update_clothing(slot_flags)
+	if(slot_flags & ITEM_SLOT_EXTRA)
+		var/handled_extra_slots = ITEM_SLOT_EXTRA
+		if((slot_flags & ITEM_SLOT_HAND) == ITEM_SLOT_HAND)
+			update_worn_hand_accessory()
+			handled_extra_slots |= (ITEM_SLOT_HAND & ~ITEM_SLOT_EXTRA)
+		if((slot_flags & ITEM_SLOT_WRISTS) == ITEM_SLOT_WRISTS)
+			update_worn_wrists()
+			handled_extra_slots |= (ITEM_SLOT_WRISTS & ~ITEM_SLOT_EXTRA)
+		if((slot_flags & ITEM_SLOT_UNDERWEAR) == ITEM_SLOT_UNDERWEAR)
+			update_worn_underwear()
+			handled_extra_slots |= (ITEM_SLOT_UNDERWEAR & ~ITEM_SLOT_EXTRA)
+		if((slot_flags & ITEM_SLOT_SHIRT) == ITEM_SLOT_SHIRT)
+			update_worn_shirt()
+			handled_extra_slots |= (ITEM_SLOT_SHIRT & ~ITEM_SLOT_EXTRA)
+		if((slot_flags & ITEM_SLOT_BRA) == ITEM_SLOT_BRA)
+			update_worn_bra()
+			handled_extra_slots |= (ITEM_SLOT_BRA & ~ITEM_SLOT_EXTRA)
+		if((slot_flags & ITEM_SLOT_SOCKS) == ITEM_SLOT_SOCKS)
+			update_worn_socks()
+			handled_extra_slots |= (ITEM_SLOT_SOCKS & ~ITEM_SLOT_EXTRA)
+		slot_flags &= ~handled_extra_slots
+
 	if(slot_flags & ITEM_SLOT_BACK)
 		update_worn_back()
 	if(slot_flags & ITEM_SLOT_MASK)
@@ -29,8 +51,6 @@
 		update_worn_glasses()
 	if(slot_flags & ITEM_SLOT_GLOVES)
 		update_worn_gloves()
-	if(slot_flags & ITEM_SLOT_WRISTS)
-		update_worn_wrists()
 	if(slot_flags & ITEM_SLOT_HEAD)
 		update_worn_head()
 	if(slot_flags & ITEM_SLOT_FEET)
@@ -39,14 +59,6 @@
 		update_worn_oversuit()
 	if(slot_flags & ITEM_SLOT_ICLOTHING)
 		update_worn_undersuit()
-	if(slot_flags & ITEM_SLOT_UNDERWEAR)
-		update_worn_underwear()
-	if(slot_flags & ITEM_SLOT_SHIRT)
-		update_worn_shirt()
-	if(slot_flags & ITEM_SLOT_BRA)
-		update_worn_bra()
-	if(slot_flags & ITEM_SLOT_SOCKS)
-		update_worn_socks()
 	if(slot_flags & ITEM_SLOT_SUITSTORE)
 		update_suit_storage()
 	if(slot_flags & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET))
@@ -140,6 +152,10 @@
 
 ///Updates the socks overlay & HUD element.
 /mob/proc/update_worn_socks()
+	return
+
+///Updates the hand accessory overlay & HUD element.
+/mob/proc/update_worn_hand_accessory()
 	return
 
 ///Updates the wrists overlay & HUD element.

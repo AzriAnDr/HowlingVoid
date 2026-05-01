@@ -11,6 +11,9 @@
 	gender = NEUTER
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
+	slot_flags = NONE
+	extra_slot_flags = ITEM_SLOT_HAND
+	slot_equipment_priority = list(ITEM_SLOT_HAND)
 	strip_delay = 4 SECONDS
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 	resistance_flags = FIRE_PROOF

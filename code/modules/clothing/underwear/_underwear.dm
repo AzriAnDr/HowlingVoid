@@ -48,7 +48,7 @@
 /mob/living/carbon/human/proc/socks_hidden()
 	if(underwear_visibility & UNDERWEAR_HIDE_SOCKS)
 		return TRUE
-	for(var/obj/item/item in list(shoes, wear_suit))
+	for(var/obj/item/item in list(wear_suit))
 		if(istype(item) && ((item.body_parts_covered & FEET) || (item.flags_inv & HIDEUNDERWEAR)))
 			return TRUE
 	return FALSE

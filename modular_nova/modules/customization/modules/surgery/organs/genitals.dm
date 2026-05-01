@@ -102,16 +102,17 @@
 		return TRUE
 
 	var/mob/living/carbon/human/human = owner
+	var/suit_hides_exposure = wear_suit_hides_exposure()
 
 	switch(visibility_preference)
 		if(GENITAL_ALWAYS_SHOW)
 			return TRUE
 		if(GENITAL_HIDDEN_BY_CLOTHES)
-			if((human.w_uniform && human.w_uniform.body_parts_covered & genital_location) || (human.wear_suit && human.wear_suit.body_parts_covered & genital_location))
+			if((human.w_uniform && human.w_uniform.body_parts_covered & genital_location) || (suit_hides_exposure && human.wear_suit && human.wear_suit.body_parts_covered & genital_location))
 				return FALSE
 
 			// Surgical gowns do not set body_parts_covered, but should still obscure covered areas.
-			if(istype(human.wear_suit, /obj/item/clothing/suit/toggle/labcoat/nova/surgical_gown))
+			if(suit_hides_exposure && istype(human.wear_suit, /obj/item/clothing/suit/toggle/labcoat/nova/surgical_gown))
 				return FALSE
 
 			if(human.undershirt != "Nude" && !(human.underwear_visibility & UNDERWEAR_HIDE_SHIRT))
@@ -134,6 +135,9 @@
 			return TRUE
 		else
 			return FALSE
+
+/obj/item/organ/genital/proc/wear_suit_hides_exposure()
+	return TRUE
 
 
 /datum/bodypart_overlay/mutant/genital
@@ -240,11 +244,10 @@
 /datum/bodypart_overlay/mutant/genital/penis/underwear_check()
 	if(!istype(owner))
 		return FALSE
-	else
-		if(owner.underwear_visibility & UNDERWEAR_HIDE_UNDIES)
-			return FALSE
-		else
-			return TRUE
+	return owner.underwear != "Nude" && !(owner.underwear_visibility & UNDERWEAR_HIDE_UNDIES)
+
+/obj/item/organ/genital/penis/wear_suit_hides_exposure()
+	return FALSE
 
 
 /obj/item/organ/genital/penis/get_description_string(datum/sprite_accessory/genital/gas)
@@ -366,11 +369,10 @@
 /datum/bodypart_overlay/mutant/genital/testicles/underwear_check()
 	if(!istype(owner))
 		return FALSE
-	else
-		if(owner.underwear_visibility & UNDERWEAR_HIDE_UNDIES)
-			return FALSE
-		else
-			return TRUE
+	return owner.underwear != "Nude" && !(owner.underwear_visibility & UNDERWEAR_HIDE_UNDIES)
+
+/obj/item/organ/genital/testicles/wear_suit_hides_exposure()
+	return FALSE
 
 /obj/item/organ/genital/testicles/update_genital_icon_state()
 	var/measured_size = clamp(genital_size, 1, TESTICLES_MAX_SIZE)
@@ -446,11 +448,7 @@
 /datum/bodypart_overlay/mutant/genital/vagina/underwear_check()
 	if(!istype(owner))
 		return FALSE
-	else
-		if(owner.underwear_visibility & UNDERWEAR_HIDE_UNDIES)
-			return FALSE
-		else
-			return TRUE
+	return owner.underwear != "Nude" && !(owner.underwear_visibility & UNDERWEAR_HIDE_UNDIES)
 
 /obj/item/organ/genital/vagina/get_description_string(datum/sprite_accessory/genital/gas)
 	var/returned_string = "You see a [LOWER_TEXT(genital_name)] vagina."
@@ -479,6 +477,9 @@
 /obj/item/organ/genital/vagina/build_from_accessory(datum/sprite_accessory/genital/accessory, datum/dna/DNA)
 	if(DNA.features["vagina_uses_skintones"])
 		uses_skintones = accessory.has_skintone_shading
+
+/obj/item/organ/genital/vagina/wear_suit_hides_exposure()
+	return FALSE
 
 /datum/bodypart_overlay/mutant/genital/vagina/get_global_feature_list()
 	return SSaccessories.sprite_accessories[ORGAN_SLOT_VAGINA]
@@ -529,6 +530,9 @@
 	if(aroused == AROUSAL_FULL)
 		returned_string += " It looks very tight."
 	return returned_string
+
+/obj/item/organ/genital/anus/wear_suit_hides_exposure()
+	return FALSE
 
 /datum/bodypart_overlay/mutant/genital/anus/get_global_feature_list()
 	return SSaccessories.sprite_accessories[ORGAN_SLOT_ANUS]
@@ -592,6 +596,9 @@
 	if(DNA.features["butt_uses_skintones"])
 		uses_skintones = accessory.has_skintone_shading
 	return ..()
+
+/obj/item/organ/genital/butt/wear_suit_hides_exposure()
+	return FALSE
 
 /datum/bodypart_overlay/mutant/genital/butt
 	feature_key = ORGAN_SLOT_BUTT
@@ -691,11 +698,9 @@
 /datum/bodypart_overlay/mutant/genital/breasts/underwear_check()
 	if(!istype(owner))
 		return FALSE
-	else
-		if((owner.underwear_visibility & UNDERWEAR_HIDE_SHIRT) && (owner.underwear_visibility & UNDERWEAR_HIDE_BRA))
-			return FALSE
-		else
-			return TRUE
+	var/visible_undershirt = owner.undershirt != "Nude" && !(owner.underwear_visibility & UNDERWEAR_HIDE_SHIRT)
+	var/visible_bra = owner.bra != "Nude" && !(owner.underwear_visibility & UNDERWEAR_HIDE_BRA)
+	return visible_undershirt || visible_bra
 
 /obj/item/organ/genital/breasts/get_description_string(datum/sprite_accessory/genital/gas)
 	var/returned_string = "You see a [LOWER_TEXT(genital_name)] of breasts."

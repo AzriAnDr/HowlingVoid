@@ -1,12 +1,17 @@
 {
-	"name": "Pat",
-	"description": "Pat their shoulder; perhaps if to comfort them.",
+	"name": "Погладить по плечу",
+	"description": "Попробуй заставить человека почувствовать себя комфортно.",
 	"usage": "other",
 	"category": "Miscellaneous",
 	"distance_allowed": 0,
-	"message": ["%USER% pats %TARGET% on their shoulder."],
+	"message": [
+		"%USER% гладит %TARGET% по плечу."
+	],
 	"sound_use": 0,
-	"sound_possible": [],
+	"sound_possible": [
+	],
 	"sound_range": 7,
-	"interaction_requires": ["self_hand"]
+	"interaction_requires": [
+		"self_hand"
+	]
 }

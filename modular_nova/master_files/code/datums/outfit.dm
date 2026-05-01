@@ -5,5 +5,7 @@
 	var/datum/sprite_accessory/bra = null
 	/// Optional extra ear item.
 	var/ears_extra = null
+	/// Optional hand accessory item.
+	var/hand_accessory = null
 	/// Optional wristwear item.
 	var/wrists = null

@@ -22,6 +22,7 @@
 #define STRIPPABLE_ITEM_PARROT_HEADSET "parrot_headset"
 #define STRIPPABLE_ITEM_EARS_EXTRA "ears_extra"
 #define STRIPPABLE_ITEM_WRISTS "wrists"
+#define STRIPPABLE_ITEM_HAND_ACCESSORY "hand_accessory"
 #define STRIPPABLE_ITEM_SOCKS "socks"
 #define STRIPPABLE_ITEM_UNDERSHIRT "undershirt"
 #define STRIPPABLE_ITEM_BRA "bra"

@@ -38,6 +38,8 @@
 			return glasses
 		if(ITEM_SLOT_GLOVES)
 			return gloves
+		if(ITEM_SLOT_HAND)
+			return hand_accessory
 		if(ITEM_SLOT_WRISTS)
 			return wrists
 		if(ITEM_SLOT_FEET)
@@ -80,6 +82,9 @@
 
 	if(looking_for == wrists)
 		return ITEM_SLOT_WRISTS
+
+	if(looking_for == hand_accessory)
+		return ITEM_SLOT_HAND
 
 	if(looking_for == gloves)
 		return ITEM_SLOT_GLOVES
@@ -138,6 +143,7 @@
 		w_shirt,
 		w_bra,
 		wrists,
+		hand_accessory,
 		)
 
 /mob/living/carbon/human/proc/get_head_slots()
@@ -219,6 +225,11 @@
 				return
 			wrists = equipping
 			update_worn_wrists()
+		if(ITEM_SLOT_HAND)
+			if(hand_accessory)
+				return
+			hand_accessory = equipping
+			update_worn_hand_accessory()
 		if(ITEM_SLOT_FEET)
 			if(shoes)
 				return
@@ -326,6 +337,10 @@
 		wrists = null
 		if(!QDELETED(src))
 			update_worn_wrists()
+	else if(item_dropping == hand_accessory)
+		hand_accessory = null
+		if(!QDELETED(src))
+			update_worn_hand_accessory()
 	else if(item_dropping == gloves)
 		// NOVA EDIT ADDITION - ERP UPDATE
 		if(gloves.breakouttime) //when unequipping a straightjacket

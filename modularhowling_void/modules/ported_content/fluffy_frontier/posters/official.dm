@@ -1,17 +1,12 @@
+/obj/structure/sign/poster/official/ff_contest
+	icon = 'modularhowling_void/modules/ported_content/fluffy_frontier/posters/poster_contest.dmi'
+
 /obj/structure/sign/poster/official/ff_contest/hot_ice
 	name = "Hot Ice!"
 	desc = "Make it, Sell it, Use it, ...Burn it? I hope everything will be ok with Atmos after this."
 	icon_state = "hot_ice"
-	icon = 'modularhowling_void/modules/ported_content/fluffy_frontier/posters/poster_contest.dmi'
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/ff_contest/hot_ice, 32)
-
-/obj/structure/sign/poster/official/ff_contest/i_low_u
-	name = "I Low U"
-	desc = "That tantalising smell of flowers and shawarma..... You've hardly seen him in person, but he definitely sees you."
-	icon_state = "i_low_u"
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/ff_contest/i_low_u, 32)
 
 /obj/structure/sign/poster/official/ff_contest/dumayte
 	name = "Dumayte"

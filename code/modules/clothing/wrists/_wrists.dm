@@ -65,3 +65,16 @@
 /datum/greyscale_config/armwarmer_striped_long/worn
 	name = "Long Striped Arm Warmers (Worn)"
 	icon_file = 'icons/mob/clothing/wrists.dmi'
+
+/obj/item/clothing/hand
+	name = "hand accessory"
+	desc = "An accessory worn on the hands."
+	w_class = WEIGHT_CLASS_SMALL
+	icon = 'icons/obj/clothing/gloves.dmi'
+	worn_icon = 'icons/mob/clothing/hands.dmi'
+	body_parts_covered = HANDS
+	slot_flags = NONE
+	extra_slot_flags = ITEM_SLOT_HAND
+	slot_equipment_priority = list(ITEM_SLOT_HAND)
+	strip_delay = 2 SECONDS
+	equip_delay_other = 4 SECONDS

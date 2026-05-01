@@ -78,9 +78,11 @@
 #define ITEM_SLOT_BRA (ITEM_SLOT_EXTRA | (1<<3))
 /// Wristwear slot.
 #define ITEM_SLOT_WRISTS (ITEM_SLOT_EXTRA | (1<<4))
+/// Hand accessory slot.
+#define ITEM_SLOT_HAND (ITEM_SLOT_EXTRA | (1<<5))
 
 /// Total amount of slots
-#define SLOTS_AMT 27 // Keep this up to date!
+#define SLOTS_AMT 28 // Keep this up to date!
 
 ///Inventory slots that can be blacklisted by a species from being equipped into
 DEFINE_BITFIELD(no_equip_flags, list(
@@ -247,6 +249,8 @@ DEFINE_BITFIELD(no_equip_flags, list(
 		"BRA" = ITEM_SLOT_BRA,
 		"EARPIECES_R" = ITEM_SLOT_EARS_RIGHT,
 		"WRISTS" = ITEM_SLOT_WRISTS,
+		"HAND" = ITEM_SLOT_HAND,
+		"HAND_ACCESSORY" = ITEM_SLOT_HAND,
 	)
 	flags += extra_flags
 	. = ..()

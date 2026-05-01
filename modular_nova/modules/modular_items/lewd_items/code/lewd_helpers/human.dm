@@ -59,7 +59,7 @@
 
 /// Are we wearing something that covers our shoes?
 /mob/living/carbon/human/proc/is_barefoot()
-	return (!(wear_suit) || !(wear_suit.body_parts_covered & GROIN)) && (!(shoes) || !(shoes.body_parts_covered & FEET))
+	return !(shoes?.body_parts_covered & FEET)
 
 /mob/living/carbon/human/proc/is_hands_uncovered()
 	return (gloves?.body_parts_covered & ARMS)
@@ -77,9 +77,9 @@
 		if(REQUIRE_GENITAL_ANY)
 			return TRUE
 		if(REQUIRE_GENITAL_EXPOSED)
-			return genital.visibility_preference == GENITAL_ALWAYS_SHOW || is_bottomless()
+			return genital.is_exposed()
 		if(REQUIRE_GENITAL_UNEXPOSED)
-			return genital.visibility_preference != GENITAL_ALWAYS_SHOW && !is_bottomless()
+			return !genital.is_exposed()
 		else
 			return TRUE
 
@@ -93,9 +93,9 @@
 		if(REQUIRE_GENITAL_ANY)
 			return TRUE
 		if(REQUIRE_GENITAL_EXPOSED)
-			return genital.visibility_preference == GENITAL_ALWAYS_SHOW || is_bottomless()
+			return genital.is_exposed()
 		if(REQUIRE_GENITAL_UNEXPOSED)
-			return genital.visibility_preference != GENITAL_ALWAYS_SHOW && !is_bottomless()
+			return !genital.is_exposed()
 		else
 			return TRUE
 
@@ -109,9 +109,9 @@
 		if(REQUIRE_GENITAL_ANY)
 			return TRUE
 		if(REQUIRE_GENITAL_EXPOSED)
-			return genital.visibility_preference == GENITAL_ALWAYS_SHOW || is_bottomless()
+			return genital.is_exposed()
 		if(REQUIRE_GENITAL_UNEXPOSED)
-			return genital.visibility_preference != GENITAL_ALWAYS_SHOW && !is_bottomless()
+			return !genital.is_exposed()
 		else
 			return TRUE
 
@@ -159,9 +159,9 @@
 		if(REQUIRE_GENITAL_ANY)
 			return TRUE
 		if(REQUIRE_GENITAL_EXPOSED)
-			return genital.visibility_preference == GENITAL_ALWAYS_SHOW || is_bottomless()
+			return genital.is_exposed()
 		if(REQUIRE_GENITAL_UNEXPOSED)
-			return genital.visibility_preference != GENITAL_ALWAYS_SHOW && !is_bottomless()
+			return !genital.is_exposed()
 		else
 			return TRUE
 

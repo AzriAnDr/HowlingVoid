@@ -235,6 +235,16 @@ There are several things that need to be remembered:
 				wrists_overlay.pixel_z += feature_y_offset
 				gloves_overlays += wrists_overlay
 
+	if(hand_accessory)
+		var/obj/item/worn_item = hand_accessory
+		update_hud_hand_accessory(worn_item)
+
+		if(!(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEGLOVES)))
+			var/mutable_appearance/hand_overlay = worn_item.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = worn_item.worn_icon || 'icons/mob/clothing/hands.dmi')
+			if(!isnull(hand_overlay))
+				hand_overlay.pixel_z += feature_y_offset
+				gloves_overlays += hand_overlay
+
 	if(gloves)
 		var/obj/item/worn_item = gloves
 		update_hud_gloves(worn_item)
@@ -1226,9 +1236,18 @@ mutant_styles: The mutant style - taur bodytype, STYLE_TESHARI, etc. // NOVA EDI
 		update_hud_bra(w_bra)
 	hud_used?.hidden_sub_inventory_update()
 
-/mob/living/carbon/human/update_worn_ears_extra()
+/mob/living/carbon/human/update_worn_hand_accessory()
 	if(client && hud_used && length(hud_used.toggleable_sub_inventory) >= 5)
 		var/atom/movable/screen/inventory/inv = hud_used.toggleable_sub_inventory[5]
+		inv?.update_icon()
+	if(hand_accessory)
+		update_hud_hand_accessory(hand_accessory)
+	hud_used?.hidden_sub_inventory_update()
+	update_worn_gloves()
+
+/mob/living/carbon/human/update_worn_ears_extra()
+	if(client && hud_used && length(hud_used.toggleable_sub_inventory) >= 6)
+		var/atom/movable/screen/inventory/inv = hud_used.toggleable_sub_inventory[6]
 		inv?.update_icon()
 	if(ears_extra)
 		update_hud_ears_extra(ears_extra)
@@ -1236,8 +1255,8 @@ mutant_styles: The mutant style - taur bodytype, STYLE_TESHARI, etc. // NOVA EDI
 	update_worn_ears()
 
 /mob/living/carbon/human/update_worn_wrists()
-	if(client && hud_used && length(hud_used.toggleable_sub_inventory) >= 6)
-		var/atom/movable/screen/inventory/inv = hud_used.toggleable_sub_inventory[6]
+	if(client && hud_used && length(hud_used.toggleable_sub_inventory) >= 7)
+		var/atom/movable/screen/inventory/inv = hud_used.toggleable_sub_inventory[7]
 		inv?.update_icon()
 	if(wrists)
 		update_hud_wrists(wrists)
@@ -1264,6 +1283,12 @@ mutant_styles: The mutant style - taur bodytype, STYLE_TESHARI, etc. // NOVA EDI
 
 /mob/living/carbon/human/proc/update_hud_wrists(obj/item/worn_item)
 	worn_item.screen_loc = ui_wrists
+	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown && hud_used.sub_inventory_shown))
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
+
+/mob/living/carbon/human/proc/update_hud_hand_accessory(obj/item/worn_item)
+	worn_item.screen_loc = ui_hand
 	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown && hud_used.sub_inventory_shown))
 		client.screen += worn_item
 	update_observer_view(worn_item,TRUE)
@@ -1368,7 +1393,7 @@ mutant_styles: The mutant style - taur bodytype, STYLE_TESHARI, etc. // NOVA EDI
 		if(bra_accessory)
 			var/mutable_appearance/bra_overlay
 			var/icon_state = bra_accessory.icon_state
-			bra_overlay = mutable_appearance(bra_accessory.icon, icon_state, -NOVA_BRA_SOCKS_LAYER)
+			bra_overlay = mutable_appearance(bra_accessory.icon, icon_state, -NOVA_BRA_LAYER)
 			if(!bra_accessory.use_static)
 				bra_overlay.color = bra_color
 			standing += bra_overlay
@@ -1403,7 +1428,7 @@ mutant_styles: The mutant style - taur bodytype, STYLE_TESHARI, etc. // NOVA EDI
 				var/icon_state = undie_accessory.icon_state
 				if((bodyshape & BODYSHAPE_DIGITIGRADE))
 					icon_state += "_d"
-				socks_overlay = mutable_appearance(undie_accessory.icon, icon_state, -NOVA_BRA_SOCKS_LAYER)
+				socks_overlay = mutable_appearance(undie_accessory.icon, icon_state, -NOVA_SOCKS_LAYER)
 				if(!undie_accessory.use_static)
 					socks_overlay.color = socks_color
 				standing += socks_overlay
