@@ -566,6 +566,51 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		H.adjust_brute_loss(0.5 * seconds_per_tick)
 
 /datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
+	if(slot == ITEM_SLOT_EARS_RIGHT)
+		if(no_equip_flags & slot && !(I.is_mod_shell_component() && (modsuit_slot_exceptions & slot)))
+			if(!I.species_exception || !is_type_in_list(src, I.species_exception))
+				return FALSE
+
+		if(!ignore_equipped && H.get_item_by_slot(slot))
+			return FALSE
+
+		if(!(I.slot_flags & ITEM_SLOT_EARS))
+			return FALSE
+
+		if(!H.get_bodypart(BODY_ZONE_HEAD))
+			return FALSE
+
+		return equip_delay_self_check(I, H, bypass_equip_delay_self)
+
+	if(slot & ITEM_SLOT_EXTRA)
+		if(no_equip_flags & slot && !(I.is_mod_shell_component() && (modsuit_slot_exceptions & slot)))
+			if(!I.species_exception || !is_type_in_list(src, I.species_exception))
+				return FALSE
+
+		if(!ignore_equipped && H.get_item_by_slot(slot))
+			return FALSE
+
+		if(!(I.extra_slot_flags & (slot & ~ITEM_SLOT_EXTRA)))
+			return FALSE
+
+		switch(slot)
+			if(ITEM_SLOT_WRISTS)
+				if(H.num_hands < 2)
+					return FALSE
+				return equip_delay_self_check(I, H, bypass_equip_delay_self)
+			if(ITEM_SLOT_UNDERWEAR)
+				return equip_delay_self_check(I, H, bypass_equip_delay_self)
+			if(ITEM_SLOT_SOCKS)
+				if(H.num_legs < 2)
+					return FALSE
+				return equip_delay_self_check(I, H, bypass_equip_delay_self)
+			if(ITEM_SLOT_SHIRT)
+				return equip_delay_self_check(I, H, bypass_equip_delay_self)
+			if(ITEM_SLOT_BRA)
+				return equip_delay_self_check(I, H, bypass_equip_delay_self)
+
+		return FALSE
+
 	if(no_equip_flags & slot && !(I.is_mod_shell_component() && (modsuit_slot_exceptions & slot))) // NOVA EDIT ADDITION - ORIGINAL: if(no_equip_flags & slot)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE

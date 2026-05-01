@@ -197,6 +197,8 @@
 		EQUIP_OUTFIT_ITEM(neck, ITEM_SLOT_NECK)
 	if(ears)
 		EQUIP_OUTFIT_ITEM(ears, ITEM_SLOT_EARS)
+	if(ears_extra)
+		EQUIP_OUTFIT_ITEM(ears_extra, ITEM_SLOT_EARS_RIGHT)
 	if(glasses)
 		EQUIP_OUTFIT_ITEM(glasses, ITEM_SLOT_EYES)
 	if(back)
@@ -217,6 +219,8 @@
 
 	if(suit_store)
 		EQUIP_OUTFIT_ITEM(suit_store, ITEM_SLOT_SUITSTORE)
+	if(wrists)
+		EQUIP_OUTFIT_ITEM(wrists, ITEM_SLOT_WRISTS)
 
 	if(undershirt)
 		user.undershirt = initial(undershirt.name)
@@ -382,10 +386,22 @@
 		gloves = H.gloves.type
 	if(H.ears)
 		ears = H.ears.type
+	if(H.ears_extra)
+		ears_extra = H.ears_extra.type
 	if(H.glasses)
 		glasses = H.glasses.type
 	if(H.belt)
 		belt = H.belt.type
+	if(H.wrists)
+		wrists = H.wrists.type
+	if(H.undershirt && H.undershirt != "Nude")
+		undershirt = SSaccessories.undershirt_list[H.undershirt]
+	if(H.underwear && H.underwear != "Nude")
+		underwear = SSaccessories.underwear_list[H.underwear]
+	if(H.socks && H.socks != "Nude")
+		socks = SSaccessories.socks_list[H.socks]
+	if(H.bra && H.bra != "Nude")
+		bra = SSaccessories.bra_list[H.bra]
 	return TRUE
 
 // NOVA EDIT ADDITION END
@@ -447,6 +463,10 @@
 	. = list()
 	.["outfit_type"] = type
 	.["name"] = name
+	.["undershirt"] = undershirt
+	.["underwear"] = underwear
+	.["socks"] = socks
+	.["bra"] = bra
 	.["uniform"] = uniform
 	.["suit"] = suit
 	.["back"] = back
@@ -457,6 +477,7 @@
 	.["mask"] = mask
 	.["neck"] = neck
 	.["ears"] = ears
+	.["ears_extra"] = ears_extra
 	.["glasses"] = glasses
 	.["id"] = id
 	.["id_trim"] = id_trim
@@ -471,10 +492,15 @@
 	.["box"] = box
 	.["implants"] = implants
 	.["accessory"] = accessory
+	.["wrists"] = wrists
 
 /// Copy most vars from another outfit to this one
 /datum/outfit/proc/copy_from(datum/outfit/target)
 	name = target.name
+	undershirt = target.undershirt
+	underwear = target.underwear
+	socks = target.socks
+	bra = target.bra
 	uniform = target.uniform
 	suit = target.suit
 	back = target.back
@@ -485,6 +511,7 @@
 	mask = target.mask
 	neck = target.neck
 	ears = target.ears
+	ears_extra = target.ears_extra
 	glasses = target.glasses
 	id = target.id
 	id_trim = target.id_trim
@@ -499,6 +526,7 @@
 	box = target.box
 	implants = target.implants
 	accessory = target.accessory
+	wrists = target.wrists
 
 /// Prompt the passed in mob client to download this outfit as a json blob
 /datum/outfit/proc/save_to_file(mob/admin)
@@ -514,6 +542,10 @@
 /datum/outfit/proc/load_from(list/outfit_data)
 	//This could probably use more strict validation
 	name = outfit_data["name"]
+	undershirt = text2path(outfit_data["undershirt"])
+	underwear = text2path(outfit_data["underwear"])
+	socks = text2path(outfit_data["socks"])
+	bra = text2path(outfit_data["bra"])
 	uniform = text2path(outfit_data["uniform"])
 	suit = text2path(outfit_data["suit"])
 	back = text2path(outfit_data["back"])
@@ -524,6 +556,7 @@
 	mask = text2path(outfit_data["mask"])
 	neck = text2path(outfit_data["neck"])
 	ears = text2path(outfit_data["ears"])
+	ears_extra = text2path(outfit_data["ears_extra"])
 	glasses = text2path(outfit_data["glasses"])
 	id = text2path(outfit_data["id"])
 	id_trim = text2path(outfit_data["id_trim"])
@@ -553,6 +586,7 @@
 		if(imptype)
 			implants += imptype
 	accessory = text2path(outfit_data["accessory"])
+	wrists = text2path(outfit_data["wrists"])
 	return TRUE
 
 /datum/outfit/vv_get_dropdown()

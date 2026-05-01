@@ -20,6 +20,12 @@
 #define STRIPPABLE_ITEM_LEGCUFFS "legcuffs"
 #define STRIPPABLE_ITEM_PET_COLLAR "pet_collar"
 #define STRIPPABLE_ITEM_PARROT_HEADSET "parrot_headset"
+#define STRIPPABLE_ITEM_EARS_EXTRA "ears_extra"
+#define STRIPPABLE_ITEM_WRISTS "wrists"
+#define STRIPPABLE_ITEM_SOCKS "socks"
+#define STRIPPABLE_ITEM_UNDERSHIRT "undershirt"
+#define STRIPPABLE_ITEM_BRA "bra"
+#define STRIPPABLE_ITEM_UNDERWEAR "underwear"
 
 /// This slot is not obscured.
 #define STRIPPABLE_OBSCURING_NONE 0

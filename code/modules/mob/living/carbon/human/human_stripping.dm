@@ -21,6 +21,12 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	/datum/strippable_item/hand/right,
 	/datum/strippable_item/mob_item_slot/handcuffs,
 	/datum/strippable_item/mob_item_slot/legcuffs,
+	/datum/strippable_item/mob_item_slot/ears_extra,
+	/datum/strippable_item/mob_item_slot/wrists,
+	/datum/strippable_item/mob_item_slot/socks,
+	/datum/strippable_item/mob_item_slot/underwear,
+	/datum/strippable_item/mob_item_slot/undershirt,
+	/datum/strippable_item/mob_item_slot/bra,
 )))
 
 /mob/living/carbon/human/proc/should_strip(mob/user)
@@ -40,6 +46,30 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 /datum/strippable_item/mob_item_slot/ears
 	key = STRIPPABLE_ITEM_EARS
 	item_slot = ITEM_SLOT_EARS
+
+/datum/strippable_item/mob_item_slot/ears_extra
+	key = STRIPPABLE_ITEM_EARS_EXTRA
+	item_slot = ITEM_SLOT_EARS_RIGHT
+
+/datum/strippable_item/mob_item_slot/wrists
+	key = STRIPPABLE_ITEM_WRISTS
+	item_slot = ITEM_SLOT_WRISTS
+
+/datum/strippable_item/mob_item_slot/socks
+	key = STRIPPABLE_ITEM_SOCKS
+	item_slot = ITEM_SLOT_SOCKS
+
+/datum/strippable_item/mob_item_slot/underwear
+	key = STRIPPABLE_ITEM_UNDERWEAR
+	item_slot = ITEM_SLOT_UNDERWEAR
+
+/datum/strippable_item/mob_item_slot/undershirt
+	key = STRIPPABLE_ITEM_UNDERSHIRT
+	item_slot = ITEM_SLOT_SHIRT
+
+/datum/strippable_item/mob_item_slot/bra
+	key = STRIPPABLE_ITEM_BRA
+	item_slot = ITEM_SLOT_BRA
 
 /datum/strippable_item/mob_item_slot/jumpsuit
 	key = STRIPPABLE_ITEM_JUMPSUIT

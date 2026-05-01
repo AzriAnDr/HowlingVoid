@@ -3,3 +3,7 @@
 	var/modified_outfit_slots = NONE
 	/// Underwear and bras are separated now
 	var/datum/sprite_accessory/bra = null
+	/// Optional extra ear item.
+	var/ears_extra = null
+	/// Optional wristwear item.
+	var/wrists = null

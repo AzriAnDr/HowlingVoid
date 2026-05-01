@@ -30,18 +30,30 @@
 			return belt
 		if(ITEM_SLOT_ID)
 			return wear_id
+		if(ITEM_SLOT_EARS_RIGHT)
+			return ears_extra
 		if(ITEM_SLOT_EARS)
 			return ears
 		if(ITEM_SLOT_EYES)
 			return glasses
 		if(ITEM_SLOT_GLOVES)
 			return gloves
+		if(ITEM_SLOT_WRISTS)
+			return wrists
 		if(ITEM_SLOT_FEET)
 			return shoes
 		if(ITEM_SLOT_OCLOTHING)
 			return wear_suit
 		if(ITEM_SLOT_ICLOTHING)
 			return w_uniform
+		if(ITEM_SLOT_UNDERWEAR)
+			return w_underwear
+		if(ITEM_SLOT_SOCKS)
+			return w_socks
+		if(ITEM_SLOT_SHIRT)
+			return w_shirt
+		if(ITEM_SLOT_BRA)
+			return w_bra
 		if(ITEM_SLOT_LPOCKET)
 			return l_store
 		if(ITEM_SLOT_RPOCKET)
@@ -57,11 +69,17 @@
 	if(looking_for == wear_id)
 		return ITEM_SLOT_ID
 
+	if(looking_for == ears_extra)
+		return ITEM_SLOT_EARS_RIGHT
+
 	if(looking_for == ears)
 		return ITEM_SLOT_EARS
 
 	if(looking_for == glasses)
 		return ITEM_SLOT_EYES
+
+	if(looking_for == wrists)
+		return ITEM_SLOT_WRISTS
 
 	if(looking_for == gloves)
 		return ITEM_SLOT_GLOVES
@@ -77,6 +95,18 @@
 
 	if(looking_for == w_uniform)
 		return ITEM_SLOT_ICLOTHING
+
+	if(looking_for == w_underwear)
+		return ITEM_SLOT_UNDERWEAR
+
+	if(looking_for == w_socks)
+		return ITEM_SLOT_SOCKS
+
+	if(looking_for == w_shirt)
+		return ITEM_SLOT_SHIRT
+
+	if(looking_for == w_bra)
+		return ITEM_SLOT_BRA
 
 	if(looking_for == r_store)
 		return ITEM_SLOT_RPOCKET
@@ -102,7 +132,12 @@
 		wear_id,
 		l_store,
 		r_store,
-		w_uniform
+		w_uniform,
+		w_underwear,
+		w_socks,
+		w_shirt,
+		w_bra,
+		wrists,
 		)
 
 /mob/living/carbon/human/proc/get_head_slots()
@@ -112,6 +147,7 @@
 		wear_neck,
 		glasses,
 		ears,
+		ears_extra,
 		)
 
 /mob/living/carbon/human/proc/get_storage_slots()
@@ -149,6 +185,11 @@
 			wear_id = equipping
 			update_ID_card()
 			update_worn_id()
+		if(ITEM_SLOT_EARS_RIGHT)
+			if(ears_extra)
+				return
+			ears_extra = equipping
+			update_worn_ears_extra()
 		if(ITEM_SLOT_EARS)
 			if(ears)
 				return
@@ -173,6 +214,11 @@
 				update_mob_action_buttons()
 			//NOVA EDIT ADDITION END
 			update_worn_gloves()
+		if(ITEM_SLOT_WRISTS)
+			if(wrists)
+				return
+			wrists = equipping
+			update_worn_wrists()
 		if(ITEM_SLOT_FEET)
 			if(shoes)
 				return
@@ -192,6 +238,26 @@
 				return
 			w_uniform = equipping
 			update_worn_undersuit()
+		if(ITEM_SLOT_UNDERWEAR)
+			if(w_underwear)
+				return
+			w_underwear = equipping
+			update_worn_underwear()
+		if(ITEM_SLOT_SOCKS)
+			if(w_socks)
+				return
+			w_socks = equipping
+			update_worn_socks()
+		if(ITEM_SLOT_SHIRT)
+			if(w_shirt)
+				return
+			w_shirt = equipping
+			update_worn_shirt()
+		if(ITEM_SLOT_BRA)
+			if(w_bra)
+				return
+			w_bra = equipping
+			update_worn_bra()
 		if(ITEM_SLOT_LPOCKET)
 			l_store = equipping
 			update_pockets()
@@ -240,6 +306,26 @@
 				dropItemToGround(wear_id)
 			if(belt && !can_equip(belt, ITEM_SLOT_BELT, TRUE, ignore_equipped = TRUE))
 				dropItemToGround(belt)
+	else if(item_dropping == w_underwear)
+		w_underwear = null
+		if(!QDELETED(src))
+			update_worn_underwear()
+	else if(item_dropping == w_socks)
+		w_socks = null
+		if(!QDELETED(src))
+			update_worn_socks()
+	else if(item_dropping == w_shirt)
+		w_shirt = null
+		if(!QDELETED(src))
+			update_worn_shirt()
+	else if(item_dropping == w_bra)
+		w_bra = null
+		if(!QDELETED(src))
+			update_worn_bra()
+	else if(item_dropping == wrists)
+		wrists = null
+		if(!QDELETED(src))
+			update_worn_wrists()
 	else if(item_dropping == gloves)
 		// NOVA EDIT ADDITION - ERP UPDATE
 		if(gloves.breakouttime) //when unequipping a straightjacket
@@ -261,6 +347,10 @@
 		ears = null
 		if(!QDELETED(src))
 			update_worn_ears()
+	else if(item_dropping == ears_extra)
+		ears_extra = null
+		if(!QDELETED(src))
+			update_worn_ears_extra()
 	else if(item_dropping == shoes)
 		shoes = null
 		if(!QDELETED(src))

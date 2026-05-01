@@ -78,6 +78,8 @@
 	QDEL_NULL(id)
 	var/obj/headset = invoker.get_item_by_slot(ITEM_SLOT_EARS)
 	QDEL_NULL(headset)
+	var/obj/headset_extra = invoker.get_item_by_slot(ITEM_SLOT_EARS_RIGHT)
+	QDEL_NULL(headset_extra)
 	// We're about to take off your pants so those are going to fall out
 	var/obj/item/pocket_L = invoker.get_item_by_slot(ITEM_SLOT_LPOCKET)
 	var/obj/item/pocket_R = invoker.get_item_by_slot(ITEM_SLOT_RPOCKET)

@@ -3,97 +3,281 @@
 /mob/dead/observer/CtrlClickOn(mob/user)
 	quickicspawn(user)
 
+
+#define QUICK_SPAWN_TELEPORT_FLUX "Bluespace"
+#define QUICK_SPAWN_TELEPORT_POD "Pod"
+#define QUICK_SPAWN_CHARACTER_SELECTED "Selected Character"
+#define QUICK_SPAWN_CHARACTER_RANDOM "Randomly Created"
+#define QUICK_SPAWN_QUIRKS_LOADOUT "Quirks & Loadout"
+#define QUICK_SPAWN_QUIRKS_ONLY "Quirks Only"
+#define QUICK_SPAWN_LOADOUT_ONLY "Loadout Only"
+#define QUICK_SPAWN_NEITHER "Neither"
+#define QUICK_SPAWN_DEFAULT_OUTFIT "Bluespace-tech"
+
 /mob/dead/observer/proc/quickicspawn(mob/user)
-	if(isobserver(user) && check_rights(R_SPAWN))
-		var/list/outfits = list()
-		outfits["Bluespace Tech"] = /datum/outfit/debug/bst
-		outfits["Bluespace Tech (MODsuit)"] = /datum/outfit/admin/bst
-		outfits["Show All"] = "Show All"
+	if(!isobserver(user) || !check_rights(R_SPAWN))
+		return
 
-		var/dresscode
-		var/teleport_option = tgui_alert(usr, "How would you like to be spawned in?", "IC Quick Spawn", list("Bluespace", "Pod", "Cancel"))
-		if (teleport_option == "Cancel")
-			return
-		var/character_option = tgui_alert(usr, "Which character?", "IC Quick Spawn", list("Selected Character", "Randomly Created", "Cancel"))
-		if (character_option == "Cancel")
-			return
-		var/initial_outfits = tgui_alert(usr, "Select outfit", "Quick Dress", list("Bluespace Tech", "Show All", "Cancel"))
-		if (initial_outfits == "Cancel")
-			return
+	var/datum/ic_spawn_builder/builder = new(src, user)
+	builder.ui_interact(src)
+	builder.wait()
 
-		switch(initial_outfits)
-			if("Bluespace Tech")
-				dresscode = /datum/outfit/admin/bst
-			if("Show All")
-				dresscode = client.robust_dress_shop_skyrat()
-				if (!dresscode)
-					return
+	if(!builder?.submitted)
+		qdel(builder)
+		return
 
-		// We're spawning someone else
-		var/give_return
-		if (user != usr)
-			give_return = tgui_alert(usr, "Do you want to give them the power to return? Not recommended for non-admins.", "Give power?", list("Yes", "No"))
-			if(!give_return)
-				return
+	builder.apply_spawn()
+	qdel(builder)
 
-		var/addquirks
-		if(character_option == "Selected Character")
-			addquirks = tgui_input_list(src, "Include quirks?", "Quirky", list("Quirks & Loadout", "Quirks Only", "Loadout Only", "Neither"))
-			if(!addquirks)
-				return
+/// Internal state holder + modal for IC quick spawn.
+/datum/ic_spawn_builder
+	var/mob/dead/observer/owner
+	var/mob/target
+	var/teleport_mode = QUICK_SPAWN_TELEPORT_FLUX
+	var/character_mode = QUICK_SPAWN_CHARACTER_SELECTED
+	var/outfit_choice = QUICK_SPAWN_DEFAULT_OUTFIT
+	var/quirk_mode = QUICK_SPAWN_QUIRKS_LOADOUT
+	var/give_return = FALSE
+	var/give_godmode = FALSE
+	var/count_as_admin = FALSE
+	var/give_nutrition_supply = FALSE
+	var/submitted = FALSE
+	var/closed = FALSE
+	var/list/outfit_options
 
+/datum/ic_spawn_builder/New(mob/dead/observer/owner, mob/target)
+	src.owner = owner
+	src.target = target
+	give_return = owner == target
+	outfit_options = build_outfit_options(owner?.client)
+	if(!(outfit_choice in outfit_options))
+		outfit_choice = QUICK_SPAWN_DEFAULT_OUTFIT
+	return ..()
 
-		var/turf/current_turf = get_turf(user)
-		var/mob/living/carbon/human/spawned_player = new(user)
+/datum/ic_spawn_builder/Destroy(force)
+	SStgui.close_uis(src)
+	return ..()
 
-		if (character_option == "Selected Character")
-			spawned_player.name = user.name
-			spawned_player.real_name = user.real_name
+/datum/ic_spawn_builder/proc/wait()
+	while(!submitted && !closed && !QDELETED(src))
+		stoplag(1)
 
-			var/mob/living/carbon/human/player_as_human = spawned_player
-			user.client?.prefs.safe_transfer_prefs_to(player_as_human)
-			if(addquirks == "Quirks & Loadout" || addquirks == "Loadout Only")
-				if(dresscode == "Naked")
-					player_as_human.equip_outfit_and_loadout(new /datum/outfit(), user.client?.prefs)
-				else
-					player_as_human.equip_outfit_and_loadout(dresscode, user.client?.prefs)
-			else if(dresscode != "Naked")
-				spawned_player.equipOutfit(dresscode)
-			if(addquirks == "Quirks & Loadout" || addquirks == "Quirks Only")
-				SSquirks.AssignQuirks(player_as_human, user.client)
-			player_as_human.dna.update_dna_identity()
-		else if(dresscode != "Naked")
-			spawned_player.equipOutfit(dresscode)
-		QDEL_IN(user, 1)
+/datum/ic_spawn_builder/ui_state(mob/user)
+	return ADMIN_STATE(R_SPAWN)
 
-		if (teleport_option == "Bluespace")
-			playsound(spawned_player, 'sound/effects/magic/Disable_Tech.ogg', 100, 1)
+/datum/ic_spawn_builder/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "QuickICSpawn")
+		ui.open()
 
-		if(user.mind && isliving(spawned_player))
-			user.mind.transfer_to(spawned_player, 1) // second argument to force key move to new mob
-		else
-			spawned_player.ckey = user.key
+/datum/ic_spawn_builder/ui_close(mob/user)
+	closed = TRUE
+	return ..()
 
-		if(give_return != "No")
-			var/datum/action/cooldown/spell/return_back/return_spell = new(spawned_player)
-			return_spell.Grant(spawned_player)
+/datum/ic_spawn_builder/ui_static_data(mob/user)
+	var/list/data = list()
+	var/list/frontend_outfits = list()
+	for(var/option_id in outfit_options)
+		var/list/entry = outfit_options[option_id]
+		frontend_outfits += list(list(
+			"id" = entry["id"],
+			"name" = entry["name"],
+			"category" = entry["category"],
+		))
+	data["outfits"] = frontend_outfits
+	data["defaultOutfit"] = outfit_choice
+	return data
 
-		switch(teleport_option)
-			if("Bluespace")
-				spawned_player.forceMove(current_turf)
-				do_sparks(10, TRUE, spawned_player, spark_type = /datum/effect_system/basic/spark_spread/quantum)
+/datum/ic_spawn_builder/ui_data(mob/user)
+	return list(
+		"targetName" = target?.name,
+		"targetKey" = target?.key,
+		"spawnForSelf" = owner == target,
+		"teleportMode" = teleport_mode,
+		"characterMode" = character_mode,
+		"outfitChoice" = outfit_choice,
+		"quirkMode" = quirk_mode,
+		"giveReturn" = give_return,
+		"canGiveReturn" = owner != target,
+		"giveGodmode" = give_godmode,
+		"countAsAdmin" = count_as_admin,
+		"giveNutritionSupply" = give_nutrition_supply,
+	)
 
-			if("Pod")
-				var/obj/structure/closet/supplypod/empty_pod = new()
+/datum/ic_spawn_builder/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
 
-				empty_pod.style = /datum/pod_style/advanced
-				empty_pod.bluespace = TRUE
-				empty_pod.explosionSize = list(0,0,0,0)
-				empty_pod.desc = "A sleek, and slightly worn bluespace pod - its probably seen many deliveries..."
+	switch(action)
+		if("setTeleport")
+			if(params["teleport"] in list(QUICK_SPAWN_TELEPORT_FLUX, QUICK_SPAWN_TELEPORT_POD))
+				teleport_mode = params["teleport"]
+			return TRUE
 
-				spawned_player.forceMove(empty_pod)
+		if("setCharacterMode")
+			if(params["characterMode"] in list(QUICK_SPAWN_CHARACTER_SELECTED, QUICK_SPAWN_CHARACTER_RANDOM))
+				character_mode = params["characterMode"]
+			return TRUE
 
-				new /obj/effect/pod_landingzone(current_turf, empty_pod)
+		if("setOutfit")
+			if(params["outfit"] && (params["outfit"] in outfit_options))
+				outfit_choice = params["outfit"]
+			return TRUE
+
+		if("setQuirkMode")
+			if(params["quirkMode"] in list(QUICK_SPAWN_QUIRKS_LOADOUT, QUICK_SPAWN_QUIRKS_ONLY, QUICK_SPAWN_LOADOUT_ONLY, QUICK_SPAWN_NEITHER))
+				quirk_mode = params["quirkMode"]
+			return TRUE
+
+		if("setReturn")
+			give_return = !!params["giveReturn"]
+			return TRUE
+
+		if("setGodmode")
+			give_godmode = !!params["giveGodmode"]
+			return TRUE
+
+		if("setCountAsAdmin")
+			count_as_admin = !!params["countAsAdmin"]
+			return TRUE
+
+		if("setNutritionSupply")
+			give_nutrition_supply = !!params["giveNutritionSupply"]
+			return TRUE
+
+		if("submit")
+			if(!(outfit_choice in outfit_options))
+				outfit_choice = QUICK_SPAWN_DEFAULT_OUTFIT
+			submitted = TRUE
+			SStgui.close_uis(src)
+			return TRUE
+
+		if("cancel")
+			closed = TRUE
+			SStgui.close_uis(src)
+			return TRUE
+
+	return FALSE
+
+/datum/ic_spawn_builder/proc/add_option(list/options, id, name, category, value)
+	options[id] = list(
+		"id" = id,
+		"name" = name,
+		"category" = category,
+		"value" = value,
+	)
+
+/datum/ic_spawn_builder/proc/build_outfit_options(client/owner_client)
+	var/list/options = list()
+	add_option(options, QUICK_SPAWN_DEFAULT_OUTFIT, "Bluespace Tech", "Quick", /datum/outfit/admin/bst)
+	add_option(options, "Bluespace-tech-modsuit", "Bluespace Tech (MODsuit)", "Quick", /datum/outfit/debug/bst)
+	add_option(options, "naked", "Naked", "Quick", null)
+
+	// Core outfits
+	var/list/job_outfits = typesof(/datum/outfit/job)
+	var/list/plasmaman_outfits = typesof(/datum/outfit/plasmaman)
+	for(var/path in sort_list(subtypesof(/datum/outfit)))
+		if((path in job_outfits) || (path in plasmaman_outfits))
+			continue
+		var/datum/outfit/O = path
+		add_option(options, "[path]", initial(O.name), "General", path)
+
+	// Job presets
+	for(var/path in sort_list(subtypesof(/datum/outfit/job)))
+		var/datum/outfit/job/O = path
+		add_option(options, "[path]", "Job: [initial(O.name)]", "Job", path)
+
+	// Plasmaman sets
+	for(var/path in sort_list(typesof(/datum/outfit/plasmaman)))
+		var/datum/outfit/plasmaman/O = path
+		add_option(options, "[path]", "Plasmaman: [initial(O.name)]", "Plasmaman", path)
+
+	// Custom saved outfits
+	if(owner_client)
+		var/custom_index = 1
+		for(var/datum/outfit/custom_outfit in GLOB.custom_outfits)
+			add_option(options, "custom-[custom_index]", custom_outfit.name, "Custom", custom_outfit)
+			custom_index++
+
+	return options
+
+/datum/ic_spawn_builder/proc/get_outfit_value()
+	var/list/entry = outfit_options[outfit_choice]
+	return entry?["value"]
+
+/datum/ic_spawn_builder/proc/apply_spawn()
+	if(!owner || !target)
+		return
+
+	var/turf/current_turf = get_turf(target)
+	if(!current_turf)
+		return
+
+	var/selected_outfit = get_outfit_value()
+	var/mob/living/carbon/human/spawned_player = new(target)
+
+	if(character_mode == QUICK_SPAWN_CHARACTER_SELECTED)
+		spawned_player.name = target.name
+		spawned_player.real_name = target.real_name
+
+		var/mob/living/carbon/human/player_as_human = spawned_player
+		target.client?.prefs.safe_transfer_prefs_to(player_as_human)
+		if(quirk_mode == QUICK_SPAWN_QUIRKS_LOADOUT || quirk_mode == QUICK_SPAWN_LOADOUT_ONLY)
+			if(isnull(selected_outfit))
+				player_as_human.equip_outfit_and_loadout(new /datum/outfit(), target.client?.prefs)
+			else
+				player_as_human.equip_outfit_and_loadout(selected_outfit, target.client?.prefs)
+		else if(selected_outfit)
+			spawned_player.equipOutfit(selected_outfit)
+		if(quirk_mode == QUICK_SPAWN_QUIRKS_LOADOUT || quirk_mode == QUICK_SPAWN_QUIRKS_ONLY)
+			SSquirks.AssignQuirks(player_as_human, target.client)
+		player_as_human.dna.update_dna_identity()
+	else if(selected_outfit)
+		spawned_player.equipOutfit(selected_outfit)
+
+	QDEL_IN(target, 1)
+
+	if(teleport_mode == QUICK_SPAWN_TELEPORT_FLUX)
+		playsound(spawned_player, 'sound/effects/magic/Disable_Tech.ogg', 100, 1)
+
+	if(target.mind && isliving(spawned_player))
+		target.mind.transfer_to(spawned_player, TRUE)
+	else
+		spawned_player.ckey = target.key
+
+	if(give_godmode)
+		ADD_TRAIT(spawned_player, TRAIT_GODMODE, ADMIN_TRAIT)
+
+	if(count_as_admin && spawned_player.client)
+		spawned_player.client.admin_ghost_poll_eligible = TRUE
+
+	if(give_return)
+		var/datum/action/cooldown/spell/return_back/return_spell = new(spawned_player)
+		return_spell.Grant(spawned_player)
+
+	if(give_nutrition_supply)
+		var/datum/action/innate/ghostcafe_supply/hydration/hydration_toggle = new(spawned_player)
+		hydration_toggle.Grant(spawned_player)
+		var/datum/action/innate/ghostcafe_supply/nutrition/nutrition_toggle = new(spawned_player)
+		nutrition_toggle.Grant(spawned_player)
+
+	switch(teleport_mode)
+		if(QUICK_SPAWN_TELEPORT_FLUX)
+			spawned_player.forceMove(current_turf)
+			do_sparks(10, TRUE, spawned_player, spark_type = /datum/effect_system/basic/spark_spread/quantum)
+		if(QUICK_SPAWN_TELEPORT_POD)
+			var/obj/structure/closet/supplypod/empty_pod = new()
+
+			empty_pod.style = /datum/pod_style/advanced
+			empty_pod.bluespace = TRUE
+			empty_pod.explosionSize = list(0,0,0,0)
+			empty_pod.desc = "A sleek, and slightly worn Bluespace pod - its probably seen many deliveries..."
+
+			spawned_player.forceMove(empty_pod)
+
+			new /obj/effect/pod_landingzone(current_turf, empty_pod)
 
 /client/proc/robust_dress_shop_skyrat()
 	var/list/baseoutfits = list("Naked","Custom","As Job...", "As Plasmaman...")
@@ -147,3 +331,13 @@
 			return
 
 	return dresscode
+
+	#undef QUICK_SPAWN_TELEPORT_FLUX
+	#undef QUICK_SPAWN_TELEPORT_POD
+	#undef QUICK_SPAWN_CHARACTER_SELECTED
+	#undef QUICK_SPAWN_CHARACTER_RANDOM
+	#undef QUICK_SPAWN_QUIRKS_LOADOUT
+	#undef QUICK_SPAWN_QUIRKS_ONLY
+	#undef QUICK_SPAWN_LOADOUT_ONLY
+	#undef QUICK_SPAWN_NEITHER
+	#undef QUICK_SPAWN_DEFAULT_OUTFIT

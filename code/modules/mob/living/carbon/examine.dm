@@ -494,9 +494,17 @@
 				accessory_message = " with [english_list(accessories)] attached"
 
 		. += "[t_He] [t_is] wearing [w_uniform.examine_title(user)][accessory_message]."
+	if(w_shirt && !undershirt_hidden() && !HAS_TRAIT(w_shirt, TRAIT_EXAMINE_SKIP))
+		. += "[t_He] [t_is] wearing [w_shirt.examine_title(user)]."
+	if(w_bra && !bra_hidden() && !HAS_TRAIT(w_bra, TRAIT_EXAMINE_SKIP))
+		. += "[t_He] [t_is] wearing [w_bra.examine_title(user)]."
+	if(w_underwear && !underwear_hidden() && !HAS_TRAIT(w_underwear, TRAIT_EXAMINE_SKIP))
+		. += "[t_He] [t_is] wearing [w_underwear.examine_title(user)]."
 	//head
 	if(head && !(obscured_slots & HIDEHEADGEAR) && !HAS_TRAIT(head, TRAIT_EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [head.examine_title(user)] on [t_his] head."
+	if(w_socks && !socks_hidden() && !HAS_TRAIT(w_socks, TRAIT_EXAMINE_SKIP))
+		. += "[t_He] [t_is] wearing [w_socks.examine_title(user)] on [t_his] feet."
 	//mask
 	if(wear_mask && !(obscured_slots & HIDEMASK)  && !HAS_TRAIT(wear_mask, TRAIT_EXAMINE_SKIP))
 		. += "[t_He] [t_has] [wear_mask.examine_title(user)] on [t_his] face."
@@ -513,7 +521,11 @@
 			. += span_warning("<B>[t_His] eyes are bloodshot!</B>")
 	//ears
 	if(ears && !(obscured_slots & HIDEEARS) && !HAS_TRAIT(ears, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_has] [ears.examine_title(user)] on [t_his] ears."
+		. += "[t_He] [t_has] [ears.examine_title(user)] on [t_his] left ear."
+	if(ears_extra && !(obscured_slots & HIDEEARS) && !HAS_TRAIT(ears_extra, TRAIT_EXAMINE_SKIP))
+		. += "[t_He] [t_has] [ears_extra.examine_title(user)] on [t_his] right ear."
+	if((istype(ears, /obj/item/radio/headset) && !(obscured_slots & HIDEEARS) && !HAS_TRAIT(ears, TRAIT_EXAMINE_SKIP)) && (istype(ears_extra, /obj/item/radio/headset) && !(obscured_slots & HIDEEARS) && !HAS_TRAIT(ears_extra, TRAIT_EXAMINE_SKIP)))
+		. += span_warning("[t_He] looks quite tacky wearing both \an [ears.name] and \an [ears_extra.name] on [t_his] head.")
 	//suit/armor
 	if(wear_suit && !HAS_TRAIT(wear_suit, TRAIT_EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [wear_suit.examine_title(user)]."
@@ -548,6 +560,8 @@
 	else if(GET_ATOM_BLOOD_DECAL_LENGTH(src) || blood_in_hands)
 		if(num_hands)
 			. += span_warning("[t_He] [t_has] [num_hands > 1 ? "" : "a "]blood-stained hand[num_hands > 1 ? "s" : ""]!")
+	if(wrists && !wrists_hidden() && !HAS_TRAIT(wrists, TRAIT_EXAMINE_SKIP))
+		. += "[t_He] [t_is] wearing [wrists.examine_title(user)]."
 	//handcuffed?
 	if(handcuffed)
 		var/cables_or_cuffs = istype(handcuffed, /obj/item/restraints/handcuffs/cable) ? "restrained with cable" : "handcuffed"

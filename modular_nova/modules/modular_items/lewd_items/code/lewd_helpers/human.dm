@@ -256,9 +256,9 @@
 		if(REQUIRE_GENITAL_ANY)
 			return TRUE
 		if(REQUIRE_GENITAL_EXPOSED)
-			return !get_item_by_slot(ITEM_SLOT_EARS)
+			return !get_item_by_slot(ITEM_SLOT_EARS) && !get_item_by_slot(ITEM_SLOT_EARS_RIGHT)
 		if(REQUIRE_GENITAL_UNEXPOSED)
-			return get_item_by_slot(ITEM_SLOT_EARS)
+			return get_item_by_slot(ITEM_SLOT_EARS) || get_item_by_slot(ITEM_SLOT_EARS_RIGHT)
 		else
 			return TRUE
 

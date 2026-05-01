@@ -34,6 +34,8 @@
 #define ITEM_SLOT_EYES (1<<3)
 /// Ear slot (radios, earmuffs)
 #define ITEM_SLOT_EARS (1<<4)
+/// Left ear slot alias kept for two-ear inventory compatibility.
+#define ITEM_SLOT_EARS_LEFT ITEM_SLOT_EARS
 /// Mask slot
 #define ITEM_SLOT_MASK (1<<5)
 /// Head slot (helmets, hats, etc.)
@@ -62,9 +64,23 @@
 #define ITEM_SLOT_HANDCUFFED (1<<17)
 /// Legcuff slot (bolas, beartraps)
 #define ITEM_SLOT_LEGCUFFED (1<<18)
+/// Right ear slot.
+#define ITEM_SLOT_EARS_RIGHT (1<<22)
+/// Marker bit for additional non-standard wearable slots.
+#define ITEM_SLOT_EXTRA (1<<23)
+/// Underwear slot.
+#define ITEM_SLOT_UNDERWEAR (ITEM_SLOT_EXTRA | (1<<0))
+/// Socks slot.
+#define ITEM_SLOT_SOCKS (ITEM_SLOT_EXTRA | (1<<1))
+/// Shirt slot.
+#define ITEM_SLOT_SHIRT (ITEM_SLOT_EXTRA | (1<<2))
+/// Bra slot.
+#define ITEM_SLOT_BRA (ITEM_SLOT_EXTRA | (1<<3))
+/// Wristwear slot.
+#define ITEM_SLOT_WRISTS (ITEM_SLOT_EXTRA | (1<<4))
 
 /// Total amount of slots
-#define SLOTS_AMT 19 // Keep this up to date!
+#define SLOTS_AMT 27 // Keep this up to date!
 
 ///Inventory slots that can be blacklisted by a species from being equipped into
 DEFINE_BITFIELD(no_equip_flags, list(
@@ -84,7 +100,7 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define ITEM_SLOT_POCKETS (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET)
 /// Slots that are physically on you
 #define ITEM_SLOT_ON_BODY (ITEM_SLOT_ICLOTHING | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_EYES | ITEM_SLOT_EARS | \
-	ITEM_SLOT_MASK | ITEM_SLOT_HEAD | ITEM_SLOT_FEET | ITEM_SLOT_ID | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_NECK )
+	ITEM_SLOT_EARS_RIGHT | ITEM_SLOT_MASK | ITEM_SLOT_HEAD | ITEM_SLOT_FEET | ITEM_SLOT_ID | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_NECK )
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
 //Make sure to update obscured_slots if you add more.
@@ -131,6 +147,10 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define HIDESEXTOY (1<<18)
 /// If this has our taur variant, do we hide our taur part?
 #define HIDETAUR (1<<19)
+/// Does this sprite hide underwear, bras, undershirts, and socks?
+#define HIDEUNDERWEAR (1<<20)
+/// Does this sprite hide wristwear?
+#define HIDEWRISTS (1<<21)
 //NOVA EDIT ADDITION END
 //bitflags for clothing coverage - also used for limbs
 #define CHEST (1<<0)
@@ -218,6 +238,18 @@ DEFINE_BITFIELD(no_equip_flags, list(
 
 #define TINT_DARKENED 2 //Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3 //Threshold of tint level to obscure vision fully
+
+/datum/bitfield/no_equip_flags/New()
+	var/list/extra_flags = list(
+		"BRIEFS" = ITEM_SLOT_UNDERWEAR,
+		"SOCKS" = ITEM_SLOT_SOCKS,
+		"SHIRT" = ITEM_SLOT_SHIRT,
+		"BRA" = ITEM_SLOT_BRA,
+		"EARPIECES_R" = ITEM_SLOT_EARS_RIGHT,
+		"WRISTS" = ITEM_SLOT_WRISTS,
+	)
+	flags += extra_flags
+	. = ..()
 
 // defines for AFK theft
 /// How many messages you can remember while logged out before you stop remembering new ones

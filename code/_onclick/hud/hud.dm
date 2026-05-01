@@ -29,15 +29,28 @@ GLOBAL_LIST_INIT(available_erp_ui_styles, list(
 	"Glass" = 'modular_nova/modules/modular_items/lewd_items/icons/obj/lewd_items/inventory_icons/glass.dmi'
 ))
 
+GLOBAL_LIST_INIT(extra_inventory_ui_styles, list(
+	'icons/hud/screen_midnight.dmi' = 'icons/hud/screen_midnight.dmi',
+	'icons/hud/screen_retro.dmi' = 'icons/hud/screen_retro.dmi',
+	'icons/hud/screen_plasmafire.dmi' = 'icons/hud/screen_plasmafire.dmi',
+	'icons/hud/screen_slimecore.dmi' = 'icons/hud/screen_slimecore.dmi',
+	'icons/hud/screen_operative.dmi' = 'icons/hud/screen_operative.dmi',
+	'icons/hud/screen_clockwork.dmi' = 'icons/hud/screen_clockwork.dmi',
+	'icons/hud/screen_trasenknox.dmi' = 'icons/hud/screen_trasenknox.dmi',
+))
+
 //NOVA EDIT - ADDITION - ERP ICONS FIX - END
 
 /proc/ui_style2icon(ui_style)
-	return GLOB.available_ui_styles[ui_style] || GLOB.available_ui_styles[GLOB.available_ui_styles[1]]
+	return GLOB.available_ui_styles[ui_style] || GLOB.available_ui_styles[1]
 
 //NOVA EDIT - ADDITION - ERP ICONS FIX
 
 /proc/erp_ui_style2icon(ui_style)
-	return GLOB.available_erp_ui_styles[ui_style] || GLOB.available_erp_ui_styles[GLOB.available_erp_ui_styles[1]]
+	return GLOB.available_erp_ui_styles[ui_style] || GLOB.available_erp_ui_styles[1]
+
+/proc/extra_inventory_ui_style(ui_style)
+	return GLOB.extra_inventory_ui_styles[ui_style] || GLOB.extra_inventory_ui_styles[1]
 
 //NOVA EDIT - ADDITION - ERP ICONS FIX - END
 
@@ -370,7 +383,7 @@ GLOBAL_LIST_INIT(available_erp_ui_styles, list(
 				screenmob.client.screen += static_inventory
 			if(toggleable_inventory.len && screenmob.hud_used && screenmob.hud_used.inventory_shown)
 				screenmob.client.screen += toggleable_inventory
-			if(toggleable_sub_inventory.len && screenmob.hud_used && screenmob.hud_used.sub_inventory_shown) //HOWLING VOID ADDITION
+			if(toggleable_sub_inventory.len && screenmob.hud_used && screenmob.hud_used.inventory_shown && screenmob.hud_used.sub_inventory_shown)
 				screenmob.client.screen += toggleable_sub_inventory
 			if(hotkeybuttons.len && !hotkey_ui_hidden)
 				screenmob.client.screen += hotkeybuttons
@@ -389,7 +402,7 @@ GLOBAL_LIST_INIT(available_erp_ui_styles, list(
 				screenmob.client.screen -= static_inventory
 			if(toggleable_inventory.len)
 				screenmob.client.screen -= toggleable_inventory
-			if(toggleable_sub_inventory.len) //HOWLING VOID ADDITION
+			if(toggleable_sub_inventory.len)
 				screenmob.client.screen -= toggleable_sub_inventory
 			if(hotkeybuttons.len)
 				screenmob.client.screen -= hotkeybuttons
@@ -413,7 +426,7 @@ GLOBAL_LIST_INIT(available_erp_ui_styles, list(
 				screenmob.client.screen -= static_inventory
 			if(toggleable_inventory.len)
 				screenmob.client.screen -= toggleable_inventory
-			if(toggleable_sub_inventory.len) //HOWLING VOID ADDITION
+			if(toggleable_sub_inventory.len)
 				screenmob.client.screen -= toggleable_sub_inventory
 			if(hotkeybuttons.len)
 				screenmob.client.screen -= hotkeybuttons
@@ -482,12 +495,16 @@ GLOBAL_LIST_INIT(available_erp_ui_styles, list(
 	// do nothing if overridden by a subtype or already on that style
 	if (initial(ui_style) || ui_style == new_ui_style)
 		return
+	var/old_extra_inventory_ui_style = extra_inventory_ui_style(ui_style)
+	var/new_extra_inventory_style = extra_inventory_ui_style(new_ui_style)
 
 	for(var/atom/item in static_inventory + toggleable_inventory + hotkeybuttons + infodisplay + always_visible_inventory + inv_slots \
 			+ toggleable_sub_inventory //HOWLING VOID ADDITION
 		)
 		if (item.icon == ui_style)
 			item.icon = new_ui_style
+		else if(item.icon == old_extra_inventory_ui_style)
+			item.icon = new_extra_inventory_style
 
 	ui_style = new_ui_style
 	build_hand_slots()

@@ -29,6 +29,15 @@
 	var/bra = "Nude"
 	/// Color of the bra.
 	var/bra_color = "#FFFFFF"
+	/// Extra inventory slots use concrete item instances instead of accessory names.
+	var/obj/item/w_underwear
+	var/obj/item/w_socks
+	var/obj/item/w_shirt
+	var/obj/item/w_bra
+	var/obj/item/ears_extra
+	var/obj/item/wrists
+	/// Prevents item equipped/dropped callbacks from clobbering prefs while update_underwear is syncing items.
+	var/tmp/syncing_extra_inventory = FALSE
 	/// Chronological age.
 	var/chrono_age = 30
 	///This are the TK effect object for the left hand for psionic holding.
@@ -37,3 +46,8 @@
 	var/obj/effect/abstract/held_tk_effect/right/held_right
 	/// This is the color of the TK effect for the hands when psionic holding is active.
 	var/held_hover_color
+
+/mob/living/carbon/human/proc/on_preference_applied()
+	update_underwear()
+	update_worn_ears_extra()
+	update_worn_wrists()
