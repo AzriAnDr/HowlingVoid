@@ -227,6 +227,20 @@ SUBSYSTEM_DEF(polling)
 	for(var/mob/dead/observer/ghost_player in GLOB.player_list)
 		candidates += ghost_player
 
+	// Allow living Ghost Cafe visitors to receive ghost role prompts.
+	for(var/mob/living/living_candidate in GLOB.player_list)
+		if(!is_ghost_cafe_visitor(living_candidate))
+			continue
+		if(!(living_candidate in candidates))
+			candidates += living_candidate
+
+	// Allow living players with admin_ghost_poll_eligible flag to receive ghost role prompts.
+	for(var/mob/living/admin_candidate in GLOB.player_list)
+		if(!admin_candidate.client?.admin_ghost_poll_eligible)
+			continue
+		if(!(admin_candidate in candidates))
+			candidates += admin_candidate
+
 #ifdef TESTING
 	for(var/mob/dude in GLOB.player_list)
 		candidates |= dude
@@ -360,3 +374,20 @@ SUBSYSTEM_DEF(polling)
 		return FALSE
 
 	return next_poll_to_finish
+
+/// Returns TRUE if the supplied mob is an active Ghost Cafe visitor that should get ghost prompts.
+/proc/is_ghost_cafe_visitor(mob/living/living_candidate)
+	if(isnull(living_candidate) || !living_candidate.client)
+		return FALSE
+	if(living_candidate.mind?.assigned_role?.title != ROLE_GHOST_CAFE)
+		return FALSE
+	var/area/current_area = get_area(living_candidate)
+	if(!is_ghost_cafe_area(current_area))
+		return FALSE
+	return TRUE
+
+/// Helper to check whether a given area belongs to the Ghost Cafe visitor zone list.
+/proc/is_ghost_cafe_area(area/checked_area)
+	if(isnull(checked_area))
+		return FALSE
+	return checked_area.type in GLOB.ghost_cafe_areas

@@ -6,6 +6,7 @@
 	. = ..()
 	mob_examine_panel = new(src) //create the datum
 	AddComponent(/datum/component/interactable)
+	RegisterSignal(src, COMSIG_HUMAN_PREFS_APPLIED, PROC_REF(on_preference_applied))
 	//Removing ERP IC verbs depending on config
 	if(CONFIG_GET(flag/disable_erp_preferences))
 		verbs -= /mob/living/carbon/human/verb/toggle_genitals
@@ -17,6 +18,7 @@
 
 
 /mob/living/carbon/human/Destroy()
+	UnregisterSignal(src, COMSIG_HUMAN_PREFS_APPLIED)
 	QDEL_NULL(mob_examine_panel)
 
 	if(held_left)

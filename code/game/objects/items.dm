@@ -101,6 +101,10 @@
 	var/w_class = WEIGHT_CLASS_NORMAL
 	///This is used to determine on which slots an item can fit.
 	var/slot_flags = NONE
+	/// Additional wearable slot flags used by custom inventory slots.
+	var/extra_slot_flags = NONE
+	/// Prevents showing this item in underwear-related examine output.
+	var/hide_underwear_examine = FALSE
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
 	/// This var exists as a weird proxy "owner" ref
@@ -959,7 +963,7 @@
 	if(!ismob(loc) || QDELETED(loc))
 		return
 	var/mob/owner = loc
-	owner.update_clothing(slot_flags | owner.get_slot_by_item(src))
+	owner.update_clothing(slot_flags | extra_slot_flags | owner.get_slot_by_item(src))
 
 ///Returns the temperature of src. If you want to know if an item is hot use this proc.
 /obj/item/proc/get_temperature()

@@ -85,6 +85,7 @@ There are several things that need to be remembered:
 		update_hud_uniform(uniform)
 
 		if(HAS_TRAIT(uniform, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEJUMPSUIT))
+			update_underwear(FALSE)
 			return
 
 		var/target_overlay = uniform.icon_state
@@ -163,6 +164,7 @@ There are several things that need to be remembered:
 
 	update_body_parts()
 	apply_overlay(UNIFORM_LAYER)
+	update_underwear(FALSE)
 
 /mob/living/carbon/human/update_worn_id()
 	remove_overlay(ID_LAYER)
@@ -201,44 +203,23 @@ There are several things that need to be remembered:
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_GLOVES) + 1]
 		inv.update_icon()
 
+	var/list/gloves_overlays = list()
+
 	//Bloody hands begin
 	if(isnull(gloves))
-		if(!blood_in_hands || !num_hands || !GET_ATOM_BLOOD_DECAL_LENGTH(src))
-			return
-		// When byond gives us filters that respect dirs we can just use an alpha mask for this but until then, two icons weeeee
-		var/mutable_appearance/hands_combined = mutable_appearance(layer = -GLOVES_LAYER, appearance_flags = KEEP_TOGETHER)
-		if(has_left_hand(check_disabled = FALSE))
-			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_left")
-			blood_overlay.color = get_blood_dna_color()
-			hands_combined.overlays += blood_overlay
-		if(has_right_hand(check_disabled = FALSE))
-			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right")
-			blood_overlay.color = get_blood_dna_color()
-			hands_combined.overlays += blood_overlay
-		overlays_standing[GLOVES_LAYER] = hands_combined
-		apply_overlay(GLOVES_LAYER)
-		return
+		if(blood_in_hands && num_hands && GET_ATOM_BLOOD_DECAL_LENGTH(src))
+			// When byond gives us filters that respect dirs we can just use an alpha mask for this but until then, two icons weeeee
+			var/mutable_appearance/hands_combined = mutable_appearance(layer = -GLOVES_LAYER, appearance_flags = KEEP_TOGETHER)
+			if(has_left_hand(check_disabled = FALSE))
+				var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_left")
+				blood_overlay.color = get_blood_dna_color()
+				hands_combined.overlays += blood_overlay
+			if(has_right_hand(check_disabled = FALSE))
+				var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right")
+				blood_overlay.color = get_blood_dna_color()
+				hands_combined.overlays += blood_overlay
+			gloves_overlays += hands_combined
 	// Bloody hands end
-
-	var/obj/item/worn_item = gloves
-	update_hud_gloves(worn_item)
-
-	if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEGLOVES))
-		return
-
-	var/icon_file = 'icons/mob/clothing/hands.dmi'
-
-	// NOVA EDIT ADDITION START
-	var/mutant_override = FALSE
-	if(bodyshape & BODYSHAPE_CUSTOM)
-		var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_GLOVES, gloves, src)
-		if(species_icon_file)
-			icon_file = species_icon_file
-			mutant_override = TRUE
-	// NOVA EDIT ADDITION END
-	var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null) // NOVA EDIT CHANGE - ORIGINAL: var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file)
-	if(isnull(gloves_overlay))
-		return
 
 	var/feature_y_offset = 0
 	//needs to be typed, hand_bodyparts can have nulls
@@ -247,22 +228,51 @@ There are several things that need to be remembered:
 		if (glove_offset && (!feature_y_offset || glove_offset["y"] > feature_y_offset))
 			feature_y_offset = glove_offset["y"]
 
-	gloves_overlay.pixel_z += feature_y_offset
+	if(wrists)
+		if(!(HAS_TRAIT(wrists, TRAIT_NO_WORN_ICON) || wrists_hidden()))
+			var/mutable_appearance/wrists_overlay = wrists.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = wrists.worn_icon || 'icons/mob/clothing/hands.dmi')
+			if(!isnull(wrists_overlay))
+				wrists_overlay.pixel_z += feature_y_offset
+				gloves_overlays += wrists_overlay
 
-	// We dont have any >2 hands human species (and likely wont ever), so theres no point in splitting this because:
-	// It will only run if the left hand OR the right hand is missing, and it wont run if both are missing because you cant wear gloves with no arms
-	// (unless admins mess with this then its their fault)
-	if(num_hands < default_num_hands)
-		var/static/atom/movable/alpha_filter_target
-		if(isnull(alpha_filter_target))
-			alpha_filter_target = new(null)
-		alpha_filter_target.icon = 'icons/effects/effects.dmi'
-		alpha_filter_target.icon_state = "missing[!has_left_hand(check_disabled = FALSE) ? "l" : "r"]"
-		alpha_filter_target.render_target = "*MissGlove [REF(src)] [!has_left_hand(check_disabled = FALSE) ? "L" : "R"]"
-		gloves_overlay.add_overlay(alpha_filter_target)
-		gloves_overlay.filters += filter(type="alpha", render_source=alpha_filter_target.render_target, y=feature_y_offset, flags=MASK_INVERSE)
+	if(gloves)
+		var/obj/item/worn_item = gloves
+		update_hud_gloves(worn_item)
 
-	overlays_standing[GLOVES_LAYER] = gloves_overlay
+		if(!(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEGLOVES)))
+			var/icon_file = 'icons/mob/clothing/hands.dmi'
+
+			// NOVA EDIT ADDITION START
+			var/mutant_override = FALSE
+			if(bodyshape & BODYSHAPE_CUSTOM)
+				var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_GLOVES, gloves, src)
+				if(species_icon_file)
+					icon_file = species_icon_file
+					mutant_override = TRUE
+			// NOVA EDIT ADDITION END
+			var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null) // NOVA EDIT CHANGE - ORIGINAL: var/mutable_appearance/gloves_overlay = gloves.build_worn_icon(default_layer = GLOVES_LAYER, default_icon_file = icon_file)
+			if(!isnull(gloves_overlay))
+				gloves_overlay.pixel_z += feature_y_offset
+
+				// We dont have any >2 hands human species (and likely wont ever), so theres no point in splitting this because:
+				// It will only run if the left hand OR the right hand is missing, and it wont run if both are missing because you cant wear gloves with no arms
+				// (unless admins mess with this then its their fault)
+				if(num_hands < default_num_hands)
+					var/static/atom/movable/alpha_filter_target
+					if(isnull(alpha_filter_target))
+						alpha_filter_target = new(null)
+					alpha_filter_target.icon = 'icons/effects/effects.dmi'
+					alpha_filter_target.icon_state = "missing[!has_left_hand(check_disabled = FALSE) ? "l" : "r"]"
+					alpha_filter_target.render_target = "*MissGlove [REF(src)] [!has_left_hand(check_disabled = FALSE) ? "L" : "R"]"
+					gloves_overlay.add_overlay(alpha_filter_target)
+					gloves_overlay.filters += filter(type="alpha", render_source=alpha_filter_target.render_target, y=feature_y_offset, flags=MASK_INVERSE)
+
+				gloves_overlays += gloves_overlay
+
+	if(!gloves_overlays.len)
+		return
+
+	overlays_standing[GLOVES_LAYER] = gloves_overlays
 	apply_overlay(GLOVES_LAYER)
 
 /mob/living/carbon/human/update_worn_glasses()
@@ -315,31 +325,50 @@ There are several things that need to be remembered:
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_EARS) + 1]
 		inv.update_icon()
 
+	var/list/ear_overlays = list()
+
 	if(ears)
 		var/obj/item/worn_item = ears
 		update_hud_ears(worn_item)
 
-		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEEARS))
-			return
+		if(!(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEEARS)))
+			var/icon_file = 'icons/mob/clothing/ears.dmi'
 
-		var/icon_file = 'icons/mob/clothing/ears.dmi'
+			// NOVA EDIT ADDITION
+			var/mutant_override = FALSE
+			if(bodyshape & BODYSHAPE_CUSTOM)
+				var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_EARS, ears, src)
+				if(species_icon_file)
+					icon_file = species_icon_file
+					mutant_override = TRUE
+			// NOVA EDIT END
 
-		// NOVA EDIT ADDITION
-		var/mutant_override = FALSE
-		if(bodyshape & BODYSHAPE_CUSTOM)
-			var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_EARS, ears, src)
-			if(species_icon_file)
-				icon_file = species_icon_file
-				mutant_override = TRUE
-		// NOVA EDIT END
+			var/mutable_appearance/ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null) // NOVA EDIT CHANGE
 
-		var/mutable_appearance/ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null) // NOVA EDIT CHANGE
+			// NOVA EDIT ADDITION
+			if(!mutant_override)
+				my_head.worn_ears_offset?.apply_offset(ears_overlay)
+			// NOVA EDIT END
+			ear_overlays += ears_overlay
 
-		// NOVA EDIT ADDITION
-		if(!mutant_override)
-			my_head.worn_ears_offset?.apply_offset(ears_overlay)
-		// NOVA EDIT END
-		overlays_standing[EARS_LAYER] = ears_overlay
+	if(ears_extra)
+		var/obj/item/right_ear_item = ears_extra
+		if(!(HAS_TRAIT(right_ear_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEEARS)))
+			var/icon_file = 'icons/mob/clothing/ears.dmi'
+			var/mutant_override = FALSE
+			if(bodyshape & BODYSHAPE_CUSTOM)
+				var/species_icon_file = dna.species.generate_custom_worn_icon(LOADOUT_ITEM_EARS, right_ear_item, src)
+				if(species_icon_file)
+					icon_file = species_icon_file
+					mutant_override = TRUE
+
+			var/mutable_appearance/right_ear_overlay = right_ear_item.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null)
+			if(!mutant_override)
+				my_head.worn_ears_offset?.apply_offset(right_ear_overlay)
+			ear_overlays += right_ear_overlay
+
+	if(ear_overlays.len)
+		overlays_standing[EARS_LAYER] = ear_overlays
 	apply_overlay(EARS_LAYER)
 
 /mob/living/carbon/human/update_worn_neck()
@@ -389,6 +418,7 @@ There are several things that need to be remembered:
 	remove_overlay(SHOES_LAYER)
 
 	if(num_legs < 2)
+		update_underwear(FALSE)
 		return
 
 	if(client && hud_used)
@@ -400,6 +430,7 @@ There are several things that need to be remembered:
 		update_hud_shoes(worn_item)
 
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDESHOES))
+			update_underwear(FALSE)
 			return
 
 		var/icon_file = DEFAULT_SHOES_FILE
@@ -418,12 +449,14 @@ There are several things that need to be remembered:
 				icon_file = species_icon_file
 				mutant_override = TRUE
 		if(bodyshape & BODYSHAPE_HIDE_SHOES)
+			update_underwear(FALSE)
 			return // We just don't want shoes that float if we're not displaying legs (useful for taurs, for now)
 		// NOVA EDIT END
 
 		var/mutable_appearance/shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file, override_file = mutant_override ? icon_file : null) // NOVA EDIT CHANGE
 
 		if(!shoes_overlay)
+			update_underwear(FALSE)
 			return
 
 		var/feature_y_offset = 0
@@ -440,6 +473,7 @@ There are several things that need to be remembered:
 
 	apply_overlay(SHOES_LAYER)
 	check_body_shape(BODYSHAPE_DIGITIGRADE, ITEM_SLOT_FEET)
+	update_underwear(FALSE)
 
 /mob/living/carbon/human/update_suit_storage()
 	remove_overlay(SUIT_STORE_LAYER)
@@ -550,6 +584,7 @@ There are several things that need to be remembered:
 		update_hud_wear_suit(worn_item)
 
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON))
+			update_underwear(FALSE)
 			return
 
 		var/icon_file = DEFAULT_SUIT_FILE
@@ -590,6 +625,7 @@ There are several things that need to be remembered:
 
 	update_body_parts()
 	apply_overlay(SUIT_LAYER)
+	update_underwear(FALSE)
 
 /mob/living/carbon/human/update_pockets()
 	if(client && hud_used)
@@ -1158,13 +1194,156 @@ mutant_styles: The mutant style - taur bodytype, STYLE_TESHARI, etc. // NOVA EDI
 	update_underwear()
 	return ..()
 
-/mob/living/carbon/human/proc/update_underwear()
+/mob/living/carbon/human/update_worn_underwear()
+	if(client && hud_used && length(hud_used.toggleable_sub_inventory) >= 1)
+		var/atom/movable/screen/inventory/inv = hud_used.toggleable_sub_inventory[1]
+		inv?.update_icon()
+	if(w_underwear)
+		update_hud_underwear(w_underwear)
+	hud_used?.hidden_sub_inventory_update()
+
+/mob/living/carbon/human/update_worn_socks()
+	if(client && hud_used && length(hud_used.toggleable_sub_inventory) >= 2)
+		var/atom/movable/screen/inventory/inv = hud_used.toggleable_sub_inventory[2]
+		inv?.update_icon()
+	if(w_socks)
+		update_hud_socks(w_socks)
+	hud_used?.hidden_sub_inventory_update()
+
+/mob/living/carbon/human/update_worn_shirt()
+	if(client && hud_used && length(hud_used.toggleable_sub_inventory) >= 3)
+		var/atom/movable/screen/inventory/inv = hud_used.toggleable_sub_inventory[3]
+		inv?.update_icon()
+	if(w_shirt)
+		update_hud_shirt(w_shirt)
+	hud_used?.hidden_sub_inventory_update()
+
+/mob/living/carbon/human/update_worn_bra()
+	if(client && hud_used && length(hud_used.toggleable_sub_inventory) >= 4)
+		var/atom/movable/screen/inventory/inv = hud_used.toggleable_sub_inventory[4]
+		inv?.update_icon()
+	if(w_bra)
+		update_hud_bra(w_bra)
+	hud_used?.hidden_sub_inventory_update()
+
+/mob/living/carbon/human/update_worn_ears_extra()
+	if(client && hud_used && length(hud_used.toggleable_sub_inventory) >= 5)
+		var/atom/movable/screen/inventory/inv = hud_used.toggleable_sub_inventory[5]
+		inv?.update_icon()
+	if(ears_extra)
+		update_hud_ears_extra(ears_extra)
+	hud_used?.hidden_sub_inventory_update()
+	update_worn_ears()
+
+/mob/living/carbon/human/update_worn_wrists()
+	if(client && hud_used && length(hud_used.toggleable_sub_inventory) >= 6)
+		var/atom/movable/screen/inventory/inv = hud_used.toggleable_sub_inventory[6]
+		inv?.update_icon()
+	if(wrists)
+		update_hud_wrists(wrists)
+	hud_used?.hidden_sub_inventory_update()
+	update_worn_gloves()
+
+/mob/living/carbon/human/proc/update_hud_shirt(obj/item/worn_item)
+	worn_item.screen_loc = ui_shirt
+	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown && hud_used.sub_inventory_shown))
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
+
+/mob/living/carbon/human/proc/update_hud_bra(obj/item/worn_item)
+	worn_item.screen_loc = ui_bra
+	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown && hud_used.sub_inventory_shown))
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
+
+/mob/living/carbon/human/proc/update_hud_underwear(obj/item/worn_item)
+	worn_item.screen_loc = ui_boxers
+	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown && hud_used.sub_inventory_shown))
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
+
+/mob/living/carbon/human/proc/update_hud_wrists(obj/item/worn_item)
+	worn_item.screen_loc = ui_wrists
+	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown && hud_used.sub_inventory_shown))
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
+
+/mob/living/carbon/human/proc/update_hud_ears_extra(obj/item/worn_item)
+	worn_item.screen_loc = ui_ears_extra
+	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown && hud_used.sub_inventory_shown))
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
+
+/mob/living/carbon/human/proc/update_hud_socks(obj/item/worn_item)
+	worn_item.screen_loc = ui_socks
+	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown && hud_used.sub_inventory_shown))
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
+
+/mob/living/carbon/human/proc/remove_extra_inventory_item(obj/item/item_to_remove)
+	if(!item_to_remove)
+		return
+	temporarilyRemoveItemFromInventory(item_to_remove, force = TRUE, idrop = FALSE, newloc = null)
+	qdel(item_to_remove)
+
+
+/mob/living/carbon/human/proc/update_underwear(sync_inventory = TRUE)
+	var/dummy_test = istype(src, /mob/living/carbon/human/dummy) && (usr?.client?.prefs.preview_pref == PREVIEW_PREF_NAKED || usr?.client?.prefs.preview_pref == PREVIEW_PREF_NAKED_AROUSED)
+	var/previous_sync_state = syncing_extra_inventory
+
+	if(sync_inventory)
+		syncing_extra_inventory = TRUE
+
+		if(HAS_TRAIT(src, TRAIT_NO_UNDERWEAR) || dummy_test)
+			remove_extra_inventory_item(w_underwear)
+			remove_extra_inventory_item(w_socks)
+			remove_extra_inventory_item(w_shirt)
+			remove_extra_inventory_item(w_bra)
+		else
+			var/datum/sprite_accessory/underwear/underwear_accessory = (underwear && underwear != "Nude") ? SSaccessories.underwear_list[underwear] : null
+			if(w_underwear && (!underwear_accessory || !underwear_accessory.briefs_obj || !istype(w_underwear, underwear_accessory.briefs_obj)))
+				remove_extra_inventory_item(w_underwear)
+			if(underwear_accessory?.briefs_obj && !w_underwear)
+				equip_to_slot_or_del(new underwear_accessory.briefs_obj(src), ITEM_SLOT_UNDERWEAR)
+			if(w_underwear && (w_underwear.flags_1 & IS_PLAYER_COLORABLE_1))
+				w_underwear.color = underwear_color
+
+			var/datum/sprite_accessory/undershirt/undershirt_accessory = (undershirt && undershirt != "Nude") ? SSaccessories.undershirt_list[undershirt] : null
+			if(w_shirt && (!undershirt_accessory || !undershirt_accessory.shirt_obj || !istype(w_shirt, undershirt_accessory.shirt_obj)))
+				remove_extra_inventory_item(w_shirt)
+			if(undershirt_accessory?.shirt_obj && !w_shirt)
+				equip_to_slot_or_del(new undershirt_accessory.shirt_obj(src), ITEM_SLOT_SHIRT)
+			if(w_shirt && (w_shirt.flags_1 & IS_PLAYER_COLORABLE_1))
+				w_shirt.color = undershirt_color
+
+			var/datum/sprite_accessory/bra/bra_accessory = (bra && bra != "Nude") ? SSaccessories.bra_list[bra] : null
+			if(w_bra && (!bra_accessory || !bra_accessory.bra_obj || !istype(w_bra, bra_accessory.bra_obj)))
+				remove_extra_inventory_item(w_bra)
+			if(bra_accessory?.bra_obj && !w_bra)
+				equip_to_slot_or_del(new bra_accessory.bra_obj(src), ITEM_SLOT_BRA)
+			if(w_bra && (w_bra.flags_1 & IS_PLAYER_COLORABLE_1))
+				w_bra.color = bra_color
+
+			var/should_have_socks = socks && socks != "Nude" && num_legs >= 2
+			var/datum/mutant_bodypart/taur_body = dna.mutant_bodyparts[FEATURE_TAUR]
+			if(taur_body && taur_body.name != SPRITE_ACCESSORY_NONE)
+				should_have_socks = FALSE
+			var/datum/sprite_accessory/socks/socks_accessory = should_have_socks ? SSaccessories.socks_list[socks] : null
+			if(w_socks && (!socks_accessory || !socks_accessory.socks_obj || !istype(w_socks, socks_accessory.socks_obj)))
+				remove_extra_inventory_item(w_socks)
+			if(socks_accessory?.socks_obj && !w_socks)
+				equip_to_slot_or_del(new socks_accessory.socks_obj(src), ITEM_SLOT_SOCKS)
+			if(w_socks && (w_socks.flags_1 & IS_PLAYER_COLORABLE_1))
+				w_socks.color = socks_color
+
+		syncing_extra_inventory = previous_sync_state
+
 	remove_overlay(BODY_LAYER)
 	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(src, TRAIT_NO_UNDERWEAR))
 		return
 	// Underwear, Undershirts & Socks
 	var/list/standing = list()
-	if(underwear && !(underwear_visibility & UNDERWEAR_HIDE_UNDIES)) // NOVA EDIT CHANGE - ORIGINAL: if(underwear)
+	if(underwear && underwear != "Nude" && !underwear_hidden()) // NOVA EDIT CHANGE - ORIGINAL: if(underwear)
 		var/datum/sprite_accessory/underwear/undie_accessory = SSaccessories.underwear_list[underwear]
 		var/mutable_appearance/underwear_overlay
 		if(undie_accessory)
@@ -1184,7 +1363,7 @@ mutant_styles: The mutant style - taur bodytype, STYLE_TESHARI, etc. // NOVA EDI
 			standing += underwear_overlay
 
 	// NOVA EDIT ADDITION START
-	if(bra && !(underwear_visibility & UNDERWEAR_HIDE_BRA))
+	if(bra && bra != "Nude" && !bra_hidden())
 		var/datum/sprite_accessory/bra/bra_accessory = SSaccessories.bra_list[bra]
 		if(bra_accessory)
 			var/mutable_appearance/bra_overlay
@@ -1194,7 +1373,7 @@ mutant_styles: The mutant style - taur bodytype, STYLE_TESHARI, etc. // NOVA EDI
 				bra_overlay.color = bra_color
 			standing += bra_overlay
 	// NOVA EDIT ADDITION END
-	if(undershirt && !(underwear_visibility & UNDERWEAR_HIDE_SHIRT)) // NOVA EDIT CHANGE - ORIGINAL: if(undershirt))
+	if(undershirt && undershirt != "Nude" && !undershirt_hidden()) // NOVA EDIT CHANGE - ORIGINAL: if(undershirt))
 		var/datum/sprite_accessory/undershirt/undie_accessory = SSaccessories.undershirt_list[undershirt]
 		if(undie_accessory)
 			var/mutable_appearance/working_shirt
@@ -1215,7 +1394,7 @@ mutant_styles: The mutant style - taur bodytype, STYLE_TESHARI, etc. // NOVA EDI
 			standing += mutable_appearance(undie_accessory.icon, undie_accessory.icon_state, -BODY_LAYER)
 	*/ // NOVA EDIT REMOVAL END
 	// NOVA EDIT ADDITION START - Nova socks
-	if(socks && num_legs >= 2 && !(underwear_visibility & UNDERWEAR_HIDE_SOCKS))
+	if(socks && socks != "Nude" && num_legs >= 2 && !socks_hidden())
 		var/datum/mutant_bodypart/taur_body = dna.mutant_bodyparts[FEATURE_TAUR]
 		if(isnull(taur_body) || taur_body.name == SPRITE_ACCESSORY_NONE)
 			var/datum/sprite_accessory/socks/undie_accessory = SSaccessories.socks_list[socks]

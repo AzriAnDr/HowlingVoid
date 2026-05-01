@@ -68,6 +68,12 @@
 		to_chat(spawned_human,span_warning("<b>Ghosting is free!</b>"))
 		var/datum/action/toggle_dead_chat_mob/dchat_toggle_ability = new(spawned_human)
 		dchat_toggle_ability.Grant(spawned_human)
+		var/datum/action/innate/ghostcafe_supply/hydration/hydration_toggle = new(spawned_human)
+		hydration_toggle.Grant(spawned_human)
+		var/datum/action/innate/ghostcafe_supply/nutrition/nutrition_toggle = new(spawned_human)
+		nutrition_toggle.Grant(spawned_human)
+		var/datum/action/innate/ghostcafe_supply/blood/blood_toggle = new(spawned_human)
+		blood_toggle.Grant(spawned_human)
 
 /mob/living/proc/on_using_radio(atom/movable/talking_movable)
 	SIGNAL_HANDLER
@@ -107,6 +113,165 @@
 	else
 		ADD_TRAIT(M,TRAIT_SIXTHSENSE,TRAIT_GHOSTROLE)
 		to_chat(M,span_notice("You're once again hearing deadchat."))
+
+/datum/action/innate/ghostcafe_supply
+	/// Status effect that this toggle will add or remove.
+	var/datum/status_effect/supply_effect_type
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_LYING
+	/// Use the default HUD background so we can leverage its active variant.
+	background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
+	/// Keep the icon set consistent with the hunger/thirst HUD sprites.
+	button_icon = 'icons/hud/screen_gen.dmi'
+	/// Avoid noisy balloon alerts when the action is unavailable.
+	transparent_when_unavailable = FALSE
+
+/datum/action/innate/ghostcafe_supply/IsAvailable(feedback = FALSE)
+	return ..(FALSE)
+
+/datum/action/innate/ghostcafe_supply/is_action_active(atom/movable/screen/movable/action_button/current_button)
+	if(!istype(owner, /mob/living))
+		return FALSE
+	return owner.has_status_effect(supply_effect_type)
+
+/datum/action/innate/ghostcafe_supply/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
+	. = ..()
+	if(is_action_active(button) && IsAvailable())
+		button.color = COLOR_LIME
+
+/datum/action/innate/ghostcafe_supply/Trigger(trigger_flags)
+	if(!..())
+		return FALSE
+	if(!istype(owner, /mob/living))
+		return FALSE
+	var/mob/living/L = owner
+
+	if(L.has_status_effect(supply_effect_type))
+		L.remove_status_effect(supply_effect_type)
+		to_chat(L, span_notice("Supply disabled."))
+	else
+		L.apply_status_effect(supply_effect_type)
+		to_chat(L, span_notice("Supply enabled."))
+	return TRUE
+
+/datum/action/innate/ghostcafe_supply/hydration
+	name = "Toggle Hydration Supply"
+	desc = "Slowly refill your thirst while in the cafe."
+	button_icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	button_icon_state = "singulo"
+	supply_effect_type = /datum/status_effect/ghostcafe_supply/hydration
+
+/datum/action/innate/ghostcafe_supply/nutrition
+	name = "Toggle Nutrition Supply"
+	desc = "Slowly refill your hunger while in the cafe."
+	button_icon = 'icons/obj/food/burgerbread.dmi'
+	button_icon_state = "superbiteburger"
+	supply_effect_type = /datum/status_effect/ghostcafe_supply/nutrition
+
+/datum/action/innate/ghostcafe_supply/blood
+	name = "Toggle Blood Supply"
+	desc = "Slowly refill your blood while in the cafe. Useful for hemophages!"
+	button_icon = 'icons/obj/medical/bloodpack.dmi'
+	button_icon_state = "bloodpack"
+	supply_effect_type = /datum/status_effect/ghostcafe_supply/blood
+
+/datum/status_effect/ghostcafe_supply
+	id = "ghostcafe_supply_base"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = 2 SECONDS
+	processing_speed = STATUS_EFFECT_FAST_PROCESS
+	/// We control alerts per child; default to no generic placeholder.
+	alert_type = null
+
+/datum/status_effect/ghostcafe_supply/on_apply()
+	if(QDELETED(owner))
+		return FALSE
+	return TRUE
+
+/datum/status_effect/ghostcafe_supply/hydration
+	id = "ghostcafe_supply_hydration"
+	/// Amount of hydration restored per second when active.
+	var/hydration_per_second = 6
+	alert_type = /atom/movable/screen/alert/status_effect/ghostcafe_supply/hydration
+
+/datum/status_effect/ghostcafe_supply/hydration/tick(seconds_between_ticks)
+	if(QDELETED(owner) || owner.stat == DEAD)
+		qdel(src)
+		return
+	if(!owner.can_replenish_thirst())
+		return
+	if(owner.water_level >= 600)
+		return
+	owner.adjust_thirst(hydration_per_second * seconds_between_ticks, 600)
+
+/datum/status_effect/ghostcafe_supply/nutrition
+	id = "ghostcafe_supply_nutrition"
+	/// Amount of nutrition restored per second when active.
+	var/nutrition_per_second = 4
+	alert_type = /atom/movable/screen/alert/status_effect/ghostcafe_supply/nutrition
+
+/datum/status_effect/ghostcafe_supply/nutrition/tick(seconds_between_ticks)
+	if(QDELETED(owner) || owner.stat == DEAD)
+		qdel(src)
+		return
+	var/target_nutrition = NUTRITION_LEVEL_FULL
+	if(owner.nutrition >= target_nutrition)
+		return
+	var/amount = min(nutrition_per_second * seconds_between_ticks, target_nutrition - owner.nutrition)
+	owner.adjust_nutrition(amount)
+
+/datum/status_effect/ghostcafe_supply/blood
+	id = "ghostcafe_supply_blood"
+	/// Amount of blood restored per second when active.
+	var/blood_per_second = 10
+	alert_type = /atom/movable/screen/alert/status_effect/ghostcafe_supply/blood
+
+/datum/status_effect/ghostcafe_supply/blood/on_apply()
+	. = ..()
+	if(!.)
+		return
+	update_blood_display()
+
+/datum/status_effect/ghostcafe_supply/blood/tick(seconds_between_ticks)
+	if(QDELETED(owner) || owner.stat == DEAD)
+		qdel(src)
+		return
+	if(HAS_TRAIT(owner, TRAIT_NOBLOOD))
+		return
+	if(owner.blood_volume >= BLOOD_VOLUME_MAXIMUM)
+		update_blood_display()
+		return
+	owner.blood_volume = min(owner.blood_volume + blood_per_second * seconds_between_ticks, BLOOD_VOLUME_MAXIMUM)
+	update_blood_display()
+
+/// Updates the blood level display on the alert icon
+/datum/status_effect/ghostcafe_supply/blood/proc/update_blood_display()
+	var/atom/movable/screen/alert/status_effect/ghostcafe_supply/blood/blood_alert = linked_alert
+	if(!blood_alert)
+		return
+	var/blood_value = round(owner.blood_volume)
+	blood_alert.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:10px; left:0px'><font face='Small Fonts' color='#ce0202'>[blood_value]</font></div>")
+
+// Alerts for supply status effects
+/atom/movable/screen/alert/status_effect/ghostcafe_supply/hydration
+	name = "Hydration Supply"
+	desc = "You feel your thirst saturated."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "singulo"
+
+/atom/movable/screen/alert/status_effect/ghostcafe_supply/nutrition
+	name = "Nutrition Supply"
+	desc = "You feel your hunger saturated."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "superbiteburger"
+
+/atom/movable/screen/alert/status_effect/ghostcafe_supply/blood
+	name = "Blood Supply"
+	desc = "You feel your blood replenishing."
+	icon = 'icons/obj/medical/bloodpack.dmi'
+	icon_state = "bloodpack"
+	maptext_width = 32
+	maptext_height = 32
 
 /obj/item/storage/box/syndie_kit/chameleon/ghostcafe
 	name = "cafe costuming kit"

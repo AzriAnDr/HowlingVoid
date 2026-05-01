@@ -322,28 +322,80 @@
 	ammo_counter = new /atom/movable/screen/ammo_counter(null, src) //NOVA EDIT ADDITION
 	infodisplay += ammo_counter //NOVA EDIT ADDITION
 
-	//HOWLING VOID ADDITION START: sub inventory
-	inv_box = new /atom/movable/screen/human/toggle/sub(null, src) //Обязательная часть - кнопка для открытия расширенного инвентаря
-	inv_box.icon = ui_style
-	inv_box.screen_loc = ui_sub_inventory
-	toggleable_inventory += inv_box
+	using = new /atom/movable/screen/human/toggle/sub(null, src)
+	using.icon = extra_inventory_ui_style(ui_style)
+	using.screen_loc = ui_sub_inventory
+	toggleable_inventory += using
 
-	inv_box = new /atom/movable/screen/inventory(null, src) //Это чисто для примера как оно добавляется на экран. Поменяй на то, что нужно тебе
-	inv_box.name = "DEBUG"
-	inv_box.icon = ui_style
-	inv_box.icon_state = "gloves"
+	//HOWLING VOID ADDITION START: extra inventory slots
+	inv_box = new /atom/movable/screen/inventory(null, src)
+	inv_box.name = "underwear"
+	inv_box.icon = extra_inventory_ui_style(ui_style)
+	inv_box.icon_state = "underwear"
 	inv_box.icon_full = "template"
-	inv_box.screen_loc = ui_sub_inventory_debug
-	inv_box.slot_id = ITEM_SLOT_HEAD
+	inv_box.icon_empty = "underwear"
+	inv_box.screen_loc = ui_boxers
+	inv_box.slot_id = ITEM_SLOT_UNDERWEAR
+	toggleable_sub_inventory += inv_box
+
+	inv_box = new /atom/movable/screen/inventory(null, src)
+	inv_box.name = "socks"
+	inv_box.icon = extra_inventory_ui_style(ui_style)
+	inv_box.icon_state = "socks"
+	inv_box.icon_full = "template"
+	inv_box.icon_empty = "socks"
+	inv_box.screen_loc = ui_socks
+	inv_box.slot_id = ITEM_SLOT_SOCKS
+	toggleable_sub_inventory += inv_box
+
+	inv_box = new /atom/movable/screen/inventory(null, src)
+	inv_box.name = "shirt"
+	inv_box.icon = extra_inventory_ui_style(ui_style)
+	inv_box.icon_state = "shirt"
+	inv_box.icon_full = "template"
+	inv_box.icon_empty = "shirt"
+	inv_box.screen_loc = ui_shirt
+	inv_box.slot_id = ITEM_SLOT_SHIRT
+	toggleable_sub_inventory += inv_box
+
+	inv_box = new /atom/movable/screen/inventory(null, src)
+	inv_box.name = "bra"
+	inv_box.icon = extra_inventory_ui_style(ui_style)
+	inv_box.icon_state = "bra"
+	inv_box.icon_full = "template"
+	inv_box.icon_empty = "bra"
+	inv_box.screen_loc = ui_bra
+	inv_box.slot_id = ITEM_SLOT_BRA
+	toggleable_sub_inventory += inv_box
+
+	inv_box = new /atom/movable/screen/inventory(null, src)
+	inv_box.name = "right ear"
+	inv_box.icon = extra_inventory_ui_style(ui_style)
+	inv_box.icon_state = "ears_extra"
+	inv_box.icon_full = "template"
+	inv_box.icon_empty = "ears_extra"
+	inv_box.screen_loc = ui_ears_extra
+	inv_box.slot_id = ITEM_SLOT_EARS_RIGHT
+	toggleable_sub_inventory += inv_box
+
+	inv_box = new /atom/movable/screen/inventory(null, src)
+	inv_box.name = "wrists"
+	inv_box.icon = extra_inventory_ui_style(ui_style)
+	inv_box.icon_state = "wrists"
+	inv_box.icon_full = "template"
+	inv_box.icon_empty = "wrists"
+	inv_box.screen_loc = ui_wrists
+	inv_box.slot_id = ITEM_SLOT_WRISTS
 	toggleable_sub_inventory += inv_box
 	//HOWLING VOID ADDITION END
 
-	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory \
-			+ toggleable_sub_inventory //HOWLING VOID ADDITION
-		))
-		if(inv.slot_id)
+	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
+		if(inv.slot_id && !(inv.slot_id & ITEM_SLOT_EXTRA))
 			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
-			inv.update_appearance()
+		inv.update_appearance()
+
+	for(var/atom/movable/screen/inventory/inv in toggleable_sub_inventory)
+		inv.update_appearance()
 
 	update_locked_slots()
 
@@ -369,11 +421,13 @@
 			blocked_slots |= ITEM_SLOT_SUITSTORE
 		if(human_mob.num_hands <= 0)
 			blocked_slots |= ITEM_SLOT_GLOVES
+		if(human_mob.num_hands < 2)
+			blocked_slots |= ITEM_SLOT_WRISTS
 		if(human_mob.num_legs < 2) // update this when you can wear shoes on one foot
-			blocked_slots |= ITEM_SLOT_FEET
+			blocked_slots |= ITEM_SLOT_FEET|ITEM_SLOT_SOCKS
 		var/obj/item/bodypart/head/head = human_mob.get_bodypart(BODY_ZONE_HEAD)
 		if(isnull(head))
-			blocked_slots |= ITEM_SLOT_HEAD|ITEM_SLOT_EARS|ITEM_SLOT_EYES|ITEM_SLOT_MASK
+			blocked_slots |= ITEM_SLOT_HEAD|ITEM_SLOT_EARS|ITEM_SLOT_EARS_RIGHT|ITEM_SLOT_EYES|ITEM_SLOT_MASK
 		var/obj/item/organ/eyes/eyes = human_mob.get_organ_slot(ORGAN_SLOT_EYES)
 		if(eyes?.no_glasses)
 			blocked_slots |= ITEM_SLOT_EYES
@@ -420,11 +474,7 @@
 		if(H.head)
 			H.head.screen_loc = ui_head
 			screenmob.client.screen += H.head
-		/* HOWLING VOID ADDITION START: sub inventory Я не уверен нужно ли это, может быть бесполезной хернёй. Насколько я понял оно нужно для отображения предметов в слотах, если нет - смело удаляй.
-		screenmob.client.screen
-		if(screenmob.hud_used.sub_inventory_shown) //HOWLING VOID ADDITION
-			hidden_sub_inventory_update(screenmob)
-		 HOWLING VOID ADDITION END */
+		hidden_sub_inventory_update(screenmob)
 	else
 		if(H.shoes)
 			screenmob.client.screen -= H.shoes
@@ -444,9 +494,7 @@
 			screenmob.client.screen -= H.wear_neck
 		if(H.head)
 			screenmob.client.screen -= H.head
-		//if(screenmob.hud_used.sub_inventory_shown && screenmob.hud_used.hud_shown) //HOWLING VOID ADDITION  Это тоже может быть бесполезным
-			//hidden_sub_inventory_update(screenmob)
-
+		hidden_sub_inventory_update(screenmob)
 /datum/hud/human/persistent_inventory_update(mob/viewer)
 	if(!mymob)
 		return

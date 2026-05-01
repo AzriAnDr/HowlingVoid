@@ -1,3 +1,18 @@
+/mob/living
+	/// Lightweight hydration reserve used by Ghost Cafe and IC quick spawn supply actions.
+	var/water_level = 400
+
+/mob/living/proc/can_replenish_thirst()
+	if(!iscarbon(src))
+		return FALSE
+	var/mob/living/carbon/carbon_src = src
+	return !!carbon_src.get_organ_slot(ORGAN_SLOT_STOMACH)
+
+/mob/living/proc/adjust_thirst(change, max = 600)
+	if(!can_replenish_thirst())
+		return
+	water_level = clamp(water_level + change, 0, max)
+
 /mob/living/Initialize(mapload)
 	. = ..()
 	if(initial_size != RESIZE_DEFAULT_SIZE)
