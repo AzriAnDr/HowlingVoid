@@ -28,7 +28,7 @@
     },
   };
 
-  const DEFAULT_CHAPTER = 'jesusWept';
+  const DEFAULT_CHAPTER = 'ironHeart';
   const CSS_READY_FALLBACK_MS = 1200;
   const MENU_CHROME_STYLE_ID = 'howling-menu-chrome-style';
 

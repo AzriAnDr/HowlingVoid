@@ -60,21 +60,81 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	key = STRIPPABLE_ITEM_HAND_ACCESSORY
 	item_slot = ITEM_SLOT_HAND
 
+/datum/strippable_item/mob_item_slot/hand_accessory/get_obscuring(atom/source)
+	. = ..()
+	if(. != STRIPPABLE_OBSCURING_NONE)
+		return
+
+	var/mob/living/carbon/human/human_source = source
+	if(!istype(human_source))
+		return
+
+	if(human_source.gloves)
+		return STRIPPABLE_OBSCURING_HIDDEN
+
 /datum/strippable_item/mob_item_slot/socks
 	key = STRIPPABLE_ITEM_SOCKS
 	item_slot = ITEM_SLOT_SOCKS
+
+/datum/strippable_item/mob_item_slot/socks/get_obscuring(atom/source)
+	. = ..()
+	if(. != STRIPPABLE_OBSCURING_NONE)
+		return
+
+	var/mob/living/carbon/human/human_source = source
+	if(!istype(human_source))
+		return
+
+	if(human_source.shoes)
+		return STRIPPABLE_OBSCURING_HIDDEN
 
 /datum/strippable_item/mob_item_slot/underwear
 	key = STRIPPABLE_ITEM_UNDERWEAR
 	item_slot = ITEM_SLOT_UNDERWEAR
 
+/datum/strippable_item/mob_item_slot/underwear/get_obscuring(atom/source)
+	. = ..()
+	if(. != STRIPPABLE_OBSCURING_NONE)
+		return
+
+	var/mob/living/carbon/human/human_source = source
+	if(!istype(human_source))
+		return
+
+	if(human_source.underwear_hidden())
+		return STRIPPABLE_OBSCURING_HIDDEN
+
 /datum/strippable_item/mob_item_slot/undershirt
 	key = STRIPPABLE_ITEM_UNDERSHIRT
 	item_slot = ITEM_SLOT_SHIRT
 
+/datum/strippable_item/mob_item_slot/undershirt/get_obscuring(atom/source)
+	. = ..()
+	if(. != STRIPPABLE_OBSCURING_NONE)
+		return
+
+	var/mob/living/carbon/human/human_source = source
+	if(!istype(human_source))
+		return
+
+	if(human_source.undershirt_hidden())
+		return STRIPPABLE_OBSCURING_HIDDEN
+
 /datum/strippable_item/mob_item_slot/bra
 	key = STRIPPABLE_ITEM_BRA
 	item_slot = ITEM_SLOT_BRA
+
+/datum/strippable_item/mob_item_slot/bra/get_obscuring(atom/source)
+	. = ..()
+	if(. != STRIPPABLE_OBSCURING_NONE)
+		return
+
+	var/mob/living/carbon/human/human_source = source
+	if(!istype(human_source))
+		return
+
+	if(human_source.bra_hidden())
+		return STRIPPABLE_OBSCURING_HIDDEN
 
 /datum/strippable_item/mob_item_slot/jumpsuit
 	key = STRIPPABLE_ITEM_JUMPSUIT

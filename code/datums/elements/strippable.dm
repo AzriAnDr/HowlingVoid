@@ -281,10 +281,22 @@
 		return STRIPPABLE_OBSCURING_NONE
 
 	var/mob/living/carbon/carbon_source = source
-	if (hidden_slots_to_inventory_slots(carbon_source.obscured_slots) & item_slot)
+	var/obscured_inventory_slots = hidden_slots_to_inventory_slots(carbon_source.obscured_slots)
+	var/covered_inventory_slots = hidden_slots_to_inventory_slots(carbon_source.covered_slots)
+
+	if(item_slot & ITEM_SLOT_EXTRA)
+		if((obscured_inventory_slots & item_slot) == item_slot)
+			return STRIPPABLE_OBSCURING_COMPLETELY
+
+		if((covered_inventory_slots & item_slot) == item_slot)
+			return STRIPPABLE_OBSCURING_INACCESSIBLE
+
+		return STRIPPABLE_OBSCURING_NONE
+
+	if (obscured_inventory_slots & item_slot)
 		return STRIPPABLE_OBSCURING_COMPLETELY
 
-	if (hidden_slots_to_inventory_slots(carbon_source.covered_slots) & item_slot)
+	if (covered_inventory_slots & item_slot)
 		return STRIPPABLE_OBSCURING_INACCESSIBLE
 
 	return STRIPPABLE_OBSCURING_NONE

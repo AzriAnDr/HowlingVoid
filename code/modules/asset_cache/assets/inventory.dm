@@ -5,6 +5,7 @@
 		"inventory-neck.png" = 'icons/ui/inventory/neck.png',
 		"inventory-mask.png" = 'icons/ui/inventory/mask.png',
 		"inventory-ears.png" = 'icons/ui/inventory/ears.png',
+		"inventory-ears_extra.png" = 'icons/ui/inventory/ears_extra.png',
 		"inventory-uniform.png" = 'icons/ui/inventory/uniform.png',
 		"inventory-suit.png" = 'icons/ui/inventory/suit.png',
 		"inventory-gloves.png" = 'icons/ui/inventory/gloves.png',
@@ -17,4 +18,9 @@
 		"inventory-back.png" = 'icons/ui/inventory/back.png',
 		"inventory-pocket.png" = 'icons/ui/inventory/pocket.png',
 		"inventory-collar.png" = 'icons/ui/inventory/collar.png',
+		"inventory-underwear.png" = 'icons/ui/inventory/underwear.png',
+		"inventory-socks.png" = 'icons/ui/inventory/socks.png',
+		"inventory-undershirt.png" = 'icons/ui/inventory/undershirt.png',
+		"inventory-wrists.png" = 'icons/ui/inventory/wrists.png',
+		"inventory-bra.png" = 'icons/ui/inventory/bra.png',
 	)
