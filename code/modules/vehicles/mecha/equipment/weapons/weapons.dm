@@ -123,6 +123,21 @@
 	projectile = /obj/projectile/beam/laser/heavylaser
 	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
 
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/amlg90
+	name = "\improper AMLG-90"
+	desc = "A weapon for combat exosuits. Shoots a rapid, three shot laser burst."
+	icon = 'icons/obj/devices/ALMG-90.dmi'
+	icon_state = "mecha_amlg90"
+	equip_cooldown = 10
+	projectile = /obj/projectile/beam/laser/rapid
+	fire_sound = 'sound/items/weapons/gun/laser_sniper/gunshot_lascarbine.ogg'
+	energy_drain = 120
+	projectiles_per_shot = 3
+	variance = 6
+	randomspread = 1
+	projectile_delay = 2
+	harmful = TRUE
+
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
 	equip_cooldown = 20
 	name = "\improper MKIV ion heavy cannon"

@@ -482,6 +482,8 @@
 		animate(target, color = old_color, time = 1 SECONDS, easing = EASE_IN)
 		return ..()
 	// NOVA EDIT ADDITION END
+	else if(IS_VAMPIRE(target))
+		effect_vampire(target, user)
 
 	if(target.can_block_magic())
 		to_chat(user, span_warning("The spell had no effect!"))

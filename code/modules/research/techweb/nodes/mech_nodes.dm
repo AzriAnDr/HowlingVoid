@@ -211,6 +211,7 @@
 	design_ids = list(
 		"mech_laser",
 		"mech_laser_heavy",
+		"mech_amlg90",
 		"mech_ion",
 		"mech_tesla",
 	)

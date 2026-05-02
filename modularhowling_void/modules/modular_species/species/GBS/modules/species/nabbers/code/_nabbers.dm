@@ -60,7 +60,7 @@
 		LOADOUT_ITEM_EARS = NABBER_EARS_ICON,
 	)
 	placeholder_description = "Giant armoured serpentids (GAS), also known as Nabbers, or snake-bugs, are a massive predatory species who are trained by a company to work with humans. Physically, although they look intimidating, they're unlikely to harm a human except in times of great stress. If you see them getting their large attack arms ready, it's telling you to back off."
-	placeholder_lore = "https://fluffy-frontier.ru/osobye-rasy"
+	placeholder_lore = ""
 
 	species_language_holder = /datum/language_holder/nabber
 	language_prefs_whitelist = list(/datum/language/nabber)

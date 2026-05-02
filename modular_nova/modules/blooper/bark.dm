@@ -43,7 +43,7 @@ GLOBAL_VAR_INIT(blooper_allowed, TRUE) // For administrators
 		GLOB.blooper_allowed = !GLOB.blooper_allowed
 	to_chat(world, span_oocplain("<B>Vocal barks have been globally [GLOB.blooper_allowed ? "enabled" : "disabled"].</B>"))
 
-/// It's was stoolen from Splurt build >:3 and from fluffySTG!! nyeehehehheee!~
+/// Vocal bark profile.
 /datum/blooper
 	var/name = "None"
 	var/id = "No Voice"

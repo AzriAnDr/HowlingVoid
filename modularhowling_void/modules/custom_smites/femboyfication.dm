@@ -44,11 +44,10 @@
 	playsound(get_turf(target), 'modular_nova/modules/modular_items/lewd_items/sounds/under_moan_f4.ogg', 50, TRUE, -1)
 
 	// Init femboyflavor.
-	var/head = strings("fluffy/femboy_flavor.json", "head")
-	var/body = strings("fluffy/femboy_flavor.json", "body")
-	var/legs = strings("fluffy/femboy_flavor.json", "legs")
-	var/erot = strings("fluffy/femboy_flavor.json", "erotic")
+	var/head = strings("custom_smites/femboy_flavor.json", "head")
+	var/body = strings("custom_smites/femboy_flavor.json", "body")
+	var/legs = strings("custom_smites/femboy_flavor.json", "legs")
+	var/erot = strings("custom_smites/femboy_flavor.json", "erotic")
 
 	var/femboy_flavor = pick(head) + " " + pick(erot) + " " + pick(body) + " " + pick(erot) + " " + pick(legs)
 	target.dna.features["flavor_text"] = femboy_flavor
-

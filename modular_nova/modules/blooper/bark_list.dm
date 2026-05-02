@@ -344,6 +344,419 @@
 	id = "chitter2"
 	soundpath = 'modular_nova/modules/blooper/voice/bloopers/chitter1.ogg'
 
+/datum/blooper/mutedc2
+	name = "Muted String (Low)"
+	id = "mutedc2"
+	soundpath = 'sound/runtime/instruments/synthesis_samples/guitar/crisis_muted/C2.ogg'
+	allow_random = TRUE
+
+/datum/blooper/mutedc3
+	name = "Muted String (Medium)"
+	id = "mutedc3"
+	soundpath = 'sound/runtime/instruments/synthesis_samples/guitar/crisis_muted/C3.ogg'
+	allow_random = TRUE
+
+/datum/blooper/mutedc4
+	name = "Muted String (High)"
+	id = "mutedc4"
+	soundpath = 'sound/runtime/instruments/synthesis_samples/guitar/crisis_muted/C4.ogg'
+	allow_random = TRUE
+
+/datum/blooper/banjoc3
+	name = "Banjo (Medium)"
+	id = "banjoc3"
+	soundpath = 'sound/runtime/instruments/banjo/Cn3.ogg'
+	allow_random = TRUE
+
+/datum/blooper/banjoc4
+	name = "Banjo (High)"
+	id = "banjoc4"
+	soundpath = 'sound/runtime/instruments/banjo/Cn4.ogg'
+	allow_random = TRUE
+
+/datum/blooper/squeaky
+	name = "Squeaky"
+	id = "squeak"
+	soundpath = 'sound/items/toy_squeak/toysqueak1.ogg'
+	maxspeed = 4
+
+/datum/blooper/beep
+	name = "Beepy"
+	id = "beep"
+	soundpath = 'sound/machines/terminal/terminal_select.ogg'
+	maxpitch = 1
+	maxspeed = 4
+
+/datum/blooper/chitter
+	name = "Chittery"
+	id = "chitter"
+	minspeed = 4
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/chitter.ogg'
+
+/datum/blooper/bullet
+	name = "Windy"
+	id = "bullet"
+	maxpitch = 1.6
+	soundpath = 'sound/items/weapons/bulletflyby.ogg'
+
+// Character barks
+
+/datum/blooper/alphys
+	name = "Alphys"
+	id = "alphys"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/character_talk/voice_alphys.ogg'
+	minvariance = 0
+
+/datum/blooper/asgore
+	name = "Asgore"
+	id = "asgore"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/character_talk/voice_asgore.ogg'
+	minvariance = 0
+
+/datum/blooper/flowey
+	name = "Flowey (normal)"
+	id = "flowey1"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/character_talk/voice_flowey_1.ogg'
+	minvariance = 0
+
+/datum/blooper/flowey/evil
+	name = "Flowey (evil)"
+	id = "flowey2"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/character_talk/voice_flowey_2.ogg'
+	minvariance = 0
+
+/datum/blooper/papyrus
+	name = "Papyrus"
+	id = "papyrus"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/character_talk/voice_papyrus.ogg'
+	minvariance = 0
+
+/datum/blooper/ralsei
+	name = "Ralsei"
+	id = "ralsei"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/character_talk/voice_ralsei.ogg'
+	minvariance = 0
+
+/datum/blooper/sans
+	name = "Sans"
+	id = "sans"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/character_talk/voice_sans.ogg'
+	minvariance = 0
+
+/datum/blooper/toriel
+	name = "Toriel"
+	id = "toriel"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/character_talk/voice_toriel.ogg'
+	minvariance = 0
+	maxpitch = BLOOPER_DEFAULT_MAXPITCH*2
+
+/datum/blooper/undyne
+	name = "Undyne"
+	id = "undyne"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/character_talk/voice_undyne.ogg'
+	minvariance = 0
+
+/datum/blooper/temmie
+	name = "Temmie"
+	id = "temmie"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/character_talk/voice_temmie.ogg'
+	minvariance = 0
+
+/datum/blooper/susie
+	name = "Susie"
+	id = "susie"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/character_talk/voice_susie.ogg'
+	minvariance = 0
+
+/datum/blooper/gaster
+	name = "Gaster"
+	id = "gaster"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/character_talk/voice_gaster_1.ogg'
+	minvariance = 0
+
+/datum/blooper/mettaton
+	name = "Mettaton"
+	id = "mettaton"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/character_talk/voice_metta_1.ogg'
+	minvariance = 0
+
+// Survival barks
+
+/datum/blooper/wilson
+	name = "Wilson"
+	id = "wilson"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/survival_talk/wilson_blooper.ogg'
+
+/datum/blooper/wolfgang
+	name = "Wolfgang"
+	id = "wolfgang"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/survival_talk/wolfgang_blooper.ogg'
+	minspeed = 4
+	maxspeed = 10
+
+/datum/blooper/woodie
+	name = "Woodie"
+	id = "woodie"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/survival_talk/woodie_blooper.ogg'
+	minspeed = 4
+	maxspeed = 10
+
+/datum/blooper/wurt
+	name = "Wurt"
+	id = "wurt"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/survival_talk/wurt_blooper.ogg'
+
+/datum/blooper/wx78
+	name = "wx78"
+	id = "wx78"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/survival_talk/wx78_blooper.ogg'
+	minspeed = 3
+	maxspeed = 9
+
+/datum/blooper/ehh/alt3
+	name = "Ehh 4"
+	id = "ehh4"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/ehh4.ogg'
+	minspeed = 3
+	maxspeed = 9
+
+// Additional barks
+
+/datum/blooper/bark_sound
+	name = "Bark"
+	id = "bark"
+	soundpath = 'modular_nova/modules/emotes/sound/voice/bark1.ogg'
+
+/datum/blooper/merp
+	name = "Merp"
+	id = "merp"
+	soundpath = 'modular_nova/modules/emotes/sound/voice/merp.ogg'
+
+/datum/blooper/weh
+	name = "Weh"
+	id = "weh"
+	soundpath = 'modular_nova/modules/emotes/sound/voice/weh.ogg'
+
+/datum/blooper/moff/long
+	name = "Moff"
+	id = "moff"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/mothsqueak.ogg'
+
+/datum/blooper/honk
+	name = "Annoying Honk"
+	id = "honk"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/goose1.ogg'
+
+/datum/blooper/bikehorn
+	name = "Bikehorn"
+	id = "horn"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/bikehorn_Cn4.ogg'
+
+/datum/blooper/xenohiss
+	name = "Xenohiss"
+	id = "Xenohiss"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/Xenohiss.ogg'
+
+/datum/blooper/bleat
+	name = "Bleat"
+	id = "bleat"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/bleat_bark.ogg'
+
+/datum/blooper/ace_blip
+	name = "Ace Talk 1"
+	id = "acetalk1"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/court_talk/aa_blip.ogg'
+
+/datum/blooper/ace_blip/alt1
+	name = "Ace Talk 2"
+	id = "acetalk2"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/court_talk/aa_dd_blip.ogg'
+
+/datum/blooper/ace_blip/alt2
+	name = "Ace Talk 3"
+	id = "acetalk3"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/court_talk/aa_tgaa_blip.ogg'
+
+/datum/blooper/ace_typewriter
+	name = "Ace Typewriter"
+	id = "acewrite"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/court_talk/aa_blip_typewriter.ogg'
+
+/datum/blooper/nomi
+	name = "Nomi"
+	id = "nomi"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/nomi.ogg'
+
+/datum/blooper/bagel
+	name = "Bagel"
+	id = "bagel"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/new_barks/bagel.ogg'
+
+/datum/blooper/bump
+	name = "Bump"
+	id = "bump"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/new_barks/bump.ogg'
+
+/datum/blooper/motor
+	name = "Motor"
+	id = "motor"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/new_barks/motor.ogg'
+
+/datum/blooper/impact
+	name = "Impact"
+	id = "impact"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/new_barks/impact.ogg'
+
+/datum/blooper/ber
+	name = "Ber"
+	id = "ber"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/new_barks/ber.ogg'
+
+/datum/blooper/jok
+	name = "Jok"
+	id = "jok"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/new_barks/jok.ogg'
+
+/datum/blooper/noe
+	name = "Noe"
+	id = "noe"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/new_barks/noe.ogg'
+
+/datum/blooper/lan
+	name = "Lan"
+	id = "lan"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/new_barks/lan.ogg'
+
+/datum/blooper/q
+	name = "Q"
+	id = "q"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/new_barks/q.ogg'
+
+/datum/blooper/rud
+	name = "Rud"
+	id = "rud"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/new_barks/rud.ogg'
+
+/datum/blooper/rx
+	name = "Rx"
+	id = "RX"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/new_barks/rx1.ogg'
+
+/datum/blooper/ultraswing
+	name = "Ultraswing"
+	id = "ultraswing"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/new_barks/ultraswing.ogg'
+
+/datum/blooper/oldtalk
+	name = "Old Talk"
+	id = "oldtalk"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/new_barks/oldtalk.ogg'
+
+/datum/blooper/note
+	name = "Note"
+	id = "note"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/new_barks/note.ogg'
+
+/datum/blooper/badnote
+	name = "Bad Note"
+	id = "badnote"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/new_barks/badnote.ogg'
+
+/datum/blooper/bullet_sound
+	name = "Bullet"
+	id = "bullet_alt"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/new_barks/bullet.ogg'
+
+/datum/blooper/catsalad
+	name = "Cat Salad"
+	id = "catsalad"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/catsalad.ogg'
+
+/datum/blooper/monkey
+	name = "Monkey"
+	id = "monkey"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/monkey.ogg'
+
+/datum/blooper/oink
+	name = "Oink"
+	id = "oink"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/oink.ogg'
+
+/datum/blooper/pig_1
+	name = "Pig (First)"
+	id = "pig_1"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/oink1.ogg'
+
+/datum/blooper/pig_2
+	name = "Pig (Second)"
+	id = "pig_2"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/oink2.ogg'
+
+/datum/blooper/pig_3
+	name = "Pig (Third)"
+	id = "pig_3"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/oink3.ogg'
+
+/datum/blooper/xenomorph_1
+	name = "Xenomorph 1"
+	id = "xenomorph1"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/xenomorph1.ogg'
+
+/datum/blooper/xenomorph_2
+	name = "Xenomorph 2"
+	id = "xenomorph2"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/xenomorph2.ogg'
+
+/datum/blooper/xenomorph_3
+	name = "Xenomorph 3"
+	id = "xenomorph3"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/xenomorph3.ogg'
+
+/datum/blooper/xenomorph_4
+	name = "Xenomorph 4"
+	id = "xenomorph4"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/xenomorph4.ogg'
+
+/datum/blooper/xenomorph_5
+	name = "Xenomorph 5"
+	id = "xenomorph5"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/xenomorph5.ogg'
+
+/datum/blooper/xenomorph_6
+	name = "Xenomorph 6"
+	id = "xenomorph6"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/xenomorph6.ogg'
+
+/datum/blooper/spider_1
+	name = "Spider 1"
+	id = "spider1"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/terrorspiders/speech_1.ogg'
+
+/datum/blooper/spider_2
+	name = "Spider 2"
+	id = "spider2"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/terrorspiders/speech_2.ogg'
+
+/datum/blooper/spider_3
+	name = "Spider 3"
+	id = "spider3"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/terrorspiders/speech_3.ogg'
+
+/datum/blooper/spider_4
+	name = "Spider 4"
+	id = "spider4"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/terrorspiders/speech_4.ogg'
+
+/datum/blooper/spider_5
+	name = "Spider 5"
+	id = "spider5"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/terrorspiders/speech_5.ogg'
+
+/datum/blooper/spider_6
+	name = "Spider 6"
+	id = "spider6"
+	soundpath = 'modular_nova/modules/blooper/voice/bloopers/creature_talk/terrorspiders/speech_6.ogg'
+
 // Aganoo barks
 
 /datum/blooper/genius
