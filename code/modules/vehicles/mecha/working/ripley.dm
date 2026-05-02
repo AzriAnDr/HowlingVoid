@@ -97,8 +97,8 @@
 	icon_state = "paddy"
 	base_icon_state = "paddy"
 	movedelay = 5
-	slow_pressure_step_in = 2
-	fast_pressure_step_in = 1.5
+	slow_pressure_step_in = 4
+	fast_pressure_step_in = 2
 	max_temperature = 20000
 	max_integrity = 250
 	overclock_name = "siren"
