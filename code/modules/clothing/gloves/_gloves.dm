@@ -25,6 +25,27 @@
 	var/cut_type = null
 	/// Used for handling bloody gloves leaving behind bloodstains on objects. Will be decremented whenever a bloodstain is left behind, and be incremented when the gloves become bloody.
 	var/transfer_blood = 0
+	/// Maximum number of rings that can be attached to these gloves.
+	var/max_rings = 1
+	/// List of rings currently attached to these gloves.
+	var/list/obj/item/clothing/gloves/ring/attached_rings
+	/// Overlay appearance used when a ring is attached.
+	var/mutable_appearance/ring_overlay
+
+/obj/item/clothing/gloves/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/clothing/gloves/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	var/changed = FALSE
+	if(istype(held_item, /obj/item/clothing/gloves/ring) && LAZYLEN(attached_rings) < max_rings)
+		context[SCREENTIP_CONTEXT_LMB] = "Attach ring"
+		changed = TRUE
+	if(LAZYLEN(attached_rings))
+		context[SCREENTIP_CONTEXT_ALT_RMB] = "Remove ring"
+		changed = TRUE
+	return changed ? CONTEXTUAL_SCREENTIP_SET : .
 
 /obj/item/clothing/gloves/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -50,6 +71,13 @@
 		return
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
+	if(LAZYLEN(attached_rings))
+		var/obj/item/clothing/gloves/ring/ring = attached_rings[1]
+		var/overlay_state = ring.worn_icon_state ? ring.worn_icon_state : ring.icon_state
+		var/mutable_appearance/worn_ring_overlay = mutable_appearance(ring.worn_icon, overlay_state)
+		worn_ring_overlay.alpha = ring.alpha
+		worn_ring_overlay.color = ring.color
+		. += worn_ring_overlay
 
 /obj/item/clothing/gloves/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file, mutant_styles) // NOVA EDIT CHANGE - ORIGINAL: /obj/item/clothing/gloves/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
 	. = ..()
@@ -73,6 +101,8 @@
 	return TRUE
 
 /obj/item/clothing/gloves/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
+	if(istype(tool, /obj/item/clothing/gloves/ring))
+		return attach_ring(tool, user)
 	. = ..()
 	if(.)
 		return
@@ -88,3 +118,94 @@
 	qdel(src)
 	user.put_in_hands(new cut_type)
 	return TRUE
+
+/// Attach a ring to these gloves.
+/obj/item/clothing/gloves/proc/attach_ring(obj/item/clothing/gloves/ring/ring, mob/living/user)
+	if(LAZYLEN(attached_rings) >= max_rings)
+		if(user)
+			balloon_alert(user, "already has a ring!")
+		return FALSE
+	if(user && !user.temporarilyRemoveItemFromInventory(ring))
+		return FALSE
+	LAZYADD(attached_rings, ring)
+	ring.forceMove(src)
+	create_ring_overlay()
+	if(user)
+		balloon_alert(user, "ring attached")
+	update_appearance()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_worn_gloves()
+	return TRUE
+
+/// Remove a ring from these gloves and optionally return it to the user's hands.
+/obj/item/clothing/gloves/proc/pop_ring(mob/living/user)
+	if(!LAZYLEN(attached_rings))
+		return
+	var/obj/item/clothing/gloves/ring/ring = attached_rings[1]
+	remove_ring(ring)
+	if(user)
+		user.put_in_hands(ring)
+		ring.balloon_alert(user, "ring removed")
+
+/// Remove a specific ring from the attachment list and update overlays.
+/obj/item/clothing/gloves/proc/remove_ring(obj/item/clothing/gloves/ring/ring)
+	LAZYREMOVE(attached_rings, ring)
+	if(ring_overlay)
+		cut_overlay(ring_overlay)
+	ring_overlay = null
+	if(LAZYLEN(attached_rings))
+		create_ring_overlay()
+	update_appearance()
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_worn_gloves()
+
+/// Rebuild the ring overlay from the first attached ring.
+/obj/item/clothing/gloves/proc/create_ring_overlay()
+	var/obj/item/clothing/gloves/ring/ring = attached_rings[1]
+	ring_overlay = ring.build_ring_overlay()
+	add_overlay(ring_overlay)
+
+/// Drop all attached rings to a location.
+/obj/item/clothing/gloves/proc/dump_rings(atom/drop_to = drop_location())
+	for(var/obj/item/clothing/gloves/ring/ring as anything in attached_rings)
+		ring.forceMove(drop_to)
+	attached_rings = null
+	if(ring_overlay)
+		cut_overlay(ring_overlay)
+	ring_overlay = null
+
+/obj/item/clothing/gloves/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(istype(gone, /obj/item/clothing/gloves/ring) && (gone in attached_rings))
+		LAZYREMOVE(attached_rings, gone)
+		if(ring_overlay)
+			cut_overlay(ring_overlay)
+		ring_overlay = null
+		if(LAZYLEN(attached_rings))
+			create_ring_overlay()
+		update_appearance()
+		if(ismob(loc))
+			var/mob/M = loc
+			M.update_worn_gloves()
+
+/obj/item/clothing/gloves/atom_destruction(damage_flag)
+	dump_rings()
+	return ..()
+
+/obj/item/clothing/gloves/Destroy()
+	attached_rings = null
+	return ..()
+
+/obj/item/clothing/gloves/click_alt_secondary(mob/user)
+	if(!LAZYLEN(attached_rings))
+		balloon_alert(user, "no ring to remove!")
+		return
+	pop_ring(user)
+
+/obj/item/clothing/gloves/examine(mob/user)
+	. = ..()
+	if(LAZYLEN(attached_rings))
+		. += "Alt-Right-Click to remove [attached_rings[1]]."
+	return .

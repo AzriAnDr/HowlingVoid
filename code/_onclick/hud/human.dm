@@ -369,16 +369,6 @@
 	toggleable_sub_inventory += inv_box
 
 	inv_box = new /atom/movable/screen/inventory(null, src)
-	inv_box.name = "hand"
-	inv_box.icon = extra_inventory_ui_style(ui_style)
-	inv_box.icon_state = "gloves"
-	inv_box.icon_full = "template"
-	inv_box.icon_empty = "gloves"
-	inv_box.screen_loc = ui_hand
-	inv_box.slot_id = ITEM_SLOT_HAND
-	toggleable_sub_inventory += inv_box
-
-	inv_box = new /atom/movable/screen/inventory(null, src)
 	inv_box.name = "right ear"
 	inv_box.icon = extra_inventory_ui_style(ui_style)
 	inv_box.icon_state = "ears_extra"
@@ -430,7 +420,7 @@
 		if(isnull(human_mob.wear_suit) || !(human_mob.wear_suit.item_flags & IN_INVENTORY))
 			blocked_slots |= ITEM_SLOT_SUITSTORE
 		if(human_mob.num_hands <= 0)
-			blocked_slots |= ITEM_SLOT_GLOVES|ITEM_SLOT_HAND
+			blocked_slots |= ITEM_SLOT_GLOVES
 		if(human_mob.num_hands < 2)
 			blocked_slots |= ITEM_SLOT_WRISTS
 		if(human_mob.num_legs < 2) // update this when you can wear shoes on one foot
