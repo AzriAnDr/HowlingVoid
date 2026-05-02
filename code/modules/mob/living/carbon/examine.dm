@@ -560,8 +560,6 @@
 	else if(GET_ATOM_BLOOD_DECAL_LENGTH(src) || blood_in_hands)
 		if(num_hands)
 			. += span_warning("[t_He] [t_has] [num_hands > 1 ? "" : "a "]blood-stained hand[num_hands > 1 ? "s" : ""]!")
-	if(hand_accessory && !gloves && !(obscured_slots & HIDEGLOVES) && !HAS_TRAIT(hand_accessory, TRAIT_EXAMINE_SKIP))
-		. += "[t_He] [t_has] [hand_accessory.examine_title(user)] on [t_his] hands."
 	if(wrists && !wrists_hidden() && !HAS_TRAIT(wrists, TRAIT_EXAMINE_SKIP))
 		. += "[t_He] [t_is] wearing [wrists.examine_title(user)]."
 	//handcuffed?

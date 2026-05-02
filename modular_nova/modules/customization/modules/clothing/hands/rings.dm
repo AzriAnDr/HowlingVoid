@@ -11,9 +11,7 @@
 	gender = NEUTER
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
-	slot_flags = NONE
-	extra_slot_flags = ITEM_SLOT_HAND
-	slot_equipment_priority = list(ITEM_SLOT_HAND)
+	slot_flags = ITEM_SLOT_GLOVES
 	strip_delay = 4 SECONDS
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 	resistance_flags = FIRE_PROOF
@@ -21,6 +19,24 @@
 /obj/item/clothing/gloves/ring/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("\[user] is putting the [src] in [user.p_their()] mouth! It looks like [user] is trying to choke on the [src]!"))
 	return OXYLOSS
+
+/// Builds the mutable_appearance overlay to display when attached to gloves.
+/// Shows the item's own sprite scaled down to the bottom-right corner.
+/obj/item/clothing/gloves/ring/proc/build_ring_overlay()
+	var/mutable_appearance/ring_overlay = mutable_appearance(icon, icon_state)
+	ring_overlay.alpha = alpha
+	ring_overlay.color = color
+	var/matrix/M = matrix()
+	M.Scale(0.5, 0.5)
+	ring_overlay.transform = M
+	ring_overlay.pixel_x = 8
+	ring_overlay.pixel_y = -8
+	return ring_overlay
+
+/obj/item/clothing/gloves/ring/examine(mob/user)
+	. = ..()
+	. += "It can be attached to gloves."
+	return .
 
 /obj/item/clothing/gloves/ring/diamond
 	name = "diamond ring"

@@ -9,9 +9,6 @@
 /mob/proc/update_clothing(slot_flags)
 	if(slot_flags & ITEM_SLOT_EXTRA)
 		var/handled_extra_slots = ITEM_SLOT_EXTRA
-		if((slot_flags & ITEM_SLOT_HAND) == ITEM_SLOT_HAND)
-			update_worn_hand_accessory()
-			handled_extra_slots |= (ITEM_SLOT_HAND & ~ITEM_SLOT_EXTRA)
 		if((slot_flags & ITEM_SLOT_WRISTS) == ITEM_SLOT_WRISTS)
 			update_worn_wrists()
 			handled_extra_slots |= (ITEM_SLOT_WRISTS & ~ITEM_SLOT_EXTRA)
@@ -152,10 +149,6 @@
 
 ///Updates the socks overlay & HUD element.
 /mob/proc/update_worn_socks()
-	return
-
-///Updates the hand accessory overlay & HUD element.
-/mob/proc/update_worn_hand_accessory()
 	return
 
 ///Updates the wrists overlay & HUD element.

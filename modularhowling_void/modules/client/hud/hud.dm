@@ -51,9 +51,6 @@
 			if(H.w_bra)
 				H.w_bra.screen_loc = ui_bra
 				screenmob.client.screen += H.w_bra
-			if(H.hand_accessory)
-				H.hand_accessory.screen_loc = ui_hand
-				screenmob.client.screen += H.hand_accessory
 			if(H.ears_extra)
 				H.ears_extra.screen_loc = ui_ears_extra
 				screenmob.client.screen += H.ears_extra
@@ -69,8 +66,6 @@
 				screenmob.client.screen -= H.w_shirt
 			if(H.w_bra)
 				screenmob.client.screen -= H.w_bra
-			if(H.hand_accessory)
-				screenmob.client.screen -= H.hand_accessory
 			if(H.ears_extra)
 				screenmob.client.screen -= H.ears_extra
 			if(H.wrists)

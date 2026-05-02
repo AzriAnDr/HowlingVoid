@@ -36,7 +36,6 @@
 	var/obj/item/w_bra
 	var/obj/item/ears_extra
 	var/obj/item/wrists
-	var/obj/item/hand_accessory
 	/// Prevents item equipped/dropped callbacks from clobbering prefs while update_underwear is syncing items.
 	var/tmp/syncing_extra_inventory = FALSE
 	/// Chronological age.
@@ -52,4 +51,3 @@
 	update_underwear()
 	update_worn_ears_extra()
 	update_worn_wrists()
-	update_worn_hand_accessory()

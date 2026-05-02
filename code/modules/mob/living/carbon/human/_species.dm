@@ -599,12 +599,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if(H.num_hands < 2)
 					return FALSE
 				return equip_delay_self_check(I, H, bypass_equip_delay_self)
-			if(ITEM_SLOT_HAND)
-				if(!istype(I, /obj/item/clothing/gloves/ring))
-					return FALSE
-				if(H.num_hands < 1)
-					return FALSE
-				return equip_delay_self_check(I, H, bypass_equip_delay_self)
 			if(ITEM_SLOT_UNDERWEAR)
 				return equip_delay_self_check(I, H, bypass_equip_delay_self)
 			if(ITEM_SLOT_SOCKS)
