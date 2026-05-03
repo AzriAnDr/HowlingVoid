@@ -45,7 +45,7 @@
     },
     sisterRay: {
       id: 'sisterRay',
-      subtitle: 'THE GROWING STONES',
+      subtitle: 'IRON HEART',
       css: 'sisterRay.css',
       js: 'sisterRay.js',
       audio: 'Sister_Ray.mp3',

@@ -1,8 +1,5 @@
 /* =========================================================
-   HOWLING VOID — SISTER RAY / THE GROWING STONES VARIANT
-   Compatible with the current menu HTML:
-   .start-overlay, .intro-overlay, .menu-wrapper, .menu-list,
-   .menu-item[data-action], #bgm, #select-sound.
+   HOWLING VOID — SISTER RAY / THE GROWING STONES
 ========================================================= */
 
 (() => {
