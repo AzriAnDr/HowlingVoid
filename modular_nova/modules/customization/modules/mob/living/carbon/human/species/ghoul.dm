@@ -8,14 +8,13 @@
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_RADIMMUNE,
 		TRAIT_CAN_STRIP,
-		TRAIT_EASYDISMEMBER,
-		TRAIT_EASILY_WOUNDED, //theyre like fuckin skin and bones
+		TRAIT_VIRUS_RESISTANCE,
 		TRAIT_LITERATE,
 		TRAIT_MUTANT_COLORS,
 		TRAIT_FIXED_MUTANT_COLORS,
 	)
 	payday_modifier = 1.0 //-- "Equality"
-	stunmod = 1.25 //multiplier for stun durations
+	stunmod = 1 //multiplier for stun durations
 	bodytemp_normal = T20C
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	bodypart_overrides = list(

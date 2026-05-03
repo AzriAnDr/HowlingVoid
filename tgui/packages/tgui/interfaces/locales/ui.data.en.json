@@ -188,6 +188,8 @@
     "ui.character.data.quirk_VisitorID_description": "As an assistant, you're given a visitor ID with limited background information. Your records will be sparse and require filling out during the shift.",
     "ui.character.data.quirk_Abnormalbodytemperature_name": "Abnormal body temperature",
     "ui.character.data.quirk_Abnormalbodytemperature_description": "Your body temperature is unusual for your baseline species, being offset above or below the norm. This is not recommended for cold-blooded species, and at extreme values it may cause minor burns on arrival.",
+    "ui.character.data.quirk_ColdBlooded_name": "Cold Blooded",
+    "ui.character.data.quirk_ColdBlooded_description": "You are cold blooded like lizards. You cannot warm yourself naturally, so you will need to manage your body temperature carefully.",
     "ui.character.data.quirk_AdaptedLungs_name": "Adapted Lungs",
     "ui.character.data.quirk_AdaptedLungs_description": "Your lungs have adapted to be resistant to certain atmospheric conditions, at the cost of being more vulnerable to others.",
     "ui.character.data.quirk_Ageusia_name": "Ageusia",

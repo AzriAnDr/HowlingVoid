@@ -1,5 +1,5 @@
-#define GHOUL_BRUTE_MODIFIER 2
-#define GHOUL_BURN_MODIFIER 2
+#define GHOUL_BRUTE_MODIFIER 1.1
+#define GHOUL_BURN_MODIFIER 1.1
 
 // Ghouls!
 /obj/item/bodypart/head/mutant/ghoul
@@ -64,7 +64,7 @@
 	unarmed_attack_sound = 'sound/items/weapons/punch1.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/punchmiss.ogg'
 	brute_modifier = GHOUL_BRUTE_MODIFIER
-	// burn_modifier = GHOUL_BURN_MODIFIER
+	burn_modifier = GHOUL_BURN_MODIFIER
 
 
 /obj/item/bodypart/arm/right/mutant/ghoul

@@ -110,6 +110,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BRAINLESS_CARBON "brainless_carbon"
 #define TRAIT_BADDNA "baddna"
 #define TRAIT_CLUMSY "clumsy"
+/// Mob is cold blooded and cannot regulate their core temperature naturally.
+#define TRAIT_COLDBLOODED "coldblooded"
 /// Trait that means you are capable of holding items in some form
 #define TRAIT_CAN_HOLD_ITEMS "can_hold_items"
 /// Trait that means you're capable of throwing things

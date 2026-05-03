@@ -188,6 +188,8 @@
 	"ui.character.data.quirk_VisitorID_description": "Будучи ассистентом, вы получаете гостевой ID с крайне ограниченной сопроводительной информацией. Ваши записи будут скудными, и их придётся заполнять уже по ходу смены.",
 	"ui.character.data.quirk_Abnormalbodytemperature_name": "Аномальная температура тела",
 	"ui.character.data.quirk_Abnormalbodytemperature_description": "Температура вашего тела заметно отличается от нормы для вашего вида и смещена вверх или вниз. Для холоднокровных видов это особенно не рекомендуется, а на крайних значениях по прибытии можно даже получить лёгкие ожоги.",
+	"ui.character.data.quirk_ColdBlooded_name": "Холоднокровный",
+	"ui.character.data.quirk_ColdBlooded_description": "Вы холоднокровны, как ящерицы. Ваше тело не способно согреваться естественным образом, поэтому за температурой придётся следить особенно внимательно.",
 	"ui.character.data.quirk_AdaptedLungs_name": "Адаптированные лёгкие",
 	"ui.character.data.quirk_AdaptedLungs_description": "Ваши лёгкие адаптировались к устойчивости к одним атмосферным условиям ценой большей уязвимости к другим.",
 	"ui.character.data.quirk_Ageusia_name": "Агевзия",

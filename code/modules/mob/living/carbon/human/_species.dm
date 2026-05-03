@@ -1162,6 +1162,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * humi (required) The mob we will stabilize
  */
 /datum/species/proc/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick)
+	if(HAS_TRAIT(humi, TRAIT_COLDBLOODED))
+		return
+
 	var/natural_change = get_temp_change_amount(humi.get_body_temp_normal() - humi.coretemperature, 0.06 * seconds_per_tick)
 	humi.adjust_coretemperature(humi.metabolism_efficiency * natural_change)
 
