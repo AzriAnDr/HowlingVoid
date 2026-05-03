@@ -25,27 +25,43 @@ GLOBAL_LIST_INIT(pp_transformables, list(
 	types = list(
 		list(
 			name = "Larva",
-			key = /mob/living/carbon/alien/larva
+			key = /mob/living/carbon/alien/larva/tgmc
 			),
 		list(
-			name = "Drone",
-			key = /mob/living/carbon/alien/adult/drone
-			),
-		list(
-			name = "Hunter",
-			key = /mob/living/carbon/alien/adult/hunter
+			name = "Runner",
+			key = /mob/living/carbon/alien/adult/tgmc/runner
 			),
 		list(
 			name = "Sentinel",
-			key = /mob/living/carbon/alien/adult/sentinel
+			key = /mob/living/carbon/alien/adult/tgmc/sentinel
+			),
+		list(
+			name = "Defender",
+			key = /mob/living/carbon/alien/adult/tgmc/defender
+			),
+		list(
+			name = "Drone",
+			key = /mob/living/carbon/alien/adult/tgmc/drone
+			),
+		list(
+			name = "Spitter",
+			key = /mob/living/carbon/alien/adult/tgmc/spitter
+			),
+		list(
+			name = "Ravager",
+			key = /mob/living/carbon/alien/adult/tgmc/ravager
+			),
+		list(
+			name = "Crusher",
+			key = /mob/living/carbon/alien/adult/tgmc/crusher
 			),
 		list(
 			name = "Praetorian",
-			key = /mob/living/carbon/alien/adult/royal/praetorian
+			key = /mob/living/carbon/alien/adult/tgmc/praetorian
 			),
 		list(
 			name = "Queen",
-			key = /mob/living/carbon/alien/adult/royal/queen
+			key = /mob/living/carbon/alien/adult/tgmc/queen
 			)
 		)
 	),

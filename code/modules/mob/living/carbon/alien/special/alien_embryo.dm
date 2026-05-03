@@ -11,6 +11,7 @@
 	var/bursting = FALSE
 	/// How long does it take to advance one stage? Growth time * 5 = how long till we make a Larva!
 	var/growth_time = 60 SECONDS
+	var/larva_path = /mob/living/carbon/alien/larva/tgmc
 
 /obj/item/organ/body_egg/alien_embryo/Initialize(mapload)
 	. = ..()
@@ -95,7 +96,7 @@
 		ignore_category = POLL_IGNORE_ALIEN_LARVA,
 		alert_pic = owner,
 		role_name_text = "alien larva",
-		chat_text_border_icon = /mob/living/carbon/alien/larva,
+		chat_text_border_icon = /mob/living/carbon/alien/larva/tgmc,
 	)
 	on_poll_concluded(gib_on_success, chosen_one)
 
@@ -114,7 +115,7 @@
 	owner.add_overlay(overlay)
 
 	var/atom/xeno_loc = get_turf(owner)
-	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
+	var/mob/living/carbon/alien/larva/new_xeno = new larva_path(xeno_loc)
 	new_xeno.PossessByPlayer(ghost.key)
 	SEND_SOUND(new_xeno, sound('sound/mobs/non-humanoids/hiss/hiss5.ogg',0,0,0,100)) //To get the player's attention
 	new_xeno.add_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_IMMOBILIZED, TRAIT_NO_TRANSFORM), type) //so we don't move during the bursting animation

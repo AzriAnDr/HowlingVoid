@@ -192,7 +192,7 @@
 	cures = list(/datum/reagent/medicine/spaceacillin, /datum/reagent/glycerol)
 	cure_chance = 2.5
 	agent = "Rip-LEY Alien Microbes"
-	desc = "This disease changes the victim into a xenomorph."
+	desc = "This disease changes the victim into a TGMC xenomorph."
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	visibility_flags = NONE
 	stage1 = list()
@@ -208,7 +208,7 @@
 		span_danger("Your skin feels very tight."),
 	)
 	stage5 = list(span_danger("Your skin feels as if it's about to burst off!"))
-	new_form = /mob/living/carbon/alien/adult/hunter
+	new_form = /mob/living/carbon/alien/adult/tgmc/runner
 	bantype = ROLE_ALIEN
 
 

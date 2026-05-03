@@ -28,6 +28,7 @@
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
 
 	var/sterile = FALSE
+	var/embryo_path = /obj/item/organ/body_egg/alien_embryo/tgmc
 	var/real = TRUE //0 for the toy, 1 for real. Sure I could istype, but fuck that.
 	var/strength = 5
 
@@ -219,7 +220,7 @@
 
 		var/obj/item/bodypart/chest/LC = target.get_bodypart(BODY_ZONE_CHEST)
 		if((!LC || IS_ORGANIC_LIMB(LC)) && !target.get_organ_by_type(/obj/item/organ/body_egg/alien_embryo))
-			new /obj/item/organ/body_egg/alien_embryo(target)
+			new embryo_path(target)
 			target.log_message("was impregnated by a facehugger", LOG_GAME)
 			target.log_message("was impregnated by a facehugger", LOG_VICTIM, log_globally = FALSE)
 			if(target.stat != DEAD && istype(target.buckled, /obj/structure/bed/nest)) //Handles toggling the nest sustenance status effect if the user was already buckled to a nest.

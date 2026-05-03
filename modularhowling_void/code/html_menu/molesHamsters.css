@@ -1,0 +1,1111 @@
+/* =========================================================
+   HOWLING VOID - MOLES / HAMSTERS
+========================================================= */
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+}
+
+body[data-chapter="molesHamsters"] {
+	--paper: #f7f5ef;
+	--paper-warm: #efe7d6;
+	--ink: #11100e;
+	--ink-soft: rgba(17, 16, 14, 0.76);
+	--pencil: rgba(17, 16, 14, 0.26);
+	--blood: #d40000;
+	--blood-soft: rgba(212, 0, 0, 0.44);
+	--soil: #7b5c43;
+	--menu-chrome-fg: rgba(16, 14, 12, 0.82);
+	--menu-chrome-bg: rgba(247, 245, 239, 0.78);
+	--menu-chrome-border: 1px solid rgba(16, 14, 12, 0.42);
+	--menu-chrome-shadow:
+		0 6px 18px rgba(16, 14, 12, 0.12), inset 0 0 0 1px rgba(255, 255, 255, 0.34);
+	--menu-chrome-accent: #d40000;
+	--menu-chrome-name-fg: rgba(16, 14, 12, 0.9);
+	--menu-chrome-name-shadow: 1px 1px 0 rgba(212, 0, 0, 0.22);
+	background: var(--paper);
+	color: var(--ink);
+	position: fixed;
+	inset: 0;
+	min-width: 100vw;
+	min-height: 100vh;
+	filter: contrast(1.06) saturate(0.82);
+}
+
+body[data-chapter="molesHamsters"] .vignette,
+body[data-chapter="molesHamsters"] .noise-overlay,
+body[data-chapter="molesHamsters"] .background-layer,
+body[data-chapter="molesHamsters"] .blood-flash,
+body[data-chapter="molesHamsters"] .white-flash {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+}
+
+body[data-chapter="molesHamsters"]::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+	background:
+		linear-gradient(90deg, rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+		linear-gradient(0deg, rgba(0, 0, 0, 0.025) 1px, transparent 1px),
+		radial-gradient(
+			circle at 68% 44%,
+			rgba(244, 226, 176, 0.52),
+			transparent 24%
+		),
+		radial-gradient(circle at 18% 82%, rgba(180, 40, 20, 0.08), transparent 22%),
+		linear-gradient(180deg, #fbfaf6 0%, #eee4d0 100%);
+	background-size:
+		14px 14px,
+		14px 14px,
+		auto,
+		auto,
+		auto;
+	opacity: 0.92;
+}
+
+body[data-chapter="molesHamsters"]::after {
+	content: "";
+	position: fixed;
+	inset: -4%;
+	z-index: 2;
+	pointer-events: none;
+	background:
+		radial-gradient(
+			circle at 50% 50%,
+			transparent 0 48%,
+			rgba(0, 0, 0, 0.24) 100%
+		), linear-gradient(rgba(0, 0, 0, 0.035) 50%, rgba(255, 255, 255, 0.02) 50%);
+	background-size:
+		auto,
+		100% 4px;
+	mix-blend-mode: multiply;
+	opacity: 0.82;
+	animation: none;
+}
+
+body[data-chapter="molesHamsters"] .vignette {
+	z-index: 8;
+	box-shadow:
+		inset 0 0 120px 40px rgba(0, 0, 0, 0.34),
+		inset 0 0 14px 3px rgba(0, 0, 0, 0.22);
+	opacity: 0.92;
+}
+
+body[data-chapter="molesHamsters"] .noise-overlay {
+	z-index: 7;
+	opacity: 0.2;
+	mix-blend-mode: multiply;
+	background:
+		repeating-linear-gradient(
+			0deg,
+			rgba(0, 0, 0, 0.035) 0 1px,
+			transparent 1px 3px
+		),
+		repeating-linear-gradient(
+			90deg,
+			rgba(0, 0, 0, 0.018) 0 1px,
+			transparent 1px 5px
+		);
+}
+
+body[data-chapter="molesHamsters"] .background-layer {
+	inset: -6%;
+	z-index: 3;
+	mix-blend-mode: multiply;
+}
+
+body[data-chapter="molesHamsters"] .bg-layer-1 {
+	background:
+		radial-gradient(circle at 17% 18%, rgba(212, 0, 0, 0.13), transparent 19%),
+		radial-gradient(circle at 79% 73%, rgba(212, 0, 0, 0.09), transparent 17%),
+		linear-gradient(
+			104deg,
+			transparent 0 38%,
+			rgba(0, 0, 0, 0.035) 38% 39%,
+			transparent 39% 100%
+		);
+	filter: blur(1px);
+	opacity: 0.9;
+	animation: molesPaperDrift 38s linear infinite alternate;
+}
+
+body[data-chapter="molesHamsters"] .bg-layer-2 {
+	background:
+		radial-gradient(
+			ellipse at 50% 82%,
+			rgba(123, 92, 67, 0.28),
+			transparent 28%
+		),
+		radial-gradient(
+			ellipse at 24% 88%,
+			rgba(123, 92, 67, 0.18),
+			transparent 18%
+		),
+		radial-gradient(
+			ellipse at 82% 90%,
+			rgba(123, 92, 67, 0.14),
+			transparent 22%
+		);
+	filter: blur(10px);
+	opacity: 0.55;
+	animation: molesPaperDrift2 52s linear infinite alternate;
+}
+
+/* The old inverted cross is disabled for this calmer variant. */
+body[data-chapter="molesHamsters"] .inverted-cross-overlay {
+	display: none !important;
+}
+
+body[data-chapter="molesHamsters"] .cross-shape {
+	background: var(--ink);
+	box-shadow: none;
+}
+
+body[data-chapter="molesHamsters"] .cross-fog,
+body[data-chapter="molesHamsters"] .cross-noise {
+	display: none;
+}
+
+/* Added by JS */
+.moles-paper-grain,
+.moles-doodle-layer,
+.moles-red-scribble-layer,
+.moles-crawl-line,
+.moles-torn-band {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+}
+
+.moles-paper-grain {
+	z-index: 6;
+	opacity: 0.38;
+	mix-blend-mode: multiply;
+	background-image:
+		radial-gradient(circle, rgba(0, 0, 0, 0.18) 0 1px, transparent 1.2px),
+		radial-gradient(circle, rgba(0, 0, 0, 0.09) 0 1px, transparent 1.3px);
+	background-size:
+		29px 31px,
+		53px 47px;
+	animation: molesGrain 0.9s steps(2, end) infinite;
+}
+
+.moles-doodle-layer {
+	z-index: 5;
+	color: var(--ink);
+	font-family: "Comic Sans MS", "Crimson Text", serif;
+	opacity: 0.64;
+}
+
+.moles-doodle {
+	position: absolute;
+	width: var(--w, 180px);
+	height: var(--h, 110px);
+	left: var(--x, 10%);
+	top: var(--y, 10%);
+	opacity: var(--o, 0.72);
+	transform: rotate(var(--r, 0deg)) scale(var(--s, 1));
+	filter: blur(var(--b, 0px));
+}
+
+.moles-doodle--hamster::before {
+	content: "";
+	position: absolute;
+	left: 18%;
+	right: 18%;
+	bottom: 16%;
+	height: 58%;
+	border: 4px solid var(--ink);
+	border-radius: 48% 47% 39% 42%;
+	background: transparent;
+	box-shadow:
+		-36px 26px 0 -25px var(--paper),
+		36px 26px 0 -25px var(--paper),
+		inset 0 -12px 0 rgba(0, 0, 0, 0.025);
+}
+
+.moles-doodle--hamster::after {
+	content: '•   •';
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 25%;
+	text-align: center;
+	color: var(--ink);
+	font-size: 32px;
+	letter-spacing: 24px;
+	text-shadow:
+		0 18px 0 var(--ink),
+		24px 18px 0 var(--ink);
+}
+
+.moles-doodle--mole::before {
+	content: "";
+	position: absolute;
+	left: 16%;
+	right: 16%;
+	bottom: 17%;
+	height: 46%;
+	border: 4px solid var(--ink);
+	border-radius: 50% 50% 38% 38%;
+	background: transparent;
+}
+
+.moles-doodle--mole::after {
+	content: "";
+	position: absolute;
+	left: 42%;
+	top: 25%;
+	width: 24px;
+	height: 24px;
+	border: 4px solid var(--ink);
+	border-radius: 50%;
+	box-shadow:
+		-34px 6px 0 -8px var(--paper),
+		34px 6px 0 -8px var(--paper),
+		-34px 6px 0 -4px var(--ink),
+		34px 6px 0 -4px var(--ink);
+}
+
+.moles-doodle--grass {
+	height: 70px;
+	border-bottom: 3px solid var(--ink);
+	background:
+		linear-gradient(
+			74deg,
+			transparent 0 48%,
+			var(--ink) 49% 51%,
+			transparent 52% 100%
+		)
+		0 20px / 22px 42px repeat-x,
+		linear-gradient(
+			106deg,
+			transparent 0 48%,
+			var(--ink) 49% 51%,
+			transparent 52% 100%
+		)
+		5px 12px / 26px 46px repeat-x;
+}
+
+.moles-doodle--word {
+	width: auto;
+	height: auto;
+	font-size: clamp(26px, 4vw, 72px);
+	font-weight: 900;
+	letter-spacing: 0.24em;
+	text-transform: uppercase;
+	color: var(--ink);
+	-webkit-text-stroke: 1px rgba(0, 0, 0, 0.12);
+	text-shadow: 2px 2px 0 rgba(212, 0, 0, 0.28);
+}
+
+.moles-red-scribble-layer {
+	z-index: 5;
+	mix-blend-mode: multiply;
+}
+
+.moles-red-scribble {
+	position: absolute;
+	left: var(--x, 50%);
+	top: var(--y, 50%);
+	width: var(--w, 150px);
+	height: var(--w, 150px);
+	opacity: var(--o, 0.52);
+	transform: translate(-50%, -50%) rotate(var(--r, 0deg));
+	border-radius: 50%;
+	background:
+		repeating-radial-gradient(
+			circle at 50% 50%,
+			transparent 0 9px,
+			rgba(212, 0, 0, 0.82) 10px 13px,
+			transparent 14px 20px
+		),
+		conic-gradient(
+			from 20deg,
+			transparent 0 8%,
+			rgba(212, 0, 0, 0.66) 8% 12%,
+			transparent 12% 21%,
+			rgba(212, 0, 0, 0.58) 21% 25%,
+			transparent 25% 100%
+		);
+	filter: blur(0.2px);
+	animation: molesRedPulse 6s ease-in-out infinite;
+}
+
+.moles-torn-band {
+	z-index: 4;
+	opacity: 0.55;
+	background:
+		linear-gradient(
+			176deg,
+			transparent 0 39%,
+			rgba(0, 0, 0, 0.13) 39.2% 39.7%,
+			rgba(255, 255, 255, 0.4) 39.8% 41.2%,
+			transparent 41.3% 100%
+		),
+		linear-gradient(
+			8deg,
+			transparent 0 66%,
+			rgba(0, 0, 0, 0.09) 66.2% 66.7%,
+			rgba(255, 255, 255, 0.33) 66.8% 68%,
+			transparent 68.1% 100%
+		);
+	mix-blend-mode: multiply;
+}
+
+.moles-crawl-line {
+	z-index: 6;
+	inset: auto 0 12%;
+	height: 80px;
+	opacity: 0.42;
+	background:
+		linear-gradient(
+			90deg,
+			transparent 0 4%,
+			rgba(0, 0, 0, 0.76) 4.2% 16%,
+			transparent 16.3% 24%,
+			rgba(0, 0, 0, 0.74) 24.2% 38%,
+			transparent 38.2% 100%
+		)
+		0 26px / 360px 4px repeat-x,
+		radial-gradient(
+			ellipse at center,
+			rgba(0, 0, 0, 0.7) 0 40%,
+			transparent 42%
+		)
+		0 30px / 80px 18px repeat-x;
+	animation: molesCrawl 9s linear infinite;
+}
+
+/* START WARNING */
+body[data-chapter="molesHamsters"] .start-overlay {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 22px;
+	background: radial-gradient(
+		circle at 50% 52%,
+		rgba(255, 255, 255, 0.82),
+		rgba(239, 231, 214, 0.96) 48%,
+		rgba(218, 203, 178, 0.98) 100%
+	);
+	color: var(--ink);
+	z-index: 100;
+	text-transform: none;
+	letter-spacing: 0.08em;
+	transition:
+		opacity 0.35s ease-out,
+		visibility 0.35s ease-out;
+}
+
+body[data-chapter="molesHamsters"] .start-overlay--hidden {
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+body[data-chapter="molesHamsters"] .start-overlay::before {
+	content: 'К Р О Т Ы  /  Х О М Я К И';
+	position: absolute;
+	left: 20px;
+	right: 20px;
+	top: 22px;
+	text-align: center;
+	font-family: "Comic Sans MS", "Crimson Text", serif;
+	font-size: clamp(22px, 5vw, 82px);
+	font-weight: 900;
+	letter-spacing: 0.32em;
+	color: rgba(17, 16, 14, 0.09);
+	transform: rotate(-1deg);
+}
+
+body[data-chapter="molesHamsters"] .start-center {
+	position: relative;
+	max-width: 840px;
+	padding: 28px 36px;
+	box-sizing: border-box;
+	text-align: left;
+	background: rgba(251, 249, 242, 0.78);
+	border: 3px solid rgba(17, 16, 14, 0.76);
+	box-shadow:
+		8px 8px 0 rgba(17, 16, 14, 0.12),
+		-4px -4px 0 rgba(212, 0, 0, 0.08);
+}
+
+body[data-chapter="molesHamsters"] .start-center::after {
+	content: "V";
+	position: absolute;
+	right: 28px;
+	bottom: 18px;
+	color: var(--blood);
+	font:
+		900 84px / 1 "Comic Sans MS",
+		serif;
+	opacity: 0.18;
+	transform: rotate(-12deg);
+}
+
+body[data-chapter="molesHamsters"] .start-title {
+	margin-bottom: 12px;
+	color: var(--ink);
+	font:
+		900 clamp(24px, 3vw, 42px) / 1 "Comic Sans MS",
+		"Crimson Text",
+		serif;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	text-shadow: 2px 2px 0 rgba(212, 0, 0, 0.22);
+}
+
+body[data-chapter="molesHamsters"] .start-text {
+	max-height: min(48vh, 420px);
+	overflow: auto;
+	padding-right: 12px;
+	color: rgba(17, 16, 14, 0.84);
+	font-size: clamp(15px, 1.4vw, 22px);
+	line-height: 1.45;
+	letter-spacing: 0.055em;
+}
+
+body[data-chapter="molesHamsters"] .start-text .accent {
+	color: var(--blood);
+	text-shadow: none;
+	font-weight: 900;
+}
+
+body[data-chapter="molesHamsters"] .start-skip {
+	display: flex;
+	width: fit-content;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	margin: 18px auto 0;
+	color: var(--ink-soft);
+	font-size: 14px;
+	text-transform: uppercase;
+}
+
+body[data-chapter="molesHamsters"] .start-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 12px auto 0;
+	padding: 12px 24px;
+	border: 3px solid var(--ink);
+	background: var(--paper);
+	color: var(--ink);
+	font:
+		900 15px / 1 "Comic Sans MS",
+		"Crimson Text",
+		serif;
+	letter-spacing: 0.18em;
+	box-shadow: 5px 5px 0 rgba(212, 0, 0, 0.34);
+}
+
+body[data-chapter="molesHamsters"] .start-button:hover {
+	background: var(--blood);
+	color: #fff;
+	transform: translate(-2px, -2px) rotate(-1deg);
+	box-shadow: 8px 8px 0 rgba(17, 16, 14, 0.22);
+}
+
+/* INTRO */
+body[data-chapter="molesHamsters"] .intro-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 55;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(247, 245, 239, 0.92);
+	color: var(--ink);
+	animation: none !important;
+	transition:
+		opacity 0.45s ease-out,
+		visibility 0.45s ease-out;
+}
+
+body[data-chapter="molesHamsters"] .intro-overlay--hidden {
+	opacity: 0;
+	visibility: hidden;
+	display: none !important;
+	pointer-events: none;
+}
+
+body[data-chapter="molesHamsters"] .intro-center {
+	font-family: "Comic Sans MS", "Crimson Text", serif;
+	color: var(--ink);
+	text-shadow: 2px 2px 0 rgba(212, 0, 0, 0.2);
+	animation: none !important;
+}
+
+body[data-chapter="molesHamsters"] .intro-line-main {
+	font-size: clamp(34px, 7vw, 96px);
+	letter-spacing: 0.2em;
+	transform: rotate(-1deg);
+	animation: none !important;
+}
+
+body[data-chapter="molesHamsters"] .intro-line-small,
+body[data-chapter="molesHamsters"] .intro-line-sub {
+	animation: none !important;
+}
+
+/* MENU */
+body[data-chapter="molesHamsters"] .menu-wrapper {
+	position: fixed;
+	inset: 0;
+	display: grid;
+	grid-template-columns: minmax(320px, 40vw) minmax(360px, 1fr);
+	grid-template-rows: 1fr auto;
+	z-index: 12;
+	align-items: center;
+	min-height: 100%;
+	height: 100%;
+	padding: clamp(28px, 5vh, 58px) clamp(42px, 5vw, 76px);
+	transform: translateX(-16px);
+	opacity: 0;
+	box-sizing: border-box;
+	pointer-events: none;
+}
+
+body[data-chapter="molesHamsters"] .menu-wrapper--visible {
+	transform: translateX(0);
+	opacity: 1 !important;
+	filter: none !important;
+	pointer-events: auto;
+}
+
+body[data-chapter="molesHamsters"] .menu-title {
+	position: relative;
+	grid-column: 2;
+	grid-row: 1;
+	justify-self: end;
+	align-self: start;
+	width: min(660px, 47vw);
+	margin: clamp(18px, 5vh, 54px) 0 20px;
+	text-align: right;
+	color: var(--ink);
+	font-family: "Comic Sans MS", "Crimson Text", serif;
+	text-shadow: 2px 2px 0 rgba(212, 0, 0, 0.22);
+	animation: none;
+	opacity: 1 !important;
+}
+
+body[data-chapter="molesHamsters"] .menu-title::before {
+	display: none;
+}
+
+body[data-chapter="molesHamsters"] .menu-title-small,
+body[data-chapter="molesHamsters"] .menu-title-sub {
+	display: block;
+	color: rgba(17, 16, 14, 0.66);
+	font-family: "Comic Sans MS", "Crimson Text", serif;
+	font-size: clamp(12px, 1.1vw, 17px);
+	letter-spacing: 0.24em;
+	text-shadow: none;
+	white-space: normal;
+}
+
+body[data-chapter="molesHamsters"] .menu-title-main {
+	color: var(--ink) !important;
+	font-family: "Comic Sans MS", "Crimson Text", serif;
+	font-size: clamp(50px, 8vw, 124px);
+	line-height: 0.88;
+	letter-spacing: 0.08em;
+	text-shadow:
+		3px 3px 0 rgba(212, 0, 0, 0.28),
+		-1px -1px 0 rgba(0, 0, 0, 0.24);
+	-webkit-text-stroke: 1px rgba(17, 16, 14, 0.38);
+}
+
+body[data-chapter="molesHamsters"] .menu-title-main::after {
+	content: 'КРОТЫ / ХОМЯКИ';
+	display: block;
+	margin-top: 14px;
+	color: var(--blood);
+	font-size: clamp(18px, 2.2vw, 34px);
+	line-height: 1;
+	letter-spacing: 0.32em;
+	-webkit-text-stroke: 0;
+	text-shadow: 1px 1px 0 rgba(17, 16, 14, 0.18);
+	transform: none;
+}
+
+body[data-chapter="molesHamsters"] .menu-title-main-ghost,
+body[data-chapter="molesHamsters"] .menu-title-small-ghost,
+body[data-chapter="molesHamsters"] .menu-title-sub-ghost {
+	display: none !important;
+}
+
+body[data-chapter="molesHamsters"] .menu-divider {
+	grid-column: 1;
+	grid-row: 1;
+	align-self: center;
+	justify-self: start;
+	width: min(560px, 68vw);
+	height: 4px;
+	margin: 0 0 22px;
+	background: linear-gradient(
+		90deg,
+		var(--ink) 0 24%,
+		transparent 24% 31%,
+		var(--ink) 31% 66%,
+		transparent 66% 72%,
+		var(--blood) 72% 100%
+	);
+	opacity: 0.8;
+	transform-origin: left;
+}
+
+body[data-chapter="molesHamsters"] .menu-divider::before,
+body[data-chapter="molesHamsters"] .menu-divider::after {
+	width: 12px;
+	height: 12px;
+	border: 3px solid var(--ink);
+	background: var(--paper);
+	border-radius: 50%;
+}
+
+body[data-chapter="molesHamsters"] .menu-list {
+	grid-column: 1;
+	grid-row: 1;
+	width: min(500px, 74vw);
+	text-align: left;
+	margin: 72px 0 0 4px;
+	opacity: 0;
+}
+
+body[data-chapter="molesHamsters"] .menu-list--visible {
+	opacity: 1 !important;
+	filter: none !important;
+}
+
+body[data-chapter="molesHamsters"] .menu-item {
+	display: block;
+	width: fit-content;
+	min-width: 260px;
+	margin: 7px 0;
+	padding: 9px 18px 9px 46px;
+	color: var(--ink);
+	font:
+		900 clamp(17px, 2.1vw, 26px) / 1 "Comic Sans MS",
+		"Crimson Text",
+		serif;
+	letter-spacing: 0.14em;
+	opacity: 0.96;
+	text-shadow: none;
+	background: linear-gradient(
+		90deg,
+		rgba(255, 255, 255, 0.34),
+		rgba(255, 255, 255, 0.02)
+	);
+	border-bottom: 3px solid rgba(17, 16, 14, 0.76);
+	transform: none;
+}
+
+body[data-chapter="molesHamsters"] .menu-item:nth-child(even) {
+	--moles-item-tilt: 0deg;
+}
+
+body[data-chapter="molesHamsters"] .menu-item::marker {
+	content: none;
+}
+
+body[data-chapter="molesHamsters"] .menu-item::before {
+	content: '*';
+	position: absolute;
+	left: 14px;
+	top: 50%;
+	color: var(--blood);
+	opacity: 0.9;
+	font-size: 18px;
+	transform: translateY(-50%) rotate(12deg);
+	mix-blend-mode: multiply;
+	animation: none;
+}
+
+body[data-chapter="molesHamsters"] .menu-item::after {
+	content: attr(data-action);
+	position: absolute;
+	left: calc(100% + 18px);
+	top: 50%;
+	color: rgba(17, 16, 14, 0.28);
+	opacity: 0;
+	font: 700 12px / 1 monospace;
+	letter-spacing: 0.18em;
+	transform: translateY(-50%);
+	white-space: nowrap;
+	mix-blend-mode: multiply;
+	animation: none;
+}
+
+body[data-chapter="molesHamsters"] .menu-label {
+	color: inherit;
+}
+
+body[data-chapter="molesHamsters"] .menu-label::before,
+body[data-chapter="molesHamsters"] .menu-label::after {
+	display: none !important;
+}
+
+body[data-chapter="molesHamsters"] .menu-item[class*="menu-fear"]::before,
+body[data-chapter="molesHamsters"] .menu-item[class*="menu-fear"]::after,
+body[data-chapter="molesHamsters"]
+	.menu-item[class*="menu-fear"]
+	.menu-label::before,
+body[data-chapter="molesHamsters"]
+	.menu-item[class*="menu-fear"]
+	.menu-label::after {
+	display: none !important;
+	animation: none !important;
+}
+
+body[data-chapter="molesHamsters"] .menu-item:hover,
+body[data-chapter="molesHamsters"] .menu-item--active {
+	color: #fff;
+	opacity: 1;
+	background: var(--blood);
+	border-color: var(--ink);
+	transform: translateX(12px);
+	text-shadow: 2px 2px 0 rgba(17, 16, 14, 0.44);
+	box-shadow: 7px 7px 0 rgba(17, 16, 14, 0.16);
+}
+
+body[data-chapter="molesHamsters"] .menu-item:hover::before,
+body[data-chapter="molesHamsters"] .menu-item--active::before {
+	color: #fff;
+}
+
+body[data-chapter="molesHamsters"] .menu-item:hover::after,
+body[data-chapter="molesHamsters"] .menu-item--active::after {
+	opacity: 1;
+}
+
+body[data-chapter="molesHamsters"] .blood-flash--active {
+	opacity: 0 !important;
+}
+
+body[data-chapter="molesHamsters"] .white-flash--active {
+	opacity: 0 !important;
+}
+
+body[data-chapter="molesHamsters"] .whisper-layer {
+	display: none;
+}
+
+body[data-chapter="molesHamsters"] .menu-audio-control,
+body[data-chapter="molesHamsters"] .menu-language-control {
+	font-family: "Comic Sans MS", "Crimson Text", serif;
+	border: 2px solid rgba(17, 16, 14, 0.64);
+	box-shadow: 4px 4px 0 rgba(212, 0, 0, 0.16);
+}
+
+body[data-chapter="molesHamsters"] .menu-character-footer {
+	font-family: "Comic Sans MS", "Crimson Text", serif;
+	letter-spacing: 0.18em;
+	bottom: 18px;
+}
+
+@keyframes molesFrameJitter {
+	0% {
+		transform: translate(0, 0);
+	}
+	50% {
+		transform: translate(-1px, 1px);
+	}
+	100% {
+		transform: translate(1px, -1px);
+	}
+}
+
+@keyframes molesPaperDrift {
+	from {
+		transform: translate3d(0, 0, 0) rotate(0deg);
+	}
+	to {
+		transform: translate3d(-24px, 16px, 0) rotate(1deg);
+	}
+}
+
+@keyframes molesPaperDrift2 {
+	from {
+		transform: translate3d(20px, -12px, 0) scale(1.02);
+	}
+	to {
+		transform: translate3d(-20px, 8px, 0) scale(1.06);
+	}
+}
+
+@keyframes molesGrain {
+	0% {
+		transform: translate(0, 0);
+	}
+	50% {
+		transform: translate(7px, -5px);
+	}
+	100% {
+		transform: translate(-5px, 3px);
+	}
+}
+
+@keyframes molesRedPulse {
+	0%,
+	100% {
+		transform: translate(-50%, -50%) rotate(var(--r, 0deg)) scale(0.96);
+		opacity: var(--o, 0.52);
+	}
+	50% {
+		transform: translate(-50%, -50%) rotate(calc(var(--r, 0deg) + 9deg))
+			scale(1.04);
+		opacity: calc(var(--o, 0.52) + 0.14);
+	}
+}
+
+@keyframes molesCrawl {
+	from {
+		background-position:
+			0 26px,
+			0 30px;
+	}
+	to {
+		background-position:
+			360px 26px,
+			240px 30px;
+	}
+}
+
+@keyframes molesTitleJitter {
+	0%,
+	100% {
+		transform: translate(0, 0) rotate(-0.35deg);
+	}
+	45% {
+		transform: translate(1px, -1px) rotate(0.22deg);
+	}
+	60% {
+		transform: translate(-1px, 1px) rotate(-0.65deg);
+	}
+}
+
+@keyframes molesPanicShake {
+	0% {
+		transform: translate(0, 0) rotate(0deg);
+	}
+	50% {
+		transform: translate(3px, -2px) rotate(0.6deg);
+	}
+	100% {
+		transform: translate(-2px, 2px) rotate(-0.5deg);
+	}
+}
+
+@media (max-width: 1366px), (max-height: 820px) {
+	body[data-chapter="molesHamsters"] .start-overlay {
+		padding: 14px !important;
+	}
+
+	body[data-chapter="molesHamsters"] .start-overlay::before {
+		top: 8px;
+		font-size: clamp(22px, 5vw, 58px);
+		letter-spacing: 0.22em;
+	}
+
+	body[data-chapter="molesHamsters"] .start-center {
+		width: min(920px, calc(100vw - 96px)) !important;
+		max-width: min(920px, calc(100vw - 96px)) !important;
+		max-height: none !important;
+		padding: 22px 32px !important;
+		overflow: visible !important;
+	}
+
+	body[data-chapter="molesHamsters"] .start-center::after {
+		right: 22px;
+		bottom: 18px;
+		font-size: 64px;
+	}
+
+	body[data-chapter="molesHamsters"] .start-title {
+		margin-bottom: 10px;
+		font-size: clamp(24px, 3.4vw, 34px) !important;
+		line-height: 1 !important;
+		letter-spacing: 0.13em;
+		white-space: normal;
+	}
+
+	body[data-chapter="molesHamsters"] .start-text {
+		max-height: none !important;
+		overflow: visible !important;
+		padding-right: 0;
+		font-size: clamp(15px, 1.75vw, 19px) !important;
+		line-height: 1.3 !important;
+		letter-spacing: 0.035em;
+	}
+
+	body[data-chapter="molesHamsters"] .start-skip {
+		margin-top: 12px !important;
+		font-size: 13px;
+	}
+
+	body[data-chapter="molesHamsters"] .start-button {
+		margin-top: 9px !important;
+		padding: 10px 22px;
+		font-size: 14px;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-wrapper {
+		grid-template-columns: minmax(300px, 39vw) minmax(320px, 1fr);
+		padding: clamp(20px, 3.6vh, 42px) clamp(36px, 4vw, 58px)
+			clamp(74px, 10vh, 104px);
+	}
+
+	body[data-chapter="molesHamsters"] .menu-title {
+		width: min(560px, 46vw);
+		margin-top: clamp(10px, 3vh, 34px);
+	}
+
+	body[data-chapter="molesHamsters"] .menu-title-main {
+		font-size: clamp(42px, 7vw, 94px);
+		letter-spacing: 0.055em;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-title-main::after {
+		margin-top: 10px;
+		font-size: clamp(14px, 1.8vw, 24px);
+		letter-spacing: 0.24em;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-divider {
+		width: min(430px, 38vw);
+		margin-bottom: 16px;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-list {
+		width: min(430px, 40vw);
+		margin-top: 58px;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-item {
+		min-width: 0;
+		max-width: min(430px, 40vw);
+		padding: 7px 14px 7px 38px;
+		font-size: clamp(14px, 1.55vw, 21px);
+		letter-spacing: 0.1em;
+	}
+}
+
+@media (max-width: 1100px), (max-height: 680px) {
+	body[data-chapter="molesHamsters"] .start-center {
+		width: min(900px, calc(100vw - 72px)) !important;
+		max-width: min(900px, calc(100vw - 72px)) !important;
+		padding: 18px 26px !important;
+	}
+
+	body[data-chapter="molesHamsters"] .start-title {
+		font-size: clamp(21px, 3.2vw, 30px) !important;
+		letter-spacing: 0.1em;
+	}
+
+	body[data-chapter="molesHamsters"] .start-text {
+		font-size: clamp(13px, 1.65vw, 17px) !important;
+		line-height: 1.24 !important;
+	}
+
+	body[data-chapter="molesHamsters"] .start-skip {
+		margin-top: 10px !important;
+	}
+
+	body[data-chapter="molesHamsters"] .start-button {
+		padding: 9px 20px;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-wrapper {
+		grid-template-columns: minmax(260px, 44vw) minmax(260px, 1fr);
+		padding: 18px 32px 84px;
+		align-items: start;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-title {
+		width: min(430px, 42vw);
+		margin-top: 22px;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-title-small,
+	body[data-chapter="molesHamsters"] .menu-title-sub {
+		font-size: 10px;
+		letter-spacing: 0.18em;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-title-main {
+		font-size: clamp(34px, 6.4vw, 70px);
+	}
+
+	body[data-chapter="molesHamsters"] .menu-divider {
+		width: min(360px, 39vw);
+		margin-top: 104px;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-list {
+		width: min(360px, 42vw);
+		margin-top: 142px;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-item {
+		max-width: min(360px, 42vw);
+		margin: 5px 0;
+		padding: 6px 12px 6px 32px;
+		font-size: clamp(12px, 1.55vw, 16px);
+		border-bottom-width: 2px;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-item::before {
+		left: 11px;
+		font-size: 14px;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-item::after {
+		display: none;
+	}
+}
+
+@media (max-width: 700px) {
+	body[data-chapter="molesHamsters"] .menu-wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 38px 18px 84px;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-title,
+	body[data-chapter="molesHamsters"] .menu-list {
+		margin: 0;
+		width: min(92vw, 520px);
+		text-align: center;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-divider {
+		width: min(78vw, 430px);
+		margin: 14px 0;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-item {
+		min-width: 0;
+		width: 100%;
+		padding-left: 36px;
+	}
+
+	body[data-chapter="molesHamsters"] .menu-item::after {
+		display: none;
+	}
+}

@@ -189,10 +189,8 @@
 			apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
 		return TRUE
 
-/mob/living/carbon/human/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
-	. = ..()
-	if(!.)
-		return
+/mob/living/carbon/human/proc/default_attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
+	. = TRUE
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //Always drop item in hand if there is one. If there's no item, shove the target. If the target is incapacitated, slam them into the ground to stun them.
 		var/obj/item/I = get_active_held_item()

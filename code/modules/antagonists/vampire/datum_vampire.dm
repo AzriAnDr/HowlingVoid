@@ -450,7 +450,6 @@
 
 /datum/antagonist/vampire/get_preview_icon()
 	var/datum/universal_icon/final_icon = render_preview_outfit(/datum/outfit/vampire_outfit)
-	final_icon.scale(64, 64)
 	return finish_preview_icon(final_icon)
 
 /datum/antagonist/vampire/roundend_report()
@@ -826,7 +825,8 @@
 /datum/outfit/vampire_outfit/post_equip(mob/living/carbon/human/enrico, visualsOnly=FALSE)
 	enrico.hairstyle = "Undercut"
 	enrico.hair_color = "FFF"
-	enrico.skin_tone = "african2"
+	enrico.skin_tone = "albino"
+	enrico.dna.features[FEATURE_SKIN_COLOR] = skintone2hex(enrico.skin_tone)
 	enrico.eye_color_left = "#663300"
 	enrico.eye_color_right = "#663300"
 

@@ -286,5 +286,9 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	playsound(src, 'sound/vehicles/mecha/mech_shield_deflect.ogg', 100, TRUE)
 
 /obj/durand_shield/bullet_act()
+	var/obj/projectile/hitting_projectile = args[1]
+	if(istype(hitting_projectile, /obj/projectile/neurotoxin/tgmc/acid))
+		hitting_projectile.armor_flag = LASER
+		hitting_projectile.damage /= 2
 	play_attack_sound()
 	. = ..()

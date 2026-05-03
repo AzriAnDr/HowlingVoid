@@ -5,8 +5,8 @@ const Xenomorph: Antagonist = {
   name: 'Xenomorph',
   description: [
     `
-      Become the extraterrestrial xenomorph. Start as a larva, and progress
-      your way up the caste, including even the Queen!
+      Become a xenomorph. Start as a larva, choose a caste, and evolve
+      into stronger forms including Ravager, Crusher, Praetorian, or Queen.
     `,
   ],
   category: Category.Midround,

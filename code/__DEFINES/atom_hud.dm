@@ -60,6 +60,9 @@
 /// If they have the DNR trait
 #define DNR_HUD "27"
 // NOVA EDIT ADDITION END
+// TGMC Xenos
+#define XENO_HUD "30"
+#define XENOPLASMA_HUD "31"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -79,6 +82,7 @@
 #define DATA_HUD_MALF_APC 10
 #define DATA_HUD_BLOOD 11
 #define DATA_HUD_PERMIT 12 //NOVA EDIT ADDITION
+#define DATA_HUD_XENO (DATA_HUD_PERMIT + 1)
 
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20

@@ -97,7 +97,7 @@
 	desc = "Lay an egg to produce huggers to impregnate prey with."
 	button_icon_state = "alien_egg"
 	plasma_cost = 75
-	made_structure_type = /obj/structure/alien/egg
+	made_structure_type = /obj/structure/alien/egg/tgmc
 
 /datum/action/cooldown/alien/make_structure/lay_egg/Activate(atom/target)
 	. = ..()

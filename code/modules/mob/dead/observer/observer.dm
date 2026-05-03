@@ -74,7 +74,8 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		TRAIT_SECURITY_HUD,
 		TRAIT_MEDICAL_HUD,
 		TRAIT_DIAGNOSTIC_HUD,
-		TRAIT_BOT_PATH_HUD
+		TRAIT_BOT_PATH_HUD,
+		TRAIT_XENO_HUD
 	)
 
 /mob/dead/observer/Initialize(mapload)

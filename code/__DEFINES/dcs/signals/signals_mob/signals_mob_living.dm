@@ -3,6 +3,9 @@
 	/// Can't pick up
 	#define COMPONENT_LIVING_CANT_PUT_IN_HAND (1<<0)
 
+/// Called when a xeno's plasma changes.
+#define COMSIG_XENO_PLASMA_ADJUSTED "plasma_adjusted"
+
 // Organ signals
 /// Called on the organ when it is implanted into someone (mob/living/carbon/receiver)
 #define COMSIG_ORGAN_IMPLANTED "organ_implanted"

@@ -1,0 +1,1196 @@
+/* =========================================================
+   HOWLING VOID — SISTER RAY / THE GROWING STONES
+========================================================= */
+
+*::selection {
+	background: rgba(205, 38, 91, 0.32);
+	color: #fff7e7;
+}
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	background: #2b183c;
+}
+
+body[data-chapter="sisterRay"] {
+	--sr-ink: #2b1017;
+	--sr-paper: #f7e8bd;
+	--sr-cream: #fff2cf;
+	--sr-red: #b4213e;
+	--sr-magenta: #bf226d;
+	--sr-green: #2fb78d;
+	--sr-yellow: #efb94c;
+	--sr-violet: #6d3a78;
+
+	--menu-chrome-fg: rgba(58, 22, 28, 0.82);
+	--menu-chrome-bg: rgba(255, 232, 183, 0.33);
+	--menu-chrome-border: 1px solid rgba(133, 41, 62, 0.24);
+	--menu-chrome-shadow:
+		0 18px 50px rgba(59, 12, 36, 0.16), inset 0 0 28px rgba(255, 255, 235, 0.18);
+	--menu-chrome-accent: #b4213e;
+	--menu-chrome-name-fg: rgba(59, 18, 31, 0.78);
+	--menu-chrome-name-shadow:
+		1px 0 rgba(47, 183, 141, 0.25), -1px 0 rgba(191, 34, 109, 0.22), 0 12px 28px
+		rgba(59, 12, 36, 0.18);
+
+	font-family: "Crimson Text", Georgia, serif;
+	color: var(--sr-ink);
+	position: fixed;
+	inset: 0;
+	min-width: 100vw;
+	min-height: 100vh;
+	background:
+		radial-gradient(
+			circle at 22% 18%,
+			rgba(47, 183, 141, 0.44),
+			transparent 30%
+		),
+		radial-gradient(
+			circle at 72% 16%,
+			rgba(246, 233, 160, 0.55),
+			transparent 28%
+		),
+		radial-gradient(
+			circle at 72% 78%,
+			rgba(191, 34, 109, 0.42),
+			transparent 34%
+		),
+		radial-gradient(
+			circle at 18% 82%,
+			rgba(239, 185, 76, 0.42),
+			transparent 28%
+		),
+		linear-gradient(135deg, #162d2d 0%, #f1d88c 42%, #d94f71 66%, #2b183c 100%);
+	background-size:
+		145% 145%,
+		155% 155%,
+		150% 150%,
+		140% 140%,
+		125% 125%;
+	background-position:
+		18% 14%,
+		74% 16%,
+		76% 80%,
+		16% 82%,
+		50% 50%;
+	overflow: hidden;
+	animation: srBackdropFlow 12s ease-in-out infinite alternate;
+}
+
+body[data-chapter="sisterRay"]::before,
+body[data-chapter="sisterRay"]::after {
+	content: "";
+	position: fixed;
+	inset: -10%;
+	pointer-events: none;
+	z-index: 1;
+}
+
+/* watercolor / paper bleed */
+body[data-chapter="sisterRay"]::before {
+	background:
+		radial-gradient(
+			circle at 12% 30%,
+			rgba(255, 244, 189, 0.62),
+			transparent 24%
+		),
+		radial-gradient(
+			circle at 34% 62%,
+			rgba(235, 58, 116, 0.36),
+			transparent 26%
+		),
+		radial-gradient(
+			circle at 80% 45%,
+			rgba(50, 189, 146, 0.36),
+			transparent 32%
+		),
+		repeating-linear-gradient(
+			78deg,
+			rgba(255, 255, 255, 0.045) 0 2px,
+			transparent 2px 9px
+		);
+	filter: blur(10px) saturate(1.38);
+	mix-blend-mode: overlay;
+	opacity: 0.96;
+	animation: srWaterDrift 13s ease-in-out infinite alternate;
+}
+
+/* trailer chromatic/faded film layer */
+body[data-chapter="sisterRay"]::after {
+	background:
+		linear-gradient(
+			90deg,
+			rgba(44, 191, 145, 0.22),
+			transparent 18%,
+			transparent 78%,
+			rgba(203, 34, 106, 0.28)
+		),
+		repeating-linear-gradient(
+			0deg,
+			rgba(255, 255, 255, 0.09) 0 1px,
+			rgba(0, 0, 0, 0.02) 1px 3px,
+			transparent 3px 7px
+		),
+		radial-gradient(
+			ellipse at center,
+			transparent 42%,
+			rgba(45, 9, 29, 0.46) 100%
+		);
+	opacity: 0.86;
+	mix-blend-mode: multiply;
+	animation: srAnalogPulse 5.2s steps(2, end) infinite;
+}
+
+@keyframes srBackdropFlow {
+	0% {
+		background-position:
+			15% 12%,
+			78% 12%,
+			76% 84%,
+			12% 84%,
+			50% 50%;
+	}
+	50% {
+		background-position:
+			32% 24%,
+			62% 22%,
+			66% 70%,
+			28% 72%,
+			43% 56%;
+	}
+	100% {
+		background-position:
+			22% 34%,
+			84% 28%,
+			58% 76%,
+			36% 64%,
+			56% 44%;
+	}
+}
+
+@keyframes srWaterDrift {
+	from {
+		transform: translate3d(-46px, -20px, 0) rotate(-1.8deg) scale(1.04);
+	}
+	to {
+		transform: translate3d(44px, 28px, 0) rotate(1.8deg) scale(1.12);
+	}
+}
+
+@keyframes srAnalogPulse {
+	0%,
+	100% {
+		opacity: 0.66;
+		transform: translateX(0);
+	}
+	49% {
+		opacity: 0.82;
+		transform: translateX(-1px);
+	}
+	50% {
+		opacity: 0.72;
+		transform: translateX(2px);
+	}
+}
+
+/* neutralize old horror layers into soft trailer haze */
+body[data-chapter="sisterRay"] .vignette {
+	position: fixed;
+	inset: 0;
+	z-index: 7;
+	pointer-events: none;
+	box-shadow:
+		inset 0 0 90px 30px rgba(42, 8, 31, 0.5),
+		inset 0 0 260px 90px rgba(18, 4, 17, 0.34);
+	opacity: 0.86;
+}
+
+body[data-chapter="sisterRay"] .noise-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 8;
+	pointer-events: none;
+	opacity: 0.22;
+	mix-blend-mode: overlay;
+	background:
+		repeating-linear-gradient(
+			0deg,
+			rgba(255, 255, 255, 0.08) 0 1px,
+			transparent 1px 3px
+		),
+		repeating-linear-gradient(
+			90deg,
+			rgba(55, 15, 40, 0.035) 0 2px,
+			transparent 2px 8px
+		);
+	animation: srTapeNoise 0.8s steps(3, end) infinite;
+}
+
+@keyframes srTapeNoise {
+	0% {
+		transform: translate3d(0, 0, 0);
+	}
+	33% {
+		transform: translate3d(-6px, 2px, 0);
+	}
+	66% {
+		transform: translate3d(5px, -2px, 0);
+	}
+	100% {
+		transform: translate3d(0, -4px, 0);
+	}
+}
+
+body[data-chapter="sisterRay"] .background-layer {
+	position: fixed;
+	inset: -12%;
+	z-index: 0;
+	pointer-events: none;
+	mix-blend-mode: soft-light;
+	filter: blur(22px) saturate(1.4);
+}
+
+body[data-chapter="sisterRay"] .bg-layer-1 {
+	opacity: 0.9;
+	background:
+		radial-gradient(
+			circle at 18% 20%,
+			rgba(39, 180, 145, 0.66),
+			transparent 38%
+		),
+		radial-gradient(
+			circle at 88% 75%,
+			rgba(203, 34, 106, 0.62),
+			transparent 42%
+		),
+		radial-gradient(
+			circle at 54% 42%,
+			rgba(255, 218, 86, 0.46),
+			transparent 52%
+		);
+	animation: srWaterDrift 15s ease-in-out infinite alternate;
+}
+
+body[data-chapter="sisterRay"] .bg-layer-2 {
+	opacity: 0.78;
+	background:
+		linear-gradient(
+			115deg,
+			transparent 0 16%,
+			rgba(255, 245, 185, 0.46) 20% 36%,
+			transparent 42% 100%
+		),
+		radial-gradient(
+			circle at 38% 76%,
+			rgba(115, 53, 141, 0.62),
+			transparent 44%
+		);
+	animation: srPrismSweep 10s ease-in-out infinite alternate;
+}
+
+@keyframes srPrismSweep {
+	from {
+		transform: translate3d(-90px, 22px, 0) rotate(-4deg) scale(1.12);
+	}
+	to {
+		transform: translate3d(96px, -38px, 0) rotate(5deg) scale(1.22);
+	}
+}
+
+/* the old cross becomes a soft monolith / wall poster shape */
+body[data-chapter="sisterRay"] .inverted-cross-overlay {
+	display: none;
+	z-index: 3;
+	opacity: 0.46;
+	filter: blur(0.5px) saturate(0.8);
+	transform: translateX(-18vw) scale(1.3) rotate(-2deg);
+	mix-blend-mode: multiply;
+}
+
+body[data-chapter="sisterRay"] .cross-shape {
+	background: rgba(71, 17, 38, 0.23);
+	box-shadow:
+		22px 10px 0 rgba(47, 183, 141, 0.12),
+		-18px -8px 0 rgba(191, 34, 109, 0.1),
+		0 0 80px rgba(255, 240, 178, 0.22);
+}
+
+body[data-chapter="sisterRay"] .cross-noise,
+body[data-chapter="sisterRay"] .cross-fog {
+	opacity: 0.28;
+}
+
+/* decorative trailer HUD built by sisterRay.js */
+.sr-stage,
+.sr-stage * {
+	box-sizing: border-box;
+}
+
+.sr-stage {
+	position: fixed;
+	inset: 0;
+	z-index: 9;
+	pointer-events: none;
+	overflow: hidden;
+}
+
+.sr-paint,
+.sr-burn,
+.sr-caption,
+.sr-frame-index,
+.sr-side-notes,
+.sr-stone-field,
+.sr-title-smear {
+	position: absolute;
+	pointer-events: none;
+}
+
+.sr-paint {
+	inset: -8%;
+	opacity: 0.76;
+	background:
+		linear-gradient(
+			24deg,
+			transparent 0 14%,
+			rgba(255, 242, 179, 0.52) 18% 40%,
+			transparent 46% 100%
+		),
+		linear-gradient(
+			153deg,
+			transparent 0 48%,
+			rgba(190, 31, 95, 0.38) 53% 72%,
+			transparent 78% 100%
+		),
+		radial-gradient(
+			circle at 55% 60%,
+			rgba(50, 190, 147, 0.34),
+			transparent 38%
+		);
+	mix-blend-mode: color-dodge;
+	filter: blur(6px);
+	animation: srPaintSlide 8s ease-in-out infinite alternate;
+}
+
+@keyframes srPaintSlide {
+	from {
+		transform: translateX(-7%) rotate(-1.6deg);
+	}
+	to {
+		transform: translateX(7%) rotate(1.6deg);
+	}
+}
+
+.sr-burn {
+	top: -12%;
+	right: -18%;
+	width: 58vw;
+	height: 58vw;
+	border-radius: 999px;
+	background: radial-gradient(
+		circle,
+		rgba(255, 245, 205, 0.86) 0 8%,
+		rgba(239, 185, 76, 0.36) 13%,
+		rgba(191, 34, 109, 0.18) 26%,
+		transparent 62%
+	);
+	filter: blur(18px);
+	opacity: 0.38;
+	mix-blend-mode: screen;
+	animation: srBurn 8s ease-in-out infinite;
+}
+
+@keyframes srBurn {
+	0%,
+	100% {
+		opacity: 0.26;
+		transform: scale(0.92);
+	}
+	50% {
+		opacity: 0.52;
+		transform: scale(1.08);
+	}
+}
+
+.sr-frame-index {
+	right: 28px;
+	top: 92px;
+	color: rgba(55, 18, 27, 0.55);
+	font:
+		700 10px / 1.2 "Crimson Text",
+		Georgia,
+		serif;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	writing-mode: vertical-rl;
+	text-shadow:
+		1px 0 rgba(47, 183, 141, 0.24),
+		-1px 0 rgba(191, 34, 109, 0.22);
+}
+
+.sr-side-notes {
+	left: 28px;
+	top: 20%;
+	width: 150px;
+	color: rgba(61, 22, 36, 0.48);
+	font:
+		700 11px / 1.45 "Crimson Text",
+		Georgia,
+		serif;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.sr-side-notes::before {
+	content: "";
+	display: block;
+	width: 44px;
+	height: 1px;
+	margin-bottom: 12px;
+	background: rgba(61, 22, 36, 0.38);
+	box-shadow:
+		12px 4px 0 rgba(47, 183, 141, 0.22),
+		-8px -3px 0 rgba(191, 34, 109, 0.2);
+}
+
+.sr-caption {
+	left: 50%;
+	bottom: 46px;
+	width: min(680px, calc(100vw - 80px));
+	transform: translateX(-50%);
+	color: rgba(50, 16, 26, 0.52);
+	text-align: center;
+	font:
+		700 12px / 1.25 "Crimson Text",
+		Georgia,
+		serif;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	opacity: 0;
+	transition:
+		opacity 0.45s ease-out,
+		transform 0.45s ease-out;
+}
+
+.sr-caption--visible {
+	opacity: 0.62;
+	transform: translate(-50%, -4px);
+}
+
+.sr-stone-field {
+	inset: 0;
+	opacity: 0.82;
+}
+
+.sr-stone {
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	border: 1px solid rgba(70, 22, 39, 0.24);
+	border-radius: 50%;
+	background: rgba(255, 235, 169, 0.22);
+	box-shadow:
+		1px 0 rgba(47, 183, 141, 0.2),
+		-1px 0 rgba(191, 34, 109, 0.18),
+		0 10px 24px rgba(67, 18, 41, 0.12);
+	animation: srStoneFloat var(--sr-dur, 16s) ease-in-out infinite alternate;
+}
+
+@keyframes srStoneFloat {
+	from {
+		transform: translate3d(0, 0, 0) scale(0.78);
+		opacity: 0.1;
+	}
+	35% {
+		opacity: 0.65;
+	}
+	to {
+		transform: translate3d(var(--sr-x, 18px), var(--sr-y, -26px), 0) scale(1.18);
+		opacity: 0.42;
+	}
+}
+
+/* start disclaimer as a soft trailer title card */
+body[data-chapter="sisterRay"] .start-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px 18px;
+	background:
+		radial-gradient(
+			circle at 72% 18%,
+			rgba(255, 245, 210, 0.86),
+			transparent 24%
+		),
+		radial-gradient(
+			circle at 22% 76%,
+			rgba(205, 35, 103, 0.38),
+			transparent 30%
+		), linear-gradient(135deg, #213835, #f0d995 44%, #d75d76 72%, #3c203e);
+	color: rgba(44, 12, 24, 0.9);
+	letter-spacing: 0.18em;
+	text-shadow:
+		1px 0 rgba(47, 183, 141, 0.2),
+		-1px 0 rgba(191, 34, 109, 0.2);
+	transition:
+		opacity 0.45s ease,
+		visibility 0.45s ease;
+}
+
+body[data-chapter="sisterRay"] .start-overlay--hidden {
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+body[data-chapter="sisterRay"] .start-overlay::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background:
+		repeating-linear-gradient(
+			0deg,
+			rgba(255, 255, 255, 0.07) 0 1px,
+			transparent 1px 4px
+		),
+		radial-gradient(ellipse at center, transparent 38%, rgba(50, 12, 34, 0.5));
+	mix-blend-mode: multiply;
+}
+
+body[data-chapter="sisterRay"] .start-center {
+	position: relative;
+	width: min(920px, calc(100vw - 140px));
+	max-width: 920px;
+	max-height: calc(100vh - 96px);
+	padding: 26px 42px 28px;
+	background: rgba(255, 238, 188, 0.34);
+	border: 1px solid rgba(83, 30, 43, 0.25);
+	box-shadow:
+		0 30px 90px rgba(49, 12, 36, 0.24),
+		inset 0 0 60px rgba(255, 255, 230, 0.16);
+	backdrop-filter: blur(5px) saturate(1.25);
+}
+
+body[data-chapter="sisterRay"] .start-title {
+	margin: 0 0 8px;
+	text-align: center;
+	font-size: clamp(1.45rem, 2.2vw, 2rem);
+	color: rgba(58, 15, 25, 0.88);
+}
+
+body[data-chapter="sisterRay"] .start-text {
+	max-height: none;
+	overflow: visible;
+	padding-right: 0;
+	font-size: clamp(0.88rem, 1.18vw, 1.05rem);
+	line-height: 1.3;
+	color: rgba(48, 16, 27, 0.78);
+	text-transform: none;
+}
+
+body[data-chapter="sisterRay"] .start-text .accent {
+	color: #af1739;
+	text-shadow:
+		1px 0 rgba(47, 183, 141, 0.22),
+		-1px 0 rgba(191, 34, 109, 0.22);
+}
+
+body[data-chapter="sisterRay"] .start-skip {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	width: 100%;
+	margin-top: 14px;
+	color: rgba(50, 16, 26, 0.66);
+	font-size: 0.92rem;
+}
+
+body[data-chapter="sisterRay"] .start-button {
+	display: block;
+	min-width: 210px;
+	margin: 12px auto 0;
+	padding: 9px 20px;
+	border: 1px solid rgba(72, 24, 38, 0.42);
+	color: rgba(45, 12, 23, 0.82);
+	background: rgba(255, 238, 190, 0.22);
+	box-shadow:
+		4px 0 rgba(47, 183, 141, 0.18),
+		-4px 0 rgba(191, 34, 109, 0.16);
+}
+
+body[data-chapter="sisterRay"] .start-button:hover,
+body[data-chapter="sisterRay"] .start-button:focus-visible {
+	color: #fff4cc;
+	background: rgba(159, 28, 55, 0.76);
+	transform: translateY(-2px) skewX(-2deg);
+}
+
+/* intro card */
+body[data-chapter="sisterRay"] .intro-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 55;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: radial-gradient(
+		circle at center,
+		rgba(255, 246, 204, 0.9),
+		rgba(236, 192, 111, 0.58) 42%,
+		rgba(78, 24, 58, 0.82) 100%
+	);
+	color: rgba(50, 14, 28, 0.88);
+	opacity: 1;
+	visibility: visible;
+	transition:
+		opacity 0.55s ease,
+		visibility 0.55s ease;
+}
+
+body[data-chapter="sisterRay"] .intro-overlay--hidden {
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+body[data-chapter="sisterRay"] .intro-center {
+	text-align: center;
+	text-transform: uppercase;
+	color: rgba(55, 17, 29, 0.86);
+	text-shadow:
+		2px 0 rgba(47, 183, 141, 0.2),
+		-2px 0 rgba(191, 34, 109, 0.2);
+	filter: saturate(1.2);
+}
+
+body[data-chapter="sisterRay"] .intro-line-main {
+	background: linear-gradient(
+		90deg,
+		rgba(55, 17, 29, 0.88) 0 58%,
+		rgba(174, 21, 55, 0.94) 58% 100%
+	);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	font-size: clamp(3rem, 9vw, 7.8rem);
+	line-height: 0.88;
+	letter-spacing: 0.05em;
+	transform: rotate(-2deg);
+}
+
+/* menu layout */
+body[data-chapter="sisterRay"] .menu-wrapper {
+	position: fixed;
+	inset: 0;
+	z-index: 20;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	padding: 62px 28px 98px;
+	opacity: 0;
+	transform: translateY(12px) rotate(-0.7deg);
+	filter: blur(6px);
+	pointer-events: none;
+	transition:
+		opacity 0.8s ease-out,
+		transform 0.8s ease-out,
+		filter 0.8s ease-out;
+}
+
+body[data-chapter="sisterRay"] .menu-wrapper--visible {
+	opacity: 1;
+	transform: translateY(0) rotate(-0.7deg);
+	filter: blur(0);
+	pointer-events: auto;
+}
+
+body[data-chapter="sisterRay"] .menu-title {
+	position: relative;
+	width: min(820px, calc(100vw - 56px));
+	margin-bottom: 16px;
+	text-align: center;
+	text-transform: uppercase;
+	user-select: none;
+	color: rgba(44, 12, 24, 0.92);
+	text-shadow:
+		2px 0 rgba(47, 183, 141, 0.24),
+		-2px 0 rgba(191, 34, 109, 0.22),
+		0 20px 60px rgba(49, 12, 36, 0.22);
+	animation: srTitleBreath 5.5s ease-in-out infinite;
+}
+
+@keyframes srTitleBreath {
+	0%,
+	100% {
+		filter: saturate(1.02) blur(0);
+	}
+	50% {
+		filter: saturate(1.32) blur(0.2px);
+	}
+}
+
+body[data-chapter="sisterRay"] .menu-title::before {
+	content: "THE GROWING STONES - SISTER RAY";
+	position: absolute;
+	left: 50%;
+	top: -28px;
+	transform: translateX(-50%) rotate(2deg);
+	color: rgba(176, 25, 62, 0.44);
+	font-size: 0.72rem;
+	letter-spacing: 0.44em;
+	white-space: nowrap;
+}
+
+body[data-chapter="sisterRay"] .menu-title-small,
+body[data-chapter="sisterRay"] .menu-title-sub {
+	display: inline-block;
+	color: rgba(76, 22, 35, 0.62);
+	font-family: "Crimson Text", Georgia, serif;
+	letter-spacing: 0.26em;
+}
+
+body[data-chapter="sisterRay"] .menu-title-small {
+	background: linear-gradient(
+		90deg,
+		rgba(76, 22, 35, 0.64) 0 56%,
+		rgba(174, 21, 55, 0.94) 56% 100%
+	);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	text-shadow:
+		1px 0 rgba(47, 183, 141, 0.14),
+		-1px 0 rgba(191, 34, 109, 0.12);
+}
+
+body[data-chapter="sisterRay"] .menu-title-small-wrap,
+body[data-chapter="sisterRay"] .menu-title-main-wrap,
+body[data-chapter="sisterRay"] .menu-title-sub-wrap {
+	position: relative;
+	display: block;
+}
+
+body[data-chapter="sisterRay"] .menu-title-main {
+	display: inline-block;
+	color: rgba(43, 12, 24, 0.94) !important;
+	font-size: clamp(3.8rem, 7.4vw, 7.4rem);
+	line-height: 0.9;
+	letter-spacing: 0.04em;
+	text-shadow:
+		4px 0 rgba(47, 183, 141, 0.24),
+		-5px 0 rgba(191, 34, 109, 0.24),
+		0 24px 70px rgba(49, 12, 36, 0.28);
+	filter: contrast(1.08);
+}
+
+body[data-chapter="sisterRay"] .menu-title-main::first-letter {
+	color: rgba(174, 21, 55, 0.9);
+}
+
+body[data-chapter="sisterRay"] .menu-title-main-ghost,
+body[data-chapter="sisterRay"] .menu-title-small-ghost,
+body[data-chapter="sisterRay"] .menu-title-sub-ghost {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	color: rgba(255, 245, 199, 0.42);
+	mix-blend-mode: overlay;
+	filter: blur(3px) saturate(1.6);
+	text-shadow:
+		16px 2px rgba(47, 183, 141, 0.24),
+		-18px -1px rgba(191, 34, 109, 0.22);
+}
+
+body[data-chapter="sisterRay"] .menu-divider {
+	width: min(560px, 66vw);
+	height: 1px;
+	margin-bottom: 22px;
+	opacity: 0;
+	transform: scaleX(0.72);
+	background: linear-gradient(
+		90deg,
+		transparent,
+		rgba(55, 15, 26, 0.28),
+		rgba(176, 25, 62, 0.42),
+		rgba(55, 15, 26, 0.24),
+		transparent
+	);
+	box-shadow: 0 8px 18px rgba(195, 33, 88, 0.18);
+	transition:
+		opacity 0.45s ease-out,
+		transform 0.45s ease-out;
+}
+
+body[data-chapter="sisterRay"] .menu-divider--visible {
+	opacity: 1;
+	transform: scaleX(1);
+}
+
+body[data-chapter="sisterRay"] .menu-divider::before,
+body[data-chapter="sisterRay"] .menu-divider::after {
+	width: 9px;
+	height: 9px;
+	background: rgba(255, 235, 176, 0.72);
+	border: 1px solid rgba(66, 20, 34, 0.28);
+	box-shadow:
+		2px 0 rgba(47, 183, 141, 0.18),
+		-2px 0 rgba(191, 34, 109, 0.16);
+}
+
+body[data-chapter="sisterRay"] .menu-list {
+	list-style: none;
+	width: min(610px, calc(100vw - 54px));
+	margin: 0;
+	padding: 18px 28px;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 8px 12px;
+	text-align: left;
+	opacity: 0;
+	transform: translateY(14px);
+	background:
+		linear-gradient(135deg, rgba(255, 242, 191, 0.5), rgba(255, 221, 153, 0.28)),
+		radial-gradient(
+			circle at 80% 10%,
+			rgba(47, 183, 141, 0.16),
+			transparent 42%
+		),
+		radial-gradient(
+			circle at 18% 88%,
+			rgba(191, 34, 109, 0.16),
+			transparent 38%
+		);
+	border: 1px solid rgba(62, 19, 34, 0.22);
+	box-shadow:
+		0 26px 90px rgba(48, 11, 34, 0.24),
+		inset 0 0 60px rgba(255, 255, 225, 0.12);
+	backdrop-filter: blur(5px) saturate(1.3);
+	transition:
+		opacity 0.55s ease-out,
+		transform 0.55s ease-out;
+}
+
+body[data-chapter="sisterRay"] .menu-list--visible {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+body[data-chapter="sisterRay"] .menu-list li:nth-child(1) {
+	grid-column: 1 / -1;
+	text-align: center;
+	margin-bottom: 6px;
+}
+
+body[data-chapter="sisterRay"] .menu-item {
+	position: relative;
+	min-height: 46px;
+	margin: 0;
+	padding: 12px 16px;
+	color: rgba(49, 16, 28, 0.68);
+	font-size: 1.05rem;
+	letter-spacing: 0.16em;
+	border: 1px solid rgba(62, 19, 34, 0.11);
+	background: rgba(255, 245, 204, 0.16);
+	overflow: hidden;
+	cursor: pointer;
+	list-style: none;
+	text-transform: uppercase;
+	transition:
+		color 0.18s ease-out,
+		background 0.18s ease-out,
+		transform 0.18s ease-out,
+		border-color 0.18s ease-out,
+		box-shadow 0.18s ease-out,
+		letter-spacing 0.18s ease-out;
+}
+
+body[data-chapter="sisterRay"] .menu-list li:nth-child(1) .menu-item,
+body[data-chapter="sisterRay"] .menu-list li:nth-child(1) {
+	font-size: clamp(1.22rem, 2vw, 1.62rem);
+}
+
+body[data-chapter="sisterRay"] .menu-link,
+body[data-chapter="sisterRay"] .menu-link:visited {
+	color: inherit;
+	text-decoration: none;
+}
+
+body[data-chapter="sisterRay"] .menu-list li:nth-child(1) .menu-label {
+	color: rgba(44, 12, 24, 0.88);
+}
+
+body[data-chapter="sisterRay"] .menu-item::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(
+			90deg,
+			rgba(47, 183, 141, 0.16),
+			transparent 28%,
+			rgba(191, 34, 109, 0.18)
+		),
+		radial-gradient(
+			circle at var(--sr-hover-x, 50%) var(--sr-hover-y, 50%),
+			rgba(255, 245, 199, 0.55),
+			transparent 34%
+		);
+	opacity: 0;
+	mix-blend-mode: screen;
+	transition: opacity 0.18s ease-out;
+}
+
+body[data-chapter="sisterRay"] .menu-item::after,
+body[data-chapter="sisterRay"] .menu-label::before,
+body[data-chapter="sisterRay"] .menu-label::after {
+	color: rgba(176, 25, 62, 0.42);
+	mix-blend-mode: multiply;
+}
+
+body[data-chapter="sisterRay"] .menu-label {
+	position: relative;
+	display: inline-block;
+	z-index: 2;
+	color: rgba(50, 16, 28, 0.74);
+	text-shadow:
+		1px 0 rgba(47, 183, 141, 0.16),
+		-1px 0 rgba(191, 34, 109, 0.15);
+}
+
+body[data-chapter="sisterRay"] .menu-item:hover,
+body[data-chapter="sisterRay"] .menu-item--active {
+	color: rgba(36, 8, 18, 0.96);
+	background: rgba(255, 237, 180, 0.38);
+	border-color: rgba(176, 25, 62, 0.34);
+	transform: translateY(-2px) skewX(-2deg);
+	letter-spacing: 0.2em;
+	box-shadow:
+		4px 0 rgba(47, 183, 141, 0.22),
+		-4px 0 rgba(191, 34, 109, 0.22),
+		0 18px 38px rgba(64, 12, 36, 0.16);
+	text-shadow:
+		2px 0 rgba(47, 183, 141, 0.24),
+		-2px 0 rgba(191, 34, 109, 0.22);
+}
+
+body[data-chapter="sisterRay"] .menu-item:hover::before,
+body[data-chapter="sisterRay"] .menu-item--active::before {
+	opacity: 1;
+}
+
+body[data-chapter="sisterRay"] .menu-list li:nth-child(1) .menu-item:hover,
+body[data-chapter="sisterRay"] .menu-list li:nth-child(1) .menu-item--active {
+	background: rgba(177, 28, 58, 0.66);
+	color: #fff0c8;
+	border-color: rgba(255, 242, 190, 0.56);
+}
+
+body[data-chapter="sisterRay"] .blood-flash {
+	position: fixed;
+	inset: 0;
+	z-index: 80;
+	pointer-events: none;
+	opacity: 0;
+	background: rgba(199, 33, 75, 0.22);
+	mix-blend-mode: multiply;
+	transition: opacity 0.12s ease-out;
+}
+
+body[data-chapter="sisterRay"] .white-flash {
+	position: fixed;
+	inset: 0;
+	z-index: 81;
+	pointer-events: none;
+	opacity: 0;
+	background: rgba(255, 246, 210, 0.85);
+	mix-blend-mode: screen;
+	transition: opacity 0.12s ease-out;
+}
+
+body[data-chapter="sisterRay"] .blood-flash--active,
+body[data-chapter="sisterRay"] .white-flash--active {
+	opacity: 1;
+}
+
+body[data-chapter="sisterRay"].sr-cut .menu-wrapper,
+body[data-chapter="sisterRay"] .menu-wrapper.sr-cut {
+	animation: srFrameCut 0.28s steps(2, end);
+}
+
+@keyframes srFrameCut {
+	0% {
+		transform: translate(0, 0) rotate(-0.7deg);
+		filter: hue-rotate(0deg) contrast(1);
+	}
+	30% {
+		transform: translate(8px, -3px) rotate(0.8deg);
+		filter: hue-rotate(18deg) contrast(1.25);
+	}
+	60% {
+		transform: translate(-5px, 2px) rotate(-1.8deg);
+		filter: hue-rotate(-22deg) contrast(1.18);
+	}
+	100% {
+		transform: translate(0, 0) rotate(-0.7deg);
+		filter: hue-rotate(0deg) contrast(1);
+	}
+}
+
+body[data-chapter="sisterRay"] .fisheye-lens {
+	display: none;
+}
+
+body[data-chapter="sisterRay"] .whisper-layer {
+	z-index: 12;
+	mix-blend-mode: multiply;
+	opacity: 0.45;
+}
+
+@media (max-width: 1366px), (max-height: 820px) {
+	body[data-chapter="sisterRay"] .start-center {
+		max-width: min(920px, calc(100vw - 56px));
+		max-height: calc(100vh - 52px);
+		padding: 24px 30px;
+		overflow: auto;
+	}
+
+	body[data-chapter="sisterRay"] .start-text {
+		max-height: min(46vh, 360px);
+		overflow: auto;
+	}
+
+	body[data-chapter="sisterRay"] .menu-wrapper {
+		padding: clamp(30px, 4vh, 52px) clamp(24px, 3.2vw, 56px)
+			clamp(78px, 10vh, 112px);
+	}
+
+	body[data-chapter="sisterRay"] .menu-title {
+		max-width: min(720px, calc(100vw - 72px));
+	}
+
+	body[data-chapter="sisterRay"] .menu-title-main {
+		font-size: clamp(48px, 8vw, 102px);
+		line-height: 0.9;
+	}
+
+	body[data-chapter="sisterRay"] .menu-list {
+		width: min(560px, calc(100vw - 72px));
+		gap: 7px;
+	}
+
+	body[data-chapter="sisterRay"] .menu-item {
+		min-height: 0;
+		padding: 8px 14px;
+		font-size: clamp(13px, 1.5vw, 18px);
+		line-height: 1.05;
+	}
+}
+
+@media (max-width: 1100px), (max-height: 680px) {
+	body[data-chapter="sisterRay"] .menu-wrapper {
+		padding: 24px 18px 86px;
+	}
+
+	body[data-chapter="sisterRay"] .menu-title-main {
+		font-size: clamp(38px, 7vw, 74px);
+	}
+
+	body[data-chapter="sisterRay"] .menu-list {
+		width: min(500px, calc(100vw - 52px));
+	}
+
+	body[data-chapter="sisterRay"] .menu-list li:nth-child(1),
+	body[data-chapter="sisterRay"] .menu-item {
+		font-size: clamp(12px, 1.45vw, 16px);
+	}
+}
+
+@media (max-width: 680px) {
+	body[data-chapter="sisterRay"] .menu-wrapper {
+		justify-content: flex-start;
+		padding: 66px 10px 42px;
+	}
+
+	body[data-chapter="sisterRay"] .menu-title {
+		width: calc(100vw - 22px);
+		margin-bottom: 8px;
+	}
+
+	body[data-chapter="sisterRay"] .menu-title::before {
+		top: -18px;
+		font-size: 0.58rem;
+		letter-spacing: 0.24em;
+	}
+
+	body[data-chapter="sisterRay"] .menu-title-small,
+	body[data-chapter="sisterRay"] .menu-title-sub {
+		font-size: 0.78rem;
+		letter-spacing: 0.18em;
+	}
+
+	body[data-chapter="sisterRay"] .menu-title-main {
+		font-size: clamp(3rem, 16vw, 4.4rem);
+		line-height: 0.88;
+		letter-spacing: 0.02em;
+	}
+
+	body[data-chapter="sisterRay"] .menu-divider {
+		width: calc(100vw - 72px);
+		margin-bottom: 10px;
+	}
+
+	body[data-chapter="sisterRay"] .menu-list {
+		grid-template-columns: 1fr;
+		width: calc(100vw - 20px);
+		gap: 6px;
+		padding: 10px 12px;
+	}
+
+	body[data-chapter="sisterRay"] .menu-item {
+		min-height: 36px;
+		padding: 8px 14px;
+		font-size: 0.94rem;
+		letter-spacing: 0.12em;
+	}
+
+	body[data-chapter="sisterRay"] .menu-list li:nth-child(1) {
+		margin-bottom: 2px;
+		font-size: 1.08rem;
+	}
+
+	body[data-chapter="sisterRay"] .sr-caption,
+	body[data-chapter="sisterRay"] .sr-side-notes,
+	body[data-chapter="sisterRay"] .sr-frame-index {
+		display: none;
+	}
+
+	body[data-chapter="sisterRay"] .menu-language-control {
+		top: 12px;
+		right: 8px;
+		padding: 4px;
+	}
+
+	body[data-chapter="sisterRay"] .menu-language-control__button {
+		min-width: 30px;
+		height: 24px;
+		padding: 0 6px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	body[data-chapter="sisterRay"] *,
+	body[data-chapter="sisterRay"] *::before,
+	body[data-chapter="sisterRay"] *::after {
+		animation-duration: 0.001ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.001ms !important;
+	}
+}

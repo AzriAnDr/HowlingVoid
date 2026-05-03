@@ -343,6 +343,8 @@
 	layer = MOB_LAYER
 	/// Ref to the hugger within.
 	var/obj/item/clothing/mask/facehugger/child
+	/// Type of facehugger this egg grows.
+	var/child_path = /obj/item/clothing/mask/facehugger/tgmc
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
 
@@ -350,7 +352,7 @@
 	. = ..()
 	update_appearance()
 	if(status == GROWING || status == GROWN)
-		child = new(src)
+		child = new child_path(src)
 	if(status == GROWING)
 		addtimer(CALLBACK(src, PROC_REF(Grow)), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 	proximity_monitor = new(src, status == GROWN ? 1 : 0)

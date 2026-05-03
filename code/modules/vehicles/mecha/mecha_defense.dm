@@ -73,7 +73,11 @@
 /obj/vehicle/sealed/mecha/attack_alien(mob/living/user, list/modifiers)
 	log_message("Attack by alien. Attacker - [user].", LOG_MECHA, color="red")
 	playsound(loc, 'sound/items/weapons/slash.ogg', 100, TRUE)
-	attack_generic(user, rand(user.melee_damage_lower, user.melee_damage_upper), BRUTE, MELEE, 0)
+	var/armor_penetration = 0
+	if(istgmcalien(user))
+		var/mob/living/carbon/alien/adult/tgmc/tgmc_alien = user
+		armor_penetration = tgmc_alien.mecha_armor_penetration
+	attack_generic(user, rand(user.melee_damage_lower, user.melee_damage_upper), BRUTE, MELEE, 0, armor_penetration = armor_penetration)
 
 /obj/vehicle/sealed/mecha/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	log_message("Attack by simple animal. Attacker - [user].", LOG_MECHA, color="red")
@@ -128,6 +132,9 @@
 	return hitmob.projectile_hit(hitting_projectile, def_zone, piercing_hit) //If we've passed any of the above conditions, the pilot can be hit
 
 /obj/vehicle/sealed/mecha/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked = null)
+	if(istype(hitting_projectile, /obj/projectile/neurotoxin/tgmc/acid))
+		hitting_projectile.armor_flag = LASER
+		hitting_projectile.damage /= 2
 	. = ..()
 	log_message("Hit by projectile. Type: [hitting_projectile]([hitting_projectile.damage_type]).", LOG_MECHA, color="red")
 	// yes we *have* to run the armor calc proc here I love tg projectile code too

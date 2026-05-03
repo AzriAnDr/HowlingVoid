@@ -3,12 +3,19 @@
 ========================================================= */
 
 (() => {
-  const MENU_SETTINGS = window.__HOWLING_MENU_SETTINGS || {};
+  const getMenuSettings = () =>
+    (window.__HOWLING_MENU_SETTINGS = {
+      musicEnabled: true,
+      musicVolume: 0.6,
+      interfaceLanguage: 'russian',
+      ...(window.__HOWLING_MENU_SETTINGS || {}),
+    });
 
   const clamp01 = (v) => Math.min(1, Math.max(0, Number(v) || 0));
-  const getConfiguredMenuVolume = () => clamp01(MENU_SETTINGS.musicVolume);
+  const getConfiguredMenuVolume = () =>
+    clamp01(getMenuSettings().musicVolume ?? 0.6);
   const isMenuMusicEnabled = () =>
-    MENU_SETTINGS.musicEnabled !== false && getConfiguredMenuVolume() > 0;
+    getMenuSettings().musicEnabled !== false && getConfiguredMenuVolume() > 0;
 
   // ===============================
   // ELEMENTS
@@ -745,7 +752,7 @@
   function startExperience() {
     if (started) return;
     started = true;
-    MENU_SETTINGS.introAccepted = true;
+    getMenuSettings().introAccepted = true;
 
     playSelect();
 

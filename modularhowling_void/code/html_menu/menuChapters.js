@@ -1,5 +1,22 @@
 // Howling Void chapter loader.
 (() => {
+  // Local/default fallback. BYOND can override these before this script loads.
+  // This keeps the menu usable when index.html is opened directly from disk.
+  window.__HOWLING_MENU_SETTINGS = {
+    musicEnabled: true,
+    musicVolume: 0.6,
+    interfaceLanguage: 'russian',
+    ...(window.__HOWLING_MENU_SETTINGS || {}),
+  };
+
+  const getMenuSettings = () =>
+    (window.__HOWLING_MENU_SETTINGS = {
+      musicEnabled: true,
+      musicVolume: 0.6,
+      interfaceLanguage: 'russian',
+      ...(window.__HOWLING_MENU_SETTINGS || {}),
+    });
+
   const ASSET_MAP = window.__HOWLING_MENU_ASSETS || {};
   const SCRIPT_SRC = document.currentScript?.src || '';
   const SCRIPT_BASE = SCRIPT_SRC.slice(0, SCRIPT_SRC.lastIndexOf('/') + 1);
@@ -26,9 +43,23 @@
       js: 'crossToBear.js',
       audio: 'cross_to_bear.ogg',
     },
+    sisterRay: {
+      id: 'sisterRay',
+      subtitle: 'THE GROWING STONES',
+      css: 'sisterRay.css',
+      js: 'sisterRay.js',
+      audio: 'Sister_Ray.mp3',
+    },
+    molesHamsters: {
+      id: 'molesHamsters',
+      subtitle: 'КРОТЫ — ХОМЯКИ',
+      css: 'molesHamsters.css',
+      js: 'molesHamsters.js',
+      audio: 'molesHamsters.mp3',
+    },
   };
 
-  const DEFAULT_CHAPTER = 'ironHeart';
+  const DEFAULT_CHAPTER = 'sisterRay';
   const CSS_READY_FALLBACK_MS = 1200;
   const MENU_CHROME_STYLE_ID = 'howling-menu-chrome-style';
 
@@ -160,6 +191,117 @@
         background: rgba(159, 23, 23, 0.34);
         outline: none;
       }
+
+      body[data-chapter] .start-skip {
+        display: flex !important;
+        width: fit-content !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      body[data-chapter] .start-button {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      @media (max-width: 1366px), (max-height: 820px) {
+        body[data-chapter] .start-overlay {
+          padding: 16px !important;
+        }
+
+        body[data-chapter] .start-center {
+          max-width: min(900px, calc(100vw - 56px)) !important;
+          max-height: calc(100vh - 46px) !important;
+          padding: 22px 28px !important;
+          overflow: auto !important;
+        }
+
+        body[data-chapter] .start-title {
+          font-size: clamp(22px, 3.2vw, 34px) !important;
+          line-height: 1.05 !important;
+        }
+
+        body[data-chapter] .start-text {
+          max-height: min(46vh, 360px) !important;
+          font-size: clamp(14px, 1.7vw, 18px) !important;
+          line-height: 1.32 !important;
+        }
+
+        body[data-chapter] .menu-wrapper {
+          padding-top: clamp(22px, 4vh, 46px) !important;
+          padding-bottom: clamp(54px, 8vh, 86px) !important;
+        }
+
+        body[data-chapter] .menu-title-main {
+          font-size: clamp(42px, 7.2vw, 96px) !important;
+          line-height: 0.9 !important;
+        }
+
+        body[data-chapter] .menu-title-small,
+        body[data-chapter] .menu-title-sub {
+          font-size: clamp(11px, 1.3vw, 17px) !important;
+          line-height: 1.15 !important;
+        }
+
+        body[data-chapter] .menu-list {
+          max-width: min(620px, calc(100vw - 72px)) !important;
+        }
+
+        body[data-chapter] .menu-item {
+          min-height: 0 !important;
+          font-size: clamp(15px, 1.8vw, 22px) !important;
+          line-height: 1.05 !important;
+        }
+
+        .menu-audio-control {
+          bottom: 34px !important;
+          min-width: 210px !important;
+          padding: 8px 12px !important;
+        }
+
+        .menu-audio-control__range {
+          width: 130px !important;
+        }
+
+        .menu-character-footer {
+          bottom: 10px !important;
+          font-size: 12px !important;
+          max-width: calc(100vw - 38px) !important;
+        }
+      }
+
+      @media (max-width: 1100px), (max-height: 680px) {
+        body[data-chapter] .start-center {
+          padding: 18px 22px !important;
+        }
+
+        body[data-chapter] .menu-title-main {
+          font-size: clamp(34px, 6.4vw, 72px) !important;
+        }
+
+        body[data-chapter] .menu-item {
+          font-size: clamp(13px, 1.65vw, 18px) !important;
+          padding-top: 7px !important;
+          padding-bottom: 7px !important;
+        }
+
+        body[data-chapter] .menu-language-control {
+          top: 10px !important;
+          right: 10px !important;
+          padding: 4px !important;
+        }
+
+        body[data-chapter] .menu-language-control__button {
+          min-width: 28px !important;
+          height: 22px !important;
+          padding: 0 6px !important;
+        }
+      }
     `;
     document.head.appendChild(style);
   }
@@ -228,7 +370,7 @@
     let hideTimer = null;
 
     function currentVolumePercent() {
-      const settings = window.__HOWLING_MENU_SETTINGS || {};
+      const settings = getMenuSettings();
       const volume = Number(settings.musicVolume);
       if (Number.isNaN(volume)) {
         return 0;
@@ -325,11 +467,7 @@
       if (typeof window.set_menu_music_volume === 'function') {
         window.set_menu_music_volume(percent);
       } else {
-        window.__HOWLING_MENU_SETTINGS = window.__HOWLING_MENU_SETTINGS || {};
-        window.__HOWLING_MENU_SETTINGS.musicVolume = Math.max(
-          0,
-          Math.min(1, percent / 100),
-        );
+        getMenuSettings().musicVolume = Math.max(0, Math.min(1, percent / 100));
       }
       sendVolumePreference(percent);
       tickSelectSound();
@@ -379,7 +517,7 @@
   }
 
   function currentMenuLanguage() {
-    const settings = window.__HOWLING_MENU_SETTINGS || {};
+    const settings = getMenuSettings();
     return settings.interfaceLanguage === 'russian' ? 'russian' : 'english';
   }
 
@@ -397,8 +535,7 @@
 
   function setMenuLanguage(language) {
     const normalized = language === 'russian' ? 'russian' : 'english';
-    window.__HOWLING_MENU_SETTINGS = window.__HOWLING_MENU_SETTINGS || {};
-    window.__HOWLING_MENU_SETTINGS.interfaceLanguage = normalized;
+    getMenuSettings().interfaceLanguage = normalized;
     window.__HOWLING_INTERFACE_LANGUAGE = normalized;
     syncLanguageControl();
 

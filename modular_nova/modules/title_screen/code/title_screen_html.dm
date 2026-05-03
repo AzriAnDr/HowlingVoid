@@ -102,9 +102,15 @@ GLOBAL_LIST_EMPTY(startup_messages)
 		var/jesus_wept_js_url = SSassets.transport.get_asset_url("jesusWept.js")
 		var/cross_to_bear_css_url = SSassets.transport.get_asset_url("crossToBear.css")
 		var/cross_to_bear_js_url = SSassets.transport.get_asset_url("crossToBear.js")
+		var/sister_ray_css_url = SSassets.transport.get_asset_url("sisterRay.css")
+		var/sister_ray_js_url = SSassets.transport.get_asset_url("sisterRay.js")
+		var/moles_hamsters_css_url = SSassets.transport.get_asset_url("molesHamsters.css")
+		var/moles_hamsters_js_url = SSassets.transport.get_asset_url("molesHamsters.js")
 		var/iron_heart_audio_url = SSassets.transport.get_asset_url("iron_heart.ogg")
 		var/jesus_wept_audio_url = SSassets.transport.get_asset_url("jesus_wept.ogg")
 		var/cross_to_bear_audio_url = SSassets.transport.get_asset_url("cross_to_bear.ogg")
+		var/sister_ray_audio_url = SSassets.transport.get_asset_url("Sister_Ray.mp3")
+		var/moles_hamsters_audio_url = SSassets.transport.get_asset_url("molesHamsters.mp3")
 		var/select_audio_url = SSassets.transport.get_asset_url("buttonclickrelease.ogg")
 
 		dat = {"
@@ -391,9 +397,15 @@ GLOBAL_LIST_EMPTY(startup_messages)
 						"jesusWept.js": "[jesus_wept_js_url]",
 						"crossToBear.css": "[cross_to_bear_css_url]",
 						"crossToBear.js": "[cross_to_bear_js_url]",
+						"sisterRay.css": "[sister_ray_css_url]",
+						"sisterRay.js": "[sister_ray_js_url]",
+						"molesHamsters.css": "[moles_hamsters_css_url]",
+						"molesHamsters.js": "[moles_hamsters_js_url]",
 						"iron_heart.ogg": "[iron_heart_audio_url]",
 						"jesus_wept.ogg": "[jesus_wept_audio_url]",
 						"cross_to_bear.ogg": "[cross_to_bear_audio_url]",
+						"Sister_Ray.mp3": "[sister_ray_audio_url]",
+						"molesHamsters.mp3": "[moles_hamsters_audio_url]",
 						"buttonclickrelease.ogg": "[select_audio_url]"
 					};
 				</script>

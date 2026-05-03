@@ -24,6 +24,14 @@
 #define ishorrorling(A) (istype(A, /mob/living/simple_animal/hostile/true_changeling))
 #define iscorticalborer(A) (istype(A, /mob/living/basic/cortical_borer))
 #define ismutant(A) (is_species(A, /datum/species/mutant))
+// TGMC Xenomorphs
+#define istgmcalien(A) (istype(A, /mob/living/carbon/alien/adult/tgmc))
+#define istgmcalienqueen(A) (istype(A, /mob/living/carbon/alien/adult/tgmc/queen))
+#define istgmcalienpraetorian(A) (istype(A, /mob/living/carbon/alien/adult/tgmc/praetorian))
+#define istgmcalienravager(A) (istype(A, /mob/living/carbon/alien/adult/tgmc/ravager))
+#define istgmcaliencrusher(A) (istype(A, /mob/living/carbon/alien/adult/tgmc/crusher))
+#define istgmcalienspitter(A) (istype(A, /mob/living/carbon/alien/adult/tgmc/spitter))
+#define istgmcalientier2(A) (istgmcalienpraetorian(A) || istgmcalienravager(A) || istgmcaliencrusher(A) || istgmcalienspitter(A))
 //Customisation bases
 #define isaquatic(A) (is_species(A,/datum/species/aquatic))
 #define ishumanoid(A) (is_species(A,/datum/species/humanoid))

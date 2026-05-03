@@ -452,6 +452,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SECURITY_HUD_ID_ONLY "sec_hud_lesser"
 #define TRAIT_BLOOD_HUD "blood_hud"
 #define TRAIT_ABDUCTOR_HUD "abductor_hud"
+#define TRAIT_XENO_HUD "xeno_hud"
 /// Stop the user from seeing the sechud. Only works for trait handled sechuds.
 #define TRAIT_BLOCK_SECHUD "block_sechud"
 /// for something granting you a diagnostic hud
@@ -464,6 +465,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOFLASH "noflash"
 /// prevents xeno huggies implanting skeletons
 #define TRAIT_XENO_IMMUNE "xeno_immune"
+/// Trait source for xeno innate abilities.
+#define TRAIT_XENO_INNATE "xeno_innate"
+/// Trait source for effects added by a xeno ability.
+#define TRAIT_XENO_ABILITY_GIVEN "xeno_ability_given"
+/// Determines if something can receive healing from a xeno.
+#define TRAIT_XENO_HEAL_AURA "trait_xeno_heal_aura"
+/// Trait source for traits added by fortify ability.
+#define TRAIT_XENO_FORTIFY "xeno_fortify"
 /// Allows the species to equip items that normally require a jumpsuit without having one equipped. Used by golems.
 #define TRAIT_NO_JUMPSUIT "no_jumpsuit"
 #define TRAIT_NAIVE "naive"

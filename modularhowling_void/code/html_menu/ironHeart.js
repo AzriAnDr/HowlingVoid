@@ -2,7 +2,13 @@
 // IRON HEART
 // =========================================================
 (() => {
-  const MENU_SETTINGS = window.__HOWLING_MENU_SETTINGS || {};
+  const getMenuSettings = () =>
+    (window.__HOWLING_MENU_SETTINGS = {
+      musicEnabled: true,
+      musicVolume: 0.6,
+      interfaceLanguage: 'russian',
+      ...(window.__HOWLING_MENU_SETTINGS || {}),
+    });
 
   const body = document.body;
   const menuItems = Array.from(document.querySelectorAll('.menu-item'));
@@ -63,9 +69,9 @@
 
   const clamp01 = (value) => Math.max(0, Math.min(1, value));
   const getConfiguredMenuVolume = () =>
-    clamp01(Number(MENU_SETTINGS.musicVolume) || 0);
+    clamp01(Number(getMenuSettings().musicVolume ?? 0.6));
   const isMenuMusicEnabled = () =>
-    MENU_SETTINGS.musicEnabled !== false && getConfiguredMenuVolume() > 0;
+    getMenuSettings().musicEnabled !== false && getConfiguredMenuVolume() > 0;
 
   const schedule = (fn, delay) => {
     const id = setTimeout(() => {
@@ -323,7 +329,7 @@
     }
 
     started = true;
-    MENU_SETTINGS.introAccepted = true;
+    getMenuSettings().introAccepted = true;
     playSelect();
 
     hideStartOverlay();

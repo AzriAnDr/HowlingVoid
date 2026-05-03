@@ -448,7 +448,7 @@
 	announce_xenos()
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/create_ruleset_body()
-	return new /mob/living/carbon/alien/larva
+	return new /mob/living/carbon/alien/larva/tgmc
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/create_execute_args()
 	return list(find_vent_spawns())

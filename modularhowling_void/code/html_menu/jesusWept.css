@@ -1940,3 +1940,59 @@ body.fisheye-warp .menu-title-sub {
 	user-select: none;
 	cursor: pointer;
 }
+
+@media (max-width: 1366px), (max-height: 820px) {
+	body[data-chapter="jesusWept"] .start-center {
+		max-width: min(920px, calc(100vw - 56px));
+		max-height: calc(100vh - 52px);
+		padding: 24px 30px;
+		overflow: auto;
+	}
+
+	body[data-chapter="jesusWept"] .start-text {
+		max-height: min(46vh, 360px);
+		overflow: auto;
+	}
+
+	body[data-chapter="jesusWept"] .menu-wrapper {
+		padding: clamp(24px, 4vh, 48px) clamp(30px, 4vw, 64px)
+			clamp(74px, 10vh, 110px);
+	}
+
+	body[data-chapter="jesusWept"] .menu-title-main {
+		font-size: clamp(42px, 7vw, 94px);
+		line-height: 0.92;
+	}
+
+	body[data-chapter="jesusWept"] .menu-title-small,
+	body[data-chapter="jesusWept"] .menu-title-sub {
+		font-size: clamp(11px, 1.25vw, 17px);
+	}
+
+	body[data-chapter="jesusWept"] .menu-list {
+		max-width: min(560px, calc(100vw - 86px));
+	}
+
+	body[data-chapter="jesusWept"] .menu-item {
+		font-size: clamp(14px, 1.7vw, 21px);
+		line-height: 1.08;
+		padding-top: 7px;
+		padding-bottom: 7px;
+	}
+}
+
+@media (max-width: 1100px), (max-height: 680px) {
+	body[data-chapter="jesusWept"] .menu-wrapper {
+		padding: 18px 26px 86px;
+	}
+
+	body[data-chapter="jesusWept"] .menu-title-main {
+		font-size: clamp(34px, 6.1vw, 70px);
+	}
+
+	body[data-chapter="jesusWept"] .menu-item {
+		font-size: clamp(12px, 1.55vw, 16px);
+		padding-top: 5px;
+		padding-bottom: 5px;
+	}
+}

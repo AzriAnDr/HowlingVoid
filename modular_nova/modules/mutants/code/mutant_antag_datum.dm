@@ -19,3 +19,11 @@
 	if(!component)
 		owner.current?.AddComponent(/datum/component/mutant_infection)
 	to_chat(owner, span_boldannounce(antag_memory))
+
+/datum/antagonist/mutant/get_preview_icon()
+	var/mob/living/carbon/human/dummy = new /mob/living/carbon/human/dummy/consistent
+	dummy.set_species(/datum/species/mutant/infectious, pref_load = FALSE)
+	dummy.set_combat_mode(TRUE)
+	var/datum/universal_icon/preview_icon = get_flat_uni_icon(dummy)
+	SSatoms.prepare_deletion(dummy)
+	return finish_preview_icon(preview_icon)

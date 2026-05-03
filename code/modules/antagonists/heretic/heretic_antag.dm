@@ -362,24 +362,7 @@
 	return ..()
 
 /datum/antagonist/heretic/get_preview_icon()
-	var/icon/icon = render_preview_outfit(preview_outfit)
-
-	// MOTHBLOCKS TOOD: Copied and pasted from cult, make this its own proc
-
-	// The sickly blade is 64x64, but getFlatIcon crunches to 32x32.
-	// So I'm just going to add it in post, screw it.
-
-	// Center the dude, because item icon states start from the center.
-	// This makes the image 64x64.
-	icon.Crop(-15, -15, 48, 48)
-
-	var/obj/item/melee/sickly_blade/blade = new
-	icon.Blend(icon(blade.lefthand_file, blade.inhand_icon_state), ICON_OVERLAY)
-	qdel(blade)
-
-	// Move the guy back to the bottom left, 32x32.
-	icon.Crop(17, 17, 48, 48)
-
+	var/datum/universal_icon/icon = render_preview_outfit(preview_outfit)
 	return finish_preview_icon(icon)
 
 /datum/antagonist/heretic/farewell()

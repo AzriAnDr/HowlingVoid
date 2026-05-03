@@ -214,13 +214,19 @@
 		"ironHeart.js" = 'modularhowling_void/code/html_menu/ironHeart.js',
 		"jesusWept.js" = 'modularhowling_void/code/html_menu/jesusWept.js',
 		"crossToBear.js" = 'modularhowling_void/code/html_menu/crossToBear.js',
+		"sisterRay.js" = 'modularhowling_void/code/html_menu/sisterRay.js',
+		"molesHamsters.js" = 'modularhowling_void/code/html_menu/molesHamsters.js',
 		"ironHeart.css" = 'modularhowling_void/code/html_menu/ironHeart.css',
 		"jesusWept.css" = 'modularhowling_void/code/html_menu/jesusWept.css',
 		"crossToBear.css" = 'modularhowling_void/code/html_menu/crossToBear.css',
+		"sisterRay.css" = 'modularhowling_void/code/html_menu/sisterRay.css',
+		"molesHamsters.css" = 'modularhowling_void/code/html_menu/molesHamsters.css',
 		"buttonclickrelease.ogg" = 'modularhowling_void/code/html_menu/buttonclickrelease.ogg',
 		"iron_heart.ogg" = 'modularhowling_void/code/html_menu/iron_heart.ogg',
 		"jesus_wept.ogg" = 'modularhowling_void/code/html_menu/jesus_wept.ogg',
 		"cross_to_bear.ogg" = 'modularhowling_void/code/html_menu/cross_to_bear.ogg',
+		"Sister_Ray.mp3" = 'modularhowling_void/code/html_menu/Sister_Ray.mp3',
+		"molesHamsters.mp3" = 'modularhowling_void/code/html_menu/molesHamsters.mp3',
 	)
 // Howling Void Edit end
 
