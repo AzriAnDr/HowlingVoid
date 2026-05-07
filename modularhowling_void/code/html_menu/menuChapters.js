@@ -209,7 +209,8 @@
         margin-right: auto !important;
       }
 
-      body[data-chapter] .start-text .epilepsy-warning {
+      body[data-chapter="jesusWept"] .start-text .epilepsy-warning,
+      body[data-chapter="crossToBear"] .start-text .epilepsy-warning {
         position: relative;
         display: inline-block;
         padding: 0 0.08em;
@@ -235,8 +236,10 @@
         will-change: transform, filter, color, background;
       }
 
-      body[data-chapter] .start-text .epilepsy-warning::before,
-      body[data-chapter] .start-text .epilepsy-warning::after {
+      body[data-chapter="jesusWept"] .start-text .epilepsy-warning::before,
+      body[data-chapter="jesusWept"] .start-text .epilepsy-warning::after,
+      body[data-chapter="crossToBear"] .start-text .epilepsy-warning::before,
+      body[data-chapter="crossToBear"] .start-text .epilepsy-warning::after {
         content: attr(data-text);
         position: absolute;
         inset: 0;
@@ -245,7 +248,8 @@
         mix-blend-mode: screen;
       }
 
-      body[data-chapter] .start-text .epilepsy-warning::before {
+      body[data-chapter="jesusWept"] .start-text .epilepsy-warning::before,
+      body[data-chapter="crossToBear"] .start-text .epilepsy-warning::before {
         color: #00fff0;
         clip-path: inset(0 0 56% 0);
         text-shadow: -2px 0 0 #00fff0;
@@ -253,7 +257,8 @@
         animation: epilepsyWarningSliceTop 310ms steps(1, end) infinite;
       }
 
-      body[data-chapter] .start-text .epilepsy-warning::after {
+      body[data-chapter="jesusWept"] .start-text .epilepsy-warning::after,
+      body[data-chapter="crossToBear"] .start-text .epilepsy-warning::after {
         color: #ffffff;
         clip-path: inset(48% 0 0 0);
         text-shadow: 2px 0 0 #ff1010;
