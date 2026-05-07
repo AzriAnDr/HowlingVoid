@@ -23,6 +23,44 @@
 	var/list/key_emotes = GLOB.emote_list[act]
 
 	if(!length(key_emotes))
+		// Check custom emote panel if no built-in emote found
+		if(client?.prefs?.custom_emote_panel && (act in client.prefs.custom_emote_panel))
+			var/entry = client.prefs.custom_emote_panel[act]
+			if(islist(entry))
+				var/type_flags = EMOTE_VISIBLE
+				if(isnum(entry["type"]))
+					type_flags = entry["type"]
+				var/res = TRUE
+				var/message_text = entry["message"]
+				var/has_message = (type_flags & EMOTE_VISIBLE) && istext(message_text) && length(message_text)
+				if(has_message)
+					var/message_flags = type_flags & (EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_IMPORTANT | EMOTE_RUNECHAT)
+					if(!message_flags)
+						message_flags = EMOTE_VISIBLE
+					res = src.emote("me", message_flags, message_text, intentional, force_silence)
+				var/sound_key = entry["sound"]
+				if(sound_key && (type_flags & EMOTE_AUDIBLE))
+					var/list/s_list = GLOB.emote_list[sound_key]
+					if(length(s_list))
+						var/datum/emote/E = s_list[1]
+						if(E.check_cooldown(src, TRUE))
+							var/snd = E.get_sound(src)
+							if(!snd)
+								snd = E.sound
+
+							if(snd && E.should_play_sound(src, TRUE) && TIMER_COOLDOWN_FINISHED(src, "general_emote_audio_cooldown") && TIMER_COOLDOWN_FINISHED(src, sound_key))
+								TIMER_COOLDOWN_START(src, sound_key, E.specific_emote_audio_cooldown)
+								TIMER_COOLDOWN_START(src, "general_emote_audio_cooldown", E.general_emote_audio_cooldown)
+								var/frequency = null
+								if(E.affected_by_pitch && SStts.tts_enabled && SStts.pitch_enabled)
+									frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH) * (1 + sqrt(abs(src.pitch)) * SIGN(src.pitch) * EMOTE_TTS_PITCH_MULTIPLIER)
+								else if(E.vary)
+									frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH)
+								playsound(source = src, soundin = snd, vol = 50, vary = FALSE, ignore_walls = E.sound_wall_ignore, frequency = frequency)
+				var/effect_key = entry["effect"]
+				if(effect_key && (type_flags & EMOTE_EFFECT))
+					src.play_emote_effect(effect_key, null, TRUE, TRUE) // mute_sound = TRUE for custom emotes
+				return res
 		if(intentional && !force_silence)
 			to_chat(src, span_notice("'[act]' emote does not exist. Say *help for a list."))
 		return FALSE
@@ -82,6 +120,7 @@
 	hands_use_check = TRUE
 	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/eye/imaginary_friend)
 	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/eye/imaginary_friend)
+	has_custom_emote_effect = TRUE
 	/// The probability we fall our our arse
 	var/fall_over_prob = 60
 	/// The direction we spin in. TRUE means clockwise, FALSE means counter-clockwise.
@@ -129,6 +168,7 @@
 	hands_use_check = TRUE
 	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/eye/imaginary_friend)
 	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/eye/imaginary_friend)
+	has_custom_emote_effect = TRUE
 
 /datum/emote/spin/run_emote(mob/user, params,  type_override, intentional)
 	. = ..()
@@ -190,4 +230,34 @@
 /datum/emote/jump/should_play_sound(mob/user, intentional)
 	if(isliving(user))
 		return ..()
+	return FALSE
+
+/**
+ * Runs only the visual effect/animation of an emote by key, without outputting text.
+ * Used by the custom emote panel to trigger emote effects.
+ *
+ * Arguments:
+ * * emote_key - The key of the emote to run the effect for.
+ * * params - Optional params.
+ * * intentional - Whether the emote is intentional.
+ * * mute_sound - If TRUE, also suppresses the emote's own sound.
+ */
+/mob/proc/play_emote_effect(emote_key, params = null, intentional = TRUE, mute_sound = FALSE)
+	var/list/key_emotes = GLOB.emote_list[emote_key]
+	if(!length(key_emotes))
+		return FALSE
+
+	for(var/datum/emote/emote in key_emotes)
+		if(!emote.check_cooldown(src, intentional))
+			continue
+		if(!emote.can_run_emote(src, TRUE, intentional, params))
+			continue
+		if(SEND_SIGNAL(src, COMSIG_MOB_PRE_EMOTED, emote.key, params, null, intentional, emote) & COMPONENT_CANT_EMOTE)
+			continue
+
+		emote.run_effect_only(src, params, null, intentional, mute_sound)
+		SEND_SIGNAL(src, COMSIG_MOB_EMOTE, emote, emote_key, null, params, intentional)
+		SEND_SIGNAL(src, COMSIG_MOB_EMOTED(emote.key))
+		return TRUE
+
 	return FALSE

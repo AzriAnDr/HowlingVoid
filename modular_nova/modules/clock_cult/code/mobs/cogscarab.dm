@@ -33,7 +33,7 @@
 	GLOB.cogscarabs -= src
 	return ..()
 
-/mob/living/basic/drone/cogscarab/transferItemToLoc(obj/item/item, newloc, force, silent)
+/mob/living/basic/drone/cogscarab/transferItemToLoc(obj/item/item, newloc, force, silent, animated)
 	return (force || (item.force <= CLOCK_DRONE_MAX_ITEM_FORCE)) && ..()
 
 /obj/effect/mob_spawn/ghost_role/drone/cogscarab

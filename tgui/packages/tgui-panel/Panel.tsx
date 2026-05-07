@@ -12,6 +12,8 @@ import { NowPlayingWidget } from './audio/NowPlayingWidget';
 import { ChatPanel } from './chat/ChatPanel';
 import { ChatTabs } from './chat/ChatTabs';
 import { useChatPersistence } from './chat/use-chat-persistence';
+import { emotesVisibleAtom } from './emotes/atoms';
+import { EmotesToolbar } from './emotes/EmotesToolbar';
 import { gameAtom } from './game/atoms';
 import { useKeepAlive } from './game/use-keep-alive';
 import { Notifications } from './Notifications';
@@ -23,6 +25,7 @@ import { useSettings } from './settings/use-settings';
 
 export function Panel(props) {
   const [audioVisible, setAudioVisible] = useAtom(visibleAtom);
+  const [emotesVisible, setEmotesVisible] = useAtom(emotesVisibleAtom);
   const game = useAtomValue(gameAtom);
   const { settings } = useSettings();
   const [settingsVisible, setSettingsVisible] = useAtom(settingsVisibleAtom);
@@ -40,6 +43,16 @@ export function Panel(props) {
               </Stack.Item>
               <Stack.Item>
                 <PingIndicator />
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  color="grey"
+                  selected={emotesVisible}
+                  icon="star"
+                  tooltip="Emote panel"
+                  tooltipPosition="bottom-start"
+                  onClick={() => setEmotesVisible((v) => !v)}
+                />
               </Stack.Item>
               <Stack.Item>
                 <Button
@@ -73,6 +86,11 @@ export function Panel(props) {
         {settingsVisible && (
           <Stack.Item>
             <SettingsPanel />
+          </Stack.Item>
+        )}
+        {emotesVisible && (
+          <Stack.Item>
+            <EmotesToolbar />
           </Stack.Item>
         )}
         <Stack.Item grow>

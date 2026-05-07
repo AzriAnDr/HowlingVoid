@@ -341,6 +341,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMOTE_IMPORTANT (1<<2)
 /// Emote only prints to runechat, not to the chat window
 #define EMOTE_RUNECHAT (1<<3)
+/// Whether this emote triggers a visual effect (animation only, used by custom emote panel)
+#define EMOTE_EFFECT (1<<4)
 
 // Flags for the empath component
 /// Can the empath see if a living mob has combat mode on

@@ -69,6 +69,21 @@
 /datum/emote/living/carbon/human/screech/get_sound(mob/living/carbon/human/user)
 	return user.dna.species.get_scream_sound(user)
 
+/datum/emote/living/scream/get_sound_variants(mob/living/user)
+	return list(
+		"male 1" = 'sound/mobs/humanoids/human/scream/malescream_1.ogg',
+		"male 2" = 'sound/mobs/humanoids/human/scream/malescream_2.ogg',
+		"male 3" = 'sound/mobs/humanoids/human/scream/malescream_3.ogg',
+		"male 4" = 'sound/mobs/humanoids/human/scream/malescream_4.ogg',
+		"male 5" = 'sound/mobs/humanoids/human/scream/malescream_5.ogg',
+		"male 6" = 'sound/mobs/humanoids/human/scream/malescream_6.ogg',
+		"female 1" = 'sound/mobs/humanoids/human/scream/femalescream_1.ogg',
+		"female 2" = 'sound/mobs/humanoids/human/scream/femalescream_2.ogg',
+		"female 3" = 'sound/mobs/humanoids/human/scream/femalescream_3.ogg',
+		"female 4" = 'sound/mobs/humanoids/human/scream/femalescream_4.ogg',
+		"female 5" = 'sound/mobs/humanoids/human/scream/femalescream_5.ogg',
+	)
+
 /datum/emote/living/carbon/human/pale
 	key = "pale"
 	message = "goes pale for a second."
@@ -365,3 +380,188 @@
 	. = ..()
 	var/datum/species/ethereal/goober = user.dna.species
 	goober.start_flicker(user)
+
+// === XENO EMOTES (for roleplay purposes) ===
+
+/datum/emote/living/carbon/human/alien_hiss_1
+	name = "Xeno Hiss 1"
+	key = "ahiss1"
+	key_third_person = "ahiss1"
+	message = "hisses!"
+	sound = 'sound/mobs/xenomorphs/talk1.ogg'
+	cooldown = 3 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/alien_hiss_2
+	name = "Xeno Hiss 2"
+	key = "ahiss2"
+	key_third_person = "ahiss2"
+	message = "hisses gutturally..."
+	cooldown = 3 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/alien_hiss_2/get_sound(mob/living/user)
+	return pick(
+		'sound/mobs/xenomorphs/talk2.ogg',
+		'sound/mobs/xenomorphs/talk3.ogg',
+		'sound/mobs/xenomorphs/talk4.ogg',
+	)
+
+/datum/emote/living/carbon/human/alien_hiss_3
+	name = "Xeno Hiss 3"
+	key = "ahiss3"
+	key_third_person = "ahiss3"
+	message = "hisses aggressively!"
+	sound = 'sound/mobs/xenomorphs/talk5.ogg'
+	cooldown = 3 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/alien_hiss_4
+	name = "Xeno Hiss 4"
+	key = "ahiss4"
+	key_third_person = "ahiss4"
+	message = "exhales with a hiss..."
+	cooldown = 3 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/alien_hiss_4/get_sound(mob/living/user)
+	return pick(
+		'sound/mobs/xenomorphs/lowHiss1.ogg',
+		'sound/mobs/xenomorphs/lowHiss2.ogg',
+		'sound/mobs/xenomorphs/lowHiss3.ogg',
+		'sound/mobs/xenomorphs/lowHiss4.ogg',
+	)
+
+/datum/emote/living/carbon/human/alien_scream_1
+	name = "Xeno Scream 1"
+	key = "ascream1"
+	key_third_person = "ascream1"
+	message = "shrieks aggressively!"
+	cooldown = 3 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/alien_scream_1/get_sound(mob/living/user)
+	return pick(
+		'sound/mobs/xenomorphs/screech1.ogg',
+		'sound/mobs/xenomorphs/screech2.ogg',
+		'sound/mobs/xenomorphs/screech3.ogg',
+		'sound/mobs/xenomorphs/screech4.ogg',
+	)
+
+/datum/emote/living/carbon/human/alien_scream_2
+	name = "Xeno Scream 2"
+	key = "ascream2"
+	key_third_person = "ascream2"
+	message = "lets out an aggressive roar!"
+	cooldown = 2 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/alien_scream_2/get_sound(mob/living/user)
+	return pick(
+		'sound/mobs/xenomorphs/alien_roar1.ogg',
+		'sound/mobs/xenomorphs/alien_roar2.ogg',
+	)
+
+/datum/emote/living/carbon/human/alien_scream_pain
+	name = "Xeno Pain Scream"
+	key = "apscream"
+	key_third_person = "apscream"
+	message = "screams in pain!"
+	cooldown = 3 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/alien_scream_pain/get_sound(mob/living/user)
+	return pick(
+		'sound/mobs/xenomorphs/hurt1.ogg',
+		'sound/mobs/xenomorphs/hurt2.ogg',
+	)
+
+/datum/emote/living/carbon/human/alien_sigh
+	name = "Xeno Sigh"
+	key = "asigh"
+	key_third_person = "asigh"
+	message = "exhales in irritation!"
+	sound = 'sound/mobs/xenomorphs/gnarl1.ogg'
+	cooldown = 3 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/alien_growl_1
+	name = "Xeno Growl 1"
+	key = "agrowl1"
+	key_third_person = "agrowl1"
+	message = "snaps their teeth aggressively!"
+	sound = 'sound/mobs/xenomorphs/growl1.ogg'
+	cooldown = 6 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/alien_growl_2
+	name = "Xeno Growl 2"
+	key = "agrowl2"
+	key_third_person = "agrowl2"
+	message = "growls with displeasure."
+	cooldown = 3 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/alien_growl_2/get_sound(mob/living/user)
+	return pick(
+		'sound/mobs/xenomorphs/growl2.ogg',
+		'sound/mobs/xenomorphs/growl9.ogg',
+		'sound/mobs/xenomorphs/growl10.ogg',
+	)
+
+/datum/emote/living/carbon/human/alien_growl_3
+	name = "Xeno Growl 3"
+	key = "agrowl3"
+	key_third_person = "agrowl3"
+	message = "growls aggressively!"
+	cooldown = 6 SECONDS
+	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/carbon/human/alien_growl_3/get_sound(mob/living/user)
+	return pick(
+		'sound/mobs/xenomorphs/growl3.ogg',
+		'sound/mobs/xenomorphs/growl4.ogg',
+		'sound/mobs/xenomorphs/growl5.ogg',
+		'sound/mobs/xenomorphs/growl6.ogg',
+		'sound/mobs/xenomorphs/growl7.ogg',
+		'sound/mobs/xenomorphs/growl8.ogg',
+	)
+
+// === SYNTH EMOTES ===
+
+/datum/emote/living/carbon/human/synth_scary
+	key = "scary"
+	key_third_person = "plays a scary sound"
+	message = "plays a scary sound!"
+	message_mime = "plays a scary sound silently!"
+	sound = 'sound/voice/synth/synth_scary.ogg'
+	cooldown = 2 SECONDS
+	emote_type = EMOTE_AUDIBLE
+	mob_type_allowed_typecache = /mob/living/carbon/human
+
+/datum/emote/living/carbon/human/synth_error
+	key = "error"
+	key_third_person = "has an error"
+	message = "has an error!"
+	message_mime = "has an error silently!"
+	sound = 'sound/voice/synth/synth_error.ogg'
+	emote_type = EMOTE_AUDIBLE
+	mob_type_allowed_typecache = /mob/living/carbon/human
+
+/datum/emote/living/carbon/human/rstartup
+	key = "startup"
+	key_third_person = "starts up"
+	message = "starts up!"
+	message_mime = "starts up silently!"
+	sound = 'sound/voice/synth/synth_startup.ogg'
+	emote_type = EMOTE_AUDIBLE
+	mob_type_allowed_typecache = /mob/living/carbon/human
+
+/datum/emote/living/carbon/human/rshutdown
+	key = "shutdown"
+	key_third_person = "shuts down"
+	message = "shuts down!"
+	message_mime = "shuts down silently!"
+	sound = 'sound/voice/synth/synth_shutdown.ogg'
+	emote_type = EMOTE_AUDIBLE
+	mob_type_allowed_typecache = /mob/living/carbon/human
