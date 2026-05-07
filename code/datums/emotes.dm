@@ -67,6 +67,12 @@
 	var/specific_emote_audio_cooldown = 5 SECONDS
 	/// Does this emote's sound ignore walls?
 	var/sound_wall_ignore = FALSE
+	/// Whether this emote has a special visual effect playable as a custom emote effect.
+	var/has_custom_emote_effect = FALSE
+	/// When TRUE, suppresses text output (used by run_effect_only for custom emote panel).
+	var/suppress_output = FALSE
+	/// When TRUE, suppresses sound (used by run_effect_only for custom emote panel).
+	var/suppress_sound = FALSE
 
 /datum/emote/New()
 	switch(mob_type_allowed_typecache)
@@ -108,11 +114,11 @@
 	/// Use the type override if it exists
 	var/running_emote_type = type_override || emote_type
 
-	if(user.client)
+	if(!suppress_output && user.client)
 		user.log_message(msg, LOG_EMOTE)
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, "general_emote_audio_cooldown") && TIMER_COOLDOWN_FINISHED(user, type))
+	if(!suppress_sound && tmp_sound && should_play_sound(user, intentional) && TIMER_COOLDOWN_FINISHED(user, "general_emote_audio_cooldown") && TIMER_COOLDOWN_FINISHED(user, type))
 		TIMER_COOLDOWN_START(user, type, specific_emote_audio_cooldown)
 		TIMER_COOLDOWN_START(user, "general_emote_audio_cooldown", general_emote_audio_cooldown)
 		var/frequency = null
@@ -133,6 +139,9 @@
 	var/is_audible = running_emote_type & EMOTE_AUDIBLE
 	var/space = should_have_space_before_emote(html_decode(msg)[1]) ? " " : "" // NOVA EDIT ADDITION
 	var/additional_message_flags = get_message_flags(intentional)
+
+	if(suppress_output)
+		return // Skip message display; subclass animations will still run after ..() returns
 
 	// Emote doesn't get printed to chat, runechat only
 	if(running_emote_type & EMOTE_RUNECHAT)
@@ -258,6 +267,19 @@
 
 	return
 
+/**
+ * Runs only the visual effect/animation portion of the emote, suppressing text output and optionally sound.
+ * Used by the custom emote panel to trigger emote animations without duplicating the text message.
+ */
+/datum/emote/proc/run_effect_only(mob/user, params, type_override, intentional = FALSE, mute_sound = FALSE)
+	var/old_output_state = suppress_output
+	var/old_sound_state = suppress_sound
+	suppress_output = TRUE
+	suppress_sound = mute_sound
+	var/result = run_emote(user, params, type_override, intentional)
+	suppress_output = old_output_state
+	suppress_sound = old_sound_state
+	return result
 
 
 /**
@@ -299,6 +321,50 @@
  */
 /datum/emote/proc/get_sound(mob/living/user)
 	return sound //by default just return this var.
+
+/**
+ * Returns an associative list of sound variants this emote supports.
+ * Override this in subtypes that have gender/species-specific sounds.
+ * Returns an associative list of variant_key -> sound path, or null if no variants.
+ */
+/datum/emote/proc/get_sound_variants(mob/living/user)
+	return null
+
+/**
+ * Returns the sound for a specific variant key.
+ * Supports meta-variants:
+ * - "default" or null: use standard get_sound() behavior
+ * - "random": pick a random sound from all variants
+ * - "random:<category>": pick a random sound from variants whose key contains category
+ * - specific key: return that variant's sound path
+ */
+/datum/emote/proc/get_variant_sound(variant, mob/living/user)
+	var/list/variants = get_sound_variants(user)
+	if(!variants || !islist(variants))
+		return null
+
+	if(variant == "default" || !variant)
+		return null
+
+	if(variant == "random")
+		var/list/all_sounds = list()
+		for(var/vkey in variants)
+			all_sounds += variants[vkey]
+		if(length(all_sounds))
+			return pick(all_sounds)
+		return null
+
+	if(copytext(variant, 1, 8) == "random:")
+		var/category = copytext(variant, 8)
+		var/list/category_sounds = list()
+		for(var/vkey in variants)
+			if(findtext(vkey, category))
+				category_sounds += variants[vkey]
+		if(length(category_sounds))
+			return pick(category_sounds)
+		return null
+
+	return variants[variant]
 
 /**
  * To get the flags visible/audible messages for ran by the emote.

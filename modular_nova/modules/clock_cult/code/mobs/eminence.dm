@@ -30,8 +30,8 @@
 	if(!GLOB.current_eminence)
 		GLOB.current_eminence = src
 	internal_radio = new /obj/item/radio/intercom/reebe(src)
-	internal_radio.listening = TRUE
-	internal_radio.broadcasting = FALSE
+	internal_radio.should_be_listening = TRUE
+	internal_radio.should_be_broadcasting = FALSE
 	cogs = GLOB.clock_installed_cogs
 	add_traits(list(TRAIT_GODMODE, TRAIT_BLOCK_SHUTTLE_MOVEMENT), INNATE_TRAIT)
 	grant_all_languages()
@@ -46,7 +46,7 @@
 	. = ..()
 	clicked_on.eminence_act(src)
 
-/mob/living/eminence/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced, filterproof, message_range, datum/saymode/saymode)
+/mob/living/eminence/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced, filterproof, message_range, datum/saymode/saymode, list/message_mods = list())
 	if(!message || stat)
 		return
 
@@ -79,7 +79,7 @@
 /mob/living/eminence/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	return FALSE
 
-/mob/living/eminence/dust(just_ash, drop_items, force)
+/mob/living/eminence/dust(just_ash, drop_items, give_moodlet, force)
 	if(!force)
 		return FALSE
 	return ..()

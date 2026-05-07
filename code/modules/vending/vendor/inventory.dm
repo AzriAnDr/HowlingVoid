@@ -20,14 +20,14 @@
 		return base_price
 
 	var/stock_multiplier = 1
-	stock_amount = max(stock_amount, 1)
-	if(stock_amount <= 1)
+	var/adjusted_stock = max(stock_amount, 1)
+	if(adjusted_stock <= 1)
 		stock_multiplier = 1.35
-	else if(stock_amount == 2)
+	else if(adjusted_stock == 2)
 		stock_multiplier = 1.2
-	else if(stock_amount <= 4)
+	else if(adjusted_stock <= 4)
 		stock_multiplier = 1.05
-	else if(stock_amount <= 7)
+	else if(adjusted_stock <= 7)
 		stock_multiplier = 0.9
 	else
 		stock_multiplier = 0.8

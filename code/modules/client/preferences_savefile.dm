@@ -385,6 +385,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Quirks
 	all_quirks = save_data?["all_quirks"]
+	//Custom emote panel
+	custom_emote_panel = SANITIZE_LIST(save_data?["custom_emote_panel"])
 	load_character_nova(save_data) // NOVA EDIT ADDITION
 
 	//try to fix any outdated data if necessary
@@ -448,6 +450,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Quirks
 	save_data["all_quirks"] = all_quirks
+	//Custom emote panel
+	save_data["custom_emote_panel"] = custom_emote_panel
 	save_character_nova(save_data) // NOVA EDIT ADDITION
 
 	return TRUE

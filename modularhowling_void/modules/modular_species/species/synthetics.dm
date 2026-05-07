@@ -14,15 +14,12 @@
 	. = ..()
 
 /datum/component/anti_magic/synthetic/block_receiving_magic(mob/living/carbon/source, casted_magic_flags, charge_cost, list/antimagic_sources)
-	SIGNAL_HANDLER
-
 	if(casted_magic_flags & MAGIC_RESISTANCE_SYNTHETIC_ALLOWED)
 		return NONE
 
 	return ..()
 
 /datum/component/anti_magic/synthetic/restrict_casting_magic(mob/user, magic_flags)
-	SIGNAL_HANDLER
 	return NONE
 
 /mob/living/carbon/human/proc/howling_synthetic_unarmed_feedback(mob/living/carbon/human/attacker, obj/item/bodypart/attacking_bodypart, attack_effect, limb_sharpness, damage)

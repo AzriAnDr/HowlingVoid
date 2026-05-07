@@ -581,3 +581,41 @@
 	color_src = USE_MATRIXED_COLORS
 	name = "Sarathi"
 	icon_state = "sarathi"
+
+/datum/sprite_accessory/snouts/renamon
+	icon = 'modular_nova/master_files/icons/mob/sprite_accessory/snouts.dmi'
+	color_src = USE_MATRIXED_COLORS
+	name = "Renamon"
+	icon_state = "renamon"
+
+/datum/sprite_accessory/snouts/exsharp
+	icon = 'modular_nova/master_files/icons/mob/sprite_accessory/snouts.dmi'
+	color_src = USE_MATRIXED_COLORS
+	name = "Extra Sharp"
+	icon_state = "exsharp"
+
+/datum/sprite_accessory/snouts/mammal/masked_wing
+	name = "Masked Wing"
+	icon_state = "masked"
+	color_src = USE_ONE_COLOR
+	organ_type = /obj/item/organ/snout/top_adj
+
+/datum/sprite_accessory/snouts/mammal/cervine
+	name = "Cervine"
+	icon_state = "cervine"
+
+/datum/sprite_accessory/snouts/mammal/cat
+	name = "Cat"
+	icon_state = "catsnout"
+
+/datum/sprite_accessory/snouts/full_face
+	icon = 'modular_nova/master_files/icons/mob/sprite_accessory/snouts.dmi'
+	color_src = USE_ONE_COLOR
+	name = "Full and Thick"
+	icon_state = "full"
+
+/datum/sprite_accessory/snouts/full_face_alt
+	icon = 'modular_nova/master_files/icons/mob/sprite_accessory/snouts.dmi'
+	color_src = USE_ONE_COLOR
+	name = "Full and Thick (Alt)"
+	icon_state = "fullalt"
