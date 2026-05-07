@@ -97,7 +97,7 @@
 	if(!istype(living_mob))
 		return FALSE
 
-	if(living_mob.can_block_magic(MAGIC_RESISTANCE_HOLY))
+	if(living_mob.can_block_magic(MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_SYNTHETIC_ALLOWED))
 		return FALSE
 
 	return TRUE

@@ -36,7 +36,6 @@
   const bloodFlash = q('.blood-flash');
   const bgm = q('#bgm');
   const selectSound = q('#select-sound');
-  const hoverSound = q('#hover-sound');
 
   const timers = [];
   const intervals = [];
@@ -49,7 +48,6 @@
   );
   let fadeToken = 0;
   let captionIndex = 0;
-  let lastHover = 0;
 
   const CAPTIONS_RU = [
     'сигнал выцветает, но камни продолжают расти',
@@ -109,13 +107,13 @@
     return currentLanguage() === 'english' ? en : ru;
   }
 
-  function playTick(kind = 'hover') {
-    const audio = kind === 'select' ? selectSound : hoverSound || selectSound;
+  function playTick() {
+    const audio = selectSound;
     if (!audio) return;
 
     try {
       audio.currentTime = 0;
-      audio.volume = kind === 'select' ? 0.055 : 0.028;
+      audio.volume = 0.055;
       audio.play().catch(() => {});
     } catch {}
   }
@@ -311,7 +309,7 @@
 
   function handleAction(action) {
     if (!action) return;
-    playTick('select');
+    playTick();
     frameCut('hard');
 
     const activeAnchor = document.querySelector(
@@ -338,11 +336,6 @@
 
       on(item, 'mouseenter', () => {
         setActive(index);
-        const now = Date.now();
-        if (now - lastHover > 80) {
-          lastHover = now;
-          playTick('hover');
-        }
       });
 
       on(item, 'mousemove', (event) => {
@@ -365,11 +358,9 @@
       if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
         event.preventDefault();
         setActive(activeIndex + 1);
-        playTick('hover');
       } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
         event.preventDefault();
         setActive(activeIndex - 1);
-        playTick('hover');
       } else if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
         handleAction(actionOf(menuItems[activeIndex]));
@@ -380,10 +371,16 @@
   }
 
   function setupStart() {
-    on(startButton, 'click', () => start(!!skipIntro?.checked));
+    on(startButton, 'click', () => {
+      playTick();
+      start(!!skipIntro?.checked);
+    });
     on(document, 'keydown', (event) => {
       if (started) return;
-      if (event.key === 'Enter') start(!!skipIntro?.checked);
+      if (event.key === 'Enter') {
+        playTick();
+        start(!!skipIntro?.checked);
+      }
     });
   }
 

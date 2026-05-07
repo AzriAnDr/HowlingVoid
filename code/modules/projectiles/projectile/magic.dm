@@ -459,6 +459,7 @@
 	icon_state = "tesla_projectile" //Better sprites are REALLY needed and appreciated!~
 	damage = 15
 	damage_type = BURN
+	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_SYNTHETIC_ALLOWED
 	speed = 3.5
 
 	/// The power of the zap itself when it electrocutes someone
@@ -494,6 +495,7 @@
 	icon_state = "fireball"
 	damage = 10
 	damage_type = BURN
+	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_SYNTHETIC_ALLOWED
 
 	/// Heavy explosion range of the fireball
 	var/exp_heavy = 0

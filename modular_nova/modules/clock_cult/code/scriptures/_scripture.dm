@@ -82,18 +82,29 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 
 /// The overall reciting proc for saying every single line for a scripture
-/datum/scripture/proc/recital()
+/datum/scripture/proc/recital(actual_invocation_time = invocation_time)
 	if(!length(invocation_text))
 		return
 
 	var/steps = length(invocation_text)
-	var/time_between_say = invocation_time / (steps + 1)
+	var/time_between_say = actual_invocation_time / (steps + 1)
 
 	if(invocation_chant_timer)
 		deltimer(invocation_chant_timer)
 		invocation_chant_timer = null
 
 	recite(1, time_between_say, steps)
+
+
+/// Returns the final invocation time after mob-specific modifiers.
+/datum/scripture/proc/get_invocation_time(mob/living/invoking_mob)
+	if(invocation_time <= 0)
+		return invocation_time
+
+	if(HAS_TRAIT(invoking_mob, TRAIT_FASTER_SLAB_INVOKE))
+		return max(1 SECONDS, invocation_time * 0.75)
+
+	return invocation_time
 
 
 /// For reciting an individual line of a scripture
@@ -168,6 +179,10 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		to_chat(invoking_mob, span_brass("You need to have the [slab.name] in your active hand to recite scriptures."))
 		return
 
+	if(slab.active_scripture && slab.active_scripture != src)
+		to_chat(invoking_mob, span_brass("The [slab.name] is already channeling [slab.active_scripture.name]."))
+		return
+
 	slab.invoking_scripture = src
 	invoker = invoking_mob
 	invoking_slab = slab
@@ -181,9 +196,10 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		end_invoke()
 		return
 
-	recital()
+	var/actual_invocation_time = get_invocation_time(invoking_mob)
+	recital(actual_invocation_time)
 
-	if(do_after(invoking_mob, invocation_time, target = invoking_mob, extra_checks = CALLBACK(src, PROC_REF(check_special_requirements), invoking_mob)))
+	if(do_after(invoking_mob, actual_invocation_time, target = invoking_mob, extra_checks = CALLBACK(src, PROC_REF(check_special_requirements), invoking_mob)))
 		invoke()
 
 		to_chat(invoking_mob, span_brass("You invoke <b>[name]</b>."))

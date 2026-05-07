@@ -15,7 +15,7 @@
 	if(affected_mob.stat == DEAD)
 		return FALSE
 
-	if(affected_mob.can_block_magic(MAGIC_RESISTANCE_HOLY))
+	if(affected_mob.can_block_magic(MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_SYNTHETIC_ALLOWED))
 		return FALSE
 
 	if(HAS_TRAIT(affected_mob, TRAIT_NODEATH))
@@ -35,7 +35,7 @@
 	if(IS_CLOCK(affected_mob))
 		return
 
-	if(affected_mob.can_block_magic(MAGIC_RESISTANCE_HOLY))
+	if(affected_mob.can_block_magic(MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_SYNTHETIC_ALLOWED))
 		return
 
 	affected_mob.Paralyze(1 SECONDS)
@@ -65,4 +65,3 @@
 		spawn_reebe(src)
 	else
 		send_clock_message(null, "[affected_mob] has had their vitality drained by [src], rejoice!", "<span class='clockred'>")
-

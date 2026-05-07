@@ -125,8 +125,10 @@
 		return FALSE
 	// Human checks
 	if(ishuman(target))
-		// Cannot drink from inorganics
 		var/mob/living/carbon/human/human_target = target
+		if(issynthetic(human_target))
+			return TRUE
+		// Cannot drink from inorganics
 		if(!human_target.dna?.species || !(human_target.mob_biotypes & MOB_ORGANIC))
 			owner.balloon_alert(owner, "no blood!")
 			return FALSE
@@ -162,6 +164,12 @@
 		power_activated_sucessfully()
 		feed_target.death()
 		return
+
+	if(ishuman(feed_target))
+		var/mob/living/carbon/human/human_target = feed_target
+		if(issynthetic(human_target))
+			fail_feed_synthetic(human_target)
+			return
 
 	//////////////////////////
 	//We start here properly//
@@ -419,6 +427,32 @@
 	vampiredatum_power.diablerie_count++
 
 	victim.final_death()
+
+/datum/action/cooldown/vampire/targeted/feed/proc/fail_feed_synthetic(mob/living/carbon/human/synthetic_target)
+	var/mob/living/carbon/living_owner = owner
+	owner.visible_message(
+		span_warning("[owner] bites into [synthetic_target]'s chassis and recoils with a metallic snap!"),
+		span_userdanger("Your fangs strike metal instead of flesh!"),
+		vision_distance = FEED_LOUD_NOTICE_RANGE,
+		ignored_mobs = synthetic_target
+	)
+	to_chat(synthetic_target, span_warning("[owner]'s fangs scrape uselessly against your chassis."), type = MESSAGE_TYPE_COMBAT)
+	playsound(get_turf(synthetic_target), 'sound/items/weapons/smash.ogg', 60, TRUE)
+
+	var/obj/item/bodypart/head/head = living_owner.get_bodypart(BODY_ZONE_HEAD)
+	if(head)
+		living_owner.apply_damage(rand(8, 14), BRUTE, head, wound_bonus = 15)
+		if(prob(20))
+			living_owner.cause_wound_of_type_and_severity(WOUND_BLUNT, head, WOUND_SEVERITY_MODERATE, wound_source = "synthetic chassis")
+	else
+		living_owner.apply_damage(rand(8, 14), BRUTE, BODY_ZONE_HEAD, wound_bonus = 15)
+
+	if(prob(45))
+		to_chat(living_owner, span_userdanger("The taste of machine oil and insulation floods your mouth."))
+		living_owner.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 10, distance = 1)
+
+	target_ref = null
+	power_activated_sucessfully()
 
 /datum/action/cooldown/vampire/targeted/feed/deactivate_power()
 	. = ..()

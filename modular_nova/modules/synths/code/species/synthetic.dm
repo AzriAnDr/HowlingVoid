@@ -248,6 +248,13 @@
 	))
 
 	perk_descriptions += list(list(
+		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+		SPECIES_PERK_ICON = "shield-alt",
+		SPECIES_PERK_NAME = "Occult Insulation",
+		SPECIES_PERK_DESC = "[plural_form] are insulated against supernatural charms, hypnosis, and most occult magic. Electricity, EMPs, lightning, and fire magic still affect their chassis, and striking one barehanded can injure the attacker's hands, claws, or teeth.",
+	))
+
+	perk_descriptions += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = "robot",
 		SPECIES_PERK_NAME = "Synthetic Oddities",

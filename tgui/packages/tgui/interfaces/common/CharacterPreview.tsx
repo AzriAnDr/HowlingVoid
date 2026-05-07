@@ -1,4 +1,10 @@
-import { type KeyboardEvent, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  type KeyboardEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { ByondUi } from 'tgui-core/components';
 
 type PreviewAnimationData = {
@@ -59,6 +65,13 @@ export const CharacterPreview = (props: {
     animation: null,
     imageUrl: null,
   });
+  const [settledPreview, setSettledPreview] = useState<{
+    animation: PreviewAnimationData | null;
+    imageUrl: string | null;
+  }>({
+    animation: null,
+    imageUrl: null,
+  });
   const [currentFrame, setCurrentFrame] = useState(0);
   const [resolvedImageDimensions, setResolvedImageDimensions] = useState<{
     width: number;
@@ -108,24 +121,70 @@ export const CharacterPreview = (props: {
     selectedDirectionImageUrl && animationMap && !selectedDirectionAnimation,
   );
 
-  const renderedImageUrl = shouldDeferDirectionSwap
+  const candidateImageUrl = shouldDeferDirectionSwap
     ? lastSettledPreviewRef.current.imageUrl
     : resolvedImageUrl;
 
-  const renderedAnimation = shouldDeferDirectionSwap
+  const candidateAnimation = shouldDeferDirectionSwap
     ? lastSettledPreviewRef.current.animation
     : resolvedAnimation;
 
   useEffect(() => {
-    if (!resolvedImageUrl || shouldDeferDirectionSwap) {
+    if (!candidateImageUrl) {
+      if (!lastSettledPreviewRef.current.imageUrl) {
+        setSettledPreview({
+          animation: null,
+          imageUrl: null,
+        });
+      }
       return;
     }
 
-    lastSettledPreviewRef.current = {
-      animation: resolvedAnimation,
-      imageUrl: resolvedImageUrl,
+    if (lastSettledPreviewRef.current.imageUrl === candidateImageUrl) {
+      setSettledPreview(lastSettledPreviewRef.current);
+      return;
+    }
+
+    let cancelled = false;
+    const previewImage = new Image();
+
+    const settlePreview = () => {
+      if (cancelled) {
+        return;
+      }
+
+      const nextSettledPreview = {
+        animation: candidateAnimation,
+        imageUrl: candidateImageUrl,
+      };
+
+      lastSettledPreviewRef.current = nextSettledPreview;
+      setSettledPreview(nextSettledPreview);
     };
-  }, [resolvedAnimation, resolvedImageUrl, shouldDeferDirectionSwap]);
+
+    previewImage.addEventListener('load', settlePreview);
+    previewImage.src = candidateImageUrl;
+
+    if (previewImage.complete && previewImage.naturalWidth > 0) {
+      settlePreview();
+    } else if (
+      !lastSettledPreviewRef.current.imageUrl &&
+      typeof previewImage.decode === 'function'
+    ) {
+      void previewImage
+        .decode()
+        .then(settlePreview)
+        .catch(() => undefined);
+    }
+
+    return () => {
+      cancelled = true;
+      previewImage.removeEventListener('load', settlePreview);
+    };
+  }, [candidateAnimation, candidateImageUrl]);
+
+  const renderedImageUrl = settledPreview.imageUrl;
+  const renderedAnimation = settledPreview.animation;
 
   const animationSignature = useMemo(
     () => JSON.stringify(renderedAnimation),
@@ -143,7 +202,9 @@ export const CharacterPreview = (props: {
       1,
     );
     const height = Math.max(
-      Number(renderedAnimation?.height) || Number(resolvedImageDimensions?.height) || 1,
+      Number(renderedAnimation?.height) ||
+        Number(resolvedImageDimensions?.height) ||
+        1,
       1,
     );
 
@@ -161,7 +222,9 @@ export const CharacterPreview = (props: {
       1,
     );
     const frameHeight = Math.max(
-      Number(renderedAnimation?.height) || Number(resolvedImageDimensions?.height) || 1,
+      Number(renderedAnimation?.height) ||
+        Number(resolvedImageDimensions?.height) ||
+        1,
       1,
     );
     const frameRatio = Math.max(frameWidth / frameHeight, 1 / 1024);
@@ -249,7 +312,11 @@ export const CharacterPreview = (props: {
   useEffect(() => {
     setCurrentFrame(0);
 
-    if (!renderedAnimation || !renderedImageUrl || renderedAnimation.frames <= 1) {
+    if (
+      !renderedAnimation ||
+      !renderedImageUrl ||
+      renderedAnimation.frames <= 1
+    ) {
       return;
     }
 
@@ -257,15 +324,16 @@ export const CharacterPreview = (props: {
     const delays = renderedAnimation.delays?.length
       ? renderedAnimation.delays
       : Array.from({ length: frameCount }, () => 1);
-    const frameSequence = renderedAnimation.rewind && frameCount > 1
-      ? [
-          ...Array.from({ length: frameCount }, (_, index) => index),
-          ...Array.from(
-            { length: frameCount - 2 },
-            (_, index) => frameCount - index - 2,
-          ),
-        ]
-      : Array.from({ length: frameCount }, (_, index) => index);
+    const frameSequence =
+      renderedAnimation.rewind && frameCount > 1
+        ? [
+            ...Array.from({ length: frameCount }, (_, index) => index),
+            ...Array.from(
+              { length: frameCount - 2 },
+              (_, index) => frameCount - index - 2,
+            ),
+          ]
+        : Array.from({ length: frameCount }, (_, index) => index);
 
     let sequenceIndex = 0;
     let timeoutId: ReturnType<typeof setTimeout> | undefined;
@@ -274,7 +342,8 @@ export const CharacterPreview = (props: {
       const currentSequenceFrame = frameSequence[sequenceIndex];
       const delay = Math.max(
         50,
-        Number(delays[currentSequenceFrame] ?? delays[delays.length - 1] ?? 1) * 100,
+        Number(delays[currentSequenceFrame] ?? delays[delays.length - 1] ?? 1) *
+          100,
       );
 
       timeoutId = setTimeout(() => {

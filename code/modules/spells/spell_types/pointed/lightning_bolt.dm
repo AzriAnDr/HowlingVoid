@@ -12,6 +12,7 @@
 	invocation = "P'WAH, UNLIM'TED P'WAH!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
+	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_SYNTHETIC_ALLOWED
 
 	active_msg = "You energize your hands with arcane lightning!"
 	deactive_msg = "You let the energy flow out of your hands back into yourself..."

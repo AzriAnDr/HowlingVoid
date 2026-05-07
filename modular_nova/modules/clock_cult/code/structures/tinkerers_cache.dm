@@ -167,3 +167,49 @@
 /datum/tinker_cache_item/trap/pressure
 	name = "Pressure Sensor (Trigger)"
 	item_path = /obj/item/clockwork/trap_placer/pressure_sensor
+
+/datum/tinker_cache_item/clock_cell
+	name = "Wound Power Cell"
+	item_path = /obj/item/stock_parts/power_store/cell/clock
+	power_use = 250
+	time_delay_mult = 0.5
+
+/datum/tinker_cache_item/clock_parts
+	name = "Clockwork Stock Parts Pack"
+	item_path = /obj/item/storage/box/clockwork_stock_parts
+	power_use = 450
+	time_delay_mult = 0.75
+
+/datum/tinker_cache_item/clock_sleeper_board
+	name = "Clockwork Sleeper Board"
+	item_path = /obj/item/circuitboard/machine/sleeper/clockwork
+	power_use = 350
+	time_delay_mult = 0.75
+
+/datum/tinker_cache_item/clock_operating_computer_board
+	name = "Clockwork Operating Computer Board"
+	item_path = /obj/item/circuitboard/computer/operating/clockwork
+	power_use = 350
+	time_delay_mult = 0.75
+
+/datum/tinker_cache_item/observation_console_board
+	name = "Ratvarian Observation Console Board"
+	item_path = /obj/item/circuitboard/computer/camera_console_ratvar
+	power_use = 600
+
+/datum/tinker_cache_item/clockwork_cyborg_shell
+	name = "Clockwork Cyborg Endoskeleton"
+	item_path = /obj/item/robot_suit/prebuilt/clockwork
+	power_use = 1000
+
+/datum/tinker_cache_item/steam_helios
+	name = "Steam Helios"
+	item_path = /obj/vehicle/sealed/mecha/steam_helios
+	power_use = 2500
+	time_delay_mult = 2
+
+/datum/tinker_cache_item/soul_vessel
+	name = "Soul Vessel"
+	item_path = /obj/item/mmi/posibrain/soul_vessel
+	power_use = 600
+	time_delay_mult = 1

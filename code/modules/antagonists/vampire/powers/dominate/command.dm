@@ -93,6 +93,13 @@
 		owner.balloon_alert(owner, "[living_target] is mindless.")
 		return FALSE
 
+	if(ishuman(living_target) && issynthetic(living_target))
+		owner.balloon_alert(owner, "synthetic mind.")
+		return FALSE
+
+	if(living_target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 1))
+		return FALSE
+
 	// Vampire/Curator check
 	if(IS_VAMPIRE(living_target) || IS_CURATOR(living_target) || HAS_MIND_TRAIT(living_target, TRAIT_UNCONVERTABLE))
 		owner.balloon_alert(owner, "too powerful.")

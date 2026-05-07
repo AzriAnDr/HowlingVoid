@@ -85,7 +85,7 @@
 		if(sacrifice.stat < SOFT_CRIT)
 			atoms -= sacrifice
 		// Otherwise if it's neither a target nor a cultist, remove it
-		else if(!(sacrifice in heretic_datum.sac_targets) && !IS_CULTIST(sacrifice))
+		else if(!(sacrifice in heretic_datum.sac_targets) && !IS_CULTIST(sacrifice) && !IS_CLOCK(sacrifice))
 			atoms -= sacrifice
 
 	// Finally, return TRUE if we have a target in the list
@@ -100,7 +100,7 @@
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	// Force it to work if the sacrifice is a cultist, even if there's no targets.
 	var/mob/living/carbon/human/sac = selected_atoms[1]
-	if(!LAZYLEN(heretic_datum.sac_targets) && !IS_CULTIST(sac))
+	if(!LAZYLEN(heretic_datum.sac_targets) && !IS_CULTIST(sac) && !IS_CLOCK(sac))
 		if(obtain_targets(user, heretic_datum = heretic_datum))
 			return TRUE
 		else
@@ -201,7 +201,7 @@
 	var/mob/living/carbon/human/sacrifice = locate() in selected_atoms
 	if(!sacrifice)
 		CRASH("[type] sacrifice_process didn't have a human in the atoms list. How'd it make it so far?")
-	if(!(sacrifice in heretic_datum.sac_targets) && !IS_CULTIST(sacrifice))
+	if(!(sacrifice in heretic_datum.sac_targets) && !IS_CULTIST(sacrifice) && !IS_CLOCK(sacrifice))
 		CRASH("[type] sacrifice_process managed to get a non-target, non-cult human. This is incorrect.")
 
 	if(sacrifice.mind)
@@ -212,6 +212,7 @@
 	var/feedback = "Your patrons accept your offer"
 	var/sac_job_flag = sacrifice.mind?.assigned_role?.job_flags | sacrifice.last_mind?.assigned_role?.job_flags
 	var/datum/antagonist/cult/cultist_datum = GET_CULTIST(sacrifice)
+	var/is_clock_cultist = IS_CLOCK(sacrifice)
 	// Heads give 3 points, cultists give 1 point (and a special reward), normal sacrifices give 2 points.
 	heretic_datum.total_sacrifices++
 	check_sacrifice_total(user, heretic_datum)
@@ -219,13 +220,13 @@
 		heretic_datum.adjust_knowledge_points(3)
 		heretic_datum.high_value_sacrifices++
 		feedback += " <i>graciously</i>"
-	if(cultist_datum)
+	if(cultist_datum || is_clock_cultist)
 		heretic_datum.adjust_knowledge_points(1)
 		grant_reward(user, sacrifice, loc)
 		// easier to read
 		var/rewards_given = heretic_datum.rewards_given
 		// Chance for it to send a warning to cultists, higher with each reward. Stops after 5 because they probably got the hint by then.
-		if(prob(min(15 * rewards_given)) && (rewards_given <= 5))
+		if(cultist_datum && prob(min(15 * rewards_given)) && (rewards_given <= 5))
 			for(var/datum/mind/mind as anything in cultist_datum.cult_team.members)
 				if(mind.current)
 					SEND_SOUND(mind.current, 'sound/effects/magic/clockwork/narsie_attack.ogg')
@@ -237,6 +238,11 @@
 			to_chat(user, span_narsiesmall("How DARE you!? I will see you destroyed for this."))
 			var/non_flavor_warning = span_cult_bold("You feel that your action has attracted ") + span_hypnophrase("attention") + span_cult_bold(".")
 			to_chat(user, non_flavor_warning)
+		else if(is_clock_cultist)
+			for(var/datum/mind/clock_mind as anything in get_antag_minds(/datum/antagonist/clock_cultist))
+				if(clock_mind.current && clock_mind.current != sacrifice)
+					SEND_SOUND(clock_mind.current, 'modular_nova/modules/clock_cult/sound/magic/scripture_tier_up.ogg')
+					to_chat(clock_mind.current, span_brass("A vile heretic has sacrificed one of Ratvar's servants. Let the engine remember this insult."))
 		return
 	else
 		heretic_datum.adjust_knowledge_points(2)

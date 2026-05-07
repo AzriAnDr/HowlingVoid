@@ -37,7 +37,9 @@ const PREVIEW_ITEM_ANIMATIONS_TOOLTIP =
 
 function rotatePreviewDirection(direction: string | null, step: -1 | 1) {
   // Match BYOND turn(dir, -90) ordering so local rotation mirrors server behavior.
-  const currentDirection = (direction || PREVIEW_DIRECTION_CYCLE[0]).toLowerCase();
+  const currentDirection = (
+    direction || PREVIEW_DIRECTION_CYCLE[0]
+  ).toLowerCase();
   const currentIndex = PREVIEW_DIRECTION_CYCLE.indexOf(currentDirection);
   const safeIndex = currentIndex >= 0 ? currentIndex : 0;
   const nextIndex =
@@ -92,7 +94,9 @@ export function CharacterPreferenceWindow(props) {
   );
 
   useEffect(() => {
-    setPreviewDirection(data.character_preview_direction || PREVIEW_DIRECTION_CYCLE[0]);
+    setPreviewDirection(
+      data.character_preview_direction || PREVIEW_DIRECTION_CYCLE[0],
+    );
   }, [data.character_preview_direction]);
 
   const rotatePreview = (step: -1 | 1) => {
@@ -101,7 +105,7 @@ export function CharacterPreferenceWindow(props) {
       act('prime_preview_direction', {
         direction: nextDirection,
       });
-      return currentDirection;
+      return nextDirection;
     });
   };
 

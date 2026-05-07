@@ -327,6 +327,8 @@
 			SSblackbox.record_feedback("amount", "cyborg_birth", 1)
 			forceMove(O)
 			O.robot_suit = src
+			if(be_clockwork)
+				O.set_clockwork(TRUE)
 
 			user.log_message("put the MMI/posibrain of [key_name(M.brainmob)] into a cyborg shell", LOG_GAME)
 			M.brainmob.log_message("was put into a cyborg shell by [key_name(user)]", LOG_GAME, log_globally = FALSE)
@@ -371,6 +373,8 @@
 			O.job = JOB_CYBORG
 			forceMove(O)
 			O.robot_suit = src
+			if(be_clockwork)
+				O.set_clockwork(TRUE)
 			if(!locomotion)
 				O.set_lockcharge(TRUE)
 

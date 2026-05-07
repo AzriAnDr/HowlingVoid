@@ -39,6 +39,12 @@
   const menuTitleSubGhost = document.querySelector('.menu-title-sub-ghost');
 
   const FEAR_VARIANTS = ['menu-fear-v1', 'menu-fear-v2', 'menu-fear-v3'];
+  const FEAR_VARIANT_DURATIONS_MS = {
+    'menu-fear-v1': 200,
+    'menu-fear-v2': 240,
+    'menu-fear-v3': 280,
+  };
+  const FEAR_VARIANT_RESTART_PAD_MS = 30;
 
   const INTRO_COPY = {
     small: 'a build by',
@@ -325,17 +331,26 @@
     FEAR_VARIANTS.forEach((cls) => item.classList.remove(cls));
   }
 
-  function applyRandomFearVariant(item) {
+  function currentFearVariant(item) {
+    return FEAR_VARIANTS.find((cls) => item.classList.contains(cls));
+  }
+
+  function randomFearVariantExcept(current) {
+    const variants = FEAR_VARIANTS.filter((cls) => cls !== current);
+    return variants[Math.floor(Math.random() * variants.length)];
+  }
+
+  function applyRandomFearVariant(item, previous = currentFearVariant(item)) {
     clearFearVariant(item);
-    item.classList.add(
-      FEAR_VARIANTS[Math.floor(Math.random() * FEAR_VARIANTS.length)],
-    );
+    const variant = randomFearVariantExcept(previous);
+    item.classList.add(variant);
+    return variant;
   }
 
   function stopFearCycle(item) {
     const id = fearTimers.get(item);
     if (id) {
-      clearInterval(id);
+      clearTimeout(id);
       fearTimers.delete(item);
     }
   }
@@ -352,11 +367,14 @@
         stopFearCycle(item);
         return;
       }
-      applyRandomFearVariant(item);
+      const variant = applyRandomFearVariant(item);
+      const delay =
+        (FEAR_VARIANT_DURATIONS_MS[variant] || 220) +
+        FEAR_VARIANT_RESTART_PAD_MS;
+      fearTimers.set(item, tset(tick, delay));
     };
 
     tick();
-    fearTimers.set(item, iset(tick, 260));
   }
 
   function setActiveItem(index) {

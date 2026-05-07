@@ -36,6 +36,10 @@
 		living_vampire.balloon_alert(living_vampire, "can't be vassalized.")
 		return FALSE
 
+	if(ishuman(conversion_target) && issynthetic(conversion_target))
+		living_vampire.balloon_alert(living_vampire, "can't be vassalized.")
+		return FALSE
+
 	var/datum/antagonist/vassal/vassaldatum = IS_VASSAL(conversion_target)
 	var/mob/living/vassal_master = conversion_target.mind.enslaved_to?.resolve()
 	if((vassaldatum && !vassaldatum.master.broke_masquerade) || (vassal_master && vassal_master != owner.current))

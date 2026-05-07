@@ -78,6 +78,10 @@
 		owner.balloon_alert(owner, "not a player")
 		return FALSE
 
+	if(ishuman(living_target) && issynthetic(living_target))
+		owner.balloon_alert(owner, "synthetic mind")
+		return FALSE
+
 	// Is our target alive or unconcious?
 	if(living_target.stat != CONSCIOUS)
 		owner.balloon_alert(owner, "not [(living_target.stat == DEAD || HAS_TRAIT(living_target, TRAIT_FAKEDEATH)) ? "alive" : "conscious"]")

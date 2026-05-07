@@ -2,7 +2,7 @@
 	"": [
 		{
 			"type": "icon_state",
-			"icon_state": "backpack",
+			"icon_state": "gloves",
 			"blend_mode": "overlay",
 			"color_ids": [1]
 		}

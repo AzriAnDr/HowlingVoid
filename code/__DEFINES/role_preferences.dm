@@ -13,6 +13,7 @@
 #define ROLE_CHANGELING "Changeling"
 #define ROLE_CULTIST "Cultist"
 #define ROLE_HERETIC "Heretic"
+#define ROLE_CLOCK_CULTIST "Clock Cultist"
 #define ROLE_MALF "Malf AI"
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_TRAITOR "Traitor"
@@ -48,7 +49,6 @@
 #define ROLE_DRIFTING_CONTRACTOR "Drifting Contractor"
 #define ROLE_MARAUDER "Marauder"
 #define ROLE_MUTANT "Mutated Abomination"
-#define ROLE_CLOCK_CULTIST "Clock Cultist"
 // NOVA EDIT ADDITION END
 #define ROLE_VOIDWALKER "Voidwalker"
 #define ROLE_SUNWALKER "Sunwalker"

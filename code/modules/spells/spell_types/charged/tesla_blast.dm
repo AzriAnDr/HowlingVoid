@@ -11,6 +11,7 @@
 	invocation = "UN'LTD P'WAH!"
 	invocation_type = INVOCATION_SHOUT
 	school = SCHOOL_EVOCATION
+	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_SYNTHETIC_ALLOWED
 
 	channel_message = span_notice("You start gathering power...")
 	charge_overlay_icon = 'icons/effects/effects.dmi'

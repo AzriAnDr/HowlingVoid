@@ -209,6 +209,112 @@
         margin-right: auto !important;
       }
 
+      body[data-chapter] .start-text .epilepsy-warning {
+        position: relative;
+        display: inline-block;
+        padding: 0 0.08em;
+        color: #ff0000 !important;
+        background:
+          linear-gradient(90deg, rgba(255, 255, 255, 0.92) 0 8%, transparent 8% 18%, rgba(255, 0, 0, 0.92) 18% 34%, transparent 34% 100%),
+          #070000;
+        filter: contrast(2.2) saturate(2.6);
+        text-shadow:
+          -3px 0 0 #00fff0,
+          3px 0 0 #ff0000,
+          0 0 3px rgba(255, 255, 255, 0.95),
+          0 0 7px rgba(255, 0, 0, 0.98),
+          0 0 18px rgba(255, 0, 0, 0.88);
+        box-shadow:
+          0 0 0 1px rgba(255, 0, 0, 0.7),
+          0 0 18px rgba(255, 0, 0, 0.72),
+          inset 0 0 16px rgba(0, 0, 0, 0.95);
+        transform-origin: 50% 55%;
+        animation:
+          epilepsyWarningJitter 520ms steps(1, end) infinite,
+          epilepsyWarningNegative 880ms steps(1, end) infinite;
+        will-change: transform, filter, color, background;
+      }
+
+      body[data-chapter] .start-text .epilepsy-warning::before,
+      body[data-chapter] .start-text .epilepsy-warning::after {
+        content: attr(data-text);
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        mix-blend-mode: screen;
+      }
+
+      body[data-chapter] .start-text .epilepsy-warning::before {
+        color: #00fff0;
+        clip-path: inset(0 0 56% 0);
+        text-shadow: -2px 0 0 #00fff0;
+        transform: translate(-3px, -1px);
+        animation: epilepsyWarningSliceTop 310ms steps(1, end) infinite;
+      }
+
+      body[data-chapter] .start-text .epilepsy-warning::after {
+        color: #ffffff;
+        clip-path: inset(48% 0 0 0);
+        text-shadow: 2px 0 0 #ff1010;
+        transform: translate(3px, 1px);
+        animation: epilepsyWarningSliceBottom 260ms steps(1, end) infinite;
+      }
+
+      @keyframes epilepsyWarningJitter {
+        0% { transform: translate(0, 0) skewX(0deg); }
+        10% { transform: translate(-3px, 1px) skewX(-8deg); }
+        18% { transform: translate(4px, -2px) skewX(7deg); }
+        28% { transform: translate(-1px, 2px) skewX(-3deg); }
+        40% { transform: translate(5px, 0) skewX(10deg); }
+        52% { transform: translate(-5px, -1px) skewX(-9deg); }
+        64% { transform: translate(2px, 3px) skewX(4deg); }
+        76% { transform: translate(-2px, -3px) skewX(-6deg); }
+        88% { transform: translate(3px, 1px) skewX(5deg); }
+        100% { transform: translate(0, 0) skewX(0deg); }
+      }
+
+      @keyframes epilepsyWarningNegative {
+        0%, 24%, 42%, 69%, 100% {
+          color: #ff0000;
+          background-color: #060000;
+          filter: contrast(2.2) saturate(2.6);
+        }
+        25%, 31% {
+          color: #000000;
+          background-color: #ffffff;
+          filter: invert(1) contrast(4) saturate(3.4);
+        }
+        43%, 48% {
+          color: #ffffff;
+          background-color: #ff0000;
+          filter: contrast(4) saturate(4);
+        }
+        70%, 76% {
+          color: #00fff0;
+          background-color: #120000;
+          filter: invert(0.75) contrast(3.4) saturate(5);
+        }
+      }
+
+      @keyframes epilepsyWarningSliceTop {
+        0% { clip-path: inset(0 0 62% 0); transform: translate(-5px, -1px); opacity: 0.9; }
+        18% { clip-path: inset(0 0 30% 0); transform: translate(4px, 1px); opacity: 1; }
+        37% { clip-path: inset(18% 0 52% 0); transform: translate(-8px, 0); opacity: 0.78; }
+        58% { clip-path: inset(0 0 72% 0); transform: translate(7px, -2px); opacity: 1; }
+        82% { clip-path: inset(28% 0 42% 0); transform: translate(-3px, 2px); opacity: 0.84; }
+        100% { clip-path: inset(0 0 62% 0); transform: translate(-5px, -1px); opacity: 0.9; }
+      }
+
+      @keyframes epilepsyWarningSliceBottom {
+        0% { clip-path: inset(48% 0 0 0); transform: translate(5px, 1px); opacity: 0.88; }
+        22% { clip-path: inset(66% 0 0 0); transform: translate(-6px, -1px); opacity: 1; }
+        43% { clip-path: inset(38% 0 18% 0); transform: translate(8px, 0); opacity: 0.78; }
+        63% { clip-path: inset(58% 0 0 0); transform: translate(-3px, 2px); opacity: 1; }
+        85% { clip-path: inset(44% 0 26% 0); transform: translate(4px, -2px); opacity: 0.84; }
+        100% { clip-path: inset(48% 0 0 0); transform: translate(5px, 1px); opacity: 0.88; }
+      }
+
       @media (max-width: 1366px), (max-height: 820px) {
         body[data-chapter] .start-overlay {
           padding: 16px !important;

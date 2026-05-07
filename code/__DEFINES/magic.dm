@@ -89,6 +89,8 @@ DEFINE_BITFIELD(spell_requirements, list(
 #define MAGIC_RESISTANCE_MIND (1<<1)
 /// Holy magic resistance that blocks unholy magic (revenant, vampire, voice of god)
 #define MAGIC_RESISTANCE_HOLY (1<<2)
+/// Synthetic bodies remain vulnerable to this magic, even when their chassis blocks other supernatural effects.
+#define MAGIC_RESISTANCE_SYNTHETIC_ALLOWED (1<<3)
 
 #define ALL_MAGIC_RESISTANCE (MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND|MAGIC_RESISTANCE_HOLY)
 
@@ -96,6 +98,7 @@ DEFINE_BITFIELD(antimagic_flags, list(
 	"MAGIC_RESISTANCE" = MAGIC_RESISTANCE,
 	"MAGIC_RESISTANCE_HOLY" = MAGIC_RESISTANCE_HOLY,
 	"MAGIC_RESISTANCE_MIND" = MAGIC_RESISTANCE_MIND,
+	"MAGIC_RESISTANCE_SYNTHETIC_ALLOWED" = MAGIC_RESISTANCE_SYNTHETIC_ALLOWED,
 ))
 
 /**

@@ -877,6 +877,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Our lower and upper unarmed damage values. Damage is rolled between these two values.
 	var/lower_unarmed_damage = attacking_bodypart.unarmed_damage_low
 	var/upper_unarmed_damage = attacking_bodypart.unarmed_damage_high
+	var/list/howling_unarmed_damage_profile = user.dna?.species?.howling_get_unarmed_damage_profile(user, attacking_bodypart)
+	if(islist(howling_unarmed_damage_profile) && length(howling_unarmed_damage_profile) >= 2)
+		lower_unarmed_damage = howling_unarmed_damage_profile[1]
+		upper_unarmed_damage = max(lower_unarmed_damage, howling_unarmed_damage_profile[2])
 
 	// The presence of TRAIT_STRENGTH increases our upper unarmed damage. This is a damage cap increase.
 	upper_unarmed_damage += HAS_TRAIT(user, TRAIT_STRENGTH) ? 2 : 0
@@ -1001,6 +1005,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(damage >= 9)
 			target.force_say()
 		log_combat(user, target, "punched")
+	target.howling_synthetic_unarmed_feedback(user, attacking_bodypart, atk_effect, limb_sharpness, damage)
 	// NOVA EDIT ADDITION START
 	if(target.try_nut_shot(user, limb_accuracy, staggered))
 		return

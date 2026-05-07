@@ -1071,6 +1071,8 @@ Striking a noncultist, however, will tear their flesh."}
 				else
 					var/mob/living/L = target
 					if(L.density)
+						if(L.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY))
+							continue
 						L.Paralyze(20)
 						L.adjust_brute_loss(45)
 						playsound(L, 'sound/effects/hallucinations/wail.ogg', 50, TRUE)

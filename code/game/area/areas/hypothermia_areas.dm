@@ -1,0 +1,183 @@
+/area/hypothermia
+	icon = 'icons/area/areas_away_missions.dmi'
+	var/area_temperature = T0C
+	var/area_min_temperature = T0C - 15
+	var/list/heat_sources = list()
+
+/area/hypothermia/outdoor
+	outdoors = TRUE
+	icon_state = "awaycontent7"
+	default_gravity = STANDARD_GRAVITY
+	ambience_index = AMBIENCE_ICEMOON
+	sound_environment = SOUND_ENVIRONMENT_MOUNTAINS
+	area_flags_mapping = CAVES_ALLOWED
+	area_flags = UNIQUE_AREA | HIDDEN_AREA | CAVES_ALLOWED | FLORA_ALLOWED
+	always_unpowered = TRUE
+	power_environ = FALSE
+	power_equip = FALSE
+	power_light = FALSE
+	requires_power = TRUE
+
+/area/hypothermia/outdoor/crashland
+	name = "Crash side"
+	icon_state = "away1"
+
+/area/hypothermia/outdoor/query
+	name = "Deisolated query"
+	icon_state = "away2"
+
+/area/hypothermia/outdoor/plato
+	name = "Deisolated plato"
+	icon_state = "away3"
+
+/area/hypothermia/outdoor/abyss
+	name = "Abyss"
+	icon_state = "away4"
+
+/area/hypothermia/outdoor/outpost
+	name = "Outpost"
+	icon_state = "away5"
+
+/area/hypothermia/outdoor/deisolated
+	name = "Deisolated wastelands"
+	icon_state = "away6"
+
+/area/hypothermia/indoor
+	outdoors = FALSE
+	default_gravity = STANDARD_GRAVITY
+	ambience_index = AMBIENCE_ICEMOON
+	sound_environment = SOUND_ENVIRONMENT_ROOM
+	area_flags = UNIQUE_AREA | HIDDEN_AREA
+	min_ambience_cooldown = 30 SECONDS
+
+/area/hypothermia/indoor/caven
+	name = "Arctic caves"
+	default_gravity = STANDARD_GRAVITY
+	ambience_index = AMBIENCE_ICEMOON
+	sound_environment = SOUND_ENVIRONMENT_CAVE
+	area_flags_mapping = CAVES_ALLOWED
+	area_flags = UNIQUE_AREA | HIDDEN_AREA | CAVES_ALLOWED | FLORA_ALLOWED
+	always_unpowered = TRUE
+	power_environ = FALSE
+	power_equip = FALSE
+	power_light = FALSE
+	requires_power = TRUE
+	min_ambience_cooldown = 45 SECONDS
+	ambientsounds = list(
+		'sound/ambience/hypothermia/he_caves_moans1.ogg',
+		'sound/ambience/hypothermia/he_caves_moans2.ogg',
+		'sound/ambience/hypothermia/he_caves_moans3.ogg',
+		'sound/ambience/hypothermia/he_caves_moans4.ogg',
+		'sound/ambience/hypothermia/he_caves_rock1.ogg',
+		'sound/ambience/hypothermia/he_caves_rock2.ogg',
+		'sound/ambience/hypothermia/he_caves_rock3.ogg',
+	)
+
+/area/hypothermia/indoor/caven/deep
+	name = "Deep caves"
+	ambientsounds = list(
+		'sound/ambience/hypothermia/he_caves_moans1.ogg',
+		'sound/ambience/hypothermia/he_caves_moans2.ogg',
+		'sound/ambience/hypothermia/he_caves_moans3.ogg',
+		'sound/ambience/hypothermia/he_caves_moans4.ogg',
+		'sound/ambience/hypothermia/he_caves_rock1.ogg',
+		'sound/ambience/hypothermia/he_caves_rock2.ogg',
+		'sound/ambience/hypothermia/he_caves_rock3.ogg',
+		'sound/ambience/hypothermia/he_caves_screams.ogg',
+		'sound/ambience/hypothermia/he_caves_steps.ogg',
+	)
+
+/area/hypothermia/indoor/caven/deep/autogen
+
+/area/hypothermia/indoor/caven/nest
+	name = "The nest"
+
+/area/hypothermia/indoor/caven/vosxod
+	name = "Vosxod silence construct"
+
+/area/hypothermia/indoor/caven/vosxod/core
+	name = "Vosxod core unit"
+
+/area/hypothermia/indoor/outpost
+	name = "Arctic Outpost"
+
+/area/hypothermia/indoor/outpost/zvezda
+	name = "Zvezda Outpost"
+
+/area/hypothermia/indoor/outpost/zvezda/kitchen
+	name = "Zvezda kitchen"
+
+/area/hypothermia/indoor/outpost/zvezda/hydroponics
+	name = "Zvezda hydroponics"
+
+/area/hypothermia/indoor/outpost/zvezda/janitor
+	name = "Zvezda janitor"
+
+/area/hypothermia/indoor/outpost/zvezda/restroom
+	name = "Zvezda restroom"
+
+/area/hypothermia/indoor/outpost/zvezda/dorm1
+	name = "Zvezda 1 dormitory"
+
+/area/hypothermia/indoor/outpost/zvezda/dorm2
+	name = "Zvezda 2 dormitory"
+
+/area/hypothermia/indoor/outpost/zvezda/dorm3
+	name = "Zvezda 3 dormitory"
+
+/area/hypothermia/indoor/outpost/zvezda/dorm4
+	name = "Zvezda 4 dormitory"
+
+/area/hypothermia/indoor/outpost/zvezda/dorm5
+	name = "Zvezda 5 dormitory"
+
+/area/hypothermia/indoor/outpost/zvezda/medical_lobby
+	name = "Zvezda medical lobby"
+
+/area/hypothermia/indoor/outpost/zvezda/medical_surgery
+	name = "Zvezda surgery"
+
+/area/hypothermia/indoor/outpost/zvezda/rnd
+	name = "Zvezda research division"
+
+/area/hypothermia/indoor/outpost/zvezda/engineering
+	name = "Zvezda engineering"
+
+/area/hypothermia/indoor/outpost/zvezda/garag
+	name = "Zvezda garag"
+
+/area/hypothermia/indoor/outpost/zvezda/heavy_armory
+	name = "Zvezda heavy armory"
+
+/area/hypothermia/indoor/outpost/zvezda/security
+	name = "Zvezda security"
+
+/area/hypothermia/indoor/outpost/tcoms
+	name = "Telecomunications"
+
+/area/hypothermia/indoor/outpost/arctic_quarters
+	name = "Arctic quarters"
+
+/area/hypothermia/indoor/outpost/arctic_quarters1
+	name = "Arctic quarters"
+
+/area/hypothermia/indoor/outpost/arctic_quarters2
+	name = "Arctic quarters"
+
+/area/hypothermia/indoor/outpost/arctic_quarters3
+	name = "Arctic quarters"
+
+/area/hypothermia/indoor/outpost/arctic_quarters4
+	name = "Arctic quarters"
+
+/area/hypothermia/indoor/outpost/progres
+	name = "Progres enterence"
+
+/area/hypothermia/indoor/outpost/progres/research
+	name = "Heavy research division"
+
+/area/hypothermia/indoor/outpost/progres/experement
+	name = "Progress experement division"
+
+/area/hypothermia/indoor/outpost/progres/bossfight
+	name = "Isolation facility"

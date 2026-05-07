@@ -29,7 +29,7 @@
 		return FALSE
 
 	// Chaplains are understandably 100% immune
-	if(hit_mob.can_block_magic(MAGIC_RESISTANCE_HOLY))
+	if(hit_mob.can_block_magic(MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_SYNTHETIC_ALLOWED))
 		hit_mob.mob_light(color = LIGHT_COLOR_HOLY_MAGIC, range = 2, duration = 10 SECONDS)
 
 		var/mutable_appearance/forbearance = mutable_appearance('icons/mob/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)

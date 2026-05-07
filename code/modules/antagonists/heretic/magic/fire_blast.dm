@@ -15,6 +15,7 @@
 	invocation = "V'LC'N!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
+	antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_SYNTHETIC_ALLOWED
 	channel_time = 5 SECONDS
 	target_radius = 5
 	max_beam_bounces = 4

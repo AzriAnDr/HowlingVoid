@@ -17,6 +17,10 @@
 	var/datum/action/innate/clockcult/comm/communicate = new
 	/// Ref to the cultist's slab recall ability
 	var/datum/action/innate/clockcult/recall_slab/recall = new
+	/// The clock cult team this servant belongs to.
+	var/datum/team/clock_cult/clock_team
+	/// If this datum should create and hand out a slab on gain.
+	var/give_slab = FALSE
 
 
 /datum/antagonist/clock_cultist/Destroy()
@@ -25,8 +29,35 @@
 
 
 /datum/antagonist/clock_cultist/on_gain()
+	if(clock_team)
+		objectives |= clock_team.objectives
+	if(give_slab && ishuman(owner.current))
+		give_clockwork_slab(owner.current)
 	. = ..()
 	owner.current.playsound_local(get_turf(owner.current), 'modular_nova/modules/clock_cult/sound/magic/scripture_tier_up.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+
+
+/datum/antagonist/clock_cultist/greet()
+	. = ..()
+	to_chat(owner.current, span_brass("Serve Ratvar. Use your Clockwork Slab to construct the Ark, gather power, and defend it until the Justiciar arrives."))
+
+
+/datum/antagonist/clock_cultist/create_team(datum/team/clock_cult/given_clock_team)
+	if(given_clock_team)
+		if(!istype(given_clock_team))
+			stack_trace("Wrong team type passed to [type] initialization.")
+			return
+		clock_team = given_clock_team
+	else if(GLOB.main_clock_cult)
+		clock_team = GLOB.main_clock_cult
+	else
+		clock_team = new /datum/team/clock_cult
+
+	clock_team.setup_objectives()
+
+
+/datum/antagonist/clock_cultist/get_team()
+	return clock_team
 
 
 /datum/antagonist/clock_cultist/apply_innate_effects(mob/living/mob_override)
@@ -57,6 +88,25 @@
 	recall.unmark_item()
 	recall.mark_item(slab)
 	to_chat(owner.current, span_brass("You re-attune yourself to a new Clockwork Slab."))
+
+
+/datum/antagonist/clock_cultist/proc/give_clockwork_slab(mob/living/carbon/human/give_to)
+	var/obj/item/clockwork/clockwork_slab/created_slab = new(give_to)
+	created_slab.cogs = max(created_slab.cogs, CLOCK_CULT_STARTING_COGS)
+
+	var/list/slots = list(
+		LOCATION_BACKPACK,
+		LOCATION_LPOCKET,
+		LOCATION_RPOCKET,
+	)
+
+	if(!give_to.equip_in_one_of_slots(created_slab, slots))
+		to_chat(give_to, span_userdanger("The Clockwork Slab could not fit in your belongings. It has been placed at your feet."))
+		created_slab.forceMove(get_turf(give_to))
+		return FALSE
+
+	to_chat(give_to, span_brass("You have been given a Clockwork Slab."))
+	return TRUE
 
 
 /datum/outfit/clock/preview

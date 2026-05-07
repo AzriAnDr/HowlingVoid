@@ -824,7 +824,7 @@
 
 /datum/outfit/vampire_outfit/post_equip(mob/living/carbon/human/enrico, visualsOnly=FALSE)
 	enrico.hairstyle = "Undercut"
-	enrico.hair_color = "FFF"
+	enrico.hair_color = "#808080"
 	enrico.skin_tone = "albino"
 	enrico.dna.features[FEATURE_SKIN_COLOR] = skintone2hex(enrico.skin_tone)
 	enrico.eye_color_left = "#663300"

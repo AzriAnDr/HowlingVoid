@@ -40,3 +40,52 @@
 		return FALSE
 
 	return ..()
+
+/obj/effect/portal/clockcult
+	name = "dimensional anomaly"
+	desc = "A dimensional anomaly. It feels warm to the touch, and has a gentle puff of steam emanating from it."
+	icon = 'icons/obj/anomaly.dmi'
+	icon_state = "bhole3"
+	mech_sized = TRUE
+	density = TRUE
+	force_teleport = TRUE
+	var/static/list/possible_targets
+
+/obj/effect/portal/clockcult/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override)
+	. = ..()
+	if(!possible_targets)
+		possible_targets = list()
+		for(var/obj/effect/landmark/late_cog_portals/portal_mark in GLOB.landmarks_list)
+			possible_targets += portal_mark
+
+	if(length(possible_targets))
+		hard_target = get_turf(pick(possible_targets))
+		return
+
+	hard_target = get_clock_reebe_turf()
+
+/obj/effect/portal/clockcult/Bumped(atom/movable/bumper)
+	. = ..()
+	teleport(bumper)
+
+/obj/effect/portal/clockcult/teleport(atom/movable/teleported_atom, force = FALSE, pull_loop = FALSE)
+	if(isliving(teleported_atom))
+		if(pull_loop)
+			return
+
+		to_chat(teleported_atom, span_notice("You begin climbing into the rift."))
+		if(!do_after(teleported_atom, 5 SECONDS, target = src))
+			return
+
+		var/mob/living/teleported_living = teleported_atom
+		if(teleported_living.pulling)
+			teleport(teleported_living.pulling, TRUE)
+
+		if(teleported_living.client)
+			var/client_color = teleported_living.client.color
+			teleported_living.client.color = "#BE8700"
+			animate(teleported_living.client, color = client_color, time = 2.5 SECONDS)
+		var/prev_alpha = teleported_atom.alpha
+		teleported_atom.alpha = 0
+		animate(teleported_atom, alpha = prev_alpha, time = 1 SECONDS)
+	return ..()

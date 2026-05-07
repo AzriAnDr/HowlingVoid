@@ -102,7 +102,6 @@
 		/obj/item/mod/module/thermal_regulator,
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/mouthhole,
 	)
 	default_pins = list(
 		/obj/item/mod/module/flashlight,
