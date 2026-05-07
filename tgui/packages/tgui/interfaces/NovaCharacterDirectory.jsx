@@ -76,7 +76,6 @@ export const NovaCharacterDirectory = (props) => {
   const { t } = usePreferencesLocalization(data);
 
   const {
-    personalVisibility,
     personalAttraction,
     personalGender,
     personalErpTag,
@@ -133,13 +132,6 @@ export const NovaCharacterDirectory = (props) => {
           <>
             <Section title={t('ui.character_directory.your_preferences')}>
               <LabeledList>
-                <LabeledList.Item label={t('ui.character_directory.visibility')}>
-                  <Button fluid>
-                    {personalVisibility
-                      ? t('ui.character_directory.shown')
-                      : t('ui.character_directory.not_shown')}
-                  </Button>
-                </LabeledList.Item>
                 <LabeledList.Item label={t('ui.character_directory.attraction')}>
                   <Button fluid>{personalAttraction}</Button>
                 </LabeledList.Item>

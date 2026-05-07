@@ -12,6 +12,7 @@ import { formatMoney, formatPower, formatSiUnit } from 'tgui-core/format';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type PTLData = {
 	output: number;
@@ -36,20 +37,21 @@ type PTLData = {
 
 export const PowerTransmissionLaser = () => {
 	const { data } = useBackend<PTLData>();
+	const { t } = usePreferencesLocalization(data);
 	const { total_earnings, total_energy } = data;
 	const windowWidth = 420;
 
 	return (
-		<Window title="Power Transmission Laser" width={windowWidth} height={500}>
+		<Window title={t('ui.power_transmission_laser.title')} width={windowWidth} height={500}>
 			<Window.Content>
 				<Status />
 				<InputControls />
 				<OutputControls />
 				<NoticeBox success>
-					Earned Credits: {total_earnings ? formatMoney(total_earnings) : 0}
+					{t('ui.power_transmission_laser.earned_credits')}: {total_earnings ? formatMoney(total_earnings) : 0}
 				</NoticeBox>
 				<NoticeBox success>
-					Energy Sold: {total_energy ? formatSiUnit(total_energy, 0, 'J') : '0 J'}
+					{t('ui.power_transmission_laser.energy_sold')}: {total_energy ? formatSiUnit(total_energy, 0, 'J') : '0 J'}
 				</NoticeBox>
 			</Window.Content>
 		</Window>
@@ -58,14 +60,15 @@ export const PowerTransmissionLaser = () => {
 
 const Status = () => {
 	const { data } = useBackend<PTLData>();
+	const { t } = usePreferencesLocalization(data);
 	const { max_capacity, held_power, input_total, max_grid_load } = data;
 	const reserveFill = max_capacity > 0 ? held_power / max_capacity : 0;
 	const gridFill = Math.min(input_total, Math.max(0, max_capacity - held_power)) / (max_grid_load || 1);
 
 	return (
-		<Section title="Status">
+		<Section title={t('ui.common.status')}>
 			<LabeledList>
-				<LabeledList.Item label="Reserve energy">
+				<LabeledList.Item label={t('ui.power_transmission_laser.reserve_energy')}>
 					{held_power ? formatSiUnit(held_power, 0, 'J') : '0 J'}
 				</LabeledList.Item>
 			</LabeledList>
@@ -80,7 +83,7 @@ const Status = () => {
 				value={reserveFill}
 			/>
 			<LabeledList>
-				<LabeledList.Item label="Grid Saturation" />
+				<LabeledList.Item label={t('ui.power_transmission_laser.grid_saturation')} />
 			</LabeledList>
 			<ProgressBar
 				mt="0.5em"
@@ -97,6 +100,7 @@ const Status = () => {
 
 const InputControls = () => {
 	const { act, data } = useBackend<PTLData>();
+	const { t } = usePreferencesLocalization(data);
 	const {
 		input_total,
 		accepting_power,
@@ -106,25 +110,27 @@ const InputControls = () => {
 	} = data;
 
 	return (
-		<Section title="Input Controls">
+		<Section title={t('ui.power_transmission_laser.input_controls')}>
 			<LabeledList>
 				<LabeledList.Item
-					label="Input Circuit"
+					label={t('ui.power_transmission_laser.input_circuit')}
 					buttons={
 						<Button
 							icon="power-off"
 							color={accepting_power ? 'green' : 'red'}
 							onClick={() => act('toggle_input')}>
-							{accepting_power ? 'Enabled' : 'Disabled'}
+							{accepting_power ? t('ui.common.enabled') : t('ui.common.disabled')}
 						</Button>
 					}
 				>
 					<Box
 						color={(sucking_power && 'good') || (accepting_power && 'average') || 'bad'}>
-						{(sucking_power && 'Online') || (accepting_power && 'Idle') || 'Offline'}
+						{(sucking_power && t('ui.common.online')) ||
+							(accepting_power && t('ui.power_transmission_laser.idle')) ||
+							t('ui.common.offline')}
 					</Box>
 				</LabeledList.Item>
-				<LabeledList.Item label="Input Level">
+				<LabeledList.Item label={t('ui.power_transmission_laser.input_level')}>
 					{input_total ? formatPower(input_total) : '0 W'}
 				</LabeledList.Item>
 			</LabeledList>
@@ -159,6 +165,7 @@ const InputControls = () => {
 
 const OutputControls = () => {
 	const { act, data } = useBackend<PTLData>();
+	const { t } = usePreferencesLocalization(data);
 	const {
 		output_total,
 		firing,
@@ -170,10 +177,10 @@ const OutputControls = () => {
 	} = data;
 
 	return (
-		<Section title="Output Controls">
+		<Section title={t('ui.power_transmission_laser.output_controls')}>
 			<LabeledList>
 				<LabeledList.Item
-					label="Laser Circuit"
+					label={t('ui.power_transmission_laser.laser_circuit')}
 					buttons={
 						<Stack fill wrap="wrap">
 							<Stack.Item>
@@ -182,7 +189,7 @@ const OutputControls = () => {
 									icon="crosshairs"
 									color={target === '' ? 'green' : 'red'}
 									onClick={() => act('target')}>
-									{target || 'Select Target'}
+									{target || t('ui.power_transmission_laser.select_target')}
 								</Button>
 							</Stack.Item>
 							<Stack.Item>
@@ -192,17 +199,19 @@ const OutputControls = () => {
 									color={firing ? 'green' : 'red'}
 									disabled={!firing && held_power < 10 ** 6}
 									onClick={() => act('toggle_output')}>
-									{firing ? 'Enabled' : 'Disabled'}
+									{firing ? t('ui.common.enabled') : t('ui.common.disabled')}
 								</Button>
 							</Stack.Item>
 						</Stack>
 					}
 				>
 					<Box color={(firing && 'good') || (accepting_power && 'average') || 'bad'}>
-						{(firing && 'Online') || (accepting_power && 'Idle') || 'Offline'}
+						{(firing && t('ui.common.online')) ||
+							(accepting_power && t('ui.power_transmission_laser.idle')) ||
+							t('ui.common.offline')}
 					</Box>
 				</LabeledList.Item>
-				<LabeledList.Item label="Output Level">
+				<LabeledList.Item label={t('ui.power_transmission_laser.output_level')}>
 					{output_total
 						? output_total < 0
 							? `-${formatPower(Math.abs(output_total))}`

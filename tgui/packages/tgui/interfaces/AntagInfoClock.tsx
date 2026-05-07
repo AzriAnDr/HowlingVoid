@@ -12,6 +12,7 @@ type Info = {
 
 export const AntagInfoClock = (props) => {
   const { data } = useBackend<Info>();
+  const { t } = usePreferencesLocalization(data);
   const { antag_name } = data;
   return (
     <Window width={620} height={350} theme="clockwork">
@@ -20,7 +21,10 @@ export const AntagInfoClock = (props) => {
           <Stack vertical>
             <Stack.Item fontSize="20px" color={'good'}>
               <Icon name={'cog'} rotation={0} spin />
-              {` You are the ${antag_name}! `}
+              {` ${t('ui.antag_info_clock.you_are_the').replace(
+                '{antag}',
+                antag_name,
+              )} `}
               <Icon name={'cog'} rotation={35} spin />
             </Stack.Item>
             <Stack.Item>
@@ -42,16 +46,8 @@ const ObjectivePrintout = (props) => {
   return (
     <Stack vertical>
       <Stack.Item bold>{t('ui.antag_info_clock.your_goals')}</Stack.Item>
-      <Stack.Item>
-        {
-          '- Further the goals of any other organization you are a part of using the power granted to you.'
-        }
-      </Stack.Item>
-      <Stack.Item>
-        {
-          '- Further the grace, knowledge, and glory of our great lord of the Engine, Ratvar.'
-        }
-      </Stack.Item>
+      <Stack.Item>{t('ui.antag_info_clock.goal_other_organizations')}</Stack.Item>
+      <Stack.Item>{t('ui.antag_info_clock.goal_ratvar')}</Stack.Item>
     </Stack>
   );
 };

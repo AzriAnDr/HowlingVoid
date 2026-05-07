@@ -4,20 +4,6 @@ GLOBAL_LIST_EMPTY(name_to_appearance)
 ///Helper macro for directory ads' preview views
 #define CHAR_DIRECTORY_ASSIGNED_VIEW(user_ckey) "preview_[user_ckey]_char_directory_records"
 
-// We want players to be able to decide whether they show up in the directory or not
-/datum/preference/toggle/show_in_directory
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	default_value = TRUE
-	savefile_key = "show_in_directory"
-	savefile_identifier = PREFERENCE_PLAYER
-
-/datum/preference/toggle/show_in_directory/is_accessible(datum/preferences/preferences)
-	..() // Required by SHOULD_CALL_PARENT
-	return FALSE
-
-/datum/preference/toggle/show_in_directory/deserialize(input, datum/preferences/preferences)
-	return TRUE
-
 // The advertisement that you show to people looking through the directory
 /datum/preference/text/character_ad
 	savefile_key = "character_ad"
@@ -167,7 +153,6 @@ GLOBAL_LIST_EMPTY(name_to_appearance)
 
 	// Collect the user's own preferences for the top of the UI
 	if (user?.client?.prefs)
-		data["personalVisibility"] = TRUE
 		data["personalAttraction"] = READ_PREFS(user, choiced/attraction)
 		data["personalGender"] = READ_PREFS(user, choiced/display_gender)
 		data["personalErpTag"] = READ_PREFS(user, choiced/erp_status)

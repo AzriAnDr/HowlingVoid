@@ -278,15 +278,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	// Custom hotkeys
 	key_bindings = savefile.get_entry("key_bindings")
 
-	var/datum/preference/show_in_directory_pref = GLOB.preference_entries[/datum/preference/toggle/show_in_directory]
-	var/list/player_save_data = savefile.get_entry()
-	var/show_in_directory_key = show_in_directory_pref.savefile_key
-	var/normalized_show_in_directory = FALSE
-
-	if(!isnull(player_save_data) && (show_in_directory_key in player_save_data) && !player_save_data[show_in_directory_key])
-		write_preference(show_in_directory_pref, TRUE)
-		normalized_show_in_directory = TRUE
-
 	//try to fix any outdated data if necessary
 	if(SHOULD_UPDATE_DATA(data_validity_integer))
 		var/bacpath = PREFS_BACKUP_PATH(path) //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
@@ -324,8 +315,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		default_slot = old_default_slot
 		max_save_slots = old_max_save_slots
 		save_preferences()
-	else if(normalized_show_in_directory)
-		savefile.save()
 
 	return TRUE
 

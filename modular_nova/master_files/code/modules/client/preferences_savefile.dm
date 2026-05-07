@@ -364,6 +364,14 @@
 			aug_entry = _text2path(aug_entry)
 
 		var/datum/augment_item/aug = GLOB.augment_items[aug_entry]
+		if(!aug)
+			for(var/augment_path in GLOB.augment_items)
+				var/datum/augment_item/possible_aug = GLOB.augment_items[augment_path]
+				if(possible_aug.path != aug_entry)
+					continue
+				aug_entry = augment_path
+				aug = possible_aug
+				break
 		if(aug)
 			augments_sanitized[aug_slot] = aug_entry
 	augments = augments_sanitized
@@ -375,14 +383,29 @@
 		return
 	for(var/augment_name in save_augments)
 		var/augment_path_string = save_augments[augment_name]
-		var/augment_path = GLOB.augment_items[_text2path(augment_path_string)]
-		if(augment_path) // The augment already exists, neat!
+		var/augment_path = _text2path(augment_path_string)
+		var/datum/augment_item/augment_item = GLOB.augment_items[augment_path]
+		if(!augment_item)
+			for(var/possible_augment_path in GLOB.augment_items)
+				var/datum/augment_item/possible_aug = GLOB.augment_items[possible_augment_path]
+				if(possible_aug.path != augment_path)
+					continue
+				augment_item = possible_aug
+				break
+		if(augment_item) // The augment already exists, neat!
 			continue
 		// Saved augment doesn't exist, try the toolkit version
 		augment_path_string = replacetext(augment_path_string, "/cyberimp/arm/", "/cyberimp/arm/toolkit/")
-		augment_path = GLOB.augment_items[_text2path(augment_path_string)]
-		if(augment_path) // Toolkit version exists, save that instead
-			save_augments[augment_name] = augment_path_string
+		augment_path = _text2path(augment_path_string)
+		var/found_toolkit_augment = FALSE
+		for(var/possible_augment_path in GLOB.augment_items)
+			var/datum/augment_item/possible_aug = GLOB.augment_items[possible_augment_path]
+			if(possible_aug.path != augment_path)
+				continue
+			save_augments[augment_name] = possible_augment_path
+			found_toolkit_augment = TRUE
+			break
+		if(found_toolkit_augment)
 			continue
 		stack_trace("Attempt to migrate augment item [save_augments[augment_name]] failed!")
 		save_augments -= augment_name

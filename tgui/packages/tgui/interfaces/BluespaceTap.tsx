@@ -15,6 +15,7 @@ import { formatPower } from 'tgui-core/format';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type BluespaceTapProduct = {
   key: string;
@@ -67,14 +68,15 @@ const Incursion = () => {
 
 const Alerts = () => {
   const { data } = useBackend<BluespaceTapData>();
+  const { t } = usePreferencesLocalization(data);
   const { miningPower, stabilizerPower, emagged, autoShutown, stabilizers } = data;
 
   if (!autoShutown && !emagged) {
-    return <NoticeBox danger>Auto shutdown disabled</NoticeBox>;
+    return <NoticeBox danger>{t('ui.bluespace_tap.auto_shutdown_disabled')}</NoticeBox>;
   }
 
   if (emagged) {
-    return <NoticeBox danger>All safeties disabled</NoticeBox>;
+    return <NoticeBox danger>{t('ui.bluespace_tap.all_safeties_disabled')}</NoticeBox>;
   }
 
   if (miningPower <= 15000000) {
@@ -82,18 +84,19 @@ const Alerts = () => {
   }
 
   if (!stabilizers) {
-    return <NoticeBox danger>Stabilizers disabled, instability likely</NoticeBox>;
+    return <NoticeBox danger>{t('ui.bluespace_tap.stabilizers_disabled_warning')}</NoticeBox>;
   }
 
   if (miningPower > stabilizerPower + 15000000) {
-    return <NoticeBox danger>Stabilizers overwhelmed, instability likely</NoticeBox>;
+    return <NoticeBox danger>{t('ui.bluespace_tap.stabilizers_overwhelmed_warning')}</NoticeBox>;
   }
 
-  return <NoticeBox>High power level detected, stabilizers engaged</NoticeBox>;
+  return <NoticeBox>{t('ui.bluespace_tap.high_power_stabilizers_engaged')}</NoticeBox>;
 };
 
 export const BluespaceTap = () => {
   const { act, data } = useBackend<BluespaceTapData>();
+  const { t } = usePreferencesLocalization(data);
   const {
     desiredMiningPower,
     miningPower,
@@ -116,60 +119,60 @@ export const BluespaceTap = () => {
         <Stack fill vertical>
           <Incursion />
           <Alerts />
-          <Collapsible title="Input Management">
-            <Section fill title="Input">
+          <Collapsible title={t('ui.bluespace_tap.input_management')}>
+            <Section fill title={t('ui.bluespace_tap.input')}>
               <Button
                 icon={autoShutown && !emagged ? 'toggle-on' : 'toggle-off'}
-                content="Auto shutdown"
+                content={t('ui.bluespace_tap.auto_shutdown')}
                 color={autoShutown && !emagged ? 'green' : 'red'}
                 disabled={emagged}
-                tooltip="Turn auto shutdown on or off"
+                tooltip={t('ui.bluespace_tap.auto_shutdown_tooltip')}
                 tooltipPosition="top"
                 onClick={() => act('auto_shutdown')}
               />
               <Button
                 icon={stabilizers && !emagged ? 'toggle-on' : 'toggle-off'}
-                content="Stabilizers"
+                content={t('ui.bluespace_tap.stabilizers')}
                 color={stabilizers && !emagged ? 'green' : 'red'}
                 disabled={emagged}
-                tooltip="Turn stabilizers on or off"
+                tooltip={t('ui.bluespace_tap.stabilizers_tooltip')}
                 tooltipPosition="top"
                 onClick={() => act('stabilizers')}
               />
               <Button
                 icon={stabilizerPriority && !emagged ? 'toggle-on' : 'toggle-off'}
-                content="Stabilizer priority"
+                content={t('ui.bluespace_tap.stabilizer_priority')}
                 color={stabilizerPriority && !emagged ? 'green' : 'red'}
                 disabled={emagged}
-                tooltip="When enabled, mining power will not exceed what the stabilizers can safely support"
+                tooltip={t('ui.bluespace_tap.stabilizer_priority_tooltip')}
                 tooltipPosition="top"
                 onClick={() => act('stabilizer_priority')}
               />
               <LabeledList>
-                <LabeledList.Item label="Desired mining power">
+                <LabeledList.Item label={t('ui.bluespace_tap.desired_mining_power')}>
                   {formatPower(desiredMiningPower)}
                 </LabeledList.Item>
-                <LabeledList.Item verticalAlign="top" label="Set desired mining power">
+                <LabeledList.Item verticalAlign="top" label={t('ui.bluespace_tap.set_desired_mining_power')}>
                   <Stack width="100%">
                     <Stack.Item>
                       <Button
                         icon="step-backward"
                         disabled={desiredMiningPower === 0 || emagged}
-                        tooltip="Set to 0"
+                        tooltip={t('ui.bluespace_tap.set_to_zero')}
                         tooltipPosition="bottom"
                         onClick={() => act('set', { set_power: 0 })}
                       />
                       <Button
                         icon="fast-backward"
                         disabled={desiredMiningPower === 0 || emagged}
-                        tooltip="Decrease by 10 MW"
+                        tooltip={t('ui.bluespace_tap.decrease_by_10mw')}
                         tooltipPosition="bottom"
                         onClick={() => act('set', { set_power: desiredMiningPower - 10000000 })}
                       />
                       <Button
                         icon="backward"
                         disabled={desiredMiningPower === 0 || emagged}
-                        tooltip="Decrease by 1 MW"
+                        tooltip={t('ui.bluespace_tap.decrease_by_1mw')}
                         tooltipPosition="bottom"
                         onClick={() => act('set', { set_power: desiredMiningPower - 1000000 })}
                       />
@@ -188,35 +191,35 @@ export const BluespaceTap = () => {
                       <Button
                         icon="forward"
                         disabled={emagged}
-                        tooltip="Increase by 1 MW"
+                        tooltip={t('ui.bluespace_tap.increase_by_1mw')}
                         tooltipPosition="bottom"
                         onClick={() => act('set', { set_power: desiredMiningPower + 1000000 })}
                       />
                       <Button
                         icon="fast-forward"
                         disabled={emagged}
-                        tooltip="Increase by 10 MW"
+                        tooltip={t('ui.bluespace_tap.increase_by_10mw')}
                         tooltipPosition="bottom"
                         onClick={() => act('set', { set_power: desiredMiningPower + 10000000 })}
                       />
                     </Stack.Item>
                   </Stack>
                 </LabeledList.Item>
-                <LabeledList.Item label="Total power use">{formatPower(powerUse)}</LabeledList.Item>
-                <LabeledList.Item label="Mining power use">{formatPower(miningPower)}</LabeledList.Item>
-                <LabeledList.Item label="Stabilizer power use">{formatPower(stabilizerPower)}</LabeledList.Item>
-                <LabeledList.Item label="Surplus power">{formatPower(availablePower)}</LabeledList.Item>
+                <LabeledList.Item label={t('ui.bluespace_tap.total_power_use')}>{formatPower(powerUse)}</LabeledList.Item>
+                <LabeledList.Item label={t('ui.bluespace_tap.mining_power_use')}>{formatPower(miningPower)}</LabeledList.Item>
+                <LabeledList.Item label={t('ui.bluespace_tap.stabilizer_power_use')}>{formatPower(stabilizerPower)}</LabeledList.Item>
+                <LabeledList.Item label={t('ui.bluespace_tap.surplus_power')}>{formatPower(availablePower)}</LabeledList.Item>
               </LabeledList>
             </Section>
           </Collapsible>
-          <Section fill title="Output">
+          <Section fill title={t('ui.bluespace_tap.output')}>
             {dirty ? (
               <Dimmer backgroundColor="rgba(63, 39, 18, 0.85)">
                 <Stack mb="30px" fontSize="256px">
                   <Stack.Item bold color="brown" fontSize="256px" textAlign="center">
-                    Blockage detected
+                    {t('ui.bluespace_tap.blockage_detected')}
                     <br />
-                    Cleanup required
+                    {t('ui.bluespace_tap.cleanup_required')}
                   </Stack.Item>
                 </Stack>
               </Dimmer>
@@ -225,8 +228,8 @@ export const BluespaceTap = () => {
               <Stack.Item>
                 <Box>
                   <LabeledList>
-                    <LabeledList.Item label="Available points">{points}</LabeledList.Item>
-                    <LabeledList.Item label="Total points">{totalPoints}</LabeledList.Item>
+                    <LabeledList.Item label={t('ui.bluespace_tap.available_points')}>{points}</LabeledList.Item>
+                    <LabeledList.Item label={t('ui.bluespace_tap.total_points')}>{totalPoints}</LabeledList.Item>
                   </LabeledList>
                 </Box>
               </Stack.Item>

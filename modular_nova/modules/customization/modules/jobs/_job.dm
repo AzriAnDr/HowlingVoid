@@ -53,7 +53,10 @@
 
 	var/list/player_augments = pref.augments
 	for(var/key in player_augments)
+		var/datum/augment_item/augment_item = GLOB.augment_items[player_augments[key]]
 		if(player_augments[key] in banned_augments)
+			return TRUE
+		if(augment_item?.path in banned_augments)
 			return TRUE
 
 	return FALSE

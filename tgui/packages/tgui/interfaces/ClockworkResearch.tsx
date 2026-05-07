@@ -64,7 +64,7 @@ const SelectedSection = (props) => {
     <Box>
       <div style={{ textAlign: 'center' }}>
         <Box color="good" bold fontSize="16px">
-          {'Selected Research'}
+          {t('ui.clockwork_research.selected_research')}
         </Box>
         <Divider />
         <Box bold fontSize="14px">
@@ -81,12 +81,12 @@ const SelectedSection = (props) => {
           <Box>{t('ui.clockwork_research.this_does_not_need_to_be_researched')}</Box>
         ) : data.focused_research.researched ? (
           <Box>
-            This ritual occurred in the{' '}
+            {t('ui.clockwork_research.ritual_occurred_in_the')}{' '}
             <b>{data.focused_research.research_location}</b>.
           </Box>
         ) : (
           <Box>
-            This ritual must occur in the{' '}
+            {t('ui.clockwork_research.ritual_must_occur_in_the')}{' '}
             <b>{data.focused_research.research_location}</b>.
           </Box>
         )}
@@ -96,8 +96,8 @@ const SelectedSection = (props) => {
             disabled={!data.in_area || data.focused_research.researched}
             content={
               data.focused_research.researched
-                ? 'Ritual Completed'
-                : 'Begin Ritual'
+                ? t('ui.clockwork_research.ritual_completed')
+                : t('ui.clockwork_research.begin_ritual')
             }
             onClick={() => act('start_research')}
           />
@@ -122,7 +122,9 @@ const ResearchSection = (props) => {
       {data.research_tiers.map((inside_array: Array<Research>) => (
         <Stack vertical fill key={inside_array[0].name}>
           <Section
-            title={`Tier ${data.research_tiers.indexOf(inside_array) + 1}`}
+            title={`${t('ui.common.tier')} ${
+              data.research_tiers.indexOf(inside_array) + 1
+            }`}
           >
             {inside_array.map((single_research: Research) => (
               <Stack.Item key={single_research.name}>
@@ -164,7 +166,7 @@ const ResearchNode = (research: Research, act: any) => {
                 <div className="ClockResearch__Icon" key={design_data.name}>
                   <Button
                     className={classes([`design32x32`, design_data.icon2])} // swap back to clockresearch when it's not absolutely broken
-                    tooltip={`${design_data.name} (Tinker's Design)`}
+                    tooltip={`${design_data.name} (${t('ui.clockwork_research.tinkers_design')})`}
                     tooltipPosition={i % 15 < 7 ? 'right' : 'left'}
                   />
                 </div>
@@ -175,7 +177,7 @@ const ResearchNode = (research: Research, act: any) => {
                 <div className="ClockResearch__Icon" key={scripture_data.name}>
                   <Button
                     className={classes([`design32x32`, scripture_data.icon2])} // swap back to clockresearch when it's not absolutely broken
-                    tooltip={`${scripture_data.name} (Scripture)`}
+                    tooltip={`${scripture_data.name} (${t('ui.clockwork_research.scripture')})`}
                     tooltipPosition={i % 15 < 7 ? 'right' : 'left'}
                   />
                 </div>

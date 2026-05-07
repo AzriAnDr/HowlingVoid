@@ -1,449 +1,1087 @@
 // THIS IS A NOVA SECTOR UI FILE
+import { useMemo, useRef, useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
   ColorBox,
+  Divider,
   Dropdown,
+  Icon,
+  Modal,
   Section,
   Stack,
 } from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { CharacterPreview } from '../../common/CharacterPreview';
-import type { PreferencesMenuData } from '../types';
+import type {
+  AugmentItem,
+  AugmentSlot,
+  Marking,
+  PreferencesMenuData,
+  RoboticStyle,
+} from '../types';
 import { useServerPrefs } from '../useServerPrefs';
 import { usePreferencesLocalization } from './localization';
+import { getCombinedQuirkAugmentBalance } from './quirkBalance';
 
-const getQuirkBalanceLikeQuirksPage = (data, serverData) => {
-  const fallbackBalance = -data.quirks_balance;
-
-  if (
-    !serverData ||
-    !serverData.quirks ||
-    !data.selected_quirks ||
-    typeof data.default_quirk_balance !== 'number'
-  ) {
-    return fallbackBalance;
-  }
-
-  const quirkInfo = serverData.quirks.quirk_info || {};
-  let balance = -data.default_quirk_balance;
-
-  for (const quirkKey of data.selected_quirks) {
-    const selectedQuirk = quirkInfo[quirkKey];
-    if (!selectedQuirk) {
-      continue;
-    }
-    balance += selectedQuirk.value || 0;
-  }
-
-  return balance;
+/** AugmentSlot with selected augment */
+type AugmentData = AugmentSlot & {
+  selectedAug: AugmentItem;
 };
 
-const getAugmentsBudgetBalance = (data, serverData) => {
-  let balance = getQuirkBalanceLikeQuirksPage(data, serverData);
-
-  // Add currently selected augment costs for purchase validation logic.
-  for (const limb of data.limbs_data || []) {
-    const chosen = limb?.chosen_aug;
-    if (!chosen || chosen === 'None') {
-      continue;
-    }
-    balance += limb?.costs?.[chosen] || 0;
-  }
-  for (const organ of data.organs_data || []) {
-    const chosen = organ?.chosen_organ;
-    if (!chosen || chosen === 'Default') {
-      continue;
-    }
-    balance += organ?.costs?.[chosen] || 0;
-  }
-
-  return balance;
+/** All the ui_data needed to populate the columns */
+type BodypartData = AugmentData & {
+  chosen_markings: Marking[] | null;
+  chosen_style: RoboticStyle | null;
+  marking_choices: string[];
+  selectedImplant: AugmentItem | null;
 };
 
-export const RotateCharacterButtons = (props: {
-  rotatePreview: (step: -1 | 1) => void;
-}) => {
-  const { t } = usePreferencesLocalization();
+type ColumnData = {
+  left: BodypartData[];
+  right: BodypartData[];
+  center: BodypartData[];
+  internalImplants: {
+    left: AugmentData[];
+    right: AugmentData[];
+  };
+  filteredMarkingPresets: string[];
+};
+
+// On hover, used to display extra_info tooltips.
+// Uses visibility/opacity toggle instead of conditional rendering to avoid
+// DOM node insertion/removal
+const HoverText = (props: { text: string; children: any }) => {
+  const [visible, setVisible] = useState(false);
   return (
-    <Box mt={1}>
-      <Button
-        className="PreferencesMenu__Augments__ActionButton"
-        onClick={() => props.rotatePreview(1)}
-        fontSize="22px"
-        icon="redo"
-        tooltip={t('ui.character.limbs_rotate_clockwise')}
-        tooltipPosition="bottom"
-      />
-      <Button
-        className="PreferencesMenu__Augments__ActionButton"
-        onClick={() => props.rotatePreview(-1)}
-        fontSize="22px"
-        icon="undo"
-        tooltip={t('ui.character.limbs_rotate_counter_clockwise')}
-        tooltipPosition="bottom"
-      />
-    </Box>
+    <div
+      className="LimbsPage__hover-text"
+      onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
+      onMouseDown={() => setVisible(false)}
+    >
+      {props.children}
+      <div
+        className={`LimbsPage__hover-text--tooltip-wrapper${visible && props.text ? ' visible' : ''}`}
+      >
+        <div className="LimbsPage__hover-text--tooltip">{props.text}</div>
+      </div>
+    </div>
   );
 };
 
-export const Markings = (props) => {
-  const { act } = useBackend<PreferencesMenuData>();
-  const { t, localizeDataLabelById } = usePreferencesLocalization();
+// The dropdown components with fancy HoverText
+
+const LabeledDropdown = (
+  props: {
+    label: string;
+    options: string[];
+    selected: string | undefined;
+    onSelected: (value: string) => void;
+  } & Partial<{
+    displayText: string;
+    searchInput: boolean;
+    maxItems: number;
+    tooltip: string;
+    disabled: boolean;
+  }>,
+) => {
+  const dropdown = (
+    <Dropdown
+      className="PreferencesMenu__AugmentsDropdown"
+      width="100%"
+      options={props.options}
+      selected={props.selected}
+      displayText={props.displayText}
+      disabled={props.disabled}
+      onSelected={props.onSelected}
+      //maxItems={props.maxItems}
+      //searchInput={props.searchInput}
+      //styledInput
+    />
+  );
   return (
-    <Stack fill vertical>
-      <Stack.Item>{t('ui.character.limbs_markings_label')}</Stack.Item>
-      {props.limb.markings.markings_list.map((marking, index) => (
-        <Stack.Item key={marking.marking_id}>
+    <Stack.Item>
+      <Box className="PreferencesMenu__AugmentsDropdownLabel">
+        {props.label}
+      </Box>
+      {props.tooltip ? (
+        <HoverText text={props.tooltip}>{dropdown}</HoverText>
+      ) : (
+        dropdown
+      )}
+    </Stack.Item>
+  );
+};
+
+// Popup to stop users from resetting all their markings accidentally via the preset dropdown
+
+const PresetConfirmPopup = (props: {
+  preset: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+}) => {
+  const { t } = usePreferencesLocalization();
+  return (
+    <Modal>
+      <Stack vertical textAlign="center" align="center">
+        <Stack.Item>
+          <Box fontSize="2em">
+            {t('ui.character.limbs_replace_markings_title')}
+          </Box>
+        </Stack.Item>
+        <Stack.Item maxWidth="300px">
+          <Box>
+            {t('ui.character.limbs_replace_markings_prefix')}{' '}
+            <b>{props.preset}</b>{' '}
+            {t('ui.character.limbs_replace_markings_suffix')}
+          </Box>
+        </Stack.Item>
+        <Stack.Item>
           <Stack fill>
-            <Stack.Item grow>
-              <Dropdown
-                className="PreferencesMenu__Augments__Dropdown"
-                width="100%"
-                options={props.limb.markings.marking_choices.map((choice) => ({
-                  value: choice,
-                  displayText: localizeDataLabelById(
-                    `limb_${props.limb.slot}_marking_choice_${choice}`,
-                    choice,
-                  ),
-                }))}
-                selected={marking.name}
-                onSelected={(shit) =>
-                  act('change_marking', {
-                    limb_slot: props.limb.slot,
-                    marking_id: marking.marking_id,
-                    marking_name: shit,
-                  })
-                }
-              />
-            </Stack.Item>
             <Stack.Item>
-              <Button
-                className="PreferencesMenu__Augments__ActionButton"
-                onClick={() =>
-                  act('color_marking', {
-                    limb_slot: props.limb.slot,
-                    marking_id: marking.marking_id,
-                  })
-                }
-              >
-                <ColorBox color={marking.color} />
+              <Button color="danger" onClick={props.onConfirm}>
+                {t('ui.character.limbs_apply_preset')}
               </Button>
             </Stack.Item>
             <Stack.Item>
-              <Button
-                className="PreferencesMenu__Augments__ActionButton"
-                color={marking.emissive ? 'good' : 'bad'}
-                tooltip={t('ui.character.limbs_emissive_tooltip')}
-                icon="lightbulb"
-                onClick={() =>
-                  act('change_emissive', {
-                    limb_slot: props.limb.slot,
-                    marking_id: marking.marking_id,
-                    emissive: marking.emissive,
-                  })
-                }
-              />
-            </Stack.Item>
-            <Stack.Item>
-              <Button
-                className="PreferencesMenu__Augments__ActionButton"
-                color="bad"
-                icon="minus"
-                tooltip={t('ui.character.limbs_remove_marking_tooltip')}
-                onClick={() =>
-                  act('remove_marking', {
-                    limb_slot: props.limb.slot,
-                    marking_id: marking.marking_id,
-                  })
-                }
-              />
+              <Button onClick={props.onCancel}>
+                {t('ui.character.cancel')}
+              </Button>
             </Stack.Item>
           </Stack>
         </Stack.Item>
-      ))}
+      </Stack>
+    </Modal>
+  );
+};
+
+const InternalImplantTitle = (props: { name: string; icon: string }) => (
+  <span>
+    <Icon name={props.icon} style={{ marginRight: '4px' }} />
+    {props.name}
+  </span>
+);
+
+// Various helpers
+
+// Slot bitflags -- these must match DM defines in code\__DEFINES\inventory.dm
+const SLOT_LEGS = (1 << 3) | (1 << 4); // LEG_LEFT | LEG_RIGHT
+
+// ── Slot predicates ───────────────────────────────────────────────────────────
+const isLegSlot = (slot_flag?: number) =>
+  !!slot_flag && (slot_flag & SLOT_LEGS) !== 0;
+const isLeft = (item: AugmentSlot) => item.slot?.startsWith('Left') ?? false;
+const isRight = (item: AugmentSlot) => item.slot?.startsWith('Right') ?? false;
+const isCenter = (item: AugmentSlot) => !isLeft(item) && !isRight(item);
+const isBodypart = (item: AugmentSlot) => item.is_bodypart;
+const isImplant = (item: AugmentSlot) => !item.is_bodypart;
+
+// ── Display helpers ───────────────────────────────────────────────────────────
+const augDisplayName = (aug: AugmentItem, showCost?: boolean) =>
+  showCost && aug.cost
+    ? `${aug.name} (${aug.cost > 0 ? '+' : ''}${aug.cost})`
+    : aug.name;
+
+/** True when the options list has more than just the default "None" entry */
+const hasAnyOptions = (options: AugmentItem[] | null | undefined) =>
+  (options?.length ?? 0) > 1;
+
+// ── Filtering ─────────────────────────────────────────────────────────────────
+const filterBySpecies = <T extends { recommended_species: string | null }>(
+  items: T[],
+  species: string,
+  allowMismatched: boolean,
+): T[] => {
+  if (allowMismatched) return items;
+  return items.filter(
+    (item) =>
+      !item.recommended_species ||
+      item.recommended_species.split(',').includes(species),
+  );
+};
+
+const isAugAllowed = (
+  aug: AugmentItem,
+  species: string,
+  ckey: string,
+  slot_flag?: number,
+  digi_legs?: BooleanLike,
+  taur_legs?: BooleanLike,
+): boolean => {
+  if (isLegSlot(slot_flag) && digi_legs && !aug.has_digi) return false;
+  if (isLegSlot(slot_flag) && taur_legs) return false;
+  if (aug.species_blacklist?.[species]) return false;
+  if (aug.species_whitelist && !aug.species_whitelist[species]) return false;
+  if (aug.ckey_whitelist && !aug.ckey_whitelist.includes(ckey)) return false;
+  return true;
+};
+
+const showsInBodyPartsTab = (bodypart: BodypartData, taur_legs: BooleanLike) =>
+  hasAnyOptions(bodypart.aug_options) ||
+  (!!taur_legs && isLegSlot(bodypart.slot_flag));
+
+/** Resolves internal implant slots into AugmentData with filtered options and selected aug */
+const buildInternalImplantData = (
+  items: AugmentSlot[],
+  augments: Record<string, string>,
+  species: string,
+  ckey: string,
+): AugmentData[] =>
+  items.map((item) => {
+    const chosen = augments?.[item.slot] ?? null;
+    const aug_options = (item.aug_options ?? []).filter((aug) =>
+      isAugAllowed(aug, species, ckey),
+    );
+    return {
+      ...item,
+      aug_options,
+      selectedAug:
+        aug_options.find((aug) => aug.path === chosen) ?? aug_options[0],
+    };
+  });
+
+// Markings
+
+const Markings = (props: {
+  body_zone: string;
+  chosen_markings: Marking[] | null;
+  marking_choices: string[];
+  act: (action: string, params?: Record<string, unknown>) => void;
+}) => {
+  const { body_zone, chosen_markings, marking_choices, act } = props;
+  const { t } = usePreferencesLocalization();
+  return (
+    <Stack fill vertical>
+      <Stack.Item>{t('ui.character.limbs_markings_label')}:</Stack.Item>
+      {(chosen_markings ?? []).map((marking) => {
+        return (
+          <Stack.Item key={marking.marking_id}>
+            <Stack fill>
+              <Stack.Item grow style={{ minWidth: 0, overflow: 'hidden' }}>
+                <Dropdown
+                  className="PreferencesMenu__AugmentsDropdown"
+                  width="100%"
+                  options={marking_choices}
+                  selected={marking.name}
+                  displayText={marking.name}
+                  //maxItems={7}
+                  //searchInput
+                  //styledInput
+                  onSelected={(value) =>
+                    act('change_marking', {
+                      bodypart_slot: body_zone,
+                      marking_id: marking.marking_id,
+                      marking_name: value,
+                    })
+                  }
+                />
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  onClick={() =>
+                    act('color_marking', {
+                      bodypart_slot: body_zone,
+                      marking_id: marking.marking_id,
+                    })
+                  }
+                >
+                  <ColorBox color={marking.color} />
+                </Button>
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  color={marking.emissive ? 'good' : 'bad'}
+                  tooltip={t('ui.character.limbs_emissive_tooltip')}
+                  onClick={() =>
+                    act('change_emissive', {
+                      bodypart_slot: body_zone,
+                      marking_id: marking.marking_id,
+                      emissive: marking.emissive,
+                    })
+                  }
+                >
+                  E
+                </Button>
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  color="bad"
+                  onClick={() =>
+                    act('remove_marking', {
+                      bodypart_slot: body_zone,
+                      marking_id: marking.marking_id,
+                    })
+                  }
+                >
+                  -
+                </Button>
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+        );
+      })}
       <Stack.Item>
         <Button
-          className="PreferencesMenu__Augments__ActionButton"
           color="good"
-          icon="plus"
-          tooltip={t('ui.character.limbs_add_marking_tooltip')}
-          onClick={() => act('add_marking', { limb_slot: props.limb.slot })}
-        />
+          onClick={() => act('add_marking', { bodypart_slot: body_zone })}
+        >
+          +
+        </Button>
       </Stack.Item>
     </Stack>
   );
 };
 
-export const LimbPage = (props) => {
-  const { localizeDataLabelById } = usePreferencesLocalization();
+// Limb augments section
+
+const BodypartAugmentSection = (props: {
+  limb: BodypartData;
+  budgetBalance: number;
+}) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization(data);
+  const server_data = useServerPrefs()?.limbs_and_markings;
+  if (!server_data) return null;
+
+  const { limb } = props;
+  const showCost = !!data.quirk_points_enabled;
+  const displayName = (aug: AugmentItem) => augDisplayName(aug, showCost);
+  const balance = props.budgetBalance;
+  const aug_options = limb.aug_options ?? [];
+  const implant_options = limb.implant_options ?? [];
+
+  const stylesForAug = (aug: AugmentItem | undefined) =>
+    (server_data.robotic_styles ?? []).filter((style) => {
+      if (!aug?.allows_styles && style.name !== 'None') return false;
+      if (limb.slot_flag && !(style.supported_slots & limb.slot_flag))
+        return false;
+      if (isLegSlot(limb.slot_flag) && data.digi_legs && !style.has_digi)
+        return false;
+      return true;
+    });
+
+  const available_styles = useMemo(
+    () => stylesForAug(limb.selectedAug),
+    [
+      server_data.robotic_styles,
+      limb.selectedAug,
+      limb.slot_flag,
+      data.digi_legs,
+    ],
+  );
+  const isTaurRestrictedLeg = !!data.taur_legs && isLegSlot(limb.slot_flag);
+
   return (
-    <div>
-      <Section
-        className="PreferencesMenu__Augments__Card"
-        fill
-        title={localizeDataLabelById(
-          `limb_${props.limb.slot}_name`,
-          props.limb.name,
-        )}
-      >
-        <Stack vertical fill>
-          <Stack.Item>
-            <Markings limb={props.limb} />
-          </Stack.Item>
+    <div style={{ marginBottom: '1.5em' }}>
+      <Section fill title={limb.slot}>
+        <Stack fill vertical>
+          {isTaurRestrictedLeg ? (
+            <LabeledDropdown
+              label={`${t('ui.character.limbs_augmentation_label')}:`}
+              options={[t('ui.character.limbs_not_available')]}
+              selected={t('ui.character.limbs_not_available')}
+              displayText={t('ui.character.limbs_not_available')}
+              disabled
+              //searchInput
+              //maxItems={7}
+              onSelected={() => {}}
+            />
+          ) : (
+            <LabeledDropdown
+              label={`${t('ui.character.limbs_augmentation_label')}:`}
+              options={aug_options.map((aug) => displayName(aug))}
+              selected={
+                limb.selectedAug ? displayName(limb.selectedAug) : undefined
+              }
+              displayText={
+                limb.selectedAug ? displayName(limb.selectedAug) : undefined
+              }
+              tooltip={limb.selectedAug?.extra_info}
+              //searchInput
+              //maxItems={7}
+              onSelected={(name) => {
+                const option = aug_options.find(
+                  (aug) => displayName(aug) === name,
+                );
+                if (option?.path === limb.selectedAug?.path) return;
+                if (
+                  showCost &&
+                  (option?.cost ?? 0) > 0 &&
+                  balance -
+                    (limb.selectedAug?.cost ?? 0) +
+                    (option?.cost ?? 0) >
+                    0
+                )
+                  return;
+                act('set_bodypart_aug', {
+                  slot: limb.slot,
+                  augment_path: option?.path ?? null,
+                });
+              }}
+            />
+          )}
+          {limb.selectedAug?.path &&
+            limb.selectedAug?.allows_styles !== 0 &&
+            (available_styles.length <= 1 ? (
+              <LabeledDropdown
+                label={`${t('ui.character.limbs_style_label')}:`}
+                options={[t('ui.character.limbs_no_available_styles')]}
+                selected={t('ui.character.limbs_no_available_styles')}
+                displayText={t('ui.character.limbs_no_available_styles')}
+                //searchInput
+                //maxItems={7}
+                disabled
+                onSelected={() => {}}
+              />
+            ) : (
+              <LabeledDropdown
+                label={`${t('ui.character.limbs_style_label')}:`}
+                options={available_styles.map((style) => style.name)}
+                selected={limb.chosen_style?.name ?? 'None'}
+                displayText={limb.chosen_style?.name ?? 'None'}
+                searchInput
+                onSelected={(value) => {
+                  if (value === limb.chosen_style?.name) return;
+                  act('set_bodypart_aug_style', {
+                    slot: limb.slot,
+                    style_name: value,
+                  });
+                }}
+              />
+            ))}
+          {limb.selectedAug?.allows_implants !== 0 &&
+            (limb.has_implant ? (
+              <LabeledDropdown
+                label={`${t('ui.character.limbs_implant_slot')}:`}
+                options={implant_options.map((aug) => displayName(aug))}
+                selected={
+                  limb.selectedImplant
+                    ? displayName(limb.selectedImplant)
+                    : undefined
+                }
+                displayText={
+                  limb.selectedImplant
+                    ? displayName(limb.selectedImplant)
+                    : undefined
+                }
+                //searchInput
+                //maxItems={7}
+                tooltip={limb.selectedImplant?.extra_info}
+                onSelected={(name) => {
+                  const option = implant_options.find(
+                    (aug) => displayName(aug) === name,
+                  );
+                  if (
+                    showCost &&
+                    (option?.cost ?? 0) > 0 &&
+                    balance -
+                      (limb.selectedImplant?.cost ?? 0) +
+                      (option?.cost ?? 0) >
+                      0
+                  )
+                    return;
+                  if (option?.path === limb.selectedImplant?.path) return;
+                  act('set_internal_implant_aug', {
+                    internal_implant_slot: `${limb.slot} implant`,
+                    augment_path: option?.path ?? null,
+                  });
+                }}
+              />
+            ) : (
+              <LabeledDropdown
+                label={`${t('ui.character.limbs_implant_slot')}:`}
+                options={[t('ui.character.limbs_none_available')]}
+                selected={t('ui.character.limbs_none_available')}
+                displayText={t('ui.character.limbs_none_available')}
+                //searchInput
+                //maxItems={7}
+                disabled
+                onSelected={() => {}}
+              />
+            ))}
         </Stack>
       </Section>
     </div>
   );
 };
 
-export const AugmentationPage = (props) => {
-  const { act } = useBackend<PreferencesMenuData>();
-  const { data } = useBackend<PreferencesMenuData>();
-  const { t, localizeDataLabelById } = usePreferencesLocalization(data);
-  const serverData = useServerPrefs();
-  const balance = getAugmentsBudgetBalance(data, serverData);
-  if (props.limb.can_augment) {
-    return (
-      <div style={{ marginBottom: '1.5em' }}>
-        <Section
-          className="PreferencesMenu__Augments__Card"
-          fill
-          title={localizeDataLabelById(
-            `limb_${props.limb.slot}_name`,
-            props.limb.name,
-          )}
-        >
-          <Stack fill vertical>
-            <Stack.Item>
-              <Stack fill>
-                <Stack.Item>{t('ui.character.limbs_augmentation_label')}</Stack.Item>
-                <Stack.Item grow>
-                  <Dropdown
-                    className="PreferencesMenu__Augments__Dropdown"
-                    width="100%"
-                    options={(Object.values(props.limb.aug_choices) as string[]).map(
-                      (choice) => ({
-                        value: choice,
-                        displayText: localizeDataLabelById(
-                          `limb_${props.limb.slot}_augmentation_${choice}`,
-                          choice,
-                        ),
-                      }),
-                    )}
-                    selected={props.limb.chosen_aug}
-                    onSelected={(value) => {
-                      // Since the costs are positive,
-                      // it's added and not substracted
-                      if (
-                        data.quirk_points_enabled &&
-                        balance + props.limb.costs[value] > 0
-                      ) {
-                        return;
-                      }
-                      act('set_limb_aug', {
-                        limb_slot: props.limb.slot,
-                        augment_name: value,
-                      });
-                    }}
-                  />
-                </Stack.Item>
-              </Stack>
-            </Stack.Item>
-            <Stack.Item>
-              <Stack fill vertical>
-                <Stack.Item>{t('ui.character.limbs_style_label')}</Stack.Item>
-                <Stack.Item grow>
-                  <Dropdown
-                    className="PreferencesMenu__Augments__Dropdown"
-                    width="100%"
-                    options={props.data.robotic_styles.map((style) => ({
-                      value: style,
-                      displayText: localizeDataLabelById(
-                        `robotic_style_${style}`,
-                        style,
-                      ),
-                    }))}
-                    selected={props.limb.chosen_style}
-                    onSelected={(value) =>
-                      act('set_limb_aug_style', {
-                        limb_slot: props.limb.slot,
-                        style_name: value,
-                      })
-                    }
-                  />
-                </Stack.Item>
-              </Stack>
-            </Stack.Item>
-          </Stack>
-        </Section>
-      </div>
-    );
-  }
-  return null;
-};
+// Internal implant augments
 
-export const OrganPage = (props) => {
-  const { act } = useBackend<PreferencesMenuData>();
-  const { data } = useBackend<PreferencesMenuData>();
-  const { localizeDataLabelById } = usePreferencesLocalization(data);
-  const serverData = useServerPrefs();
-  const balance = getAugmentsBudgetBalance(data, serverData);
+const InternalImplantSection = (props: {
+  internal_implant: AugmentData;
+  budgetBalance: number;
+}) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization(data);
+  const { internal_implant } = props;
+  const showCost = !!data.quirk_points_enabled;
+  const displayName = (aug: AugmentItem) => augDisplayName(aug, showCost);
+  const balance = props.budgetBalance;
+  const aug_options = internal_implant.aug_options ?? [];
   return (
-    <Stack.Item>
-      <Stack fill>
-        <Stack.Item>{`${localizeDataLabelById(
-          `organ_${props.organ.slot}_name`,
-          props.organ.name,
-        )}: `}</Stack.Item>
-        <Stack.Item grow>
-          <Dropdown
-            className="PreferencesMenu__Augments__Dropdown"
-            width="100%"
-            options={(Object.values(props.organ.organ_choices) as string[]).map(
-              (choice) => ({
-                value: choice,
-                displayText: localizeDataLabelById(
-                  `organ_${props.organ.slot}_choice_${choice}`,
-                  choice,
-                ),
-              }),
-            )}
-            selected={props.organ.chosen_organ}
-            onSelected={(value) => {
-              // Since the costs are positive, it's added and not substracted
-              if (
-                data.quirk_points_enabled &&
-                balance + props.organ.costs[value] > 0
-              ) {
-                return;
-              }
-              act('set_organ_aug', {
-                organ_slot: props.organ.slot,
-                augment_name: value,
-              });
-            }}
+    <div style={{ marginBottom: '1.5em' }}>
+      <Section
+        fill
+        title={
+          <InternalImplantTitle
+            name={internal_implant.slot}
+            icon={internal_implant.icon ?? ''}
           />
-        </Stack.Item>
-      </Stack>
-    </Stack.Item>
+        }
+      >
+        <LabeledDropdown
+          label={`${t('ui.character.limbs_implant_label')}:`}
+          options={aug_options.map(displayName)}
+          selected={
+            internal_implant.selectedAug
+              ? displayName(internal_implant.selectedAug)
+              : undefined
+          }
+          displayText={
+            internal_implant.selectedAug
+              ? displayName(internal_implant.selectedAug)
+              : undefined
+          }
+          //searchInput
+          //maxItems={7}
+          onSelected={(name) => {
+            const option = aug_options.find((aug) => displayName(aug) === name);
+            if (
+              showCost &&
+              (option?.cost ?? 0) > 0 &&
+              balance -
+                (internal_implant.selectedAug?.cost ?? 0) +
+                (option?.cost ?? 0) >
+                0
+            )
+              return;
+            if (option?.path === internal_implant.selectedAug?.path) return;
+            act('set_internal_implant_aug', {
+              internal_implant_slot: internal_implant.slot,
+              augment_path: option?.path ?? null,
+            });
+          }}
+        />
+      </Section>
+    </div>
   );
 };
 
-export const LimbsPage = (props: {
-  previewDirection: string;
-  rotatePreview: (step: -1 | 1) => void;
+const MarkingsColumn = (props: {
+  limbs: BodypartData[];
+  act: (action: string, params?: Record<string, unknown>) => void;
+}) => {
+  const { t } = usePreferencesLocalization();
+  return (
+    <Section fill scrollable title={t('ui.character.limbs_markings_title')}>
+      {props.limbs.map((bodypart) => (
+        <div key={bodypart.slot} style={{ marginBottom: '1.5em' }}>
+          <Section fill title={bodypart.slot}>
+            <Markings
+              body_zone={bodypart.body_zone ?? bodypart.slot}
+              chosen_markings={bodypart.chosen_markings}
+              marking_choices={bodypart.marking_choices}
+              act={props.act}
+            />
+          </Section>
+        </div>
+      ))}
+    </Section>
+  );
+};
+
+const BodyPartsColumn = (props: {
+  limbs: BodypartData[];
+  budgetBalance: number;
+}) => {
+  const { t } = usePreferencesLocalization();
+  return (
+    <Section fill scrollable title={t('ui.character.limbs_augmentations')}>
+      <QuirkBalance
+        budgetBalance={props.budgetBalance}
+        style={{ marginBottom: '1em' }}
+      />
+      {props.limbs.map((bodypart) => (
+        <BodypartAugmentSection
+          key={bodypart.slot}
+          limb={bodypart}
+          budgetBalance={props.budgetBalance}
+        />
+      ))}
+    </Section>
+  );
+};
+
+const InternalImplantsColumn = (props: {
+  internal_implants: AugmentData[];
+  budgetBalance: number;
+}) => {
+  const { t } = usePreferencesLocalization();
+  return (
+    <Section
+      fill
+      scrollable
+      title={t('ui.character.limbs_internal_implants')}
+    >
+      {props.internal_implants.map((internal_implant) => (
+        <InternalImplantSection
+          key={internal_implant.slot}
+          internal_implant={internal_implant}
+          budgetBalance={props.budgetBalance}
+        />
+      ))}
+    </Section>
+  );
+};
+
+const QuirkBalance = (props: {
+  budgetBalance: number;
+  style?: Record<string, unknown>;
 }) => {
   const { data } = useBackend<PreferencesMenuData>();
-  const { act } = useBackend<PreferencesMenuData>();
   const { t } = usePreferencesLocalization(data);
-  const serverData = useServerPrefs();
-  const markings = data.marking_presets ? data.marking_presets : [];
-  const displayBalance = getAugmentsBudgetBalance(data, serverData);
+  if (!data.quirk_points_enabled) return null;
   return (
-    <Stack minHeight="100%" className="PreferencesMenu__Augments">
-      <Stack.Item minWidth="33%" minHeight="100%">
-        <Section
-          className="PreferencesMenu__Augments__Panel"
-          fill
-          scrollable
-          title={t('ui.character.limbs_markings_title')}
-          height="197%"
+    <Section
+      align="center"
+      title={t('ui.character.limbs_quirk_points_balance')}
+      style={props.style}
+    >
+      <Stack justify="center">
+        <Box
+          backgroundColor="#eee"
+          bold
+          color="black"
+          fontSize="1.2em"
+          py={0.5}
+          style={{ width: '20%', alignItems: 'center' }}
         >
-          <div>
-            <Dropdown
-              className="PreferencesMenu__Augments__Dropdown"
-              width="100%"
-              options={Object.values(markings)}
-              selected={Object.values(markings)[1]}
-              placeholder={t('ui.character.limbs_pick_preset')}
-              onSelected={(value) => act('set_preset', { preset: value })}
+          {props.budgetBalance}
+        </Box>
+      </Stack>
+    </Section>
+  );
+};
+
+// Things that live in the center columns of the various tabs, below the character preview
+
+const CenterColumnExtras = (props: {
+  tab: AugmentsTab | null;
+  center: BodypartData[];
+  budgetBalance: number;
+  act: (action: string, params?: Record<string, unknown>) => void;
+}) => {
+  const { data } = useBackend<PreferencesMenuData>();
+
+  if (props.tab === AugmentsTab.BodyParts) {
+    return (
+      <>
+        {props.center
+          .filter((bodypart) => showsInBodyPartsTab(bodypart, data.taur_legs))
+          .map((bodypart) => (
+            <BodypartAugmentSection
+              key={bodypart.slot}
+              limb={bodypart}
+              budgetBalance={props.budgetBalance}
             />
-          </div>
-          <div>
-            {data.limbs_data.map((val) => (
-              <LimbPage key={val.slot} limb={val} data={data} />
-            ))}
-          </div>
-        </Section>
-      </Stack.Item>
-      <Stack.Item minWidth="33%">
-        <Section
-          className="PreferencesMenu__Augments__Panel"
-          title={t('ui.character.limbs_character_preview')}
-          fill
-          align="center"
-          height="197%"
-        >
-          <div className="PreferencesMenu__Character__PreviewFrame PreferencesMenu__Character__PreviewFrame--medium">
-            <CharacterPreview
-              animationMap={data.character_preview_animations}
-              direction={props.previewDirection}
-              imageMap={data.character_preview_urls}
-              imageUrl={data.character_preview_url}
-              height="100%"
-              width="100%"
-              onClick={() => act('open_preview_window')}
-              title="Open expanded preview"
-            />
-          </div>
-          <RotateCharacterButtons rotatePreview={props.rotatePreview} />
-          {data.quirk_points_enabled ? (
-            <Section
-              className="PreferencesMenu__Augments__PointsSection"
-              fill
-              align="center"
-              title={t('ui.character.limbs_quirk_points_balance')}
-              style={{
-                marginTop: '3em',
-              }}
-            >
-              <Stack justify="center">
-                <Box
-                  className="PreferencesMenu__Augments__PointsValue"
-                  bold
-                  fontSize="1.2em"
-                  py={0.5}
-                  style={{
-                    width: '20%',
-                    alignItems: 'center',
-                  }}
-                >
-                  {displayBalance}
-                </Box>
-              </Stack>
-            </Section>
-          ) : (
-            ''
-          )}
-        </Section>
-      </Stack.Item>
-      <Stack.Item minWidth="33%">
-        <Section
-          className="PreferencesMenu__Augments__Panel"
-          fill
-          title={t('ui.character.limbs_organs')}
-          height="87%"
-        >
-          <Stack fill vertical>
-            {data.organs_data.map((val) => (
-              <OrganPage key={val.slot} organ={val} data={data} />
-            ))}
-          </Stack>
-        </Section>
-        <Section
-          className="PreferencesMenu__Augments__Panel"
-          fill
-          scrollable
-          title={t('ui.character.limbs_augmentations')}
-          height="107%"
-        >
-          {data.limbs_data.map((val) => (
-            <AugmentationPage key={val.slot} limb={val} data={data} />
           ))}
-        </Section>
+      </>
+    );
+  }
+
+  if (props.tab === AugmentsTab.InternalImplants) {
+    return (
+      <QuirkBalance
+        budgetBalance={props.budgetBalance}
+        style={{ marginTop: '1em' }}
+      />
+    );
+  }
+
+  if (props.tab === AugmentsTab.Markings) {
+    return (
+      <>
+        {props.center.map((bodypart) => (
+          <div key={bodypart.slot} style={{ marginBottom: '1.5em' }}>
+            <Section fill title={bodypart.slot}>
+              <Markings
+                body_zone={bodypart.body_zone ?? bodypart.slot}
+                chosen_markings={bodypart.chosen_markings}
+                marking_choices={bodypart.marking_choices}
+                act={props.act}
+              />
+            </Section>
+          </div>
+        ))}
+      </>
+    );
+  }
+
+  return null;
+};
+
+// The character preview section at the top of the center column
+const PreviewSection = (props: {
+  previewDirection: string;
+}) => {
+  const { data, act } = useBackend<PreferencesMenuData>();
+  const { t, localizeCharacterDataById } = usePreferencesLocalization(data);
+  const previewDropdownOptions = data.preview_options.map((option) => ({
+    value: option,
+    displayText: data.preview_option_ids?.[option]
+      ? localizeCharacterDataById(data.preview_option_ids[option], option)
+      : localizeCharacterDataById(`preview_option_${option}`, option),
+  }));
+  const selectedPreviewText =
+    previewDropdownOptions.find(
+      (option) => option.value === data.preview_selection,
+    )?.displayText ?? data.preview_selection;
+
+  return (
+  <Section fill title={t('ui.character.limbs_character_preview')} align="center">
+    <Stack vertical fill>
+      <Stack.Item grow align="center">
+        <CharacterPreview
+          animationMap={data.character_preview_animations}
+          direction={props.previewDirection}
+          imageMap={data.character_preview_urls}
+          imageUrl={data.character_preview_url}
+          height="100%"
+          width="100%"
+          onClick={() => act('open_preview_window')}
+          title={t('ui.character.preview_open_expanded')}
+        />
+      </Stack.Item>
+      <Stack.Divider />
+      <Stack.Item align="center">
+        <Dropdown
+          className="PreferencesMenu__AugmentsDropdown PreferencesMenu__AugmentsDropdown--preview"
+          width="160px"
+          displayText={selectedPreviewText}
+          selected={data.preview_selection}
+          options={previewDropdownOptions}
+          onSelected={(value) =>
+            act('update_preview', {
+              updated_preview: value,
+            })
+          }
+        />
       </Stack.Item>
     </Stack>
+  </Section>
+  );
+};
+
+// Root page
+
+export enum AugmentsTab {
+  Markings = 0,
+  BodyParts = 1,
+  InternalImplants = 2,
+}
+
+export const LimbsPage = ({
+  onTabChange,
+  previewDirection,
+}: {
+  onTabChange?: (tab: AugmentsTab) => void;
+  previewDirection: string;
+}) => {
+  const { data, act } = useBackend<PreferencesMenuData>();
+  const { t } = usePreferencesLocalization(data);
+  const serverPrefs = useServerPrefs();
+  const server_data = serverPrefs?.limbs_and_markings;
+  const budgetBalance = getCombinedQuirkAugmentBalance(data, serverPrefs);
+  const [tab, setTab] = useState<AugmentsTab>(AugmentsTab.Markings);
+  const [pendingPreset, setPendingPreset] = useState<string | null>(null);
+  const hasWarnedRef = useRef(false);
+
+  const handleTab = (next: AugmentsTab) => {
+    setTab(next);
+    onTabChange?.(next);
+  };
+
+  // Resets the preset warning when a marking is manually changed (e.g. not using the preset dropdown)
+  const actAndResetPresetWarning = (
+    action: string,
+    params?: Record<string, unknown>,
+  ) => {
+    if (
+      [
+        'add_marking',
+        'remove_marking',
+        'change_marking',
+        'color_marking',
+        'change_emissive',
+      ].includes(action)
+    ) {
+      hasWarnedRef.current = false;
+    }
+    act(action, params);
+  };
+
+  const pendingPresetStyle = {
+    position: 'fixed' as const,
+    top: '60%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '400px',
+    zIndex: 100,
+  };
+
+  // Build all column data, splitting augment_items into bodyparts and internal implants
+  const columns: ColumnData | null = useMemo(() => {
+    if (!server_data?.augment_items) return null;
+
+    const species =
+      data.species_id ?? data.character_preferences?.misc?.species ?? '';
+    const ckey = data.ckey ?? '';
+    const allowMismatched = !!data.allow_mismatched_parts;
+
+    // Filter marking choices and presets by species/mismatched parts
+    const markingChoices: Record<string, string[]> = {};
+    for (const [slot, choices] of Object.entries(
+      data.marking_choices ?? server_data.marking_choices ?? {},
+    )) {
+      markingChoices[slot] = filterBySpecies(
+        choices,
+        species,
+        allowMismatched,
+      ).map((choice) => choice.name);
+    }
+    const filteredMarkingPresets = (
+      data.marking_presets ??
+      server_data.marking_presets ??
+      []
+    ).map((preset) => preset.name);
+
+    const styles = server_data.robotic_styles ?? [];
+
+    const limbs: BodypartData[] = server_data.augment_items
+      .filter(isBodypart)
+      .map((item) => {
+        const aug_options = (item.aug_options ?? []).filter((aug) =>
+          isAugAllowed(
+            aug,
+            species,
+            ckey,
+            item.slot_flag,
+            data.digi_legs,
+            data.taur_legs,
+          ),
+        );
+        const implant_options = (item.implant_options ?? []).filter((aug) =>
+          isAugAllowed(
+            aug,
+            species,
+            ckey,
+            item.slot_flag,
+            data.digi_legs,
+            data.taur_legs,
+          ),
+        );
+        const chosen_style_name = data.augment_styles?.[item.slot] ?? null;
+        const augByPath = aug_options.length
+          ? Object.fromEntries(aug_options.map((aug) => [aug.path, aug]))
+          : {};
+        const implantByPath = implant_options.length
+          ? Object.fromEntries(implant_options.map((aug) => [aug.path, aug]))
+          : {};
+        return {
+          ...item,
+          aug_options,
+          implant_options,
+          chosen_markings: (data.markings?.[item.body_zone ?? item.slot] ??
+            null) as Marking[] | null,
+          chosen_style:
+            styles.find((style) => style.name === chosen_style_name) ?? null,
+          marking_choices: markingChoices[item.body_zone ?? item.slot] ?? [],
+          selectedAug:
+            augByPath[data.augments?.[item.slot] ?? ''] ?? aug_options[0],
+          selectedImplant:
+            implantByPath[data.augments?.[`${item.slot} implant`] ?? ''] ??
+            implant_options[0] ??
+            null,
+        };
+      });
+
+    const internal_implants = server_data.augment_items.filter(isImplant);
+    const mid = Math.ceil(internal_implants.length / 2);
+
+    return {
+      left: limbs.filter(isLeft),
+      right: limbs.filter(isRight),
+      center: limbs.filter(isCenter),
+      internalImplants: {
+        left: buildInternalImplantData(
+          internal_implants.slice(0, mid),
+          data.augments ?? {},
+          species,
+          ckey,
+        ),
+        right: buildInternalImplantData(
+          internal_implants.slice(mid),
+          data.augments ?? {},
+          species,
+          ckey,
+        ),
+      },
+      filteredMarkingPresets,
+    };
+  }, [server_data, data]);
+
+  const columnForTab = (
+    limbs: BodypartData[],
+    internal_implants: AugmentData[],
+  ) => {
+    if (tab === AugmentsTab.Markings)
+      return <MarkingsColumn limbs={limbs} act={actAndResetPresetWarning} />;
+    if (tab === AugmentsTab.BodyParts)
+      return (
+        <BodyPartsColumn
+          limbs={limbs.filter((b) => showsInBodyPartsTab(b, data.taur_legs))}
+          budgetBalance={budgetBalance}
+        />
+      );
+    if (tab === AugmentsTab.InternalImplants)
+      return (
+        <InternalImplantsColumn
+          internal_implants={internal_implants}
+          budgetBalance={budgetBalance}
+        />
+      );
+    return null;
+  };
+
+  return (
+    <>
+      {pendingPreset && (
+        <div style={pendingPresetStyle}>
+          <PresetConfirmPopup
+            preset={pendingPreset}
+            onConfirm={() => {
+              hasWarnedRef.current = true;
+              act('set_preset', { preset: pendingPreset });
+              setPendingPreset(null);
+            }}
+            onCancel={() => setPendingPreset(null)}
+          />
+        </div>
+      )}
+      <Stack fill vertical className="PreferencesMenu__Augments">
+        <Stack.Item>
+          <Stack>
+            <Stack.Item grow>
+              <Button
+                selected={tab === AugmentsTab.Markings}
+                onClick={() => handleTab(AugmentsTab.Markings)}
+                fluid
+                align="center"
+                fontSize="14px"
+              >
+                {t('ui.character.limbs_markings_title')}
+              </Button>
+            </Stack.Item>
+            <Stack.Item grow>
+              <Button
+                selected={tab === AugmentsTab.BodyParts}
+                onClick={() => handleTab(AugmentsTab.BodyParts)}
+                fluid
+                align="center"
+                fontSize="14px"
+              >
+                {t('ui.character.limbs_body_parts')}
+              </Button>
+            </Stack.Item>
+            <Stack.Item grow>
+              <Button
+                selected={tab === AugmentsTab.InternalImplants}
+                onClick={() => handleTab(AugmentsTab.InternalImplants)}
+                fluid
+                align="center"
+                fontSize="14px"
+              >
+                {t('ui.character.limbs_internal_implants')}
+              </Button>
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+        <Stack.Item grow>
+          <Stack fill>
+            {/* Left column */}
+            <Stack.Item minWidth="33%">
+              {columnForTab(
+                columns?.left ?? [],
+                columns?.internalImplants.left ?? [],
+              )}
+            </Stack.Item>
+
+            {/* Center column — fixed width so CharacterPreview anchors correctly */}
+            <Stack.Item width="300px">
+              <Stack vertical fill>
+                {/* Preview: takes 45% of the column height */}
+                <Stack.Item
+                  height="45%"
+                  style={{ overflow: 'hidden', position: 'relative' }}
+                >
+                  <PreviewSection
+                    previewDirection={previewDirection}
+                  />
+                </Stack.Item>
+
+                {/* Extras: anything rendering below the preview, takes remaining space */}
+                {columns &&
+                  (tab !== AugmentsTab.InternalImplants ||
+                    !!data.quirk_points_enabled) && (
+                    <Stack.Item height="55%" style={{ overflow: 'hidden' }}>
+                      <Section fill scrollable>
+                        {tab === AugmentsTab.Markings && (
+                          <>
+                            <Box mb={1}>
+                              <Dropdown
+                                className="PreferencesMenu__AugmentsDropdown PreferencesMenu__AugmentsDropdown--preset"
+                                width="100%"
+                                options={columns.filteredMarkingPresets}
+                                selected={null}
+                                placeholder={t('ui.character.limbs_apply_preset_placeholder')}
+                                //maxItems={7}
+                                //searchInput
+                                //styledInput
+                                onSelected={(value) => {
+                                  if (!hasWarnedRef.current)
+                                    setPendingPreset(value);
+                                  else act('set_preset', { preset: value });
+                                }}
+                              />
+                            </Box>
+                            <Divider />
+                          </>
+                        )}
+                        <CenterColumnExtras
+                          tab={tab}
+                          center={columns.center}
+                          budgetBalance={budgetBalance}
+                          act={actAndResetPresetWarning}
+                        />
+                      </Section>
+                    </Stack.Item>
+                  )}
+              </Stack>
+            </Stack.Item>
+
+            {/* Right column */}
+            <Stack.Item minWidth="33%">
+              {columnForTab(
+                columns?.right ?? [],
+                columns?.internalImplants.right ?? [],
+              )}
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
+      </Stack>
+    </>
   );
 };

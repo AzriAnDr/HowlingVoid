@@ -122,7 +122,7 @@ const ClockworkHelp = (props) => {
         <Section>
           {t('ui.clockwork.help_research_desc_1')}
           <br />
-          The&nbsp;
+          {t('ui.clockwork.the')}&nbsp;
           <font color={brassColor}>
             <b>{t('ui.clockwork.technologists_lectern')}&nbsp;</b>
           </font>

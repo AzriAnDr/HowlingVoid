@@ -15,6 +15,7 @@ import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { usePreferencesLocalization } from './localization';
 
 type ShieldMode = {
 	name: string;
@@ -51,20 +52,23 @@ type BluespaceShieldGenData = {
 	broken: BooleanLike;
 };
 
-function getStateLabel(running: number): string {
+function getStateLabel(
+	running: number,
+	t: (key: string, fallback?: string) => string,
+): string {
 	switch (running) {
 		case 0:
-			return 'OFFLINE';
+			return t('ui.bluespace_shield_gen.offline');
 		case 1:
-			return 'DISCHARGING';
+			return t('ui.bluespace_shield_gen.discharging');
 		case 2:
-			return 'ACTIVE';
+			return t('ui.bluespace_shield_gen.active');
 		case 3:
-			return 'IDLE';
+			return t('ui.bluespace_shield_gen.idle');
 		case 4:
-			return 'SPINNING UP';
+			return t('ui.bluespace_shield_gen.spinning_up');
 		default:
-			return 'UNKNOWN';
+			return t('ui.bluespace_shield_gen.unknown');
 	}
 }
 
@@ -87,6 +91,7 @@ function getStateColor(running: number): string {
 
 export const BluespaceShieldGen = () => {
 	const { act, data } = useBackend<BluespaceShieldGenData>();
+	const { t } = usePreferencesLocalization(data);
 	const [inputCap, setInputCap] = useState<number | undefined>(undefined);
 
 	const {
@@ -118,36 +123,39 @@ export const BluespaceShieldGen = () => {
 	const currentInputCap = inputCap ?? input_cap_kw;
 
 	return (
-		<Window title="Bluespace Shield Field Generator" width={580} height={720}>
+		<Window title={t('ui.bluespace_shield_gen.title')} width={580} height={720}>
 			<Window.Content scrollable>
 				{broken ? (
-					<Section title="Shield Status">
+					<Section title={t('ui.bluespace_shield_gen.shield_status')}>
 						<Box color="red" bold fontSize={1.4} textAlign="center" mb={1}>
-							CONTAINMENT FAILURE
+							{t('ui.bluespace_shield_gen.containment_failure')}
 						</Box>
 						<Box color="label" textAlign="center">
-							Core destroyed. Repair required.
+							{t('ui.bluespace_shield_gen.core_destroyed')}
 						</Box>
 					</Section>
 				) : (
 					<Stack vertical fill>
 						<Stack.Item>
-							<Section title="Shield Status">
+							<Section title={t('ui.bluespace_shield_gen.shield_status')}>
 								<LabeledList>
-									<LabeledList.Item label="Status" color={getStateColor(running)}>
+									<LabeledList.Item label={t('ui.common.status')} color={getStateColor(running)}>
 										{overloaded ? (
 											<Box color="red" bold>
-												OVERLOADED
+												{t('ui.bluespace_shield_gen.overloaded')}
 											</Box>
 										) : offline_for > 0 ? (
 											<Box color={full_stop ? 'yellow' : 'orange'}>
-												{full_stop ? 'FULL STOP' : 'COOLDOWN'} - {offline_for}s
+												{full_stop
+													? t('ui.bluespace_shield_gen.full_stop')
+													: t('ui.bluespace_shield_gen.cooldown')}{' '}
+												- {offline_for}s
 											</Box>
 										) : (
-											getStateLabel(running)
+											getStateLabel(running, t)
 										)}
 									</LabeledList.Item>
-									<LabeledList.Item label="Field Integrity">
+									<LabeledList.Item label={t('ui.bluespace_shield_gen.field_integrity')}>
 										<ProgressBar
 											value={field_integrity}
 											maxValue={100}
@@ -160,7 +168,7 @@ export const BluespaceShieldGen = () => {
 											{field_integrity}%
 										</ProgressBar>
 									</LabeledList.Item>
-									<LabeledList.Item label="Energy Reserve">
+									<LabeledList.Item label={t('ui.bluespace_shield_gen.energy_reserve')}>
 										<ProgressBar
 											value={percentage_energy}
 											maxValue={100}
@@ -173,18 +181,21 @@ export const BluespaceShieldGen = () => {
 											{current_energy} / {max_energy} MJ ({percentage_energy}%)
 										</ProgressBar>
 									</LabeledList.Item>
-									<LabeledList.Item label="Field Segments">
-										{functional_segments} / {total_segments} active
+									<LabeledList.Item label={t('ui.bluespace_shield_gen.field_segments')}>
+										{functional_segments} / {total_segments}{' '}
+										{t('ui.bluespace_shield_gen.active_lowercase')}
 									</LabeledList.Item>
-									<LabeledList.Item label="Power Draw">
+									<LabeledList.Item label={t('ui.bluespace_shield_gen.power_draw')}>
 										{power_usage} kW
 									</LabeledList.Item>
-									<LabeledList.Item label="Upkeep">
+									<LabeledList.Item label={t('ui.bluespace_shield_gen.upkeep')}>
 										{upkeep_power_usage} kW
 									</LabeledList.Item>
-									<LabeledList.Item label="Grid">
+									<LabeledList.Item label={t('ui.bluespace_shield_gen.grid')}>
 										<Box color={grid_connected ? 'green' : 'red'} bold>
-											{grid_connected ? 'CONNECTED' : 'NO CONNECTION'}
+											{grid_connected
+												? t('ui.bluespace_shield_gen.connected')
+												: t('ui.bluespace_shield_gen.no_connection')}
 										</Box>
 									</LabeledList.Item>
 								</LabeledList>
@@ -192,7 +203,7 @@ export const BluespaceShieldGen = () => {
 						</Stack.Item>
 
 						<Stack.Item>
-							<Section title="Controls">
+							<Section title={t('ui.common.controls')}>
 								<Stack>
 									<Stack.Item grow>
 										<Button
@@ -200,7 +211,7 @@ export const BluespaceShieldGen = () => {
 											icon="power-off"
 											color="green"
 											disabled={running !== 0 || offline_for > 0}
-											content="Start Generator"
+											content={t('ui.bluespace_shield_gen.start_generator')}
 											onClick={() => act('start_generator')}
 										/>
 									</Stack.Item>
@@ -210,7 +221,7 @@ export const BluespaceShieldGen = () => {
 											icon="stop"
 											color="orange"
 											disabled={running < 2}
-											content="Shutdown"
+											content={t('ui.bluespace_shield_gen.shutdown')}
 											onClick={() => act('begin_shutdown')}
 										/>
 									</Stack.Item>
@@ -220,23 +231,25 @@ export const BluespaceShieldGen = () => {
 											icon="exclamation-triangle"
 											color="red"
 											disabled={!running}
-											content="Emergency Stop"
+											content={t('ui.bluespace_shield_gen.emergency_stop')}
 											onClick={() => act('emergency_shutdown')}
 										/>
 									</Stack.Item>
 								</Stack>
 								<Divider />
 								<LabeledList>
-									<LabeledList.Item label="Idle State">
+									<LabeledList.Item label={t('ui.bluespace_shield_gen.idle_state')}>
 										<Button
 											icon={running === 3 ? 'pause' : 'play'}
 											selected={running === 3}
 											disabled={running < 2 && running !== 3}
-											content={running === 3 ? 'IDLE' : 'ACTIVE'}
+											content={running === 3
+												? t('ui.bluespace_shield_gen.idle')
+												: t('ui.bluespace_shield_gen.active')}
 											onClick={() => act('toggle_idle')}
 										/>
 									</LabeledList.Item>
-									<LabeledList.Item label="Input Cap (kW)">
+									<LabeledList.Item label={t('ui.bluespace_shield_gen.input_cap_kw')}>
 										<NumberInput
 											fluid
 											step={100}
@@ -249,7 +262,7 @@ export const BluespaceShieldGen = () => {
 											}}
 										/>
 									</LabeledList.Item>
-									<LabeledList.Item label="Idle Rate">
+									<LabeledList.Item label={t('ui.bluespace_shield_gen.idle_rate')}>
 										{idle_valid_values.map((value) => (
 											<Button
 												key={value}
@@ -264,9 +277,9 @@ export const BluespaceShieldGen = () => {
 						</Stack.Item>
 
 						<Stack.Item>
-							<Section title="Damage Mitigation">
+							<Section title={t('ui.bluespace_shield_gen.damage_mitigation')}>
 								<LabeledList>
-									<LabeledList.Item label="Physical">
+									<LabeledList.Item label={t('ui.bluespace_shield_gen.physical')}>
 										<ProgressBar
 											value={mitigation_physical}
 											maxValue={mitigationCap}
@@ -279,7 +292,7 @@ export const BluespaceShieldGen = () => {
 											{mitigation_physical}% / {mitigationCap}%
 										</ProgressBar>
 									</LabeledList.Item>
-									<LabeledList.Item label="EM">
+									<LabeledList.Item label={t('ui.bluespace_shield_gen.em')}>
 										<ProgressBar
 											value={mitigation_em}
 											maxValue={mitigationCap}
@@ -292,7 +305,7 @@ export const BluespaceShieldGen = () => {
 											{mitigation_em}% / {mitigationCap}%
 										</ProgressBar>
 									</LabeledList.Item>
-									<LabeledList.Item label="Heat">
+									<LabeledList.Item label={t('ui.bluespace_shield_gen.heat')}>
 										<ProgressBar
 											value={mitigation_heat}
 											maxValue={mitigationCap}
@@ -310,7 +323,7 @@ export const BluespaceShieldGen = () => {
 						</Stack.Item>
 
 						<Stack.Item>
-							<Section title="Shield Modes">
+							<Section title={t('ui.bluespace_shield_gen.shield_modes')}>
 								{modes.map((mode) => (
 									<Box key={mode.flag} mb={0.5}>
 										<Tooltip content={mode.desc}>
@@ -323,8 +336,8 @@ export const BluespaceShieldGen = () => {
 											>
 												{mode.name}
 												<Box as="span" color="label" ml={1}>
-													(Cost: x{mode.multiplier})
-													{mode.hacked ? ' [HACKED]' : ''}
+													({t('ui.common.cost')}: x{mode.multiplier})
+													{mode.hacked ? ` [${t('ui.bluespace_shield_gen.hacked')}]` : ''}
 												</Box>
 											</Button>
 										</Tooltip>

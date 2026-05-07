@@ -31,9 +31,6 @@ enum Page {
 }
 
 const PREVIEW_DIRECTION_CYCLE = ['south', 'west', 'north', 'east'];
-const PREVIEW_ITEM_ANIMATIONS_LABEL = 'Animate Preview Items';
-const PREVIEW_ITEM_ANIMATIONS_TOOLTIP =
-  'Toggles animated item sprites in character previews. Enabling this can significantly reduce performance.';
 
 function rotatePreviewDirection(direction: string | null, step: -1 | 1) {
   // Match BYOND turn(dir, -90) ordering so local rotation mirrors server behavior.
@@ -154,7 +151,6 @@ export function CharacterPreferenceWindow(props) {
       pageContents = (
         <LimbsPage
           previewDirection={previewDirection}
-          rotatePreview={rotatePreview}
         />
       );
       break;
@@ -202,10 +198,10 @@ export function CharacterPreferenceWindow(props) {
                   : ''
               }`}
               checked={!!data.preview_item_animations_enabled}
-              tooltip={PREVIEW_ITEM_ANIMATIONS_TOOLTIP}
+              tooltip={t('ui.character.preview_item_animations_tooltip')}
               onClick={() => act('toggle_preview_item_animations')}
             >
-              {PREVIEW_ITEM_ANIMATIONS_LABEL}
+              {t('ui.character.preview_item_animations_label')}
             </Button.Checkbox>
           </Stack.Item>
         </Stack>

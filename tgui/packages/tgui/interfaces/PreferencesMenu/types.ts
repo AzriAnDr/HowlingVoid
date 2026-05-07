@@ -116,30 +116,47 @@ export type Marking = {
   name: string;
   color: string;
   marking_id: string;
+  emissive: boolean;
 };
 
-export type MarkingData = {
-  marking_choices: string[];
-  markings_list: Marking[];
-};
-
-export type Limb = {
-  slot: string;
+export type AugmentItem = {
+  path: string | null;
   name: string;
-  can_augment: boolean;
-  chosen_aug: string;
-  chosen_style: string;
-  aug_choices: Record<string, string>;
-  costs: Record<string, number>;
-  markings: MarkingData;
+  cost: number;
+  extra_info: string;
+  has_digi: BooleanLike;
+  allows_styles: BooleanLike;
+  allows_implants: BooleanLike;
+  species_blacklist: Record<string, number> | null;
+  species_whitelist: Record<string, number> | null;
+  ckey_whitelist: string[] | null;
 };
 
-export type Organ = {
-  slot: string;
+export type MarkingChoice = {
   name: string;
-  chosen_organ: string;
-  organ_choices: Record<string, string>;
-  costs: Record<string, number>;
+  recommended_species: string | null;
+};
+
+export type MarkingPreset = {
+  name: string;
+  recommended_species: string | null;
+};
+
+export type RoboticStyle = {
+  name: string;
+  supported_slots: number;
+  has_digi: BooleanLike;
+};
+
+export type AugmentSlot = {
+  slot: string;
+  body_zone?: string;
+  slot_flag?: number;
+  is_bodypart: boolean;
+  icon?: string;
+  aug_options: AugmentItem[];
+  has_implant?: boolean;
+  implant_options?: AugmentItem[] | null;
 };
 
 // NOVA EDIT END
@@ -262,10 +279,16 @@ export type PreferencesMenuData = {
 
   job_alt_titles: Record<string, string>;
 
-  robotic_styles: string[];
-  limbs_data: Limb[];
-  organs_data: Organ[];
-  marking_presets: string[];
+  markings: Record<string, Marking[]>;
+  augments: Record<string, string>;
+  augment_styles: Record<string, string>;
+
+  species_id?: string;
+  allow_mismatched_parts: BooleanLike;
+  digi_legs: BooleanLike;
+  taur_legs: BooleanLike;
+  marking_choices?: Record<string, MarkingChoice[]>;
+  marking_presets?: MarkingPreset[];
 
   selected_languages: Language[];
   unselected_languages: Language[];
@@ -321,6 +344,12 @@ export type ServerData = {
     choices: string[];
     choice_ids?: Record<string, string>;
   }; // NOVA EDIT ADDITION
+  limbs_and_markings?: {
+    robotic_styles: RoboticStyle[];
+    augment_items: AugmentSlot[];
+    marking_choices: Record<string, MarkingChoice[]>;
+    marking_presets: MarkingPreset[];
+  };
   background_state_ids?: Record<string, string>;
   [otherKey: string]: unknown;
 };
