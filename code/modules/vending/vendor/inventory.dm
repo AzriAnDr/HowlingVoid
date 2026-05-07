@@ -11,6 +11,35 @@
  * * startempty - should we set vending_product record amount from the product list (so it's prefilled at roundstart)
  * * premium - Whether the ending products shall have premium or default prices
  */
+/obj/machinery/vending/proc/get_product_price(obj/item/product_path, premium = FALSE, stock_amount = 1)
+	SHOULD_BE_PURE(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/base_price = premium ? extra_price : default_price
+	if(base_price <= 0)
+		return base_price
+
+	var/stock_multiplier = 1
+	stock_amount = max(stock_amount, 1)
+	if(stock_amount <= 1)
+		stock_multiplier = 1.35
+	else if(stock_amount == 2)
+		stock_multiplier = 1.2
+	else if(stock_amount <= 4)
+		stock_multiplier = 1.05
+	else if(stock_amount <= 7)
+		stock_multiplier = 0.9
+	else
+		stock_multiplier = 0.8
+
+	var/price_seed = "[product_path]"
+	var/price_hash = 0
+	for(var/i in 1 to length(price_seed))
+		price_hash += text2ascii(price_seed, i)
+
+	var/price_jitter = round(base_price * (((price_hash % 7) - 3) * 0.05))
+	return max(round(base_price * stock_multiplier) + price_jitter, 1)
+
 /obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE, premium = FALSE)
 	PRIVATE_PROC(TRUE)
 
@@ -40,16 +69,7 @@
 			new_record.amount = amount
 		new_record.max_amount = amount
 
-		///Prices of vending machines are all increased uniformly.
-		var/custom_price = round(initial(temp.custom_price) * inflation_value)
-		if(!premium)
-			new_record.price = custom_price || default_price
-		else
-			var/premium_custom_price = round(initial(temp.custom_premium_price) * inflation_value)
-			if(!premium_custom_price && custom_price) //For some ungodly reason, some premium only items only have a custom_price
-				new_record.price = extra_price + custom_price
-			else
-				new_record.price = premium_custom_price || extra_price
+		new_record.price = get_product_price(typepath, premium, amount)
 
 		new_record.age_restricted = initial(temp.age_restricted)
 		new_record.colorable = !!(initial(temp.greyscale_config) && initial(temp.greyscale_colors) && (initial(temp.flags_1) & IS_PLAYER_COLORABLE_1))

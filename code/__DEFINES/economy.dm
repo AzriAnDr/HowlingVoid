@@ -1,18 +1,17 @@
-/// Number of paychecks jobs start with at the creation of a new bank account for a player (So at shift-start or game join, but not a blank new account.)
-#define STARTING_PAYCHECKS 20 // NOVA EDIT: increase from 5 to 20
 /// How much mail the Economy SS will create per minute, regardless of firing time.
 #define MAX_MAIL_PER_MINUTE 3
 /// Probability of using letters of envelope sprites on all letters.
 #define FULL_CRATE_LETTER_ODDS 70
 
-//Current Paycheck values. Altering these changes both the cost of items meant for each paygrade, as well as the passive/starting income of each job.
+// Legacy paygrade constants. Howling Void uses per-job paycheck and starting_funds values for wages;
+// these constants remain as compatibility price anchors for upstream content.
 ///Default paygrade for the Unassigned Job/Unpaid job assignments.
 #define PAYCHECK_ZERO 0
-///Paygrade for Prisoners and Assistants.
+///Legacy lower-tier price/paygrade anchor.
 #define PAYCHECK_LOWER 25
-///Paygrade for all regular crew not belonging to PAYGRADE_LOWER or PAYGRADE_COMMAND.
+///Legacy crew-tier price/paygrade anchor.
 #define PAYCHECK_CREW 50
-///Paygrade for Heads of Staff.
+///Legacy command-tier price/paygrade anchor.
 #define PAYCHECK_COMMAND 100
 
 

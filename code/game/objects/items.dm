@@ -111,9 +111,9 @@
 	/// It's used in a few places. Stop using it, and optimially replace all uses please
 	var/obj/item/master = null
 
-	///Price of an item in a vending machine, overriding the base vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
+	///Price used by custom player-stocked vending machines. Station vending machines use their own machine price tiers.
 	var/custom_price
-	///Price of an item in a vending machine, overriding the premium vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
+	///Legacy premium custom price. Station vending machines use their own machine price tiers.
 	var/custom_premium_price
 	///Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item
 	var/age_restricted = FALSE

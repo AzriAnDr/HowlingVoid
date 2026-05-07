@@ -22,7 +22,7 @@
  * arguments:
  * records - list of records available
  * categories - list of categories available
- * premium - bool of whether a record should be priced by a custom/premium price or not
+ * premium - bool of whether a record belongs to a premium inventory list
  */
 /obj/machinery/vending/proc/collect_records_for_static_data(list/records, list/categories, premium)
 	PROTECTED_PROC(TRUE)

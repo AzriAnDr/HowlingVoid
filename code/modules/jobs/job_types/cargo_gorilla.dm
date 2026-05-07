@@ -33,7 +33,10 @@
 	. = ..()
 	// Gorilla with a wage, what's he buyin?
 	var/datum/bank_account/bank_account = new(spawned.real_name, src)
-	bank_account.payday(STARTING_PAYCHECKS, free = TRUE)
+	var/starting_amount = max(0, round(starting_funds))
+	if(starting_amount)
+		bank_account.adjust_money(starting_amount, "Nanotrasen: Shift Payment")
+		SSeconomy.station_target += starting_amount
 	bank_account.replaceable = FALSE
 	spawned.add_mob_memory(/datum/memory/key/account, remembered_id = bank_account.account_id)
 

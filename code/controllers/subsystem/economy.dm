@@ -2,9 +2,7 @@ SUBSYSTEM_DEF(economy)
 	name = "Economy"
 	wait = 5 MINUTES
 	runlevels = RUNLEVEL_GAME
-	///How many paychecks should players start out the round with?
-	var/roundstart_paychecks = 5
-	///How many credits does the in-game economy have in circulation at round start? Divided up by 6 of the 7 department budgets evenly, where cargo starts with nothing.
+	///How many credits does the in-game economy have in circulation at round start? Divided up among non-cargo department budgets.
 	var/budget_pool = 35000
 	var/list/department_accounts = list(ACCOUNT_CIV = ACCOUNT_CIV_NAME,
 										ACCOUNT_ENG = ACCOUNT_ENG_NAME,
@@ -71,7 +69,7 @@ SUBSYSTEM_DEF(economy)
 
 /datum/controller/subsystem/economy/Initialize()
 	//removes cargo from the split
-	var/budget_to_hand_out = round(budget_pool / department_accounts.len -1)
+	var/budget_to_hand_out = round(budget_pool / max(department_accounts.len - 1, 1))
 	if(time2text(world.timeofday, "DDD") == SUNDAY)
 		mail_blocked = TRUE
 	for(var/dep_id in department_accounts)
@@ -167,17 +165,13 @@ SUBSYSTEM_DEF(economy)
 
 /**
  * Returns expected initial personal funds for a given bank account.
- * Uses job.starting_funds when present, otherwise falls back to legacy paycheck * STARTING_PAYCHECKS.
  */
 /datum/controller/subsystem/economy/proc/get_expected_roundstart_funds(datum/bank_account/bank_account)
 	if(!bank_account?.account_job)
 		return 0
 
 	var/datum/job/job = bank_account.account_job
-	if(isnum(job.starting_funds))
-		return max(0, round(job.starting_funds))
-
-	return max(0, round(job.paycheck * STARTING_PAYCHECKS))
+	return max(0, round(job.starting_funds))
 
 /**
  * Updates the the inflation_value, effecting newscaster alerts and the mail system.
@@ -266,7 +260,7 @@ SUBSYSTEM_DEF(economy)
 /**
  * Reassign the prices of the vending machine as a result of the inflation value, as provided by SSeconomy
  *
- * This rebuilds both /datum/data/vending_products lists for premium and standard products based on their most relevant pricing values.
+ * This rebuilds both /datum/data/vending_products lists using the vending machine's Howling Void price tier.
  * Arguments:
  * * recordlist - the list of standard product datums in the vendor to refresh their prices.
  * * premiumlist - the list of premium product datums in the vendor to refresh their prices.
@@ -277,17 +271,9 @@ SUBSYSTEM_DEF(economy)
 	extra_price = round(initial(extra_price) * inflation_value)
 
 	for(var/datum/data/vending_product/record as anything in recordlist)
-		var/obj/item/potential_product = record.product_path
-		var/custom_price = round(initial(potential_product.custom_price) * inflation_value)
-		record.price = custom_price | default_price
+		record.price = get_product_price(record.product_path, premium = FALSE, stock_amount = record.max_amount)
 	for(var/datum/data/vending_product/premium_record as anything in premiumlist)
-		var/obj/item/potential_product = premium_record.product_path
-		var/premium_custom_price = round(initial(potential_product.custom_premium_price) * inflation_value)
-		var/custom_price = initial(potential_product.custom_price)
-		if(!premium_custom_price && custom_price) //For some ungodly reason, some premium only items only have a custom_price
-			premium_record.price = extra_price + round(custom_price * inflation_value)
-		else
-			premium_record.price = premium_custom_price || extra_price
+		premium_record.price = get_product_price(premium_record.product_path, premium = TRUE, stock_amount = premium_record.max_amount)
 
 /datum/controller/subsystem/economy/proc/inflict_moneybags(datum/bank_account/moneybags)
 	if(!moneybags)

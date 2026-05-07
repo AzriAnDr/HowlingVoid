@@ -110,6 +110,11 @@
 	paycheck = 3
 	starting_funds = 45
 
+/datum/job/cargo_gorilla
+	paycheck = 1
+	starting_funds = 30
+	paycheck_department = ACCOUNT_CAR
+
 /datum/job/shaft_miner
 	paycheck = 5
 	starting_funds = 50

@@ -78,10 +78,13 @@
 
 /// this is where we add the job datum and build a bank account based on it
 /datum/antagonist/traitor/marauder/proc/set_assignment(mob/living/carbon/human/marauder)
-	var/datum/bank_account/bank_account = new(marauder.name, /datum/job/marauder, marauder.dna.species.payday_modifier)
-	owner.set_assigned_role(SSjob.get_job_type(/datum/job/marauder))
-	bank_account.payday(5, TRUE) // STARTING_PAYCHECKS is way too high for us
-	bank_account.account_job = SSjob.get_job_type(/datum/job/marauder)
+	var/datum/job/marauder_job = SSjob.get_job_type(/datum/job/marauder)
+	var/datum/bank_account/bank_account = new(marauder.name, marauder_job, marauder.dna.species.payday_modifier)
+	owner.set_assigned_role(marauder_job)
+	var/starting_amount = max(0, round(marauder_job.starting_funds))
+	if(starting_amount)
+		bank_account.adjust_money(starting_amount, "Nanotrasen: Shift Payment")
+		SSeconomy.station_target += starting_amount
 	bank_account.replaceable = FALSE
 	marauder.account_id = bank_account.account_id
 	marauder.add_mob_memory(/datum/memory/key/account, remembered_id = marauder.account_id)
@@ -96,6 +99,8 @@
 //antag job
 /datum/job/marauder
 	title = ROLE_MARAUDER
+	paycheck = 5
+	starting_funds = 50
 	paycheck_department = ACCOUNT_DS2
 	exclusive_mail_goodies = TRUE
 	mail_goodies = list(/obj/item/stack/telecrystal/five)
