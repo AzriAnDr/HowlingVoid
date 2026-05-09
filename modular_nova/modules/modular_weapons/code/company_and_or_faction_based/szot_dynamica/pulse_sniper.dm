@@ -28,7 +28,7 @@
 
 	spread = 2.5
 	recoil = 0.5
-	projectile_damage_multiplier = 1.8
+	projectile_damage_multiplier = 1.3
 	projectile_speed_multiplier = 1.5
 
 	weapon_weight = WEAPON_HEAVY

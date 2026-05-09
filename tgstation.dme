@@ -7403,6 +7403,7 @@
 #include "modular_nova\master_files\code\modules\client\preferences\loadout_override_preference.dm"
 #include "modular_nova\master_files\code\modules\client\preferences\looc.dm"
 #include "modularhowling_void\modules\cargo\supply_packs\armor.dm"
+#include "modularhowling_void\modules\cargo\supply_packs\guns.dm"
 #include "modularhowling_void\modules\client\hud\hud.dm"
 #include "modularhowling_void\modules\client\preferences\interface_language.dm"
 #include "modular_nova\master_files\code\modules\client\preferences\mutant_parts.dm"
