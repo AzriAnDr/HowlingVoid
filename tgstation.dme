@@ -9839,6 +9839,7 @@
 #include "modularhowling_void\modules\buckshoot\code\~game.dm"
 #include "modularhowling_void\modules\buckshoot\code\~shootgun.dm"
 #include "modularhowling_void\modules\emotes\code\maow.dm"
+#include "modularhowling_void\modules\items\storages\fish_case.dm"
 #include "modularhowling_void\modules\mapping\zones.dm"
 #include "modularhowling_void\modules\modular_species\species\howling_void_species_defines.dm"
 #include "modularhowling_void\modules\modular_species\species\species_unarmed_damage.dm"

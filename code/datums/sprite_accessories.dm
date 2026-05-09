@@ -2138,6 +2138,10 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Simple Ponytail Alt"
 	icon_state = "hair_simple_ponytail_alt"
 
+/datum/sprite_accessory/hair/additional/hair_simple_ponytail_alt_two
+	name = "Simple Ponytail Alt Two"
+	icon_state = "hair_simple_ponytail_alt_2"
+
 /datum/sprite_accessory/hair/additional/hair_simple_short
 	name = "Simple short"
 	icon_state = "hair_simple_short"
