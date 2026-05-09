@@ -1,45 +1,45 @@
 /area/awaymission/outdoors
-	name = "Улица"
+	name = "Outdoors"
 
 /area/awaymission/survivors
-	name = "Территория выживших"
+	name = "Survivors Territory"
 
 /area/awaymission/survivors/house
-	name = "База выживших"
+	name = "Survivors House"
 
 /area/awaymission/survivors/shuttle
-	name = "Шаттл выживших"
+	name = "Survivors Shuttle"
 	requires_power = FALSE
 
 /area/awaymission/survivors/base
-	name = "Дом выживших"
+	name = "Survivors Base"
 	requires_power = FALSE
 
 /area/awaymission/village
-	name = "Деревня"
+	name = "Village"
 	requires_power = FALSE
 
 /area/awaymission/huge_church
-	name = "Большая церковь"
+	name = "Large Church"
 	requires_power = FALSE
 
 /area/awaymission/gulag
-	name = "Гулаг"
+	name = "Gulag"
 	requires_power = FALSE
 
 /area/awaymission/gulag/laboratory
-	name = "Лаборатория гулага"
+	name = "Gulag Laboratory"
 
 /area/awaymission/gen_laboratory
-	name = "Генетическая лаборатория"
+	name = "Genetic Laboratory"
 
 /area/awaymission/mining_base
-	name = "Добывающая база"
+	name = "Mining Base"
 
 /area/awaymission/mining_base/security_post
-	name = "Охранный пост добывающей базы"
+	name = "Mining Base Guard Post"
 	requires_power = FALSE
 
 /area/awaymission/mining_base/hangar
-	name = "Ангар добывающей базы"
+	name = "Mining Base Hangar"
 	requires_power = FALSE

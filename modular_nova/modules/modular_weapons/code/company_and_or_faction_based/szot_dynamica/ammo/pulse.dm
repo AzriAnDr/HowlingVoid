@@ -122,7 +122,7 @@
 	name = "pulse energy"
 	icon = 'modular_nova/modules/modular_weapons/icons/obj/company_and_or_faction_based/szot_dynamica/ammo.dmi'
 	icon_state = "plasma_pulse"
-	damage = 15
+	damage = 10 //HOWLING VOID EDIT. ORIGINAL: 15
 	speed = /obj/projectile::speed
 	wound_bonus = 5
 	exposed_wound_bonus = 10

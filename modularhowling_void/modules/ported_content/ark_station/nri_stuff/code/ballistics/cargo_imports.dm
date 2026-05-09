@@ -27,6 +27,7 @@
 /datum/supply_pack/companies/ballistics/nt/bisonnri
 	contains = list(/obj/item/gun/ballistic/automatic/bison/nri)
 	cost = 1200
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
 //SOL
 
