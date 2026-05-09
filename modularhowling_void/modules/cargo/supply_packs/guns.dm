@@ -13,6 +13,9 @@
 /datum/supply_pack/companies/ballistics/sol_fed/longarm/kiboko
 	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
+/datum/supply_pack/security/armory/kiboko
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
 /datum/supply_pack/companies/ballistics/sol_fed/longarm/elite //Krijgspaard Marksman Rifle
 	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
