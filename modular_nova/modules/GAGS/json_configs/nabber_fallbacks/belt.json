@@ -1,0 +1,18 @@
+{
+	"": [
+		{
+			"type": "icon_state",
+			"icon_state": "belt",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	],
+	"nabber_belt": [
+		{
+			"type": "icon_state",
+			"icon_state": "belt",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
+}

@@ -43,6 +43,8 @@ GLOBAL_LIST_INIT(stock_part_datums, generate_stock_part_datums())
 	var/list/stock_part_datums = list()
 
 	for (var/datum/stock_part/stock_part_type as anything in subtypesof(/datum/stock_part))
+		if(isnull(initial(stock_part_type.physical_object_type)))
+			continue
 		var/singleton = new stock_part_type
 		stock_part_datums[stock_part_type] = singleton
 
