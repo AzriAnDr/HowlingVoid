@@ -226,8 +226,112 @@
 	name = "Ammo Box (9mm) (Lethal)"
 	id = "c9mm"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 300)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 150)
 	build_path = /obj/item/ammo_box/c9mm
+	category = list(
+		RND_CATEGORY_HACKED,
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/c9mm_casing
+	name = "9mm ammo casing"
+	desc = "A 9mm ammo casing"
+	id = "c9mm_casing"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5)
+	build_path = /obj/item/ammo_casing/c9mm
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	research_icon = 'icons/obj/weapons/guns/ammo.dmi'
+	research_icon_state = "s-casing-live"
+
+/datum/design/c9mm_ap
+	name = "9mm AP ammo casing"
+	desc = "A 9mm AP ammo casing"
+	id = "c9mm_ap_casing"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.75)
+	build_path = /obj/item/ammo_casing/c9mm/ap
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	research_icon = 'icons/obj/weapons/guns/ammo.dmi'
+	research_icon_state = "s-casing-live"
+
+/datum/design/c9mm_hp
+	name = "9mm HP ammo casing"
+	desc = "A 9mm HP ammo casing"
+	id = "c9mm_hp_casing"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.75)
+	build_path = /obj/item/ammo_casing/c9mm/hp
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+	research_icon = 'icons/obj/weapons/guns/ammo.dmi'
+	research_icon_state = "s-casing-live"
+
+/datum/design/c9mm_box_ap
+	name = "Ammo Box (9mm AP) (Lethal)"
+	desc = "A box of 30 armor-piercing 9mm rounds."
+	id = "c9mm_box_ap"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 225)
+	build_path = /obj/item/ammo_box/c9mm/ap
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/c9mm_box_hp
+	name = "Ammo Box (9mm HP) (Lethal)"
+	desc = "A box of 30 hollow-point 9mm rounds."
+	id = "c9mm_box_hp"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 225)
+	build_path = /obj/item/ammo_box/c9mm/hp
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/m9mm_aps_mag
+	name = "Stechkin APS Magazine (9mm)"
+	desc = "A standard 9mm magazine for the Stechkin APS machine pistol."
+	id = "m9mm_aps_mag"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6)
+	build_path = /obj/item/ammo_box/magazine/m9mm_aps
+	category = list(
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/m9mm_aps_mag_ap
+	name = "Stechkin APS Magazine (9mm AP)"
+	desc = "An armor-piercing magazine for the Stechkin APS pistol."
+	id = "m9mm_aps_mag_ap"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 12)
+	build_path = /obj/item/ammo_box/magazine/m9mm_aps/ap
+	category = list(
+		RND_CATEGORY_HACKED,
+		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
+/datum/design/m9mm_aps_mag_hp
+	name = "Stechkin APS Magazine (9mm HP)"
+	desc = "A hollow-point magazine for the Stechkin APS pistol."
+	id = "m9mm_aps_mag_hp"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 12)
+	build_path = /obj/item/ammo_box/magazine/m9mm_aps/hp
 	category = list(
 		RND_CATEGORY_HACKED,
 		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_AMMO,

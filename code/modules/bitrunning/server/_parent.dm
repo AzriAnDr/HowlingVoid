@@ -178,17 +178,28 @@
 /obj/machinery/quantum_server/RefreshParts()
 	var/capacitor_rating = 1.15
 	var/datum/stock_part/capacitor/cap = locate() in component_parts
-	capacitor_rating -= cap.tier * 0.15
+	if(cap)
+		capacitor_rating -= cap.tier * 0.15
+	else
+		var/obj/item/stock_parts/capacitor/item_cap = locate() in component_parts
+		if(item_cap)
+			capacitor_rating -= item_cap.rating * 0.15
 
 	capacitor_coefficient = capacitor_rating
 
 	var/datum/stock_part/scanning_module/scanner = locate() in component_parts
 	if(scanner)
 		scanner_tier = scanner.tier
+	else
+		var/obj/item/stock_parts/scanning_module/item_scanner = locate() in component_parts
+		if(item_scanner)
+			scanner_tier = item_scanner.rating
 
 	var/servo_rating = 0
 	for(var/datum/stock_part/servo/servo in component_parts)
 		servo_rating += servo.tier * 0.1
+	for(var/obj/item/stock_parts/servo/servo in component_parts)
+		servo_rating += servo.rating * 0.1
 
 	servo_bonus = servo_rating
 

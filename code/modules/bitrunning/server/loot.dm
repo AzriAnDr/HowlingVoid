@@ -70,8 +70,9 @@
 	certificate.name = "certificate of domain completion"
 	certificate.update_appearance()
 
-	var/obj/structure/closet/crate/secure/bitrunning/decrypted/reward_cache = new(src, generated_domain, bonus)
+	var/obj/structure/closet/crate/secure/bitrunning/decrypted/reward_cache = new(src, generated_domain, bonus, grade, chosen_forge)
 	reward_cache.manifest = WEAKREF(certificate)
+	reward_cache.update_manifest_with_ore_totals()
 	reward_cache.update_appearance()
 
 	if(can_generate_tech_disk(grade))

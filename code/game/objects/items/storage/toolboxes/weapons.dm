@@ -75,6 +75,19 @@
 		for(var/iterate in 1 to 3)
 			new extra_to_spawn (src)
 
+/obj/item/storage/toolbox/guncase/tstechkin
+	name = "Stechkin APS gun case"
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/aps
+	extra_to_spawn = /obj/item/ammo_box/magazine/m9mm_aps
+
+/obj/item/storage/toolbox/guncase/tstechkin/PopulateContents()
+	new weapon_to_spawn (src)
+	new extra_to_spawn (src)
+	new /obj/item/ammo_box/magazine/m9mm_aps/hp (src)
+	new /obj/item/ammo_box/magazine/m9mm_aps/ap (src)
+	new /obj/item/suppressor (src)
+	new /obj/item/disk/design_disk/aps_ammo(src)
+
 /obj/item/storage/toolbox/guncase/traitor
 	name = "makarov gun case"
 	desc = "A weapon's case. Has a blood-red 'S' stamped on the cover. There seems to be a strange switch along the side inside a plastic flap."

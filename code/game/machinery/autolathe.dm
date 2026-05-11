@@ -471,7 +471,7 @@
 
 	var/obj/item/disk/design_disk/disky = tool
 	var/list/not_imported
-	for(var/datum/design/blueprint as anything in disky.blueprints)
+	for(var/datum/design/blueprint as anything in disky.get_autolathe_blueprints())
 		if(!blueprint)
 			continue
 		if(blueprint.build_type & AUTOLATHE)
