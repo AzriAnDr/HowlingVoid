@@ -4,6 +4,14 @@
 	ammo_type = /obj/item/ammo_casing/c9mm
 	max_ammo = 30
 
+/obj/item/ammo_box/c9mm/ap
+	name = "ammo box (9mm AP)"
+	ammo_type = /obj/item/ammo_casing/c9mm/ap
+
+/obj/item/ammo_box/c9mm/hp
+	name = "ammo box (9mm HP)"
+	ammo_type = /obj/item/ammo_casing/c9mm/hp
+
 /obj/item/ammo_box/c10mm
 	name = "ammo box (10mm)"
 	icon_state = "10mmbox"

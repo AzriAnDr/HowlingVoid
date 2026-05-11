@@ -35,6 +35,14 @@
 		/datum/uplink_item/ammo/pistolfire,
 	)
 
+/datum/uplink_item/dangerous/tstechkin
+	name = "APS Stechkin Kit"
+	desc = "A gun case containing a Stechkin APS machine pistol, standard, armor-piercing and hollow-point magazines, a suppressor and a 9mm AP/HP design disk. Fires in 3-round bursts."
+	item = /obj/item/storage/toolbox/guncase/tstechkin
+	cost = 10
+	surplus = 12
+	purchasable_from = UPLINK_TRAITORS | UPLINK_NUKE_OPS
+
 /datum/uplink_item/dangerous/throwingweapons
 	name = "Box of Throwing Weapons"
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \

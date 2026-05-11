@@ -9,6 +9,14 @@
 	obj_flags = BLOCKS_CONSTRUCTION | CAN_BE_HIT
 	/// Idle particles
 	var/mutable_appearance/byteforge_particles
+	/// Highest installed laser tier influencing ore output
+	var/laser_tier = 0
+	/// Highest installed scanning module tier influencing duplication chance
+	var/scanner_tier = 0
+	/// Multiplier applied to ore yield after byteforge processing
+	var/ore_yield_multiplier = 1
+	/// Percentage chance to double the produced ore stacks
+	var/ore_duplication_chance = 0
 
 /obj/machinery/byteforge/Initialize(mapload)
 	. = ..()
@@ -18,6 +26,7 @@
 /obj/machinery/byteforge/post_machine_initialize()
 	. = ..()
 
+	RefreshParts()
 	setup_particles()
 
 /obj/machinery/byteforge/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -41,6 +50,12 @@
 	if(panel_open)
 		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
 
+	var/laser_bonus = max(ore_yield_multiplier - 1, 0) * 100
+	var/scanner_bonus = ore_duplication_chance
+
+	. += span_notice("- Laser array yield bonus: [round(laser_bonus)]% (Tier [laser_tier]).")
+	. += span_notice("- Scanning module duplication chance: [round(scanner_bonus)]% (Tier [scanner_tier]).")
+
 /obj/machinery/byteforge/update_appearance(updates)
 	. = ..()
 
@@ -55,6 +70,62 @@
 	. = ITEM_INTERACT_FAILURE
 	if(default_deconstruction_crowbar(crowbar))
 		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/byteforge/RefreshParts()
+	. = ..()
+
+	var/new_laser_tier = 0
+	var/new_scanner_tier = 0
+
+	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		new_laser_tier = max(new_laser_tier, laser.tier)
+	for(var/obj/item/stock_parts/micro_laser/laser in component_parts)
+		new_laser_tier = max(new_laser_tier, laser.rating)
+
+	for(var/datum/stock_part/scanning_module/scanner in component_parts)
+		new_scanner_tier = max(new_scanner_tier, scanner.tier)
+	for(var/obj/item/stock_parts/scanning_module/scanner in component_parts)
+		new_scanner_tier = max(new_scanner_tier, scanner.rating)
+
+	laser_tier = new_laser_tier
+	scanner_tier = new_scanner_tier
+
+	ore_yield_multiplier = get_laser_multiplier_for_tier(laser_tier)
+	ore_duplication_chance = get_scanner_chance_for_tier(scanner_tier)
+
+	return .
+
+/obj/machinery/byteforge/proc/get_laser_multiplier_for_tier(tier)
+	switch(tier)
+		if(4 to INFINITY)
+			return 2
+		if(3)
+			return 1.2
+		if(2)
+			return 0.8
+		if(1)
+			return 0.4
+		else
+			return 0
+
+/obj/machinery/byteforge/proc/get_scanner_chance_for_tier(tier)
+	switch(tier)
+		if(4 to INFINITY)
+			return 30
+		if(3)
+			return 15
+		if(2)
+			return 10
+		if(1)
+			return 5
+		else
+			return 0
+
+/obj/machinery/byteforge/proc/get_ore_yield_multiplier()
+	return ore_yield_multiplier
+
+/obj/machinery/byteforge/proc/get_ore_duplication_chance()
+	return ore_duplication_chance
 
 /// Does some sparks after it's done
 /obj/machinery/byteforge/proc/flash(atom/movable/thing)
@@ -93,4 +164,3 @@
 	flicker()
 
 	addtimer(CALLBACK(src, PROC_REF(spawn_cache), cache), 1 SECONDS)
-

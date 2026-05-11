@@ -221,7 +221,7 @@ Nothing else in the console has ID requirements.
 		)
 	if (d_disk)
 		data["d_disk"] = list("blueprints" = list())
-		for (var/datum/design/D in d_disk.blueprints)
+		for (var/datum/design/D in d_disk.get_rd_blueprints())
 			data["d_disk"]["blueprints"] += D.id
 
 
@@ -376,7 +376,7 @@ Nothing else in the console has ID requirements.
 				if(QDELETED(d_disk))
 					say("No design disk inserted!")
 					return TRUE
-				for(var/D in d_disk.blueprints)
+				for(var/D in d_disk.get_rd_blueprints())
 					if(D)
 						stored_research.add_design(D, TRUE)
 				say("Uploading blueprints from disk.")

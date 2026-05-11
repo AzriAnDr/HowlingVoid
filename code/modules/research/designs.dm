@@ -115,12 +115,22 @@ other types of metals and chemistry for reagents).
 
 	///List of all `/datum/design` stored on the disk.
 	var/list/blueprints = list()
+	///Optional subset of blueprints available to autolathes.
+	var/list/autolathe_blueprints
+	///Optional subset of blueprints available to R&D consoles.
+	var/list/rd_blueprints
 
 /obj/item/disk/design_disk/Initialize(mapload)
 	. = ..()
 	if(mapload)
 		pixel_x = base_pixel_x + rand(-5, 5)
 		pixel_y = base_pixel_y + rand(-5, 5)
+
+/obj/item/disk/design_disk/proc/get_autolathe_blueprints()
+	return isnull(autolathe_blueprints) ? blueprints : autolathe_blueprints
+
+/obj/item/disk/design_disk/proc/get_rd_blueprints()
+	return isnull(rd_blueprints) ? blueprints : rd_blueprints
 
 /**
  * Used for special interactions with a techweb when uploading the designs.
@@ -165,3 +175,38 @@ other types of metals and chemistry for reagents).
 	SSresearch.techweb_nodes_experimental -= bepis_node.id
 	log_research("[bepis_node.display_name] has been removed from experimental nodes through the BEPIS techweb's \"remove tech\" feature.")
 
+/obj/item/disk/design_disk/aps_ammo
+	name = "9mm AP and HP design disk"
+
+/obj/item/disk/design_disk/aps_ammo/Initialize(mapload)
+	. = ..()
+	autolathe_blueprints = list()
+	rd_blueprints = list()
+
+	var/list/shared_designs = list(
+		/datum/design/c9mm_casing,
+		/datum/design/c9mm_ap,
+		/datum/design/c9mm_hp,
+	)
+	for(var/autolathe_design in list(
+		/datum/design/c9mm_casing,
+		/datum/design/c9mm_ap,
+		/datum/design/c9mm_hp,
+		/datum/design/c9mm_box_ap,
+		/datum/design/c9mm_box_hp,
+		/datum/design/c9mm,
+	))
+		var/datum/design/new_autolathe_design = new autolathe_design
+		blueprints += new_autolathe_design
+		autolathe_blueprints += new_autolathe_design
+		if(autolathe_design in shared_designs)
+			rd_blueprints += new_autolathe_design
+
+	for(var/rd_design in list(
+		/datum/design/m9mm_aps_mag,
+		/datum/design/m9mm_aps_mag_ap,
+		/datum/design/m9mm_aps_mag_hp,
+	))
+		var/datum/design/new_rd_design = new rd_design
+		blueprints += new_rd_design
+		rd_blueprints += new_rd_design

@@ -1912,6 +1912,7 @@
 	build_path = /obj/machinery/byteforge
 	req_components = list(
 		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/scanning_module = 1,
 	)
 
 /obj/item/circuitboard/machine/washing_machine

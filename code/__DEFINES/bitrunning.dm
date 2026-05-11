@@ -23,6 +23,8 @@
 #define BITRUNNER_DIFFICULTY_MEDIUM 2
 /// Red with skull. I am trying to kill bitrunners.
 #define BITRUNNER_DIFFICULTY_HIGH 3
+/// Black with skulls. Bring friends and a will.
+#define BITRUNNER_DIFFICULTY_EXTREME 4
 
 /// Camera network bitrunner bodycams are on
 #define BITRUNNER_CAMERA_NET "bitrunner"

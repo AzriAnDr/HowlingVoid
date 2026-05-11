@@ -202,10 +202,12 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m9mm_aps
 	can_suppress = TRUE
 	burst_size = 3
-	burst_delay = 1
+	burst_delay = 2
 	spread = 10
+	projectile_damage_multiplier = 1
 	actions_types = list(/datum/action/item_action/toggle_firemode)
-	suppressor_x_offset = 6
+	suppressor_x_offset = 12
+	suppressor_y_offset = 4
 
 /obj/item/gun/ballistic/automatic/pistol/stickman
 	name = "flat gun"
