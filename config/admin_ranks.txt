@@ -36,7 +36,7 @@
 
 Name = Ведущий
 Include = ADMIN FUN STEALTH POSSESS POLL BUILD SERVER DEBUG VAREDIT SOUND SPAWN
-Exclude = AUTOADMIN
+Exclude =
 Edit =
 
 Name = Поддержка
@@ -66,5 +66,5 @@ Edit = EVERYTHING
 
 Name = Разработчик
 Include = ADMIN FUN STEALTH POSSESS POLL BUILD SERVER DEBUG VAREDIT SOUND SPAWN
-Exclude = AUTOADMIN
+Exclude =
 Edit =
