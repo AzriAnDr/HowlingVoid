@@ -24,7 +24,7 @@
 		to_chat(A, span_notice("Remember, you can transmit over holopads by right clicking on them, and can speak through them with \".[/datum/saymode/holopad::key]\"."))
 
 	if(prob(30) || fake) //most of the time, we don't want an announcement, so as to allow AIs to fake blackouts.
-		priority_announce(alert, "Anomaly Alert", sound = ANNOUNCER_COMMSBLACKOUT) //NOVA EDIT CHANGE - ORIGINAL: priority_announce(alert, "Anomaly Alert")
+		priority_announce(alert, "Anomaly Alert", sound = ANNOUNCER_COMMSBLACKOUT, text_ru = pick("Ионосферные аномалии обнаружены. Временный сбой связи неизбежен. Пожа#%д$-БЗЗТ", "Ионосферные аномалии обнаружены. Временный отказ свя*31мга;#-БЗЗЗТ", "Ионосферные аномалии обнару#МКи46:5.;@63-БЗЗЗЗТ", "Ионосферные анома'Фз\\к55_0-БЗЗЗЗЗТ", "Ионосфери:%Й ЖСаяй^ж<.3-БЗЗЗЗЗЗТ", "#4нд%;ф4у6,>Й%-БЗЗЗЗЗЗТ"), title_ru = "Тревога аномалии") //NOVA EDIT CHANGE - ORIGINAL: priority_announce(alert, "Anomaly Alert")
 
 
 /datum/round_event/communications_blackout/start()

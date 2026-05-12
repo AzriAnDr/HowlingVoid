@@ -2,7 +2,7 @@ import { Box, Button, Flex, Icon } from 'tgui-core/components';
 import { usePreferencesLocalization } from '../localization';
 
 export function LockedExperiment(props) {
-  const { t } = usePreferencesLocalization();
+  const { t } = usePreferencesLocalization(undefined, 'rnd');
   return (
     <Box m={1} className="ExperimentConfigure__ExperimentPanel">
       <Button

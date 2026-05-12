@@ -1,5 +1,14 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useBackend } from 'tgui/backend';
+import {
+  getInterfaceLanguageUpdatedEvent,
+  getRememberedUIElementLanguage,
+  getRememberedInterfaceLanguage,
+  getLanguageUpdatedEvent,
+  rememberInterfaceLanguage,
+  rememberUIElementLanguage,
+  type UIElementType,
+} from 'common/panelLocalization';
 
 import type { PreferencesMenuData } from '../types';
 import { features } from '../preferences/features';
@@ -9,8 +18,6 @@ export type InterfaceLanguage = 'english' | 'russian';
 
 const EN_UI_BY_KEY = uiEn as Record<string, string>;
 const RU_UI_BY_KEY = uiRu as Record<string, string>;
-const INTERFACE_LANGUAGE_STORAGE_KEY = 'howling_void.interface_language';
-
 const UI_BY_LANGUAGE: Record<InterfaceLanguage, Record<string, string>> = {
   english: EN_UI_BY_KEY,
   russian: RU_UI_BY_KEY,
@@ -231,37 +238,67 @@ function toCasePreservingDataId(value: string): string {
   return normalized || 'unknown';
 }
 
-function rememberInterfaceLanguage(language: InterfaceLanguage) {
-  try {
-    (globalThis as any).__HOWLING_INTERFACE_LANGUAGE = language;
-  } catch {
-    // Ignore write failures in restricted environments.
+function extractPanelLanguageValue(
+  raw: unknown,
+  element: UIElementType,
+): InterfaceLanguage | null {
+  if (!raw || typeof raw !== 'object') {
+    return null;
   }
 
-  try {
-    globalThis?.localStorage?.setItem(INTERFACE_LANGUAGE_STORAGE_KEY, language);
-  } catch {
-    // Ignore storage failures such as disabled localStorage.
+  const detected = extractLanguage((raw as Record<string, unknown>)[element]);
+  if (detected) {
+    rememberUIElementLanguage(element, detected);
   }
+
+  return detected;
 }
 
-function getRememberedInterfaceLanguage(): InterfaceLanguage | null {
-  const rememberedGlobal = normalizeLanguage(
-    (globalThis as any)?.__HOWLING_INTERFACE_LANGUAGE,
-  );
-  if (rememberedGlobal) {
-    return rememberedGlobal;
+function inferUIElementType(data: any): UIElementType | null {
+  const interfaceName = `${data?.config?.interface?.name || data?.interface?.name || ''}`;
+
+  if (interfaceName === 'InteractionPanel') {
+    return 'interaction';
   }
 
-  const rememberedStored = normalizeLanguage(
-    globalThis?.localStorage?.getItem(INTERFACE_LANGUAGE_STORAGE_KEY),
-  );
-  if (rememberedStored) {
-    rememberInterfaceLanguage(rememberedStored);
-    return rememberedStored;
+  if (interfaceName === 'Techweb' || interfaceName === 'NtosTechweb') {
+    return 'rnd';
+  }
+
+  if (interfaceName.startsWith('AntagInfo')) {
+    return 'antag_info';
+  }
+
+  if (interfaceName === 'PreferencesMenu' || data?.character_preferences) {
+    if (data?.window === 1 || data?.window === 2) {
+      return 'game_preferences';
+    }
+
+    return 'preferences';
   }
 
   return null;
+}
+
+function getPanelLanguage(
+  data: any,
+  uiElement: UIElementType,
+): InterfaceLanguage | null {
+  const candidates = [
+    data?.panel_languages,
+    data?.config?.client?.panel_languages,
+    data?.client?.panel_languages,
+    data?.preferences?.panel_languages,
+  ];
+
+  for (const candidate of candidates) {
+    const detected = extractPanelLanguageValue(candidate, uiElement);
+    if (detected) {
+      return detected;
+    }
+  }
+
+  return getRememberedUIElementLanguage(uiElement);
 }
 
 const DATA_ID_PREFIXES = [
@@ -551,7 +588,18 @@ function extractLanguage(raw: unknown, depth = 0): InterfaceLanguage | null {
   return null;
 }
 
-export function getCharacterPreferencesLanguage(data: any): InterfaceLanguage {
+export function getCharacterPreferencesLanguage(
+  data: any,
+  uiElement?: UIElementType,
+): InterfaceLanguage {
+  const localizedElement = uiElement ?? inferUIElementType(data);
+  if (localizedElement) {
+    const panelLanguage = getPanelLanguage(data, localizedElement);
+    if (panelLanguage) {
+      return panelLanguage;
+    }
+  }
+
   // Prefer top-level interface language because it's player-wide and authoritative.
   const candidates = [
     data?.interface_language,
@@ -665,8 +713,11 @@ export function localizeGender(
   return key ? translateUi(language, key, genderId) : genderId;
 }
 
-export function getPreferencesLocalization(data: unknown) {
-  const language = getCharacterPreferencesLanguage(data);
+export function getPreferencesLocalization(
+  data: unknown,
+  uiElement?: UIElementType,
+) {
+  const language = getCharacterPreferencesLanguage(data, uiElement);
 
   return {
     language,
@@ -691,15 +742,61 @@ export function getPreferencesLocalization(data: unknown) {
   };
 }
 
-export function usePreferencesLocalization(data?: unknown) {
+export function usePreferencesLocalization(
+  data?: unknown,
+  uiElement?: UIElementType,
+) {
   const backend = useBackend<PreferencesMenuData>();
+  const [, setRefreshVersion] = useState(0);
   const mergedSource = {
     ...(backend.data as Record<string, unknown>),
     ...((data as Record<string, unknown>) ?? {}),
     config: backend.config,
     client: backend.config?.client,
   };
-  const resolved = getPreferencesLocalization(mergedSource);
+  const localizedElement = uiElement ?? inferUIElementType(mergedSource);
+
+  useEffect(() => {
+    const rerender = () => {
+      setRefreshVersion((version) => version + 1);
+    };
+
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    window.addEventListener(
+      getInterfaceLanguageUpdatedEvent(),
+      rerender as EventListener,
+    );
+
+    if (localizedElement) {
+      window.addEventListener(
+        getLanguageUpdatedEvent(localizedElement),
+        rerender as EventListener,
+      );
+    }
+
+    window.addEventListener('storage', rerender);
+
+    return () => {
+      window.removeEventListener(
+        getInterfaceLanguageUpdatedEvent(),
+        rerender as EventListener,
+      );
+
+      if (localizedElement) {
+        window.removeEventListener(
+          getLanguageUpdatedEvent(localizedElement),
+          rerender as EventListener,
+        );
+      }
+
+      window.removeEventListener('storage', rerender);
+    };
+  }, [localizedElement]);
+
+  const resolved = getPreferencesLocalization(mergedSource, uiElement);
   const { language } = resolved;
 
   const t = useCallback(

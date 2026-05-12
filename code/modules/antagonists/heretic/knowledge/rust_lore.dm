@@ -183,6 +183,7 @@
 
 	ascension_achievement = /datum/award/achievement/misc/rust_ascension
 	announcement_text = "%SPOOKY% Fear the decay, for the Rustbringer, %NAME% has ascended! None shall escape the corrosion! %SPOOKY%"
+	announcement_text_ru = "%SPOOKY% Страшитесь тлена: Ржавоносец %NAME% вознёсся! Никто не уйдёт от коррозии! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_rust.ogg'
 	/// If TRUE, then immunities are currently active.
 	var/immunities_active = FALSE

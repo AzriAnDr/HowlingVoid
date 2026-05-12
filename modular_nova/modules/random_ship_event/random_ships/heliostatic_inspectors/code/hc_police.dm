@@ -12,10 +12,14 @@
 		Please let us know if you would like to schedule an inspection. Heliostatic Coalition departmental secretary out."
 	arrival_announcement = "Inspection vessel approaching. Vessel ID tag is %NUMBER1-%NUMBER2-%NUMBER3. \
 		Vessel Model: Strider, Flight ETA: three minutes minimal. Vessel is authorized to perform inspection duties. We're clear for close orbit."
+	arrival_announcement_ru = "Подходит инспекционное судно. Идентификатор борта: %NUMBER1-%NUMBER2-%NUMBER3. \
+	Модель судна: Strider. Минимальное время подлёта: три минуты. Судно уполномочено проводить инспекционные мероприятия. Разрешаем выход на близкую орбиту."
 
 	possible_answers = list("Accept the inspection.", "Decline the inspection at this time.")
 	response_accepted = "Thank you for your cooperation. As a token of appreciation for participating in our voluntary inspection program, a bonus of 10000 credits has been deposited to your station's account. Heliostatic Coalition departmental secretary out."
+	response_accepted_ru = "Благодарим за сотрудничество. В знак признательности за участие в нашей добровольной инспекционной программе на счёт вашей станции зачислен бонус в размере 10000 кредитов. С вами говорил секретарь департамента Гелиостатической Коалиции."
 	response_rejected = "Understood. We respect your decision. Should you change your mind, please feel free to contact us at a later time."
+	response_rejected_ru = "Вас поняли. Мы уважаем ваше решение. Если передумаете, не стесняйтесь связаться с нами позднее."
 
 	announcement_color = "purple"
 
@@ -42,6 +46,9 @@
 	arrival_announcement = replacetext(arrival_announcement, "%NUMBER1", pick(GLOB.phonetic_alphabet))
 	arrival_announcement = replacetext(arrival_announcement, "%NUMBER2", pick(GLOB.phonetic_alphabet))
 	arrival_announcement = replacetext(arrival_announcement, "%NUMBER3", pick(GLOB.phonetic_alphabet))
+	arrival_announcement_ru = replacetext(arrival_announcement_ru, "%NUMBER1", pick(GLOB.phonetic_alphabet))
+	arrival_announcement_ru = replacetext(arrival_announcement_ru, "%NUMBER2", pick(GLOB.phonetic_alphabet))
+	arrival_announcement_ru = replacetext(arrival_announcement_ru, "%NUMBER3", pick(GLOB.phonetic_alphabet))
 	var/datum/comm_message/message = new /datum/comm_message(message_title, built_message_content, possible_answers)
 	message.answer_callback = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(random_ship_event_answered), message, src)
 	return message

@@ -11,7 +11,7 @@ type Props = {
 
 export function TechwebDiskMenu(props: Props) {
   const { act, data } = useRemappedBackend();
-  const { t } = usePreferencesLocalization(data);
+  const { t } = usePreferencesLocalization(data, 'rnd');
   const { diskType } = props;
   const { t_disk, d_disk } = data;
   const [techwebRoute, setTechwebRoute] = useTechWebRoute();
@@ -29,7 +29,9 @@ export function TechwebDiskMenu(props: Props) {
       <Flex.Item>
         <Flex justify="space-between" className="Techweb__HeaderSectionTabs">
           <Flex.Item align="center" className="Techweb__HeaderTabTitle">
-            {diskType.charAt(0).toUpperCase() + diskType.slice(1)} Disk
+            {diskType === 'tech'
+              ? t('ui.techweb.tech_disk', 'Tech Disk')
+              : t('ui.techweb.design_disk', 'Design Disk')}
           </Flex.Item>
           <Flex.Item grow>
             <Tabs>
@@ -39,14 +41,14 @@ export function TechwebDiskMenu(props: Props) {
           <Flex.Item align="center">
             {diskType === 'tech' && (
               <Button icon="save" onClick={() => act('loadTech')}>
-                Web &rarr; Disk
+                {t('ui.techweb.web_to_disk')}
               </Button>
             )}
             <Button
               icon="upload"
               onClick={() => act('uploadDisk', { type: diskType })}
             >
-              Disk &rarr; Web
+              {t('ui.techweb.disk_to_web')}
             </Button>
             <Button
               icon="eject"

@@ -514,7 +514,16 @@
 	shutdown_field()
 	end_processing()
 	sound_loop.stop()
-	priority_announce("A catastrophic failure has been detected in the bluespace shield generator compartment. Containment is destroyed and the core is exposed. Engineering response required immediately.", "BLUESPACE GENERATOR FAILURE", 'sound/machines/matteralarm.ogg', sender_override = "Bluespace Containment Monitoring", color_override = "red")
+	priority_announce(
+		"A catastrophic failure has been detected in the bluespace shield generator compartment. Containment is destroyed and the core is exposed. Engineering response required immediately.",
+		"BLUESPACE GENERATOR FAILURE",
+		'sound/machines/matteralarm.ogg',
+		sender_override = "Bluespace Containment Monitoring",
+		color_override = "red",
+		text_ru = "В отсеке блюспейс-щитогенератора зафиксирована катастрофическая авария. Контейнмент разрушен, ядро оголено. Инженерной службе требуется немедленно отреагировать.",
+		title_ru = "АВАРИЯ БЛЮСПЕЙС-ГЕНЕРАТОРА",
+		sender_override_ru = "Мониторинг блюспейс-контейнмента",
+	)
 	playsound(src, 'sound/machines/BSD_explosion.ogg', 100, FALSE, extrarange = 30)
 	addtimer(CALLBACK(src, PROC_REF(do_break_explosion)), 4 SECONDS)
 	update_appearance()
@@ -541,11 +550,23 @@
 	var/minutes = round(singularity_countdown / 60)
 	var/seconds = singularity_countdown % 60
 	var/time_text
+	var/time_text_ru
 	if(minutes > 0)
 		time_text = "[minutes] min [seconds] sec"
+		time_text_ru = "[minutes] мин [seconds] сек"
 	else
 		time_text = "[seconds] sec"
-	priority_announce("Critical bluespace destabilization detected. Core containment remains breached. Gravitational singularity formation expected in [time_text]. Repair immediately.", "BLUESPACE ALERT", 'sound/misc/null.ogg', sender_override = "Bluespace Containment Monitoring", color_override = "red")
+		time_text_ru = "[seconds] сек"
+	priority_announce(
+		"Critical bluespace destabilization detected. Core containment remains breached. Gravitational singularity formation expected in [time_text]. Repair immediately.",
+		"BLUESPACE ALERT",
+		'sound/misc/null.ogg',
+		sender_override = "Bluespace Containment Monitoring",
+		color_override = "red",
+		text_ru = "Зафиксирована критическая дестабилизация блюспейса. Контейнмент ядра всё ещё нарушен. Формирование гравитационной сингулярности ожидается через [time_text_ru]. Немедленно приступите к ремонту.",
+		title_ru = "ТРЕВОГА БЛЮСПЕЙСА",
+		sender_override_ru = "Мониторинг блюспейс-контейнмента",
+	)
 
 /// Spawns a stage 6 gravitational singularity at the generator's location
 /obj/machinery/power/bluespace_shield_generator/proc/spawn_singularity()
@@ -559,7 +580,15 @@
 	var/turf/T = get_turf(src)
 	if(!T)
 		return
-	priority_announce("Containment failure is now total. A gravitational singularity has formed at the generator site.", "BLUESPACE CATASTROPHE", sender_override = "Bluespace Containment Monitoring", color_override = "red")
+	priority_announce(
+		"Containment failure is now total. A gravitational singularity has formed at the generator site.",
+		"BLUESPACE CATASTROPHE",
+		sender_override = "Bluespace Containment Monitoring",
+		color_override = "red",
+		text_ru = "Контейнмент полностью утрачен. В зоне генератора сформировалась гравитационная сингулярность.",
+		title_ru = "БЛЮСПЕЙС-КАТАСТРОФА",
+		sender_override_ru = "Мониторинг блюспейс-контейнмента",
+	)
 	playsound(T, 'sound/machines/matteralarm.ogg', 200, FALSE, extrarange = 50)
 	var/obj/singularity/S = new(T)
 	S.consumed_supermatter = TRUE
@@ -812,7 +841,15 @@
 		warning_timer = TIMER_ID_NULL
 	singularity_countdown = 0
 	end_processing()
-	priority_announce("Bluespace generator containment restored. Singularity threat eliminated.", "BLUESPACE STABLE", sender_override = "Bluespace Containment Monitoring", color_override = "green")
+	priority_announce(
+		"Bluespace generator containment restored. Singularity threat eliminated.",
+		"BLUESPACE STABLE",
+		sender_override = "Bluespace Containment Monitoring",
+		color_override = "green",
+		text_ru = "Контейнмент блюспейс-генератора восстановлен. Угроза сингулярности устранена.",
+		title_ru = "БЛЮСПЕЙС СТАБИЛЕН",
+		sender_override_ru = "Мониторинг блюспейс-контейнмента",
+	)
 	update_appearance()
 
 // =============================================================================

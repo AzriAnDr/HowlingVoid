@@ -34,13 +34,16 @@ GLOBAL_LIST_INIT(random_ship_events, init_random_ship_events())
 	var/message_content = "This is the %SHIPNAME. We are approaching your station."
 	///Station receives this message upon the ship's spawn.
 	var/arrival_announcement = "We have arrived at the station."
+	var/arrival_announcement_ru = "Мы прибыли к станции."
 	///What the station can say in response. First item accepts the ship, second item rejects it.
 	var/list/possible_answers = list("Permission granted, you may dock.", "Permission denied, stay away.")
 
 	///Station responds to message and accepts the ship.
 	var/response_accepted = "Thank you for allowing us to dock."
+	var/response_accepted_ru = "Благодарим за разрешение на стыковку."
 	///Station responds to message and rejects the ship.
 	var/response_rejected = "Understood, we will not approach."
+	var/response_rejected_ru = "Вас поняли, приближаться не будем."
 	///Has the ship been accepted?
 	var/accepted = FALSE
 	///The colour of their announcements when sent to players
@@ -67,11 +70,11 @@ GLOBAL_LIST_INIT(random_ship_events, init_random_ship_events())
 		return
 	if(message.answered == POSITIVE_ANSWER)
 		event.accepted = TRUE
-		priority_announce(event.response_accepted, sender_override = event.ship_name, color_override = event.announcement_color)
+		priority_announce(event.response_accepted, sender_override = event.ship_name, color_override = event.announcement_color, text_ru = event.response_accepted_ru)
 		event.on_accept()
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(spawn_random_ship), event), 1 MINUTES)
 	else
-		priority_announce(event.response_rejected, sender_override = event.ship_name, color_override = event.announcement_color)
+		priority_announce(event.response_rejected, sender_override = event.ship_name, color_override = event.announcement_color, text_ru = event.response_rejected_ru)
 		event.on_refuse()
 
 ///Spawns the random ship proper, with the follow-up effects, if you've set any up.
@@ -98,7 +101,7 @@ GLOBAL_LIST_INIT(random_ship_events, init_random_ship_events())
 		CRASH("Loading random ship failed!")
 
 	event.on_ship_spawn()
-	priority_announce(event.arrival_announcement, sender_override = event.ship_name, color_override = event.announcement_color)
+	priority_announce(event.arrival_announcement, sender_override = event.ship_name, color_override = event.announcement_color, text_ru = event.arrival_announcement_ru)
 
 ///Additional effects when the ship is accepted
 /datum/random_ship_event/proc/on_accept()

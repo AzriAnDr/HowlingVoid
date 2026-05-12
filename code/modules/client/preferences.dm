@@ -197,6 +197,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	data["quirks_balance"] = GetQuirkBalance()
 	data["positive_quirk_count"] = GetPositiveQuirkCount()
 	data["interface_language"] = read_preference(/datum/preference/choiced/interface_language) // Howling Void edit
+	data["panel_languages"] = build_panel_languages_payload(src)
 	//NOVA EDIT ADDITION END
 	data["character_preview_direction"] = dir2text(character_preview_view?.dir || SOUTH)
 	data["character_preview_url"] = character_preview_view?.get_preview_url(user)
@@ -235,6 +236,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	data["content_unlocked"] = unlock_content
 	data["interface_language"] = read_preference(/datum/preference/choiced/interface_language) // Howling Void edit
+	data["panel_languages"] = build_panel_languages_payload(src)
 
 	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
 		data += preference_middleware.get_ui_static_data(user)
@@ -369,6 +371,19 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if ("open_food")
 			GLOB.food_prefs_menu.ui_interact(usr)
 			return TRUE
+		if("set_ui_language")
+			var/element = params["element"]
+			var/language = lowertext("[params["language"]]")
+			var/pref_path = get_panel_language_preference_path(element)
+
+			if(!pref_path || !(language in list("english", "russian")))
+				return FALSE
+
+			var/datum/preference/requested_preference = GLOB.preference_entries[pref_path]
+			if(isnull(requested_preference))
+				return FALSE
+
+			return update_preference(requested_preference, language)
 		// NOVA EDIT ADDITION START: Background Selection
 		if("update_background")
 			update_preference(GLOB.preference_entries[/datum/preference/choiced/background_state], params["new_background"])

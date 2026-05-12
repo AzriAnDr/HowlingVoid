@@ -185,6 +185,7 @@
 
 	ascension_achievement = /datum/award/achievement/misc/ash_ascension
 	announcement_text = "%SPOOKY% Fear the blaze, for the Ashlord, %NAME% has ascended! The flames shall consume all! %SPOOKY%"
+	announcement_text_ru = "%SPOOKY% Страшитесь пламени: Пепельный владыка %NAME% вознёсся! Огонь поглотит всех! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_ash.ogg'
 	/// A static list of all traits we apply on ascension.
 	var/static/list/traits_to_apply = list(

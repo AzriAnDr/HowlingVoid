@@ -15,7 +15,7 @@
 	announce_when = 1
 
 /datum/round_event/electrical_storm/announce(fake)
-	priority_announce("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert", ANNOUNCER_ELECTRICALSTORM) //NOVA EDIT CHANGE
+	priority_announce("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert", ANNOUNCER_ELECTRICALSTORM, text_ru = "В вашем секторе зафиксирован электрический шторм. Проверьте оборудование на возможные электронные перегрузки.", title_ru = "Тревога: электрический шторм") //NOVA EDIT CHANGE
 
 
 /datum/round_event/electrical_storm/start()

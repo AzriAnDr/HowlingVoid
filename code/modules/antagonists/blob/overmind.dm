@@ -172,7 +172,12 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			qdel(src)
 	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
 		victory_in_progress = TRUE
-		priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
+		priority_announce(
+			"Biohazard has reached critical mass. Station loss is imminent.",
+			"Biohazard Alert",
+			text_ru = "Биоопасность достигла критической массы. Потеря станции неизбежна.",
+			title_ru = "Тревога: биоопасность",
+		)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 
 		// Set status displays to biohazard alert - critical level
@@ -189,7 +194,13 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		max_count = blobs_legit.len
 
 	if(announcement_time && (world.time >= announcement_time || blobs_legit.len >= announcement_size) && !has_announced)
-		priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
+		priority_announce(
+			"Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.",
+			"Biohazard Alert",
+			ANNOUNCER_OUTBREAK5,
+			text_ru = "Подтверждена вспышка биоопасности 5-го уровня на борту [station_name()]. Всему персоналу предписано локализовать очаг заражения.",
+			title_ru = "Тревога: биоопасность",
+		)
 
 		// Set status displays to biohazard alert
 		send_status_display_biohazard_alert()

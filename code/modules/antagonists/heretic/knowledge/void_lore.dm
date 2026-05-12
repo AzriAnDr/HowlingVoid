@@ -193,6 +193,7 @@
 
 	ascension_achievement = /datum/award/achievement/misc/void_ascension
 	announcement_text = "%SPOOKY% The nobleman of void %NAME% has arrived, stepping along the Waltz that ends worlds! %SPOOKY%"
+	announcement_text_ru = "%SPOOKY% Явился дворянин Пустоты, %NAME%, ступающий в Вальсе, завершающем миры! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_void.ogg'
 	///soundloop for the void theme
 	var/datum/looping_sound/void_loop/sound_loop

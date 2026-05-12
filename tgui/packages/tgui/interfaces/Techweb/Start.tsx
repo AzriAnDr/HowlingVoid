@@ -9,7 +9,7 @@ import type { TechWebData } from './types';
 
 export function TechwebStart(props) {
   const { act, data } = useBackend<TechWebData>();
-  const { t } = usePreferencesLocalization(data);
+  const { t } = usePreferencesLocalization(data, 'rnd');
   const { locked, stored_research } = data;
   const techwebState = useState({
     route: '',

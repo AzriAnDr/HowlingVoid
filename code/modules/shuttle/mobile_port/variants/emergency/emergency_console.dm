@@ -141,6 +141,8 @@
 				type = ANNOUNCEMENT_TYPE_PRIORITY,
 				has_important_message = TRUE,
 				color_override = "red",
+				text_ru = "Для досрочного запуска шаттла требуется ещё [remaining] авторизац[remaining == 1 ? "ия" : "ии"].",
+				title_ru = "Статус аварийного шаттла",
 			)
 		if(repeal)
 			priority_announce(
@@ -149,6 +151,8 @@
 				sound = 'sound/announcer/notice/notice2.ogg',
 				type = ANNOUNCEMENT_TYPE_PRIORITY,
 				color_override = "blue",
+				text_ru = "Разрешение на досрочный запуск отозвано, требуется ещё [remaining] авторизац[remaining == 1 ? "ия" : "ии"].",
+				title_ru = "Статус аварийного шаттла",
 			)
 
 	acted_recently += user
@@ -197,8 +201,13 @@
 		// shuttle timers use 1/10th seconds internally
 		SSshuttle.emergency.setTimer(ENGINE_START_TIME)
 		var/system_error = obj_flags & EMAGGED ? "SYSTEM ERROR:" : null
-		minor_announce("The emergency shuttle will launch in \
-			[TIME_LEFT] seconds", system_error, alert=TRUE)
+		minor_announce(
+			"The emergency shuttle will launch in [TIME_LEFT] seconds",
+			system_error,
+			alert = TRUE,
+			message_ru = "Аварийный шаттл стартует через [TIME_LEFT] секунд.",
+			title_ru = system_error ? "СИСТЕМНАЯ ОШИБКА:" : null,
+		)
 		. = TRUE
 
 /obj/machinery/computer/emergency_shuttle/proc/increase_hijack_stage()

@@ -10,7 +10,7 @@
 	announce_when = 1
 
 /datum/round_event/bureaucratic_error/announce(fake)
-	priority_announce("A recent bureaucratic error in the Organic Resources Department may result in personnel shortages in some departments and redundant staffing in others.", "Paperwork Mishap Alert")
+	priority_announce("A recent bureaucratic error in the Organic Resources Department may result in personnel shortages in some departments and redundant staffing in others.", "Paperwork Mishap Alert", text_ru = "Недавняя бюрократическая ошибка в департаменте органических ресурсов может привести к нехватке персонала в одних отделах и избыточному штату в других.", title_ru = "Тревога: ошибка в документации")
 
 /datum/round_event/bureaucratic_error/start()
 	var/list/jobs = SSjob.get_valid_overflow_jobs()

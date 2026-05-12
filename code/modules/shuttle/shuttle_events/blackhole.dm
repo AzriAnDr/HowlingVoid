@@ -40,6 +40,9 @@
 		has_important_message = TRUE,
 		sender_override = "Emergency Shuttle",
 		color_override = "red",
+		text_ru = "Сенсоры показывают, что гравитационное поле чёрной дыры воздействует на участок пространства, через который мы следуем.",
+		title_ru = "Тропа Ориона",
+		sender_override_ru = "Аварийный шаттл",
 	)
 
 /datum/shuttle_event/simple_spawner/black_hole/no_escape/activate()

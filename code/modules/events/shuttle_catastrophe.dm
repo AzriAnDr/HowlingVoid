@@ -24,18 +24,30 @@
 	var/datum/map_template/shuttle/new_shuttle
 
 /datum/round_event/shuttle_catastrophe/announce(fake)
-	var/cause = pick("was attacked by [syndicate_name()] Operatives", "mysteriously teleported away", "had its refuelling crew mutiny",
-		"was found with its engines stolen", "\[REDACTED\]", "flew into the sunset, and melted", "learned something from a very wise cow, and left on its own",
-		"had cloning devices on it", "had its shuttle inspector put the shuttle in reverse instead of park, causing the shuttle to crash into the hangar")
-	var/message = "Your emergency shuttle [cause]. "
+	var/list/cause = pick(
+		list("en" = "was attacked by [syndicate_name()] Operatives", "ru" = "был атакован оперативниками [syndicate_name()]"),
+		list("en" = "mysteriously teleported away", "ru" = "загадочным образом телепортировался прочь"),
+		list("en" = "had its refuelling crew mutiny", "ru" = "лишился экипажа заправщиков из-за мятежа"),
+		list("en" = "was found with its engines stolen", "ru" = "был найден с украденными двигателями"),
+		list("en" = "\[REDACTED\]", "ru" = "\[УДАЛЕНО\]"),
+		list("en" = "flew into the sunset, and melted", "ru" = "улетел в закат и расплавился"),
+		list("en" = "learned something from a very wise cow, and left on its own", "ru" = "узнал нечто от очень мудрой коровы и ушёл сам по себе"),
+		list("en" = "had cloning devices on it", "ru" = "оказался оборудован клонирующими устройствами"),
+		list("en" = "had its shuttle inspector put the shuttle in reverse instead of park, causing the shuttle to crash into the hangar", "ru" = "пострадал из-за инспектора, который вместо парковки включил задний ход и врезал шаттл в ангар"),
+	)
+	var/message = "Your emergency shuttle [cause["en"]]. "
+	var/message_ru = "Ваш аварийный шаттл [cause["ru"]]. "
 
 	if(SSshuttle.shuttle_insurance)
 		message += "Luckily, your shuttle insurance has covered the costs of repair!"
+		message_ru += "К счастью, страховка шаттла покрыла стоимость ремонта!"
 		if(SSeconomy.get_dep_account(ACCOUNT_CAR))
 			message += " You have been awarded a bonus from [command_name()] for smart spending."
+			message_ru += " Вам также начислена премия от [command_name()] за разумные траты."
 	else
 		message += "Your replacement shuttle will be the [new_shuttle.name] until further notice."
-	priority_announce(message, "[command_name()] Spacecraft Engineering")
+		message_ru += " Вашим временным заменяющим шаттлом будет [new_shuttle.name] до дальнейших распоряжений."
+	priority_announce(message, "[command_name()] Spacecraft Engineering", text_ru = message_ru, title_ru = "[command_name()] Корабельная инженерия")
 
 /datum/round_event/shuttle_catastrophe/setup()
 	if(SSshuttle.shuttle_insurance || !isnull(new_shuttle)) //If an admin has overridden it don't re-roll it

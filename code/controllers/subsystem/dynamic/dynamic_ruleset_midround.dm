@@ -53,7 +53,13 @@
 	addtimer(CALLBACK(src, PROC_REF(announce_spiders)), rand(375, 600) SECONDS)
 
 /datum/dynamic_ruleset/midround/spiders/proc/announce_spiders()
-	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)
+	priority_announce(
+		"Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.",
+		"Lifesign Alert",
+		ANNOUNCER_ALIENS,
+		text_ru = "На борту [station_name()] обнаружены неопознанные формы жизни. Герметизируйте все внешние входы, включая воздуховоды и вентиляцию.",
+		title_ru = "Тревога: биосигналы",
+	)
 
 /datum/dynamic_ruleset/midround/spiders/false_alarm()
 	announce_spiders()
@@ -134,28 +140,34 @@
 		payoff = max(PAYOFF_MIN, FLOOR(account.account_balance * 0.80, 1000))
 	var/datum/comm_message/threat = chosen_gang.generate_message(payoff)
 	//send message
-	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", SSstation.announcer.get_rand_report_sound())
+	priority_announce(
+		"Incoming subspace communication. Secure channel opened at all communication consoles.",
+		"Incoming Message",
+		SSstation.announcer.get_rand_report_sound(),
+		text_ru = "Входящая подпространственная связь. Защищённый канал открыт на всех консолях связи.",
+		title_ru = "Входящее сообщение",
+	)
 	threat.answer_callback = CALLBACK(src, PROC_REF(pirates_answered), threat, chosen_gang, payoff, world.time)
 	addtimer(CALLBACK(src, PROC_REF(spawn_pirates), threat, chosen_gang), RESPONSE_MAX_TIME)
 	GLOB.communications_controller.send_message(threat, unique = TRUE)
 
 /datum/dynamic_ruleset/midround/pirates/proc/pirates_answered(datum/comm_message/threat, datum/pirate_gang/chosen_gang, payoff, initial_send_time)
 	if(world.time > initial_send_time + RESPONSE_MAX_TIME)
-		priority_announce(chosen_gang.response_too_late, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
+		priority_announce(chosen_gang.response_too_late, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color, text_ru = chosen_gang.response_too_late_ru)
 		return
 	if(!threat?.answered)
 		return
 	if(threat.answered == NEGATIVE_ANSWER)
-		priority_announce(chosen_gang.response_rejected, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
+		priority_announce(chosen_gang.response_rejected, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color, text_ru = chosen_gang.response_rejected_ru)
 		return
 
 	var/datum/bank_account/plundered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(plundered_account)
 		if(plundered_account.adjust_money(-payoff))
 			chosen_gang.paid_off = TRUE
-			priority_announce(chosen_gang.response_received, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
+			priority_announce(chosen_gang.response_received, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color, text_ru = chosen_gang.response_received_ru)
 		else
-			priority_announce(chosen_gang.response_not_enough, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
+			priority_announce(chosen_gang.response_not_enough, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color, text_ru = chosen_gang.response_not_enough_ru)
 
 /datum/dynamic_ruleset/midround/pirates/proc/spawn_pirates(datum/comm_message/threat, datum/pirate_gang/chosen_gang)
 	if(chosen_gang.paid_off)
@@ -194,7 +206,7 @@
 					header = "Pirate Spawn Here!",
 				)
 
-	priority_announce(chosen_gang.arrival_announcement, sender_override = chosen_gang.ship_name)
+	priority_announce(chosen_gang.arrival_announcement, sender_override = chosen_gang.ship_name, text_ru = chosen_gang.arrival_announcement_ru)
 
 #undef NO_ANSWER
 #undef POSITIVE_ANSWER
@@ -405,7 +417,13 @@
 	return pick(GLOB.blobstart)
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob/false_alarm()
-	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
+	priority_announce(
+		"Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.",
+		"Biohazard Alert",
+		ANNOUNCER_OUTBREAK5,
+		text_ru = "Подтверждена вспышка биоопасности 5-го уровня на борту [station_name()]. Всему персоналу предписано локализовать очаг заражения.",
+		title_ru = "Тревога: биоопасность",
+	)
 
 	// Set status displays to biohazard alert even for false alarm
 	send_status_display_biohazard_alert()
@@ -442,7 +460,13 @@
 	addtimer(CALLBACK(src, PROC_REF(announce_xenos)), rand(375, 600) SECONDS)
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/proc/announce_xenos()
-	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)
+	priority_announce(
+		"Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.",
+		"Lifesign Alert",
+		ANNOUNCER_ALIENS,
+		text_ru = "На борту [station_name()] обнаружены неопознанные формы жизни. Герметизируйте все внешние входы, включая воздуховоды и вентиляцию.",
+		title_ru = "Тревога: биосигналы",
+	)
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/false_alarm()
 	announce_xenos()
@@ -495,7 +519,13 @@
 	candidate.current.move_into_vent(vent)
 
 /datum/dynamic_ruleset/midround/from_ghosts/blood_worms/proc/announce_worms()
-	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)
+	priority_announce(
+		"Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.",
+		"Lifesign Alert",
+		ANNOUNCER_ALIENS,
+		text_ru = "На борту [station_name()] обнаружены неопознанные формы жизни. Герметизируйте все внешние входы, включая воздуховоды и вентиляцию.",
+		title_ru = "Тревога: биосигналы",
+	)
 
 /datum/dynamic_ruleset/midround/from_ghosts/blood_worms/false_alarm()
 	announce_worms()
@@ -556,7 +586,12 @@
 	addtimer(CALLBACK(src, PROC_REF(announce_space_dragon)), rand(5, 10) SECONDS)
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/proc/announce_space_dragon()
-	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
+	priority_announce(
+		"A large organic energy flux has been recorded near of [station_name()], please stand-by.",
+		"Lifesign Alert",
+		text_ru = "Рядом со [station_name()] зафиксирован крупный органический всплеск энергии. Ожидайте дальнейших указаний.",
+		title_ru = "Тревога: биосигналы",
+	)
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/false_alarm()
 	announce_space_dragon()

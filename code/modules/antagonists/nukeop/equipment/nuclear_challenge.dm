@@ -78,6 +78,9 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	war_was_declared(memo = war_declaration)
 
 /obj/item/nuclear_challenge/proc/war_was_declared(mob/living/user, memo)
+	var/memo_ru
+	if(memo == "A syndicate fringe group has declared their intent to utterly destroy [station_name()] with a nuclear device, and dares the crew to try and stop them.")
+		memo_ru = "Одна из отколовшихся группировок Синдиката объявила о намерении полностью уничтожить [station_name()] ядерным устройством и бросает экипажу вызов остановить её."
 	priority_announce(
 		text = memo,
 		title = "Declaration of War",
@@ -85,6 +88,9 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		has_important_message = TRUE,
 		sender_override = "Nuclear Operative Outpost",
 		color_override = "red",
+		text_ru = memo_ru,
+		title_ru = "Объявление войны",
+		sender_override_ru = "Форпост ядерных оперативников",
 	)
 	if(user)
 		to_chat(user, "You've attracted the attention of powerful forces within the syndicate. \
@@ -190,6 +196,9 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 	if(are_you_sure != "I'm sure")
 		return
 #endif
+	var/memo_ru
+	if(memo == "A syndicate fringe group has declared their intent to utterly destroy [station_name()] with a nuclear device, and dares the crew to try and stop them.")
+		memo_ru = "Одна из отколовшихся группировок Синдиката объявила о намерении полностью уничтожить [station_name()] ядерным устройством и бросает экипажу вызов остановить её."
 
 	priority_announce(
 		text = memo,
@@ -198,6 +207,9 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		has_important_message = TRUE,
 		sender_override = "Nuclear Operative Outpost",
 		color_override = "red",
+		text_ru = memo_ru,
+		title_ru = "Объявление войны",
+		sender_override_ru = "Форпост ядерных оперативников",
 	)
 
 /obj/item/nuclear_challenge/literally_just_does_the_message/distribute_tc()

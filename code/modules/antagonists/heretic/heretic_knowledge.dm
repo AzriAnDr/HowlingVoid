@@ -640,6 +640,8 @@
 	/// %NAME% is replaced with the heretic's real name,
 	/// and %SPOOKY% is replaced with output from [generate_heretic_text]
 	var/announcement_text
+	/// Russian version of the ascension announcement text.
+	var/announcement_text_ru
 	/// The sound that's played for the ascension announcement.
 	var/announcement_sound
 
@@ -711,6 +713,7 @@
 		title = generate_heretic_text(),
 		sound = announcement_sound,
 		color_override = "pink",
+		text_ru = announcement_text_ru ? replacetext(replacetext(announcement_text_ru, "%NAME%", user.real_name), "%SPOOKY%", GLOBAL_PROC_REF(generate_heretic_text)) : null,
 	)
 
 	if(EMERGENCY_IDLE_OR_RECALLED)

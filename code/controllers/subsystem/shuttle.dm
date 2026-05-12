@@ -282,6 +282,9 @@ SUBSYSTEM_DEF(shuttle)
 			sound = ANNOUNCER_SHUTTLECALLED,
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "orange",
+			text_ru = "Зафиксированы катастрофические потери экипажа: активированы кризисные протоколы аварийного шаттла. Сигналы отзыва подавляются на всех частотах.",
+			title_ru = "Аварийный шаттл отправлен",
+			sender_override_ru = "Канал оповещения аварийного шаттла",
 		)
 		if(EMERGENCY_IDLE_OR_RECALLED || emergency.timeLeft(1) > emergency_call_time * ALERT_COEFF_AUTOEVAC_CRITICAL)
 			emergency.request(null, set_coefficient = ALERT_COEFF_AUTOEVAC_CRITICAL)
@@ -296,6 +299,9 @@ SUBSYSTEM_DEF(shuttle)
 			sound = ANNOUNCER_SHUTTLE, // NOVA EDIT CHANGE - Announcer Sounds - ORIGINAL: sound = 'sound/announcer/announcement/announce_dig.ogg',
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "grey",
+			text_ru = "Обнаружены помехи в канале аварийного шаттла. Вызов шаттла заблокирован, пока система проходит повторную инициализацию. Ожидаемое восстановление через [DisplayTimeText(lockout_timer, round_seconds_to = 60)].",
+			title_ru = "Помехи канала",
+			sender_override_ru = "Канал оповещения аварийного шаттла",
 		)
 		addtimer(CALLBACK(src, PROC_REF(unblock_recall)), lockout_timer)
 		return
@@ -310,6 +316,9 @@ SUBSYSTEM_DEF(shuttle)
 			sound = ANNOUNCER_SHUTTLE, // NOVA EDIT CHANGE - Announcer Sounds - ORIGINAL: sound = 'sound/announcer/announcement/announce_dig.ogg',
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "green",
+			text_ru = "Сервисы канала аварийного шаттла снова работают в штатном режиме.",
+			title_ru = "Канал восстановлен",
+			sender_override_ru = "Канал оповещения аварийного шаттла",
 		)
 		return
 	emergency_no_recall = FALSE
@@ -615,6 +624,9 @@ SUBSYSTEM_DEF(shuttle)
 			sound = 'sound/announcer/notice/notice1.ogg',
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "grey",
+			text_ru = "Отправление отложено на неопределённый срок до устранения враждебной обстановки.",
+			title_ru = "Обнаружена враждебная обстановка",
+			sender_override_ru = "Канал оповещения аварийного шаттла",
 		)
 	if(!emergency_no_escape && (emergency.mode == SHUTTLE_STRANDED || emergency.mode == SHUTTLE_DOCKED))
 		emergency.mode = SHUTTLE_DOCKED
@@ -625,6 +637,9 @@ SUBSYSTEM_DEF(shuttle)
 			sound = ANNOUNCER_SHUTTLE, // NOVA EDIT CHANGE - Announcer Sounds - ORIGINAL: sound = 'sound/announcer/announcement/announce_dig.ogg',
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "green",
+			text_ru = "У вас есть [DisplayTimeText(emergency_dock_time)] на посадку в аварийный шаттл.",
+			title_ru = "Враждебная обстановка устранена",
+			sender_override_ru = "Канал оповещения аварийного шаттла",
 		)
 
 //try to move/request to dock_home if possible, otherwise dock_away. Mainly used for admin buttons

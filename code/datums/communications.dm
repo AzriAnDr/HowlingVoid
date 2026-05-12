@@ -40,7 +40,12 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 	if(!can_announce(user, is_silicon))
 		return FALSE
 	if(is_silicon)
-		minor_announce(html_decode(input),"[user.name] announces:", players = players)
+		minor_announce(
+			html_decode(input),
+			"[user.name] announces:",
+			players = players,
+			title_ru = "[user.name] объявляет:",
+		)
 		COOLDOWN_START(src, silicon_message_cooldown, COMMUNICATION_COOLDOWN_AI)
 	else
 		var/list/message_data = user.treat_message(input)
@@ -142,6 +147,8 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 			"Security Report",
 			SSstation.announcer.get_rand_report_sound(),
 			color_override = "green",
+			text_ru = "Благодаря неустанной работе наших служб безопасности и разведки в настоящее время не выявлено ни одной достоверной угрозы для [station_name()]. Все строительные проекты станции одобрены. Удачной смены!",
+			title_ru = "Отчёт службы безопасности",
 		)
 	else if(CONFIG_GET(flag/roundstart_blue_alert))
 		if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_BLUE)
@@ -152,12 +159,16 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 			"Security level elevated.",
 			ANNOUNCER_INTERCEPT,
 			color_override = SSsecurity_level.current_security_level.announcement_color,
+			text_ru = "[SSsecurity_level.current_security_level.elevating_to_announcement]\n\nСводка была скопирована и распечатана на всех консолях связи.",
+			title_ru = "Уровень угрозы повышен.",
 		)
 	else
 		priority_announce(
 			"A summary of the station's situation has been copied and printed to all communications consoles.",
 			"Security Report",
 			SSstation.announcer.get_rand_report_sound(),
+			text_ru = "Сводка о текущем положении станции была скопирована и распечатана на всех консолях связи.",
+			title_ru = "Отчёт службы безопасности",
 		)
 
 #endif

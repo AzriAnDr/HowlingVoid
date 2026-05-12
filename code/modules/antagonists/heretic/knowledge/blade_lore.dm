@@ -250,6 +250,7 @@
 
 	ascension_achievement = /datum/award/achievement/misc/blade_ascension
 	announcement_text = "%SPOOKY% Master of blades, the Torn Champion's disciple, %NAME% has ascended! Their steel is that which will cut reality in a maelstom of silver! %SPOOKY%"
+	announcement_text_ru = "%SPOOKY% Владыка клинков, ученик Разорванного Чемпиона, %NAME% вознёсся! Его сталь рассечёт саму реальность в серебряном маэльстроме! %SPOOKY%"
 	announcement_sound = 'sound/music/antag/heretic/ascend_blade.ogg'
 
 /datum/heretic_knowledge/ultimate/blade_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)

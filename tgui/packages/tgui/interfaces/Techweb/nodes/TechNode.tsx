@@ -24,7 +24,7 @@ type Props = {
 
 export function TechNode(props: Props) {
   const { act, data } = useRemappedBackend();
-  const { t } = usePreferencesLocalization(data);
+  const { t } = usePreferencesLocalization(data, 'rnd');
   const {
     node_cache,
     design_cache,
@@ -108,7 +108,7 @@ export function TechNode(props: Props) {
                   disabled={!can_unlock || tier > 1 || queue_nodes.length > 0}
                   onClick={() => act('researchNode', { node_id: id })}
                 >
-                  Research
+                  {t('ui.techweb.research')}
                 </Button>
               ) : enqueued_by_user ? (
                 <Button
@@ -116,11 +116,11 @@ export function TechNode(props: Props) {
                   color="bad"
                   onClick={() => act('dequeueNode', { node_id: id })}
                 >
-                  Dequeue
+                  {t('ui.techweb.dequeue')}
                 </Button>
               ) : id in queue_nodes && !enqueued_by_user ? (
                 <Button icon="check" color="good">
-                  Queued
+                  {t('ui.techweb.queued')}
                 </Button>
               ) : (
                 <Button
@@ -132,7 +132,7 @@ export function TechNode(props: Props) {
                   }
                   onClick={() => act('enqueueNode', { node_id: id })}
                 >
-                  Enqueue
+                  {t('ui.techweb.enqueue')}
                 </Button>
               ))}
             {!nodetails && (
@@ -142,7 +142,7 @@ export function TechNode(props: Props) {
                   setTechwebRoute({ route: 'details', selectedNode: id });
                 }}
               >
-                Details
+                {t('ui.common.details')}
               </Button>
             )}
           </>
@@ -225,8 +225,10 @@ export function TechNode(props: Props) {
             return (
               <Experiment key={thisExp.name} exp={thisExp}>
                 <Box className="Techweb__ExperimentDiscount">
-                  Provides a discount of {discount_experiments[k]} points to all
-                  required point pools.
+                  {t(
+                    'ui.techweb.provides_discount',
+                    'Provides a discount of {points} points to all required point pools.',
+                  ).replace('{points}', `${discount_experiments[k]}`)}
                 </Box>
               </Experiment>
             );

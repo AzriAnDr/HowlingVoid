@@ -17,4 +17,4 @@
 /datum/round_event/anomaly/anomaly_vortex/announce(fake)
 	if(isnull(impact_area))
 		impact_area = placer.findValidArea()
-	priority_announce("Localized high-intensity vortex anomaly detected on [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.name]", "Anomaly Alert", ANNOUNCER_VORTEXANOMALIES) //NOVA EDIT CHANGE - ORIGINAL: priority_announce("Localized high-intensity vortex anomaly detected on [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.name]", "Anomaly Alert")
+	priority_announce("Localized high-intensity vortex anomaly detected on [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.name]", "Anomaly Alert", ANNOUNCER_VORTEXANOMALIES, text_ru = "Зафиксирована локальная высокоинтенсивная вихревая аномалия. Локальные сканеры определили область: [impact_area.name].", title_ru = "Тревога аномалии") //NOVA EDIT CHANGE - ORIGINAL: priority_announce("Localized high-intensity vortex anomaly detected on [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.name]", "Anomaly Alert")

@@ -1,11 +1,13 @@
 import { Section, VirtualList } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../../localization';
 import { useRemappedBackend } from '../helpers';
 import { TechNode } from '../nodes/TechNode';
 import type { TechwebNode } from '../types';
 
 export function TechwebDesignDisk(props) {
   const { data } = useRemappedBackend();
+  const { t } = usePreferencesLocalization(data, 'rnd');
   const { design_cache, d_disk } = data;
   if (!d_disk) return;
 
@@ -14,10 +16,11 @@ export function TechwebDesignDisk(props) {
   return (
     <>
       {blueprints.map((x, i) => (
-        <Section key={i} title={`Slot ${i + 1}`}>
-          {(x === null && 'Empty') || (
+        <Section key={i} title={`${t('ui.techweb.slot')} ${i + 1}`}>
+          {(x === null && t('ui.techweb.empty', 'Empty')) || (
             <>
-              Contains the design for <b>{design_cache[x].name}</b>:<br />
+              {t('ui.techweb.contains_design_for')} <b>{design_cache[x].name}</b>:
+              <br />
               <span
                 className={`${design_cache[x].class} Techweb__DesignIcon`}
               />
