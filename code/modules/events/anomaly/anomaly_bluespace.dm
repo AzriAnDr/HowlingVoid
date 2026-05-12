@@ -16,4 +16,4 @@
 /datum/round_event/anomaly/anomaly_bluespace/announce(fake)
 	if(isnull(impact_area))
 		impact_area = placer.findValidArea()
-	priority_announce("Bluespace instability detected on [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.name].", "Anomaly Alert", ANNOUNCER_MASSIVEBSPACEANOMALIES) //NOVA EDIT CHANGE - ORIGINAL: 	priority_announce("Bluespace instability detected on [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.name].", "Anomaly Alert")
+	priority_announce("Bluespace instability detected on [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.name].", "Anomaly Alert", ANNOUNCER_MASSIVEBSPACEANOMALIES, text_ru = "Обнаружена нестабильность блюспейса. Дальние сканеры указывают на область: [impact_area.name].", title_ru = "Тревога аномалии") //NOVA EDIT CHANGE - ORIGINAL: 	priority_announce("Bluespace instability detected on [ANOMALY_ANNOUNCE_MEDIUM_TEXT] [impact_area.name].", "Anomaly Alert")

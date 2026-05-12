@@ -256,7 +256,13 @@
 ///First crew last second win check and flufftext for [/proc/begin_the_end()]
 /proc/narsie_end_begin_check()
 	if(QDELETED(GLOB.cult_narsie)) // uno
-		priority_announce("Status report? We detected an anomaly, but it disappeared almost immediately.","[command_name()] Higher Dimensional Affairs", 'sound/announcer/notice/notice1.ogg')
+		priority_announce(
+			"Status report? We detected an anomaly, but it disappeared almost immediately.",
+			"[command_name()] Higher Dimensional Affairs",
+			'sound/announcer/notice/notice1.ogg',
+			text_ru = "Требуется отчёт о состоянии. Мы обнаружили аномалию, но она исчезла почти мгновенно.",
+			title_ru = "[command_name()] Отдел высших измерений",
+		)
 		GLOB.cult_narsie = null
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_FAILURE_NARSIE_KILLED), 2 SECONDS)
 		return
@@ -264,17 +270,30 @@
 		text = "An acausal dimensional event has been detected in your sector. Event has been flagged EXTINCTION-CLASS. Directing all available assets toward simulating solutions. SOLUTION ETA: 60 SECONDS.",
 		title = "[command_name()] Higher Dimensional Affairs",
 		sound = 'sound/announcer/alarm/airraid.ogg',
+		text_ru = "В вашем секторе обнаружено акаузальное пространственное событие. Событию присвоен класс ВЫМИРАНИЯ. Все доступные ресурсы направлены на моделирование решений. Расчётное время до готовности решения: 60 секунд.",
+		title_ru = "[command_name()] Отдел высших измерений",
 	)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_end_second_check)), 50 SECONDS)
 
 ///Second crew last second win check and flufftext for [/proc/begin_the_end()]
 /proc/narsie_end_second_check()
 	if(QDELETED(GLOB.cult_narsie)) // dos
-		priority_announce("Simulations aborted, sensors report that the acasual event is normalizing. Good work, crew.","[command_name()] Higher Dimensional Affairs", 'sound/announcer/notice/notice1.ogg')
+		priority_announce(
+			"Simulations aborted, sensors report that the acasual event is normalizing. Good work, crew.",
+			"[command_name()] Higher Dimensional Affairs",
+			'sound/announcer/notice/notice1.ogg',
+			text_ru = "Моделирование прекращено: сенсоры сообщают, что акаузальное событие нормализуется. Отличная работа, экипаж.",
+			title_ru = "[command_name()] Отдел высших измерений",
+		)
 		GLOB.cult_narsie = null
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(cult_ending_helper), CULT_FAILURE_NARSIE_KILLED), 2 SECONDS)
 		return
-	priority_announce("Simulations on acausal dimensional event complete. Deploying solution package now. Deployment ETA: ONE MINUTE. ","[command_name()] Higher Dimensional Affairs")
+	priority_announce(
+		"Simulations on acausal dimensional event complete. Deploying solution package now. Deployment ETA: ONE MINUTE. ",
+		"[command_name()] Higher Dimensional Affairs",
+		text_ru = "Моделирование акаузального пространственного события завершено. Пакет решения развёртывается. Ожидаемое время развёртывания: ОДНА МИНУТА.",
+		title_ru = "[command_name()] Отдел высших измерений",
+	)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_start_destroy_station)), 5 SECONDS)
 
 ///security level and shuttle lockdowns for [/proc/begin_the_end()]
@@ -287,7 +306,13 @@
 ///Third crew last second win check and flufftext for [/proc/begin_the_end()]
 /proc/narsie_apocalypse()
 	if(QDELETED(GLOB.cult_narsie)) // tres
-		priority_announce("Normalization detected! Abort the solution package!","[command_name()] Higher Dimensional Affairs", 'sound/announcer/notice/notice1.ogg')
+		priority_announce(
+			"Normalization detected! Abort the solution package!",
+			"[command_name()] Higher Dimensional Affairs",
+			'sound/announcer/notice/notice1.ogg',
+			text_ru = "Обнаружена нормализация! Отмените развёртывание пакета решения!",
+			title_ru = "[command_name()] Отдел высших измерений",
+		)
 		SSshuttle.clearHostileEnvironment(GLOB.cult_narsie)
 		GLOB.cult_narsie = null
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_last_second_win)), 2 SECONDS)

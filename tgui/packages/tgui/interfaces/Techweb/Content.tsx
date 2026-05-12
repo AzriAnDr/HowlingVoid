@@ -7,7 +7,7 @@ import { TechwebRouter } from './Router';
 
 export function TechwebContent(props) {
   const { act, data } = useRemappedBackend();
-  const { t } = usePreferencesLocalization(data);
+  const { t } = usePreferencesLocalization(data, 'rnd');
   const {
     d_disk,
     node_cache,
@@ -48,12 +48,12 @@ export function TechwebContent(props) {
                   ? Object.keys(queue_nodes).map((node_id) => (
                       <Button
                         key={node_id}
-                        tooltip={`Added by: ${queue_nodes[node_id]}`}
+                        tooltip={`${t('ui.techweb.added_by')}: ${queue_nodes[node_id]}`}
                       >
                         {node_cache[node_id].name}
                       </Button>
                     ))
-                  : t('ui.common.empty')}
+                  : t('ui.techweb.empty', 'Empty')}
               </LabeledList.Item>
             </LabeledList>
           </Flex.Item>

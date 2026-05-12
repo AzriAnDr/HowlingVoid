@@ -20,7 +20,9 @@
 /datum/round_event/aurora_caelus/announce(fake)
 	priority_announce("[station_name()]: A harmless cloud of ions is approaching your station, and will exhaust their energy battering the hull. Nanotrasen has approved a short break for all employees to relax and observe this very rare event. During this time, starlight will be bright but gentle, shifting between quiet green and blue colors. Any staff who would like to view these lights for themselves may proceed to the area nearest to them with viewing ports to open space. We hope you enjoy the lights.",
 	sound = 'sound/announcer/notice/notice2.ogg',
-	sender_override = "Nanotrasen Meteorology Division")
+	sender_override = "Nanotrasen Meteorology Division",
+	text_ru = "[station_name()]: К вашей станции приближается безвредное ионное облако, которое исчерпает свою энергию, ударяясь о корпус. Nanotrasen одобрила короткий перерыв, чтобы сотрудники смогли расслабиться и понаблюдать за этим редким явлением. В это время звёздный свет станет ярким, но мягким, переливаясь спокойными зелёными и голубыми оттенками. Все желающие могут пройти к ближайшим обзорным окнам, выходящим в открытый космос. Надеемся, вы получите удовольствие от этого зрелища.",
+	sender_override_ru = "Метеорологический департамент Nanotrasen")
 	if (fake)
 		return
 	for(var/V in GLOB.player_list)
@@ -68,7 +70,9 @@
 	fade_kitchen()
 	priority_announce("The aurora caelus event is now ending. Starlight conditions will slowly return to normal. When this has concluded, please return to your workplace and continue work as normal. Have a pleasant shift, [station_name()], and thank you for watching with us.",
 	sound = 'sound/announcer/notice/notice2.ogg',
-	sender_override = "Nanotrasen Meteorology Division")
+	sender_override = "Nanotrasen Meteorology Division",
+	text_ru = "Явление Aurora Caelus подходит к концу. Условия звёздного освещения постепенно вернутся к норме. После завершения эффекта просьба вернуться на рабочие места и продолжить смену в обычном режиме. Приятной смены, [station_name()], и спасибо, что наблюдали вместе с нами.",
+	sender_override_ru = "Метеорологический департамент Nanotrasen")
 
 /datum/round_event/aurora_caelus/proc/fade_space(fade_in = FALSE)
 	set waitfor = FALSE

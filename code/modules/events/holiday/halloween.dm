@@ -23,7 +23,12 @@
 		qdel(bird)
 
 /datum/round_event/spooky/announce(fake)
-	priority_announce(pick("RATTLE ME BONES!","THE RIDE NEVER ENDS!", "A SKELETON POPS OUT!", "SPOOKY SCARY SKELETONS!", "CREWMEMBERS BEWARE, YOU'RE IN FOR A SCARE!") , "THE CALL IS COMING FROM INSIDE THE HOUSE")
+	priority_announce(
+		pick("RATTLE ME BONES!","THE RIDE NEVER ENDS!", "A SKELETON POPS OUT!", "SPOOKY SCARY SKELETONS!", "CREWMEMBERS BEWARE, YOU'RE IN FOR A SCARE!"),
+		"THE CALL IS COMING FROM INSIDE THE HOUSE",
+		text_ru = pick("ГРЕМИ МОИ КОСТИ!","ПОЕЗДКА НИКОГДА НЕ КОНЧАЕТСЯ!","СКЕЛЕТ ВЫПРЫГИВАЕТ ИЗ ШКАФА!","ЖУТКИЕ СТРАШНЫЕ СКЕЛЕТЫ!","ЭКИПАЖ, БЕРЕГИТЕСЬ, ВАС ЖДЁТ ИСПУГ!"),
+		title_ru = "ЗВОНОК ИДЁТ ИЗНУТРИ ДОМА",
+	)
 
 //spooky foods (you can't actually make these when it's not halloween)
 /obj/item/food/cookie/sugar/spookyskull

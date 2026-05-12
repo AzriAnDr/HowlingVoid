@@ -138,7 +138,12 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 		caller_card.use_charge(user)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(summon_battlecruiser), caller_card.team), rand(20 SECONDS, 1 MINUTES))
 		playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
-		priority_announce("Attention crew: deep-space sensors detect a Syndicate battlecruiser-class signature subspace rift forming near your station. Estimated time until arrival: three to five minutes.", "[command_name()] High-Priority Update") //NOVA EDIT ADDITION: announcement on battlecruiser call
+		priority_announce(
+			"Attention crew: deep-space sensors detect a Syndicate battlecruiser-class signature subspace rift forming near your station. Estimated time until arrival: three to five minutes.",
+			"[command_name()] High-Priority Update",
+			text_ru = "Внимание, экипаж: дальние сенсоры фиксируют формирование подпространственного разлома с сигнатурой синдикатского линейного крейсера рядом с вашей станцией. Ориентировочное время прибытия: от трёх до пяти минут.",
+			title_ru = "[command_name()] Срочное оповещение",
+		) //NOVA EDIT ADDITION: announcement on battlecruiser call
 		return TRUE
 
 	if(obj_flags & EMAGGED)
@@ -290,7 +295,12 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 			bank_account.adjust_money(-shuttle.credit_cost)
 
 			var/purchaser_name = (obj_flags & EMAGGED) ? scramble_message_replace_chars("AUTHENTICATION FAILURE: CVE-2018-17107", 60) : user.real_name
-			minor_announce("[purchaser_name] has purchased [shuttle.name] for [shuttle.credit_cost] [MONEY_NAME].[shuttle.extra_desc ? " [shuttle.extra_desc]" : ""]" , "Shuttle Purchase")
+			minor_announce(
+				"[purchaser_name] has purchased [shuttle.name] for [shuttle.credit_cost] [MONEY_NAME].[shuttle.extra_desc ? " [shuttle.extra_desc]" : ""]",
+				"Shuttle Purchase",
+				message_ru = "[purchaser_name] приобрёл(а) [shuttle.name] за [shuttle.credit_cost] [MONEY_NAME].[shuttle.extra_desc ? " [shuttle.extra_desc]" : ""]",
+				title_ru = "Покупка шаттла",
+			)
 
 			message_admins("[ADMIN_LOOKUPFLW(user)] purchased [shuttle.name].")
 			log_shuttle("[key_name(user)] has purchased [shuttle.name].")
@@ -310,7 +320,13 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 			nuke_request(reason, user)
 			to_chat(user, span_notice("Request sent."))
 			user.log_message("has requested the nuclear codes from CentCom with reason \"[reason]\"", LOG_SAY)
-			priority_announce("The codes for the on-station nuclear self-destruct have been requested by [user]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self-Destruct Codes Requested", SSstation.announcer.get_rand_report_sound())
+			priority_announce(
+				"The codes for the on-station nuclear self-destruct have been requested by [user]. Confirmation or denial of this request will be sent shortly.",
+				"Nuclear Self-Destruct Codes Requested",
+				SSstation.announcer.get_rand_report_sound(),
+				text_ru = "[user] запросил(а) коды активации станционного ядерного самоуничтожения. Подтверждение или отказ будут отправлены в ближайшее время.",
+				title_ru = "Запрошены коды ядерного самоуничтожения",
+			)
 			playsound(src, 'sound/machines/terminal/terminal_prompt.ogg', 50, FALSE)
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
 		if ("restoreBackupRoutingData")
@@ -462,7 +478,10 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 			SSjob.safe_code_request_loc = pod_location
 			SSjob.safe_code_requested = TRUE
 			SSjob.safe_code_timer_id = addtimer(CALLBACK(SSjob, TYPE_PROC_REF(/datum/controller/subsystem/job, send_spare_id_safe_code), pod_location), 120 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE)
-			minor_announce("Due to staff shortages, your station has been approved for delivery of access codes to secure the Captain's Spare ID. Delivery via drop pod at [get_area(pod_location)]. ETA 120 seconds.")
+			minor_announce(
+				"Due to staff shortages, your station has been approved for delivery of access codes to secure the Captain's Spare ID. Delivery via drop pod at [get_area(pod_location)]. ETA 120 seconds.",
+				message_ru = "Из-за нехватки персонала вашей станции одобрена доставка кодов доступа к сейфу с запасной ID-картой капитана. Доставка дропподом в [get_area(pod_location)]. Ожидаемое время: 120 секунд.",
+			)
 		// NOVA EDIT ADDITION START
 		if ("messagethefeds")
 			if(!message_federation(usr))
@@ -543,7 +562,7 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 	var/name_to_send = "[CONFIG_GET(string/cross_comms_name)]([station_name()])" //NOVA EDIT ADDITION
 
 	send2otherserver(html_decode(name_to_send), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload) //NOVA EDIT END
-	minor_announce(message, title = "Outgoing message to allied station")
+	minor_announce(message, title = "Outgoing message to allied station", title_ru = "Исходящее сообщение союзной станции")
 	user.log_talk(message, LOG_SAY, tag = "message to the other server")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has sent a message to the other server\[s].")
 	deadchat_broadcast(" has sent an outgoing message to the other station(s).</span>", "<span class='bold'>[user.real_name]", user, message_type = DEADCHAT_ANNOUNCEMENT)
@@ -925,6 +944,8 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 			priority_announce(
 				"Attention crew: sector monitoring reports a jump-trace from an unidentified vessel destined for your system. Prepare for probable contact.",
 				"[command_name()] High-Priority Update",
+				text_ru = "Внимание, экипаж: секторный мониторинг зафиксировал след прыжка неопознанного судна, направляющегося в вашу систему. Приготовьтесь к вероятному контакту.",
+				title_ru = "[command_name()] Срочное оповещение",
 			)
 			SSdynamic.force_run_midround(/datum/dynamic_ruleset/midround/from_ghosts/fugitives)
 
@@ -932,6 +953,8 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 			priority_announce(
 				"Attention crew, it appears that someone on your station has hijacked your telecommunications and broadcasted an unknown signal.",
 				"[command_name()] High-Priority Update",
+				text_ru = "Внимание, экипаж: похоже, кто-то на вашей станции захватил телекоммуникации и передал неизвестный сигнал.",
+				title_ru = "[command_name()] Срочное оповещение",
 			)
 			var/max_number_of_sleepers = clamp(round(length(GLOB.alive_player_list) / 40), 1, 3)
 			if(!SSdynamic.force_run_midround(/datum/dynamic_ruleset/midround/from_living/traitor, forced_max_cap = max_number_of_sleepers))

@@ -82,7 +82,10 @@
 /datum/job/human_ai/announce_job(mob/living/joining_mob)
 	. = ..()
 	if(SSticker.HasRoundStarted())
-		minor_announce("Due to a research mishap, [joining_mob] has been sent to be your replacement AI at [AREACOORD(joining_mob)]. Please treat them with respect.")
+		minor_announce(
+			"Due to a research mishap, [joining_mob] has been sent to be your replacement AI at [AREACOORD(joining_mob)]. Please treat them with respect.",
+			message_ru = "Из-за исследовательского инцидента [joining_mob] был(а) направлен(а) в качестве вашего заменяющего ИИ по координатам [AREACOORD(joining_mob)]. Пожалуйста, относитесь к нему(ней) с уважением.",
+		)
 
 /datum/job/human_ai/get_radio_information()
 	return "<b>Prefix your message with :b to speak with cyborgs.</b>"

@@ -14,7 +14,7 @@ enum Tab {
 
 export function TechwebOverview(props) {
   const { data } = useRemappedBackend();
-  const { t } = usePreferencesLocalization(data);
+  const { t } = usePreferencesLocalization(data, 'rnd');
   const { nodes, node_cache, design_cache } = data;
   const [tabIndex, setTabIndex] = useState(Tab.AVAILABLE);
   const [searchText, setSearchText] = useState('');
@@ -53,7 +53,7 @@ export function TechwebOverview(props) {
       <Flex.Item>
         <Flex justify="space-between" className="Techweb__HeaderSectionTabs">
           <Flex.Item align="center" className="Techweb__HeaderTabTitle">
-            Web View
+            {t('ui.techweb.web_view')}
           </Flex.Item>
           <Flex.Item grow>
             <Tabs>
@@ -61,19 +61,19 @@ export function TechwebOverview(props) {
                 selected={!searching && tabIndex === Tab.RESEARCHED}
                 onClick={() => switchTab(0)}
               >
-                Researched
+                {t('ui.techweb.researched')}
               </Tabs.Tab>
               <Tabs.Tab
                 selected={!searching && tabIndex === Tab.AVAILABLE}
                 onClick={() => switchTab(1)}
               >
-                Available
+                {t('ui.techweb.available')}
               </Tabs.Tab>
               <Tabs.Tab
                 selected={!searching && tabIndex === Tab.FUTURE}
                 onClick={() => switchTab(2)}
               >
-                Future
+                {t('ui.techweb.future')}
               </Tabs.Tab>
               {!!searching && (
                 <Tabs.Tab selected>{t('ui.techweb.search_results')}</Tabs.Tab>

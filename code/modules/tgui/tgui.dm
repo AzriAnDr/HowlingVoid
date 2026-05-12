@@ -283,6 +283,7 @@
 			"address" = user.client.address,
 			"computer_id" = user.client.computer_id,
 			"interface_language" = user.client.prefs.read_preference(/datum/preference/choiced/interface_language),
+			"panel_languages" = build_panel_languages_payload(user.client.prefs),
 		),
 		"user" = list(
 			"name" = "[user]",

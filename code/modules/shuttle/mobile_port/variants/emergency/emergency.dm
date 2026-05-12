@@ -57,7 +57,10 @@
 		sound = ANNOUNCER_SHUTTLECALLED,
 		sender_override = "Emergency Shuttle Uplink Alert",
 		color_override = "orange",
-		)
+		text_ru = "Аварийный шаттл вызван. [red_alert ? "Подтверждён код красный: отправляется приоритетный шаттл. " : "" ]Он прибудет через [timeLeft(60 SECONDS)] мин.[reason][SSshuttle.emergency_last_call_loc ? "\n\nИсточник сигнала вызова установлен. Результаты доступны на любой консоли связи." : "" ][SSshuttle.admin_emergency_no_recall ? "\n\nВнимание: подпрограммы отзыва шаттла отключены; отзыв невозможен." : ""]",
+		title_ru = "Аварийный шаттл отправлен",
+		sender_override_ru = "Канал оповещения аварийного шаттла",
+	)
 
 /// This proc will assume you have done all of the necessary checks to see if the shuttle can be recalled, it will always recall when invoked.
 /// signal_origin is an optional parameter that will log where the recall signal was sent from
@@ -79,7 +82,10 @@
 		sound = ANNOUNCER_SHUTTLERECALLED,
 		sender_override = "Emergency Shuttle Uplink Alert",
 		color_override = "orange",
-		)
+		text_ru = "Вызов аварийного шаттла отменён.[SSshuttle.emergency_last_call_loc ? " Источник сигнала отзыва установлен. Результаты доступны на любой консоли связи." : "" ]",
+		title_ru = "Аварийный шаттл отозван",
+		sender_override_ru = "Канал оповещения аварийного шаттла",
+	)
 
 	SSticker.emergency_reason = null
 
@@ -174,6 +180,9 @@
 					sound = ANNOUNCER_SHUTTLEDOCK,
 					sender_override = "Emergency Shuttle Uplink Alert",
 					color_override = "orange",
+					text_ru = "[SSshuttle.emergency] пристыковался к станции. У вас есть [DisplayTimeText(SSshuttle.emergency_dock_time)] на посадку в аварийный шаттл.",
+					title_ru = "Прибытие аварийного шаттла",
+					sender_override_ru = "Канал оповещения аварийного шаттла",
 				)
 				ShuttleDBStuff()
 				addtimer(CALLBACK(src, PROC_REF(announce_shuttle_events)), 20 SECONDS)
@@ -237,6 +246,9 @@
 					title = "Emergency Shuttle Departure",
 					sender_override = "Emergency Shuttle Uplink Alert",
 					color_override = "orange",
+					text_ru = "Аварийный шаттл покинул станцию. Ориентировочное время до стыковки с [command_name()]: [timeLeft(60 SECONDS)] мин.",
+					title_ru = "Отправление аварийного шаттла",
+					sender_override_ru = "Канал оповещения аварийного шаттла",
 				)
 				INVOKE_ASYNC(SSticker, TYPE_PROC_REF(/datum/controller/subsystem/ticker, poll_hearts))
 				INVOKE_ASYNC(SSvote, TYPE_PROC_REF(/datum/controller/subsystem/vote, initiate_vote), /datum/vote/map_vote, vote_initiator_name = "Map Rotation", forced = TRUE)
@@ -283,9 +295,13 @@
 					// just double check
 					SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 					destination_dock = "emergency_syndicate"
-					minor_announce("Corruption detected in \
-						shuttle navigation protocols. Please contact your \
-						supervisor.", "SYSTEM ERROR:", sound_override = 'sound/announcer/announcement/announce_syndi.ogg')
+					minor_announce(
+						"Corruption detected in shuttle navigation protocols. Please contact your supervisor.",
+						"SYSTEM ERROR:",
+						sound_override = 'sound/announcer/announcement/announce_syndi.ogg',
+						message_ru = "Обнаружено повреждение навигационных протоколов шаттла. Пожалуйста, свяжитесь со своим руководителем.",
+						title_ru = "СИСТЕМНАЯ ОШИБКА:",
+					)
 
 				dock_id(destination_dock)
 				unbolt_all_doors() // NOVA EDIT ADDITION
@@ -305,6 +321,9 @@
 		title = "Emergency Shuttle Transit Failure",
 		sender_override = "Emergency Shuttle Uplink Alert",
 		color_override = "orange",
+		text_ru = "Аварийный шаттл готовится к прямому прыжку. Ориентировочное время до стыковки с [command_name()]: [timeLeft(60 SECONDS)] мин.",
+		title_ru = "Сбой транзита аварийного шаттла",
+		sender_override_ru = "Канал оповещения аварийного шаттла",
 	)
 
 ///Generate a list of events to run during the departure

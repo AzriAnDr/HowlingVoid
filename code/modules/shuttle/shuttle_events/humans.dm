@@ -48,7 +48,9 @@
 	..()
 
 	minor_announce("We're sending you our bravest interns, please let them in when they arrive.",
-		title = "Emergency Shuttle", alert = TRUE)
+		title = "Emergency Shuttle", alert = TRUE,
+		message_ru = "Мы отправляем к вам наших самых храбрых стажёров. Пожалуйста, впустите их, когда они прибудут.",
+		title_ru = "Аварийный шаттл")
 
 /datum/shuttle_event/simple_spawner/player_controlled/human/greytide/interns/armed
 	name = "Intern Wave (Armed, 10 interns)"

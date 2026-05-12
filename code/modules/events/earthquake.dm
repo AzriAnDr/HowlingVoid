@@ -95,7 +95,7 @@
 		underbelly += GET_TURF_BELOW(turf_to_quake)
 
 /datum/round_event/earthquake/announce(fake)
-	priority_announce("Planetary monitoring systems indicate a devastating seismic event in the near future.", "Seismic Report")
+	priority_announce("Planetary monitoring systems indicate a devastating seismic event in the near future.", "Seismic Report", text_ru = "Системы планетарного мониторинга указывают на разрушительное сейсмическое событие в ближайшем будущем.", title_ru = "Сейсмический отчёт")
 
 /datum/round_event/earthquake/start()
 	notify_ghosts(

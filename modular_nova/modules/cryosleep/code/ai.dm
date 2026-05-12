@@ -8,7 +8,12 @@
 	switch(alert("Would you like to enter cryo? This will ghost you. Remember to AHELP before cryoing out of important roles, even with no admins online.",,"Yes.","No."))
 		if("Yes.")
 			src.ghostize(FALSE)
-			minor_announce("Station AI has disconnected from system networks and moved to remote storage. Preparing for new AI personality upload.", "Station AI")
+			minor_announce(
+				"Station AI has disconnected from system networks and moved to remote storage. Preparing for new AI personality upload.",
+				"Station AI",
+				message_ru = "Станционный ИИ отключился от системных сетей и переведён в удалённое хранилище. Подготавливается загрузка новой личности ИИ.",
+				title_ru = "Станционный ИИ",
+			)
 			new /obj/structure/ai_core/latejoin_inactive(loc)
 			if(src.mind)
 				//Handle job slot/tater cleanup.

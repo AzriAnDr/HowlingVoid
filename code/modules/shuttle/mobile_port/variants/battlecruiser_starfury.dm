@@ -178,4 +178,7 @@
 					source = spawner,
 				)
 
-	priority_announce("Unidentified armed ship detected near the station.")
+	priority_announce(
+		"Unidentified armed ship detected near the station.",
+		text_ru = "Рядом со станцией обнаружено неопознанное вооружённое судно.",
+	)

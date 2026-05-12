@@ -26,7 +26,7 @@
 	// whether it's, say, a tesla zapping tcomms, or some selective
 	// modification of the tcomms bus
 	if(prob(80) || fake)
-		priority_announce(alert, "Anomaly Alert")
+		priority_announce(alert, "Anomaly Alert", text_ru = pick("Экзосферный пузырь на подходе. Вероятна перегрузка процессоров. Пожа%@#-БЗЗТ", "Экзосферный пузырь на подходе. Перегрузка процессоров веро*1эта;#-БЗЗЗТ", "Экзосферный пузырь на подх#МКи46:5.;@63-БЗЗЗЗТ", "Экзосферный пузырь приб'Фз\\к55_@-БЗЗЗЗЗТ", "Экзосфери:%Й ЦКбыж^ж</.3-БЗЗЗЗЗЗТ", "!!хы%;ф3л7е,<$^-БЗЗЗЗЗЗТ"), title_ru = "Тревога аномалии")
 
 /datum/round_event/processor_overload/start()
 	for(var/obj/machinery/telecomms/processor/spinny_thing in GLOB.telecomm_machines)

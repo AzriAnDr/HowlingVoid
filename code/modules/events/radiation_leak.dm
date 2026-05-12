@@ -60,7 +60,11 @@
 
 	priority_announce("A radiation leak has been detected in [location_descriptor || "an unknown area"]. \
 		All crew are to evacuate the affected area. Our [pick("mechanics", "engineers", "scientists", "interns", "sensors", "readings")] \
-		report that a machine within is causing it - repair it quickly to stop the leak.", "[command_name()] Engineering Division")
+		report that a machine within is causing it - repair it quickly to stop the leak.", "[command_name()] Engineering Division",
+		text_ru = "В [location_descriptor || "неизвестной зоне"] обнаружена утечка радиации. \
+		Весь экипаж обязан покинуть поражённую область. По данным наших [pick("механиков", "инженеров", "учёных", "стажёров", "датчиков", "замеров")] \
+		источником является одна из машин внутри зоны — срочно отремонтируйте её, чтобы остановить утечку.",
+		title_ru = "[command_name()] Инженерный департамент")
 
 /datum/round_event/radiation_leak/start()
 	var/obj/machinery/the_source_of_our_problems = picked_machine_ref?.resolve()

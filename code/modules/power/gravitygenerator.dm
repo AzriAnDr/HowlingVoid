@@ -425,9 +425,21 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 	if(!SSmapping.level_has_any_trait(z, ZTRAIT_STATION)) // SHUT THE FUCK UP ABANDONED STATIONS, I DON'T CARE
 		return
 	if(on)
-		priority_announce("A gravity generator has successfully restarted its graviton field, artificial gravity is online.", "Gravity Generator", ANNOUNCER_GRAVGENON)
+		priority_announce(
+			"A gravity generator has successfully restarted its graviton field, artificial gravity is online.",
+			"Gravity Generator",
+			ANNOUNCER_GRAVGENON,
+			text_ru = "Генератор гравитации успешно восстановил своё гравитонное поле. Искусственная гравитация активна.",
+			title_ru = "Генератор гравитации",
+		)
 	else
-		priority_announce("A gravity generator has lost its graviton field integrity ballast, artificial gravity is offline.", "Gravity Generator", ANNOUNCER_GRAVGENOFF)
+		priority_announce(
+			"A gravity generator has lost its graviton field integrity ballast, artificial gravity is offline.",
+			"Gravity Generator",
+			ANNOUNCER_GRAVGENOFF,
+			text_ru = "Генератор гравитации потерял устойчивость гравитонного поля. Искусственная гравитация отключена.",
+			title_ru = "Генератор гравитации",
+		)
 	//NOVA EDIT END
 
 /obj/machinery/gravity_generator/main/proc/gravity_in_level()

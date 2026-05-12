@@ -671,6 +671,8 @@ GLOBAL_VAR(station_nuke_source)
 				"Long Range Scanners indicate that the nuclear device has detonated on a previously unknown base, we assume \
 				the base to be of Syndicate Origin. Good work crew.",
 				"Nuclear Operations Command",
+				text_ru = "Дальние сканеры показывают, что ядерное устройство сдетонировало на ранее неизвестной базе. Мы предполагаем, что база имеет происхождение Синдиката. Отличная работа, экипаж.",
+				title_ru = "Командование ядерных операций",
 			)
 
 			var/datum/turf_reservation/syndicate_base = SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
@@ -685,6 +687,8 @@ GLOBAL_VAR(station_nuke_source)
 				"Long Range Scanners indicate that the nuclear device has detonated; however seismic activity on the station \
 				is minimal. We anticipate that the device has not detonated on the station itself.",
 				"Nuclear Operations Command",
+				text_ru = "Дальние сканеры подтверждают детонацию ядерного устройства, однако сейсмическая активность на станции минимальна. Вероятнее всего, устройство сработало не на самой станции.",
+				title_ru = "Командование ядерных операций",
 			)
 
 	if(drop_level)

@@ -1,4 +1,5 @@
 import type { BooleanLike } from 'tgui-core/react';
+import type { UIElementType } from 'common/panelLocalization';
 
 import type { sendAct } from '../../events/act';
 import type {
@@ -258,6 +259,7 @@ export type PreferencesMenuData = {
   character_preferences: CharacterPreferencesData;
 
   content_unlocked: BooleanLike;
+  panel_languages?: Partial<Record<UIElementType, string>>;
 
   job_bans?: string[];
   job_days_left?: Record<string, number>;

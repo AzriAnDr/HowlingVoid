@@ -8,6 +8,8 @@
 /datum/action/innate/summon_rift
 	name = "Summon Rift"
 	desc = "Summon a rift to bring forth a horde of space carp."
+	name_ru = "Призвать Разлом"
+	desc_ru = "Открывает разлом, из которого на станцию хлынет орда космических карпов."
 	background_icon_state = "bg_default"
 	overlay_icon_state = "bg_default_border"
 	button_icon = 'icons/mob/actions/actions_space_dragon.dmi'
@@ -42,7 +44,12 @@
 	dragon.rift_list += new_rift
 	// NOVA EDIT ADDITION START, announce on first rift - reset stats if dragon manages to retry
 	if(!dragon.announced)
-		priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
+		priority_announce(
+			"A large organic energy flux has been recorded near of [station_name()], please stand-by.",
+			"Lifesign Alert",
+			text_ru = "Рядом со [station_name()] зафиксирован крупный органический всплеск энергии. Ожидайте дальнейших указаний.",
+			title_ru = "Тревога: биосигналы",
+		)
 		dragon.announced = TRUE
 	if(HAS_TRAIT(owner, TRAIT_RIFT_FAILURE))
 		REMOVE_TRAIT(owner, TRAIT_RIFT_FAILURE, REF(dragon))
@@ -216,7 +223,13 @@
 	if(time_charged >= max_charge)
 		charge_state = CHARGE_COMPLETED
 		var/area/A = get_area(src)
-		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "[command_name()] Wildlife Observations", has_important_message = TRUE)
+		priority_announce(
+			"Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.",
+			"[command_name()] Wildlife Observations",
+			has_important_message = TRUE,
+			text_ru = "Пространственный объект в зоне [initial(A.name)] достиг пика энергетической зарядки. Ожидайте дальнейших указаний.",
+			title_ru = "[command_name()] Наблюдение за фауной",
+		)
 		atom_integrity = INFINITY
 		icon_state = "carp_rift_charged"
 		set_light_color(LIGHT_COLOR_DIM_YELLOW)
@@ -236,7 +249,13 @@
 	if(charge_state < CHARGE_FINALWARNING && time_charged >= (max_charge * 0.5))
 		charge_state = CHARGE_FINALWARNING
 		var/area/A = get_area(src)
-		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)]. Stop it at all costs!", "[command_name()] Wildlife Observations", ANNOUNCER_SPANOMALIES)
+		priority_announce(
+			"A rift is causing an unnaturally large energy flux in [initial(A.name)]. Stop it at all costs!",
+			"[command_name()] Wildlife Observations",
+			ANNOUNCER_SPANOMALIES,
+			text_ru = "Разлом в зоне [initial(A.name)] вызывает неестественно сильный энергетический всплеск. Остановите его любой ценой!",
+			title_ru = "[command_name()] Наблюдение за фауной",
+		)
 
 /**
  * Used to create carp controlled by ghosts when the option is available.

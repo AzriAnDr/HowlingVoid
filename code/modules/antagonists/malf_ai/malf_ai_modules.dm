@@ -270,7 +270,13 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		active = FALSE
 		return
 	if (owner_AI.stat != DEAD)
-		priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", ANNOUNCER_AIMALF)
+		priority_announce(
+			"Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.",
+			"Anomaly Alert",
+			ANNOUNCER_AIMALF,
+			text_ru = "Во всех системах станции обнаружены враждебные процессы. Пожалуйста, деактивируйте ИИ, чтобы предотвратить возможное повреждение его ядра морали.",
+			title_ru = "Тревога аномалии",
+		)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 		var/obj/machinery/doomsday_device/DOOM = new(owner_AI)
 		owner_AI.nuking = TRUE
@@ -345,7 +351,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /obj/machinery/doomsday_device/process()
 	var/turf/T = get_turf(src)
 	if(!T || !is_station_level(T.z))
-		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
+		minor_announce(
+			"DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING",
+			"ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4",
+			TRUE,
+			message_ru = "УСТРОЙСТВО СУДНОГО ДНЯ ВНЕ ПРЕДЕЛОВ СТАНЦИИ, ОТМЕНА ПРОТОКОЛА",
+		)
 		owner.ShutOffDoomsdayDevice()
 		return
 	if(!timing)
@@ -358,7 +369,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(play_cinematic), /datum/cinematic/malf, world, CALLBACK(src, PROC_REF(trigger_doomsday))), 10 SECONDS)
 
 	else if(world.time >= next_announce)
-		minor_announce("[sec_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
+		minor_announce(
+			"[sec_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!",
+			"ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4",
+			TRUE,
+			message_ru = "ДО АКТИВАЦИИ УСТРОЙСТВА СУДНОГО ДНЯ: [sec_left] СЕКУНД!",
+		)
 		next_announce += DOOMSDAY_ANNOUNCE_INTERVAL
 
 /obj/machinery/doomsday_device/proc/trigger_doomsday()
@@ -412,11 +428,28 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	// Set status displays to lockdown alert
 	send_status_display_lockdown_alert()
 
-	minor_announce("Hostile runtime detected in door controllers. Isolation lockdown protocols are now in effect. Please remain calm.", "Network Alert:", TRUE)
+	minor_announce(
+		"Hostile runtime detected in door controllers. Isolation lockdown protocols are now in effect. Please remain calm.",
+		"Network Alert:",
+		TRUE,
+		message_ru = "Во взломщиках дверных контроллеров обнаружен враждебный процесс. Протоколы изоляционной блокировки уже активированы. Сохраняйте спокойствие.",
+		title_ru = "Сетевая тревога:",
+	)
 	to_chat(owner, span_danger("Lockdown initiated. Network reset in 90 seconds."))
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(minor_announce),
+	addtimer(CALLBACK(
+		GLOBAL_PROC,
+		GLOBAL_PROC_REF(minor_announce),
 		"Automatic system reboot complete. Have a secure day.",
-		"Network reset:"), 90 SECONDS)
+		"Network reset:",
+		FALSE,
+		TRUE,
+		null,
+		null,
+		TRUE,
+		null,
+		"Автоматическая перезагрузка систем завершена. Удачной смены.",
+		"Сброс сети:"
+	), 90 SECONDS)
 	hack_in_progress = FALSE
 
 /// For Lockdown malf AI ability. Opens all doors on the station.

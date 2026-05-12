@@ -36,22 +36,30 @@
 		start_side = pick(GLOB.cardinals)
 
 	var/start_side_text = "unknown"
+	var/start_side_text_ru = "неизвестной"
 	switch(start_side)
 		if(NORTH)
 			start_side_text = "fore"
+			start_side_text_ru = "носовой"
 		if(SOUTH)
 			start_side_text = "aft"
+			start_side_text_ru = "кормовой"
 		if(EAST)
 			start_side_text = "starboard"
+			start_side_text_ru = "правой"
 		if(WEST)
 			start_side_text = "port"
+			start_side_text_ru = "левой"
 		else
 			stack_trace("Sandstorm event given [start_side] as unrecognized direction. Cancelling event...")
 			kill()
 			return
 
 	priority_announce("A large wave of space dust is approaching from the [start_side_text] side of the station. \
-		Impact is expected in the next two minutes. All employees are encouraged to assist in repairs and damage mitigation if possible.", "Collision Emergency Alert")
+		Impact is expected in the next two minutes. All employees are encouraged to assist in repairs and damage mitigation if possible.", "Collision Emergency Alert",
+		text_ru = "К [start_side_text_ru] стороне станции приближается крупная волна космической пыли. \
+		Удар ожидается в течение ближайших двух минут. Всем сотрудникам рекомендуется по возможности помочь с ремонтом и снижением ущерба.",
+		title_ru = "Чрезвычайная тревога столкновения")
 
 /datum/round_event/sandstorm/tick()
 	spawn_meteors(15, GLOB.meteors_sandstorm, start_side)

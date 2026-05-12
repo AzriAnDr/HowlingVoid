@@ -242,6 +242,9 @@ GLOBAL_DATUM_INIT(battle_royale_master, /datum/battle_royale_master, new)
 		has_important_message = TRUE,
 		sender_override = "Rumble Royale Pirate Broadcast Station",
 		color_override = "red",
+		text_ru = "Поздравляем, [station_name()]: именно вы выбраны новой ареной Rumble Royale!\nПо всему сектору зрители будут наблюдать, как наши [length(contestant_implants)] счастливых участника пробиваются в зону [chosen_area] и сражаются, пока на ногах не останется только один.\nЕсли они не успеют добраться туда за пять минут, их дисквалифицируют. Если увидите, что кто-то из участников не справляется с дорогой, можете помочь... или не помогать, если готовы жить с последствиями.\nВ знак признательности мы без доплаты откроем премиум-трансляцию на ваших развлекательных мониторах, чтобы вы могли насладиться зрелищем.\nПосторонним рекомендуется не вмешиваться... но если уж вмешаетесь, сделайте это красиво для камеры!",
+		title_ru = "Начало Rumble Royale",
+		sender_override_ru = "Пиратская вещательная станция Rumble Royale",
 	)
 
 	for (var/obj/item/implant/explosive/battle_royale/contestant_implant as anything in contestant_implants)
@@ -265,6 +268,11 @@ GLOBAL_DATUM_INIT(battle_royale_master, /datum/battle_royale_master, new)
 			message = "Looks like someone removed and destroyed their implant, that's cheating!"
 		else
 			message = "[implant.imp_in.real_name] [pick(euphemisms)] [pick(condolences)]"
+		var/message_ru = ""
+		if (isnull(implant.imp_in))
+			message_ru = "Похоже, кто-то вытащил и уничтожил свой имплант. Это жульничество!"
+		else
+			message_ru = "[implant.imp_in.real_name] [pick(list("выбывает", "падает", "сходит со сцены"))]. [pick(list("Толпа в шоке.", "Какая досада.", "Публика требует ещё зрелищ."))]"
 		priority_announce(
 			text = message,
 			title = "Rumble Royale Casualty Report",
@@ -272,6 +280,9 @@ GLOBAL_DATUM_INIT(battle_royale_master, /datum/battle_royale_master, new)
 			has_important_message = TRUE,
 			sender_override = "Rumble Royale Pirate Broadcast Station",
 			color_override = "red",
+			text_ru = message_ru,
+			title_ru = "Сводка потерь Rumble Royale",
+			sender_override_ru = "Пиратская вещательная станция Rumble Royale",
 		)
 
 /// There's only one person left, we have a winner!
@@ -291,6 +302,13 @@ GLOBAL_DATUM_INIT(battle_royale_master, /datum/battle_royale_master, new)
 		var/loser_text = isnull(loser) ? "With the disqualification of the other remaining contestant" : "With the death of [loser.real_name]"
 		var/winner_text = isnull(winner) ? "we must sadly announce that the would-be winner has also been disqualified. Such bad showmanship!" : "only [winner.real_name] remains. Congratulations, we have a winner!"
 		message = "[loser_text], [winner_text]"
+	var/message_ru = ""
+	if (isnull(winner) && isnull(loser))
+		message_ru = "Каким-то образом сегодня у нас нет победителя. Какое разочарование!"
+	else
+		var/loser_text_ru = isnull(loser) ? "После дисквалификации последнего оставшегося участника" : "После гибели [loser.real_name]"
+		var/winner_text_ru = isnull(winner) ? "нам с сожалением приходится сообщить, что и претендент на победу также был дисквалифицирован. Возмутительное отсутствие шоу!" : "в строю остался только [winner.real_name]. Поздравляем, у нас есть победитель!"
+		message_ru = "[loser_text_ru], [winner_text_ru]"
 
 	if (!isnull(winner))
 		podspawn(list(
@@ -306,6 +324,9 @@ GLOBAL_DATUM_INIT(battle_royale_master, /datum/battle_royale_master, new)
 		has_important_message = TRUE,
 		sender_override = "Rumble Royale Pirate Broadcast Station",
 		color_override = "red",
+		text_ru = message_ru,
+		title_ru = "Победитель Rumble Royale",
+		sender_override_ru = "Пиратская вещательная станция Rumble Royale",
 	)
 
 	qdel(winning_implant) // You get to live!
@@ -321,6 +342,9 @@ GLOBAL_DATUM_INIT(battle_royale_master, /datum/battle_royale_master, new)
 		has_important_message = TRUE,
 		sender_override = "Rumble Royale Pirate Broadcast Station",
 		color_override = "red",
+		text_ru = "Мы пересекли середину матча! И плохие новости для всех, кто так и не добрался до [chosen_area]... вы выбываете!",
+		title_ru = "Обновление Rumble Royale",
+		sender_override_ru = "Пиратская вещательная станция Rumble Royale",
 	)
 
 	for (var/obj/item/implant/explosive/battle_royale/contestant_implant as anything in contestant_implants)
@@ -339,6 +363,9 @@ GLOBAL_DATUM_INIT(battle_royale_master, /datum/battle_royale_master, new)
 		has_important_message = TRUE,
 		sender_override = "Rumble Royale Pirate Broadcast Station",
 		color_override = "red",
+		text_ru = "Оставшиеся участники, ваше время вышло. С сожалением сообщаем, что в этом выпуске Rumble Royale победителя не будет.\nПовезёт в следующий раз!",
+		title_ru = "Rumble Royale завершён",
+		sender_override_ru = "Пиратская вещательная станция Rumble Royale",
 	)
 
 	for (var/obj/item/implant/explosive/battle_royale/contestant_implant as anything in contestant_implants)

@@ -102,7 +102,10 @@
 /datum/job/ai/announce_job(mob/living/joining_mob)
 	. = ..()
 	if(SSticker.HasRoundStarted())
-		minor_announce("[joining_mob] has been downloaded to an empty bluespace-networked AI core at [AREACOORD(joining_mob)].")
+		minor_announce(
+			"[joining_mob] has been downloaded to an empty bluespace-networked AI core at [AREACOORD(joining_mob)].",
+			message_ru = "[joining_mob] был(а) загружен(а) в свободное блюспейс-сетевое ядро ИИ по координатам [AREACOORD(joining_mob)].",
+		)
 
 
 /datum/job/ai/config_check()

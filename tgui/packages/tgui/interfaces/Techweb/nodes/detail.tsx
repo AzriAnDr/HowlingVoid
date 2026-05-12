@@ -8,6 +8,7 @@ import {
   VirtualList,
 } from 'tgui-core/components';
 
+import { usePreferencesLocalization } from '../../localization';
 import { useRemappedBackend } from '../helpers';
 import { useTechWebRoute } from '../hooks';
 import type { TechwebNode } from '../types';
@@ -44,6 +45,7 @@ export function TechNodeDetail(props: TechNodeDetailProps) {
   const { node } = props;
 
   const { data } = useRemappedBackend();
+  const { t } = usePreferencesLocalization(data, 'rnd');
   const { nodes, node_cache } = data;
 
   const { prereq_ids, unlock_ids } = node_cache[node.id];
@@ -62,7 +64,7 @@ export function TechNodeDetail(props: TechNodeDetailProps) {
       <Flex.Item shrink={1}>
         <Flex justify="space-between" className="Techweb__HeaderSectionTabs">
           <Flex.Item align="center" className="Techweb__HeaderTabTitle">
-            Node
+            {t('ui.techweb.node', 'Node')}
           </Flex.Item>
           <Flex.Item grow>
             <Tabs>
@@ -70,20 +72,20 @@ export function TechNodeDetail(props: TechNodeDetailProps) {
                 selected={tabIndex === Tab.REQUIRED}
                 onClick={() => setTabIndex(Tab.REQUIRED)}
               >
-                Required ({complPrereq}/{prereqNodes.length})
+                {t('ui.techweb.required', 'Required')} ({complPrereq}/{prereqNodes.length})
               </Tabs.Tab>
               <Tabs.Tab
                 selected={tabIndex === Tab.UNLOCKS}
                 // disabled={unlockedNodes.length === 0}
                 onClick={() => setTabIndex(Tab.UNLOCKS)}
               >
-                Unlocks ({unlockedNodes.length})
+                {t('ui.techweb.unlocks', 'Unlocks')} ({unlockedNodes.length})
               </Tabs.Tab>
             </Tabs>
           </Flex.Item>
           <Flex.Item align="center">
             <Button icon="home" onClick={() => setTechwebRoute({ route: '' })}>
-              Home
+              {t('ui.common.home')}
             </Button>
           </Flex.Item>
         </Flex>

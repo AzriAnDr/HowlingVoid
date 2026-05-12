@@ -6,8 +6,12 @@
 /datum/action
 	/// The name of the action
 	var/name = "Generic Action"
+	/// Russian display name for localized action tooltips
+	var/name_ru
 	/// The description of what the action does, shown in button tooltips
 	var/desc
+	/// Russian display description for localized action tooltips
+	var/desc_ru
 	/// The target the action is attached to. If the target datum is deleted, the action is as well.
 	/// Set in New() via the proc link_to(). PLEASE set a target if you're making an action
 	var/datum/target
@@ -258,6 +262,16 @@
 	button.name = name
 	if(desc)
 		button.desc = desc
+
+/datum/action/proc/get_localized_name(mob/viewer)
+	if(uses_panel_language(viewer, "antag_info") && name_ru)
+		return name_ru
+	return name
+
+/datum/action/proc/get_localized_desc(mob/viewer)
+	if(uses_panel_language(viewer, "antag_info") && desc_ru)
+		return desc_ru
+	return desc
 
 /**
  * Creates the background underlay for the button
