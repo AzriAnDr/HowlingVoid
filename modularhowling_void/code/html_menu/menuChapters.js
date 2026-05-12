@@ -25,6 +25,7 @@
     ironHeart: {
       id: 'ironHeart',
       subtitle: 'IRON HEART',
+      variantLabel: 'IRON HEART',
       css: 'ironHeart.css',
       js: 'ironHeart.js',
       audio: 'iron_heart.ogg',
@@ -32,6 +33,7 @@
     jesusWept: {
       id: 'jesusWept',
       subtitle: 'JESUS WEPT',
+      variantLabel: 'JESUS WEPT',
       css: 'jesusWept.css',
       js: 'jesusWept.js',
       audio: 'jesus_wept.ogg',
@@ -39,6 +41,7 @@
     crossToBear: {
       id: 'crossToBear',
       subtitle: 'JESUS WEPT',
+      variantLabel: 'CROSS TO BEAR',
       css: 'crossToBear.css',
       js: 'crossToBear.js',
       audio: 'cross_to_bear.ogg',
@@ -46,6 +49,7 @@
     sisterRay: {
       id: 'sisterRay',
       subtitle: 'IRON HEART',
+      variantLabel: 'SISTER RAY',
       css: 'sisterRay.css',
       js: 'sisterRay.js',
       audio: 'Sister_Ray.mp3',
@@ -53,18 +57,38 @@
     molesHamsters: {
       id: 'molesHamsters',
       subtitle: 'КРОТЫ — ХОМЯКИ',
+      variantLabel: 'MOLES / HAMSTERS',
       css: 'molesHamsters.css',
       js: 'molesHamsters.js',
       audio: 'molesHamsters.mp3',
     },
   };
 
-  const DEFAULT_CHAPTER = 'sisterRay';
+  MENU_CHAPTERS.molesHamsters.variantLabel = 'MOLES / HAMSTERS';
+
+  const MENU_VARIANT_GROUPS = {
+    ironHeart: {
+      label: 'CHAPTER I MENU:',
+      variants: ['ironHeart', 'sisterRay'],
+    },
+    jesusWept: {
+      label: 'CHAPTER III MENU:',
+      variants: ['jesusWept', 'crossToBear'],
+    },
+    EVENT: {
+      label: 'EVENT HAPTER MENU:',
+      variants: ['molesHamsters'],
+    },
+  };
+
+  const DEFAULT_CHAPTER = 'ironHeart';
+  const MENU_VARIANT_STORAGE_KEY = 'howlingMenuChapterVariant';
   const CSS_READY_FALLBACK_MS = 1200;
   const MENU_CHROME_STYLE_ID = 'howling-menu-chrome-style';
 
   let currentStyleEl = null;
   let currentScriptEl = null;
+  let currentChapterId = null;
   let revealTimer = null;
 
   function isRootedUrl(name) {
@@ -382,6 +406,62 @@
         outline: none;
       }
 
+      .menu-variant-control {
+        position: fixed;
+        z-index: 130;
+        top: 18px;
+        left: 18px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 6px;
+        background: var(--menu-chrome-bg, rgba(8, 0, 0, 0.34));
+        border: var(--menu-chrome-border, 1px solid rgba(180, 30, 30, 0.34));
+        box-shadow: var(--menu-chrome-shadow, 0 0 24px rgba(130, 0, 0, 0.22), inset 0 0 18px rgba(255, 230, 200, 0.04));
+        opacity: 0.82;
+      }
+
+      .menu-variant-control:hover,
+      .menu-variant-control:focus-within {
+        opacity: 0.98;
+      }
+
+      .menu-variant-control__label {
+        padding: 0 8px 0 4px;
+        color: var(--menu-chrome-fg, rgba(246, 226, 202, 0.72));
+        font: 700 10px/1 "Crimson Text", serif;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        pointer-events: none;
+      }
+
+      .menu-variant-control__button {
+        min-width: 38px;
+        height: 26px;
+        border: 0;
+        padding: 0 9px;
+        color: var(--menu-chrome-fg, rgba(246, 226, 202, 0.82));
+        background: transparent;
+        font: 700 11px/1 "Crimson Text", serif;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+
+      .menu-variant-control__button:hover,
+      .menu-variant-control__button:focus-visible,
+      .menu-variant-control__button--active {
+        color: var(--menu-chrome-name-fg, rgba(255, 238, 214, 0.92));
+        background: rgba(159, 23, 23, 0.34);
+        outline: none;
+      }
+
+      body[data-menu-variant-locked] .menu-variant-control,
+      body.menu-chrome-ready .menu-variant-control {
+        opacity: 0;
+        pointer-events: none;
+      }
+
       body[data-chapter] .start-skip {
         display: flex !important;
         width: fit-content !important;
@@ -597,10 +677,21 @@
           padding: 4px !important;
         }
 
-        body[data-chapter] .menu-language-control__button {
+        body[data-chapter] .menu-variant-control {
+          top: 10px !important;
+          left: 10px !important;
+          padding: 4px !important;
+        }
+
+        body[data-chapter] .menu-language-control__button,
+        body[data-chapter] .menu-variant-control__button {
           min-width: 28px !important;
           height: 22px !important;
           padding: 0 6px !important;
+        }
+
+        body[data-chapter] .menu-variant-control__label {
+          display: none !important;
         }
       }
     `;
@@ -851,11 +942,134 @@
     }
   }
 
+  function getVariantGroupForChapter(chapterId) {
+    return Object.values(MENU_VARIANT_GROUPS).find((group) =>
+      group.variants.includes(chapterId),
+    );
+  }
+
+  function setupVariantControl() {
+    const chapterId =
+      currentChapterId || document.body?.dataset.chapter || DEFAULT_CHAPTER;
+    const group = getVariantGroupForChapter(chapterId);
+    const existingControl = document.querySelector('.menu-variant-control');
+
+    if (!group) {
+      existingControl?.remove();
+      return;
+    }
+
+    const desiredVariantList = group.variants.join('|');
+    let control = existingControl;
+    if (!control || control.dataset.variants !== desiredVariantList) {
+      control?.remove();
+      control = document.createElement('div');
+      control.className = 'menu-variant-control';
+      control.dataset.variants = desiredVariantList;
+
+      const label = document.createElement('span');
+      label.className = 'menu-variant-control__label';
+      label.textContent = group.label;
+      control.appendChild(label);
+
+      group.variants.forEach((variantId) => {
+        const chapter = MENU_CHAPTERS[variantId];
+        if (!chapter) {
+          return;
+        }
+
+        const button = document.createElement('button');
+        button.className = 'menu-variant-control__button';
+        button.type = 'button';
+        button.dataset.chapter = variantId;
+        button.textContent =
+          chapter.variantLabel || chapter.subtitle || variantId;
+        control.appendChild(button);
+      });
+
+      document.body.appendChild(control);
+    }
+
+    if (control.dataset.ready !== 'true') {
+      control.dataset.ready = 'true';
+      control.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-chapter]');
+        if (!button) {
+          return;
+        }
+
+        setMenuVariant(button.dataset.chapter);
+      });
+    }
+
+    syncVariantControl();
+    setupVariantAvailabilityWatcher();
+    syncVariantAvailability();
+  }
+
+  function syncVariantControl() {
+    const activeChapter =
+      currentChapterId || document.body?.dataset.chapter || DEFAULT_CHAPTER;
+    document
+      .querySelectorAll('.menu-variant-control__button[data-chapter]')
+      .forEach((button) => {
+        const isActive = button.dataset.chapter === activeChapter;
+        button.classList.toggle(
+          'menu-variant-control__button--active',
+          isActive,
+        );
+        button.setAttribute('aria-pressed', String(isActive));
+      });
+  }
+
+  function syncVariantAvailability() {
+    const startOverlay = document.querySelector('.start-overlay');
+    const isLocked =
+      !startOverlay || startOverlay.classList.contains('start-overlay--hidden');
+    document.body?.toggleAttribute('data-menu-variant-locked', isLocked);
+  }
+
+  function setupVariantAvailabilityWatcher() {
+    if (document.body?.dataset.menuVariantWatcher === 'true') {
+      return;
+    }
+    document.body.dataset.menuVariantWatcher = 'true';
+
+    const observer = new MutationObserver(syncVariantAvailability);
+    observer.observe(document.body, { childList: true });
+
+    const startOverlay = document.querySelector('.start-overlay');
+    if (startOverlay) {
+      observer.observe(startOverlay, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    }
+  }
+
+  function setMenuVariant(chapterId) {
+    if (!MENU_CHAPTERS[chapterId]) {
+      return;
+    }
+
+    if (document.body?.hasAttribute('data-menu-variant-locked')) {
+      return;
+    }
+
+    getMenuSettings().menuChapter = chapterId;
+    try {
+      localStorage.setItem(MENU_VARIANT_STORAGE_KEY, chapterId);
+    } catch {}
+
+    loadChapter(chapterId);
+  }
+
   function setupMenuChrome() {
     injectMenuChromeStyle();
     setupCharacterFooter();
     setupAudioControl();
     setupLanguageControl();
+    setupVariantControl();
     setupRoundStartHandler();
     watchMenuChromeReady();
   }
@@ -1046,9 +1260,16 @@
       return;
     }
 
+    if (currentChapterId === chapter.id) {
+      syncVariantControl();
+      return;
+    }
+
     unloadCurrentChapter();
     document.body.classList.remove('menu-css-ready');
     document.body.dataset.chapter = chapter.id;
+    currentChapterId = chapter.id;
+    getMenuSettings().menuChapter = chapter.id;
 
     applyChapterText(chapter);
     ensureMenuDataLabels();
@@ -1058,14 +1279,32 @@
     loadJS(chapter.js);
   }
 
+  function getInitialChapter() {
+    const settingsChapter = getMenuSettings().menuChapter;
+    if (MENU_CHAPTERS[settingsChapter]) {
+      return settingsChapter;
+    }
+
+    try {
+      const storedChapter = localStorage.getItem(MENU_VARIANT_STORAGE_KEY);
+      if (MENU_CHAPTERS[storedChapter]) {
+        return storedChapter;
+      }
+    } catch {}
+
+    return DEFAULT_CHAPTER;
+  }
+
   window.setMenuChapter = loadChapter;
+  window.setMenuVariant = setMenuVariant;
   window.__HOWLING_MENU_CHAPTERS = MENU_CHAPTERS;
+  window.__HOWLING_MENU_VARIANT_GROUPS = MENU_VARIANT_GROUPS;
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () =>
-      loadChapter(DEFAULT_CHAPTER),
+      loadChapter(getInitialChapter()),
     );
   } else {
-    loadChapter(DEFAULT_CHAPTER);
+    loadChapter(getInitialChapter());
   }
 })();
