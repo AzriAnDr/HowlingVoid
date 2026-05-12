@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	if(human_source.shoes)
-		return STRIPPABLE_OBSCURING_HIDDEN
+		return STRIPPABLE_OBSCURING_COMPLETELY
 
 /datum/strippable_item/mob_item_slot/underwear
 	key = STRIPPABLE_ITEM_UNDERWEAR
@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	if(human_source.underwear_hidden())
-		return STRIPPABLE_OBSCURING_HIDDEN
+		return STRIPPABLE_OBSCURING_COMPLETELY
 
 /datum/strippable_item/mob_item_slot/undershirt
 	key = STRIPPABLE_ITEM_UNDERSHIRT
@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	if(human_source.undershirt_hidden())
-		return STRIPPABLE_OBSCURING_HIDDEN
+		return STRIPPABLE_OBSCURING_COMPLETELY
 
 /datum/strippable_item/mob_item_slot/bra
 	key = STRIPPABLE_ITEM_BRA
@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	if(human_source.bra_hidden())
-		return STRIPPABLE_OBSCURING_HIDDEN
+		return STRIPPABLE_OBSCURING_COMPLETELY
 
 /datum/strippable_item/mob_item_slot/jumpsuit
 	key = STRIPPABLE_ITEM_JUMPSUIT

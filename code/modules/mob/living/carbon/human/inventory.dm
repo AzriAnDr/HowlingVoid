@@ -204,7 +204,14 @@
 			update_worn_glasses()
 		if(ITEM_SLOT_GLOVES)
 			if(gloves)
-				return
+				var/obj/item/clothing/gloves/ring/worn_ring = gloves
+				var/obj/item/clothing/gloves/new_gloves = equipping
+				if(!istype(worn_ring) || !istype(new_gloves) || istype(new_gloves, /obj/item/clothing/gloves/ring) || new_gloves.covered_ring)
+					return
+				if(!doUnEquip(worn_ring, force = TRUE, newloc = new_gloves, invdrop = FALSE, silent = TRUE))
+					return
+				if(!new_gloves.cover_ring(worn_ring))
+					return
 
 			gloves = equipping
 			//NOVA EDIT ADDITION - ERP UPDATE
@@ -327,6 +334,7 @@
 		if(!QDELETED(src))
 			update_worn_wrists()
 	else if(item_dropping == gloves)
+		var/obj/item/clothing/gloves/old_gloves = gloves
 		// NOVA EDIT ADDITION - ERP UPDATE
 		if(gloves.breakouttime) //when unequipping a straightjacket
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, TRAIT_GLOVES)
@@ -334,6 +342,9 @@
 			update_mob_action_buttons() //certain action buttons may be usable again.
 		// NOVA EDIT ADDITION END
 		gloves = null
+		var/obj/item/clothing/gloves/ring/covered_ring = old_gloves.uncover_ring()
+		if(covered_ring)
+			equip_to_slot(covered_ring, ITEM_SLOT_GLOVES)
 		if(!QDELETED(src))
 			update_worn_gloves()
 	else if(item_dropping == glasses)

@@ -619,7 +619,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// if there's an item in the slot we want, fail
 	if(!ignore_equipped)
 		if(H.get_item_by_slot(slot))
-			return FALSE
+			if(slot != ITEM_SLOT_GLOVES)
+				return FALSE
+			var/obj/item/clothing/gloves/ring/worn_ring = H.gloves
+			var/obj/item/clothing/gloves/new_gloves = I
+			if(!istype(worn_ring) || !istype(new_gloves) || istype(new_gloves, /obj/item/clothing/gloves/ring) || new_gloves.covered_ring)
+				return FALSE
 
 	// this check prevents us from equipping something to a slot it doesn't support, WITH the exceptions of storage slots (pockets, suit storage, and backpacks)
 	// we don't require having those slots defined in the item's slot_flags, so we'll rely on their own checks further down

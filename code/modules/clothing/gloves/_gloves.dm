@@ -29,6 +29,8 @@
 	var/max_rings = 1
 	/// List of rings currently attached to these gloves.
 	var/list/obj/item/clothing/gloves/ring/attached_rings
+	/// Ring currently worn under these gloves.
+	var/obj/item/clothing/gloves/ring/covered_ring
 	/// Overlay appearance used when a ring is attached.
 	var/mutable_appearance/ring_overlay
 
@@ -138,6 +140,20 @@
 		M.update_worn_gloves()
 	return TRUE
 
+/// Put an already worn ring under these gloves.
+/obj/item/clothing/gloves/proc/cover_ring(obj/item/clothing/gloves/ring/ring)
+	if(covered_ring || !istype(ring))
+		return FALSE
+	covered_ring = ring
+	ring.forceMove(src)
+	return TRUE
+
+/// Remove the ring worn under these gloves.
+/obj/item/clothing/gloves/proc/uncover_ring()
+	var/obj/item/clothing/gloves/ring/ring = covered_ring
+	covered_ring = null
+	return ring
+
 /// Remove a ring from these gloves and optionally return it to the user's hands.
 /obj/item/clothing/gloves/proc/pop_ring(mob/living/user)
 	if(!LAZYLEN(attached_rings))
@@ -172,12 +188,17 @@
 	for(var/obj/item/clothing/gloves/ring/ring as anything in attached_rings)
 		ring.forceMove(drop_to)
 	attached_rings = null
+	if(covered_ring)
+		covered_ring.forceMove(drop_to)
+		covered_ring = null
 	if(ring_overlay)
 		cut_overlay(ring_overlay)
 	ring_overlay = null
 
 /obj/item/clothing/gloves/Exited(atom/movable/gone, direction)
 	. = ..()
+	if(gone == covered_ring)
+		covered_ring = null
 	if(istype(gone, /obj/item/clothing/gloves/ring) && (gone in attached_rings))
 		LAZYREMOVE(attached_rings, gone)
 		if(ring_overlay)
@@ -195,6 +216,7 @@
 	return ..()
 
 /obj/item/clothing/gloves/Destroy()
+	covered_ring = null
 	attached_rings = null
 	return ..()
 

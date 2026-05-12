@@ -203,6 +203,12 @@
 	if(hud?.mymob && slot_id)
 		var/obj/item/inv_item = hud.mymob.get_item_by_slot(slot_id)
 		if(inv_item)
+			if(slot_id == ITEM_SLOT_GLOVES && istype(inv_item, /obj/item/clothing/gloves/ring))
+				var/obj/item/clothing/gloves/held_gloves = hud.mymob.get_active_held_item()
+				if(istype(held_gloves) && !istype(held_gloves, /obj/item/clothing/gloves/ring))
+					if(usr.attack_ui(slot_id, params))
+						usr.update_held_items()
+					return TRUE
 			return inv_item.Click(location, control, params)
 
 	if(usr.attack_ui(slot_id, params))
