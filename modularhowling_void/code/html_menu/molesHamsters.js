@@ -6,6 +6,13 @@
   const intervals = [];
   const listeners = [];
   const created = [];
+  const webglCleanup = window.__HOWLING_INSTALL_WEBGL_BACKDROP({
+    readyClass: 'moles-hamsters-webgl-ready',
+    zIndex: 3,
+    colors: ['#f4efe2', '#d7c9aa', '#b34034', '#7b5c43'],
+    intensity: 0.36,
+    vignette: 0.35,
+  });
   let started = false;
   let activeIndex = 0;
 
@@ -343,6 +350,7 @@
       target?.removeEventListener?.(type, fn, opts),
     );
     created.forEach((el) => el.remove());
+    webglCleanup();
     document.body.classList.remove('moles-panic', 'moles-red-cut');
   }
 

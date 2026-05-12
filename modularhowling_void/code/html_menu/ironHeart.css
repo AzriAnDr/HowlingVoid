@@ -167,6 +167,11 @@ body::after {
 	filter: blur(0.5px);
 }
 
+body[data-chapter="ironHeart"].iron-heart-webgl-ready .noise-overlay,
+body[data-chapter="ironHeart"].iron-heart-webgl-ready .vignette {
+	display: none;
+}
+
 body[data-chapter="ironHeart"] .inverted-cross-overlay,
 body[data-chapter="ironHeart"] .inverted-cross-overlay *,
 body[data-chapter="ironHeart"] .blood-flash,

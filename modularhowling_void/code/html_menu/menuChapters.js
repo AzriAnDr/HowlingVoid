@@ -1,6 +1,6 @@
 // Howling Void chapter loader.
 (() => {
-  // Local/default fallback. BYOND can override these before this script loads.
+  // Local/default config. BYOND can override these before this script loads.
   // This keeps the menu usable when index.html is opened directly from disk.
   window.__HOWLING_MENU_SETTINGS = {
     musicEnabled: true,
@@ -78,6 +78,196 @@
 
     return SCRIPT_BASE ? SCRIPT_BASE + name : name;
   }
+
+  window.__HOWLING_INSTALL_WEBGL_BACKDROP = (options = {}) => {
+    const canvas = document.createElement('canvas');
+    canvas.className = options.className || 'menu-webgl-backdrop';
+    canvas.setAttribute('aria-hidden', 'true');
+    Object.assign(canvas.style, {
+      position: 'fixed',
+      inset: '0',
+      width: '100%',
+      height: '100%',
+      zIndex: String(options.zIndex ?? 0),
+      pointerEvents: 'none',
+    });
+    document.body.prepend(canvas);
+
+    const gl = canvas.getContext('webgl', {
+      alpha: true,
+      antialias: false,
+      depth: false,
+      preserveDrawingBuffer: false,
+      stencil: false,
+    });
+
+    if (!gl) {
+      canvas.remove();
+      return () => {};
+    }
+
+    const createShader = (type, source) => {
+      const shader = gl.createShader(type);
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        gl.deleteShader(shader);
+        return null;
+      }
+      return shader;
+    };
+
+    const vertex = createShader(
+      gl.VERTEX_SHADER,
+      `
+        attribute vec2 a_position;
+        varying vec2 v_uv;
+        void main() {
+          v_uv = a_position * 0.5 + 0.5;
+          gl_Position = vec4(a_position, 0.0, 1.0);
+        }
+      `,
+    );
+    const fragment = createShader(
+      gl.FRAGMENT_SHADER,
+      `
+        precision mediump float;
+        varying vec2 v_uv;
+        uniform vec2 u_resolution;
+        uniform float u_time;
+        uniform vec3 u_color0;
+        uniform vec3 u_color1;
+        uniform vec3 u_color2;
+        uniform vec3 u_color3;
+        uniform float u_intensity;
+        uniform float u_vignette;
+
+        float blob(vec2 uv, vec2 center, float radius) {
+          return smoothstep(radius, 0.0, distance(uv, center));
+        }
+
+        void main() {
+          vec2 uv = v_uv;
+          float aspect = u_resolution.x / max(1.0, u_resolution.y);
+          vec2 centered = vec2((uv.x - 0.5) * aspect, uv.y - 0.5);
+          float t = u_time * 0.001;
+          vec2 driftA = vec2(sin(t * 0.13) * 0.065, cos(t * 0.11) * 0.052);
+          vec2 driftB = vec2(cos(t * 0.09) * 0.055, sin(t * 0.10) * 0.06);
+
+          vec3 color = mix(u_color0, u_color1, smoothstep(-0.08, 1.15, uv.x + uv.y));
+          color = mix(color, u_color2, blob(uv + driftA, vec2(0.22, 0.26), 0.42) * u_intensity);
+          color = mix(color, u_color3, blob(uv - driftB, vec2(0.76, 0.68), 0.50) * u_intensity);
+          color += u_color1 * blob(uv + vec2(driftB.y, -driftB.x), vec2(0.56, 0.46), 0.38) * 0.18;
+
+          float vignette = smoothstep(0.88, 0.18, length(centered));
+          color = mix(color, color * 0.42, (1.0 - vignette) * u_vignette);
+          gl_FragColor = vec4(color, 0.96);
+        }
+      `,
+    );
+
+    if (!vertex || !fragment) {
+      canvas.remove();
+      return () => {};
+    }
+
+    const program = gl.createProgram();
+    gl.attachShader(program, vertex);
+    gl.attachShader(program, fragment);
+    gl.linkProgram(program);
+    gl.deleteShader(vertex);
+    gl.deleteShader(fragment);
+
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      gl.deleteProgram(program);
+      canvas.remove();
+      return () => {};
+    }
+
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+      gl.STATIC_DRAW,
+    );
+
+    const parseColor = (hex, defaultColor) => {
+      const value = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(
+        String(hex || ''),
+      );
+      if (!value) return defaultColor;
+      return [
+        Number.parseInt(value[1], 16) / 255,
+        Number.parseInt(value[2], 16) / 255,
+        Number.parseInt(value[3], 16) / 255,
+      ];
+    };
+
+    const colors = options.colors || [];
+    const uniforms = {
+      position: gl.getAttribLocation(program, 'a_position'),
+      resolution: gl.getUniformLocation(program, 'u_resolution'),
+      time: gl.getUniformLocation(program, 'u_time'),
+      color0: gl.getUniformLocation(program, 'u_color0'),
+      color1: gl.getUniformLocation(program, 'u_color1'),
+      color2: gl.getUniformLocation(program, 'u_color2'),
+      color3: gl.getUniformLocation(program, 'u_color3'),
+      intensity: gl.getUniformLocation(program, 'u_intensity'),
+      vignette: gl.getUniformLocation(program, 'u_vignette'),
+    };
+
+    function resize() {
+      const dpr = Math.min(1.5, window.devicePixelRatio || 1);
+      const width = Math.max(1, Math.floor(canvas.clientWidth * dpr));
+      const height = Math.max(1, Math.floor(canvas.clientHeight * dpr));
+      if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+      }
+      gl.viewport(0, 0, width, height);
+    }
+
+    let frame = 0;
+    const render = (now) => {
+      gl.clearColor(0, 0, 0, 0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.useProgram(program);
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.enableVertexAttribArray(uniforms.position);
+      gl.vertexAttribPointer(uniforms.position, 2, gl.FLOAT, false, 0, 0);
+
+      gl.uniform2f(uniforms.resolution, canvas.width, canvas.height);
+      gl.uniform1f(uniforms.time, now);
+      [
+        uniforms.color0,
+        uniforms.color1,
+        uniforms.color2,
+        uniforms.color3,
+      ].forEach((uniform, index) => {
+        gl.uniform3fv(uniform, parseColor(colors[index], [0.02, 0.02, 0.02]));
+      });
+      gl.uniform1f(uniforms.intensity, options.intensity ?? 0.55);
+      gl.uniform1f(uniforms.vignette, options.vignette ?? 0.85);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      frame = requestAnimationFrame(render);
+    };
+
+    const readyClass = options.readyClass || 'menu-webgl-backdrop-ready';
+    resize();
+    window.addEventListener('resize', resize);
+    document.body.classList.add(readyClass);
+    frame = requestAnimationFrame(render);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('resize', resize);
+      document.body.classList.remove(readyClass);
+      gl.deleteBuffer(buffer);
+      gl.deleteProgram(program);
+      canvas.remove();
+    };
+  };
 
   function injectMenuChromeStyle() {
     if (document.getElementById(MENU_CHROME_STYLE_ID)) {

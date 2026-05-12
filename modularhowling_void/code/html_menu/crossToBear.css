@@ -831,6 +831,11 @@ body[data-chapter="crossToBear"] .noise-overlay--hard {
 	filter: contrast(1.2);
 }
 
+body[data-chapter="crossToBear"].cross-to-bear-webgl-ready .background-layer,
+body[data-chapter="crossToBear"].cross-to-bear-webgl-ready .vignette {
+	display: none;
+}
+
 @keyframes noiseFloat {
 	0% {
 		transform: translate(0, 0);

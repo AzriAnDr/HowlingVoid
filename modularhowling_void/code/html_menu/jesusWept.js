@@ -119,6 +119,8 @@
   let fisheyeScheduled = false;
   let fadeToken = 0;
   let lastHoverTime = 0;
+  let webglStarted = false;
+  let webglCleanup = () => {};
 
   const controller = new AbortController();
   const { signal } = controller;
@@ -320,6 +322,21 @@
     }
   }
 
+  function startWebglBackdrop() {
+    if (webglStarted) return;
+    webglStarted = true;
+    webglCleanup = window.__HOWLING_INSTALL_WEBGL_BACKDROP({
+      readyClass: 'jesus-wept-webgl-ready',
+      colors: ['#030101', '#230405', '#600707', '#110006'],
+      intensity: 0.62,
+      vignette: 1,
+    });
+  }
+
+  function revealCrossOverlay() {
+    crossOverlay?.classList.add('inverted-cross-overlay--visible');
+  }
+
   // ===============================
   // INTRO / REVEAL
   // ===============================
@@ -340,6 +357,7 @@
   }
 
   function revealMenuList() {
+    startWebglBackdrop();
     menuList?.classList.add('menu-list--visible');
     menuDivider?.classList.add('menu-divider--visible');
   }
@@ -354,6 +372,7 @@
 
   function revealMenuNow() {
     endIntro();
+    revealCrossOverlay();
     revealSupportTitles();
     revealMenuList();
     settleMainTitle();
@@ -385,6 +404,8 @@
   }
 
   function runChapterBeat() {
+    revealCrossOverlay();
+
     if (whiteFlash) {
       whiteFlash.classList.add('white-flash--active');
       tset(
@@ -761,7 +782,6 @@
       tset(() => startOverlay.remove(), START_OVERLAY_REMOVE_MS);
     }
 
-    crossOverlay?.classList.add('inverted-cross-overlay--visible');
     triggerImpactFX();
 
     startBgm();
@@ -849,11 +869,14 @@
     fisheyeScheduled = false;
     crossBeatsScheduled = false;
     impactBeatsScheduled = false;
+    webglStarted = false;
   }
 
   window.__menuChapterTeardown = () => {
     controller.abort();
     clearScheduledWork();
     resetMenuState();
+    webglCleanup();
+    webglCleanup = () => {};
   };
 })();

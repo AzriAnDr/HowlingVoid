@@ -79,6 +79,11 @@ body[data-chapter="jesusWept"] {
 	animation-duration: 0.25s;
 }
 
+body[data-chapter="jesusWept"].jesus-wept-webgl-ready .background-layer,
+body[data-chapter="jesusWept"].jesus-wept-webgl-ready .vignette {
+	display: none;
+}
+
 @keyframes noiseShift {
 	0% {
 		transform: translate3d(0, 0, 0);

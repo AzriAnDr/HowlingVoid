@@ -37,6 +37,12 @@
   const menuTitleSmallGhost = document.querySelector('.menu-title-small-ghost');
   const menuTitleSub = document.querySelector('.menu-title-sub');
   const menuTitleSubGhost = document.querySelector('.menu-title-sub-ghost');
+  const webglCleanup = window.__HOWLING_INSTALL_WEBGL_BACKDROP({
+    readyClass: 'cross-to-bear-webgl-ready',
+    colors: ['#030101', '#160202', '#6c0202', '#220000'],
+    intensity: 0.7,
+    vignette: 1,
+  });
 
   const FEAR_VARIANTS = ['menu-fear-v1', 'menu-fear-v2', 'menu-fear-v3'];
   const FEAR_VARIANT_DURATIONS_MS = {
@@ -1399,5 +1405,6 @@
       'tape-glitch-burst',
       'void-shader',
     );
+    webglCleanup();
   };
 })();

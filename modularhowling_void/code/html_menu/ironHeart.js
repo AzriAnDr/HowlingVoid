@@ -66,6 +66,12 @@
 
   const controller = new AbortController();
   const { signal } = controller;
+  const webglCleanup = window.__HOWLING_INSTALL_WEBGL_BACKDROP({
+    readyClass: 'iron-heart-webgl-ready',
+    colors: ['#020406', '#11243a', '#731728', '#05070d'],
+    intensity: 0.48,
+    vignette: 1,
+  });
 
   const clamp01 = (value) => Math.max(0, Math.min(1, value));
   const getConfiguredMenuVolume = () =>
@@ -385,5 +391,6 @@
     }
 
     controller.abort();
+    webglCleanup();
   };
 })();
