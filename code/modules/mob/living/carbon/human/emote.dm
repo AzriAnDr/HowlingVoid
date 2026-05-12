@@ -538,30 +538,3 @@
 	cooldown = 2 SECONDS
 	emote_type = EMOTE_AUDIBLE
 	mob_type_allowed_typecache = /mob/living/carbon/human
-
-/datum/emote/living/carbon/human/synth_error
-	key = "error"
-	key_third_person = "has an error"
-	message = "has an error!"
-	message_mime = "has an error silently!"
-	sound = 'sound/voice/synth/synth_error.ogg'
-	emote_type = EMOTE_AUDIBLE
-	mob_type_allowed_typecache = /mob/living/carbon/human
-
-/datum/emote/living/carbon/human/rstartup
-	key = "startup"
-	key_third_person = "starts up"
-	message = "starts up!"
-	message_mime = "starts up silently!"
-	sound = 'sound/voice/synth/synth_startup.ogg'
-	emote_type = EMOTE_AUDIBLE
-	mob_type_allowed_typecache = /mob/living/carbon/human
-
-/datum/emote/living/carbon/human/rshutdown
-	key = "shutdown"
-	key_third_person = "shuts down"
-	message = "shuts down!"
-	message_mime = "shuts down silently!"
-	sound = 'sound/voice/synth/synth_shutdown.ogg'
-	emote_type = EMOTE_AUDIBLE
-	mob_type_allowed_typecache = /mob/living/carbon/human

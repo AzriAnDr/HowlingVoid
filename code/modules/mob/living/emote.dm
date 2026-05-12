@@ -728,73 +728,11 @@
 	sound = 'sound/voice/snakedies.ogg'
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/prettygood
-	key = "prettygood"
-	key_third_person = "calls the person pretty good"
-	message = "calls the person pretty good."
-	sound = 'sound/voice/prettygood.ogg'
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/keptyouwaiting
-	key = "keptyouwaiting"
-	key_third_person = "asks if you've been waiting"
-	message = "asks if you've been waiting for him."
-	sound = 'sound/voice/keptyouwaiting.ogg'
-	emote_type = EMOTE_AUDIBLE
-
 /datum/emote/living/foxtrill
 	key = "foxtrill"
 	key_third_person = "foxtrills"
 	message = "trills like a fox!"
 	sound = 'sound/voice/foxtrill2.ogg'
-	emote_type = EMOTE_AUDIBLE
-	vary = TRUE
-
-/datum/emote/living/doridoridori
-	key = "doridoridori"
-	key_third_person = "doridoridoris"
-	message = "dori dori dori!"
-	sound = 'sound/voice/doridoridori.ogg'
-	emote_type = EMOTE_AUDIBLE
-	vary = TRUE
-
-/datum/emote/living/nyanyachan
-	key = "nyanyachan"
-	key_third_person = "nyanyachans"
-	message = "nya nya chaaan!"
-	sound = 'sound/voice/nyanyachan.ogg'
-	emote_type = EMOTE_AUDIBLE
-	vary = TRUE
-
-/datum/emote/living/mudamuda
-	key = "mudamuda"
-	key_third_person = "mudamudas"
-	message = "muda muda muda!"
-	sound = 'sound/voice/mudamuda.ogg'
-	emote_type = EMOTE_AUDIBLE
-	vary = TRUE
-
-/datum/emote/living/nyanyanya
-	key = "nyanyanya"
-	key_third_person = "nyanyanyas"
-	message = "nya, nya, nya"
-	sound = 'sound/voice/nyanyanya.ogg'
-	emote_type = EMOTE_AUDIBLE
-	vary = TRUE
-
-/datum/emote/living/evilnya
-	key = "evilnya"
-	key_third_person = "evilnyas"
-	message = "nyas!"
-	sound = 'sound/voice/evilnya.ogg'
-	emote_type = EMOTE_AUDIBLE
-	vary = TRUE
-
-/datum/emote/living/vibivi
-	key = "vibivi"
-	key_third_person = "vibivis"
-	message = "vibibis!"
-	sound = 'sound/voice/vibivi.ogg'
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
 
@@ -975,15 +913,6 @@
 	specific_emote_audio_cooldown = 4.45 SECONDS
 	emote_type = EMOTE_AUDIBLE
 
-/datum/emote/living/alaugh
-	key = "alaugh"
-	key_third_person = "alaugh"
-	message = "lets out an ominous laugh!"
-	message_mime = "laughs silently."
-	sound = 'sound/emotes/afton_laugh.ogg'
-	specific_emote_audio_cooldown = 6 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
 // === CAT SOUNDS ===
 
 /datum/emote/living/cathiss
@@ -1117,214 +1046,6 @@
 	specific_emote_audio_cooldown = 0.3 SECONDS
 	emote_type = EMOTE_AUDIBLE
 
-// === TWERK ===
-
-/datum/emote/living/twerk
-	key = "twerk"
-	key_third_person = "twerks"
-	message = "twerks!"
-	message_mime = "twerks silently!"
-	sound = 'sound/misc/monkey_twerk.ogg'
-	specific_emote_audio_cooldown = 3.2 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-// === BRUH ===
-
-/datum/emote/living/bruh
-	key = "bruh"
-	key_third_person = "bruhs"
-	message = "bruhs."
-	message_mime = "bruhs silently."
-	sound = 'sound/voice/bruh.ogg'
-	specific_emote_audio_cooldown = 0.6 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-// === BABABOOEY SERIES ===
-
-/datum/emote/living/bababooey
-	key = "bababooey"
-	key_third_person = "bababooeys"
-	message = "bababooeys."
-	message_mime = "bababooeys silently."
-	sound = 'sound/voice/bababooey/bababooey.ogg'
-	specific_emote_audio_cooldown = 0.9 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/babafooey
-	key = "babafooey"
-	key_third_person = "babafooeys"
-	message = "babafooeys."
-	message_mime = "babafooeys silently."
-	sound = 'sound/voice/bababooey/babafooey.ogg'
-	specific_emote_audio_cooldown = 0.85 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/fafafooey
-	key = "fafafooey"
-	key_third_person = "fafafooeys"
-	message = "fafafooeys."
-	message_mime = "fafafooeys silently."
-	sound = 'sound/voice/bababooey/fafafooey.ogg'
-	specific_emote_audio_cooldown = 0.7 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/fafafoggy
-	key = "fafafoggy"
-	key_third_person = "fafafoggys"
-	message = "fafafoggys."
-	message_mime = "fafafoggys silently."
-	sound = 'sound/voice/bababooey/fafafoggy.ogg'
-	specific_emote_audio_cooldown = 0.9 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/hohohoy
-	key = "hohohoy"
-	key_third_person = "hohohoys"
-	message = "hohohoys."
-	message_mime = "hohohoys silently."
-	sound = 'sound/voice/bababooey/hohohoy.ogg'
-	specific_emote_audio_cooldown = 0.7 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/ffff
-	key = "ffff"
-	key_third_person = "ffffs"
-	message = "ffffs."
-	message_mime = "ffffs silently."
-	muzzle_ignore = TRUE
-	sound = 'sound/voice/bababooey/ffff.ogg'
-	specific_emote_audio_cooldown = 0.85 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/fafafail
-	key = "fafafail"
-	key_third_person = "fafafails"
-	message = "fafafails."
-	message_mime = "fafafails silently."
-	sound = 'sound/voice/bababooey/ffffhvh.ogg'
-	specific_emote_audio_cooldown = 1.15 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-// === BOOWOMP / SWAOS ===
-
-/datum/emote/living/boowomp
-	key = "boowomp"
-	key_third_person = "boowomps"
-	message = "boowomps."
-	message_mime = "boowomps silently."
-	sound = 'sound/voice/boowomp.ogg'
-	specific_emote_audio_cooldown = 0.4 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/swaos
-	key = "swaos"
-	key_third_person = "swaos"
-	message = "swaos."
-	message_mime = "swaos silently."
-	sound = 'sound/voice/swaos.ogg'
-	specific_emote_audio_cooldown = 0.7 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-// === MEME VOICE LINES ===
-
-/datum/emote/living/breakbad
-	key = "breakbad"
-	key_third_person = "breakbads"
-	message = "says, \"Say my name!\""
-	message_mime = "silently demands someone say their name."
-	sound = 'sound/voice/breakbad.ogg'
-	specific_emote_audio_cooldown = 6.4 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/lawyerup
-	key = "lawyerup"
-	key_third_person = "lawyersup"
-	message = "says, \"Better call Saul!\""
-	message_mime = "silently calls Saul."
-	sound = 'sound/voice/lawyerup.ogg'
-	specific_emote_audio_cooldown = 7.5 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/damn
-	key = "damn"
-	key_third_person = "damns"
-	message = "says, \"God damn!\""
-	message_mime = "is very surprised."
-	sound = 'sound/voice/god_damn.ogg'
-	specific_emote_audio_cooldown = 1.25 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/spoonful
-	key = "spoonful"
-	key_third_person = "spoonfuls"
-	message = "asks for a spoonful!"
-	message_mime = "seems to want a spoonful of something."
-	sound = 'sound/voice/spoonful.ogg'
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/mygod
-	key = "mygod"
-	key_third_person = "mygods"
-	message = "says, \"Oh my god!\""
-	message_mime = "seems very shocked."
-	sound = 'sound/voice/OMG.ogg'
-	specific_emote_audio_cooldown = 1.6 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/whatthehell
-	key = "wth"
-	key_third_person = "wths"
-	message = "says, \"What the hell?!\""
-	message_mime = "seems confused."
-	sound = 'sound/voice/WTH.ogg'
-	specific_emote_audio_cooldown = 4.4 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/fusrodah
-	key = "fusrodah"
-	key_third_person = "fusrodahs"
-	message = "fus-ro-dahs!"
-	message_mime = "silently fus-ro-dahs."
-	sound = 'sound/voice/fusrodah.ogg'
-	specific_emote_audio_cooldown = 7 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/skibidi
-	key = "skibidi"
-	key_third_person = "skibidis"
-	message = "skibidis!"
-	message_mime = "skibidis silently!"
-	sound = 'sound/voice/skibidi.ogg'
-	specific_emote_audio_cooldown = 1.1 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/fbi
-	key = "fbi"
-	key_third_person = "fbis"
-	message = "says, \"FBI, open up!\""
-	message_mime = "knocks on an invisible door."
-	sound = 'sound/voice/fbi.ogg'
-	specific_emote_audio_cooldown = 2 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/illuminati
-	key = "illuminati"
-	key_third_person = "illuminatis"
-	message = "hums the Illuminati theme."
-	message_mime = "hums silently."
-	sound = 'sound/voice/illuminati.ogg'
-	specific_emote_audio_cooldown = 7.8 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/bonerif
-	key = "bonerif"
-	key_third_person = "bonerifs"
-	message = "bonerifs!"
-	message_mime = "bonerifs silently!"
-	sound = 'sound/voice/bonerif.ogg'
-	specific_emote_audio_cooldown = 2 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
 // === CRY2 ===
 
 /datum/emote/living/cry2
@@ -1340,26 +1061,6 @@
 		'sound/voice/cry_king.ogg',
 		'sound/voice/cry_king2.ogg',
 	)
-
-// === CHOIR / AGONY ===
-
-/datum/emote/living/choir
-	key = "choir"
-	key_third_person = "choir"
-	message = "lets out a choir!"
-	message_mime = "silently choirs."
-	sound = 'sound/voice/choir.ogg'
-	specific_emote_audio_cooldown = 6 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/agony
-	key = "agony"
-	key_third_person = "agonies"
-	message = "lets out a choir of agony!"
-	message_mime = "is visibly in agony."
-	sound = 'sound/voice/agony.ogg'
-	specific_emote_audio_cooldown = 7 SECONDS
-	emote_type = EMOTE_AUDIBLE
 
 // === WHISTLE TUNES ===
 
@@ -1389,58 +1090,6 @@
 	sound = 'sound/voice/wolfwhistle.ogg'
 	specific_emote_audio_cooldown = 0.78 SECONDS
 	emote_type = EMOTE_AUDIBLE
-
-// === TERROR ===
-
-/datum/emote/living/terror
-	key = "terror"
-	key_third_person = "terrors"
-	message = "whistles some dreadful tune..."
-	message_mime = "stares with an aura full of dread..."
-	specific_emote_audio_cooldown = 13.07 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/terror/get_sound(mob/living/user)
-	return pick(
-		'sound/voice/terror1.ogg',
-		'sound/voice/terror2.ogg',
-	)
-
-// === SICKO / CHILL ===
-
-/datum/emote/living/sicko
-	key = "sicko"
-	key_third_person = "sickos"
-	message = "briefly goes sicko mode!"
-	message_mime = "briefly imitates sicko mode!"
-	sound = 'sound/voice/sicko.ogg'
-	specific_emote_audio_cooldown = 0.8 SECONDS
-	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-
-/datum/emote/living/chill
-	key = "chill"
-	key_third_person = "chills"
-	message = "feels a chill running down their spine..."
-	message_mime = "acts out a chill running down their spine..."
-	sound = 'sound/voice/waterphone.ogg'
-	specific_emote_audio_cooldown = 3.4 SECONDS
-	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-
-// === SNORE2 ===
-
-/datum/emote/living/snore2
-	key = "snore2"
-	key_third_person = "snores"
-	message = "lets out an earthshaking snore."
-	message_mime = "lets out an inaudible snore!"
-	specific_emote_audio_cooldown = 2.1 SECONDS
-	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/snore2/get_sound(mob/living/user)
-	return pick(
-		'sound/voice/aauugghh1.ogg',
-		'sound/voice/aauugghh2.ogg',
-	)
 
 // === PAIN ===
 
@@ -1474,15 +1123,7 @@
 		'sound/voice/human_female_scream_4.ogg',
 	)
 
-// === MALAYSIA / RAWR / MICHAEL ===
-
-/datum/emote/living/malaysia
-	key = "malaysia"
-	key_third_person = "admits to blowing up Malaysia"
-	message = "admits to blowing up Malaysia!"
-	message_mime = "silently explains they blew up Malaysia!"
-	emote_type = EMOTE_AUDIBLE
-	sound = 'sound/voice/malaysia.ogg'
+// === RAWR ===
 
 /datum/emote/living/rawr2
 	key = "rawr"
@@ -1490,14 +1131,6 @@
 	message = "makes RAWR!"
 	sound = 'sound/voice/rawr.ogg'
 	emote_type = EMOTE_AUDIBLE
-
-/datum/emote/living/michael
-	key = "michael"
-	key_third_person = "asks don't leave them"
-	message = "asks don't leave them!"
-	message_mime = "knocks on an invisible window with their knuckles!"
-	emote_type = EMOTE_AUDIBLE
-	sound = 'sound/emotes/dontleaveme.ogg'
 
 // === ZUBBERS EMOTES ===
 
