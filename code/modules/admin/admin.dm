@@ -19,19 +19,70 @@
 	if(!check_rights(0))
 		return
 
-	var/dat
-	dat += "<a href='byond://?src=[REF(src)];[HrefToken()];gamemode_panel=1'>Dynamic Panel</a><BR>"
-	dat += "<hr/>"
-
-	dat += "<a href='byond://?src=[REF(src)];[HrefToken()];spawn_panel=1'>Spawn Panel</a><br>"
-
-	if(marked_datum && istype(marked_datum, /atom))
-		dat += "<a href='byond://?src=[REF(src)];[HrefToken()];dupe_marked_datum=1'>Duplicate Marked Datum</a><br>"
-
-	var/datum/browser/browser = new(usr, "admin2", "Game Panel", 240, 280)
-	browser.set_content(dat)
-	browser.open()
+	var/datum/admin_game_panel/interface = new(src)
+	interface.ui_interact(usr)
 	return
+
+/datum/admin_game_panel
+	var/datum/admins/holder
+
+/datum/admin_game_panel/New(datum/admins/holder)
+	src.holder = holder
+	return ..()
+
+/datum/admin_game_panel/ui_state(mob/user)
+	return ADMIN_STATE(R_ADMIN)
+
+/datum/admin_game_panel/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "GamePanel")
+		ui.open()
+
+/datum/admin_game_panel/ui_data(mob/user)
+	var/list/data = list()
+	var/can_spawn = FALSE
+	var/has_marked_atom = FALSE
+	if(holder)
+		if(holder.check_for_rights(R_SPAWN))
+			can_spawn = TRUE
+		var/datum/marked = holder.marked_datum
+		if(istype(marked, /atom))
+			has_marked_atom = TRUE
+	data["canSpawn"] = can_spawn
+	data["hasMarkedAtom"] = has_marked_atom
+	return data
+
+/datum/admin_game_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	if(!holder)
+		return
+
+	switch(action)
+		if("storyteller")
+			if(!check_rights(R_ADMIN))
+				return
+			dynamic_panel(usr)
+		if("spawn_panel")
+			if(!check_rights(R_SPAWN))
+				return
+			SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/spawn_panel)
+		if("create_reagent")
+			if(!check_rights(R_SPAWN))
+				return
+			holder.create_reagent(usr)
+		if("duplicate_marked")
+			if(!check_rights(R_SPAWN))
+				return
+			var/atom/marked_atom = holder.marked_datum
+			if(!istype(marked_atom))
+				return
+			var/turf/location = get_turf(usr)
+			if(!location)
+				return
+			duplicate_object(marked_atom, location)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 

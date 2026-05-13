@@ -1192,6 +1192,14 @@
 
 	update_draw_color()
 
+	// NOVA EDIT ADDITION - Apply species alpha outside is_creating guard so toggle_transparency works on subsequent updates
+	if(ishuman(owner))
+		var/mob/living/carbon/human/alpha_owner = owner
+		var/datum/species/alpha_species = alpha_owner.dna?.species
+		if(alpha_species)
+			alpha = alpha_species.specific_alpha
+	// NOVA EDIT END
+
 	if(!is_creating || !owner)
 		return
 
@@ -1222,6 +1230,8 @@
 
 	if(owner_species && owner_species.specific_alpha != 255)
 		alpha = owner_species.specific_alpha
+	else
+		alpha = 255
 
 	if(body_zone in owner_dna.body_markings)
 		markings = LAZYCOPY(owner_dna.body_markings[body_zone])

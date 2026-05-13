@@ -961,6 +961,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/board/autodoc
+	name = "Autodoc Medical System Board"
+	desc = "The circuit board for an Autodoc automated surgical unit."
+	id = "autodoc"
+	build_path = /obj/item/circuitboard/machine/autodoc
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_MEDICAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/medical_kiosk
 	name = "Medical Kiosk Board"
 	desc = "The circuit board for a Medical Kiosk."
