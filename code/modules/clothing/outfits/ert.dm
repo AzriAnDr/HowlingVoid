@@ -640,7 +640,6 @@
 		/obj/item/mod/module/defibrillator,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/health_analyzer,
-		/obj/item/mod/module/injector,
 		/obj/item/mod/module/surgical_processor/emergency,
 		/obj/item/mod/module/storage/large_capacity,
 	)

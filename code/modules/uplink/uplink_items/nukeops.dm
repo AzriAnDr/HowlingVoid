@@ -813,14 +813,6 @@
 	cost = 5
 	purchasable_from = (UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 
-/datum/uplink_item/suits/injector
-	name = "MODsuit Injector Module"
-	desc = "An injector module for a MODsuit. It is an extendable piercing injector with 30u capacity."
-	item = /obj/item/mod/module/injector
-	cost = 2
-	purchasable_from = (UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
-	uplink_item_flags = NONE
-
 /datum/uplink_item/suits/holster
 	name = "MODsuit Holster Module"
 	desc = "A holster module for a MODsuit. It can stealthily store any not too heavy gun inside it."

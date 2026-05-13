@@ -94,34 +94,430 @@
 ///Injector - Gives the suit an extendable large-capacity piercing syringe.
 /obj/item/mod/module/injector
 	name = "MOD injector module"
-	desc = "A module installed into the wrist of the suit, this functions as a high-capacity syringe, \
-		with a tip fine enough to locate the emergency injection ports on any suit of armor, \
-		penetrating it with ease. Even yours."
+	desc = "A self-contained chem-archiving platform installed into the wrist of the suit. \
+		Once it has sampled enough of a reagent, it can synthesize fresh doses from the MOD's power reserves, \
+		store custom emergency cocktails, and inject through any armor in moments."
 	icon_state = "injector"
 	module_type = MODULE_ACTIVE
 	complexity = 1
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
-	device = /obj/item/reagent_containers/syringe/mod
+	device = /obj/item/reagent_containers/hypospray/mod/injector
 	incompatible_modules = list(/obj/item/mod/module/injector)
 	cooldown_time = 0.5 SECONDS
 	required_slots = list(ITEM_SLOT_GLOVES)
+	/// Suit charge consumed for every synthesized unit.
+	var/synthesis_charge_cost = DEFAULT_CHARGE_DRAIN * 0.75
 
-/obj/item/reagent_containers/syringe/mod
+/obj/item/mod/module/injector/Initialize(mapload)
+	. = ..()
+	if(istype(device, /obj/item/reagent_containers/hypospray/mod/injector))
+		var/obj/item/reagent_containers/hypospray/mod/injector/injector_device = device
+		injector_device.link_module(src)
+
+/obj/item/reagent_containers/hypospray/mod/injector
 	name = "MOD injector syringe"
-	desc = "A high-capacity syringe, with a tip fine enough to locate \
-		the emergency injection ports on any suit of armor, penetrating it with ease. Even yours."
-	icon_state = "mod_0"
-	base_icon_state = "mod"
-	amount_per_transfer_from_this = 30
-	possible_transfer_amounts = list(5, 10, 15, 20, 30)
-	volume = 30
-	inject_flags = INJECT_CHECK_PENETRATE_THICK
+	desc = "A combat-grade adaptive injector with a built-in synthesis archive. \
+		It can memorize sampled reagents, mix reserve cocktails, and punch through any armor or sealed MOD with contemptuous ease."
+	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
+	inhand_icon_state = "combat_hypo"
+	worn_icon_state = "hypo"
+	icon_state = "injector"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	amount_per_transfer_from_this = 5
+	volume = 100
+	possible_transfer_amounts = list(1, 5, 10, 15, 20, 25, 30, 40, 50)
+	resistance_flags = ACID_PROOF
+	initial_reagent_flags = OPENCONTAINER | NO_SPLASH
+	ignore_flags = TRUE
+	/// Parent module that powers synthesis and owns this injector.
+	var/obj/item/mod/module/injector/linked_module
+	/// Reagent path currently highlighted in the injector UI.
+	var/selected_reagent
+	/// Default amount synthesized with a single button press.
+	var/synthesis_amount = 10
+	/// If TRUE, synthesize the missing units for the current dose on demand.
+	var/auto_refill = TRUE
+	/// Reagent archive sample size needed to learn a new reagent.
+	var/sample_volume = 50
+	/// Cached reagent archive.
+	var/list/known_reagents = list()
+	/// Saved cocktail blueprints keyed by profile name.
+	var/list/saved_profiles = list()
+	/// Hard cap for stored cocktail profiles.
+	var/max_saved_profiles = 6
 
-/obj/item/reagent_containers/syringe/mod/update_reagent_overlay()
-	if(reagents?.total_volume)
-		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/medical/reagent_fillings.dmi', "mod[get_rounded_vol()]")
-		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
-		. += filling_overlay
+/obj/item/reagent_containers/hypospray/mod/injector/Initialize(mapload)
+	. = ..()
+	if(istype(loc, /obj/item/mod/module/injector))
+		link_module(loc)
+
+/obj/item/reagent_containers/hypospray/mod/injector/examine(mob/user)
+	. = ..()
+	. += span_notice("Use in hand to open the injector console, archive reagents, and manage dose profiles.")
+	. += span_notice("Any reagent is archived automatically once the injector itself contains [sample_volume] units of it.")
+	if(selected_reagent)
+		var/datum/reagent/selected_reagent_datum = GLOB.chemical_reagents_list[selected_reagent]
+		if(selected_reagent_datum)
+			. += span_notice("Selected synthesis target: [selected_reagent_datum.name].")
+	. += span_notice("Current dose: [amount_per_transfer_from_this]u. Auto-refill: [auto_refill ? "enabled" : "disabled"].")
+
+/obj/item/reagent_containers/hypospray/mod/injector/proc/link_module(obj/item/mod/module/injector/module)
+	linked_module = module
+
+/obj/item/reagent_containers/hypospray/mod/injector/proc/archive_reagent(reagent_type, mob/user, silent = FALSE)
+	if(!reagent_type || known_reagents[reagent_type])
+		return FALSE
+	known_reagents[reagent_type] = TRUE
+	if(!selected_reagent)
+		selected_reagent = reagent_type
+	if(!silent)
+		var/datum/reagent/reagent_datum = GLOB.chemical_reagents_list[reagent_type]
+		balloon_alert(user, "archived [reagent_datum?.name || "sample"]")
+		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+	return TRUE
+
+/obj/item/reagent_containers/hypospray/mod/injector/proc/auto_archive_contents(mob/user, silent = FALSE)
+	var/archived_any = FALSE
+	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
+		if(reagent.volume < sample_volume)
+			continue
+		archived_any = archive_reagent(reagent.type, user, silent) || archived_any
+	return archived_any
+
+/obj/item/reagent_containers/hypospray/mod/injector/on_reagent_change(datum/reagents/holder, ...)
+	SIGNAL_HANDLER
+	auto_archive_contents(null, TRUE)
+	return ..()
+
+/obj/item/reagent_containers/hypospray/mod/injector/attack_self(mob/user)
+	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
+		ui_interact(user)
+	return TRUE
+
+/obj/item/reagent_containers/hypospray/mod/injector/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!attacking_item?.reagents || !attacking_item.is_drainable())
+		return ..()
+	var/obj/item/reagent_containers/source_container = attacking_item
+	if(reagents.holder_full())
+		balloon_alert(user, "reservoir full")
+		return TRUE
+	var/list/sample_choices = list()
+	for(var/datum/reagent/reagent as anything in attacking_item.reagents.reagent_list)
+		sample_choices["[reagent.name] ([round(reagent.volume, CHEMICAL_VOLUME_ROUNDING)]u)"] = reagent.type
+	if(!length(sample_choices))
+		return ..()
+	var/chosen_label
+	if(length(sample_choices) == 1)
+		for(var/sample_label in sample_choices)
+			chosen_label = sample_label
+			break
+	else
+		chosen_label = tgui_input_list(user, "Select a reagent to load into the injector.", "MOD Injector", sample_choices)
+	if(!chosen_label)
+		return TRUE
+	var/reagent_type = sample_choices[chosen_label]
+	if(!reagent_type)
+		return TRUE
+	var/free_volume = reagents.maximum_volume - reagents.total_volume
+	if(free_volume <= 0)
+		balloon_alert(user, "reservoir full")
+		return TRUE
+	var/was_known = !!known_reagents[reagent_type]
+	var/current_amount = reagents.get_reagent_amount(reagent_type)
+	var/transfer_amount = source_container.amount_per_transfer_from_this
+	if(!known_reagents[reagent_type] && current_amount < sample_volume)
+		transfer_amount = max(transfer_amount, sample_volume - current_amount)
+	transfer_amount = min(
+		transfer_amount,
+		source_container.reagents.get_reagent_amount(reagent_type),
+		free_volume,
+	)
+	transfer_amount = round(transfer_amount, CHEMICAL_VOLUME_ROUNDING)
+	if(transfer_amount <= 0)
+		balloon_alert(user, "sample transfer failed")
+		return TRUE
+	var/datum/reagent/reagent_datum = GLOB.chemical_reagents_list[reagent_type]
+	var/transferred = round(
+		source_container.reagents.trans_to(
+			src,
+			transfer_amount,
+			transferred_by = user,
+			target_id = reagent_type,
+			no_react = TRUE,
+		),
+		CHEMICAL_VOLUME_ROUNDING,
+	)
+	if(!transferred)
+		balloon_alert(user, "sample transfer failed")
+		return TRUE
+	to_chat(user, span_notice("You load [transferred] unit\s of [reagent_datum?.name || "reagents"] into [src]."))
+	if(!was_known && known_reagents[reagent_type])
+		balloon_alert(user, "archived [reagent_datum?.name || "sample"]")
+		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+	else if(!known_reagents[reagent_type])
+		var/current_sample = round(reagents.get_reagent_amount(reagent_type), CHEMICAL_VOLUME_ROUNDING)
+		balloon_alert(user, "sample [current_sample]/[sample_volume]u")
+	return TRUE
+
+/obj/item/reagent_containers/hypospray/mod/injector/proc/get_mod_charge()
+	return linked_module?.mod?.get_charge() || 0
+
+/obj/item/reagent_containers/hypospray/mod/injector/proc/get_mod_max_charge()
+	return linked_module?.mod?.get_max_charge() || 0
+
+/obj/item/reagent_containers/hypospray/mod/injector/proc/get_synthesis_cost_per_unit()
+	return linked_module?.synthesis_charge_cost || 0
+
+/obj/item/reagent_containers/hypospray/mod/injector/proc/synthesize_reagent(reagent_type, amount, mob/user, silent = FALSE)
+	if(!reagent_type || !known_reagents[reagent_type] || amount <= 0)
+		return 0
+	if(!linked_module?.mod)
+		if(user && !silent)
+			balloon_alert(user, "no MOD link")
+		return 0
+	var/free_volume = max(0, reagents.maximum_volume - reagents.total_volume)
+	if(free_volume <= 0)
+		if(user && !silent)
+			balloon_alert(user, "reservoir full")
+		return 0
+	var/to_create = min(amount, free_volume)
+	var/synthesis_cost = get_synthesis_cost_per_unit()
+	if(synthesis_cost <= 0)
+		return 0
+	var/max_affordable = floor(get_mod_charge() / synthesis_cost)
+	to_create = min(to_create, max_affordable)
+	if(to_create <= 0)
+		if(user && !silent)
+			balloon_alert(user, "not enough charge")
+		return 0
+	if(!linked_module.drain_power(to_create * synthesis_cost))
+		if(user && !silent)
+			balloon_alert(user, "not enough charge")
+		return 0
+	reagents.add_reagent(reagent_type, to_create, no_react = TRUE)
+	update_appearance()
+	return to_create
+
+/obj/item/reagent_containers/hypospray/mod/injector/proc/ensure_payload(mob/user)
+	if(reagents.total_volume >= amount_per_transfer_from_this)
+		return TRUE
+	if(!auto_refill || !selected_reagent)
+		return FALSE
+	var/missing_amount = amount_per_transfer_from_this - reagents.total_volume
+	synthesize_reagent(selected_reagent, missing_amount, user, silent = TRUE)
+	return reagents.total_volume >= amount_per_transfer_from_this
+
+/obj/item/reagent_containers/hypospray/mod/injector/inject(mob/living/affected_mob, mob/user)
+	if(used_up)
+		to_chat(user, span_warning("[src] tip is broken and is now unusable!"))
+		return FALSE
+	if(!isliving(affected_mob) || !affected_mob.reagents)
+		return FALSE
+	if(!ensure_payload(user) && (!reagents || reagents.total_volume <= 0))
+		to_chat(user, span_warning("[src] reservoir is empty!"))
+		return FALSE
+	if(!reagents || reagents.total_volume <= 0)
+		to_chat(user, span_warning("[src] reservoir is empty!"))
+		return FALSE
+	var/transfer_amount = min(amount_per_transfer_from_this, reagents.total_volume)
+	if(transfer_amount <= 0)
+		return FALSE
+	var/contained = reagents.get_reagent_log_string()
+	log_combat(user, affected_mob, "attempted to inject", src, "([contained])")
+	to_chat(affected_mob, span_warning("You feel a sharp puncture!"))
+	if(affected_mob == user)
+		to_chat(user, span_notice("You inject yourself with [src]."))
+	else
+		affected_mob.visible_message(
+			span_danger("[user] punctures [affected_mob] with [src]!"),
+			span_userdanger("[user] punctures you with [src]!"),
+		)
+		to_chat(user, span_notice("You inject [affected_mob] with [src]."))
+	playsound(affected_mob, 'sound/items/hypospray.ogg', 50, TRUE)
+	var/transferred = reagents.trans_to(affected_mob, transfer_amount, transferred_by = user, methods = INJECT)
+	if(transferred)
+		to_chat(user, span_notice("[transferred] unit\s injected. [round(reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)] unit\s remain in [src]."))
+		log_combat(user, affected_mob, "injected", src, "([contained])")
+		update_appearance()
+		return TRUE
+	return FALSE
+
+/obj/item/reagent_containers/hypospray/mod/injector/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "MODInjector", name)
+		ui.open()
+
+/obj/item/reagent_containers/hypospray/mod/injector/ui_data(mob/user)
+	. = list()
+	.["currentVolume"] = round(reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
+	.["maxVolume"] = reagents.maximum_volume
+	.["dose"] = amount_per_transfer_from_this
+	.["synthesisAmount"] = synthesis_amount
+	.["autoRefill"] = auto_refill
+	.["sampleVolume"] = sample_volume
+	.["power"] = get_mod_charge()
+	.["maxPower"] = get_mod_max_charge()
+	.["synthesisCostPerUnit"] = get_synthesis_cost_per_unit()
+	.["selectedReagent"] = selected_reagent ? "[selected_reagent]" : null
+	var/list/known_reagent_data = list()
+	for(var/reagent_type in known_reagents)
+		var/datum/reagent/reagent = GLOB.chemical_reagents_list[reagent_type]
+		if(!reagent)
+			continue
+		known_reagent_data += list(list(
+			"id" = "[reagent_type]",
+			"name" = reagent.name,
+			"description" = reagent.description,
+			"color" = reagent.color,
+			"selected" = reagent_type == selected_reagent,
+		))
+	.["knownReagents"] = known_reagent_data
+	var/list/reservoir_contents = list()
+	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
+		reservoir_contents += list(list(
+			"id" = "[reagent.type]",
+			"name" = reagent.name,
+			"volume" = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING),
+			"color" = reagent.color,
+		))
+	.["reservoirContents"] = reservoir_contents
+	var/list/profile_data = list()
+	for(var/profile_name in saved_profiles)
+		var/list/profile = saved_profiles[profile_name]
+		var/list/profile_lines = list()
+		for(var/reagent_type in profile)
+			var/datum/reagent/reagent = GLOB.chemical_reagents_list[reagent_type]
+			if(!reagent)
+				continue
+			profile_lines += "[reagent.name] [round(profile[reagent_type], CHEMICAL_VOLUME_ROUNDING)]u"
+		profile_data += list(list(
+			"name" = profile_name,
+			"summary" = english_list(profile_lines, and_text = ", "),
+		))
+	.["profiles"] = profile_data
+
+/obj/item/reagent_containers/hypospray/mod/injector/proc/save_current_profile(mob/user)
+	if(!reagents?.total_volume)
+		balloon_alert(user, "reservoir empty")
+		return FALSE
+	var/suggested_name
+	if(selected_reagent)
+		var/datum/reagent/selected_reagent_datum = GLOB.chemical_reagents_list[selected_reagent]
+		suggested_name = selected_reagent_datum?.name
+	var/profile_name = trim(tgui_input_text(user, "Name this injector profile.", "MOD Injector Profile", suggested_name, max_length = 32))
+	if(!profile_name)
+		return FALSE
+	if(length(saved_profiles) >= max_saved_profiles && !saved_profiles[profile_name])
+		balloon_alert(user, "profile bank full")
+		return FALSE
+	var/list/profile = list()
+	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
+		profile[reagent.type] = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING)
+	saved_profiles[profile_name] = profile
+	balloon_alert(user, "profile saved")
+	return TRUE
+
+/obj/item/reagent_containers/hypospray/mod/injector/proc/load_profile(profile_name, mob/user)
+	var/list/profile = saved_profiles[profile_name]
+	if(!profile)
+		return FALSE
+	reagents.clear_reagents()
+	update_appearance()
+	var/fully_loaded = TRUE
+	var/first_reagent
+	for(var/reagent_type in profile)
+		first_reagent ||= reagent_type
+		var/desired_amount = profile[reagent_type]
+		var/synthesized_amount = synthesize_reagent(reagent_type, desired_amount, user, silent = TRUE)
+		if(synthesized_amount < desired_amount)
+			fully_loaded = FALSE
+	selected_reagent = first_reagent
+	if(fully_loaded)
+		balloon_alert(user, "profile synthesized")
+	else
+		balloon_alert(user, "profile partially synthesized")
+	update_appearance()
+	return TRUE
+
+/obj/item/reagent_containers/hypospray/mod/injector/proc/delete_profile(profile_name, mob/user)
+	if(!saved_profiles[profile_name])
+		return FALSE
+	saved_profiles -= profile_name
+	balloon_alert(user, "profile deleted")
+	return TRUE
+
+/obj/item/reagent_containers/hypospray/mod/injector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("set_dose")
+			var/new_dose = clamp(round(text2num(params["value"])), 1, 50)
+			if(!new_dose)
+				return
+			amount_per_transfer_from_this = new_dose
+			return TRUE
+		if("set_synthesis_amount")
+			var/new_amount = clamp(round(text2num(params["value"])), 1, 50)
+			if(!new_amount)
+				return
+			synthesis_amount = new_amount
+			return TRUE
+		if("toggle_auto_refill")
+			auto_refill = !auto_refill
+			return TRUE
+		if("select_reagent")
+			var/reagent_type = text2path(params["id"])
+			if(!reagent_type || !known_reagents[reagent_type])
+				return
+			selected_reagent = reagent_type
+			return TRUE
+		if("synthesize")
+			var/reagent_type = text2path(params["id"])
+			if(!reagent_type)
+				return
+			var/requested_amount = round(text2num(params["amount"]))
+			if(!requested_amount)
+				requested_amount = synthesis_amount
+			requested_amount = clamp(requested_amount, 1, 50)
+			synthesize_reagent(reagent_type, requested_amount, ui.user)
+			return TRUE
+		if("prime_selected")
+			if(!selected_reagent)
+				balloon_alert(ui.user, "no reagent selected")
+				return
+			reagents.clear_reagents()
+			update_appearance()
+			synthesize_reagent(selected_reagent, reagents.maximum_volume, ui.user)
+			return TRUE
+		if("flush")
+			reagents.clear_reagents()
+			update_appearance()
+			balloon_alert(ui.user, "reservoir flushed")
+			return TRUE
+		if("purge_reagent")
+			var/reagent_type = text2path(params["id"])
+			if(!reagent_type)
+				return
+			var/datum/reagent/reagent = reagents.has_reagent(reagent_type)
+			if(!reagent)
+				return
+			reagents.remove_reagent(reagent_type, reagent.volume)
+			update_appearance()
+			return TRUE
+		if("self_inject")
+			if(loc != ui.user)
+				balloon_alert(ui.user, "hold injector")
+				return
+			return inject(ui.user, ui.user)
+		if("save_profile")
+			return save_current_profile(ui.user)
+		if("load_profile")
+			return load_profile(params["name"], ui.user)
+		if("delete_profile")
+			return delete_profile(params["name"], ui.user)
 
 ///Organizer - Lets you shoot organs, immediately replacing them if the target has the organ manipulation surgery.
 /obj/item/mod/module/organizer
