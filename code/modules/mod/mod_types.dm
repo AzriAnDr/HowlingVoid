@@ -168,6 +168,14 @@
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/health_analyzer,
+	)
+
+/obj/item/mod/control/pre_equipped/rescue/cmo
+	theme = /datum/mod_theme/rescue/cmo
+	applied_modules = list(
+		/obj/item/mod/module/storage/large_capacity,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/health_analyzer,
 		/obj/item/mod/module/injector,
 	)
 
@@ -389,7 +397,6 @@
 		/obj/item/mod/module/defibrillator/combat,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/health_analyzer,
-		/obj/item/mod/module/injector,
 		/obj/item/mod/module/surgical_processor/preloaded,
 		/obj/item/mod/module/storage/syndicate,
 		/obj/item/mod/module/hat_stabilizer/syndicate,
@@ -517,7 +524,6 @@
 
 /obj/item/mod/control/pre_equipped/responsory/chaplain
 	insignia_type = /obj/item/mod/module/insignia/chaplain
-	additional_modules = /obj/item/mod/module/injector
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory
 	applied_skin = "inquisitory"
@@ -564,7 +570,6 @@
 
 /obj/item/mod/control/pre_equipped/responsory/inquisitory/chaplain
 	insignia_type = /obj/item/mod/module/insignia/chaplain
-	additional_modules = /obj/item/mod/module/injector
 
 /obj/item/mod/control/pre_equipped/apocryphal
 	theme = /datum/mod_theme/apocryphal
@@ -638,7 +643,6 @@
 		/obj/item/mod/module/bikehorn,
 		/obj/item/mod/module/rad_protection,
 		/obj/item/mod/module/tether,
-		/obj/item/mod/module/injector,
 	)
 
 /obj/item/mod/control/pre_equipped/administrative

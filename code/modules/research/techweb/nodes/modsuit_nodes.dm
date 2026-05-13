@@ -73,7 +73,6 @@
 	design_ids = list(
 		"mod_plating_medical",
 		"mod_quick_carry",
-		"mod_injector",
 		"mod_organizer",
 		"mod_patienttransport",
 	)

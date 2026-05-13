@@ -838,6 +838,9 @@
 		),
 	)
 
+/datum/mod_theme/rescue/cmo
+	complexity_max = 25
+
 /datum/armor/mod_theme_rescue
 	melee = 10
 	bullet = 10
