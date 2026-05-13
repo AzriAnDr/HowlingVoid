@@ -854,6 +854,24 @@
 	to_chat(user, span_notice("You change the circuit board setting to \"[new_name]\"."))
 	return TRUE
 
+/obj/item/circuitboard/machine/autodoc
+	name = "Autodoc Medical System"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/autodoc
+	req_components = list(
+		/datum/stock_part/servo = 2,
+		/datum/stock_part/matter_bin = 2,
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/scanning_module = 1,
+		/obj/item/scalpel/advanced = 1,
+		/obj/item/cautery/advanced = 1,
+		/obj/item/retractor/advanced = 1,
+		/obj/item/reagent_containers/cup/beaker/large = 1,
+		/obj/item/reagent_containers/cup/beaker = 1,
+		/obj/item/stack/cable_coil = 2,
+		/obj/item/stack/sheet/glass = 2,
+	)
+
 /obj/item/circuitboard/machine/cryo_tube
 	name = "Cryotube"
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL

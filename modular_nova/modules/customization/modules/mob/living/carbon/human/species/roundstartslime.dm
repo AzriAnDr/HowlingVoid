@@ -358,6 +358,10 @@
 /datum/species/jelly/spec_life(mob/living/carbon/human/slime, seconds_per_tick)
 	. = ..()
 
+	// Skip HV-exclusive wetness/healing logic for species that opt out (e.g. xenoslime)
+	if(skip_hv_spec_life)
+		return
+
 	// Skip if unconscious
 	if(slime.stat != CONSCIOUS)
 		return

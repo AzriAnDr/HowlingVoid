@@ -85,3 +85,13 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	discount_experiments = list(/datum/experiment/autopsy/xenomorph = TECHWEB_TIER_4_POINTS)
 	announce_channels = list(RADIO_CHANNEL_MEDICAL)
+
+/datum/techweb_node/autodoc
+	id = TECHWEB_NODE_AUTODOC
+	display_name = "Automated Medical System"
+	description = "Unlocks the construction of an Autodoc \u2014 an automated surgical unit capable of performing complex medical procedures without direct human supervision."
+	prereq_ids = list(TECHWEB_NODE_SURGERY_TOOLS, TECHWEB_NODE_SURGERY_EXP, TECHWEB_NODE_CRYOSTASIS)
+	design_ids = list("autodoc")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
+	required_experiments = list(/datum/experiment/scanning/people/dead_soulled)
+	announce_channels = list(RADIO_CHANNEL_MEDICAL)

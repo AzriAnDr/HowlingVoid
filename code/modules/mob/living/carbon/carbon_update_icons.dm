@@ -539,6 +539,8 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "[human_owner.mob_height]"
+	if(alpha != 255) // NOVA EDIT ADDITION - Include alpha so transparency changes invalidate the icon cache
+		. += "[alpha]"
 	SEND_SIGNAL(src, COMSIG_BODYPART_GENERATE_ICON_KEY, .)
 	return .
 

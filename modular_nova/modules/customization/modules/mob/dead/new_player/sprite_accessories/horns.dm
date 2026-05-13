@@ -200,3 +200,85 @@
 	name = "Geniculate Antenna"
 	icon_state = "geniculate"
 	color_src = USE_ONE_COLOR
+
+// == PORTED FROM ZUBBERS ==
+
+/datum/sprite_accessory/horns/hollowpoint
+	name = "Hollow-Points"
+	icon_state = "hollowpoint"
+
+/datum/sprite_accessory/horns/analyticalantlers
+	name = "Analytical Antlers"
+	icon_state = "analyticalantlers"
+
+/datum/sprite_accessory/horns/spidersspikes
+	name = "Spiders Spikes"
+	icon_state = "spidersspikes"
+
+/datum/sprite_accessory/horns/biterhorns
+	name = "Biter's Horns"
+	icon_state = "biterhorns"
+
+/datum/sprite_accessory/horns/halo
+	name = "Halo"
+	icon_state = "halo"
+
+/datum/sprite_accessory/horns/messenger
+	name = "Winged Messenger"
+	icon_state = "messenger"
+	color_src = USE_ONE_COLOR
+
+/datum/sprite_accessory/horns/newsimple
+	name = "Simple (New)"
+	icon_state = "newsimple"
+
+/datum/sprite_accessory/horns/newbroken
+	name = "Broken (New)"
+	icon_state = "newbroken"
+
+/datum/sprite_accessory/horns/newram
+	name = "Ram (New)"
+	icon_state = "newram"
+
+/datum/sprite_accessory/horns/lightning
+	name = "Lightning"
+	icon_state = "lightning"
+
+/datum/sprite_accessory/horns/brimstone
+	name = "Brimstone"
+	icon_state = "brimstone"
+
+/datum/sprite_accessory/horns/antennae_bent
+	name = "Bent Antennae"
+	icon_state = "antennae_bent"
+	color_src = USE_ONE_COLOR
+
+/datum/sprite_accessory/horns/antennae_wisteria
+	name = "Wisteria Antennae"
+	icon_state = "antennae_wisteria"
+	color_src = USE_ONE_COLOR
+
+/datum/sprite_accessory/horns/big/antlers_more
+	name = "Aged Antlers"
+	icon_state = "antlers_more"
+
+/datum/sprite_accessory/horns/big/antlers_large
+	name = "Large Antlers"
+	icon_state = "antlers_large"
+
+/datum/sprite_accessory/horns/big/antlers_regal
+	name = "Regal Antlers"
+	icon_state = "antlers_regal"
+
+/datum/sprite_accessory/horns/big/antlers_monarch
+	name = "Monarch Antlers"
+	icon_state = "antlers_monarch"
+
+/datum/sprite_accessory/horns/big/antlers_short
+	name = "Short Antlers"
+	icon_state = "antlers_short"
+
+/datum/sprite_accessory/horns/big/antenna_slanted
+	name = "Slanted Antenna"
+	icon_state = "antenna_slanted"
+	color_src = USE_ONE_COLOR

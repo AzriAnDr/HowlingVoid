@@ -20,6 +20,8 @@
 	mutantlungs = /obj/item/organ/lungs/slime
 	mutanteyes = /obj/item/organ/eyes/jelly
 	mutantheart = null
+	/// If TRUE, xenoslime's spec_life skips the HV-exclusive passive healing/water damage logic.
+	var/skip_hv_spec_life = FALSE
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_bloodtype = BLOOD_TYPE_TOX
 	blood_deficiency_drain_rate = JELLY_REGEN_RATE + BLOOD_DEFICIENCY_MODIFIER

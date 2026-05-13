@@ -104,6 +104,10 @@
 	return appearance
 
 /datum/bodypart_overlay/mutant/color_image(image/overlay, layer, obj/item/bodypart/limb)
+	// NOVA EDIT ADDITION - Apply limb transparency to external organ overlays
+	if(limb && limb.alpha != 255)
+		overlay.alpha = limb.alpha
+	// NOVA EDIT END
 	overlay.color = sprite_datum.color_src ? (dye_color || draw_color) : null
 
 /datum/bodypart_overlay/mutant/added_to_limb(obj/item/bodypart/limb)

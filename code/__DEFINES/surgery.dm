@@ -188,3 +188,11 @@ DEFINE_BITFIELD(operation_flags, list(
 #define FORMAT_LIMB_OWNER(limb) (limb.owner ? "[limb.owner]'s [limb.plaintext_zone]" : limb)
 /// Used in string formatting to print an organ's location as "John" or "the human chest"
 #define FORMAT_ORGAN_OWNER(organ) (organ.owner || organ.loc)
+
+// "special" argument values for organ Insert/Remove procs
+/// No special effect - standard organ removal behavior
+#define SURGERY_EFFECT_NONE 0
+/// Removal does not cause pain or external damage
+#define SURGERY_EFFECT_PAINLESS 1
+/// Clean removal - involves stitching and non-invasive measures
+#define SURGERY_EFFECT_CLEAN 2
