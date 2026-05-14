@@ -114,6 +114,10 @@
 		var/obj/item/reagent_containers/hypospray/mod/injector/injector_device = device
 		injector_device.link_module(src)
 
+/obj/item/mod/module/injector/has_required_parts(list/parts, need_active = FALSE)
+	// The injector is wrist-mounted and should stay usable on an active MOD even if the suit parts are folded.
+	return ..(parts, need_active = FALSE)
+
 /obj/item/reagent_containers/hypospray/mod/injector
 	name = "MOD injector syringe"
 	desc = "A combat-grade adaptive injector with a built-in synthesis archive. \
@@ -142,6 +146,8 @@
 	var/sample_volume = 50
 	/// Cached reagent archive.
 	var/list/known_reagents = list()
+	/// Hard cap for archived reagents available to synthesize.
+	var/max_known_reagents = 12
 	/// Saved cocktail blueprints keyed by profile name.
 	var/list/saved_profiles = list()
 	/// Hard cap for stored cocktail profiles.
@@ -167,6 +173,10 @@
 
 /obj/item/reagent_containers/hypospray/mod/injector/proc/archive_reagent(reagent_type, mob/user, silent = FALSE)
 	if(!reagent_type || known_reagents[reagent_type])
+		return FALSE
+	if(length(known_reagents) >= max_known_reagents)
+		if(user && !silent)
+			balloon_alert(user, "archive full")
 		return FALSE
 	known_reagents[reagent_type] = TRUE
 	if(!selected_reagent)
@@ -252,9 +262,12 @@
 		balloon_alert(user, "sample transfer failed")
 		return TRUE
 	to_chat(user, span_notice("You load [transferred] unit\s of [reagent_datum?.name || "reagents"] into [src]."))
+	var/reagent_meets_archive_threshold = reagents.get_reagent_amount(reagent_type) >= sample_volume
 	if(!was_known && known_reagents[reagent_type])
 		balloon_alert(user, "archived [reagent_datum?.name || "sample"]")
 		playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
+	else if(!was_known && reagent_meets_archive_threshold && length(known_reagents) >= max_known_reagents)
+		balloon_alert(user, "archive full")
 	else if(!known_reagents[reagent_type])
 		var/current_sample = round(reagents.get_reagent_amount(reagent_type), CHEMICAL_VOLUME_ROUNDING)
 		balloon_alert(user, "sample [current_sample]/[sample_volume]u")
@@ -295,7 +308,7 @@
 		if(user && !silent)
 			balloon_alert(user, "not enough charge")
 		return 0
-	reagents.add_reagent(reagent_type, to_create, no_react = TRUE)
+	reagents.add_reagent(reagent_type, to_create, added_purity = 1, no_react = TRUE)
 	update_appearance()
 	return to_create
 
@@ -357,6 +370,8 @@
 	.["synthesisAmount"] = synthesis_amount
 	.["autoRefill"] = auto_refill
 	.["sampleVolume"] = sample_volume
+	.["knownReagentCount"] = length(known_reagents)
+	.["maxKnownReagents"] = max_known_reagents
 	.["power"] = get_mod_charge()
 	.["maxPower"] = get_mod_max_charge()
 	.["synthesisCostPerUnit"] = get_synthesis_cost_per_unit()
@@ -448,6 +463,22 @@
 	balloon_alert(user, "profile deleted")
 	return TRUE
 
+/obj/item/reagent_containers/hypospray/mod/injector/proc/delete_known_reagent(reagent_type, mob/user)
+	if(!known_reagents[reagent_type])
+		return FALSE
+	known_reagents -= reagent_type
+	var/datum/reagent/reagent = reagents.has_reagent(reagent_type)
+	if(reagent)
+		reagents.remove_reagent(reagent_type, reagent.volume)
+	if(selected_reagent == reagent_type)
+		selected_reagent = null
+		for(var/next_reagent in known_reagents)
+			selected_reagent = next_reagent
+			break
+	update_appearance()
+	balloon_alert(user, "reagent deleted")
+	return TRUE
+
 /obj/item/reagent_containers/hypospray/mod/injector/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
@@ -474,6 +505,11 @@
 				return
 			selected_reagent = reagent_type
 			return TRUE
+		if("delete_known_reagent")
+			var/reagent_type = text2path(params["id"])
+			if(!reagent_type)
+				return
+			return delete_known_reagent(reagent_type, ui.user)
 		if("synthesize")
 			var/reagent_type = text2path(params["id"])
 			if(!reagent_type)

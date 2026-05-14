@@ -46,6 +46,8 @@ type MODInjectorData = {
   synthesisAmount: number;
   autoRefill: BooleanLike;
   sampleVolume: number;
+  knownReagentCount: number;
+  maxKnownReagents: number;
   power: number;
   maxPower: number;
   synthesisCostPerUnit: number;
@@ -119,6 +121,7 @@ const STRINGS = {
     archiveThreshold: 'Archive sample',
     batchCost: 'Batch cost',
     doseCost: 'Auto-refill cost',
+    archiveSlots: 'Archive slots',
     reservoirLoad: 'Reservoir load',
     reservoirContents: 'Reservoir contents',
     modCharge: 'MOD charge',
@@ -176,6 +179,7 @@ const STRINGS = {
     archiveThreshold: 'Образец для архива',
     batchCost: 'Цена пакета',
     doseCost: 'Цена автодозы',
+    archiveSlots: 'Ячеек архива',
     reservoirLoad: 'Заполнение резервуара',
     reservoirContents: 'Содержимое резервуара',
     modCharge: 'Заряд MOD',
@@ -243,6 +247,8 @@ export const MODInjector = () => {
     synthesisAmount,
     autoRefill,
     sampleVolume,
+    knownReagentCount,
+    maxKnownReagents,
     power,
     maxPower,
     synthesisCostPerUnit,
@@ -307,6 +313,9 @@ export const MODInjector = () => {
                     </LabeledList.Item>
                     <LabeledList.Item label={strings.archiveThreshold}>
                       {formatUnits(sampleVolume)}
+                    </LabeledList.Item>
+                    <LabeledList.Item label={strings.archiveSlots}>
+                      {`${knownReagentCount} / ${maxKnownReagents}`}
                     </LabeledList.Item>
                     <LabeledList.Item label={strings.readyDoses}>
                       {readyDoses}
@@ -422,6 +431,7 @@ const ArchiveSection = (props: ArchiveSectionProps) => {
             <Table.Cell>{strings.reagent}</Table.Cell>
             <Table.Cell width={1}>{strings.actions}</Table.Cell>
             <Table.Cell width={1} />
+            <Table.Cell width={1} />
           </Table.Row>
           {filteredReagents.map((reagent) => (
             <Table.Row key={reagent.id}>
@@ -460,6 +470,18 @@ const ArchiveSection = (props: ArchiveSectionProps) => {
                     act('synthesize', {
                       id: reagent.id,
                       amount: synthesisAmount,
+                    })
+                  }
+                />
+              </Table.Cell>
+              <Table.Cell width={1} textAlign="right">
+                <Button.Confirm
+                  icon="trash"
+                  color="bad"
+                  content={strings.delete}
+                  onClick={() =>
+                    act('delete_known_reagent', {
+                      id: reagent.id,
                     })
                   }
                 />

@@ -423,6 +423,7 @@
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
 	slowdown_deployed = 0.5
 	inbuilt_modules = list(/obj/item/mod/module/magboot/advanced)
 	allowed_suit_storage = list(
@@ -867,7 +868,7 @@
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 15
 	slowdown_deployed = 1.25
 	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced)
 	hearing_protection = EAR_PROTECTION_NORMAL
@@ -1004,6 +1005,7 @@
 	armor_type = /datum/armor/mod_theme_safeguard
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
 	inbuilt_modules = list(/obj/item/mod/module/shove_blocker/locked)
 	hearing_protection = EAR_PROTECTION_NORMAL
 	slowdown_deployed = 0.25
@@ -1076,7 +1078,7 @@
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
-	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
+	complexity_max = DEFAULT_MAX_COMPLEXITY + 15
 	slowdown_deployed = 0.25
 	hearing_protection = EAR_PROTECTION_NORMAL
 	allowed_suit_storage = list(
