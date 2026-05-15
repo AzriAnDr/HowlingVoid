@@ -394,6 +394,8 @@
 	"ui.character.feature.voice_actor_color.name": "Цвет голосового актёра",
 	"ui.character.feature.blindfold_color.name": "Цвет повязки на глаза",
 	"ui.character.feature.paint_color.name": "Цвет краски",
+	"ui.character.feature.voidwalker_space_color.name": "Цвет космоса",
+	"ui.character.feature.voidwalker_space_color.description": "Цвет, которым будет окрашена ваша космическая текстура.",
 	"ui.character.feature.socks_color.name": "Цвет носков",
 	"ui.character.feature.undershirt_color.name": "Цвет нижней рубашки",
 	"ui.character.feature.vox_bodycolor.name": "Цвет тела вокса",

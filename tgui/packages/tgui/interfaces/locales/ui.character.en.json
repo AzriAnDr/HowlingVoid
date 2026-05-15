@@ -394,6 +394,8 @@
     "ui.character.feature.voice_actor_color.name":  "Voice Actor Color",
     "ui.character.feature.blindfold_color.name":  "Blindfold Color",
     "ui.character.feature.paint_color.name":  "Paint Color",
+    "ui.character.feature.voidwalker_space_color.name":  "Space Color",
+    "ui.character.feature.voidwalker_space_color.description":  "The color used for your space texture.",
     "ui.character.feature.socks_color.name":  "Socks Color",
     "ui.character.feature.undershirt_color.name":  "Undershirt Color",
     "ui.character.feature.vox_bodycolor.name":  "Vox Bodycolor",
