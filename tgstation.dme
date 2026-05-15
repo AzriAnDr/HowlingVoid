@@ -3035,6 +3035,7 @@
 #include "code\game\objects\items\weaponry\melee\high_frequency_blade.dm"
 #include "code\game\objects\items\weaponry\melee\his_grace.dm"
 #include "code\game\objects\items\weaponry\melee\katana.dm"
+#include "code\game\objects\items\weaponry\melee\spellblade.dm"
 #include "code\game\objects\items\weaponry\melee\knives.dm"
 #include "code\game\objects\items\weaponry\melee\misc.dm"
 #include "code\game\objects\items\weaponry\melee\powerfist.dm"
@@ -9966,4 +9967,3 @@
 #include "code\modules\antagonists\tgmc_xenos\code\xeno_types\sentinel.dm"
 #include "code\modules\antagonists\tgmc_xenos\code\xeno_types\spitter.dm"
 // END_INCLUDE
-
