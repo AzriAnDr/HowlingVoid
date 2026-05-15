@@ -7411,6 +7411,7 @@
 #include "modularhowling_void\modules\cargo\supply_packs\guns.dm"
 #include "modularhowling_void\modules\client\hud\hud.dm"
 #include "modularhowling_void\modules\client\preferences\interface_language.dm"
+#include "modularhowling_void\modules\client\preferences\menu_chapter.dm"
 #include "modularhowling_void\modules\client\preferences\panel_language.dm"
 #include "modular_nova\master_files\code\modules\client\preferences\mutant_parts.dm"
 #include "modular_nova\master_files\code\modules\client\preferences\out_of_combat_fov_darkness.dm"
@@ -9967,4 +9968,3 @@
 #include "code\modules\antagonists\tgmc_xenos\code\xeno_types\sentinel.dm"
 #include "code\modules\antagonists\tgmc_xenos\code\xeno_types\spitter.dm"
 // END_INCLUDE
-

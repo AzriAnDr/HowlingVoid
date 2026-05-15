@@ -75,13 +75,13 @@
       label: 'CHAPTER III MENU:',
       variants: ['jesusWept', 'crossToBear'],
     },
-    EVENT: {
-      label: 'EVENT HAPTER MENU:',
+    event: {
+      label: 'EVENT MENU:',
       variants: ['molesHamsters'],
     },
   };
 
-  const DEFAULT_CHAPTER = 'ironHeart';
+  const DEFAULT_CHAPTER = 'sisterRay';
   const MENU_VARIANT_STORAGE_KEY = 'howlingMenuChapterVariant';
   const CSS_READY_FALLBACK_MS = 1200;
   const MENU_CHROME_STYLE_ID = 'howling-menu-chrome-style';
@@ -1047,6 +1047,25 @@
     }
   }
 
+  function rememberMenuVariant(chapterId, notifyServer) {
+    getMenuSettings().menuChapter = chapterId;
+    try {
+      localStorage.setItem(MENU_VARIANT_STORAGE_KEY, chapterId);
+    } catch {}
+
+    if (!notifyServer) {
+      return;
+    }
+
+    const src = getMenuSettings().byondSrc || window.__HOWLING_MENU_SRC;
+    if (!src) {
+      return;
+    }
+
+    window.location.href =
+      'byond://?src=' + src + ';set_menu_chapter=' + encodeURIComponent(chapterId);
+  }
+
   function setMenuVariant(chapterId) {
     if (!MENU_CHAPTERS[chapterId]) {
       return;
@@ -1056,11 +1075,16 @@
       return;
     }
 
-    getMenuSettings().menuChapter = chapterId;
-    try {
-      localStorage.setItem(MENU_VARIANT_STORAGE_KEY, chapterId);
-    } catch {}
+    rememberMenuVariant(chapterId, true);
+    loadChapter(chapterId);
+  }
 
+  function setMenuChapterFromServer(chapterId) {
+    if (!MENU_CHAPTERS[chapterId]) {
+      return;
+    }
+
+    rememberMenuVariant(chapterId, false);
     loadChapter(chapterId);
   }
 
@@ -1296,6 +1320,7 @@
   }
 
   window.setMenuChapter = loadChapter;
+  window.setMenuChapterFromServer = setMenuChapterFromServer;
   window.setMenuVariant = setMenuVariant;
   window.__HOWLING_MENU_CHAPTERS = MENU_CHAPTERS;
   window.__HOWLING_MENU_VARIANT_GROUPS = MENU_VARIANT_GROUPS;

@@ -41,6 +41,21 @@
 		update_interface_language_setting()
 		return
 
+	if(href_list["set_menu_chapter"])
+		var/datum/preferences/preferences = client.prefs
+		if(!preferences)
+			return
+
+		var/datum/preference/choiced/chapter_preference = GLOB.preference_entries[/datum/preference/choiced/menu_chapter]
+		var/menu_chapter = href_list["set_menu_chapter"]
+		if(!(menu_chapter in chapter_preference.get_choices()))
+			return
+
+		preferences.write_preference(chapter_preference, menu_chapter)
+		preferences.save_preferences()
+		update_menu_chapter_setting()
+		return
+
 	if(href_list["observe"])
 		play_lobby_button_sound()
 		make_me_an_observer()
@@ -128,6 +143,7 @@
 		title_screen_is_ready = TRUE
 		update_menu_music_settings()
 		update_interface_language_setting()
+		update_menu_chapter_setting()
 		if(SSticker && SSticker.current_state > GAME_STATE_PREGAME)
 			client << output(1, "nova_title_browser:set_round_started")
 		return
@@ -171,12 +187,19 @@
 	src << browse(SStitle.current_title_screen, "file=loading_screen.gif;display=0")
 	src << browse(dat, "window=nova_title_browser")
 	update_menu_music_settings()
+	update_menu_chapter_setting()
 
 // Howling Void Edit start
 /mob/dead/new_player/proc/notify_round_started()
 	if(!client)
 		return
 	client << output(1, "nova_title_browser:set_round_started")
+
+/mob/dead/new_player/proc/update_menu_chapter_setting()
+	if(!client || !client.prefs || !title_screen_is_ready)
+		return
+
+	client << output(client.prefs.read_preference(/datum/preference/choiced/menu_chapter), "nova_title_browser:set_menu_chapter")
 // Howling Void Edit end
 
 /mob/dead/new_player/proc/update_menu_music_settings()

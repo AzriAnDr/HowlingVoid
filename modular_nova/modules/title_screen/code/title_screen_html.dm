@@ -148,6 +148,7 @@ GLOBAL_LIST_EMPTY(startup_messages)
 	var/menu_music_enabled = client.prefs.read_preference(/datum/preference/toggle/menu_music_enabled)
 	var/menu_music_volume = clamp(client.prefs.read_preference(/datum/preference/numeric/volume/sound_menu_music_volume), 0, 100)
 	var/current_interface_language = client.prefs.read_preference(/datum/preference/choiced/interface_language)
+	var/current_menu_chapter = client.prefs.read_preference(/datum/preference/choiced/menu_chapter)
 
 	return {"
 		<span id=\"character_slot\" style=\"display:none\">[current_character_name]</span>
@@ -296,6 +297,19 @@ GLOBAL_LIST_EMPTY(startup_messages)
 				window.__HOWLING_INTERFACE_LANGUAGE = normalized;
 			}
 
+			function set_menu_chapter(chapter) {
+				if(window.setMenuChapterFromServer) {
+					window.setMenuChapterFromServer(chapter);
+					return;
+				}
+				if(window.setMenuChapter) {
+					window.setMenuChapter(chapter);
+					return;
+				}
+				window.__HOWLING_MENU_SETTINGS = window.__HOWLING_MENU_SETTINGS || {};
+				window.__HOWLING_MENU_SETTINGS.menuChapter = String(chapter || \"\");
+			}
+
 			function append_terminal_text() {}
 			function update_loading_progress() {}
 		</script>
@@ -306,6 +320,8 @@ GLOBAL_LIST_EMPTY(startup_messages)
 				musicEnabled: [menu_music_enabled ? "true" : "false"],
 				musicVolume: [menu_music_volume] / 100,
 				interfaceLanguage: \"[current_interface_language]\",
+				menuChapter: \"[current_menu_chapter]\",
+				byondSrc: \"[text_ref(src)]\",
 				introAccepted: false
 			};
 			window.__HOWLING_INTERFACE_LANGUAGE = \"[current_interface_language]\";
