@@ -130,3 +130,83 @@
 	. = ..()
 
 	qdel(owner.GetComponent(/datum/component/glass_passer))
+
+/datum/brain_trauma/voided_quirk
+	name = "Voided"
+	desc = "They've seen the secrets of the cosmos."
+	scan_desc = "cosmic neural pattern"
+	gain_text = ""
+	lose_text = ""
+	resilience = TRAUMA_RESILIENCE_LOBOTOMY
+	random_gain = FALSE
+	known_trauma = FALSE
+	/// Type for the bodypart texture we add
+	var/bodypart_overlay_type = /datum/bodypart_overlay/texture/spacey
+	/// Color in which we paint the space texture
+	var/space_color = COLOR_WHITE
+
+/datum/brain_trauma/voided_quirk/on_gain()
+	. = ..()
+
+	owner.AddComponent(/datum/component/debris_bleeder, \
+		list(/obj/effect/spawner/random/glass_shards = 20, /obj/effect/spawner/random/glass_debris = 0), \
+		BRUTE, SFX_SHATTER, sound_threshold = 20)
+
+/datum/brain_trauma/voided_quirk/proc/apply_effects()
+	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(texture_limb))
+	RegisterSignal(owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(untexture_limb))
+
+	for(var/obj/item/bodypart as anything in owner.get_bodyparts())
+		texture_limb(owner, bodypart)
+
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human = owner
+		human.underwear = "Nude"
+		human.undershirt = "Nude"
+		human.socks = "Nude"
+
+	owner.update_body()
+
+/datum/brain_trauma/voided_quirk/on_lose()
+	. = ..()
+
+	UnregisterSignal(owner, list(COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
+	qdel(owner.GetComponent(/datum/component/debris_bleeder))
+
+	for(var/obj/item/bodypart/bodypart as anything in owner.get_bodyparts())
+		untexture_limb(owner, bodypart)
+	owner.update_body()
+
+/// Apply the space texture.
+/datum/brain_trauma/voided_quirk/proc/texture_limb(atom/source, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+
+	limb.add_bodypart_overlay(new bodypart_overlay_type(), update = FALSE)
+	limb.add_color_override(space_color, LIMB_COLOR_VOIDWALKER_CURSE)
+	if(istype(limb, /obj/item/bodypart/head))
+		var/obj/item/bodypart/head/head = limb
+		head.head_flags &= ~HEAD_EYESPRITES
+
+/datum/brain_trauma/voided_quirk/proc/untexture_limb(atom/source, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+
+	var/overlay = locate(bodypart_overlay_type) in limb.bodypart_overlays
+	if(overlay)
+		limb.remove_bodypart_overlay(overlay, update = FALSE)
+		limb.remove_color_override(LIMB_COLOR_VOIDWALKER_CURSE)
+
+	if(istype(limb, /obj/item/bodypart/head))
+		var/obj/item/bodypart/head/head = limb
+		head.head_flags = initial(head.head_flags)
+
+/datum/brain_trauma/voided/texture_limb(atom/source, obj/item/bodypart/limb)
+	if(owner.has_trauma_type(/datum/brain_trauma/voided_quirk, TRAUMA_RESILIENCE_ABSOLUTE))
+		return FALSE
+
+	return ..()
+
+/datum/brain_trauma/voided/untexture_limb(atom/source, obj/item/bodypart/limb)
+	if(owner.has_trauma_type(/datum/brain_trauma/voided_quirk, TRAUMA_RESILIENCE_ABSOLUTE))
+		return FALSE
+
+	return ..()

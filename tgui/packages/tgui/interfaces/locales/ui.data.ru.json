@@ -401,6 +401,8 @@
 	"ui.character.data.quirk_skittish_description": "Вас легко напугать, и вы часто прячетесь. Вбегайте в закрытый шкафчик, чтобы нырнуть внутрь, если у вас есть доступ.",
 	"ui.character.data.quirk_venomousbite_name": "Ядовитый укус",
 	"ui.character.data.quirk_venomousbite_description": "У вас есть ядовитая железа, и вы можете кусать людей, вводя им выбранный вами токсин.",
+	"ui.character.data.quirk_Touchedbycosmos_name": "Затронутый бездной",
+	"ui.character.data.quirk_Touchedbycosmos_description": "Вы стали едины с космосом и теперь выглядите как живой кусочек космической пустоты.",
 	"ui.character.data.a_complicated_ancient_language_spoken_by_sentient_plants": "Сложный древний язык разумных растений.",
 	"ui.character.data.language_desc_vox_hybrid_encoded": "Гибридный закодированный язык биомеханического вида Вокс, который для непосвящённых звучит крайне раздражающе. Обычно для полноценной речи на нём требуется имплант.",
 	"ui.character.data.a_language_commonly_used_by_constructs_with_no_dedicated_vocalization_organs": "Язык, обычно используемый конструкциями без специализированных органов вокализации.",
