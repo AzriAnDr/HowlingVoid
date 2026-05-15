@@ -170,6 +170,9 @@
 		/mob/living/proc/emote_teshsqueak,
 		/mob/living/proc/emote_teshtrill,
 		/mob/living/proc/emote_gecker,
+		/mob/living/proc/emote_alli_growl,
+		/mob/living/proc/emote_alli_hiss,
+		/mob/living/proc/emote_alli_call,
 	)
 	all_emotes += nova_living_emotes
 
@@ -697,6 +700,21 @@
 	set name = "> Gecker"
 	set category = "Emotes+"
 	usr.emote("gecker", intentional = TRUE)
+
+/mob/living/proc/emote_alli_growl()
+	set name = "> Alli Growl"
+	set category = "Emotes+"
+	usr.emote("alligrowl", intentional = TRUE)
+
+/mob/living/proc/emote_alli_hiss()
+	set name = "> Alli Hiss"
+	set category = "Emotes+"
+	usr.emote("allihiss", intentional = TRUE)
+
+/mob/living/proc/emote_alli_call()
+	set name = "> Alli Call"
+	set category = "Emotes+"
+	usr.emote("allicall", intentional = TRUE)
 
 /mob/living/proc/emote_fwhine()
 	set name = "> Fox Whine"
