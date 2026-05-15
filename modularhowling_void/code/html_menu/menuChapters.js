@@ -64,6 +64,8 @@
     },
   };
 
+  MENU_CHAPTERS.molesHamsters.variantLabel = 'MOLES / HAMSTERS';
+
   const MENU_VARIANT_GROUPS = {
     ironHeart: {
       label: 'CHAPTER I MENU:',
@@ -73,13 +75,13 @@
       label: 'CHAPTER III MENU:',
       variants: ['jesusWept', 'crossToBear'],
     },
-    event: {
-      label: 'EVENT MENU:',
+    EVENT: {
+      label: 'EVENT HAPTER MENU:',
       variants: ['molesHamsters'],
     },
   };
 
-  const DEFAULT_CHAPTER = 'sisterRay';
+  const DEFAULT_CHAPTER = 'ironHeart';
   const MENU_VARIANT_STORAGE_KEY = 'howlingMenuChapterVariant';
   const CSS_READY_FALLBACK_MS = 1200;
   const MENU_CHROME_STYLE_ID = 'howling-menu-chrome-style';
@@ -1054,7 +1056,11 @@
       return;
     }
 
-    rememberSelectedChapter(chapterId, true);
+    getMenuSettings().menuChapter = chapterId;
+    try {
+      localStorage.setItem(MENU_VARIANT_STORAGE_KEY, chapterId);
+    } catch {}
+
     loadChapter(chapterId);
   }
 
@@ -1248,27 +1254,6 @@
     } catch {}
   }
 
-  function rememberSelectedChapter(chapterId, notifyServer = false) {
-    if (!MENU_CHAPTERS[chapterId]) {
-      return;
-    }
-
-    getMenuSettings().menuChapter = chapterId;
-    try {
-      localStorage.setItem(MENU_VARIANT_STORAGE_KEY, chapterId);
-    } catch {}
-
-    if (!notifyServer) {
-      return;
-    }
-
-    const src = window.__HOWLING_MENU_SRC;
-    if (src) {
-      window.location.href =
-        'byond://?src=' + src + ';set_menu_chapter=' + encodeURIComponent(chapterId);
-    }
-  }
-
   function loadChapter(name) {
     const chapter = MENU_CHAPTERS[name] || MENU_CHAPTERS[DEFAULT_CHAPTER];
     if (!chapter || !document.body) {
@@ -1284,7 +1269,7 @@
     document.body.classList.remove('menu-css-ready');
     document.body.dataset.chapter = chapter.id;
     currentChapterId = chapter.id;
-    rememberSelectedChapter(chapter.id);
+    getMenuSettings().menuChapter = chapter.id;
 
     applyChapterText(chapter);
     ensureMenuDataLabels();
@@ -1292,24 +1277,6 @@
     setupMenuChrome();
     loadCSS(chapter.css);
     loadJS(chapter.js);
-  }
-
-  function setMenuChapter(name) {
-    if (!MENU_CHAPTERS[name]) {
-      return;
-    }
-
-    rememberSelectedChapter(name, true);
-    loadChapter(name);
-  }
-
-  function setMenuChapterFromServer(name) {
-    if (!MENU_CHAPTERS[name]) {
-      return;
-    }
-
-    rememberSelectedChapter(name);
-    loadChapter(name);
   }
 
   function getInitialChapter() {
@@ -1328,8 +1295,7 @@
     return DEFAULT_CHAPTER;
   }
 
-  window.setMenuChapter = setMenuChapter;
-  window.setMenuChapterFromServer = setMenuChapterFromServer;
+  window.setMenuChapter = loadChapter;
   window.setMenuVariant = setMenuVariant;
   window.__HOWLING_MENU_CHAPTERS = MENU_CHAPTERS;
   window.__HOWLING_MENU_VARIANT_GROUPS = MENU_VARIANT_GROUPS;
