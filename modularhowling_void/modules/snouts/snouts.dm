@@ -8,3 +8,7 @@
 	icon = 'modularhowling_void/modules/snouts/snouts.dmi'
 	icon_state = "vulp2"
 
+/datum/sprite_accessory/snouts/mammal/noodle
+	name = "Noodle"
+	icon = 'modularhowling_void/modules/snouts/crocodilo_snouts.dmi'
+	icon_state = "noodle"
