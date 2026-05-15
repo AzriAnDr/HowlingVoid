@@ -2057,7 +2057,6 @@
 #include "code\datums\quirks\negative_quirks\unusual.dm"
 #include "code\datums\quirks\neutral_quirks\bald.dm"
 #include "code\datums\quirks\neutral_quirks\cosglow.dm"
-#include "code\datums\quirks\neutral_quirks\touched_by_cosmos.dm"
 #include "code\datums\quirks\neutral_quirks\deviant_tastes.dm"
 #include "code\datums\quirks\neutral_quirks\evil.dm"
 #include "code\datums\quirks\neutral_quirks\foreigner.dm"
