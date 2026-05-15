@@ -1,10 +1,10 @@
 /datum/quirk/touched_by_cosmos
 	name = "Touched by cosmos"
-	desc = "You have become one with the cosmos and now you look like a living piece of space!"
-	value = 0
+	desc = "You have become one with the cosmos, making voidwalker attacks less effective against you at the cost of slightly more physical and burn damage."
+	value = 8
 	gain_text = ""
 	lose_text = ""
-	medical_record_text = "They've seen the secrets of the cosmos."
+	medical_record_text = "They have a stable cosmic neural pattern and glass-like tissue fragility."
 	icon = FA_ICON_SHUTTLE_SPACE
 
 /datum/quirk/touched_by_cosmos/add(client/client_source)
@@ -31,7 +31,7 @@
 	savefile_key = "voidwalker_space_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	can_randomize = FALSE
-	should_update_preview = FALSE
+	should_update_preview = TRUE
 
 /datum/preference/color/space_color/create_default_value()
 	return COLOR_WHITE
@@ -43,4 +43,8 @@
 	return /datum/quirk/touched_by_cosmos::name in preferences.all_quirks
 
 /datum/preference/color/space_color/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
-	return
+	var/datum/brain_trauma/voided_quirk/cosmos_quirk = target.has_trauma_type(/datum/brain_trauma/voided_quirk, TRAUMA_RESILIENCE_ABSOLUTE)
+	if(!cosmos_quirk)
+		return
+
+	cosmos_quirk.set_space_color(value)

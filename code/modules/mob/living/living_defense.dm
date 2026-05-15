@@ -475,6 +475,7 @@
 		exposed_wound_bonus = user.exposed_wound_bonus,
 		sharpness = user.sharpness,
 		attack_direction = get_dir(user, src),
+		attacking_item = user,
 	)
 	log_combat(user, src, "attacked")
 	return damage_done

@@ -133,7 +133,7 @@
 
 /datum/brain_trauma/voided_quirk
 	name = "Voided"
-	desc = "They've seen the secrets of the cosmos."
+	desc = "They've seen the secrets of the cosmos, leaving them glass-fragile but harder for voidwalkers to unravel."
 	scan_desc = "cosmic neural pattern"
 	gain_text = ""
 	lose_text = ""
@@ -144,6 +144,14 @@
 	var/bodypart_overlay_type = /datum/bodypart_overlay/texture/spacey
 	/// Color in which we paint the space texture
 	var/space_color = COLOR_WHITE
+	/// How much damage we take from voidwalker attacks.
+	var/voidwalker_damage_mod = 0.75
+	/// We are closer to glass now, so direct physical damage hurts more.
+	var/brute_mod = 1.1
+	/// Heat stress bites a little harder through the cosmic imprint.
+	var/burn_mod = 1.05
+	/// Have the active quirk effects been applied to the owner?
+	var/effects_applied = FALSE
 
 /datum/brain_trauma/voided_quirk/on_gain()
 	. = ..()
@@ -153,14 +161,21 @@
 		BRUTE, SFX_SHATTER, sound_threshold = 20)
 
 /datum/brain_trauma/voided_quirk/proc/apply_effects()
+	if(effects_applied)
+		return
+
+	effects_applied = TRUE
 	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(texture_limb))
 	RegisterSignal(owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(untexture_limb))
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(modify_voidwalker_damage))
 
 	for(var/obj/item/bodypart as anything in owner.get_bodyparts())
 		texture_limb(owner, bodypart)
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
+		human.physiology.brute_mod *= brute_mod
+		human.physiology.burn_mod *= burn_mod
 		human.underwear = "Nude"
 		human.undershirt = "Nude"
 		human.socks = "Nude"
@@ -170,11 +185,34 @@
 /datum/brain_trauma/voided_quirk/on_lose()
 	. = ..()
 
-	UnregisterSignal(owner, list(COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
+	UnregisterSignal(owner, list(COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS))
 	qdel(owner.GetComponent(/datum/component/debris_bleeder))
+
+	if(effects_applied && ishuman(owner))
+		var/mob/living/carbon/human/human = owner
+		human.physiology.brute_mod /= brute_mod
+		human.physiology.burn_mod /= burn_mod
 
 	for(var/obj/item/bodypart/bodypart as anything in owner.get_bodyparts())
 		untexture_limb(owner, bodypart)
+	effects_applied = FALSE
+	owner.update_body()
+
+/datum/brain_trauma/voided_quirk/proc/modify_voidwalker_damage(mob/living/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, atom/attacking_item)
+	SIGNAL_HANDLER
+
+	if(!istype(attacking_item, /mob/living/basic/voidwalker))
+		return
+
+	damage_mods += voidwalker_damage_mod
+
+/datum/brain_trauma/voided_quirk/proc/set_space_color(new_color)
+	if(space_color == new_color)
+		return
+
+	space_color = new_color
+	for(var/obj/item/bodypart/bodypart as anything in owner.get_bodyparts())
+		bodypart.add_color_override(space_color, LIMB_COLOR_VOIDWALKER_CURSE)
 	owner.update_body()
 
 /// Apply the space texture.
