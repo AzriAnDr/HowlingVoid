@@ -168,30 +168,6 @@
 	vary = TRUE
 	sound = 'modular_nova/modules/emotes/sound/voice/gecker.ogg'
 
-/datum/emote/living/alligrowl
-	key = "Alli Growl"
-	key_third_person = "alligrowl"
-	message = "growls intensively!"
-	emote_type = EMOTE_AUDIBLE
-	vary = TRUE
-	sound = 'modular_nova/modules/emotes/sound/voice/alli_growl.ogg'
-
-/datum/emote/living/allihiss
-	key = "Alli Hiss"
-	key_third_person = "allihiss"
-	message = "hisses deeply!"
-	emote_type = EMOTE_AUDIBLE
-	vary = TRUE
-	sound = 'modular_nova/modules/emotes/sound/voice/alli_hiss.ogg'
-
-/datum/emote/living/allicall
-	key = "Alli Call"
-	key_third_person = "allicall"
-	message = "shortly calls!"
-	emote_type = EMOTE_AUDIBLE
-	vary = TRUE
-	sound = 'modular_nova/modules/emotes/sound/voice/alli_call.ogg'
-
 /datum/emote/living/fwhine
 	key = "fwhine"
 	key_third_person = "fwhines"
@@ -268,15 +244,6 @@
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
 	sound = SFX_CAT_MEOW
-
-/datum/emote/living/carbon/maow
-	key = "maow"
-	key_third_person = "meows!"
-	message = "meows!"
-	message_mime = "meows silently."
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	vary = TRUE
-	sound = 'sound/mobs/non-humanoids/cat/cat_meow_vibe.ogg'
 
 /datum/emote/living/hiss
 	key = "hiss"
