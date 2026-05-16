@@ -196,8 +196,9 @@
 	return archived_any
 
 /obj/item/reagent_containers/hypospray/mod/injector/on_reagent_change(datum/reagents/holder, ...)
-	. = ..()
+	SIGNAL_HANDLER
 	auto_archive_contents(null, TRUE)
+	return ..()
 
 /obj/item/reagent_containers/hypospray/mod/injector/attack_self(mob/user)
 	if(user.can_perform_action(src, FORBID_TELEKINESIS_REACH|ALLOW_RESTING))
