@@ -25,6 +25,10 @@ SUBSYSTEM_DEF(title)
 	var/progress_reference_time = 0
 
 /datum/controller/subsystem/title/Initialize()
+	startup_message_timings = list()
+	progress_json = list()
+	progress_reference_time = 0
+
 	var/dat
 	if(!fexists("[global.config.directory]/nova/title_html.txt"))
 		to_chat(world, span_boldwarning("CRITICAL ERROR: Unable to read title_html.txt, reverting to backup title html, please check your server config and ensure this file exists."))

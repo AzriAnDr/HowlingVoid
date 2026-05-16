@@ -105,6 +105,51 @@ SUBSYSTEM_DEF(air)
 	return SS_INIT_SUCCESS
 
 
+/datum/controller/subsystem/air/Shutdown()
+	cached_cost = 0
+
+	cost_atoms = 0
+	cost_turfs = 0
+	cost_hotspots = 0
+	cost_groups = 0
+	cost_highpressure = 0
+	cost_superconductivity = 0
+	cost_pipenets = 0
+	cost_atmos_machinery = 0
+	cost_rebuilds = 0
+	cost_adjacent = 0
+
+	excited_groups = list()
+	active_turfs = list()
+	hotspots = list()
+	networks = list()
+	rebuild_queue = list()
+	expansion_queue = list()
+	adjacent_rebuild = list()
+	atmos_machinery = list()
+
+	pipe_init_dirs_cache = list()
+	gas_reactions = list()
+	atmos_gen = null
+	planetary = list()
+	strings_to_mix = list()
+
+	active_super_conductivity = list()
+	high_pressure_delta = list()
+	atom_process = list()
+	hotspot_reactions = null
+
+	currentrun = list()
+	currentpart = SSAIR_PIPENETS
+
+	map_loading = TRUE
+	queued_for_activation = null
+	display_all_groups = FALSE
+
+	reaction_handbook = null
+	gas_handbook = null
+
+
 /datum/controller/subsystem/air/fire(resumed = FALSE)
 	var/timer = TICK_USAGE_REAL
 

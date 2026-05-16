@@ -358,6 +358,9 @@ GLOBAL_VAR_INIT(last_maptick_time, 0)
 				text2file("[++GLOB.restart_counter]", RESTART_COUNTER_PATH)
 				return FALSE
 
+/world/proc/cleanup_native_caches()
+	rustg_iconforge_cleanup()
+
 /world/Reboot(reason = 0, fast_track = FALSE)
 	if (reason || fast_track) //special reboot, do none of the normal stuff
 		if (usr)
@@ -367,6 +370,8 @@ GLOBAL_VAR_INIT(last_maptick_time, 0)
 	else
 		to_chat(world, span_boldannounce("Rebooting world..."))
 		Master.Shutdown() //run SS shutdowns
+
+	cleanup_native_caches()
 
 	#ifdef UNIT_TESTS
 	FinishTestRun()
@@ -392,6 +397,7 @@ GLOBAL_VAR_INIT(last_maptick_time, 0)
 	#endif
 
 /world/Del()
+	cleanup_native_caches()
 	QDEL_NULL(Tracy)
 	QDEL_NULL(Debugger)
 	. = ..()

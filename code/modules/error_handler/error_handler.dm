@@ -55,6 +55,11 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	var/static/list/error_last_seen = list()
 	var/static/list/error_cooldown = list() /* Error_cooldown items will either be positive(cooldown time) or negative(silenced error)
 												If negative, starts at -1, and goes down by 1 each time that error gets skipped*/
+	var/static/world/error_handler_world
+	if(error_handler_world != world)
+		error_handler_world = world
+		error_last_seen = list()
+		error_cooldown = list()
 
 	// Defensive guard: if these statics get clobbered by malformed runtime state,
 	// recover them so the error handler itself does not crash with "bad list".
@@ -73,8 +78,16 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		E.name = stack_workaround.Replace(E.name, "")
 
 	var/erroruid = "[E.file][E.line]"
-	var/last_seen = error_last_seen[erroruid]
-	var/cooldown = error_cooldown[erroruid] || 0
+	var/last_seen
+	var/cooldown
+	try
+		last_seen = error_last_seen[erroruid]
+		cooldown = error_cooldown[erroruid] || 0
+	catch
+		error_last_seen = list()
+		error_cooldown = list()
+		last_seen = null
+		cooldown = 0
 
 	if(last_seen == null)
 		error_last_seen[erroruid] = world.time
@@ -111,17 +124,25 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	if(cooldown > configured_error_cooldown * configured_error_limit)
 		cooldown = -1
 		silencing = TRUE
+		var/silenced_erroruid = erroruid
+		var/silenced_file = E.file
+		var/silenced_line = E.line
 		spawn(0)
 			usr = null
 			sleep(configured_error_silence_time)
-			var/skipcount = abs(error_cooldown[erroruid]) - 1
-			error_cooldown[erroruid] = 0
+			if(!islist(error_cooldown))
+				return
+			var/skipcount = abs(error_cooldown[silenced_erroruid]) - 1
+			error_cooldown[silenced_erroruid] = 0
 			if(skipcount > 0)
-				SEND_TEXT(world.log, "\[[time_stamp()]] Skipped [skipcount] runtimes in [E.file],[E.line].")
-				GLOB.error_cache.log_error(E, skip_count = skipcount)
+				SEND_TEXT(world.log, "\[[time_stamp()]] Skipped [skipcount] runtimes in [silenced_file],[silenced_line].")
 
-	error_last_seen[erroruid] = world.time
-	error_cooldown[erroruid] = cooldown
+	try
+		error_last_seen[erroruid] = world.time
+		error_cooldown[erroruid] = cooldown
+	catch
+		error_last_seen = list()
+		error_cooldown = list()
 
 	var/list/usrinfo = null
 	var/locinfo
