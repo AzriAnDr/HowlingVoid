@@ -335,7 +335,7 @@ GLOBAL_LIST_EMPTY(startup_messages)
 	"}
 
 /mob/dead/new_player/proc/get_howling_menu_assets()
-	get_asset_datum(/datum/asset/simple/lobby_howling_menu_audio)
+	get_asset_datum(/datum/asset/simple/lobby_howling_menu)
 	return list(
 		"menuChapters.js" = SSassets.transport.get_asset_url("menuChapters.js"),
 		"ironHeart.css" = SSassets.transport.get_asset_url("ironHeart.css"),

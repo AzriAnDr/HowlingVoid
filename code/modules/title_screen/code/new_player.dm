@@ -196,7 +196,6 @@
 	var/dat = get_title_html()
 
 	src << browse(SStitle.current_title_screen, "file=loading_screen.gif;display=0")
-	send_current_menu_chapter_audio()
 	src << browse(dat, "window=howling_title_browser")
 	update_menu_music_settings()
 	update_menu_chapter_setting()
@@ -211,7 +210,6 @@
 		return
 
 	var/menu_chapter = client.prefs.read_preference(/datum/preference/choiced/menu_chapter)
-	send_menu_chapter_audio(menu_chapter)
 	client << output(menu_chapter, "howling_title_browser:set_menu_chapter")
 
 /mob/dead/new_player/proc/update_menu_music_settings()
@@ -256,43 +254,12 @@
 		"sisterRay.css" = 'code/html_menu/sisterRay.css',
 		"molesHamsters.css" = 'code/html_menu/molesHamsters.css',
 		"buttonclickrelease.ogg" = 'code/html_menu/buttonclickrelease.ogg',
-	)
-
-/datum/asset/simple/lobby_howling_menu_audio
-	assets = list(
 		"iron_heart.ogg" = 'code/html_menu/iron_heart.ogg',
 		"jesus_wept.ogg" = 'code/html_menu/jesus_wept.ogg',
 		"cross_to_bear.ogg" = 'code/html_menu/cross_to_bear.ogg',
 		"Sister_Ray.mp3" = 'code/html_menu/Sister_Ray.mp3',
 		"molesHamsters.mp3" = 'code/html_menu/molesHamsters.mp3',
 	)
-
-/mob/dead/new_player/proc/send_current_menu_chapter_audio()
-	if(!client?.prefs)
-		return
-
-	send_menu_chapter_audio(client.prefs.read_preference(/datum/preference/choiced/menu_chapter))
-
-/mob/dead/new_player/proc/send_menu_chapter_audio(menu_chapter)
-	if(!client)
-		return
-
-	var/audio_asset = get_menu_chapter_audio_asset(menu_chapter)
-	if(!audio_asset)
-		return
-
-	get_asset_datum(/datum/asset/simple/lobby_howling_menu_audio)
-	SSassets.transport.send_assets(client, audio_asset)
-
-/proc/get_menu_chapter_audio_asset(menu_chapter)
-	var/static/list/chapter_audio = list(
-		"ironHeart" = "iron_heart.ogg",
-		"jesusWept" = "jesus_wept.ogg",
-		"crossToBear" = "cross_to_bear.ogg",
-		"sisterRay" = "Sister_Ray.mp3",
-		"molesHamsters" = "molesHamsters.mp3",
-	)
-	return chapter_audio[menu_chapter]
 
 /**
  * Removes the titlescreen entirely from a mob.
