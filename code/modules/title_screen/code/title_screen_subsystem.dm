@@ -189,12 +189,10 @@ SUBSYSTEM_DEF(title)
  * * name - the real name of the current slot.
  */
 /datum/controller/subsystem/title/proc/update_character_name(mob/dead/new_player/user, name)
-	// Howling Void Edit start
 	if(!istype(user) || !user.client)
 		return
-	// Howling Void Edit end
 
-	user.client << output(name, "nova_title_browser:update_current_character")
+	user.client << output(name, "howling_title_browser:update_current_character")
 
 /**
  * Adds a startup message to the splashscreen.
@@ -232,5 +230,5 @@ SUBSYSTEM_DEF(title)
 		if(!new_player.title_screen_is_ready)
 			continue
 
-		new_player.client << output(msg_html, "nova_title_browser:append_terminal_text")
-		new_player.client << output(list2params(list(new_timing, SStitle.average_completion_time)), "nova_title_browser:update_loading_progress")
+		new_player.client << output(msg_html, "howling_title_browser:append_terminal_text")
+		new_player.client << output(list2params(list(new_timing, SStitle.average_completion_time)), "howling_title_browser:update_loading_progress")

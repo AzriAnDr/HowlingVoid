@@ -2,7 +2,7 @@ GLOBAL_LIST_EMPTY(startup_messages)
 // FOR MOR INFO ON HTML CUSTOMISATION, SEE: https://github.com/Skyrat-SS13/Skyrat-tg/pull/4783
 
 #define MAX_STARTUP_MESSAGES 27
-#define HOWLING_MENU_HTML "modularhowling_void/code/html_menu/index.html"
+#define HOWLING_MENU_HTML "code/html_menu/index.html"
 
 /mob/dead/new_player/proc/get_title_html()
 	if(SSticker.current_state == GAME_STATE_STARTUP)
@@ -335,6 +335,7 @@ GLOBAL_LIST_EMPTY(startup_messages)
 	"}
 
 /mob/dead/new_player/proc/get_howling_menu_assets()
+	get_asset_datum(/datum/asset/simple/lobby_howling_menu_audio)
 	return list(
 		"menuChapters.js" = SSassets.transport.get_asset_url("menuChapters.js"),
 		"ironHeart.css" = SSassets.transport.get_asset_url("ironHeart.css"),

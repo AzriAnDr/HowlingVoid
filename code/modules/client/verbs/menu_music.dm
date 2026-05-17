@@ -1,4 +1,3 @@
-// Howling Void Edit start
 /client/verb/mute_menu_music()
 	set name = "Mute Menu Music"
 	set category = "OOC"
@@ -14,4 +13,3 @@
 	if(isnewplayer(mob))
 		var/mob/dead/new_player/new_player = mob
 		new_player.update_menu_music_settings()
-// Howling Void Edit end

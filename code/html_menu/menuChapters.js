@@ -739,6 +739,12 @@
   }
 
   function setupAudioControl() {
+    const selectSound = document.getElementById('select-sound');
+    if (selectSound && selectSound.dataset.assetReady !== 'true') {
+      selectSound.src = assetUrl('buttonclickrelease.ogg');
+      selectSound.dataset.assetReady = 'true';
+    }
+
     if (!document.querySelector('.menu-audio-control')) {
       const control = document.createElement('div');
       control.className = 'menu-audio-control';
@@ -1085,6 +1091,11 @@
     }
 
     rememberMenuVariant(chapterId, false);
+    if (currentChapterId === chapterId) {
+      setupAudio(MENU_CHAPTERS[chapterId].audio);
+      syncVariantControl();
+      return;
+    }
     loadChapter(chapterId);
   }
 
