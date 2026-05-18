@@ -195,6 +195,8 @@
     "ui.character.data.quirk_Unstable_description": "Due to past troubles, you are unable to recover your sanity if you lose it. Be very careful managing your mood.",
     "ui.character.data.quirk_VisitorID_name": "Visitor ID",
     "ui.character.data.quirk_VisitorID_description": "As an assistant, you're given a visitor ID with limited background information. Your records will be sparse and require filling out during the shift.",
+    "ui.character.data.quirk_Touchedbycosmos_name": "Touched by Cosmos",
+    "ui.character.data.quirk_Touchedbycosmos_description": "You have become one with the cosmos, making voidwalker attacks less effective against you. Your glass-like body takes slightly more brute and burn damage.",
     "ui.character.data.quirk_Abnormalbodytemperature_name": "Abnormal body temperature",
     "ui.character.data.quirk_Abnormalbodytemperature_description": "Your body temperature is unusual for your baseline species, being offset above or below the norm. This is not recommended for cold-blooded species, and at extreme values it may cause minor burns on arrival.",
     "ui.character.data.quirk_ColdBlooded_name": "Cold Blooded",

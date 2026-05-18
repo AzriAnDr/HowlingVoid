@@ -12,33 +12,7 @@
 	if(client.interviewee)
 		return FALSE
 
-	if(href_list["set_menu_music_volume"])
-		var/datum/preferences/preferences = client.prefs
-		if(!preferences)
-			return
-
-		var/menu_music_volume = clamp(text2num(href_list["set_menu_music_volume"]), 0, 100)
-		preferences.update_preference(GLOB.preference_entries[/datum/preference/numeric/volume/sound_menu_music_volume], menu_music_volume)
-		if(menu_music_volume > 0)
-			preferences.update_preference(GLOB.preference_entries[/datum/preference/toggle/menu_music_enabled], TRUE)
-		preferences.update_data_for_all_viewers()
-		preferences.update_static_data(src, always_instant = TRUE)
-		preferences.save_preferences()
-		update_menu_music_settings()
-		return
-
-	if(href_list["set_interface_language"])
-		var/datum/preferences/preferences = client.prefs
-		if(!preferences)
-			return
-
-		var/interface_language = href_list["set_interface_language"]
-		if(!(interface_language in list("english", "russian")))
-			return
-
-		preferences.write_preference(GLOB.preference_entries[/datum/preference/choiced/interface_language], interface_language)
-		preferences.update_static_data(src, always_instant = TRUE)
-		update_interface_language_setting()
+	if(handle_title_screen_preference_topic(href_list))
 		return
 
 	if(href_list["observe"])
@@ -65,7 +39,7 @@
 		play_lobby_button_sound()
 		var/datum/preferences/preferences = client.prefs
 		preferences.write_preference(GLOB.preference_entries[/datum/preference/toggle/be_antag], !preferences.read_preference(/datum/preference/toggle/be_antag))
-		client << output(preferences.read_preference(/datum/preference/toggle/be_antag), "nova_title_browser:toggle_antag")
+		client << output(preferences.read_preference(/datum/preference/toggle/be_antag), "howling_title_browser:toggle_antag")
 		return
 
 	if(href_list["character_setup"])
@@ -102,7 +76,7 @@
 			ready = PLAYER_NOT_READY
 			SSstatpanels.remove_job_estimation(src)
 
-		client << output((ready == PLAYER_READY_TO_PLAY) ? 1 : 0, "nova_title_browser:toggle_ready")
+		client << output((ready == PLAYER_READY_TO_PLAY) ? 1 : 0, "howling_title_browser:toggle_ready")
 		return
 
 	if(href_list["late_join"])
@@ -128,9 +102,64 @@
 		title_screen_is_ready = TRUE
 		update_menu_music_settings()
 		update_interface_language_setting()
+		update_menu_chapter_setting()
 		if(SSticker && SSticker.current_state > GAME_STATE_PREGAME)
-			client << output(1, "nova_title_browser:set_round_started")
+			client << output(1, "howling_title_browser:set_round_started")
 		return
+
+/mob/dead/new_player/proc/handle_title_screen_preference_topic(list/href_list)
+	if(href_list["set_menu_music_volume"])
+		set_menu_music_volume(text2num(href_list["set_menu_music_volume"]))
+		return TRUE
+
+	if(href_list["set_interface_language"])
+		set_menu_interface_language(href_list["set_interface_language"])
+		return TRUE
+
+	if(href_list["set_menu_chapter"])
+		set_menu_chapter(href_list["set_menu_chapter"])
+		return TRUE
+
+	return FALSE
+
+/mob/dead/new_player/proc/set_menu_music_volume(volume)
+	var/datum/preferences/preferences = client?.prefs
+	if(!preferences)
+		return
+
+	var/menu_music_volume = clamp(volume, 0, 100)
+	preferences.update_preference(GLOB.preference_entries[/datum/preference/numeric/volume/sound_menu_music_volume], menu_music_volume)
+	if(menu_music_volume > 0)
+		preferences.update_preference(GLOB.preference_entries[/datum/preference/toggle/menu_music_enabled], TRUE)
+	preferences.update_data_for_all_viewers()
+	preferences.update_static_data(src, always_instant = TRUE)
+	preferences.save_preferences()
+	update_menu_music_settings()
+
+/mob/dead/new_player/proc/set_menu_interface_language(interface_language)
+	var/datum/preferences/preferences = client?.prefs
+	if(!preferences)
+		return
+
+	if(!(interface_language in list("english", "russian")))
+		return
+
+	preferences.write_preference(GLOB.preference_entries[/datum/preference/choiced/interface_language], interface_language)
+	preferences.update_static_data(src, always_instant = TRUE)
+	update_interface_language_setting()
+
+/mob/dead/new_player/proc/set_menu_chapter(menu_chapter)
+	var/datum/preferences/preferences = client?.prefs
+	if(!preferences)
+		return
+
+	var/datum/preference/choiced/chapter_preference = GLOB.preference_entries[/datum/preference/choiced/menu_chapter]
+	if(!(menu_chapter in chapter_preference.get_choices()))
+		return
+
+	preferences.write_preference(chapter_preference, menu_chapter)
+	preferences.save_preferences()
+	update_menu_chapter_setting()
 
 /mob/dead/new_player/Login()
 	. = ..()
@@ -149,16 +178,14 @@
 
 	stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
-	winset(src, "nova_title_browser", "is-disabled=false;is-visible=true")
+	winset(src, "howling_title_browser", "is-disabled=false;is-visible=true")
 	winset(src, "status_bar", "is-visible=false")
 
-	// Howling Void Edit start
 	var/datum/asset/lobby_assets = get_asset_datum(/datum/asset/simple/lobby) // Sending base lobby assets
 	lobby_assets.send(src)
 
 	var/datum/asset/howling_menu_assets = get_asset_datum(/datum/asset/simple/lobby_howling_menu) // Sending custom html_menu assets
 	howling_menu_assets.send(src)
-	// Howling Void Edit end
 
 	update_title_screen()
 
@@ -169,15 +196,21 @@
 	var/dat = get_title_html()
 
 	src << browse(SStitle.current_title_screen, "file=loading_screen.gif;display=0")
-	src << browse(dat, "window=nova_title_browser")
+	src << browse(dat, "window=howling_title_browser")
 	update_menu_music_settings()
+	update_menu_chapter_setting()
 
-// Howling Void Edit start
 /mob/dead/new_player/proc/notify_round_started()
 	if(!client)
 		return
-	client << output(1, "nova_title_browser:set_round_started")
-// Howling Void Edit end
+	client << output(1, "howling_title_browser:set_round_started")
+
+/mob/dead/new_player/proc/update_menu_chapter_setting()
+	if(!client || !client.prefs || !title_screen_is_ready)
+		return
+
+	var/menu_chapter = client.prefs.read_preference(/datum/preference/choiced/menu_chapter)
+	client << output(menu_chapter, "howling_title_browser:set_menu_chapter")
 
 /mob/dead/new_player/proc/update_menu_music_settings()
 	if(!client)
@@ -189,8 +222,8 @@
 
 	var/menu_music_enabled = preferences.read_preference(/datum/preference/toggle/menu_music_enabled) ? 1 : 0
 	var/menu_music_volume = clamp(preferences.read_preference(/datum/preference/numeric/volume/sound_menu_music_volume), 0, 100)
-	client << output(menu_music_enabled, "nova_title_browser:set_menu_music_enabled")
-	client << output(menu_music_volume, "nova_title_browser:set_menu_music_volume")
+	client << output(menu_music_enabled, "howling_title_browser:set_menu_music_enabled")
+	client << output(menu_music_volume, "howling_title_browser:set_menu_music_volume")
 
 /mob/dead/new_player/proc/update_interface_language_setting()
 	if(!client)
@@ -200,45 +233,41 @@
 	if(!preferences)
 		return
 
-	client << output(preferences.read_preference(/datum/preference/choiced/interface_language), "nova_title_browser:set_menu_language")
+	client << output(preferences.read_preference(/datum/preference/choiced/interface_language), "howling_title_browser:set_menu_language")
 
 /datum/asset/simple/lobby
 	assets = list(
 		"FixedsysExcelsior3.01Regular.ttf" = 'html/browser/FixedsysExcelsior3.01Regular.ttf',
 	)
 
-// Howling Void Edit start
 /datum/asset/simple/lobby_howling_menu
 	assets = list(
-		"menuChapters.js" = 'modularhowling_void/code/html_menu/menuChapters.js',
-		"ironHeart.js" = 'modularhowling_void/code/html_menu/ironHeart.js',
-		"jesusWept.js" = 'modularhowling_void/code/html_menu/jesusWept.js',
-		"crossToBear.js" = 'modularhowling_void/code/html_menu/crossToBear.js',
-		"sisterRay.js" = 'modularhowling_void/code/html_menu/sisterRay.js',
-		"molesHamsters.js" = 'modularhowling_void/code/html_menu/molesHamsters.js',
-		"ironHeart.css" = 'modularhowling_void/code/html_menu/ironHeart.css',
-		"jesusWept.css" = 'modularhowling_void/code/html_menu/jesusWept.css',
-		"crossToBear.css" = 'modularhowling_void/code/html_menu/crossToBear.css',
-		"sisterRay.css" = 'modularhowling_void/code/html_menu/sisterRay.css',
-		"molesHamsters.css" = 'modularhowling_void/code/html_menu/molesHamsters.css',
-		"buttonclickrelease.ogg" = 'modularhowling_void/code/html_menu/buttonclickrelease.ogg',
-		"iron_heart.ogg" = 'modularhowling_void/code/html_menu/iron_heart.ogg',
-		"jesus_wept.ogg" = 'modularhowling_void/code/html_menu/jesus_wept.ogg',
-		"cross_to_bear.ogg" = 'modularhowling_void/code/html_menu/cross_to_bear.ogg',
-		"Sister_Ray.mp3" = 'modularhowling_void/code/html_menu/Sister_Ray.mp3',
-		"molesHamsters.mp3" = 'modularhowling_void/code/html_menu/molesHamsters.mp3',
+		"menuChapters.js" = 'code/html_menu/menuChapters.js',
+		"ironHeart.js" = 'code/html_menu/ironHeart.js',
+		"jesusWept.js" = 'code/html_menu/jesusWept.js',
+		"crossToBear.js" = 'code/html_menu/crossToBear.js',
+		"sisterRay.js" = 'code/html_menu/sisterRay.js',
+		"molesHamsters.js" = 'code/html_menu/molesHamsters.js',
+		"ironHeart.css" = 'code/html_menu/ironHeart.css',
+		"jesusWept.css" = 'code/html_menu/jesusWept.css',
+		"crossToBear.css" = 'code/html_menu/crossToBear.css',
+		"sisterRay.css" = 'code/html_menu/sisterRay.css',
+		"molesHamsters.css" = 'code/html_menu/molesHamsters.css',
+		"buttonclickrelease.ogg" = 'code/html_menu/buttonclickrelease.ogg',
+		"iron_heart.ogg" = 'code/html_menu/iron_heart.ogg',
+		"jesus_wept.ogg" = 'code/html_menu/jesus_wept.ogg',
+		"cross_to_bear.ogg" = 'code/html_menu/cross_to_bear.ogg',
+		"Sister_Ray.mp3" = 'code/html_menu/Sister_Ray.mp3',
+		"molesHamsters.mp3" = 'code/html_menu/molesHamsters.mp3',
 	)
-// Howling Void Edit end
 
 /**
  * Removes the titlescreen entirely from a mob.
  */
 /mob/dead/new_player/proc/hide_title_screen()
 	if(client?.mob)
-		// Howling Void Edit start
-		client << output(null, "nova_title_browser:stop_menu_audio")
-		// Howling Void Edit end
-		winset(client, "nova_title_browser", "is-disabled=true;is-visible=false")
+		client << output(null, "howling_title_browser:stop_menu_audio")
+		winset(client, "howling_title_browser", "is-disabled=true;is-visible=false")
 		winset(client, "status_bar", "is-visible=true")
 
 /mob/dead/new_player/proc/play_lobby_button_sound()

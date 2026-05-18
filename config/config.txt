@@ -151,7 +151,7 @@ ALLOW_RESPAWN 1
 RESPAWN_DELAY 0
 
 ## set a hosted by name for unix platforms
-ALOHADAWN
+#ALOHADAWN
 
 ## Uncomment this to stop people connecting to your server without a registered ckey. (i.e. guest-* are all blocked from connecting).
 ## You probably want this enabled for a production server.
@@ -660,7 +660,7 @@ TGUI_MAX_CHUNK_COUNT 32
 
 ## While this is uncommented, server initialization will include some asset generation usually useful for development.
 ## It increases initialization time significantly so you'll want to disable this in live environments.
-GENERATE_ASSETS_IN_INIT
+#GENERATE_ASSETS_IN_INIT
 
 ## Minimum time before a heretic can ascend, in minutes
 # MINIMUM_ASCENSION_TIME 3

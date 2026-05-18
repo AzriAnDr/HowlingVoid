@@ -140,8 +140,8 @@
 
 /datum/spellbook_entry/item/spellblade
 	name = "Spellblade"
-	desc = "A rune-carved blade that can parry incoming attacks and, on first use, bind itself to one of several powerful enchantments."
-	item_path = /obj/item/melee/spellblade
+	desc = "A sword capable of firing blasts of energy which rip targets limb from limb."
+	item_path = /obj/item/gun/magic/staff/spellblade
 	category = SPELLBOOK_CATEGORY_OFFENSIVE
 
 /datum/spellbook_entry/item/highfrequencyblade

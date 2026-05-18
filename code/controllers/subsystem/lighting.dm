@@ -21,6 +21,11 @@ SUBSYSTEM_DEF(lighting)
 
 
 /datum/controller/subsystem/lighting/Initialize()
+	sources_queue = list()
+	corners_queue = list()
+	objects_queue = list()
+	current_sources = list()
+
 	if(!initialized)
 		create_all_lighting_objects()
 		initialized = TRUE
@@ -28,6 +33,13 @@ SUBSYSTEM_DEF(lighting)
 	fire(FALSE, TRUE)
 
 	return SS_INIT_SUCCESS
+
+
+/datum/controller/subsystem/lighting/Shutdown()
+	sources_queue = list()
+	corners_queue = list()
+	objects_queue = list()
+	current_sources = list()
 
 
 /datum/controller/subsystem/lighting/proc/create_all_lighting_objects()

@@ -135,7 +135,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	return QDEL_HINT_HARDDEL_NOW
 
 /datum/controller/master/Shutdown()
-	processing = FALSE
+	processing = -1
 	sortTim(subsystems, GLOBAL_PROC_REF(cmp_subsystem_init))
 	reverse_range(subsystems)
 	for(var/datum/controller/subsystem/ss in subsystems)
@@ -334,6 +334,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	init_stage_completed = 0
 	var/mc_started = FALSE
 
+	GLOB.startup_messages = list() // NOVA EDIT ADDITION - clear soft reboot startup output before the first message
 	add_startup_message("Initializing subsystems...") // NOVA EDIT CHANGE - Custom HTML Lobby Screen - ORIGINAL: to_chat(world, span_boldannounce("Initializing subsystems..."), MESSAGE_TYPE_DEBUG)
 
 	var/list/stage_sorted_subsystems = new(INITSTAGE_MAX)

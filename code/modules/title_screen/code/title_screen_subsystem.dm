@@ -25,6 +25,10 @@ SUBSYSTEM_DEF(title)
 	var/progress_reference_time = 0
 
 /datum/controller/subsystem/title/Initialize()
+	startup_message_timings = list()
+	progress_json = list()
+	progress_reference_time = 0
+
 	var/dat
 	if(!fexists("[global.config.directory]/nova/title_html.txt"))
 		to_chat(world, span_boldwarning("CRITICAL ERROR: Unable to read title_html.txt, reverting to backup title html, please check your server config and ensure this file exists."))
@@ -185,12 +189,10 @@ SUBSYSTEM_DEF(title)
  * * name - the real name of the current slot.
  */
 /datum/controller/subsystem/title/proc/update_character_name(mob/dead/new_player/user, name)
-	// Howling Void Edit start
 	if(!istype(user) || !user.client)
 		return
-	// Howling Void Edit end
 
-	user.client << output(name, "nova_title_browser:update_current_character")
+	user.client << output(name, "howling_title_browser:update_current_character")
 
 /**
  * Adds a startup message to the splashscreen.
@@ -228,5 +230,5 @@ SUBSYSTEM_DEF(title)
 		if(!new_player.title_screen_is_ready)
 			continue
 
-		new_player.client << output(msg_html, "nova_title_browser:append_terminal_text")
-		new_player.client << output(list2params(list(new_timing, SStitle.average_completion_time)), "nova_title_browser:update_loading_progress")
+		new_player.client << output(msg_html, "howling_title_browser:append_terminal_text")
+		new_player.client << output(list2params(list(new_timing, SStitle.average_completion_time)), "howling_title_browser:update_loading_progress")

@@ -11,6 +11,13 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 #endif
 
 /datum/controller/subsystem/processing/greyscale/Initialize()
+	configurations = list()
+	layer_types = list()
+#ifdef USE_RUSTG_ICONFORGE_GAGS
+	gags_cache = list()
+	rustg_iconforge_cleanup()
+#endif
+
 	for(var/datum/greyscale_layer/greyscale_layer as anything in subtypesof(/datum/greyscale_layer))
 		layer_types[initial(greyscale_layer.layer_type)] = greyscale_layer
 
@@ -40,6 +47,14 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 #endif
 
 	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/processing/greyscale/Shutdown()
+	configurations = list()
+	layer_types = list()
+#ifdef USE_RUSTG_ICONFORGE_GAGS
+	gags_cache = list()
+	rustg_iconforge_cleanup()
+#endif
 
 #ifdef USE_RUSTG_ICONFORGE_GAGS
 /datum/controller/subsystem/processing/greyscale/proc/jobs_completed(list/job_ids)

@@ -5,14 +5,29 @@ SUBSYSTEM_DEF(greyscale_previews)
 	dependencies = list(
 		/datum/controller/subsystem/processing/greyscale,
 	)
+	var/static/generated_this_process = FALSE
 
 /datum/controller/subsystem/greyscale_previews/Initialize()
 #ifndef UNIT_TESTS // We want this to run during unit tests regardless of the config
 	if(!CONFIG_GET(flag/generate_assets_in_init))
 		return SS_INIT_SUCCESS
 #endif
+	if(generated_this_process)
+		return SS_INIT_SUCCESS
+#ifdef USE_RUSTG_ICONFORGE_GAGS
+	rustg_iconforge_cleanup()
+#endif
 	ExportMapPreviews()
+	generated_this_process = TRUE
+#ifdef USE_RUSTG_ICONFORGE_GAGS
+	rustg_iconforge_cleanup()
+#endif
 	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/greyscale_previews/Shutdown()
+#ifdef USE_RUSTG_ICONFORGE_GAGS
+	rustg_iconforge_cleanup()
+#endif
 
 /// Sets up the list of types to process for organizing icons into their respective .dmi.
 /datum/controller/subsystem/greyscale_previews/proc/build_type_category_map(list/types_that_get_their_own_file)

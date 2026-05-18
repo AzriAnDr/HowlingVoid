@@ -127,7 +127,7 @@ window "mapwindow"
 		saved-params = ""
 		text = ""
 		align = left
-    elem "nova_title_browser"
+    elem "howling_title_browser"
 		type = BROWSER
 		pos = 0,0
 		size = 640x480

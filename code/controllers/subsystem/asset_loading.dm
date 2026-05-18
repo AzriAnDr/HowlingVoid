@@ -27,6 +27,12 @@ SUBSYSTEM_DEF(asset_loading)
 		// Clean up cached icons, freeing memory.
 		rustg_iconforge_cleanup()
 
+/datum/controller/subsystem/asset_loading/Shutdown()
+	generate_queue.Cut()
+	assets_generating = 0
+	last_queue_len = 0
+	rustg_iconforge_cleanup()
+
 /datum/controller/subsystem/asset_loading/proc/queue_asset(datum/asset/queue)
 #ifdef DO_NOT_DEFER_ASSETS
 	stack_trace("We queued an instance of [queue.type] for lateloading despite not allowing it")
