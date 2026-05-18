@@ -335,7 +335,7 @@ function main() {
     );
   }
 
-  const nextDmContents = keptBlocks.map(formatTemplateBlock).join('\n').trimEnd() + '\n';
+  const nextDmContents = `${keptBlocks.map(formatTemplateBlock).join('\n').trimEnd()}\n`;
 
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.mkdirSync(path.dirname(rewrittenDmPath), { recursive: true });

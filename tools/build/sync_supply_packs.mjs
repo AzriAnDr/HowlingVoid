@@ -520,7 +520,6 @@ function rewriteSupplyPackFile(filePath) {
       exportedCount += 1;
     } catch {
       keptBlocks.push(block);
-      continue;
     }
   }
 

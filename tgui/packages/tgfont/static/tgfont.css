@@ -1,10 +1,10 @@
 @font-face {
   font-family: "tgfont";
-  src: url('tgfont.woff2?t=1779126576031') format('woff2');
+  src: url('tgfont.woff2?t=1779132093064') format('woff2');
 }
 
 [class^="tg-"], [class*=" tg-"] {
-  font-family: 'tgfont' !important;font-size: undefined;
+  font-family: 'tgfont' !important;
   font-style:normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

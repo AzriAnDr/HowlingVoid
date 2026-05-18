@@ -4,6 +4,7 @@ import svgtofont from 'svgtofont';
 const config = {
   classNamePrefix: 'tg',
   css: {
+    fontSize: false,
     include: /\.css$/,
   },
   dist: './dist',
