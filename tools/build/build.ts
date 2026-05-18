@@ -605,7 +605,6 @@ export const ContentValidateTarget = new Juke.Target({
   inputs: () => [
     'config/content/loadout_items.json',
     'config/content/supply_packs.json',
-    'config/content/greyscale_configs.json',
     'tools/build/validate_content_manifests.mjs',
     ...getTrackedDmSubtypeFiles(),
   ],

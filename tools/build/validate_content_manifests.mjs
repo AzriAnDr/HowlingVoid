@@ -36,16 +36,6 @@ const MANIFESTS = [
     },
     uniqueFields: ['id'],
   },
-  {
-    kind: 'greyscale_configs',
-    file: 'config/content/greyscale_configs.json',
-    requiredFields: ['id', 'template_type', 'name', 'json_config'],
-    pathFields: {
-      template_type: '/datum/greyscale_config',
-    },
-    assocPathKeyFields: {},
-    uniqueFields: ['id'],
-  },
 ];
 
 function normalizePath(filePath) {
@@ -238,9 +228,6 @@ function validateManifest(manifest, declaredTypes, errors, warnings) {
       validateAssocPathKeys(errors, declaredTypes, manifest.kind, entryId, fieldName, entry[fieldName], expectedRoot);
     }
 
-    if (manifest.kind === 'greyscale_configs' && typeof entry.json_config !== 'string') {
-      errors.push(`${manifest.kind}:${entryId}:json_config must be a file path string.`);
-    }
   }
 
   return {
