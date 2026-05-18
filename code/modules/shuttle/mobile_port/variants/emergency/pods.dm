@@ -90,21 +90,85 @@
 /obj/docking_port/stationary/random/Initialize(mapload)
 	. = ..()
 	if(!mapload)
+		return .
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/docking_port/stationary/random/LateInitialize()
+	if(!SSmapping.initialized)
+		RegisterSignal(SSmapping, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(on_mapping_initialized))
 		return
 
-	var/list/turfs = get_area_turfs(target_area)
-	var/original_len = turfs.len
-	while(turfs.len)
-		var/turf/picked_turf = pick(turfs)
-		if(picked_turf.x<edge_distance || picked_turf.y<edge_distance || (world.maxx+1-picked_turf.x)<edge_distance || (world.maxy+1-picked_turf.y)<edge_distance)
-			turfs -= picked_turf
+	finalize_random_placement()
+
+/obj/docking_port/stationary/random/proc/on_mapping_initialized(datum/source)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(SSmapping, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	if(QDELETED(src))
+		return
+	finalize_random_placement()
+
+/obj/docking_port/stationary/random/proc/finalize_random_placement()
+	if(!place_randomly())
+		qdel(src)
+		return
+
+	INVOKE_ASYNC(SSshuttle, TYPE_PROC_REF(/datum/controller/subsystem/shuttle, setup_shuttles), list(src))
+
+#ifdef TESTING
+	highlight("#f00")
+#endif
+
+/obj/docking_port/stationary/random/proc/get_target_areas()
+	. = list()
+
+	var/minetype = SSmapping.current_map?.minetype
+	var/list/lavaland_targets = list(
+		/area/lavaland/surface/outdoors,
+	)
+	var/list/icemoon_targets = list(
+		/area/icemoon/surface/outdoors,
+		/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters,
+	)
+
+	if(target_area == /area/lavaland/surface/outdoors)
+		if(minetype == MINETYPE_ICE)
+			. += icemoon_targets
+			. += lavaland_targets
 		else
-			forceMove(picked_turf)
-			return
+			. += lavaland_targets
+			. += icemoon_targets
+		return
+
+	if(ispath(target_area, /area/icemoon/surface/outdoors))
+		if(minetype == MINETYPE_LAVALAND)
+			. += lavaland_targets
+			. += icemoon_targets
+		else
+			. += icemoon_targets
+			. += lavaland_targets
+		return
+
+	. += target_area
+
+/obj/docking_port/stationary/random/proc/place_randomly()
+	var/list/attempted_areas = list()
+	for(var/area_path as anything in get_target_areas())
+		var/list/turfs = get_area_turfs(area_path, subtypes = TRUE)
+		var/original_len = turfs.len
+		attempted_areas += "[area_path] ([original_len] turfs)"
+		while(turfs.len)
+			var/turf/picked_turf = pick(turfs)
+			if(picked_turf.x<edge_distance || picked_turf.y<edge_distance || (world.maxx+1-picked_turf.x)<edge_distance || (world.maxy+1-picked_turf.y)<edge_distance)
+				turfs -= picked_turf
+			else
+				forceMove(picked_turf)
+				return TRUE
 
 	// Fallback: couldn't find anything
-	WARNING("docking port '[shuttle_id]' could not be randomly placed in [target_area]: of [original_len] turfs, none were suitable")
-	return INITIALIZE_HINT_QDEL
+	WARNING("docking port '[shuttle_id]' could not be randomly placed in [english_list(attempted_areas)]: none were suitable")
+	return FALSE
 
 /obj/docking_port/stationary/random/icemoon
 	target_area = /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters

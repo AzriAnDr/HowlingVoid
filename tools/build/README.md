@@ -21,6 +21,15 @@ You can get a list of all targets that you can build by running the following co
 tools/build/build.sh --help
 ```
 
+## Diagnostics
+
+- `--explain-rebuild`: prints why a target rebuilt or why it was skipped as up to date.
+- `--profile-build`: writes a per-target profile to `tmp/build/build-profile.json`, including timings, input/output counts, rebuild reason, and the peak RSS seen in spawned child processes.
+- `content-validate`: validates `config/content/*.json` manifests and writes the result to `tmp/build/content-validate.json` without invoking DM.
+- `subtype-report`: writes `tmp/build/subtype-report.json` with tracked counts for large BYOND families such as `/obj/item` and `/datum/interaction`.
+
+For compile crash triage, use the normal build by default. The runtime-GC and harddel-heavy lane is still the testing configuration (`-DTESTING -DREAGENTS_TESTING -DTIMER_DEBUG -DREFERENCE_DOING_IT_LIVE`) and should be used separately when the failure only appears after compile during `dm-test` or DreamDaemon execution.
+
 ## Dependencies
 
 - On Windows, `build.bat` will automatically install a private (vendored) copy of Node.

@@ -1,0 +1,5169 @@
+{
+  "/datum/interaction/howling_item/vibrator/chest": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/chest",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Press Vibrator To Chest",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.chest.name",
+    "description": "Run a vibrator across their chest.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.chest.description",
+    "target_required_parts": [
+      "chest"
+    ],
+    "message": [
+      "presses %ITEM% to %TARGET%'s chest.",
+      "glides %ITEM% over %TARGET%'s chest.",
+      "runs %ITEM% slowly along %TARGET%'s chest."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/nipples": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/nipples",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Tease Nipples With Vibrator",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.nipples.name",
+    "description": "Hold a vibrator against their nipples.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.nipples.description",
+    "target_required_parts": [
+      "breasts"
+    ],
+    "message": [
+      "teases %TARGET%'s nipples with %ITEM%.",
+      "buzzes %ITEM% over %TARGET%'s nipples.",
+      "holds %ITEM% against %TARGET%'s sensitive nipples."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/clit": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/clit",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Circle Clit With Vibrator",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.clit.name",
+    "description": "Circle a vibrator over their clit.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.clit.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "circles %ITEM% over %TARGET%'s clit.",
+      "moves %ITEM% against %TARGET%'s clit in tight circles.",
+      "presses %ITEM% to %TARGET%'s clit and keeps it humming there."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/cock": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/cock",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Run Vibrator Along Cock",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.cock.name",
+    "description": "Buzz a vibrator against their cock.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.cock.description",
+    "target_required_parts": [
+      "penis"
+    ],
+    "message": [
+      "runs %ITEM% along %TARGET%'s cock.",
+      "presses %ITEM% beneath %TARGET%'s shaft.",
+      "buzzes %ITEM% over %TARGET%'s cock from base to tip."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/balls": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/balls",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Vibrate Their Balls",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.balls.name",
+    "description": "Press a vibrator under their balls.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.balls.description",
+    "target_required_parts": [
+      "balls"
+    ],
+    "message": [
+      "presses %ITEM% under %TARGET%'s balls.",
+      "keeps %ITEM% buzzing against %TARGET%'s sack.",
+      "teases %TARGET%'s balls with the trembling tip of %ITEM%."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/ass": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/ass",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Press Vibrator To Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.ass.name",
+    "description": "Buzz a vibrator against their rear.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.ass.description",
+    "target_required_parts": [
+      "butt"
+    ],
+    "message": [
+      "presses %ITEM% to %TARGET%'s ass.",
+      "runs %ITEM% over %TARGET%'s rear in slow circles.",
+      "keeps %ITEM% humming against %TARGET%'s asscheeks."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/lips": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/lips",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Press Vibrator To Lips",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.lips.name",
+    "description": "Press a vibrator to their lips.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.lips.description",
+    "target_required_parts": [
+      "mouth"
+    ],
+    "message": [
+      "presses %ITEM% to %TARGET%'s lips.",
+      "presses %ITEM% to %TARGET%'s mouth and lets it hum there.",
+      "holds the trembling tip of %ITEM% against %TARGET%'s lips."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/tongue": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/tongue",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Tease Tongue With Vibrator",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.tongue.name",
+    "description": "Touch a vibrator to their tongue.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.tongue.description",
+    "target_required_parts": [
+      "mouth"
+    ],
+    "message": [
+      "teases %TARGET%'s tongue with %ITEM%.",
+      "presses %ITEM% to %TARGET%'s tongue and lets it buzz there.",
+      "holds %ITEM% at %TARGET%'s open mouth until their tongue meets it."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/snout": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/snout",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Press Vibrator To Snout",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.snout.name",
+    "description": "Press a vibrator to their snout.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.snout.description",
+    "target_required_parts": [
+      "snout"
+    ],
+    "message": [
+      "presses %ITEM% to %TARGET%'s snout.",
+      "runs %ITEM%'s humming tip along %TARGET%'s snout.",
+      "holds %ITEM% against %TARGET%'s muzzle and lets it buzz there."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/hands": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/hands",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Vibrate Their Hands",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.hands.name",
+    "description": "Press a vibrator into their palms and fingers.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.hands.description",
+    "target_required_parts": [
+      "hands"
+    ],
+    "message": [
+      "presses %ITEM% into %TARGET%'s palms.",
+      "runs %ITEM% along %TARGET%'s fingers and hands.",
+      "lets %ITEM% buzz in %TARGET%'s grasp."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/ears": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/ears",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Buzz Their Ears",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.ears.name",
+    "description": "Hold a vibrator against their ears.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.ears.description",
+    "target_required_parts": [
+      "ears"
+    ],
+    "message": [
+      "buzzes %ITEM% against %TARGET%'s ears.",
+      "presses %ITEM% to %TARGET%'s ear and lets it hum there.",
+      "runs the trembling tip of %ITEM% along %TARGET%'s ear."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/armpits": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/armpits",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Press Vibrator To Armpits",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.armpits.name",
+    "description": "Run a vibrator into their armpits.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.armpits.description",
+    "target_required_parts": [
+      "armpits"
+    ],
+    "message": [
+      "presses %ITEM% into %TARGET%'s armpit.",
+      "runs %ITEM% along the sensitive hollow of %TARGET%'s armpit.",
+      "lets %ITEM% buzz against %TARGET%'s armpit."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/tail": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/tail",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Run Vibrator Along Tail",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.tail.name",
+    "description": "Run a vibrator along their tail.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.tail.description",
+    "target_required_parts": [
+      "tail"
+    ],
+    "message": [
+      "runs %ITEM% along %TARGET%'s tail.",
+      "presses %ITEM% to %TARGET%'s tail and lets it buzz there.",
+      "guides %ITEM%'s humming tip from the base of %TARGET%'s tail outward."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/groin": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/groin",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Press Vibrator To Groin",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.groin.name",
+    "description": "Press a vibrator against their groin without focusing on one spot.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.groin.description",
+    "target_required_parts": [
+      "groin"
+    ],
+    "message": [
+      "presses %ITEM% to %TARGET%'s groin.",
+      "works %ITEM% over the heat of %TARGET%'s groin.",
+      "holds %ITEM% against %TARGET%'s groin and lets it hum there."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/body": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/body",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Run Vibrator Over Body",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.body.name",
+    "description": "Drag a vibrator over their body in broad teasing passes.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.body.description",
+    "target_required_parts": [
+      "body"
+    ],
+    "message": [
+      "runs %ITEM% over %TARGET%'s body.",
+      "draws %ITEM%'s humming tip over %TARGET%'s body in slow passes.",
+      "teases %TARGET%'s body with the steady buzz of %ITEM%."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/pin_nipples": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/pin_nipples",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Pin Vibrator To Nipples",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.pin_nipples.name",
+    "description": "Hold the vibrator firmly against their nipples.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.pin_nipples.description",
+    "target_required_parts": [
+      "breasts"
+    ],
+    "message": [
+      "pins %ITEM% to %TARGET%'s nipples.",
+      "holds %ITEM% firmly against %TARGET%'s nipples.",
+      "keeps %ITEM% pressed hard to %TARGET%'s sensitive nipples."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/grind_clit": {
+    "interaction_id": "/datum/interaction/howling_item/vibrator/grind_clit",
+    "template_type": "/datum/interaction/howling_item/vibrator",
+    "name": "Grind Vibrator On Clit",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.grind_clit.name",
+    "description": "Grind the vibrator against their clit in short presses.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.grind_clit.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "grinds %ITEM% against %TARGET%'s clit.",
+      "presses %ITEM% into %TARGET%'s clit in short hard nudges.",
+      "rocks %ITEM% against %TARGET%'s clit and keeps it there."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/wand/breasts": {
+    "interaction_id": "/datum/interaction/howling_item/wand/breasts",
+    "template_type": "/datum/interaction/howling_item/wand",
+    "name": "Buzz Their Breasts",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.breasts.name",
+    "description": "Sweep a wand over their breasts.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.breasts.description",
+    "target_required_parts": [
+      "breasts"
+    ],
+    "message": [
+      "sweeps %ITEM% over %TARGET%'s breasts.",
+      "presses the head of %ITEM% into %TARGET%'s breasts.",
+      "draws %ITEM%'s buzzing head across %TARGET%'s chest and nipples."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/wand/pussy": {
+    "interaction_id": "/datum/interaction/howling_item/wand/pussy",
+    "template_type": "/datum/interaction/howling_item/wand",
+    "name": "Glide Wand Over Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.pussy.name",
+    "description": "Work a wand over their pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.pussy.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "glides %ITEM% over %TARGET%'s pussy.",
+      "presses %ITEM% into %TARGET%'s folds and clit.",
+      "draws slow vibrating circles over %TARGET%'s pussy with %ITEM%."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/wand/cock": {
+    "interaction_id": "/datum/interaction/howling_item/wand/cock",
+    "template_type": "/datum/interaction/howling_item/wand",
+    "name": "Buzz Their Cock",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.cock.name",
+    "description": "Use a wand on their cock.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.cock.description",
+    "target_required_parts": [
+      "penis"
+    ],
+    "message": [
+      "buzzes %ITEM% against %TARGET%'s cock.",
+      "presses %ITEM% under %TARGET%'s shaft until it hums against them.",
+      "runs %ITEM% up and down %TARGET%'s cock."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/wand/ass": {
+    "interaction_id": "/datum/interaction/howling_item/wand/ass",
+    "template_type": "/datum/interaction/howling_item/wand",
+    "name": "Buzz Their Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.ass.name",
+    "description": "Press a wand against their rear.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.ass.description",
+    "target_required_parts": [
+      "butt"
+    ],
+    "message": [
+      "presses %ITEM% into %TARGET%'s asscheeks.",
+      "holds %ITEM% against %TARGET%'s rear and lets it vibrate there.",
+      "drags %ITEM%'s buzzing head over %TARGET%'s ass."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/wand/lips": {
+    "interaction_id": "/datum/interaction/howling_item/wand/lips",
+    "template_type": "/datum/interaction/howling_item/wand",
+    "name": "Press Wand To Lips",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.lips.name",
+    "description": "Press the head of a wand to their lips.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.lips.description",
+    "target_required_parts": [
+      "mouth"
+    ],
+    "message": [
+      "presses %ITEM% to %TARGET%'s lips.",
+      "holds %ITEM%'s buzzing head at %TARGET%'s mouth.",
+      "lets %ITEM% hum against %TARGET%'s lips in a teasing offer."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/wand/tongue": {
+    "interaction_id": "/datum/interaction/howling_item/wand/tongue",
+    "template_type": "/datum/interaction/howling_item/wand",
+    "name": "Buzz Their Tongue",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.tongue.name",
+    "description": "Press a wand to their tongue.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.tongue.description",
+    "target_required_parts": [
+      "mouth"
+    ],
+    "message": [
+      "buzzes %ITEM% against %TARGET%'s tongue.",
+      "presses %ITEM% into %TARGET%'s open mouth and onto their tongue.",
+      "holds %ITEM%'s head against %TARGET%'s tongue while it hums."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/wand/nipples": {
+    "interaction_id": "/datum/interaction/howling_item/wand/nipples",
+    "template_type": "/datum/interaction/howling_item/wand",
+    "name": "Press Wand To Nipples",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.nipples.name",
+    "description": "Work a wand insistently over their nipples.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.nipples.description",
+    "target_required_parts": [
+      "breasts"
+    ],
+    "message": [
+      "presses %ITEM% firmly to %TARGET%'s nipples.",
+      "pins %ITEM%'s buzzing head against %TARGET%'s nipples.",
+      "leans %ITEM% hard into %TARGET%'s nipples and keeps it there."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/wand/snout": {
+    "interaction_id": "/datum/interaction/howling_item/wand/snout",
+    "template_type": "/datum/interaction/howling_item/wand",
+    "name": "Buzz Their Snout",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.snout.name",
+    "description": "Sweep a wand over their snout.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.snout.description",
+    "target_required_parts": [
+      "snout"
+    ],
+    "message": [
+      "sweeps %ITEM% over %TARGET%'s snout.",
+      "presses %ITEM%'s buzzing head to %TARGET%'s muzzle.",
+      "draws %ITEM% along %TARGET%'s snout and lets it hum there."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/wand/hands": {
+    "interaction_id": "/datum/interaction/howling_item/wand/hands",
+    "template_type": "/datum/interaction/howling_item/wand",
+    "name": "Buzz Their Hands",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.hands.name",
+    "description": "Run a wand across their palms and fingers.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.hands.description",
+    "target_required_parts": [
+      "hands"
+    ],
+    "message": [
+      "buzzes %ITEM% over %TARGET%'s hands.",
+      "presses %ITEM% into %TARGET%'s palm and drags it over their fingers.",
+      "lets %ITEM%'s head hum through %TARGET%'s hands."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/wand/ears": {
+    "interaction_id": "/datum/interaction/howling_item/wand/ears",
+    "template_type": "/datum/interaction/howling_item/wand",
+    "name": "Press Wand To Ears",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.ears.name",
+    "description": "Press a wand to their ears.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.ears.description",
+    "target_required_parts": [
+      "ears"
+    ],
+    "message": [
+      "presses %ITEM% to %TARGET%'s ear.",
+      "holds %ITEM%'s buzzing head along %TARGET%'s ear.",
+      "works %ITEM% around %TARGET%'s ear and lets it hum there."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/wand/armpits": {
+    "interaction_id": "/datum/interaction/howling_item/wand/armpits",
+    "template_type": "/datum/interaction/howling_item/wand",
+    "name": "Buzz Their Armpits",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.armpits.name",
+    "description": "Sweep a wand into their armpits.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.armpits.description",
+    "target_required_parts": [
+      "armpits"
+    ],
+    "message": [
+      "sweeps %ITEM% into %TARGET%'s armpit.",
+      "presses %ITEM%'s head into the hollow of %TARGET%'s armpit.",
+      "lets %ITEM% hum against %TARGET%'s armpit."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/wand/tail": {
+    "interaction_id": "/datum/interaction/howling_item/wand/tail",
+    "template_type": "/datum/interaction/howling_item/wand",
+    "name": "Buzz Their Tail",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.tail.name",
+    "description": "Sweep a wand over their tail.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.tail.description",
+    "target_required_parts": [
+      "tail"
+    ],
+    "message": [
+      "sweeps %ITEM% over %TARGET%'s tail.",
+      "presses %ITEM%'s head to %TARGET%'s tail and lets it buzz there.",
+      "draws %ITEM% along %TARGET%'s tail in a slow humming stroke."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/wand/groin": {
+    "interaction_id": "/datum/interaction/howling_item/wand/groin",
+    "template_type": "/datum/interaction/howling_item/wand",
+    "name": "Buzz Their Groin",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.groin.name",
+    "description": "Work a wand over their groin without settling on one spot.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.groin.description",
+    "target_required_parts": [
+      "groin"
+    ],
+    "message": [
+      "buzzes %ITEM% over %TARGET%'s groin.",
+      "presses %ITEM%'s head into the heat of %TARGET%'s groin.",
+      "works %ITEM% across %TARGET%'s groin in slow teasing passes."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/wand/body": {
+    "interaction_id": "/datum/interaction/howling_item/wand/body",
+    "template_type": "/datum/interaction/howling_item/wand",
+    "name": "Sweep Wand Over Body",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.body.name",
+    "description": "Drag a wand over their body in broad teasing strokes.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.body.description",
+    "target_required_parts": [
+      "body"
+    ],
+    "message": [
+      "sweeps %ITEM% over %TARGET%'s body.",
+      "draws %ITEM%'s buzzing head over %TARGET%'s body in slow passes.",
+      "teases %TARGET%'s body with the humming weight of %ITEM%."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/wand/clit": {
+    "interaction_id": "/datum/interaction/howling_item/wand/clit",
+    "template_type": "/datum/interaction/howling_item/wand",
+    "name": "Press Wand To Clit",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.clit.name",
+    "description": "Hold the head of the wand directly to their clit.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.clit.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "presses %ITEM% directly to %TARGET%'s clit.",
+      "holds %ITEM%'s head against %TARGET%'s clit without moving it away.",
+      "pins %ITEM% to %TARGET%'s clit and lets it hum there."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/dildo/tease_pussy": {
+    "interaction_id": "/datum/interaction/howling_item/dildo/tease_pussy",
+    "template_type": "/datum/interaction/howling_item/dildo",
+    "name": "Tease Pussy With Dildo",
+    "translation_key": "ui.interaction_panel.interaction.toy.dildo.tease_pussy.name",
+    "description": "Tease their pussy with the tip of a dildo.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.dildo.tease_pussy.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "teases %TARGET%'s pussy with %ITEM%.",
+      "rubs the tip of %ITEM% through %TARGET%'s folds.",
+      "drags %ITEM% over %TARGET%'s pussy without quite pushing it in."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/dildo/pussy": {
+    "interaction_id": "/datum/interaction/howling_item/dildo/pussy",
+    "template_type": "/datum/interaction/howling_item/dildo",
+    "name": "Slide Dildo Into Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.dildo.pussy.name",
+    "description": "Push a dildo into their pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.dildo.pussy.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "slides %ITEM% into %TARGET%'s pussy.",
+      "pushes %ITEM% into %TARGET%'s folds a little at a time.",
+      "rocks %ITEM% inside %TARGET%'s pussy."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/dildo/tease_ass": {
+    "interaction_id": "/datum/interaction/howling_item/dildo/tease_ass",
+    "template_type": "/datum/interaction/howling_item/dildo",
+    "name": "Tease Ass With Dildo",
+    "translation_key": "ui.interaction_panel.interaction.toy.dildo.tease_ass.name",
+    "description": "Brush a dildo over their ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.dildo.tease_ass.description",
+    "target_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "teases %TARGET%'s ass with %ITEM%.",
+      "circles %ITEM% against %TARGET%'s entrance.",
+      "rubs the tip of %ITEM% over %TARGET%'s ass."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/dildo/ass": {
+    "interaction_id": "/datum/interaction/howling_item/dildo/ass",
+    "template_type": "/datum/interaction/howling_item/dildo",
+    "name": "Slide Dildo Into Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.dildo.ass.name",
+    "description": "Push a dildo into their ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.dildo.ass.description",
+    "target_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "slides %ITEM% into %TARGET%'s ass.",
+      "eases %ITEM% into %TARGET%'s rear.",
+      "eases %ITEM% past %TARGET%'s entrance and into their ass."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ],
+    "target_pain": [
+      0,
+      2
+    ]
+  },
+  "/datum/interaction/howling_item/dildo/lips": {
+    "interaction_id": "/datum/interaction/howling_item/dildo/lips",
+    "template_type": "/datum/interaction/howling_item/dildo",
+    "name": "Press Dildo To Lips",
+    "translation_key": "ui.interaction_panel.interaction.toy.dildo.lips.name",
+    "description": "Press a dildo to their lips.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.dildo.lips.description",
+    "target_required_parts": [
+      "mouth"
+    ],
+    "message": [
+      "presses %ITEM% to %TARGET%'s lips.",
+      "taps %ITEM% against %TARGET%'s mouth in a teasing offer.",
+      "holds %ITEM% at %TARGET%'s lips and lets them feel its shape."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/dildo/mouth": {
+    "interaction_id": "/datum/interaction/howling_item/dildo/mouth",
+    "template_type": "/datum/interaction/howling_item/dildo",
+    "name": "Feed Dildo To Mouth",
+    "translation_key": "ui.interaction_panel.interaction.toy.dildo.mouth.name",
+    "description": "Work a dildo past their lips.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.dildo.mouth.description",
+    "target_required_parts": [
+      "mouth"
+    ],
+    "message": [
+      "feeds %ITEM% to %TARGET%'s mouth.",
+      "eases %ITEM% past %TARGET%'s lips.",
+      "guides %ITEM% into %TARGET%'s mouth a little at a time."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/dildo/thighs": {
+    "interaction_id": "/datum/interaction/howling_item/dildo/thighs",
+    "template_type": "/datum/interaction/howling_item/dildo",
+    "name": "Rub Dildo Between Thighs",
+    "translation_key": "ui.interaction_panel.interaction.toy.dildo.thighs.name",
+    "description": "Grind a dildo between their thighs.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.dildo.thighs.description",
+    "target_required_parts": [
+      "thighs"
+    ],
+    "message": [
+      "rubs %ITEM% between %TARGET%'s thighs.",
+      "grinds %ITEM% along the heat between %TARGET%'s thighs.",
+      "presses %ITEM% between %TARGET%'s legs and rocks it there."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/dildo/clit": {
+    "interaction_id": "/datum/interaction/howling_item/dildo/clit",
+    "template_type": "/datum/interaction/howling_item/dildo",
+    "name": "Ride Dildo Over Clit",
+    "translation_key": "ui.interaction_panel.interaction.toy.dildo.clit.name",
+    "description": "Work a dildo over their clit without pushing it in.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.dildo.clit.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "rides %ITEM% over %TARGET%'s clit.",
+      "grinds %ITEM% over %TARGET%'s clit and folds.",
+      "works %ITEM% against %TARGET%'s clit without slipping it inside."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/fleshlight/work_cock": {
+    "interaction_id": "/datum/interaction/howling_item/fleshlight/work_cock",
+    "template_type": "/datum/interaction/howling_item/fleshlight",
+    "name": "Take Cock Into Fleshlight",
+    "translation_key": "ui.interaction_panel.interaction.toy.fleshlight.work_cock.name",
+    "description": "Take their cock into a fleshlight.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.fleshlight.work_cock.description",
+    "target_required_parts": [
+      "penis"
+    ],
+    "message": [
+      "works %TARGET%'s cock into %ITEM%.",
+      "guides %ITEM% down %TARGET%'s shaft.",
+      "takes %TARGET%'s cock into %ITEM% and starts stroking."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/fleshlight/stroke_cock": {
+    "interaction_id": "/datum/interaction/howling_item/fleshlight/stroke_cock",
+    "template_type": "/datum/interaction/howling_item/fleshlight",
+    "name": "Stroke Cock With Fleshlight",
+    "translation_key": "ui.interaction_panel.interaction.toy.fleshlight.stroke_cock.name",
+    "description": "Stroke their cock with a fleshlight.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.fleshlight.stroke_cock.description",
+    "target_required_parts": [
+      "penis"
+    ],
+    "message": [
+      "strokes %TARGET%'s cock with %ITEM%.",
+      "pumps %ITEM% along %TARGET%'s shaft.",
+      "slides %ITEM% up and down %TARGET%'s cock."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/fleshlight/tease_tip": {
+    "interaction_id": "/datum/interaction/howling_item/fleshlight/tease_tip",
+    "template_type": "/datum/interaction/howling_item/fleshlight",
+    "name": "Tease Tip With Fleshlight",
+    "translation_key": "ui.interaction_panel.interaction.toy.fleshlight.tease_tip.name",
+    "description": "Work only the tip of their cock into a fleshlight.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.fleshlight.tease_tip.description",
+    "target_required_parts": [
+      "penis"
+    ],
+    "message": [
+      "teases the tip of %TARGET%'s cock with %ITEM%.",
+      "works only the head of %TARGET%'s cock into %ITEM%.",
+      "drags %ITEM% over %TARGET%'s tip in short teasing strokes."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/fleshlight/balls": {
+    "interaction_id": "/datum/interaction/howling_item/fleshlight/balls",
+    "template_type": "/datum/interaction/howling_item/fleshlight",
+    "name": "Rub Fleshlight Under Balls",
+    "translation_key": "ui.interaction_panel.interaction.toy.fleshlight.balls.name",
+    "description": "Press a fleshlight beneath their balls.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.fleshlight.balls.description",
+    "target_required_parts": [
+      "balls"
+    ],
+    "message": [
+      "rubs %ITEM% under %TARGET%'s balls.",
+      "presses %ITEM% up against %TARGET%'s sack.",
+      "works the soft edge of %ITEM% beneath %TARGET%'s balls."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/strapon/grind_pussy": {
+    "interaction_id": "/datum/interaction/howling_item/strapon/grind_pussy",
+    "template_type": "/datum/interaction/howling_item/strapon",
+    "name": "Grind Strap-On Against Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.strapon.grind_pussy.name",
+    "description": "Grind the strap-on over their pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.strapon.grind_pussy.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "grinds %ITEM% against %TARGET%'s pussy.",
+      "rubs %ITEM% through %TARGET%'s folds.",
+      "presses %ITEM% to %TARGET%'s pussy and rolls their hips."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/strapon/fuck_pussy": {
+    "interaction_id": "/datum/interaction/howling_item/strapon/fuck_pussy",
+    "template_type": "/datum/interaction/howling_item/strapon",
+    "name": "Slide Strap-On Into Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.strapon.fuck_pussy.name",
+    "description": "Push the strap-on into their pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.strapon.fuck_pussy.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "pushes %ITEM% into %TARGET%'s pussy.",
+      "works %ITEM% into %TARGET%'s folds a little at a time.",
+      "thrusts %ITEM% into %TARGET%'s folds."
+    ],
+    "user_pleasure": [
+      1,
+      3
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/strapon/grind_ass": {
+    "interaction_id": "/datum/interaction/howling_item/strapon/grind_ass",
+    "template_type": "/datum/interaction/howling_item/strapon",
+    "name": "Grind Strap-On Against Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.strapon.grind_ass.name",
+    "description": "Grind the strap-on over their rear.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.strapon.grind_ass.description",
+    "target_required_parts": [
+      "butt"
+    ],
+    "message": [
+      "grinds %ITEM% against %TARGET%'s ass.",
+      "rubs %ITEM% between %TARGET%'s cheeks.",
+      "presses %ITEM% to %TARGET%'s rear and grinds slowly."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/strapon/fuck_ass": {
+    "interaction_id": "/datum/interaction/howling_item/strapon/fuck_ass",
+    "template_type": "/datum/interaction/howling_item/strapon",
+    "name": "Slide Strap-On Into Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.strapon.fuck_ass.name",
+    "description": "Push the strap-on into their ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.strapon.fuck_ass.description",
+    "target_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "pushes %ITEM% into %TARGET%'s ass.",
+      "eases %ITEM% into %TARGET%'s rear a little at a time.",
+      "thrusts %ITEM% into %TARGET%'s rear."
+    ],
+    "user_pleasure": [
+      1,
+      3
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ],
+    "target_pain": [
+      0,
+      2
+    ]
+  },
+  "/datum/interaction/howling_item/strapon/lips": {
+    "interaction_id": "/datum/interaction/howling_item/strapon/lips",
+    "template_type": "/datum/interaction/howling_item/strapon",
+    "name": "Press Strap-On To Lips",
+    "translation_key": "ui.interaction_panel.interaction.toy.strapon.lips.name",
+    "description": "Hold the strap-on at their lips.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.strapon.lips.description",
+    "target_required_parts": [
+      "mouth"
+    ],
+    "message": [
+      "presses %ITEM% to %TARGET%'s lips.",
+      "holds %ITEM% at %TARGET%'s mouth in a blunt offer.",
+      "taps %ITEM% against %TARGET%'s lips and waits for them to part."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/strapon/mouth": {
+    "interaction_id": "/datum/interaction/howling_item/strapon/mouth",
+    "template_type": "/datum/interaction/howling_item/strapon",
+    "name": "Feed Strap-On To Mouth",
+    "translation_key": "ui.interaction_panel.interaction.toy.strapon.mouth.name",
+    "description": "Work the strap-on into their mouth.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.strapon.mouth.description",
+    "target_required_parts": [
+      "mouth"
+    ],
+    "message": [
+      "feeds %ITEM% to %TARGET%'s mouth.",
+      "eases %ITEM% past %TARGET%'s lips.",
+      "guides %ITEM% into %TARGET%'s mouth in slow thrusting pushes."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/whip/chest": {
+    "interaction_id": "/datum/interaction/howling_item/whip/chest",
+    "template_type": "/datum/interaction/howling_item/whip",
+    "name": "Trace Whip Over Chest",
+    "translation_key": "ui.interaction_panel.interaction.toy.whip.chest.name",
+    "description": "Trail a whip over their chest.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.whip.chest.description",
+    "target_required_parts": [
+      "chest"
+    ],
+    "message": [
+      "trails %ITEM% over %TARGET%'s chest.",
+      "draws the length of %ITEM% across %TARGET%'s chest.",
+      "slides %ITEM% over %TARGET%'s chest in a slow stroke."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item/whip/thighs": {
+    "interaction_id": "/datum/interaction/howling_item/whip/thighs",
+    "template_type": "/datum/interaction/howling_item/whip",
+    "name": "Lash Their Thighs",
+    "translation_key": "ui.interaction_panel.interaction.toy.whip.thighs.name",
+    "description": "Snap a whip across their thighs.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.whip.thighs.description",
+    "target_required_parts": [
+      "thighs"
+    ],
+    "message": [
+      "lashes %TARGET%'s thighs with %ITEM%.",
+      "snaps %ITEM% across %TARGET%'s thighs.",
+      "strikes %TARGET%'s thighs with %ITEM%."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      1,
+      3
+    ],
+    "target_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/whip/ass": {
+    "interaction_id": "/datum/interaction/howling_item/whip/ass",
+    "template_type": "/datum/interaction/howling_item/whip",
+    "name": "Snap Whip Across Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.whip.ass.name",
+    "description": "Crack a whip against their ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.whip.ass.description",
+    "target_required_parts": [
+      "butt"
+    ],
+    "message": [
+      "snaps %ITEM% across %TARGET%'s ass.",
+      "cracks %ITEM% against %TARGET%'s rear.",
+      "lashes %TARGET%'s ass with %ITEM%."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      1,
+      3
+    ],
+    "target_pain": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/spanking_pad/ass": {
+    "interaction_id": "/datum/interaction/howling_item/spanking_pad/ass",
+    "template_type": "/datum/interaction/howling_item/spanking_pad",
+    "name": "Spank Their Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.spanking.ass.name",
+    "description": "Smack their ass with a spanking pad.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.spanking.ass.description",
+    "target_required_parts": [
+      "butt"
+    ],
+    "message": [
+      "spanks %TARGET%'s ass with %ITEM%.",
+      "smacks %ITEM% across %TARGET%'s rear.",
+      "slaps %TARGET%'s ass with %ITEM%."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      1,
+      3
+    ],
+    "target_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/spanking_pad/thighs": {
+    "interaction_id": "/datum/interaction/howling_item/spanking_pad/thighs",
+    "template_type": "/datum/interaction/howling_item/spanking_pad",
+    "name": "Smack Their Thighs",
+    "translation_key": "ui.interaction_panel.interaction.toy.spanking.thighs.name",
+    "description": "Smack their thighs with a spanking pad.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.spanking.thighs.description",
+    "target_required_parts": [
+      "thighs"
+    ],
+    "message": [
+      "smacks %ITEM% against %TARGET%'s thighs.",
+      "spanks %TARGET%'s thighs with %ITEM%.",
+      "brings %ITEM% down across %TARGET%'s thighs."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      1,
+      3
+    ],
+    "target_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/feather/chest": {
+    "interaction_id": "/datum/interaction/howling_item/feather/chest",
+    "template_type": "/datum/interaction/howling_item/feather",
+    "name": "Trail Feather Over Chest",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.chest.name",
+    "description": "Drag a feather over their chest.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.chest.description",
+    "target_required_parts": [
+      "chest"
+    ],
+    "message": [
+      "trails %ITEM% over %TARGET%'s chest.",
+      "draws %ITEM%'s tip down %TARGET%'s chest.",
+      "teases %TARGET%'s chest with slow strokes from %ITEM%."
+    ],
+    "user_arousal": [
+      0,
+      2
+    ],
+    "target_pleasure": [
+      0,
+      2
+    ],
+    "target_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item/feather/pussy": {
+    "interaction_id": "/datum/interaction/howling_item/feather/pussy",
+    "template_type": "/datum/interaction/howling_item/feather",
+    "name": "Tease Pussy With Feather",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.pussy.name",
+    "description": "Tickle their pussy with a feather.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.pussy.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "teases %TARGET%'s pussy with %ITEM%.",
+      "brushes %ITEM% through %TARGET%'s folds.",
+      "tickles %TARGET%'s clit and pussy with %ITEM%."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/feather/feet": {
+    "interaction_id": "/datum/interaction/howling_item/feather/feet",
+    "template_type": "/datum/interaction/howling_item/feather",
+    "name": "Trace Their Feet With Feather",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.feet.name",
+    "description": "Run a feather over their feet.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.feet.description",
+    "target_required_parts": [
+      "feet"
+    ],
+    "message": [
+      "traces %TARGET%'s feet with %ITEM%.",
+      "brushes %ITEM% over %TARGET%'s soles.",
+      "teases %TARGET%'s feet with the tip of %ITEM%."
+    ],
+    "user_arousal": [
+      0,
+      2
+    ],
+    "target_pleasure": [
+      0,
+      2
+    ],
+    "target_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item/feather/thighs": {
+    "interaction_id": "/datum/interaction/howling_item/feather/thighs",
+    "template_type": "/datum/interaction/howling_item/feather",
+    "name": "Trail Feather Between Thighs",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.thighs.name",
+    "description": "Tease the insides of their thighs with a feather.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.thighs.description",
+    "target_required_parts": [
+      "thighs"
+    ],
+    "message": [
+      "trails %ITEM% between %TARGET%'s thighs.",
+      "brushes %ITEM% up the insides of %TARGET%'s thighs.",
+      "teases the sensitive skin between %TARGET%'s legs with %ITEM%."
+    ],
+    "user_arousal": [
+      0,
+      2
+    ],
+    "target_pleasure": [
+      0,
+      2
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/feather/neck": {
+    "interaction_id": "/datum/interaction/howling_item/feather/neck",
+    "template_type": "/datum/interaction/howling_item/feather",
+    "name": "Brush Feather Along Neck",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.neck.name",
+    "description": "Run a feather over their neck.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.neck.description",
+    "target_required_parts": [
+      "neck"
+    ],
+    "message": [
+      "brushes %ITEM% along %TARGET%'s neck.",
+      "skims %ITEM% over %TARGET%'s throat and neck.",
+      "teases %TARGET%'s neck with light feathery strokes."
+    ],
+    "user_arousal": [
+      0,
+      2
+    ],
+    "target_pleasure": [
+      0,
+      2
+    ],
+    "target_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item/feather/snout": {
+    "interaction_id": "/datum/interaction/howling_item/feather/snout",
+    "template_type": "/datum/interaction/howling_item/feather",
+    "name": "Brush Feather Over Snout",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.snout.name",
+    "description": "Trace a feather over their snout.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.snout.description",
+    "target_required_parts": [
+      "snout"
+    ],
+    "message": [
+      "brushes %ITEM% over %TARGET%'s snout.",
+      "traces %ITEM%'s tip along %TARGET%'s muzzle.",
+      "teases %TARGET%'s snout with the light touch of %ITEM%."
+    ],
+    "user_arousal": [
+      0,
+      2
+    ],
+    "target_pleasure": [
+      0,
+      2
+    ],
+    "target_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item/feather/hands": {
+    "interaction_id": "/datum/interaction/howling_item/feather/hands",
+    "template_type": "/datum/interaction/howling_item/feather",
+    "name": "Trace Their Hands With Feather",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.hands.name",
+    "description": "Run a feather over their palms and fingers.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.hands.description",
+    "target_required_parts": [
+      "hands"
+    ],
+    "message": [
+      "traces %TARGET%'s hands with %ITEM%.",
+      "brushes %ITEM% over %TARGET%'s palms and fingers.",
+      "teases %TARGET%'s hands with the soft tip of %ITEM%."
+    ],
+    "user_arousal": [
+      0,
+      2
+    ],
+    "target_pleasure": [
+      0,
+      2
+    ],
+    "target_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item/feather/ears": {
+    "interaction_id": "/datum/interaction/howling_item/feather/ears",
+    "template_type": "/datum/interaction/howling_item/feather",
+    "name": "Brush Feather Over Ears",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.ears.name",
+    "description": "Tease their ears with a feather.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.ears.description",
+    "target_required_parts": [
+      "ears"
+    ],
+    "message": [
+      "brushes %ITEM% over %TARGET%'s ears.",
+      "traces %ITEM%'s tip along %TARGET%'s ear.",
+      "teases %TARGET%'s ears with feathery little strokes."
+    ],
+    "user_arousal": [
+      0,
+      2
+    ],
+    "target_pleasure": [
+      0,
+      2
+    ],
+    "target_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item/feather/armpits": {
+    "interaction_id": "/datum/interaction/howling_item/feather/armpits",
+    "template_type": "/datum/interaction/howling_item/feather",
+    "name": "Tease Armpits With Feather",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.armpits.name",
+    "description": "Tickle their armpits with a feather.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.armpits.description",
+    "target_required_parts": [
+      "armpits"
+    ],
+    "message": [
+      "teases %TARGET%'s armpit with %ITEM%.",
+      "brushes %ITEM% into the hollow of %TARGET%'s armpit.",
+      "tickles %TARGET%'s armpit with the tip of %ITEM%."
+    ],
+    "user_arousal": [
+      0,
+      2
+    ],
+    "target_pleasure": [
+      0,
+      2
+    ],
+    "target_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item/feather/tail": {
+    "interaction_id": "/datum/interaction/howling_item/feather/tail",
+    "template_type": "/datum/interaction/howling_item/feather",
+    "name": "Brush Feather Along Tail",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.tail.name",
+    "description": "Trace a feather along their tail.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.tail.description",
+    "target_required_parts": [
+      "tail"
+    ],
+    "message": [
+      "brushes %ITEM% along %TARGET%'s tail.",
+      "traces %ITEM%'s tip down %TARGET%'s tail.",
+      "teases %TARGET%'s tail with light feathery strokes."
+    ],
+    "user_arousal": [
+      0,
+      2
+    ],
+    "target_pleasure": [
+      0,
+      2
+    ],
+    "target_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item/feather/groin": {
+    "interaction_id": "/datum/interaction/howling_item/feather/groin",
+    "template_type": "/datum/interaction/howling_item/feather",
+    "name": "Tease Groin With Feather",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.groin.name",
+    "description": "Tickle their groin with a feather.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.groin.description",
+    "target_required_parts": [
+      "groin"
+    ],
+    "message": [
+      "teases %TARGET%'s groin with %ITEM%.",
+      "brushes %ITEM% over the sensitive heat of %TARGET%'s groin.",
+      "tickles %TARGET%'s groin with the tip of %ITEM%."
+    ],
+    "user_arousal": [
+      0,
+      2
+    ],
+    "target_pleasure": [
+      0,
+      2
+    ],
+    "target_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item/feather/body": {
+    "interaction_id": "/datum/interaction/howling_item/feather/body",
+    "template_type": "/datum/interaction/howling_item/feather",
+    "name": "Trail Feather Over Body",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.body.name",
+    "description": "Drag a feather over their body in long teasing strokes.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.body.description",
+    "target_required_parts": [
+      "body"
+    ],
+    "message": [
+      "trails %ITEM% over %TARGET%'s body.",
+      "draws %ITEM%'s tip across %TARGET%'s body in long strokes.",
+      "teases %TARGET%'s body with the light touch of %ITEM%."
+    ],
+    "user_arousal": [
+      0,
+      2
+    ],
+    "target_pleasure": [
+      0,
+      2
+    ],
+    "target_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item/shocker/nipples": {
+    "interaction_id": "/datum/interaction/howling_item/shocker/nipples",
+    "template_type": "/datum/interaction/howling_item/shocker",
+    "name": "Shock Their Nipples",
+    "translation_key": "ui.interaction_panel.interaction.toy.shocker.nipples.name",
+    "description": "Touch a shocker to their nipples.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.shocker.nipples.description",
+    "target_required_parts": [
+      "breasts"
+    ],
+    "message": [
+      "touches %ITEM% to %TARGET%'s nipples.",
+      "zaps %TARGET%'s nipples with %ITEM%.",
+      "holds %ITEM% to %TARGET%'s sensitive nipples and lets it crackle there."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ],
+    "target_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/shocker/cock": {
+    "interaction_id": "/datum/interaction/howling_item/shocker/cock",
+    "template_type": "/datum/interaction/howling_item/shocker",
+    "name": "Shock Their Cock",
+    "translation_key": "ui.interaction_panel.interaction.toy.shocker.cock.name",
+    "description": "Press a shocker to their cock.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.shocker.cock.description",
+    "target_required_parts": [
+      "penis"
+    ],
+    "message": [
+      "presses %ITEM% to %TARGET%'s cock.",
+      "zaps %TARGET%'s shaft with %ITEM%.",
+      "holds %ITEM% to %TARGET%'s cock and lets it crackle there."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ],
+    "target_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/shocker/pussy": {
+    "interaction_id": "/datum/interaction/howling_item/shocker/pussy",
+    "template_type": "/datum/interaction/howling_item/shocker",
+    "name": "Shock Their Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.shocker.pussy.name",
+    "description": "Press a shocker to their pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.shocker.pussy.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "presses %ITEM% to %TARGET%'s pussy.",
+      "zaps %TARGET%'s folds with %ITEM%.",
+      "holds %ITEM% to %TARGET%'s pussy and lets it crackle there."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ],
+    "target_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/shocker/ass": {
+    "interaction_id": "/datum/interaction/howling_item/shocker/ass",
+    "template_type": "/datum/interaction/howling_item/shocker",
+    "name": "Shock Their Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.shocker.ass.name",
+    "description": "Press a shocker to their ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.shocker.ass.description",
+    "target_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "presses %ITEM% to %TARGET%'s ass.",
+      "zaps %TARGET%'s entrance with %ITEM%.",
+      "holds %ITEM% to %TARGET%'s rear and lets it crackle there."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ],
+    "target_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/candle/chest": {
+    "interaction_id": "/datum/interaction/howling_item/candle/chest",
+    "template_type": "/datum/interaction/howling_item/candle",
+    "name": "Drip Wax On Chest",
+    "translation_key": "ui.interaction_panel.interaction.toy.wax_play.chest.name",
+    "description": "Drip warm wax over their chest.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wax_play.chest.description",
+    "target_required_parts": [
+      "chest"
+    ],
+    "message": [
+      "drips wax from %ITEM% over %TARGET%'s chest.",
+      "tilts %ITEM% and lets warm wax spatter %TARGET%'s chest.",
+      "trails hot droplets from %ITEM% down %TARGET%'s chest."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ],
+    "target_pain": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item/candle/thighs": {
+    "interaction_id": "/datum/interaction/howling_item/candle/thighs",
+    "template_type": "/datum/interaction/howling_item/candle",
+    "name": "Drip Wax On Thighs",
+    "translation_key": "ui.interaction_panel.interaction.toy.wax_play.thighs.name",
+    "description": "Drip warm wax over their thighs.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wax_play.thighs.description",
+    "target_required_parts": [
+      "thighs"
+    ],
+    "message": [
+      "drips wax from %ITEM% over %TARGET%'s thighs.",
+      "lets warm droplets from %ITEM% patter across %TARGET%'s thighs.",
+      "tilts %ITEM% and traces hot wax over %TARGET%'s legs."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ],
+    "target_pain": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item/candle/butt": {
+    "interaction_id": "/datum/interaction/howling_item/candle/butt",
+    "template_type": "/datum/interaction/howling_item/candle",
+    "name": "Drip Wax On Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.wax_play.butt.name",
+    "description": "Drip warm wax over their ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wax_play.butt.description",
+    "target_required_parts": [
+      "butt"
+    ],
+    "message": [
+      "drips wax from %ITEM% over %TARGET%'s ass.",
+      "lets warm wax fall over %TARGET%'s rear from %ITEM%.",
+      "tilts %ITEM% and traces hot droplets over %TARGET%'s ass."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ],
+    "target_pain": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item/plug/tease_ass": {
+    "interaction_id": "/datum/interaction/howling_item/plug/tease_ass",
+    "template_type": "/datum/interaction/howling_item/plug",
+    "name": "Tease Ass With Plug",
+    "translation_key": "ui.interaction_panel.interaction.toy.buttplug.tease_ass.name",
+    "description": "Circle a plug over their rear.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.buttplug.tease_ass.description",
+    "target_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "teases %TARGET%'s ass with %ITEM%.",
+      "circles %ITEM% against %TARGET%'s entrance.",
+      "rubs the rounded tip of %ITEM% over %TARGET%'s ass."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/plug/insert_ass": {
+    "interaction_id": "/datum/interaction/howling_item/plug/insert_ass",
+    "template_type": "/datum/interaction/howling_item/plug",
+    "name": "Ease Plug Into Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.buttplug.insert_ass.name",
+    "description": "Work a plug into their ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.buttplug.insert_ass.description",
+    "target_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "eases %ITEM% into %TARGET%'s ass.",
+      "eases %ITEM% into %TARGET%'s rear a little at a time.",
+      "presses %ITEM% past %TARGET%'s entrance until it settles in place."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ],
+    "target_pain": [
+      0,
+      2
+    ]
+  },
+  "/datum/interaction/howling_item/plug/insert_pussy": {
+    "interaction_id": "/datum/interaction/howling_item/plug/insert_pussy",
+    "template_type": "/datum/interaction/howling_item/plug",
+    "name": "Ease Plug Into Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.buttplug.insert_pussy.name",
+    "description": "Work a plug into their pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.buttplug.insert_pussy.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "eases %ITEM% into %TARGET%'s pussy.",
+      "works %ITEM% into %TARGET%'s folds until it settles in place.",
+      "presses %ITEM% into %TARGET%'s pussy and leaves it snug inside."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/plug/grind_ass": {
+    "interaction_id": "/datum/interaction/howling_item/plug/grind_ass",
+    "template_type": "/datum/interaction/howling_item/plug",
+    "name": "Grind Plug Between Cheeks",
+    "translation_key": "ui.interaction_panel.interaction.toy.buttplug.grind_ass.name",
+    "description": "Rub a plug between their asscheeks.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.buttplug.grind_ass.description",
+    "target_required_parts": [
+      "butt"
+    ],
+    "message": [
+      "grinds %ITEM% between %TARGET%'s cheeks.",
+      "rubs %ITEM% along %TARGET%'s asscheeks and rear.",
+      "presses %ITEM% between %TARGET%'s cheeks and rocks it there."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/plug/press_pussy": {
+    "interaction_id": "/datum/interaction/howling_item/plug/press_pussy",
+    "template_type": "/datum/interaction/howling_item/plug",
+    "name": "Press Plug To Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.buttplug.press_pussy.name",
+    "description": "Press the rounded plug to their folds.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.buttplug.press_pussy.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "presses %ITEM% to %TARGET%'s pussy.",
+      "rubs %ITEM% through %TARGET%'s folds.",
+      "works the smooth curve of %ITEM% over %TARGET%'s clit and pussy."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/plug/lips": {
+    "interaction_id": "/datum/interaction/howling_item/plug/lips",
+    "template_type": "/datum/interaction/howling_item/plug",
+    "name": "Press Plug To Lips",
+    "translation_key": "ui.interaction_panel.interaction.toy.buttplug.lips.name",
+    "description": "Press the plug to their lips.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.buttplug.lips.description",
+    "target_required_parts": [
+      "mouth"
+    ],
+    "message": [
+      "presses %ITEM% to %TARGET%'s lips.",
+      "holds the rounded tip of %ITEM% at %TARGET%'s mouth.",
+      "taps %ITEM% against %TARGET%'s lips in a teasing offer."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/egg/clit": {
+    "interaction_id": "/datum/interaction/howling_item/egg/clit",
+    "template_type": "/datum/interaction/howling_item/egg",
+    "name": "Hum Egg Over Clit",
+    "translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.clit.name",
+    "description": "Work an egg vibrator over their clit.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.clit.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "works %ITEM% over %TARGET%'s clit.",
+      "presses %ITEM% into %TARGET%'s folds and keeps it humming there.",
+      "glides %ITEM% over %TARGET%'s clit in tight circles."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/egg/insert_pussy": {
+    "interaction_id": "/datum/interaction/howling_item/egg/insert_pussy",
+    "template_type": "/datum/interaction/howling_item/egg",
+    "name": "Slip Egg Into Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.insert_pussy.name",
+    "description": "Push an egg vibrator into their pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.insert_pussy.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "slips %ITEM% into %TARGET%'s pussy.",
+      "works %ITEM% into %TARGET%'s folds until it disappears inside.",
+      "presses %ITEM% into %TARGET%'s pussy and lets it thrum there."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/egg/insert_ass": {
+    "interaction_id": "/datum/interaction/howling_item/egg/insert_ass",
+    "template_type": "/datum/interaction/howling_item/egg",
+    "name": "Slip Egg Into Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.insert_ass.name",
+    "description": "Push an egg vibrator into their ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.insert_ass.description",
+    "target_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "slips %ITEM% into %TARGET%'s ass.",
+      "works %ITEM% into %TARGET%'s rear until it settles inside.",
+      "presses %ITEM% into %TARGET%'s ass and leaves it trembling there."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ],
+    "target_pain": [
+      0,
+      2
+    ]
+  },
+  "/datum/interaction/howling_item/egg/nipples": {
+    "interaction_id": "/datum/interaction/howling_item/egg/nipples",
+    "template_type": "/datum/interaction/howling_item/egg",
+    "name": "Buzz Nipples With Egg",
+    "translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.nipples.name",
+    "description": "Hold the egg against their nipples.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.nipples.description",
+    "target_required_parts": [
+      "breasts"
+    ],
+    "message": [
+      "buzzes %ITEM% over %TARGET%'s nipples.",
+      "holds %ITEM% to %TARGET%'s sensitive nipples.",
+      "presses the humming curve of %ITEM% against %TARGET%'s breasts."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/egg/lips": {
+    "interaction_id": "/datum/interaction/howling_item/egg/lips",
+    "template_type": "/datum/interaction/howling_item/egg",
+    "name": "Buzz Lips With Egg",
+    "translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.lips.name",
+    "description": "Hold the egg vibrator to their lips.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.lips.description",
+    "target_required_parts": [
+      "mouth"
+    ],
+    "message": [
+      "buzzes %ITEM% at %TARGET%'s lips.",
+      "holds %ITEM%'s humming curve to %TARGET%'s mouth.",
+      "presses %ITEM% to %TARGET%'s lips and lets it thrum there."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/ring/cock": {
+    "interaction_id": "/datum/interaction/howling_item/ring/cock",
+    "template_type": "/datum/interaction/howling_item/ring",
+    "name": "Roll Ring Along Cock",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrating_ring.cock.name",
+    "description": "Work a vibrating ring over their cock.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrating_ring.cock.description",
+    "target_required_parts": [
+      "penis"
+    ],
+    "message": [
+      "rolls %ITEM% along %TARGET%'s cock.",
+      "works %ITEM% up %TARGET%'s shaft in slow passes.",
+      "presses %ITEM% over %TARGET%'s cock and lets it buzz there."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/ring/tip": {
+    "interaction_id": "/datum/interaction/howling_item/ring/tip",
+    "template_type": "/datum/interaction/howling_item/ring",
+    "name": "Buzz Tip With Ring",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrating_ring.tip.name",
+    "description": "Hold a vibrating ring against their tip.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrating_ring.tip.description",
+    "target_required_parts": [
+      "penis"
+    ],
+    "message": [
+      "buzzes %ITEM% against %TARGET%'s tip.",
+      "holds %ITEM% to the head of %TARGET%'s cock.",
+      "presses the humming edge of %ITEM% over %TARGET%'s slit and tip."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/ring/clit": {
+    "interaction_id": "/datum/interaction/howling_item/ring/clit",
+    "template_type": "/datum/interaction/howling_item/ring",
+    "name": "Press Ring To Clit",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrating_ring.clit.name",
+    "description": "Use the vibrating ring on their clit.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrating_ring.clit.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "presses %ITEM% to %TARGET%'s clit.",
+      "works %ITEM% over %TARGET%'s clit and folds.",
+      "keeps %ITEM% humming against %TARGET%'s clit in short teasing presses."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/ring/balls": {
+    "interaction_id": "/datum/interaction/howling_item/ring/balls",
+    "template_type": "/datum/interaction/howling_item/ring",
+    "name": "Buzz Balls With Ring",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrating_ring.balls.name",
+    "description": "Work the vibrating ring under their balls.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrating_ring.balls.description",
+    "target_required_parts": [
+      "balls"
+    ],
+    "message": [
+      "buzzes %ITEM% beneath %TARGET%'s balls.",
+      "presses %ITEM% under %TARGET%'s sack and lets it hum there.",
+      "works %ITEM%'s vibrating edge beneath %TARGET%'s balls."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/clamps/attach": {
+    "interaction_id": "/datum/interaction/howling_item/clamps/attach",
+    "template_type": "/datum/interaction/howling_item/clamps",
+    "name": "Clamp Their Nipples",
+    "translation_key": "ui.interaction_panel.interaction.toy.nipple_clamps.attach.name",
+    "description": "Fasten the clamps onto their nipples.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.nipple_clamps.attach.description",
+    "target_required_parts": [
+      "breasts"
+    ],
+    "message": [
+      "clamps %ITEM% onto %TARGET%'s nipples.",
+      "fastens %ITEM% onto %TARGET%'s sensitive nipples.",
+      "attaches %ITEM% to %TARGET%'s nipples and leaves them pinched there."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      2,
+      4
+    ],
+    "target_pain": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item/clamps/tug": {
+    "interaction_id": "/datum/interaction/howling_item/clamps/tug",
+    "template_type": "/datum/interaction/howling_item/clamps",
+    "name": "Tug Nipple Clamps",
+    "translation_key": "ui.interaction_panel.interaction.toy.nipple_clamps.tug.name",
+    "description": "Pull on the clamps once they're on.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.nipple_clamps.tug.description",
+    "target_required_parts": [
+      "breasts"
+    ],
+    "message": [
+      "tugs on %ITEM% where they bite into %TARGET%'s nipples.",
+      "gives %ITEM% a sharp pull against %TARGET%'s nipples.",
+      "draws %ITEM% out just enough to make %TARGET%'s nipples strain."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      2,
+      4
+    ],
+    "target_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/clamps/kiss": {
+    "interaction_id": "/datum/interaction/howling_item/clamps/kiss",
+    "template_type": "/datum/interaction/howling_item/clamps",
+    "name": "Kiss Clamped Nipples",
+    "translation_key": "ui.interaction_panel.interaction.toy.nipple_clamps.kiss.name",
+    "description": "Kiss around their clamped nipples.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.nipple_clamps.kiss.description",
+    "target_required_parts": [
+      "breasts"
+    ],
+    "message": [
+      "kisses around %ITEM% on %TARGET%'s nipples.",
+      "presses slow kisses to %TARGET%'s nipples around %ITEM%.",
+      "mouths at %TARGET%'s nipples while %ITEM% pinches them tight."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      3,
+      5
+    ],
+    "target_pain": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/dildo/rock": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/dildo/rock",
+    "template_type": "/datum/interaction/howling_item_inserted/dildo",
+    "name": "Rock Inserted Dildo",
+    "translation_key": "ui.interaction_panel.interaction.toy.dildo.inserted_rock.name",
+    "description": "Work the dildo already seated inside them.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.dildo.inserted_rock.description",
+    "message": [
+      "rocks %ITEM% inside %TARGET% in slow, deliberate motions.",
+      "works %ITEM% back and forth while it stays buried inside %TARGET%.",
+      "presses %ITEM% deeper into %TARGET% with each measured thrust."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/dildo/pull": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/dildo/pull",
+    "template_type": "/datum/interaction/howling_item_inserted/dildo",
+    "name": "Tease Inserted Dildo",
+    "translation_key": "ui.interaction_panel.interaction.toy.dildo.inserted_pull.name",
+    "description": "Draw the dildo nearly free before easing it back in.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.dildo.inserted_pull.description",
+    "message": [
+      "draws %ITEM% almost free from %TARGET% before pressing it back in.",
+      "teases %TARGET% by working %ITEM% out to the edge and sliding it back deep.",
+      "lets %ITEM% drag at %TARGET%'s entrance before sinking it back inside."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ],
+    "target_pain": [
+      0,
+      2
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/dildo/grind": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/dildo/grind",
+    "template_type": "/datum/interaction/howling_item_inserted/dildo",
+    "name": "Grind On Inserted Dildo",
+    "translation_key": "ui.interaction_panel.interaction.toy.dildo.inserted_grind.name",
+    "description": "Grind them down around the dildo already inside.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.dildo.inserted_grind.description",
+    "message": [
+      "grinds %TARGET% down around %ITEM%.",
+      "works %TARGET%'s body around the shape of %ITEM% inside them.",
+      "presses %TARGET% into %ITEM% and makes them ride out every inch."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/plug/rock": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/plug/rock",
+    "template_type": "/datum/interaction/howling_item_inserted/plug",
+    "name": "Rock Their Plug",
+    "translation_key": "ui.interaction_panel.interaction.toy.buttplug.rock.name",
+    "description": "Work the plug already inside them.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.buttplug.rock.description",
+    "message": [
+      "rocks %ITEM% inside %TARGET%.",
+      "works %ITEM% in slow motions inside %TARGET%.",
+      "presses against %ITEM% and makes it shift inside %TARGET%."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/plug/pull": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/plug/pull",
+    "template_type": "/datum/interaction/howling_item_inserted/plug",
+    "name": "Ease Plug Partway Out",
+    "translation_key": "ui.interaction_panel.interaction.toy.buttplug.pull.name",
+    "description": "Draw the plug out partway before pressing it back in.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.buttplug.pull.description",
+    "message": [
+      "eases %ITEM% partway out of %TARGET%, then presses it back in.",
+      "draws %ITEM% out of %TARGET% just enough to tease.",
+      "pulls %ITEM% almost free before easing it back inside %TARGET%."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ],
+    "target_pain": [
+      0,
+      2
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/plug/kiss": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/plug/kiss",
+    "template_type": "/datum/interaction/howling_item_inserted/plug",
+    "name": "Kiss Around Plug",
+    "translation_key": "ui.interaction_panel.interaction.toy.buttplug.kiss.name",
+    "description": "Kiss around the plug while it stays inside.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.buttplug.kiss.description",
+    "message": [
+      "kisses around %ITEM% where it sits inside %TARGET%.",
+      "presses kisses around %ITEM% while it stays snug inside %TARGET%.",
+      "mouths at %TARGET% around %ITEM% without pulling it free."
+    ],
+    "interaction_requires": [
+      "self_mouth"
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/egg/pulse": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/egg/pulse",
+    "template_type": "/datum/interaction/howling_item_inserted/egg",
+    "name": "Pulse Inserted Egg",
+    "translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.pulse.name",
+    "description": "Enjoy the egg already tucked inside them.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.pulse.description",
+    "message": [
+      "lets %ITEM% pulse inside %TARGET%.",
+      "keeps %ITEM% humming inside %TARGET%.",
+      "draws out the trembling hum of %ITEM% inside %TARGET%."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/egg/grind": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/egg/grind",
+    "template_type": "/datum/interaction/howling_item_inserted/egg",
+    "name": "Grind Against Inserted Egg",
+    "translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.grind.name",
+    "description": "Grind them around the egg already inside.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.grind.description",
+    "message": [
+      "grinds %TARGET% around the shape of %ITEM% inside them.",
+      "presses %TARGET% into the trembling shape of %ITEM% inside them.",
+      "works %TARGET%'s body around %ITEM% while it hums inside."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/egg/pull": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/egg/pull",
+    "template_type": "/datum/interaction/howling_item_inserted/egg",
+    "name": "Tease Egg At Entrance",
+    "translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.pull.name",
+    "description": "Draw the egg to the edge before slipping it back in.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.pull.description",
+    "message": [
+      "teases %ITEM% at %TARGET%'s entrance before slipping it back in.",
+      "draws %ITEM% almost free from %TARGET%, then eases it back inside.",
+      "lets %ITEM% drag at %TARGET%'s entrance before pressing it deep again."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ],
+    "target_pain": [
+      0,
+      1
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/ring/stroke": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/ring/stroke",
+    "template_type": "/datum/interaction/howling_item_inserted/ring",
+    "name": "Stroke Ringed Cock",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrating_ring.stroke.name",
+    "description": "Work their cock while the vibrating ring stays on.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrating_ring.stroke.description",
+    "message": [
+      "strokes %TARGET%'s cock with %ITEM% still snug around it.",
+      "works %TARGET%'s ringed cock in slow strokes.",
+      "pumps %TARGET%'s cock while %ITEM% hums around it."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/ring/tip": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/ring/tip",
+    "template_type": "/datum/interaction/howling_item_inserted/ring",
+    "name": "Work Tip Through Ring",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrating_ring.ring_tip.name",
+    "description": "Focus on the head while the ring stays in place.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrating_ring.ring_tip.description",
+    "message": [
+      "works %TARGET%'s tip through %ITEM%.",
+      "strokes %TARGET%'s head while %ITEM% hugs the shaft beneath it.",
+      "teases %TARGET%'s tip while %ITEM% keeps buzzing lower down."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/ring/balls": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/ring/balls",
+    "template_type": "/datum/interaction/howling_item_inserted/ring",
+    "name": "Cup Ringed Cock And Balls",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrating_ring.ring_balls.name",
+    "description": "Hold them around the vibrating ring and the rest of their package.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrating_ring.ring_balls.description",
+    "message": [
+      "cups %TARGET%'s cock and balls around %ITEM%.",
+      "holds %TARGET%'s ringed cock and sack together in one firm grip.",
+      "cradles %TARGET%'s cock and balls while %ITEM% keeps humming."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/clamps/tug": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/clamps/tug",
+    "template_type": "/datum/interaction/howling_item_inserted/clamps",
+    "name": "Tug Attached Clamps",
+    "translation_key": "ui.interaction_panel.interaction.toy.nipple_clamps.attached_tug.name",
+    "description": "Pull on the clamps already fastened to them.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.nipple_clamps.attached_tug.description",
+    "message": [
+      "tugs on %ITEM% where they hang from %TARGET%'s nipples.",
+      "gives %ITEM% a sharp pull from %TARGET%'s nipples.",
+      "draws %ITEM% taut and makes %TARGET%'s nipples strain beneath them."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      2,
+      4
+    ],
+    "target_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/clamps/lick": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/clamps/lick",
+    "template_type": "/datum/interaction/howling_item_inserted/clamps",
+    "name": "Lick Clamped Nipples",
+    "translation_key": "ui.interaction_panel.interaction.toy.nipple_clamps.lick.name",
+    "description": "Lick at their nipples while the clamps stay on.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.nipple_clamps.lick.description",
+    "interaction_requires": [
+      "self_mouth"
+    ],
+    "message": [
+      "licks at %TARGET%'s nipples around %ITEM%.",
+      "laps slowly at %TARGET%'s clamped nipples.",
+      "teases %TARGET%'s nipples with tongue and lips while %ITEM% keeps pinching them."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      3,
+      5
+    ],
+    "target_pain": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/clamps/twist": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/clamps/twist",
+    "template_type": "/datum/interaction/howling_item_inserted/clamps",
+    "name": "Twist Attached Clamps",
+    "translation_key": "ui.interaction_panel.interaction.toy.nipple_clamps.twist.name",
+    "description": "Twist the clamps without removing them.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.nipple_clamps.twist.description",
+    "message": [
+      "twists %ITEM% where they cling to %TARGET%'s nipples.",
+      "rolls %ITEM% against %TARGET%'s nipples in a tight turn.",
+      "works %ITEM% around %TARGET%'s nipples without taking them off."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      2,
+      4
+    ],
+    "target_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/condom/apply": {
+    "interaction_id": "/datum/interaction/howling_item/condom/apply",
+    "template_type": "/datum/interaction/howling_item/condom",
+    "name": "Roll Condom Onto Cock",
+    "translation_key": "ui.interaction_panel.interaction.toy.condom.apply.name",
+    "description": "Unroll a condom down their cock.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.condom.apply.description",
+    "target_required_parts": [
+      "penis"
+    ],
+    "message": [
+      "rolls %ITEM% onto %TARGET%'s cock.",
+      "stretches %ITEM% over %TARGET%'s tip and rolls it down.",
+      "fits %ITEM% over %TARGET%'s cock in one slow smooth pull."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item/condom/lips": {
+    "interaction_id": "/datum/interaction/howling_item/condom/lips",
+    "template_type": "/datum/interaction/howling_item/condom",
+    "name": "Tease Cock With Condom",
+    "translation_key": "ui.interaction_panel.interaction.toy.condom.lips.name",
+    "description": "Brush the wrapped condom over their tip before rolling it on.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.condom.lips.description",
+    "target_required_parts": [
+      "penis"
+    ],
+    "message": [
+      "teases %TARGET%'s tip with %ITEM%.",
+      "brushes %ITEM% over %TARGET%'s tip before rolling it on.",
+      "lets the slick rim of %ITEM% drag across %TARGET%'s head."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/condom/stroke": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/condom/stroke",
+    "template_type": "/datum/interaction/howling_item_inserted/condom",
+    "name": "Stroke Condomed Cock",
+    "translation_key": "ui.interaction_panel.interaction.toy.condom.stroke.name",
+    "description": "Work their cock while the condom stays on.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.condom.stroke.description",
+    "message": [
+      "strokes %TARGET%'s condom-sheathed cock.",
+      "works %TARGET%'s cock through %ITEM% in slow slick strokes.",
+      "slides a hand over %TARGET%'s cock with %ITEM% stretched tight over it."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/condom/tip": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/condom/tip",
+    "template_type": "/datum/interaction/howling_item_inserted/condom",
+    "name": "Rub Covered Tip",
+    "translation_key": "ui.interaction_panel.interaction.toy.condom.tip.name",
+    "description": "Focus on the head through the condom.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.condom.tip.description",
+    "message": [
+      "rubs %TARGET%'s tip through %ITEM%.",
+      "presses at %TARGET%'s head through %ITEM%'s thin latex.",
+      "works %TARGET%'s sensitive tip through the tight stretch of %ITEM%."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/condom/mouth": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/condom/mouth",
+    "template_type": "/datum/interaction/howling_item_inserted/condom",
+    "name": "Suck Condomed Cock",
+    "translation_key": "ui.interaction_panel.interaction.toy.condom.mouth.name",
+    "description": "Use your mouth on their condom-covered cock.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.condom.mouth.description",
+    "interaction_requires": [
+      "self_mouth"
+    ],
+    "message": [
+      "mouths %TARGET%'s cock through %ITEM%.",
+      "takes %TARGET%'s condom-covered cock into %USER_PRONOUN_THEIR% mouth.",
+      "slides lips and tongue over %ITEM% stretched tight around %TARGET%'s cock."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/signal_egg/trigger": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/signal_egg/trigger",
+    "template_type": "/datum/interaction/howling_item_inserted/signal_egg",
+    "name": "Trigger Remote Egg",
+    "translation_key": "ui.interaction_panel.interaction.toy.signal_egg.trigger.name",
+    "description": "Set off the signal-controlled toy already on them.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.signal_egg.trigger.description",
+    "message": [
+      "triggers %ITEM% where it sits on %TARGET%.",
+      "sets %ITEM% humming inside %TARGET% with a remote signal.",
+      "activates %ITEM% and makes %TARGET% jolt at the sudden vibration."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/signal_egg/pulse": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/signal_egg/pulse",
+    "template_type": "/datum/interaction/howling_item_inserted/signal_egg",
+    "name": "Keep Remote Egg Humming",
+    "translation_key": "ui.interaction_panel.interaction.toy.signal_egg.pulse.name",
+    "description": "Hold them in that remote-controlled vibration.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.signal_egg.pulse.description",
+    "message": [
+      "keeps %ITEM% humming on %TARGET%.",
+      "draws out the remote pulse of %ITEM% on %TARGET%.",
+      "keeps %ITEM% thrumming on %TARGET% without giving them a break."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/double_dildo/rock": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/double_dildo/rock",
+    "template_type": "/datum/interaction/howling_item_inserted/double_dildo",
+    "name": "Rock Double Dildo",
+    "translation_key": "ui.interaction_panel.interaction.toy.double_dildo.rock.name",
+    "description": "Work the double dildo already seated inside them.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.double_dildo.rock.description",
+    "message": [
+      "rocks %ITEM% inside %TARGET%.",
+      "works %ITEM% inside %TARGET% in deep rolling motions.",
+      "presses against %ITEM% and makes it shift deep inside %TARGET%."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/double_dildo/pull": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/double_dildo/pull",
+    "template_type": "/datum/interaction/howling_item_inserted/double_dildo",
+    "name": "Draw Double Dildo To Edge",
+    "translation_key": "ui.interaction_panel.interaction.toy.double_dildo.pull.name",
+    "description": "Pull the double dildo almost free before easing it back.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.double_dildo.pull.description",
+    "message": [
+      "draws %ITEM% almost free from %TARGET% before easing it back in.",
+      "teases %TARGET% by pulling %ITEM% to the edge and pressing it back deep.",
+      "works %ITEM% out of %TARGET% just enough to make them feel every inch."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ],
+    "target_pain": [
+      0,
+      2
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/double_dildo/grind": {
+    "interaction_id": "/datum/interaction/howling_item_inserted/double_dildo/grind",
+    "template_type": "/datum/interaction/howling_item_inserted/double_dildo",
+    "name": "Grind On Double Dildo",
+    "translation_key": "ui.interaction_panel.interaction.toy.double_dildo.grind.name",
+    "description": "Grind them down on the double dildo.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.double_dildo.grind.description",
+    "message": [
+      "grinds %TARGET% down on %ITEM%.",
+      "works %TARGET%'s body around %ITEM% in deep rolling motions.",
+      "presses %TARGET% hard against %ITEM% and makes them ride it out."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_self_inserted/double_dildo/rock": {
+    "interaction_id": "/datum/interaction/howling_item_self_inserted/double_dildo/rock",
+    "template_type": "/datum/interaction/howling_item_self_inserted/double_dildo",
+    "name": "Rock Double Dildo Inside Yourself",
+    "translation_key": "ui.interaction_panel.interaction.toy.double_dildo.self_rock.name",
+    "description": "Work the double dildo already seated inside you.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.double_dildo.self_rock.description",
+    "message": [
+      "rocks %ITEM% inside themself.",
+      "works their hips against %ITEM% in slow, hungry motions.",
+      "keeps %ITEM% moving inside themself until their body trembles."
+    ],
+    "user_pleasure": [
+      4,
+      6
+    ],
+    "user_arousal": [
+      5,
+      7
+    ]
+  },
+  "/datum/interaction/howling_item_self_inserted/double_dildo/pull": {
+    "interaction_id": "/datum/interaction/howling_item_self_inserted/double_dildo/pull",
+    "template_type": "/datum/interaction/howling_item_self_inserted/double_dildo",
+    "name": "Draw Double Dildo To Your Edge",
+    "translation_key": "ui.interaction_panel.interaction.toy.double_dildo.self_pull.name",
+    "description": "Pull the double dildo almost free before easing it back into yourself.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.double_dildo.self_pull.description",
+    "message": [
+      "draws %ITEM% almost out before sinking back down on it.",
+      "teases themself by working %ITEM% to the edge and taking it again.",
+      "pulls %ITEM% to the brink before easing it into themself once more."
+    ],
+    "user_pleasure": [
+      3,
+      5
+    ],
+    "user_arousal": [
+      4,
+      6
+    ],
+    "user_pain": [
+      0,
+      2
+    ]
+  },
+  "/datum/interaction/howling_item_self_inserted/double_dildo/grind": {
+    "interaction_id": "/datum/interaction/howling_item_self_inserted/double_dildo/grind",
+    "template_type": "/datum/interaction/howling_item_self_inserted/double_dildo",
+    "name": "Grind Yourself On Double Dildo",
+    "translation_key": "ui.interaction_panel.interaction.toy.double_dildo.self_grind.name",
+    "description": "Grind yourself down on the double dildo.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.double_dildo.self_grind.description",
+    "message": [
+      "grinds themself down on %ITEM%.",
+      "rolls their hips against %ITEM% in needy little circles.",
+      "works themself against %ITEM% until they shiver."
+    ],
+    "user_pleasure": [
+      4,
+      6
+    ],
+    "user_arousal": [
+      5,
+      7
+    ]
+  },
+  "/datum/interaction/howling_item/custom_dildo/size_pussy": {
+    "interaction_id": "/datum/interaction/howling_item/custom_dildo/size_pussy",
+    "template_type": "/datum/interaction/howling_item/custom_dildo",
+    "name": "Size Up Their Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.custom_dildo.size_pussy.name",
+    "description": "Use the custom dildo to test how much they can take.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.custom_dildo.size_pussy.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "sizes up %TARGET%'s pussy with %ITEM%.",
+      "works %ITEM% against %TARGET%'s folds to see how much they can take.",
+      "tests %TARGET%'s pussy with %ITEM% in slow deliberate pushes."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/custom_dildo/stretch_pussy": {
+    "interaction_id": "/datum/interaction/howling_item/custom_dildo/stretch_pussy",
+    "template_type": "/datum/interaction/howling_item/custom_dildo",
+    "name": "Stretch Pussy With Custom Dildo",
+    "translation_key": "ui.interaction_panel.interaction.toy.custom_dildo.stretch_pussy.name",
+    "description": "Use the custom dildo to stretch their pussy wider.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.custom_dildo.stretch_pussy.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "stretches %TARGET%'s pussy with %ITEM%.",
+      "works %ITEM% into %TARGET%'s pussy in slow widening thrusts.",
+      "presses %ITEM% deep into %TARGET%'s folds and makes them take the full shape."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ],
+    "target_pain": [
+      0,
+      1
+    ]
+  },
+  "/datum/interaction/howling_item/custom_dildo/stretch_ass": {
+    "interaction_id": "/datum/interaction/howling_item/custom_dildo/stretch_ass",
+    "template_type": "/datum/interaction/howling_item/custom_dildo",
+    "name": "Stretch Ass With Custom Dildo",
+    "translation_key": "ui.interaction_panel.interaction.toy.custom_dildo.stretch_ass.name",
+    "description": "Use the custom dildo to open their ass wider.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.custom_dildo.stretch_ass.description",
+    "target_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "stretches %TARGET%'s ass with %ITEM%.",
+      "works %ITEM% into %TARGET%'s rear in slow widening pushes.",
+      "presses %ITEM% deeper into %TARGET%'s ass and makes them take its full size."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ],
+    "target_pain": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item/custom_dildo/mouth": {
+    "interaction_id": "/datum/interaction/howling_item/custom_dildo/mouth",
+    "template_type": "/datum/interaction/howling_item/custom_dildo",
+    "name": "Feed Custom Dildo To Mouth",
+    "translation_key": "ui.interaction_panel.interaction.toy.custom_dildo.mouth.name",
+    "description": "Feed the custom dildo past their lips.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.custom_dildo.mouth.description",
+    "target_required_parts": [
+      "mouth"
+    ],
+    "message": [
+      "feeds %ITEM% to %TARGET%'s mouth.",
+      "eases %ITEM% past %TARGET%'s lips in slow measured pushes.",
+      "guides %ITEM% into %TARGET%'s mouth and makes them feel its size."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/double_dildo/pussy": {
+    "interaction_id": "/datum/interaction/howling_item/double_dildo/pussy",
+    "template_type": "/datum/interaction/howling_item/double_dildo",
+    "name": "Seat Double Dildo In Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.double_dildo.pussy.name",
+    "description": "Push one end of the double dildo into their pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.double_dildo.pussy.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "seats one end of %ITEM% in %TARGET%'s pussy.",
+      "pushes one side of %ITEM% into %TARGET%'s folds.",
+      "works one end of %ITEM% into %TARGET%'s pussy until it sits snug."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      4,
+      6
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/double_dildo/ass": {
+    "interaction_id": "/datum/interaction/howling_item/double_dildo/ass",
+    "template_type": "/datum/interaction/howling_item/double_dildo",
+    "name": "Seat Double Dildo In Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.double_dildo.ass.name",
+    "description": "Push one end of the double dildo into their ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.double_dildo.ass.description",
+    "target_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "seats one end of %ITEM% in %TARGET%'s ass.",
+      "pushes one side of %ITEM% into %TARGET%'s rear.",
+      "works one end of %ITEM% into %TARGET%'s ass until it settles there."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ],
+    "target_pain": [
+      0,
+      2
+    ]
+  },
+  "/datum/interaction/howling_item/double_dildo/thighs": {
+    "interaction_id": "/datum/interaction/howling_item/double_dildo/thighs",
+    "template_type": "/datum/interaction/howling_item/double_dildo",
+    "name": "Drag Double Dildo Between Thighs",
+    "translation_key": "ui.interaction_panel.interaction.toy.double_dildo.thighs.name",
+    "description": "Use the length of the double dildo between their thighs.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.double_dildo.thighs.description",
+    "target_required_parts": [
+      "thighs"
+    ],
+    "message": [
+      "drags %ITEM% between %TARGET%'s thighs.",
+      "works the length of %ITEM% through the heat between %TARGET%'s legs.",
+      "presses %ITEM% between %TARGET%'s thighs and rocks it there."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/double_dildo/mouth": {
+    "interaction_id": "/datum/interaction/howling_item/double_dildo/mouth",
+    "template_type": "/datum/interaction/howling_item/double_dildo",
+    "name": "Feed Double Dildo To Mouth",
+    "translation_key": "ui.interaction_panel.interaction.toy.double_dildo.mouth.name",
+    "description": "Guide one end of the double dildo into their mouth.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.double_dildo.mouth.description",
+    "target_required_parts": [
+      "mouth"
+    ],
+    "message": [
+      "feeds one end of %ITEM% to %TARGET%'s mouth.",
+      "guides one side of %ITEM% past %TARGET%'s lips.",
+      "works one end of %ITEM% into %TARGET%'s mouth in slow teasing pushes."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/signal_egg/insert_pussy": {
+    "interaction_id": "/datum/interaction/howling_item/signal_egg/insert_pussy",
+    "template_type": "/datum/interaction/howling_item/signal_egg",
+    "name": "Slip Remote Egg Into Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.signal_egg.insert_pussy.name",
+    "description": "Push the signal-controlled egg into their pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.signal_egg.insert_pussy.description",
+    "target_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "slips %ITEM% into %TARGET%'s pussy.",
+      "works %ITEM% into %TARGET%'s folds until the remote toy disappears inside.",
+      "presses %ITEM% into %TARGET%'s pussy and leaves it ready to be triggered."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item/signal_egg/insert_ass": {
+    "interaction_id": "/datum/interaction/howling_item/signal_egg/insert_ass",
+    "template_type": "/datum/interaction/howling_item/signal_egg",
+    "name": "Slip Remote Egg Into Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.signal_egg.insert_ass.name",
+    "description": "Push the signal-controlled egg into their ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.signal_egg.insert_ass.description",
+    "target_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "slips %ITEM% into %TARGET%'s ass.",
+      "works %ITEM% into %TARGET%'s rear and leaves it ready to be triggered.",
+      "presses %ITEM% into %TARGET%'s ass and settles it there for later remote play."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "target_pleasure": [
+      3,
+      5
+    ],
+    "target_arousal": [
+      4,
+      6
+    ],
+    "target_pain": [
+      0,
+      2
+    ]
+  },
+  "/datum/interaction/howling_item/signal_egg/nipples": {
+    "interaction_id": "/datum/interaction/howling_item/signal_egg/nipples",
+    "template_type": "/datum/interaction/howling_item/signal_egg",
+    "name": "Set Remote Egg On Nipples",
+    "translation_key": "ui.interaction_panel.interaction.toy.signal_egg.nipples.name",
+    "description": "Fasten the remote egg against their nipples.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.signal_egg.nipples.description",
+    "target_required_parts": [
+      "breasts"
+    ],
+    "message": [
+      "sets %ITEM% against %TARGET%'s nipples.",
+      "fastens %ITEM% against %TARGET%'s sensitive nipples.",
+      "places %ITEM% on %TARGET%'s breasts and leaves it ready to be triggered."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/signal_egg/penis": {
+    "interaction_id": "/datum/interaction/howling_item/signal_egg/penis",
+    "template_type": "/datum/interaction/howling_item/signal_egg",
+    "name": "Set Remote Egg On Cock",
+    "translation_key": "ui.interaction_panel.interaction.toy.signal_egg.penis.name",
+    "description": "Set the remote egg against their cock.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.signal_egg.penis.description",
+    "target_required_parts": [
+      "penis"
+    ],
+    "message": [
+      "sets %ITEM% against %TARGET%'s cock.",
+      "positions %ITEM% along %TARGET%'s shaft for later remote play.",
+      "presses %ITEM% to %TARGET%'s cock and leaves it ready to be triggered."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_pleasure": [
+      2,
+      4
+    ],
+    "target_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item/signal_egg/press_lips": {
+    "interaction_id": "/datum/interaction/howling_item/signal_egg/press_lips",
+    "template_type": "/datum/interaction/howling_item/signal_egg",
+    "name": "Press Remote Egg To Lips",
+    "translation_key": "ui.interaction_panel.interaction.toy.signal_egg.press_lips.name",
+    "description": "Press the remote egg to their lips before using it elsewhere.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.signal_egg.press_lips.description",
+    "target_required_parts": [
+      "mouth"
+    ],
+    "message": [
+      "teases %TARGET%'s lips with %ITEM%.",
+      "presses %ITEM% to %TARGET%'s lips and lets them feel its shape.",
+      "taps %ITEM% at %TARGET%'s mouth in a teasing promise of what's next."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "target_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/nipples": {
+    "interaction_id": "/datum/interaction/howling_item_self/vibrator/nipples",
+    "template_type": "/datum/interaction/howling_item_self/vibrator",
+    "name": "Tease Your Nipples With Vibrator",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_nipples.name",
+    "description": "Hold a vibrator against your own nipples.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_nipples.description",
+    "user_required_parts": [
+      "breasts"
+    ],
+    "message": [
+      "teases their own nipples with %ITEM%.",
+      "buzzes %ITEM% over their nipples.",
+      "holds %ITEM% against their sensitive nipples."
+    ],
+    "user_pleasure": [
+      2,
+      4
+    ],
+    "user_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/clit": {
+    "interaction_id": "/datum/interaction/howling_item_self/vibrator/clit",
+    "template_type": "/datum/interaction/howling_item_self/vibrator",
+    "name": "Circle Your Clit With Vibrator",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_clit.name",
+    "description": "Circle a vibrator over your clit.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_clit.description",
+    "user_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "circles %ITEM% over their clit.",
+      "moves %ITEM% against their clit in tight circles.",
+      "presses %ITEM% to their clit and keeps it humming there."
+    ],
+    "user_pleasure": [
+      4,
+      6
+    ],
+    "user_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/cock": {
+    "interaction_id": "/datum/interaction/howling_item_self/vibrator/cock",
+    "template_type": "/datum/interaction/howling_item_self/vibrator",
+    "name": "Run Vibrator Along Your Cock",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_cock.name",
+    "description": "Buzz a vibrator against your cock.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_cock.description",
+    "user_required_parts": [
+      "penis"
+    ],
+    "message": [
+      "runs %ITEM% along their cock.",
+      "presses %ITEM% beneath their shaft.",
+      "buzzes %ITEM% over their cock from base to tip."
+    ],
+    "user_pleasure": [
+      3,
+      5
+    ],
+    "user_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/vibrator/ass",
+    "template_type": "/datum/interaction/howling_item_self/vibrator",
+    "name": "Press Vibrator To Your Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_ass.name",
+    "description": "Buzz a vibrator against your rear.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_ass.description",
+    "user_required_parts": [
+      "butt"
+    ],
+    "message": [
+      "presses %ITEM% to their ass.",
+      "runs %ITEM% over their rear in slow circles.",
+      "keeps %ITEM% humming against their asscheeks."
+    ],
+    "user_pleasure": [
+      2,
+      4
+    ],
+    "user_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/lips": {
+    "interaction_id": "/datum/interaction/howling_item_self/vibrator/lips",
+    "template_type": "/datum/interaction/howling_item_self/vibrator",
+    "name": "Press Vibrator To Your Lips",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_lips.name",
+    "description": "Hold a vibrator to your lips.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_lips.description",
+    "user_required_parts": [
+      "mouth"
+    ],
+    "message": [
+      "presses %ITEM% to their lips.",
+      "holds %ITEM%'s humming tip against their lips.",
+      "teases their lips with the vibration of %ITEM%."
+    ],
+    "user_pleasure": [
+      1,
+      3
+    ],
+    "user_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/ears": {
+    "interaction_id": "/datum/interaction/howling_item_self/vibrator/ears",
+    "template_type": "/datum/interaction/howling_item_self/vibrator",
+    "name": "Buzz Your Ears",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_ears.name",
+    "description": "Hold a vibrator against your ears.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_ears.description",
+    "user_required_parts": [
+      "ears"
+    ],
+    "message": [
+      "buzzes %ITEM% against their ears.",
+      "runs %ITEM%'s trembling tip along their ear.",
+      "lets %ITEM% hum softly against their ears."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/armpits": {
+    "interaction_id": "/datum/interaction/howling_item_self/vibrator/armpits",
+    "template_type": "/datum/interaction/howling_item_self/vibrator",
+    "name": "Press Vibrator To Your Armpits",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_armpits.name",
+    "description": "Press a vibrator into your armpits.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_armpits.description",
+    "user_required_parts": [
+      "armpits"
+    ],
+    "message": [
+      "presses %ITEM% into their armpit.",
+      "runs %ITEM% along the hollow of their armpit.",
+      "lets %ITEM% buzz against the sensitive skin of their armpit."
+    ],
+    "user_pleasure": [
+      0,
+      2
+    ],
+    "user_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/groin": {
+    "interaction_id": "/datum/interaction/howling_item_self/vibrator/groin",
+    "template_type": "/datum/interaction/howling_item_self/vibrator",
+    "name": "Press Vibrator To Your Groin",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_groin.name",
+    "description": "Work a vibrator over your groin.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_groin.description",
+    "user_required_parts": [
+      "groin"
+    ],
+    "message": [
+      "presses %ITEM% to their groin.",
+      "works %ITEM% over the heat of their groin.",
+      "holds %ITEM% against their groin and lets it hum there."
+    ],
+    "user_pleasure": [
+      2,
+      4
+    ],
+    "user_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/body": {
+    "interaction_id": "/datum/interaction/howling_item_self/vibrator/body",
+    "template_type": "/datum/interaction/howling_item_self/vibrator",
+    "name": "Run Vibrator Over Your Body",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_body.name",
+    "description": "Trail the vibrator over your body.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrator.self_body.description",
+    "user_required_parts": [
+      "chest"
+    ],
+    "message": [
+      "runs %ITEM% over their body.",
+      "glides %ITEM% over their skin in slow teasing passes.",
+      "lets %ITEM% hum across their body."
+    ],
+    "user_pleasure": [
+      1,
+      3
+    ],
+    "user_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/wand/breasts": {
+    "interaction_id": "/datum/interaction/howling_item_self/wand/breasts",
+    "template_type": "/datum/interaction/howling_item_self/wand",
+    "name": "Buzz Your Breasts",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.self_breasts.name",
+    "description": "Sweep a wand over your breasts.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.self_breasts.description",
+    "user_required_parts": [
+      "breasts"
+    ],
+    "message": [
+      "sweeps %ITEM% over their breasts.",
+      "works %ITEM% over their chest in broad buzzing passes.",
+      "holds the head of %ITEM% against their breasts."
+    ],
+    "user_pleasure": [
+      2,
+      4
+    ],
+    "user_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_self/wand/pussy": {
+    "interaction_id": "/datum/interaction/howling_item_self/wand/pussy",
+    "template_type": "/datum/interaction/howling_item_self/wand",
+    "name": "Glide Wand Over Your Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.self_pussy.name",
+    "description": "Work a wand over your pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.self_pussy.description",
+    "user_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "glides %ITEM% over their pussy.",
+      "works %ITEM% over their folds in steady teasing motions.",
+      "holds %ITEM% to their pussy and lets it thrum there."
+    ],
+    "user_pleasure": [
+      4,
+      6
+    ],
+    "user_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_self/wand/cock": {
+    "interaction_id": "/datum/interaction/howling_item_self/wand/cock",
+    "template_type": "/datum/interaction/howling_item_self/wand",
+    "name": "Buzz Your Cock",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.self_cock.name",
+    "description": "Use a wand on your cock.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.self_cock.description",
+    "user_required_parts": [
+      "penis"
+    ],
+    "message": [
+      "runs %ITEM% along their cock.",
+      "presses the head of %ITEM% to their shaft.",
+      "lets %ITEM% thrum against their cock."
+    ],
+    "user_pleasure": [
+      3,
+      5
+    ],
+    "user_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_self/wand/lips": {
+    "interaction_id": "/datum/interaction/howling_item_self/wand/lips",
+    "template_type": "/datum/interaction/howling_item_self/wand",
+    "name": "Brush Wand Over Your Lips",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.self_lips.name",
+    "description": "Brush the wand over your lips.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.self_lips.description",
+    "user_required_parts": [
+      "mouth"
+    ],
+    "message": [
+      "brushes %ITEM% over their lips.",
+      "holds %ITEM%'s broad head against their lips.",
+      "lets %ITEM% thrum lightly against their mouth."
+    ],
+    "user_pleasure": [
+      1,
+      3
+    ],
+    "user_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/wand/ears": {
+    "interaction_id": "/datum/interaction/howling_item_self/wand/ears",
+    "template_type": "/datum/interaction/howling_item_self/wand",
+    "name": "Press Wand To Your Ears",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.self_ears.name",
+    "description": "Hold the wand to your ears.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.self_ears.description",
+    "user_required_parts": [
+      "ears"
+    ],
+    "message": [
+      "presses %ITEM% to their ears.",
+      "holds %ITEM%'s head to their ear and lets it hum there.",
+      "works %ITEM% along their ears in soft buzzing passes."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item_self/wand/groin": {
+    "interaction_id": "/datum/interaction/howling_item_self/wand/groin",
+    "template_type": "/datum/interaction/howling_item_self/wand",
+    "name": "Sweep Wand Over Your Groin",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.self_groin.name",
+    "description": "Sweep the wand over your groin.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.self_groin.description",
+    "user_required_parts": [
+      "groin"
+    ],
+    "message": [
+      "sweeps %ITEM% over their groin.",
+      "works %ITEM% over the heat between their legs.",
+      "lets %ITEM% thrum against their groin in broad passes."
+    ],
+    "user_pleasure": [
+      2,
+      4
+    ],
+    "user_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_self/wand/body": {
+    "interaction_id": "/datum/interaction/howling_item_self/wand/body",
+    "template_type": "/datum/interaction/howling_item_self/wand",
+    "name": "Sweep Wand Over Your Body",
+    "translation_key": "ui.interaction_panel.interaction.toy.wand.self_body.name",
+    "description": "Run the wand across your body.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wand.self_body.description",
+    "user_required_parts": [
+      "chest"
+    ],
+    "message": [
+      "sweeps %ITEM% over their body.",
+      "guides %ITEM%'s broad head across their skin.",
+      "lets %ITEM% thrum across their body in lazy passes."
+    ],
+    "user_pleasure": [
+      1,
+      3
+    ],
+    "user_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/dildo/pussy": {
+    "interaction_id": "/datum/interaction/howling_item_self/dildo/pussy",
+    "template_type": "/datum/interaction/howling_item_self/dildo",
+    "name": "Slide Dildo Into Your Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.dildo.self_pussy.name",
+    "description": "Push a dildo into your pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.dildo.self_pussy.description",
+    "user_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "slides %ITEM% into their pussy.",
+      "works %ITEM% into their folds and sinks it inside.",
+      "pushes %ITEM% into their own wet sex."
+    ],
+    "user_pleasure": [
+      4,
+      6
+    ],
+    "user_arousal": [
+      5,
+      7
+    ]
+  },
+  "/datum/interaction/howling_item_self/dildo/ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/dildo/ass",
+    "template_type": "/datum/interaction/howling_item_self/dildo",
+    "name": "Slide Dildo Into Your Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.dildo.self_ass.name",
+    "description": "Push a dildo into your ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.dildo.self_ass.description",
+    "user_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "slides %ITEM% into their ass.",
+      "presses %ITEM% into their rear and takes it deeper.",
+      "works %ITEM% into their own ass."
+    ],
+    "user_pleasure": [
+      3,
+      5
+    ],
+    "user_arousal": [
+      4,
+      6
+    ],
+    "user_pain": [
+      0,
+      2
+    ]
+  },
+  "/datum/interaction/howling_item_self/fleshlight/cock": {
+    "interaction_id": "/datum/interaction/howling_item_self/fleshlight/cock",
+    "template_type": "/datum/interaction/howling_item_self/fleshlight",
+    "name": "Take Your Cock Into Fleshlight",
+    "translation_key": "ui.interaction_panel.interaction.toy.fleshlight.self_cock.name",
+    "description": "Work a fleshlight over your cock.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.fleshlight.self_cock.description",
+    "user_required_parts": [
+      "penis"
+    ],
+    "message": [
+      "works %ITEM% over their cock.",
+      "slides their shaft into %ITEM% and strokes themself with it.",
+      "uses %ITEM% to milk their own cock."
+    ],
+    "user_pleasure": [
+      4,
+      6
+    ],
+    "user_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_self/buttplug/insert_ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/buttplug/insert_ass",
+    "template_type": "/datum/interaction/howling_item_self/buttplug",
+    "name": "Ease Plug Into Your Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.buttplug.self_insert_ass.name",
+    "description": "Work a plug into your ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.buttplug.self_insert_ass.description",
+    "user_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "eases %ITEM% into their ass.",
+      "presses %ITEM% into their rear until the plug settles in place.",
+      "works %ITEM% into their own ass."
+    ],
+    "user_pleasure": [
+      3,
+      5
+    ],
+    "user_arousal": [
+      4,
+      6
+    ],
+    "user_pain": [
+      0,
+      2
+    ]
+  },
+  "/datum/interaction/howling_item_self/buttplug/adjust_ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/buttplug/adjust_ass",
+    "template_type": "/datum/interaction/howling_item_self/buttplug",
+    "name": "Adjust Plug At Your Entrance",
+    "translation_key": "ui.interaction_panel.interaction.toy.buttplug.self_adjust_ass.name",
+    "description": "Tease the plug against your entrance without fully taking it.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.buttplug.self_adjust_ass.description",
+    "user_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "nudges %ITEM% at their entrance.",
+      "teases their rear with the rounded tip of %ITEM%.",
+      "presses %ITEM% to their ass and adjusts it in small motions."
+    ],
+    "user_pleasure": [
+      2,
+      4
+    ],
+    "user_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_self/buttplug/rock_ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/buttplug/rock_ass",
+    "template_type": "/datum/interaction/howling_item_self/buttplug",
+    "name": "Rock Plug Against Yourself",
+    "translation_key": "ui.interaction_panel.interaction.toy.buttplug.self_rock_ass.name",
+    "description": "Rock the plug at your entrance in slow motions.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.buttplug.self_rock_ass.description",
+    "user_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "rocks %ITEM% against their entrance.",
+      "works %ITEM% in slow teasing motions against their rear.",
+      "rolls %ITEM% over their ass without pushing it fully inside."
+    ],
+    "user_pleasure": [
+      2,
+      4
+    ],
+    "user_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_self/buttplug/hold_ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/buttplug/hold_ass",
+    "template_type": "/datum/interaction/howling_item_self/buttplug",
+    "name": "Hold Plug In Place",
+    "translation_key": "ui.interaction_panel.interaction.toy.buttplug.self_hold_ass.name",
+    "description": "Keep the plug pressed in place and enjoy the pressure.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.buttplug.self_hold_ass.description",
+    "user_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "holds %ITEM% in place at their rear.",
+      "keeps %ITEM% pressed firmly against their ass.",
+      "rests %ITEM% at their entrance and savors the pressure."
+    ],
+    "user_pleasure": [
+      2,
+      4
+    ],
+    "user_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_self/egg/insert_pussy": {
+    "interaction_id": "/datum/interaction/howling_item_self/egg/insert_pussy",
+    "template_type": "/datum/interaction/howling_item_self/egg",
+    "name": "Slip Egg Into Your Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.self_insert_pussy.name",
+    "description": "Push a vibrating egg into your pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.self_insert_pussy.description",
+    "user_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "slips %ITEM% into their pussy.",
+      "works %ITEM% into their folds until it disappears inside.",
+      "pushes %ITEM% into their pussy and leaves it humming there."
+    ],
+    "user_pleasure": [
+      4,
+      6
+    ],
+    "user_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_self/egg/insert_ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/egg/insert_ass",
+    "template_type": "/datum/interaction/howling_item_self/egg",
+    "name": "Slip Egg Into Your Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.self_insert_ass.name",
+    "description": "Push a vibrating egg into your ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.self_insert_ass.description",
+    "user_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "slips %ITEM% into their ass.",
+      "works %ITEM% into their rear and keeps it there.",
+      "presses %ITEM% into their ass and leaves it buzzing inside."
+    ],
+    "user_pleasure": [
+      3,
+      5
+    ],
+    "user_arousal": [
+      4,
+      6
+    ],
+    "user_pain": [
+      0,
+      2
+    ]
+  },
+  "/datum/interaction/howling_item_self/egg/adjust_pussy": {
+    "interaction_id": "/datum/interaction/howling_item_self/egg/adjust_pussy",
+    "template_type": "/datum/interaction/howling_item_self/egg",
+    "name": "Tease Egg At Your Entrance",
+    "translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.self_adjust_pussy.name",
+    "description": "Tease the egg at your entrance before slipping it in.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.self_adjust_pussy.description",
+    "user_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "teases %ITEM% at their entrance.",
+      "drags %ITEM% over their folds without pushing it in yet.",
+      "holds %ITEM% at their entrance and teases themself with it."
+    ],
+    "user_pleasure": [
+      2,
+      4
+    ],
+    "user_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_self/egg/hold_pussy": {
+    "interaction_id": "/datum/interaction/howling_item_self/egg/hold_pussy",
+    "template_type": "/datum/interaction/howling_item_self/egg",
+    "name": "Hold Egg Against Your Clit",
+    "translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.self_hold_pussy.name",
+    "description": "Keep the humming egg pressed to your clit.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.self_hold_pussy.description",
+    "user_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "holds %ITEM% against their clit.",
+      "keeps %ITEM% pressed to their folds and lets it hum there.",
+      "rests %ITEM% to their clit and savors the vibration."
+    ],
+    "user_pleasure": [
+      3,
+      5
+    ],
+    "user_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_self/egg/adjust_ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/egg/adjust_ass",
+    "template_type": "/datum/interaction/howling_item_self/egg",
+    "name": "Tease Egg At Your Rear",
+    "translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.self_adjust_ass.name",
+    "description": "Tease the egg at your rear before taking it.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.self_adjust_ass.description",
+    "user_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "teases %ITEM% at their rear.",
+      "presses %ITEM% to their ass and rolls it in small circles.",
+      "holds %ITEM% at their entrance and teases themself with it."
+    ],
+    "user_pleasure": [
+      2,
+      4
+    ],
+    "user_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_self/egg/hold_ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/egg/hold_ass",
+    "template_type": "/datum/interaction/howling_item_self/egg",
+    "name": "Hold Egg Against Your Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.self_hold_ass.name",
+    "description": "Keep the egg pressed to your rear and feel it hum.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.egg_vibrator.self_hold_ass.description",
+    "user_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "holds %ITEM% against their ass.",
+      "keeps %ITEM% pressed to their rear and lets it buzz there.",
+      "rests %ITEM% at their entrance and savors the trembling hum."
+    ],
+    "user_pleasure": [
+      2,
+      4
+    ],
+    "user_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_self/signal_egg/insert_pussy": {
+    "interaction_id": "/datum/interaction/howling_item_self/signal_egg/insert_pussy",
+    "template_type": "/datum/interaction/howling_item_self/signal_egg",
+    "name": "Slip Remote Egg Into Your Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.signal_egg.self_insert_pussy.name",
+    "description": "Push the signal-controlled egg into your pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.signal_egg.self_insert_pussy.description",
+    "user_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "slips %ITEM% into their pussy.",
+      "works %ITEM% into their folds until the remote toy disappears inside.",
+      "presses %ITEM% into their pussy and leaves it ready to be triggered."
+    ],
+    "user_pleasure": [
+      4,
+      6
+    ],
+    "user_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_self/signal_egg/insert_ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/signal_egg/insert_ass",
+    "template_type": "/datum/interaction/howling_item_self/signal_egg",
+    "name": "Slip Remote Egg Into Your Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.signal_egg.self_insert_ass.name",
+    "description": "Push the signal-controlled egg into your ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.signal_egg.self_insert_ass.description",
+    "user_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "slips %ITEM% into their ass.",
+      "works %ITEM% into their rear and leaves it ready to be triggered.",
+      "presses %ITEM% into their ass and settles it there for later remote play."
+    ],
+    "user_pleasure": [
+      3,
+      5
+    ],
+    "user_arousal": [
+      4,
+      6
+    ],
+    "user_pain": [
+      0,
+      2
+    ]
+  },
+  "/datum/interaction/howling_item_self/ring/cock": {
+    "interaction_id": "/datum/interaction/howling_item_self/ring/cock",
+    "template_type": "/datum/interaction/howling_item_self/ring",
+    "name": "Fit Ring On Your Cock",
+    "translation_key": "ui.interaction_panel.interaction.toy.vibrating_ring.self_fit_cock.name",
+    "description": "Slip the ring onto your cock.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.vibrating_ring.self_fit_cock.description",
+    "user_required_parts": [
+      "penis"
+    ],
+    "message": [
+      "fits %ITEM% onto their cock.",
+      "works %ITEM% down their shaft until it sits snugly in place.",
+      "slides %ITEM% onto their own cock."
+    ],
+    "user_pleasure": [
+      2,
+      4
+    ],
+    "user_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_self/clamps/attach": {
+    "interaction_id": "/datum/interaction/howling_item_self/clamps/attach",
+    "template_type": "/datum/interaction/howling_item_self/clamps",
+    "name": "Attach Clamps To Yourself",
+    "translation_key": "ui.interaction_panel.interaction.toy.nipple_clamps.self_attach.name",
+    "description": "Fasten nipple clamps onto yourself.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.nipple_clamps.self_attach.description",
+    "user_required_parts": [
+      "breasts"
+    ],
+    "message": [
+      "fastens %ITEM% onto their nipples.",
+      "clips %ITEM% onto their sensitive nipples.",
+      "attaches %ITEM% to their own chest."
+    ],
+    "user_pleasure": [
+      1,
+      3
+    ],
+    "user_arousal": [
+      3,
+      5
+    ],
+    "user_pain": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item_self/strapon/grind_pussy": {
+    "interaction_id": "/datum/interaction/howling_item_self/strapon/grind_pussy",
+    "template_type": "/datum/interaction/howling_item_self/strapon",
+    "name": "Grind Strap-On Against Yourself",
+    "translation_key": "ui.interaction_panel.interaction.toy.strapon.self_grind_pussy.name",
+    "description": "Grind the strap-on over your pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.strapon.self_grind_pussy.description",
+    "user_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "grinds %ITEM% against their pussy.",
+      "rubs %ITEM% through their folds.",
+      "presses %ITEM% to their pussy and rolls their hips."
+    ],
+    "user_pleasure": [
+      3,
+      5
+    ],
+    "user_arousal": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_self/strapon/fuck_pussy": {
+    "interaction_id": "/datum/interaction/howling_item_self/strapon/fuck_pussy",
+    "template_type": "/datum/interaction/howling_item_self/strapon",
+    "name": "Slide Strap-On Into Yourself",
+    "translation_key": "ui.interaction_panel.interaction.toy.strapon.self_fuck_pussy.name",
+    "description": "Push the strap-on into your pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.strapon.self_fuck_pussy.description",
+    "user_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "pushes %ITEM% into their pussy.",
+      "works %ITEM% into their folds a little at a time.",
+      "thrusts %ITEM% into their own wet sex."
+    ],
+    "user_pleasure": [
+      4,
+      6
+    ],
+    "user_arousal": [
+      4,
+      6
+    ]
+  },
+  "/datum/interaction/howling_item_self/strapon/grind_ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/strapon/grind_ass",
+    "template_type": "/datum/interaction/howling_item_self/strapon",
+    "name": "Grind Strap-On Against Your Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.strapon.self_grind_ass.name",
+    "description": "Grind the strap-on over your rear.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.strapon.self_grind_ass.description",
+    "user_required_parts": [
+      "butt"
+    ],
+    "message": [
+      "grinds %ITEM% against their ass.",
+      "rubs %ITEM% between their cheeks.",
+      "presses %ITEM% to their rear and grinds slowly."
+    ],
+    "user_pleasure": [
+      2,
+      4
+    ],
+    "user_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/strapon/fuck_ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/strapon/fuck_ass",
+    "template_type": "/datum/interaction/howling_item_self/strapon",
+    "name": "Slide Strap-On Into Your Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.strapon.self_fuck_ass.name",
+    "description": "Push the strap-on into your ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.strapon.self_fuck_ass.description",
+    "user_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "pushes %ITEM% into their ass.",
+      "eases %ITEM% into their rear a little at a time.",
+      "thrusts %ITEM% into their own ass."
+    ],
+    "user_pleasure": [
+      3,
+      5
+    ],
+    "user_arousal": [
+      4,
+      6
+    ],
+    "user_pain": [
+      0,
+      2
+    ]
+  },
+  "/datum/interaction/howling_item_self/custom_dildo/pussy": {
+    "interaction_id": "/datum/interaction/howling_item_self/custom_dildo/pussy",
+    "template_type": "/datum/interaction/howling_item_self/custom_dildo",
+    "name": "Stretch Yourself With Custom Dildo",
+    "translation_key": "ui.interaction_panel.interaction.toy.custom_dildo.self_pussy.name",
+    "description": "Work the custom dildo into your pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.custom_dildo.self_pussy.description",
+    "user_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "works %ITEM% into their pussy.",
+      "stretches their folds around %ITEM%.",
+      "uses %ITEM% to slowly open themself up."
+    ],
+    "user_pleasure": [
+      4,
+      6
+    ],
+    "user_arousal": [
+      5,
+      7
+    ]
+  },
+  "/datum/interaction/howling_item_self/custom_dildo/ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/custom_dildo/ass",
+    "template_type": "/datum/interaction/howling_item_self/custom_dildo",
+    "name": "Stretch Your Ass With Custom Dildo",
+    "translation_key": "ui.interaction_panel.interaction.toy.custom_dildo.self_ass.name",
+    "description": "Work the custom dildo into your ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.custom_dildo.self_ass.description",
+    "user_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "works %ITEM% into their ass.",
+      "stretches their rear around %ITEM%.",
+      "uses %ITEM% to slowly open up their own ass."
+    ],
+    "user_pleasure": [
+      3,
+      5
+    ],
+    "user_arousal": [
+      4,
+      6
+    ],
+    "user_pain": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item_self/double_dildo/pussy": {
+    "interaction_id": "/datum/interaction/howling_item_self/double_dildo/pussy",
+    "template_type": "/datum/interaction/howling_item_self/double_dildo",
+    "name": "Seat Double Dildo In Your Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.double_dildo.self_pussy.name",
+    "description": "Seat the double dildo in your pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.double_dildo.self_pussy.description",
+    "user_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "seats %ITEM% in their pussy.",
+      "guides %ITEM% into their folds and rocks against it.",
+      "works %ITEM% into their own pussy."
+    ],
+    "user_pleasure": [
+      4,
+      6
+    ],
+    "user_arousal": [
+      5,
+      7
+    ]
+  },
+  "/datum/interaction/howling_item_self/double_dildo/ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/double_dildo/ass",
+    "template_type": "/datum/interaction/howling_item_self/double_dildo",
+    "name": "Seat Double Dildo In Your Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.double_dildo.self_ass.name",
+    "description": "Seat the double dildo in your ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.double_dildo.self_ass.description",
+    "user_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "seats %ITEM% in their ass.",
+      "guides %ITEM% into their rear and rocks against it.",
+      "works %ITEM% into their own ass."
+    ],
+    "user_pleasure": [
+      3,
+      5
+    ],
+    "user_arousal": [
+      4,
+      6
+    ],
+    "user_pain": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item_self/whip/chest": {
+    "interaction_id": "/datum/interaction/howling_item_self/whip/chest",
+    "template_type": "/datum/interaction/howling_item_self/whip",
+    "name": "Trace Whip Over Your Chest",
+    "translation_key": "ui.interaction_panel.interaction.toy.whip.self_chest.name",
+    "description": "Trail the whip over your chest.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.whip.self_chest.description",
+    "user_required_parts": [
+      "chest"
+    ],
+    "message": [
+      "trails %ITEM% over their chest.",
+      "draws the length of %ITEM% across their chest.",
+      "slides %ITEM% over their chest in a slow stroke."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item_self/whip/thighs": {
+    "interaction_id": "/datum/interaction/howling_item_self/whip/thighs",
+    "template_type": "/datum/interaction/howling_item_self/whip",
+    "name": "Lash Your Thighs",
+    "translation_key": "ui.interaction_panel.interaction.toy.whip.self_thighs.name",
+    "description": "Snap the whip across your thighs.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.whip.self_thighs.description",
+    "user_required_parts": [
+      "thighs"
+    ],
+    "message": [
+      "lashes their thighs with %ITEM%.",
+      "snaps %ITEM% across their thighs.",
+      "strikes their thighs with %ITEM%."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "user_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/whip/ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/whip/ass",
+    "template_type": "/datum/interaction/howling_item_self/whip",
+    "name": "Snap Whip Across Your Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.whip.self_ass.name",
+    "description": "Crack the whip against your ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.whip.self_ass.description",
+    "user_required_parts": [
+      "butt"
+    ],
+    "message": [
+      "snaps %ITEM% across their ass.",
+      "cracks %ITEM% against their rear.",
+      "lashes their ass with %ITEM%."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "user_pain": [
+      3,
+      5
+    ]
+  },
+  "/datum/interaction/howling_item_self/spanking_pad/ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/spanking_pad/ass",
+    "template_type": "/datum/interaction/howling_item_self/spanking_pad",
+    "name": "Spank Your Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.spanking.self_ass.name",
+    "description": "Smack your ass with the spanking pad.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.spanking.self_ass.description",
+    "user_required_parts": [
+      "butt"
+    ],
+    "message": [
+      "spanks their ass with %ITEM%.",
+      "smacks %ITEM% across their rear.",
+      "slaps their ass with %ITEM%."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "user_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/spanking_pad/thighs": {
+    "interaction_id": "/datum/interaction/howling_item_self/spanking_pad/thighs",
+    "template_type": "/datum/interaction/howling_item_self/spanking_pad",
+    "name": "Smack Your Thighs",
+    "translation_key": "ui.interaction_panel.interaction.toy.spanking.self_thighs.name",
+    "description": "Smack your thighs with the spanking pad.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.spanking.self_thighs.description",
+    "user_required_parts": [
+      "thighs"
+    ],
+    "message": [
+      "smacks %ITEM% against their thighs.",
+      "spanks their thighs with %ITEM%.",
+      "brings %ITEM% down across their thighs."
+    ],
+    "user_arousal": [
+      1,
+      3
+    ],
+    "user_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/pussy": {
+    "interaction_id": "/datum/interaction/howling_item_self/feather/pussy",
+    "template_type": "/datum/interaction/howling_item_self/feather",
+    "name": "Tease Yourself With Feather",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.self_pussy.name",
+    "description": "Tickle your pussy with the feather.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.self_pussy.description",
+    "user_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "teases their pussy with %ITEM%.",
+      "brushes %ITEM% through their folds.",
+      "tickles their clit and pussy with %ITEM%."
+    ],
+    "user_pleasure": [
+      1,
+      3
+    ],
+    "user_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/thighs": {
+    "interaction_id": "/datum/interaction/howling_item_self/feather/thighs",
+    "template_type": "/datum/interaction/howling_item_self/feather",
+    "name": "Trail Feather Between Your Thighs",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.self_thighs.name",
+    "description": "Tease the insides of your thighs with the feather.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.self_thighs.description",
+    "user_required_parts": [
+      "thighs"
+    ],
+    "message": [
+      "trails %ITEM% between their thighs.",
+      "brushes %ITEM% up the insides of their thighs.",
+      "teases the sensitive skin between their legs with %ITEM%."
+    ],
+    "user_pleasure": [
+      0,
+      2
+    ],
+    "user_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/neck": {
+    "interaction_id": "/datum/interaction/howling_item_self/feather/neck",
+    "template_type": "/datum/interaction/howling_item_self/feather",
+    "name": "Brush Feather Along Your Neck",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.self_neck.name",
+    "description": "Run the feather over your neck.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.self_neck.description",
+    "user_required_parts": [
+      "neck"
+    ],
+    "message": [
+      "brushes %ITEM% along their neck.",
+      "skims %ITEM% over their throat and neck.",
+      "teases their neck with light feathery strokes."
+    ],
+    "user_pleasure": [
+      0,
+      2
+    ],
+    "user_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/tail": {
+    "interaction_id": "/datum/interaction/howling_item_self/feather/tail",
+    "template_type": "/datum/interaction/howling_item_self/feather",
+    "name": "Brush Feather Along Your Tail",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.self_tail.name",
+    "description": "Trace the feather along your tail.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.self_tail.description",
+    "user_required_parts": [
+      "tail"
+    ],
+    "message": [
+      "brushes %ITEM% along their tail.",
+      "traces %ITEM%'s tip down their tail.",
+      "teases their tail with light feathery strokes."
+    ],
+    "user_pleasure": [
+      0,
+      2
+    ],
+    "user_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/lips": {
+    "interaction_id": "/datum/interaction/howling_item_self/feather/lips",
+    "template_type": "/datum/interaction/howling_item_self/feather",
+    "name": "Brush Feather Over Your Lips",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.self_lips.name",
+    "description": "Brush the feather over your lips.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.self_lips.description",
+    "user_required_parts": [
+      "mouth"
+    ],
+    "message": [
+      "brushes %ITEM% over their lips.",
+      "teases their lips with %ITEM%'s soft tip.",
+      "lets the feather skim over their mouth."
+    ],
+    "user_pleasure": [
+      0,
+      2
+    ],
+    "user_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/ears": {
+    "interaction_id": "/datum/interaction/howling_item_self/feather/ears",
+    "template_type": "/datum/interaction/howling_item_self/feather",
+    "name": "Brush Feather Over Your Ears",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.self_ears.name",
+    "description": "Trace the feather over your ears.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.self_ears.description",
+    "user_required_parts": [
+      "ears"
+    ],
+    "message": [
+      "brushes %ITEM% over their ears.",
+      "traces the feather along their ear.",
+      "lets %ITEM% tickle the edge of their ears."
+    ],
+    "user_pleasure": [
+      0,
+      2
+    ],
+    "user_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/armpits": {
+    "interaction_id": "/datum/interaction/howling_item_self/feather/armpits",
+    "template_type": "/datum/interaction/howling_item_self/feather",
+    "name": "Tease Your Armpits With Feather",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.self_armpits.name",
+    "description": "Tickle your armpits with the feather.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.self_armpits.description",
+    "user_required_parts": [
+      "armpits"
+    ],
+    "message": [
+      "teases their armpits with %ITEM%.",
+      "brushes %ITEM% through the hollow of their armpit.",
+      "lets %ITEM% tickle their sensitive armpits."
+    ],
+    "user_pleasure": [
+      0,
+      2
+    ],
+    "user_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/groin": {
+    "interaction_id": "/datum/interaction/howling_item_self/feather/groin",
+    "template_type": "/datum/interaction/howling_item_self/feather",
+    "name": "Tease Your Groin With Feather",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.self_groin.name",
+    "description": "Tease your groin with the feather without focusing on one spot.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.self_groin.description",
+    "user_required_parts": [
+      "groin"
+    ],
+    "message": [
+      "teases their groin with %ITEM%.",
+      "trails %ITEM% over the heat between their legs.",
+      "brushes %ITEM% over their groin in light strokes."
+    ],
+    "user_pleasure": [
+      1,
+      3
+    ],
+    "user_arousal": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/body": {
+    "interaction_id": "/datum/interaction/howling_item_self/feather/body",
+    "template_type": "/datum/interaction/howling_item_self/feather",
+    "name": "Trail Feather Over Your Body",
+    "translation_key": "ui.interaction_panel.interaction.toy.feather.self_body.name",
+    "description": "Trail the feather over your body.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.feather.self_body.description",
+    "user_required_parts": [
+      "chest"
+    ],
+    "message": [
+      "trails %ITEM% over their body.",
+      "brushes %ITEM% over their skin in soft teasing strokes.",
+      "lets %ITEM% drift over their body."
+    ],
+    "user_pleasure": [
+      0,
+      2
+    ],
+    "user_arousal": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item_self/shocker/nipples": {
+    "interaction_id": "/datum/interaction/howling_item_self/shocker/nipples",
+    "template_type": "/datum/interaction/howling_item_self/shocker",
+    "name": "Shock Your Nipples",
+    "translation_key": "ui.interaction_panel.interaction.toy.shocker.self_nipples.name",
+    "description": "Touch the shocker to your nipples.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.shocker.self_nipples.description",
+    "user_required_parts": [
+      "breasts"
+    ],
+    "message": [
+      "touches %ITEM% to their nipples.",
+      "zaps their nipples with %ITEM%.",
+      "holds %ITEM% to their sensitive nipples and lets it crackle there."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "user_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/shocker/cock": {
+    "interaction_id": "/datum/interaction/howling_item_self/shocker/cock",
+    "template_type": "/datum/interaction/howling_item_self/shocker",
+    "name": "Shock Your Cock",
+    "translation_key": "ui.interaction_panel.interaction.toy.shocker.self_cock.name",
+    "description": "Press the shocker to your cock.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.shocker.self_cock.description",
+    "user_required_parts": [
+      "penis"
+    ],
+    "message": [
+      "presses %ITEM% to their cock.",
+      "zaps their shaft with %ITEM%.",
+      "holds %ITEM% to their cock and lets it crackle there."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "user_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/shocker/pussy": {
+    "interaction_id": "/datum/interaction/howling_item_self/shocker/pussy",
+    "template_type": "/datum/interaction/howling_item_self/shocker",
+    "name": "Shock Your Pussy",
+    "translation_key": "ui.interaction_panel.interaction.toy.shocker.self_pussy.name",
+    "description": "Press the shocker to your pussy.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.shocker.self_pussy.description",
+    "user_required_parts": [
+      "vagina"
+    ],
+    "message": [
+      "presses %ITEM% to their pussy.",
+      "zaps their folds with %ITEM%.",
+      "holds %ITEM% to their pussy and lets it crackle there."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "user_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/shocker/ass": {
+    "interaction_id": "/datum/interaction/howling_item_self/shocker/ass",
+    "template_type": "/datum/interaction/howling_item_self/shocker",
+    "name": "Shock Your Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.shocker.self_ass.name",
+    "description": "Press the shocker to your ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.shocker.self_ass.description",
+    "user_required_parts": [
+      "anus"
+    ],
+    "message": [
+      "presses %ITEM% to their ass.",
+      "zaps their entrance with %ITEM%.",
+      "holds %ITEM% to their rear and lets it crackle there."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "user_pain": [
+      2,
+      4
+    ]
+  },
+  "/datum/interaction/howling_item_self/candle/chest": {
+    "interaction_id": "/datum/interaction/howling_item_self/candle/chest",
+    "template_type": "/datum/interaction/howling_item_self/candle",
+    "name": "Drip Wax On Your Chest",
+    "translation_key": "ui.interaction_panel.interaction.toy.wax_play.self_chest.name",
+    "description": "Drip warm wax over your chest.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wax_play.self_chest.description",
+    "user_required_parts": [
+      "chest"
+    ],
+    "message": [
+      "drips wax from %ITEM% over their chest.",
+      "tilts %ITEM% and lets warm wax spatter their chest.",
+      "trails hot droplets from %ITEM% down their chest."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "user_pain": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item_self/candle/thighs": {
+    "interaction_id": "/datum/interaction/howling_item_self/candle/thighs",
+    "template_type": "/datum/interaction/howling_item_self/candle",
+    "name": "Drip Wax On Your Thighs",
+    "translation_key": "ui.interaction_panel.interaction.toy.wax_play.self_thighs.name",
+    "description": "Drip warm wax over your thighs.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wax_play.self_thighs.description",
+    "user_required_parts": [
+      "thighs"
+    ],
+    "message": [
+      "drips wax from %ITEM% over their thighs.",
+      "lets warm droplets from %ITEM% patter across their thighs.",
+      "tilts %ITEM% and traces hot wax over their legs."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "user_pain": [
+      1,
+      3
+    ]
+  },
+  "/datum/interaction/howling_item_self/candle/butt": {
+    "interaction_id": "/datum/interaction/howling_item_self/candle/butt",
+    "template_type": "/datum/interaction/howling_item_self/candle",
+    "name": "Drip Wax On Your Ass",
+    "translation_key": "ui.interaction_panel.interaction.toy.wax_play.self_butt.name",
+    "description": "Drip warm wax over your ass.",
+    "description_translation_key": "ui.interaction_panel.interaction.toy.wax_play.self_butt.description",
+    "user_required_parts": [
+      "butt"
+    ],
+    "message": [
+      "drips wax from %ITEM% over their ass.",
+      "lets warm wax fall over their rear from %ITEM%.",
+      "tilts %ITEM% and traces hot droplets over their ass."
+    ],
+    "user_arousal": [
+      2,
+      4
+    ],
+    "user_pain": [
+      1,
+      3
+    ]
+  }
+}
