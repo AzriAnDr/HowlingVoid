@@ -1,6 +1,11 @@
 @font-face {
+<<<<<<< Updated upstream
 	font-family: "tgfont";
 	src: url("tgfont.woff2?t=1747971548188") format("woff2");
+=======
+  font-family: "tgfont";
+  src: url('tgfont.woff2?t=1779132951578') format('woff2');
+>>>>>>> Stashed changes
 }
 
 [class^="tg-"],

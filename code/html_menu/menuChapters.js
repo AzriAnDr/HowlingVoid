@@ -82,7 +82,7 @@
   };
 
   const DEFAULT_CHAPTER = 'sisterRay';
-  const MENU_VARIANT_STORAGE_KEY = 'howlingMenuChapterVariant';
+  const MENU_VARIANT_STORAGE_KEY = `howlingMenuChapterVariant:${DEFAULT_CHAPTER}`;
   const CSS_READY_FALLBACK_MS = 1200;
   const MENU_CHROME_STYLE_ID = 'howling-menu-chrome-style';
 
@@ -1069,7 +1069,10 @@
     }
 
     window.location.href =
-      'byond://?src=' + src + ';set_menu_chapter=' + encodeURIComponent(chapterId);
+      'byond://?src=' +
+      src +
+      ';set_menu_chapter=' +
+      encodeURIComponent(chapterId);
   }
 
   function setMenuVariant(chapterId) {
