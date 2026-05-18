@@ -524,6 +524,16 @@
 	name = "Ancient Circuit Imprinter"
 	build_path = /obj/machinery/rnd/production/circuit_imprinter/offstation
 
+/obj/item/circuitboard/machine/circuit_imprinter/proc/configure_blackmarket()
+	name = "Black Market Circuit Imprinter Board"
+	techweb_link_on_init = FALSE
+	techweb_link_via_alt_click = TRUE
+	machine_name_override = "black market circuit imprinter"
+	machine_desc_override = "A circuit imprinter stripped down to work with illicit techwebs."
+	override_allowed_department_flags = TRUE
+	allowed_department_flags_override = null
+	return src
+
 /obj/item/circuitboard/machine/circuit_imprinter/department
 	name = "Departmental Circuit Imprinter"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
@@ -665,6 +675,16 @@
 		/datum/stock_part/matter_bin = 2,
 		/datum/stock_part/servo = 2,
 		)
+
+/obj/item/circuitboard/machine/techfab/proc/configure_blackmarket()
+	name = "Black Market Techfab Board"
+	techweb_link_on_init = FALSE
+	techweb_link_via_alt_click = TRUE
+	machine_name_override = "black market techfab"
+	machine_desc_override = "An illicit fabricator wired to accept designs from a black market techweb."
+	override_allowed_department_flags = TRUE
+	allowed_department_flags_override = null
+	return src
 
 /obj/item/circuitboard/machine/techfab/department
 	name = "\improper Departmental Techfab"
@@ -1052,6 +1072,15 @@
 		/datum/stock_part/micro_laser = 1,
 		/obj/item/stack/sheet/glass = 1)
 
+/obj/item/circuitboard/machine/mechfab/proc/configure_blackmarket()
+	name = "Black Market Exosuit Fabricator Board"
+	techweb_link_on_init = FALSE
+	techweb_link_via_alt_click = TRUE
+	machine_name_override = "black market exosuit fabricator"
+	machine_desc_override = "A robotics fabricator modified to run on contraband research data."
+	machine_req_access_override = list(ACCESS_AWAY_GENERIC4)
+	return src
+
 /obj/item/circuitboard/machine/vatgrower
 	name = "Growing Vat"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
@@ -1103,6 +1132,11 @@
 		/obj/item/stack/cable_coil = 2,
 		/datum/stock_part/scanning_module = 1,
 	)
+
+/obj/item/circuitboard/machine/rdserver/proc/configure_blackmarket()
+	name = "Black Market R&D Server Board"
+	build_path = /obj/machinery/rnd/server/blackmarket
+	return src
 
 /obj/item/circuitboard/machine/rdserver/oldstation
 	name = "Ancient R&D Server"

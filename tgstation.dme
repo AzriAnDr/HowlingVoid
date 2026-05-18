@@ -2629,6 +2629,7 @@
 #include "code\game\objects\effects\posters\contraband.dm"
 #include "code\game\objects\effects\posters\official.dm"
 #include "code\game\objects\effects\posters\poster.dm"
+#include "code\game\objects\effects\spawners\blackmarket_boards.dm"
 #include "code\game\objects\effects\spawners\bombspawner.dm"
 #include "code\game\objects\effects\spawners\costume.dm"
 #include "code\game\objects\effects\spawners\gibspawner.dm"

@@ -13,12 +13,14 @@
 
 	/// Are we busy printing?
 	var/busy = FALSE
-	/// Coefficient applied to consumed materials. Lower values result in lower material consumption.
+	/// Coefficient applied to machine stock-part materials. Lower values result in lower material consumption.
 	var/creation_efficiency = 2
+	/// Coefficient applied to console frame materials. Better servos reduce the frame overhead.
+	var/computer_creation_efficiency = 1
 	///The container to hold materials
-	var/datum/material_container/materials
+	var/datum/remote_materials/materials
 	/// The inserted board
-	var/obj/item/circuitboard/machine/inserted_board
+	var/obj/item/circuitboard/inserted_board
 	/// List of components that need to be packed along with the circuitboard
 	var/list/obj/item/flatpacked_components = list()
 	/// Materials needed to print this board
@@ -27,6 +29,10 @@
 	var/print_tier = 1
 	/// Our max print tier
 	var/max_part_tier = 1
+	/// The highest tier of machine components we can pack based on our installed micro lasers.
+	var/max_component_tier = 1
+	/// The selected tier for generic machine stock parts inside the produced flatpack.
+	var/selected_component_tier = 1
 	/// time needed to produce a flatpacked machine
 	var/flatpack_time = 4.5 SECONDS
 
@@ -35,11 +41,11 @@
 
 	materials = new ( \
 		src, \
-		SSmaterials.get_materials_by_flag(MATERIAL_SILO_STORED), \
-		0, \
-		MATCONTAINER_EXAMINE, \
-		container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/flatpacker, AfterMaterialInsert)) \
+		mapload, \
+		mat_container_flags = MATCONTAINER_EXAMINE, \
+		mat_container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/flatpacker, AfterMaterialInsert)) \
 	)
+	RegisterSignal(src, COMSIG_SILO_ITEM_CONSUMED, TYPE_PROC_REF(/obj/machinery/flatpacker, AfterSiloMaterialInsert))
 
 	return ..()
 
@@ -54,14 +60,15 @@
 	if(!QDELETED(inserted_board))
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Eject board"
 
-		if(!isnull(held_item) && (held_item.type in inserted_board.flatpack_components))
+		var/obj/item/circuitboard/machine/machine_board = inserted_board
+		if(istype(machine_board) && !isnull(held_item) && (held_item.type in machine_board.flatpack_components))
 			context[SCREENTIP_CONTEXT_LMB] = "Insert flatpack component"
 			return CONTEXTUAL_SCREENTIP_SET
 
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	if(!isnull(held_item))
-		if(istype(held_item, /obj/item/circuitboard/machine))
+		if(istype(held_item, /obj/item/circuitboard/machine) || istype(held_item, /obj/item/circuitboard/computer))
 			context[SCREENTIP_CONTEXT_LMB] = "Insert board"
 			return CONTEXTUAL_SCREENTIP_SET
 		else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
@@ -78,19 +85,21 @@
 
 	. += span_notice("The status display reads:")
 	. += span_notice("Capable of packing up to <b>Tier [max_part_tier]</b>.")
-	. += span_notice("Storing up to <b>[materials.max_amount]</b> material units.")
-	. += span_notice("Material consumption at <b>[creation_efficiency * 100]%</b>.")
+	. += span_notice("Storing up to <b>[materials.mat_container.max_amount]</b> material units.")
+	. += span_notice("Machine component consumption at <b>[creation_efficiency * 100]%</b>.")
+	. += span_notice("Console frame consumption at <b>[computer_creation_efficiency * 100]%</b>.")
 
 	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
 	if(panel_open)
 		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
 	if(!QDELETED(inserted_board))
 		. += span_notice("The board can be ejected via [EXAMINE_HINT("Ctrl Click")].")
-		if(length(inserted_board.flatpack_components))
+		var/obj/item/circuitboard/machine/machine_board = inserted_board
+		if(istype(machine_board) && length(machine_board.flatpack_components))
 			var/list/obj/item/to_insert
-			for(var/obj/item/component as anything in inserted_board.flatpack_components)
+			for(var/obj/item/component as anything in machine_board.flatpack_components)
 				var/inserted = get_flatpack_component_count(component)
-				var/required = inserted_board.req_components[component]
+				var/required = machine_board.req_components[component]
 				if(inserted == required)
 					continue
 				LAZYADDASSOC(to_insert, get_flatpack_component_name(component), "[inserted]/[required]")
@@ -139,8 +148,9 @@
 	. = ..()
 	if(gone == inserted_board)
 		inserted_board = null
-		needed_mats.Cut()
+		needed_mats = list()
 		print_tier = 1
+		selected_component_tier = 1
 		update_appearance(UPDATE_OVERLAYS)
 	if(gone in flatpacked_components)
 		flatpacked_components -= gone
@@ -151,15 +161,23 @@
 	var/mat_capacity = 0
 	for(var/datum/stock_part/matter_bin/new_matter_bin in component_parts)
 		mat_capacity += new_matter_bin.tier * 25 * SHEET_MATERIAL_AMOUNT
-	materials.max_amount = mat_capacity
+	materials.set_local_size(mat_capacity)
 
 	var/datum/stock_part/servo/servo = locate() in component_parts
 	max_part_tier = servo.tier
 	flatpack_time = initial(flatpack_time) - servo.tier / 2 // T4 = 2 seconds off
+	computer_creation_efficiency = clamp(round(1.1 - (servo.tier * 0.1), 0.1), 0.7, 1)
 	var/efficiency = initial(creation_efficiency)
+	var/laser_tier = 1
+	var/found_laser = FALSE
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
+		laser_tier = found_laser ? min(laser_tier, laser.tier) : laser.tier
+		found_laser = TRUE
 		efficiency -= laser.tier * 0.2
+	max_component_tier = found_laser ? laser_tier : 1
+	selected_component_tier = clamp(selected_component_tier, 1, max_component_tier)
 	creation_efficiency = max(1.2, round(efficiency, 0.1))
+	recalculate_needed_materials()
 
 /obj/machinery/flatpacker/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
 	SIGNAL_HANDLER
@@ -178,6 +196,18 @@
 
 		flick_overlay_view(material_insertion_animation(highest_mat_ref), 1 SECONDS)
 
+/obj/machinery/flatpacker/proc/AfterSiloMaterialInsert(obj/machinery/flatpacker/machine, container, obj/item/item_inserted, last_inserted_id, list/mats_consumed, amount_inserted)
+	SIGNAL_HANDLER
+
+	AfterMaterialInsert(container, item_inserted, last_inserted_id, mats_consumed, amount_inserted, src)
+
+/obj/machinery/flatpacker/proc/get_material_efficiency_for_board(obj/item/circuitboard/board)
+	PRIVATE_PROC(TRUE)
+
+	if(istype(board, /obj/item/circuitboard/computer))
+		return computer_creation_efficiency
+	return creation_efficiency
+
 /**
  * Attempts to find the total material cost of a typepath (including our creation efficiency), modifying a list
  * The list is modified as an assoc list: Material datum typepath = Cost
@@ -194,7 +224,8 @@
 
 	var/comp_type = part_type
 	if(ispath(part_type, /datum/stock_part))
-		var/datum/stock_part/as_part = part_type
+		part_type = get_selected_stock_part_type(part_type)
+		var/datum/stock_part/as_part = GLOB.stock_part_datums[part_type]
 		comp_type = initial(as_part.physical_object_type)
 		if(as_part.tier > print_tier)
 			print_tier = as_part.tier
@@ -218,11 +249,131 @@
 		qdel(null_comp)
 	return costs
 
+/obj/machinery/flatpacker/proc/get_selected_stock_part_type(part_type)
+	PRIVATE_PROC(TRUE)
+
+	if(selected_component_tier <= 1)
+		return part_type
+
+	var/static/list/stock_part_tiers = list(
+		/datum/stock_part/scanning_module = list(
+			/datum/stock_part/scanning_module,
+			/datum/stock_part/scanning_module/tier2,
+			/datum/stock_part/scanning_module/tier3,
+			/datum/stock_part/scanning_module/tier4,
+		),
+		/datum/stock_part/capacitor = list(
+			/datum/stock_part/capacitor,
+			/datum/stock_part/capacitor/tier2,
+			/datum/stock_part/capacitor/tier3,
+			/datum/stock_part/capacitor/tier4,
+		),
+		/datum/stock_part/servo = list(
+			/datum/stock_part/servo,
+			/datum/stock_part/servo/tier2,
+			/datum/stock_part/servo/tier3,
+			/datum/stock_part/servo/tier4,
+		),
+		/datum/stock_part/micro_laser = list(
+			/datum/stock_part/micro_laser,
+			/datum/stock_part/micro_laser/tier2,
+			/datum/stock_part/micro_laser/tier3,
+			/datum/stock_part/micro_laser/tier4,
+		),
+		/datum/stock_part/matter_bin = list(
+			/datum/stock_part/matter_bin,
+			/datum/stock_part/matter_bin/tier2,
+			/datum/stock_part/matter_bin/tier3,
+			/datum/stock_part/matter_bin/tier4,
+		),
+	)
+
+	var/list/available_tiers = stock_part_tiers[part_type]
+	if(!available_tiers)
+		return part_type
+
+	return available_tiers[selected_component_tier]
+
+/obj/machinery/flatpacker/proc/add_computer_frame_costs()
+	PRIVATE_PROC(TRUE)
+
+	CREATE_AND_INCREMENT(needed_mats, /datum/material/iron, SHEET_MATERIAL_AMOUNT * 5)
+	CREATE_AND_INCREMENT(needed_mats, /datum/material/glass, SHEET_MATERIAL_AMOUNT * 2)
+
+	var/static/list/cable_piece_materials
+	if(isnull(cable_piece_materials))
+		var/obj/item/stack/cable_coil/cable_piece = new(null, 1)
+		cable_piece_materials = cable_piece.mats_per_unit.Copy()
+		qdel(cable_piece)
+
+	for(var/material_type in cable_piece_materials)
+		CREATE_AND_INCREMENT(needed_mats, material_type, cable_piece_materials[material_type] * 5)
+
+/obj/machinery/flatpacker/proc/recalculate_needed_materials()
+	PRIVATE_PROC(TRUE)
+
+	needed_mats = list()
+	print_tier = 1
+
+	if(QDELETED(inserted_board))
+		return
+
+	selected_component_tier = clamp(selected_component_tier, 1, max_component_tier)
+
+	var/obj/item/circuitboard/machine/machine_board = inserted_board
+	if(istype(machine_board))
+		for(var/type in machine_board.req_components)
+			if(type in machine_board.flatpack_components)
+				continue
+			needed_mats = analyze_cost(type, needed_mats, machine_board.req_components[type])
+
+		// 5 sheets of iron and 5 of cable coil
+		CREATE_AND_INCREMENT(needed_mats, /datum/material/iron, (SHEET_MATERIAL_AMOUNT * 5 + (SHEET_MATERIAL_AMOUNT / 20)))
+		CREATE_AND_INCREMENT(needed_mats, /datum/material/glass, (SHEET_MATERIAL_AMOUNT / 20))
+		return
+
+	if(istype(inserted_board, /obj/item/circuitboard/computer))
+		add_computer_frame_costs()
+
+/obj/machinery/flatpacker/proc/generate_replacement_parts()
+	PRIVATE_PROC(TRUE)
+
+	var/list/replacement_parts = list()
+	if(QDELETED(inserted_board))
+		return replacement_parts
+
+	var/obj/item/circuitboard/machine/machine_board = inserted_board
+	if(!istype(machine_board))
+		return replacement_parts
+
+	for(var/component in machine_board.req_components)
+		var/amount = machine_board.req_components[component]
+		if(!amount)
+			continue
+
+		if(machine_board.def_components && machine_board.def_components[component])
+			component = machine_board.def_components[component]
+
+		if(ispath(component, /obj/item/stack))
+			continue
+
+		if(ispath(component, /datum/stock_part))
+			component = get_selected_stock_part_type(component)
+			var/datum/stock_part/stock_part_datum = GLOB.stock_part_datums[component]
+			if(isnull(stock_part_datum))
+				CRASH("[component] didn't have a matching stock part datum")
+			component = stock_part_datum.physical_object_type
+
+		for(var/_ in 1 to amount)
+			replacement_parts += component
+
+	return replacement_parts
+
 /obj/machinery/flatpacker/base_item_interaction(mob/living/user, obj/item/attacking_item, list/modifiers)
 	if(attacking_item.flags_1 & HOLOGRAM_1)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
-	if(istype(attacking_item, /obj/item/circuitboard/machine))
+	if(istype(attacking_item, /obj/item/circuitboard/machine) || istype(attacking_item, /obj/item/circuitboard/computer))
 		if(busy)
 			balloon_alert(user, "busy!")
 			return ITEM_INTERACT_BLOCKING
@@ -234,21 +385,13 @@
 			inserted_board.forceMove(drop_location())
 		inserted_board = attacking_item
 
-		//compute the needed mats from its stock parts
-		for(var/type in inserted_board.req_components)
-			//these don't count to the final cost as they have to inserted manually
-			if(type in inserted_board.flatpack_components)
-				continue
-			needed_mats = analyze_cost(type, needed_mats, inserted_board.req_components[type])
-
-		// 5 sheets of iron and 5 of cable coil
-		CREATE_AND_INCREMENT(needed_mats, /datum/material/iron, (SHEET_MATERIAL_AMOUNT * 5 + (SHEET_MATERIAL_AMOUNT / 20)))
-		CREATE_AND_INCREMENT(needed_mats, /datum/material/glass, (SHEET_MATERIAL_AMOUNT / 20))
+		recalculate_needed_materials()
 
 		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
-	else if(!QDELETED(inserted_board) && (attacking_item.type in inserted_board.flatpack_components))
-		if(get_flatpack_component_count(attacking_item.type) == inserted_board.req_components[attacking_item.type])
+	var/obj/item/circuitboard/machine/machine_board = inserted_board
+	if(istype(machine_board) && !QDELETED(inserted_board) && (attacking_item.type in machine_board.flatpack_components))
+		if(get_flatpack_component_count(attacking_item.type) == machine_board.req_components[attacking_item.type])
 			balloon_alert(user, "max count reached!")
 			return ITEM_INTERACT_BLOCKING
 
@@ -284,33 +427,35 @@
 	)
 
 /obj/machinery/flatpacker/ui_static_data(mob/user)
-	return materials.ui_static_data()
+	return materials.mat_container.ui_static_data()
 
 /obj/machinery/flatpacker/ui_data(mob/user)
 	. = list()
 
-	.["materials"] = materials.ui_data()
+	.["materials"] = materials.mat_container.ui_data()
 	.["busy"] = busy
 
 	var/list/design
 	if(!QDELETED(inserted_board))
+		var/material_efficiency = get_material_efficiency_for_board(inserted_board)
 		var/list/cost_mats = list()
 		for(var/datum/material/mat_type as anything in needed_mats)
 			var/list/new_entry = list()
 			new_entry["name"] = initial(mat_type.name)
-			new_entry["amount"] = OPTIMAL_COST(needed_mats[mat_type] * creation_efficiency)
+			new_entry["amount"] = OPTIMAL_COST(needed_mats[mat_type] * material_efficiency)
 			cost_mats += list(new_entry)
 
 		var/atom/build = initial(inserted_board.build_path)
+		var/obj/item/circuitboard/machine/machine_board = inserted_board
 
 		var/disableReason = ""
 		if(print_tier > max_part_tier)
 			disableReason = "This design is too advanced for this machine. "
-		else if(!materials.has_materials(needed_mats, creation_efficiency))
+		else if(!materials.mat_container.has_materials(needed_mats, material_efficiency))
 			disableReason = "Not enough materials. "
-		else
-			for(var/obj/item/component as anything in inserted_board.flatpack_components)
-				var/diff = inserted_board.req_components[component] - get_flatpack_component_count(component)
+		else if(istype(machine_board))
+			for(var/obj/item/component as anything in machine_board.flatpack_components)
+				var/diff = machine_board.req_components[component] - get_flatpack_component_count(component)
 				if(diff)
 					disableReason = "Please insert [diff] [get_flatpack_component_name(component)]"
 					break
@@ -318,7 +463,10 @@
 			"name" = initial(build.name),
 			"requiredMaterials" = cost_mats,
 			"icon" = icon2base64(icon(initial(build.icon), initial(build.icon_state), frame = 1)),
-			"disableReason" = disableReason
+			"disableReason" = disableReason,
+			"selectedPartTier" = selected_component_tier,
+			"maxPartTier" = max_component_tier,
+			"supportsPartTierSelection" = !!istype(inserted_board, /obj/item/circuitboard/machine),
 		)
 	.["design"] = design
 
@@ -337,22 +485,38 @@
 			if(print_tier > max_part_tier)
 				say("Design too complex.")
 				return
-			for(var/obj/item/component as anything in inserted_board.flatpack_components)
-				if(inserted_board.req_components[component] != get_flatpack_component_count(component))
-					say("Not enough [get_flatpack_component_name(component)].")
-					return
-			if(!materials.has_materials(needed_mats, creation_efficiency))
+			var/obj/item/circuitboard/machine/machine_board = inserted_board
+			if(istype(machine_board))
+				for(var/obj/item/component as anything in machine_board.flatpack_components)
+					if(machine_board.req_components[component] != get_flatpack_component_count(component))
+						say("Not enough [get_flatpack_component_name(component)].")
+						return
+			if(!materials.can_use_resource(user_data = ID_DATA(ui.user)))
+				return
+			var/material_efficiency = get_material_efficiency_for_board(inserted_board)
+			if(!materials.mat_container.has_materials(needed_mats, material_efficiency))
 				say("Not enough materials to begin production.")
 				return
 			playsound(src, 'sound/items/tools/rped.ogg', 50, TRUE)
-
 			busy = TRUE
 			flick_overlay_view(mutable_appearance('icons/obj/machines/lathes.dmi', "flatpacker_bar"), flatpack_time)
-			addtimer(CALLBACK(src, PROC_REF(finish_build), inserted_board), flatpack_time)
+			addtimer(CALLBACK(src, PROC_REF(finish_build), inserted_board, ID_DATA(ui.user)), flatpack_time)
 			return TRUE
 
 		if("ejectBoard")
 			try_put_in_hand(inserted_board, ui.user)
+			return TRUE
+
+		if("setPartTier")
+			if(QDELETED(inserted_board) || !istype(inserted_board, /obj/item/circuitboard/machine))
+				return
+
+			var/new_tier = text2num(params["tier"])
+			if(isnull(new_tier))
+				return
+
+			selected_component_tier = clamp(new_tier, 1, max_component_tier)
+			recalculate_needed_materials()
 			return TRUE
 
 		if("eject")
@@ -373,7 +537,7 @@
 				say("No power to dispense sheets")
 				return
 
-			materials.retrieve_stack(amount, material)
+			materials.eject_sheets(material, amount, user_data = ID_DATA(ui.user))
 			return TRUE
 
 /**
@@ -382,15 +546,23 @@
  *
  * * board - the board to put inside the flatpack
  */
-/obj/machinery/flatpacker/proc/finish_build(board)
+/obj/machinery/flatpacker/proc/finish_build(obj/item/circuitboard/board, alist/user_data)
 	PRIVATE_PROC(TRUE)
 
 	busy = FALSE
 
-	materials.use_materials(needed_mats, creation_efficiency)
+	if(!materials.use_materials(needed_mats, get_material_efficiency_for_board(board), user_data = user_data))
+		say("Unable to access materials for production.")
+		SStgui.update_uis(src)
+		return
+
+	var/obj/item/circuitboard/machine/machine_board = board
+	if(istype(machine_board))
+		machine_board.replacement_parts = generate_replacement_parts()
 	var/obj/item/flatpack/box = new (drop_location(), board)
-	for(var/obj/item/component as anything in flatpacked_components)
-		component.forceMove(box)
+	if(istype(machine_board))
+		for(var/obj/item/component as anything in flatpacked_components)
+			component.forceMove(box)
 
 	SStgui.update_uis(src)
 

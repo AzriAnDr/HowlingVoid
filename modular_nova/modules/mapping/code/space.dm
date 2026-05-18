@@ -84,6 +84,8 @@
 	suffix = "blackmarket.dmm"
 	name = "Space-Ruin Shady Market"
 	description = "Whaddya buyin'?"
+	always_place = TRUE
+	cost = 0 //since always place is true, putting cost to 0 frees up the budget for other space ruins
 
 /datum/map_template/ruin/space/nova/shuttle8532
 	id = "shuttle8532"

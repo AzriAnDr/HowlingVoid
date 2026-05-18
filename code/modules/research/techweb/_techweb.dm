@@ -54,6 +54,8 @@
 
 	///Boolean on whether the techweb should generate research points overtime.
 	var/should_generate_points = FALSE
+	/// If TRUE, nodes on this techweb do not require completed experiments to unlock.
+	var/ignore_required_experiments = FALSE
 	///A multiplier applied to all research gain, cut in half if the Master server was sabotaged.
 	var/income_modifier = 1
 	///The amount of research points generated the techweb generated the latest time it generated.
@@ -252,6 +254,8 @@
  * * node - the node to check
  */
 /datum/techweb/proc/have_experiments_for_node(datum/techweb_node/node)
+	if(ignore_required_experiments)
+		return TRUE
 	. = TRUE
 	for (var/experiment_type in node.required_experiments)
 		if (!completed_experiments[experiment_type])

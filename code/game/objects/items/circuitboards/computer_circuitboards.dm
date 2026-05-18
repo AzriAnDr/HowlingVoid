@@ -2,6 +2,11 @@
 	name = "Generic"
 	abstract_type = /obj/item/circuitboard/computer
 	name_extension = "(Computer Board)"
+	var/techweb_link_on_init = TRUE
+	var/techweb_link_via_alt_click = FALSE
+	var/console_name_override
+	var/console_desc_override
+	var/list/console_req_access_override
 
 /obj/item/circuitboard/computer/examine()
 	. = ..()
@@ -437,6 +442,16 @@
 // An unlocked subtype of the board for mapping.
 /obj/item/circuitboard/computer/rdconsole/unlocked
 	locked = FALSE
+
+/obj/item/circuitboard/computer/rdconsole/proc/configure_blackmarket()
+	name = "Black Market R&D Console Board"
+	req_access = list(ACCESS_AWAY_GENERIC4)
+	techweb_link_on_init = FALSE
+	techweb_link_via_alt_click = TRUE
+	console_name_override = "black market R&D console"
+	console_desc_override = "A covert console used to manage contraband research."
+	console_req_access_override = list(ACCESS_AWAY_GENERIC4)
+	return src
 
 /obj/item/circuitboard/computer/rdconsole/examine(mob/user)
 	. = ..()

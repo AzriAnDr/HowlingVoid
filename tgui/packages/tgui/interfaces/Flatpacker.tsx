@@ -31,6 +31,8 @@ type Design = {
   icon: string;
   requiredMaterials: Material[];
   disableReason?: string;
+  selectedPartTier: number;
+  maxPartTier: number;
 };
 
 export const Flatpacker = (props: any) => {
@@ -39,7 +41,7 @@ export const Flatpacker = (props: any) => {
   const { SHEET_MATERIAL_AMOUNT, materials, design, busy } = data;
 
   return (
-    <Window width={670} height={400} title={t('ui.flatpacker.title')}>
+    <Window width={670} height={500} title={t('ui.flatpacker.title')}>
       <Window.Content>
         {!!busy && (
           <Dimmer
@@ -64,7 +66,9 @@ export const Flatpacker = (props: any) => {
                       fontSize: '18px',
                     }}
                   >
-                    {design ? toTitleCase(design.name) : t('ui.flatpacker.no_board')}
+                    {design
+                      ? toTitleCase(design.name)
+                      : t('ui.flatpacker.no_board')}
                   </Box>
                 </Section>
               </Stack.Item>
@@ -86,7 +90,11 @@ export const Flatpacker = (props: any) => {
             {design ? (
               <Stack fill>
                 <Stack.Item width={15}>
-                  <BoardPreview design={design} onPrint={() => act('build')} />
+                  <BoardPreview
+                    design={design}
+                    onPrint={() => act('build')}
+                    onSelectTier={(tier) => act('setPartTier', { tier })}
+                  />
                 </Stack.Item>
                 <Stack.Item grow>
                   <CostPreview
@@ -119,11 +127,16 @@ export const Flatpacker = (props: any) => {
 type BoardPreviewProps = {
   design: Design;
   onPrint: () => void;
+  onSelectTier: (tier: number) => void;
 };
 
 const BoardPreview = (props: BoardPreviewProps) => {
-  const { design, onPrint } = props;
+  const { design, onPrint, onSelectTier } = props;
   const { t } = usePreferencesLocalization();
+  const tiers = Array.from(
+    { length: design.maxPartTier },
+    (_, index) => index + 1,
+  );
 
   return (
     <Section fill>
@@ -136,6 +149,23 @@ const BoardPreview = (props: BoardPreviewProps) => {
                 height="128px"
                 src={`data:image/jpeg;base64,${design.icon}`}
               />
+            </Stack.Item>
+            <Stack.Item width="100%">
+              <Section title="Component tier">
+                <Stack>
+                  {tiers.map((tier) => (
+                    <Stack.Item key={tier} grow>
+                      <Button
+                        fluid
+                        selected={design.selectedPartTier === tier}
+                        onClick={() => onSelectTier(tier)}
+                      >
+                        {`T${tier}`}
+                      </Button>
+                    </Stack.Item>
+                  ))}
+                </Stack>
+              </Section>
             </Stack.Item>
           </Stack>
         </Stack.Item>
