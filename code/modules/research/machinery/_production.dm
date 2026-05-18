@@ -89,6 +89,11 @@
 
 /obj/machinery/rnd/production/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
+	if(!isnull(held_item) && manual_techweb_link_requires_alt && held_item.tool_behaviour == TOOL_MULTITOOL)
+		var/obj/item/multitool/tool = held_item.get_proxy_attacker_for(src, user)
+		if(get_multitool_techweb(tool))
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Link Techweb"
+			return CONTEXTUAL_SCREENTIP_SET
 	if(drop_direction)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Reset Drop"
 		return CONTEXTUAL_SCREENTIP_SET
@@ -485,6 +490,8 @@
 	balloon_alert(user, "dropping [dir2text(drop_direction)]")
 
 /obj/machinery/rnd/production/click_alt(mob/user)
+	if(isliving(user) && try_alt_multitool_link(user))
+		return CLICK_ACTION_SUCCESS
 	if(drop_direction == 0)
 		return CLICK_ACTION_BLOCKING
 	if(busy)

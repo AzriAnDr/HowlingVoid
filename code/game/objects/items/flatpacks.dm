@@ -1,6 +1,6 @@
 /obj/item/flatpack
 	name = "flatpack"
-	desc = "A box containing a compactly packed machine. Use multitool to deploy."
+	desc = "A box containing a compactly packed machine or console. Use multitool to deploy."
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "flatpack"
 	density = TRUE
@@ -12,9 +12,9 @@
 	custom_premium_price = PAYCHECK_COMMAND * 1.5
 
 	/// The board we deploy
-	var/obj/item/circuitboard/machine/board
+	var/obj/item/circuitboard/board
 
-/obj/item/flatpack/Initialize(mapload, obj/item/circuitboard/machine/new_board)
+/obj/item/flatpack/Initialize(mapload, obj/item/circuitboard/new_board)
 	if(isnull(board) && isnull(new_board))
 		return INITIALIZE_HINT_QDEL //how
 
@@ -71,9 +71,25 @@
 		return ITEM_INTERACT_BLOCKING
 
 	new /obj/effect/temp_visual/mook_dust(loc)
-	var/obj/item/circuitboard/machine/leaving_circuit = board
+	var/obj/item/circuitboard/leaving_circuit = board
+	var/obj/machinery/deployed_machine
+	if(istype(leaving_circuit, /obj/item/circuitboard/machine))
+		deployed_machine = deploy_machine_flatpack(leaving_circuit, user)
+	else if(istype(leaving_circuit, /obj/item/circuitboard/computer))
+		deployed_machine = deploy_computer_flatpack(leaving_circuit, user)
+	else
+		return ITEM_INTERACT_BLOCKING
+	if(isnull(deployed_machine))
+		return ITEM_INTERACT_BLOCKING
+	loc.visible_message(span_warning("[src] deploys!"))
+	playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 70, TRUE)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/flatpack/proc/deploy_machine_flatpack(obj/item/circuitboard/machine/leaving_circuit, mob/living/user)
 	if(contents.len > 1)
-		leaving_circuit.replacement_parts = leaving_circuit.flatten_component_list()
+		if(!length(leaving_circuit.replacement_parts))
+			leaving_circuit.replacement_parts = leaving_circuit.flatten_component_list()
 		for(var/obj/item/flatpack_component in src)
 			if(flatpack_component == leaving_circuit)
 				continue
@@ -88,10 +104,19 @@
 	board = null
 	var/obj/machinery/new_machine = new leaving_circuit.build_path(loc, board = leaving_circuit)
 	new_machine.on_construction(user)
-	loc.visible_message(span_warning("[src] deploys!"))
-	playsound(src, 'sound/machines/terminal/terminal_eject.ogg', 70, TRUE)
-	qdel(src)
-	return ITEM_INTERACT_SUCCESS
+	return new_machine
+
+/obj/item/flatpack/proc/deploy_computer_flatpack(obj/item/circuitboard/computer/leaving_circuit, mob/living/user)
+	board = null
+	var/obj/machinery/computer/new_computer = new leaving_circuit.build_path(loc)
+	new_computer.clear_components()
+	new_computer.set_anchored(TRUE)
+	new_computer.component_parts = list(leaving_circuit)
+	new_computer.circuit = leaving_circuit
+	leaving_circuit.forceMove(new_computer)
+	new_computer.RefreshParts()
+	new_computer.on_construction(user)
+	return new_computer
 
 ///Maximum number of flatpacks in a cart
 #define MAX_FLAT_PACKS 3

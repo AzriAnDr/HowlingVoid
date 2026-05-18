@@ -82,6 +82,20 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 	name_extension = "(Machine Board)"
 	/// Whether this machine must be anchored to be constructed.
 	var/needs_anchored = TRUE
+	/// Whether the finished machine should automatically connect to a nearby R&D techweb on init.
+	var/techweb_link_on_init = TRUE
+	/// Whether the finished machine requires alt-click with a techweb-linked multitool to connect.
+	var/techweb_link_via_alt_click = FALSE
+	/// Optional machine name override applied after construction.
+	var/machine_name_override
+	/// Optional machine description override applied after construction.
+	var/machine_desc_override
+	/// Optional access override applied after construction.
+	var/list/machine_req_access_override
+	/// Whether a constructed production machine should override its department restrictions.
+	var/override_allowed_department_flags = FALSE
+	/// Department flags override used when override_allowed_department_flags is TRUE.
+	var/allowed_department_flags_override = null
 	/// Components required by the machine.
 	/// Example: list(/obj/item/stock_parts/matter_bin = 5)
 	var/list/req_components

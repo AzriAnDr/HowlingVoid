@@ -36,6 +36,25 @@
 		research_points[i] = INFINITY
 	hidden_nodes = list()
 
+/datum/techweb/blackmarket
+	id = "BLACKMARKET"
+	organization = "Black Market"
+	should_generate_points = TRUE
+	ignore_required_experiments = TRUE
+	/// Whether this black market techweb has already recalculated full node availability.
+	var/blackmarket_nodes_initialized = FALSE
+
+/datum/techweb/blackmarket/proc/initialize_blackmarket_nodes()
+	if(blackmarket_nodes_initialized)
+		return
+
+	hidden_nodes = list()
+	for(var/node_id in SSresearch.techweb_nodes)
+		update_node_status(SSresearch.techweb_node_by_id(node_id))
+		CHECK_TICK
+
+	blackmarket_nodes_initialized = TRUE
+
 /**
  * Techweb made through tech disks
  * Contains nothing, subtype mostly meant to make it easy for admins to see.

@@ -37,6 +37,10 @@ Nothing else in the console has ID requirements.
 	var/id_cache_seq = 1
 	/// Cooldown that prevents hanging the MC when tech disks are copied
 	STATIC_COOLDOWN_DECLARE(cooldowncopy)
+	/// Whether this console should automatically connect to a nearby R&D server on init.
+	var/auto_connect_to_techweb = TRUE
+	/// Whether this console requires alt-click with a linked multitool to connect to a techweb.
+	var/manual_techweb_link_requires_alt = FALSE
 
 // An unlocked subtype of the console for mapping.
 /obj/machinery/computer/rdconsole/unlocked
@@ -53,10 +57,16 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/post_machine_initialize()
 	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
+	if(auto_connect_to_techweb && !CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
 	if(stored_research)
-		stored_research.consoles_accessing += src
+		connect_techweb(stored_research)
+
+/obj/machinery/computer/rdconsole/on_construction(mob/user)
+	. = ..()
+	apply_console_circuit_configuration()
+	if(!auto_connect_to_techweb)
+		connect_techweb(null)
 
 /obj/machinery/computer/rdconsole/Destroy()
 	if(stored_research)
@@ -69,6 +79,52 @@ Nothing else in the console has ID requirements.
 		d_disk.forceMove(get_turf(src))
 		d_disk = null
 	return ..()
+
+/obj/machinery/computer/rdconsole/proc/apply_console_circuit_configuration()
+	var/obj/item/circuitboard/computer/board = circuit
+	if(!istype(board))
+		return
+
+	auto_connect_to_techweb = board.techweb_link_on_init
+	manual_techweb_link_requires_alt = board.techweb_link_via_alt_click
+
+	if(board.console_name_override)
+		name = board.console_name_override
+	if(board.console_desc_override)
+		desc = board.console_desc_override
+	if(!isnull(board.console_req_access_override))
+		req_access = board.console_req_access_override.Copy()
+
+/obj/machinery/computer/rdconsole/proc/connect_techweb(datum/techweb/new_techweb)
+	if(stored_research == new_techweb)
+		if(stored_research && !(src in stored_research.consoles_accessing))
+			stored_research.consoles_accessing += src
+		return
+
+	if(stored_research)
+		stored_research.consoles_accessing -= src
+
+	stored_research = new_techweb
+	if(stored_research)
+		stored_research.consoles_accessing += src
+
+/obj/machinery/computer/rdconsole/proc/get_multitool_techweb(obj/item/multitool/tool)
+	if(isnull(tool) || QDELETED(tool.buffer) || !istype(tool.buffer, /datum/techweb))
+		return null
+	return tool.buffer
+
+/obj/machinery/computer/rdconsole/proc/try_alt_multitool_link(mob/living/user)
+	if(!manual_techweb_link_requires_alt)
+		return FALSE
+
+	var/obj/item/multitool/tool = user.get_active_held_item()
+	var/datum/techweb/new_techweb = get_multitool_techweb(tool)
+	if(!new_techweb)
+		return FALSE
+
+	connect_techweb(new_techweb)
+	balloon_alert(user, "techweb linked")
+	return TRUE
 
 /obj/machinery/computer/rdconsole/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/disk))
@@ -105,9 +161,18 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/multitool_act(mob/living/user, obj/item/multitool/tool)
 	. = ..()
-	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		stored_research = tool.buffer
+	var/datum/techweb/new_techweb = get_multitool_techweb(tool)
+	if(new_techweb)
+		if(manual_techweb_link_requires_alt)
+			balloon_alert(user, "alt-click to link")
+			return ITEM_INTERACT_BLOCKING
+		connect_techweb(new_techweb)
 	return TRUE
+
+/obj/machinery/computer/rdconsole/click_alt(mob/user)
+	if(isliving(user) && try_alt_multitool_link(user))
+		return CLICK_ACTION_SUCCESS
+	return ..()
 
 /obj/machinery/computer/rdconsole/proc/enqueue_node(id, mob/user)
 	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])

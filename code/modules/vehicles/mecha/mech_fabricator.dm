@@ -40,10 +40,13 @@
 
 	/// Reference to the techweb.
 	var/datum/techweb/stored_research
+	/// Whether this Exofab should automatically connect to a nearby R&D server on init.
+	var/auto_connect_to_techweb = TRUE
+	/// Whether this Exofab requires alt-click with a linked multitool to connect to a techweb.
+	var/manual_techweb_link_requires_alt = FALSE
 
 	/// Whether the Exofab links to the ore silo on init. Special derelict or maintanance variants should set this to FALSE.
 	var/link_on_init = TRUE
-
 	/// Reference to a remote material inventory, such as an ore silo.
 	var/datum/remote_materials/rmat
 
@@ -69,10 +72,47 @@
 
 /obj/machinery/mecha_part_fabricator/post_machine_initialize()
 	. = ..()
-	if(!CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
+	if(auto_connect_to_techweb && !CONFIG_GET(flag/no_default_techweb_link) && !stored_research)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(stored_research, src)
 	if(stored_research)
 		on_connected_techweb()
+
+/obj/machinery/mecha_part_fabricator/on_construction(mob/user)
+	. = ..()
+	apply_machine_circuit_configuration()
+
+/obj/machinery/mecha_part_fabricator/proc/apply_machine_circuit_configuration()
+	var/obj/item/circuitboard/machine/board = circuit
+	if(!istype(board))
+		return
+
+	auto_connect_to_techweb = board.techweb_link_on_init
+	manual_techweb_link_requires_alt = board.techweb_link_via_alt_click
+
+	if(board.machine_name_override)
+		name = board.machine_name_override
+	if(board.machine_desc_override)
+		desc = board.machine_desc_override
+	if(!isnull(board.machine_req_access_override))
+		req_access = board.machine_req_access_override.Copy()
+
+/obj/machinery/mecha_part_fabricator/proc/get_multitool_techweb(obj/item/multitool/tool)
+	if(isnull(tool) || QDELETED(tool.buffer) || !istype(tool.buffer, /datum/techweb))
+		return null
+	return tool.buffer
+
+/obj/machinery/mecha_part_fabricator/proc/try_alt_multitool_link(mob/living/user)
+	if(!manual_techweb_link_requires_alt)
+		return FALSE
+
+	var/obj/item/multitool/tool = user.get_active_held_item()
+	var/datum/techweb/new_techweb = get_multitool_techweb(tool)
+	if(!new_techweb)
+		return FALSE
+
+	connect_techweb(new_techweb)
+	balloon_alert(user, "techweb linked")
+	return TRUE
 
 /obj/machinery/mecha_part_fabricator/proc/connect_techweb(datum/techweb/new_techweb)
 	if(stored_research)
@@ -90,9 +130,18 @@
 	update_menu_tech()
 
 /obj/machinery/mecha_part_fabricator/multitool_act(mob/living/user, obj/item/multitool/tool)
-	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
-		connect_techweb(tool.buffer)
+	var/datum/techweb/new_techweb = get_multitool_techweb(tool)
+	if(new_techweb)
+		if(manual_techweb_link_requires_alt)
+			balloon_alert(user, "alt-click to link")
+			return ITEM_INTERACT_BLOCKING
+		connect_techweb(new_techweb)
 	return TRUE
+
+/obj/machinery/mecha_part_fabricator/click_alt(mob/user)
+	if(isliving(user) && try_alt_multitool_link(user))
+		return CLICK_ACTION_SUCCESS
+	return ..()
 
 /obj/machinery/mecha_part_fabricator/proc/on_techweb_update()
 	SIGNAL_HANDLER

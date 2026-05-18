@@ -112,6 +112,43 @@
 	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 
+/obj/machinery/rnd/server/blackmarket
+	name = "black market R&D server"
+	desc = "A shadow-networked server farm used to bankroll illicit research."
+	circuit = /obj/item/circuitboard/machine/rdserver
+	req_access = list(ACCESS_AWAY_GENERIC4)
+	var/pending_blackmarket_configuration = FALSE
+
+/obj/machinery/rnd/server/blackmarket/Initialize(mapload)
+	if(!istype(stored_research, /datum/techweb/blackmarket))
+		stored_research = new /datum/techweb/blackmarket
+		pending_blackmarket_configuration = TRUE
+	else
+		var/datum/techweb/blackmarket/blackmarket_web = stored_research
+		if(!blackmarket_web.blackmarket_nodes_initialized)
+			pending_blackmarket_configuration = TRUE
+	return ..()
+
+/obj/machinery/rnd/server/blackmarket/post_machine_initialize()
+	. = ..()
+	if(pending_blackmarket_configuration)
+		ensure_blackmarket_techweb()
+		pending_blackmarket_configuration = FALSE
+
+/obj/machinery/rnd/server/blackmarket/on_construction(mob/user)
+	. = ..()
+	ensure_blackmarket_techweb()
+
+/obj/machinery/rnd/server/blackmarket/proc/ensure_blackmarket_techweb()
+	if(!istype(stored_research, /datum/techweb/blackmarket))
+		if(stored_research)
+			stored_research.techweb_servers -= src
+		stored_research = new /datum/techweb/blackmarket
+
+	var/datum/techweb/blackmarket/blackmarket_web = stored_research
+	blackmarket_web.initialize_blackmarket_nodes()
+	blackmarket_web.techweb_servers |= src
+
 /// Master R&D server. As long as this still exists and still holds the HDD for the theft objective, research points generate at normal speed. Destroy it or an antag steals the HDD? Half research speed.
 /obj/machinery/rnd/server/master
 	max_integrity = 1800 //takes roughly ~15s longer to break then full deconstruction.
