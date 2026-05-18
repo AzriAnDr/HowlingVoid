@@ -20,7 +20,6 @@ const MANIFESTS = [
       job_greyscale_palettes: '/datum',
     },
     uniqueFields: ['id', 'item_path'],
-    warningUniqueFields: ['item_path'],
   },
   {
     kind: 'supply_packs',

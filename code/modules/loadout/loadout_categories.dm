@@ -29,6 +29,8 @@
 			continue
 
 		if(GLOB.all_loadout_datums[item.item_path])
+			var/datum/loadout_item/existing_item = GLOB.all_loadout_datums[item.item_path]
+			stack_trace("Duplicate loadout item_path [item.item_path] for [item.type] in [type]. Already registered by [existing_item?.type] in [existing_item?.category?.type]. Ignoring duplicate entry.")
 			associated_items.Cut(i, i + 1)
 			qdel(item, force = TRUE)
 			continue
