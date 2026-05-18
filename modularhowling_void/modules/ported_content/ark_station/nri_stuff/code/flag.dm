@@ -1,7 +1,3 @@
-/datum/loadout_item/inhand/flag_nri
-	name = "Folded Novaya Rossiyskaya Imperiya Flag"
-	item_path = /obj/item/sign/flag/nri
-
 /obj/item/sign/flag/nri
 	name = "folded flag of the Novaya Rossiyskaya Imperiya"
 	desc = "The folded flag of the Novaya Rossiyskaya Imperiya."

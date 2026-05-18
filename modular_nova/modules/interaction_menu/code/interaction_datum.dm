@@ -80,6 +80,8 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 	var/color = "blue"
 	/// What sexuality preference do we display for.
 	var/sexuality = ""
+	/// Whether this datum should be auto-registered into the player-visible interaction list.
+	var/register_in_menu = TRUE
 
 /datum/interaction/proc/normalize_translation_token(value)
 	value = lowertext("[value]")
@@ -171,6 +173,27 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 	if(type != /datum/interaction)
 		return "[type]"
 	return "name:[name]"
+
+/proc/interaction_json_to_typepath(value, expected_parent)
+	if(ispath(value))
+		if(ispath(value, expected_parent))
+			return value
+		return null
+	if(!istext(value))
+		return null
+	var/typepath = text2path(value)
+	if(!ispath(typepath, expected_parent))
+		return null
+	return typepath
+
+/proc/interaction_json_to_typepath_list(value, expected_parent)
+	var/list/raw_values = sanitize_islist(value, list())
+	var/list/typepaths = list()
+	for(var/raw_value in raw_values)
+		var/typepath = interaction_json_to_typepath(raw_value, expected_parent)
+		if(ispath(typepath, expected_parent))
+			typepaths += typepath
+	return typepaths
 
 /datum/interaction/proc/get_matching_held_item(mob/living/carbon/human/user)
 	if(!length(user_required_item_paths))
@@ -414,41 +437,86 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 		return FALSE
 	var/file = file(fpath)
 	var/list/json = json_load(file)
-	name = sanitize_text(json["name"])
-	translation_key = sanitize_text(json["translation_key"])
-	description = sanitize_text(json["description"])
-	description_translation_key = sanitize_text(json["description_translation_key"])
-	distance_allowed = sanitize_integer(json["distance_allowed"], 0, 1, 0)
-	message = sanitize_islist(json["message"], list("json error"))
-	category = sanitize_text(json["category"])
-	category_translation_key = sanitize_text(json["category_translation_key"])
-	usage = sanitize_text(json["usage"])
-	sound_use = sanitize_integer(json["sound_use"], 0, 1, 0)
-	sound_range = sanitize_integer(json["sound_range"], 1, 7, 1)
-	sound_vary = sanitize_integer(json["sound_vary"], 0, 1, 1)
-	sound_possible = sanitize_islist(json["sound_possible"], list("json error"))
-	interaction_requires = sanitize_islist(json["interaction_requires"], list())
-	color = sanitize_text(json["color"])
+	return load_from_json_data(json)
 
-	user_messages = sanitize_islist(json["user_messages"], list())
-	user_required_parts = sanitize_islist(json["user_required_parts"], list())
-	user_required_any_parts = sanitize_islist(json["user_required_any_parts"], list())
-	user_required_item_paths = sanitize_islist(json["user_required_item_paths"], list())
-	user_blocked_item_paths = sanitize_islist(json["user_blocked_item_paths"], list())
-	user_arousal = load_effect_value(json["user_arousal"])
-	user_pleasure = load_effect_value(json["user_pleasure"])
-	user_pain = load_effect_value(json["user_pain"])
-	target_messages = sanitize_islist(json["target_messages"], list())
-	target_required_parts = sanitize_islist(json["target_required_parts"], list())
-	target_required_any_parts = sanitize_islist(json["target_required_any_parts"], list())
-	target_required_item_slots = sanitize_islist(json["target_required_item_slots"], list())
-	target_required_item_paths = sanitize_islist(json["target_required_item_paths"], list())
-	target_blocked_item_paths = sanitize_islist(json["target_blocked_item_paths"], list())
-	target_arousal = load_effect_value(json["target_arousal"])
-	target_pleasure = load_effect_value(json["target_pleasure"])
-	target_pain = load_effect_value(json["target_pain"])
-	lewd = sanitize_integer(json["lewd"], 0, 1, 0)
-	sexuality = sanitize_text(json["sexuality"])
+/datum/interaction/proc/load_from_json_data(list/json, fallback_name)
+	if(!islist(json))
+		return FALSE
+	if("interaction_id" in json)
+		interaction_id = sanitize_text(json["interaction_id"])
+	if("name" in json)
+		name = sanitize_text(json["name"])
+	else if(length(fallback_name) && !length(name))
+		name = sanitize_text(fallback_name)
+	if("translation_key" in json)
+		translation_key = sanitize_text(json["translation_key"])
+	if("description" in json)
+		description = sanitize_text(json["description"])
+	if("description_translation_key" in json)
+		description_translation_key = sanitize_text(json["description_translation_key"])
+	if("distance_allowed" in json)
+		distance_allowed = sanitize_integer(json["distance_allowed"], 0, 1, 0)
+	if("message" in json)
+		message = sanitize_islist(json["message"], list("json error"))
+	if("category" in json)
+		category = sanitize_text(json["category"])
+	if("category_translation_key" in json)
+		category_translation_key = sanitize_text(json["category_translation_key"])
+	if("usage" in json)
+		usage = sanitize_text(json["usage"])
+	if("sound_use" in json)
+		sound_use = sanitize_integer(json["sound_use"], 0, 1, 0)
+	if("sound_range" in json)
+		sound_range = sanitize_integer(json["sound_range"], 1, 7, 1)
+	if("sound_vary" in json)
+		sound_vary = sanitize_integer(json["sound_vary"], 0, 1, 1)
+	if("sound_possible" in json)
+		sound_possible = sanitize_islist(json["sound_possible"], list("json error"))
+	if("interaction_requires" in json)
+		interaction_requires = sanitize_islist(json["interaction_requires"], list())
+	if("color" in json)
+		color = sanitize_text(json["color"])
+
+	if("user_messages" in json)
+		user_messages = sanitize_islist(json["user_messages"], list())
+	if("user_required_parts" in json)
+		user_required_parts = sanitize_islist(json["user_required_parts"], list())
+	if("user_required_any_parts" in json)
+		user_required_any_parts = sanitize_islist(json["user_required_any_parts"], list())
+	if("user_required_item_paths" in json)
+		user_required_item_paths = interaction_json_to_typepath_list(json["user_required_item_paths"], /obj/item)
+	if("user_blocked_item_paths" in json)
+		user_blocked_item_paths = interaction_json_to_typepath_list(json["user_blocked_item_paths"], /obj/item)
+	if("user_arousal" in json)
+		user_arousal = load_effect_value(json["user_arousal"])
+	if("user_pleasure" in json)
+		user_pleasure = load_effect_value(json["user_pleasure"])
+	if("user_pain" in json)
+		user_pain = load_effect_value(json["user_pain"])
+	if("target_messages" in json)
+		target_messages = sanitize_islist(json["target_messages"], list())
+	if("target_required_parts" in json)
+		target_required_parts = sanitize_islist(json["target_required_parts"], list())
+	if("target_required_any_parts" in json)
+		target_required_any_parts = sanitize_islist(json["target_required_any_parts"], list())
+	if("target_required_item_slots" in json)
+		target_required_item_slots = sanitize_islist(json["target_required_item_slots"], list())
+	if("target_required_item_paths" in json)
+		target_required_item_paths = interaction_json_to_typepath_list(json["target_required_item_paths"], /obj/item)
+	if("target_blocked_item_paths" in json)
+		target_blocked_item_paths = interaction_json_to_typepath_list(json["target_blocked_item_paths"], /obj/item)
+	if("target_arousal" in json)
+		target_arousal = load_effect_value(json["target_arousal"])
+	if("target_pleasure" in json)
+		target_pleasure = load_effect_value(json["target_pleasure"])
+	if("target_pain" in json)
+		target_pain = load_effect_value(json["target_pain"])
+	if("lewd" in json)
+		lewd = sanitize_integer(json["lewd"], 0, 1, 0)
+	if("sexuality" in json)
+		sexuality = sanitize_text(json["sexuality"])
+	if("register_in_menu" in json)
+		register_in_menu = sanitize_integer(json["register_in_menu"], 0, 1, 1)
 	return TRUE
 
 /datum/interaction/proc/json_save(path)
@@ -456,6 +524,7 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 	if(fexists(fpath))
 		fdel(fpath)
 	var/list/json = list(
+		"interaction_id" = interaction_id,
 		"name" = name,
 		"translation_key" = translation_key,
 		"description" = description,
@@ -490,6 +559,7 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 		"target_pain" = target_pain,
 		"lewd" = lewd,
 		"sexuality" = sexuality,
+		"register_in_menu" = register_in_menu,
 	)
 	var/file = file(fpath)
 	WRITE_FILE(file, json_encode(json))
@@ -497,6 +567,8 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 
 /// Global loading procs
 /proc/should_register_interaction_instance(datum/interaction/interaction, spath)
+	if(!interaction.register_in_menu)
+		return FALSE
 	if(interaction.name != initial(/datum/interaction::name))
 		return TRUE
 	if(interaction.description != initial(/datum/interaction::description))
@@ -507,7 +579,24 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 		return FALSE
 	return TRUE
 
+/proc/build_interaction_instance_from_json(list/json, source_name)
+	if(!islist(json))
+		return null
+	var/template_type = null
+	if("template_type" in json)
+		template_type = interaction_json_to_typepath(json["template_type"], /datum/interaction)
+		if(!ispath(template_type, /datum/interaction))
+			message_admins("Interaction json '[html_encode(source_name)]' specified an invalid template type.")
+			return null
+
+	var/datum/interaction/interaction = ispath(template_type, /datum/interaction) ? new template_type() : new()
+	if(!interaction.load_from_json_data(json, source_name))
+		qdel(interaction)
+		return null
+	return interaction
+
 /proc/populate_interaction_instances()
+	QDEL_LIST_ASSOC_VAL(GLOB.interaction_instances)
 	for(var/spath in subtypesof(/datum/interaction))
 		var/datum/interaction/interaction = new spath()
 		if(!should_register_interaction_instance(interaction, spath))
@@ -515,21 +604,37 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 			continue
 		interaction.interaction_id = "[spath]"
 		GLOB.interaction_instances[interaction.get_interaction_id()] = interaction
-	populate_interaction_jsons(INTERACTION_JSON_FOLDER)
+	for(var/directory in get_interaction_json_directories())
+		populate_interaction_jsons(directory)
+
+/proc/get_interaction_json_directories()
+	var/list/directories = list(INTERACTION_JSON_FOLDER)
+	if(length(INTERACTION_LEGACY_JSON_FOLDER) && !(INTERACTION_LEGACY_JSON_FOLDER in directories))
+		directories += INTERACTION_LEGACY_JSON_FOLDER
+	return directories
 
 /proc/populate_interaction_jsons(directory)
 	for(var/file in flist(directory))
-		if(flist(directory + file) && !findlasttext(directory + file, ".json"))
-			populate_interaction_instances(directory + file)
+		var/entry_path = "[directory][file]"
+		if(flist(entry_path) && !findlasttext(entry_path, ".json"))
+			populate_interaction_jsons(entry_path)
 			continue
-		if(findlasttext(directory + file, ".master.json")) // This is a master json which has special handling
-			populate_interaction_jsons_master(directory + file)
+		if(findlasttext(entry_path, ".master.json")) // This is a master json which has special handling
+			populate_interaction_jsons_master(entry_path)
 			continue
-		var/datum/interaction/interaction = new()
-		if(interaction.load_from_json(directory + file))
+		var/file_handle = file(entry_path)
+		var/list/json = json_load(file_handle)
+		var/datum/interaction/interaction = build_interaction_instance_from_json(json, entry_path)
+		if(!interaction)
+			message_admins("Error loading interaction from file: '[html_encode(entry_path)]'. Inform coders.")
+			continue
+		if(!length(interaction.interaction_id))
 			interaction.interaction_id = "json:[interaction.name]"
-			GLOB.interaction_instances[interaction.get_interaction_id()] = interaction
-		else message_admins("Error loading interaction from file: '[html_encode(directory + file)]'. Inform coders.")
+		if(GLOB.interaction_instances[interaction.get_interaction_id()])
+			message_admins("Interaction file '[html_encode(entry_path)]' tried to register a duplicate interaction id '[html_encode(interaction.get_interaction_id())]'.")
+			qdel(interaction)
+			continue
+		GLOB.interaction_instances[interaction.get_interaction_id()] = interaction
 
 /proc/populate_interaction_jsons_master(path)
 	if(!fexists(path))
@@ -538,50 +643,18 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 	var/file = file(path)
 	var/list/json = json_load(file)
 
-	for(var/iname in json)
-		if(GLOB.interaction_instances["json:[iname]"])
-			message_admins("Interaction Master '[html_encode(path)]' contained a duplicate interaction! '[html_encode(iname)]'")
+	for(var/entry_key in json)
+		var/list/entry_json = json[entry_key]
+		var/datum/interaction/interaction = build_interaction_instance_from_json(entry_json, "[path]::[entry_key]")
+		if(!interaction)
+			message_admins("Interaction Master '[html_encode(path)]' contained an invalid interaction! '[html_encode(entry_key)]'")
 			continue
-
-		var/list/ijson = json[iname]
-		if(ijson["name"] != iname)
-			message_admins("Interaction Master '[html_encode(path)]' contained an invalid interaction! '[html_encode(iname)]'")
+		if(!length(interaction.interaction_id))
+			interaction.interaction_id = "json:[entry_key]"
+		if(GLOB.interaction_instances[interaction.get_interaction_id()])
+			message_admins("Interaction Master '[html_encode(path)]' contained a duplicate interaction id! '[html_encode(interaction.get_interaction_id())]'")
+			qdel(interaction)
 			continue
-
-		var/datum/interaction/interaction = new()
-
-		interaction.name = sanitize_text(ijson["name"] || iname)
-		interaction.translation_key = sanitize_text(ijson["translation_key"])
-		interaction.description = sanitize_text(ijson["description"])
-		interaction.description_translation_key = sanitize_text(ijson["description_translation_key"])
-		interaction.distance_allowed = sanitize_integer(ijson["distance_allowed"], 0, 1, 0)
-		interaction.message = sanitize_islist(ijson["message"], list("json error"))
-		interaction.category = sanitize_text(ijson["category"])
-		interaction.category_translation_key = sanitize_text(ijson["category_translation_key"])
-		interaction.usage = sanitize_text(ijson["usage"])
-		interaction.sound_use = sanitize_integer(ijson["sound_use"], 0, 1, 0)
-		interaction.sound_range = sanitize_integer(ijson["sound_range"], 1, 7, 1)
-		interaction.sound_vary = sanitize_integer(ijson["sound_vary"], 0, 1, 1)
-		interaction.sound_possible = sanitize_islist(ijson["sound_possible"], list("json error"))
-		interaction.interaction_requires = sanitize_islist(ijson["interaction_requires"], list())
-		interaction.color = sanitize_text(ijson["color"])
-
-		interaction.user_messages = sanitize_islist(ijson["user_messages"], list())
-		interaction.user_required_parts = sanitize_islist(ijson["user_required_parts"], list())
-		interaction.user_required_any_parts = sanitize_islist(ijson["user_required_any_parts"], list())
-		interaction.user_arousal = sanitize_integer(ijson["user_arousal"], 0, 100, 0)
-		interaction.user_pleasure = sanitize_integer(ijson["user_pleasure"], 0, 100, 0)
-		interaction.user_pain = sanitize_integer(ijson["user_pain"], 0, 100, 0)
-		interaction.target_messages = sanitize_islist(ijson["target_messages"], list())
-		interaction.target_required_parts = sanitize_islist(ijson["target_required_parts"], list())
-		interaction.target_required_any_parts = sanitize_islist(ijson["target_required_any_parts"], list())
-		interaction.target_arousal = sanitize_integer(ijson["target_arousal"], 0, 100, 0)
-		interaction.target_pleasure = sanitize_integer(ijson["target_pleasure"], 0, 100, 0)
-		interaction.target_pain = sanitize_integer(ijson["target_pain"], 0, 100, 0)
-		interaction.lewd = sanitize_integer(ijson["lewd"], 0, 1, 0)
-		interaction.sexuality = sanitize_text(ijson["sexuality"])
-
-		interaction.interaction_id = "json:[iname]"
 		GLOB.interaction_instances[interaction.get_interaction_id()] = interaction
 
 ADMIN_VERB(reload_interactions, R_DEBUG, "Reload Interactions", "Force reload interactions.", ADMIN_CATEGORY_DEBUG)

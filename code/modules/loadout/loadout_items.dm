@@ -1,6 +1,14 @@
+/// Runtime manifest that stores data-only loadout entries outside the DM subtype tree.
+#define LOADOUT_ITEMS_MANIFEST_PATH "config/content/loadout_items.json"
+
 /// Global list of ALL loadout datums instantiated.
 /// Loadout datums are created by loadout categories.
 GLOBAL_LIST_EMPTY(all_loadout_datums)
+
+/// Data-only loadout definitions loaded from JSON manifests.
+GLOBAL_LIST_EMPTY(loadout_manifest_entries)
+GLOBAL_LIST_EMPTY(loadout_manifest_entries_by_id)
+GLOBAL_VAR_INIT(loadout_manifest_loaded, FALSE)
 
 /// Global list of all loadout categories
 /// Doesn't really NEED to be a global but we need to init this early for preferences,
@@ -23,6 +31,68 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	if(a_order == b_order)
 		return cmp_text_asc(A::category_name, B::category_name)
 	return cmp_numeric_asc(a_order, b_order)
+
+/proc/loadout_manifest_json_to_typepath(value, expected_parent)
+	if(ispath(value))
+		if(ispath(value, expected_parent))
+			return value
+		return null
+	if(!istext(value))
+		return null
+	var/comment_start = findtext(value, "//")
+	if(comment_start)
+		value = trim(copytext(value, 1, comment_start))
+	var/typepath = text2path(value)
+	if(!ispath(typepath, expected_parent))
+		return null
+	return typepath
+
+/proc/loadout_manifest_json_to_typepath_assoc(value, expected_parent)
+	var/list/raw_assoc = sanitize_islist(value, list())
+	var/list/converted = list()
+	for(var/raw_key in raw_assoc)
+		var/type_key = loadout_manifest_json_to_typepath(raw_key, expected_parent)
+		if(!ispath(type_key, expected_parent))
+			continue
+		converted[type_key] = raw_assoc[raw_key]
+	return converted
+
+/proc/ensure_loadout_manifest_entries()
+	if(GLOB.loadout_manifest_loaded)
+		return GLOB.loadout_manifest_entries
+
+	GLOB.loadout_manifest_loaded = TRUE
+	GLOB.loadout_manifest_entries = list()
+	GLOB.loadout_manifest_entries_by_id = list()
+
+	if(!fexists(LOADOUT_ITEMS_MANIFEST_PATH))
+		return GLOB.loadout_manifest_entries
+
+	var/list/raw_entries = safe_json_decode(file2text(LOADOUT_ITEMS_MANIFEST_PATH))
+	if(!islist(raw_entries))
+		stack_trace("Loadout manifest [LOADOUT_ITEMS_MANIFEST_PATH] failed to decode into a list.")
+		return GLOB.loadout_manifest_entries
+
+	for(var/raw_entry_key in raw_entries)
+		var/list/raw_entry = raw_entries[raw_entry_key]
+		if(!islist(raw_entry))
+			stack_trace("Loadout manifest entry [raw_entry_key] is not an object.")
+			continue
+		if(isnull(raw_entry["id"]))
+			raw_entry["id"] = "[raw_entry_key]"
+		var/entry_id = "[raw_entry["id"]]"
+		raw_entry["id"] = entry_id
+		GLOB.loadout_manifest_entries += list(raw_entry)
+		GLOB.loadout_manifest_entries_by_id[entry_id] = raw_entry
+
+	return GLOB.loadout_manifest_entries
+
+/proc/get_loadout_manifest_entry(manifest_id)
+	if(isnull(manifest_id))
+		return null
+
+	ensure_loadout_manifest_entries()
+	return GLOB.loadout_manifest_entries_by_id["[manifest_id]"]
 
 /**
  * # Loadout item datum
@@ -61,8 +131,17 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	/// Note: You don't need to set a color for every job or department!
 	var/list/job_greyscale_palettes
 
-/datum/loadout_item/New(category)
+/datum/loadout_item/New(category, list/manifest_entry, manifest_id)
 	src.category = category
+	if(manifest_entry)
+		if(!apply_manifest_entry(manifest_entry, manifest_id))
+			return
+
+	finalize_loadout_definition()
+
+/datum/loadout_item/proc/finalize_loadout_definition()
+	if(!ispath(item_path, /obj/item))
+		return
 
 	if(!(loadout_flags & LOADOUT_FLAG_BLOCK_GREYSCALING) && is_greyscale_item())
 		loadout_flags |= LOADOUT_FLAG_GREYSCALING_ALLOWED
@@ -83,6 +162,41 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 	if(isnull(ui_icon) && isnull(ui_icon_state))
 		ui_icon = item_path::icon_preview || item_path::icon
 		ui_icon_state = item_path::icon_state_preview || item_path::icon_state
+
+/datum/loadout_item/proc/apply_manifest_entry(list/manifest_entry, manifest_id)
+	if(!islist(manifest_entry))
+		stack_trace("Loadout manifest entry [manifest_id] is malformed.")
+		return FALSE
+
+	for(var/field_name in manifest_entry)
+		if(field_name == "template_type" || field_name == "id")
+			continue
+
+		var/value = manifest_entry[field_name]
+		switch(field_name)
+			if("item_path")
+				value = loadout_manifest_json_to_typepath(value, /obj/item)
+			if("reskin_datum")
+				value = loadout_manifest_json_to_typepath(value, /datum/atom_skin)
+			if("job_greyscale_palettes")
+				value = loadout_manifest_json_to_typepath_assoc(value, /datum)
+			if("ui_icon")
+				if(istext(value) && length(value))
+					value = file(value)
+			if("ckeywhitelist", "restricted_roles", "blacklisted_roles", "species_whitelist", "species_blacklist")
+				value = sanitize_islist(value, list())
+
+		if(!(field_name in vars))
+			stack_trace("Loadout manifest [manifest_id] tried to set unknown field [field_name] on [type].")
+			continue
+
+		src.vars[field_name] = value
+
+	if(!ispath(item_path, /obj/item))
+		stack_trace("Loadout manifest [manifest_id] did not resolve to a valid /obj/item path.")
+		return FALSE
+
+	return TRUE
 
 /datum/loadout_item/Destroy(force, ...)
 	if(!force)

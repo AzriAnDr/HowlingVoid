@@ -26,7 +26,9 @@
 	. = ..()
 	var/obj/machinery/computer/shuttle/our_computer = computer_ref?.resolve()
 	if(may_change_docks && our_computer)
-		. += span_notice("You can change where the [get_area_name(SSshuttle.getShuttle(our_computer.shuttleId))] docks using [EXAMINE_HINT("alt-right-click")].")
+		var/obj/docking_port/mobile/mobile_shuttle = SSshuttle.getShuttle(our_computer.shuttleId, FALSE)
+		if(mobile_shuttle)
+			. += span_notice("You can change where the [get_area_name(mobile_shuttle)] docks using [EXAMINE_HINT("alt-right-click")].")
 
 /obj/item/shuttle_remote/Initialize(mapload)
 	. = ..()
@@ -51,7 +53,7 @@
 		return ITEM_INTERACT_BLOCKING
 	new_computer.remote_ref = WEAKREF(src)
 	computer_ref = WEAKREF(new_computer)
-	our_port = SSshuttle.getShuttle(new_computer.shuttleId)
+	our_port = SSshuttle.getShuttle(new_computer.shuttleId, FALSE)
 	playsound(src, 'sound/machines/beep/beep.ogg', 30)
 	balloon_alert(user, "linked")
 	return ITEM_INTERACT_SUCCESS
@@ -59,15 +61,17 @@
 /obj/item/shuttle_remote/attack_self(mob/user)
 	var/obj/machinery/computer/shuttle/our_computer = computer_ref?.resolve()
 	if(!our_port)
-		our_port = SSshuttle.getShuttle(our_computer.shuttleId) //incase we were maploaded
+		our_port = SSshuttle.getShuttle(our_computer.shuttleId, FALSE) //incase we were maploaded
 	if(!can_use(user))
 		return
 
 	var/obj/docking_port/home = SSshuttle.getDock(shuttle_home_id)
 	var/obj/docking_port/away = SSshuttle.getDock(shuttle_away_id)
 	var/obj/docking_port/dock = our_port.get_docked()
+	var/obj/docking_port/mobile/mobile_shuttle = SSshuttle.getShuttle(our_computer.shuttleId, FALSE)
+	var/shuttle_area_name = mobile_shuttle ? get_area_name(mobile_shuttle) : "the shuttle"
 
-	var/send_off_text = "Are you sure you want to send off [get_area_name(SSshuttle.getShuttle(our_computer.shuttleId))] to [away.name]?"
+	var/send_off_text = "Are you sure you want to send off [shuttle_area_name] to [away.name]?"
 	var/list/send_off_options = list("Yes", "No")
 	var/destination = null
 
@@ -76,7 +80,7 @@
 			if("Yes")
 				destination = away.shuttle_id
 	else if(away == dock)
-		send_off_text = "Are you sure you want to call [get_area_name(SSshuttle.getShuttle(our_computer.shuttleId))] to [home.name]?"
+		send_off_text = "Are you sure you want to call [shuttle_area_name] to [home.name]?"
 		for(var/list/possible_destinations in our_computer.get_valid_destinations())
 			if(LAZYACCESS(possible_destinations, "id") == "[our_computer.shuttleId]_custom")
 				send_off_text += "\n\nCustom location loaded, try to dock?"

@@ -4,6 +4,45 @@
 		{
 			"type": "process",
 			"command": "tools/build/build.sh",
+			"args": ["--profile-build", "--explain-rebuild"],
+			"windows": {
+				"command": ".\\tools\\build\\build.bat",
+				"args": ["--profile-build", "--explain-rebuild"]
+			},
+			"options": {
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
+			"problemMatcher": ["$dreammaker", "$tsc", "$eslint-stylish"],
+			"group": {
+				"kind": "build"
+			},
+			"dependsOn": "dm: reparse",
+			"label": "Build All (profiled)"
+		},
+		{
+			"type": "process",
+			"command": "tools/build/build.sh",
+			"args": ["content-validate"],
+			"windows": {
+				"command": ".\\tools\\build\\build.bat",
+				"args": ["content-validate"]
+			},
+			"options": {
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
+			"group": {
+				"kind": "build"
+			},
+			"dependsOn": "dm: reparse",
+			"label": "Validate Content Manifests"
+		},
+		{
+			"type": "process",
+			"command": "tools/build/build.sh",
 			"windows": {
 				"command": ".\\tools\\build\\build.bat"
 			},

@@ -37,23 +37,11 @@
 
 	return ..()
 
-/* // NOVA EDIT REMOVAL START - We have these under 'toys' not 'pocket items'
+// NOVA EDIT REMOVAL START - Data-only pocket entries were migrated into the loadout manifest.
 /datum/loadout_item/pocket_items/plush
 	group = "Plushies"
 	abstract_type = /datum/loadout_item/pocket_items/plush
 	loadout_flags = LOADOUT_FLAG_ALLOW_NAMING
-
-/datum/loadout_item/pocket_items/plush/bee
-	name = "Plush (Bee)"
-	item_path = /obj/item/toy/plush/beeplushie
-
-/datum/loadout_item/pocket_items/plush/carp
-	name = "Plush (Carp)"
-	item_path = /obj/item/toy/plush/carpplushie
-
-/datum/loadout_item/pocket_items/plush/lizard_greyscale
-	name = "Plush (Lizard, Colorable)"
-	item_path = /obj/item/toy/plush/lizard_plushie/greyscale
 
 /datum/loadout_item/pocket_items/plush/lizard_random
 	name = "Plush (Lizard, Random)"
@@ -62,111 +50,9 @@
 	ui_icon_state = "plushie_lizard_random"
 	item_path = /obj/item/toy/plush/lizard_plushie
 
-/datum/loadout_item/pocket_items/plush/moth
-	name = "Plush (Moth)"
-	item_path = /obj/item/toy/plush/moth
-
-/datum/loadout_item/pocket_items/plush/nukie
-	name = "Plush (Nukie)"
-	item_path = /obj/item/toy/plush/nukeplushie
-
-/datum/loadout_item/pocket_items/plush/peacekeeper
-	name = "Plush (Peacekeeper)"
-	item_path = /obj/item/toy/plush/pkplush
-
-/datum/loadout_item/pocket_items/plush/plasmaman
-	name = "Plush (Plasmaman)"
-	item_path = /obj/item/toy/plush/plasmamanplushie
-
-/datum/loadout_item/pocket_items/plush/human
-	name = "Plush (human)"
-	item_path = /obj/item/toy/plush/human
-
-/datum/loadout_item/pocket_items/plush/rouny
-	name = "Plush (Rouny)"
-	item_path = /obj/item/toy/plush/rouny
-
-/datum/loadout_item/pocket_items/plush/snake
-	name = "Plush (Snake)"
-	item_path = /obj/item/toy/plush/snakeplushie
-
-/datum/loadout_item/pocket_items/plush/horse
-	name = "Plush (Horse)"
-	item_path = /obj/item/toy/plush/horse
-
 /datum/loadout_item/pocket_items/dice
 	group = "Dice"
 	abstract_type = /datum/loadout_item/pocket_items/dice
-
-/datum/loadout_item/pocket_items/dice/dice_bag
-	name = "Dice Bag"
-	item_path = /obj/item/storage/dice
-
-/datum/loadout_item/pocket_items/dice/d1
-	name = "D1"
-	item_path = /obj/item/dice/d1
-
-/datum/loadout_item/pocket_items/dice/d2
-	name = "D2"
-	item_path = /obj/item/dice/d2
-
-/datum/loadout_item/pocket_items/dice/d4
-	name = "D4"
-	item_path = /obj/item/dice/d4
-
-/datum/loadout_item/pocket_items/dice/d6
-	name = "D6"
-	item_path = /obj/item/dice/d6
-
-/datum/loadout_item/pocket_items/dice/d6_ebony
-	name = "D6 (Ebony)"
-	item_path = /obj/item/dice/d6/ebony
-
-/datum/loadout_item/pocket_items/dice/d6_space
-	name = "D6 (Space)"
-	item_path = /obj/item/dice/d6/space
-
-/datum/loadout_item/pocket_items/dice/d8
-	name = "D8"
-	item_path = /obj/item/dice/d8
-
-/datum/loadout_item/pocket_items/dice/d10
-	name = "D10"
-	item_path = /obj/item/dice/d10
-
-/datum/loadout_item/pocket_items/dice/d12
-	name = "D12"
-	item_path = /obj/item/dice/d12
-
-/datum/loadout_item/pocket_items/dice/d20
-	name = "D20"
-	item_path = /obj/item/dice/d20
-
-/datum/loadout_item/pocket_items/dice/d100
-	name = "D100"
-	item_path = /obj/item/dice/d100
-
-/datum/loadout_item/pocket_items/dice/d00
-	name = "D00"
-	item_path = /obj/item/dice/d00
-
-/datum/loadout_item/pocket_items/card_binder
-	name = "Card Binder"
-	item_path = /obj/item/storage/card_binder
-
-/datum/loadout_item/pocket_items/card_deck
-	name = "Playing Card Deck"
-	item_path = /obj/item/toy/cards/deck
-
-/datum/loadout_item/pocket_items/kotahi_deck
-	name = "Kotahi Deck"
-	item_path = /obj/item/toy/cards/deck/kotahi
-
-/datum/loadout_item/pocket_items/wizoff_deck
-	name = "Wizoff Deck"
-	item_path = /obj/item/toy/cards/deck/wizoff
-// NOVA EDIT REMOVAL END
-*/
 
 /datum/loadout_item/pocket_items/lipstick
 	name = "Lipstick"
@@ -237,43 +123,6 @@
 
 	return ..()
 
-/datum/loadout_item/pocket_items/lighter
-	name = "Zippo Lighter"
-	item_path = /obj/item/lighter
-
-/datum/loadout_item/pocket_items/flask
-	name = "Pocket Flask"
-	item_path = /obj/item/reagent_containers/cup/glass/flask
-
-/datum/loadout_item/pocket_items/clipboard
-	name = "Clipboard"
-	item_path = /obj/item/clipboard
-
-/datum/loadout_item/pocket_items/dye
-	name = "Hair Dye"
-	item_path = /obj/item/dyespray
-
-/datum/loadout_item/pocket_items/poster
-	name = "Poster (Contraband)"
-	item_path = /obj/item/poster/random_contraband
-
-/datum/loadout_item/pocket_items/poster_pinup
-	name = "Poster (Pinup)"
-	item_path = /obj/item/poster/random_contraband/pinup
-
-/datum/loadout_item/pocket_items/holodisk
-	name = "Holodisk"
-	item_path = /obj/item/disk/holodisk
-
-/datum/loadout_item/pocket_items/mug_nt
-	name = "Nanotrasen Mug"
-	item_path = /obj/item/reagent_containers/cup/glass/mug/nanotrasen
-
-/datum/loadout_item/pocket_items/britcup
-	name = "British Flag Cup"
-	item_path = /obj/item/reagent_containers/cup/glass/mug/britcup
-
-// The wallet loadout item is special, and puts the player's ID and other small items into it on initialize (fancy!)
 /datum/loadout_item/pocket_items/wallet
 	name = "Wallet"
 	item_path = /obj/item/storage/wallet
@@ -316,7 +165,6 @@
 			continue
 		wallet.atom_storage.attempt_insert(thing, override = TRUE, force = STORAGE_FULLY_LOCKED, messages = FALSE)
 
-
 /datum/loadout_item/pocket_items/borg_me_dogtag
 	item_path = /obj/item/clothing/accessory/dogtag/borg_ready
 
@@ -332,7 +180,3 @@
 	UnregisterSignal(source, COMSIG_HUMAN_CHARACTER_SETUP_FINISHED)
 	var/datum/record/crew/record = find_record(source.real_name)
 	record?.medical_notes += new /datum/medical_note("Central Command", "Patient is a registered brain donor for Robotics research.", null)
-
-/datum/loadout_item/pocket_items/candles
-	name = "Box of Candles"
-	item_path = /obj/item/storage/fancy/candle_box

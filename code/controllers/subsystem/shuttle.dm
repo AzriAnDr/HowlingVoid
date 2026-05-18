@@ -323,17 +323,23 @@ SUBSYSTEM_DEF(shuttle)
 		return
 	emergency_no_recall = FALSE
 
-/datum/controller/subsystem/shuttle/proc/getShuttle(id)
+/datum/controller/subsystem/shuttle/proc/getShuttle(id, warn_if_missing = TRUE)
+	if(!length(id))
+		return null
 	for(var/obj/docking_port/mobile/M in mobile_docking_ports)
 		if(M.shuttle_id == id)
 			return M
-	WARNING("couldn't find shuttle with id: [id]")
+	if(warn_if_missing && initialized)
+		WARNING("couldn't find shuttle with id: [id]")
 
-/datum/controller/subsystem/shuttle/proc/getDock(id)
+/datum/controller/subsystem/shuttle/proc/getDock(id, warn_if_missing = TRUE)
+	if(!length(id))
+		return null
 	for(var/obj/docking_port/stationary/S in stationary_docking_ports)
 		if(S.shuttle_id == id)
 			return S
-	WARNING("couldn't find dock with id: [id]")
+	if(warn_if_missing && initialized)
+		WARNING("couldn't find dock with id: [id]")
 
 /// Check if we can call the evac shuttle.
 /// Returns TRUE if we can. Otherwise, returns a string detailing the problem.
