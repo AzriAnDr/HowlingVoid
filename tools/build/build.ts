@@ -8,6 +8,7 @@
  */
 
 import fs from 'node:fs';
+import path from 'node:path';
 import Bun from 'bun';
 import Juke from './juke/index.js';
 import { bun, bunRoot } from './lib/bun';
@@ -19,6 +20,18 @@ import { prependDefines } from './lib/tgs';
 export const TGS_MODE = process.env.CBT_BUILD_MODE === 'TGS';
 
 export const DME_NAME = 'tgstation';
+
+const hasCliFlag = (flag: string) =>
+  process.argv.includes(flag) ||
+  process.argv.some((arg) => arg.startsWith(`${flag}=`));
+
+if (hasCliFlag('--profile-build')) {
+  process.env.JUKE_PROFILE_BUILD = '1';
+}
+
+if (hasCliFlag('--explain-rebuild')) {
+  process.env.JUKE_EXPLAIN_REBUILD = '1';
+}
 
 Juke.chdir('../..', import.meta.url);
 
@@ -44,6 +57,141 @@ function getCutterPath() {
 
 const cutter_path = getCutterPath();
 
+const BUILD_PROFILE_OUTPUT = 'tmp/build/build-profile.json';
+const CONTENT_VALIDATE_OUTPUT = 'tmp/build/content-validate.json';
+const SUBTYPE_REPORT_OUTPUT = 'tmp/build/subtype-report.json';
+
+const TGUI_SOURCE_EXTENSIONS = new Set([
+  '.css',
+  '.cjs',
+  '.js',
+  '.jsx',
+  '.mjs',
+  '.scss',
+  '.svg',
+  '.ts',
+  '.tsx',
+]);
+
+const TRACKED_SUBTYPE_ROOTS = [
+  '/obj/item',
+  '/datum/loadout_item',
+  '/datum/sprite_accessory',
+  '/datum/supply_pack',
+  '/datum/interaction',
+  '/datum/greyscale_config',
+] as const;
+
+function normalizePath(filePath: string) {
+  return filePath.replaceAll('\\', '/');
+}
+
+function walkFiles(
+  root: string,
+  options: {
+    extensions?: Set<string>;
+    excludeDirs?: Set<string>;
+  } = {},
+): string[] {
+  if (!fs.existsSync(root)) {
+    return [];
+  }
+
+  const {
+    extensions,
+    excludeDirs = new Set<string>(),
+  } = options;
+  const files: string[] = [];
+  const stack = [root];
+
+  while (stack.length > 0) {
+    const current = stack.pop();
+    if (!current) {
+      continue;
+    }
+
+    for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+      const entryPath = normalizePath(path.join(current, entry.name));
+
+      if (entry.isDirectory()) {
+        if (!excludeDirs.has(entry.name)) {
+          stack.push(entryPath);
+        }
+        continue;
+      }
+
+      if (extensions && !extensions.has(path.extname(entry.name))) {
+        continue;
+      }
+
+      files.push(entryPath);
+    }
+  }
+
+  files.sort();
+  return files;
+}
+
+function getTguiWorkspacePackageDirs() {
+  const packagesRoot = 'tgui/packages';
+  if (!fs.existsSync(packagesRoot)) {
+    return [];
+  }
+
+  return fs
+    .readdirSync(packagesRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => `${packagesRoot}/${entry.name}`)
+    .sort();
+}
+
+function getTguiWorkspaceManifests() {
+  return [
+    'tgui/package.json',
+    'tgui/bun.lock',
+    ...getTguiWorkspacePackageDirs().map((pkgDir) => `${pkgDir}/package.json`),
+  ];
+}
+
+function getTguiWorkspaceSources() {
+  return [
+    'tgui/rspack.config.ts',
+    'tgui/tsconfig.json',
+    'tgui/bunfig.toml',
+    'tgui/global.d.ts',
+    'tgui/happydom.ts',
+    ...walkFiles('tgui/packages', {
+      extensions: TGUI_SOURCE_EXTENSIONS,
+      excludeDirs: new Set(['dist', 'node_modules', 'public', 'static']),
+    }),
+  ];
+}
+
+function getTrackedDmSubtypeFiles() {
+  return [
+    ...walkFiles('code', { extensions: new Set(['.dm']) }),
+    ...walkFiles('modular_nova', { extensions: new Set(['.dm']) }),
+    ...walkFiles('modularhowling_void', { extensions: new Set(['.dm']) }),
+  ];
+}
+
+function countTrackedSubtypes(fileContents: string) {
+  const counts = Object.fromEntries(
+    TRACKED_SUBTYPE_ROOTS.map((root) => [root, 0]),
+  ) as Record<(typeof TRACKED_SUBTYPE_ROOTS)[number], number>;
+
+  for (const match of fileContents.matchAll(/^\s*(\/[^\s(]+)\s*$/gm)) {
+    const typePath = match[1];
+    for (const root of TRACKED_SUBTYPE_ROOTS) {
+      if (typePath === root || typePath.startsWith(`${root}/`)) {
+        counts[root] += 1;
+      }
+    }
+  }
+
+  return counts;
+}
+
 export const DefineParameter = new Juke.Parameter({
   type: 'string[]',
   alias: 'D',
@@ -59,6 +207,16 @@ export const DmVersionParameter = new Juke.Parameter({
 });
 
 export const CiParameter = new Juke.Parameter({ type: 'boolean' });
+
+export const ProfileBuildParameter = new Juke.Parameter({
+  type: 'boolean',
+  name: 'profile-build',
+});
+
+export const ExplainRebuildParameter = new Juke.Parameter({
+  type: 'boolean',
+  name: 'explain-rebuild',
+});
 
 export const ForceRecutParameter = new Juke.Parameter({
   type: 'boolean',
@@ -156,6 +314,15 @@ export const IconCutterTarget = new Juke.Target({
 });
 
 export const DmMapsIncludeTarget = new Juke.Target({
+  inputs: [
+    '_maps/map_files/**/modular_pieces/*.dmm',
+    '_maps/RandomRuins/**/*.dmm',
+    '_maps/RandomZLevels/**/*.dmm',
+    '_maps/shuttles/**/*.dmm',
+    '_maps/templates/**/*.dmm',
+    '_maps/nova/**/*.dmm',
+  ],
+  outputs: ['_maps/templates.dm', '_maps/templates_nova.dm'],
   executes: async () => {
     const folders = [
       ...Juke.glob('_maps/map_files/**/modular_pieces/*.dmm'),
@@ -211,7 +378,7 @@ export const DmTarget = new Juke.Target({
     get(DefineParameter).includes('NOVA_TEMPLATES') && DmMapsIncludeTarget, // NOVA EDIT ADDITION
     !get(SkipIconCutter) && IconCutterTarget,
   ],
-  inputs: [
+  inputs: ({ get }) => [
     '_maps/map_files/generic/**',
     'maps/**/*.dm',
     'code/**',
@@ -219,8 +386,20 @@ export const DmTarget = new Juke.Target({
     'icons/**',
     'interface/**',
     'sound/**',
-    'tgui/public/tgui.html',
-    "modular_nova/**", ///NOVA EDIT ADDITION - Making the CBT work
+    'tgui/public/**',
+    'tgui/packages/tgfont/static/**',
+    'modular_nova/**', // NOVA EDIT ADDITION - Making the CBT work
+    'modularhowling_void/**',
+    ...(
+      get(DefineParameter).includes('ALL_TEMPLATES')
+        ? ['_maps/templates.dm']
+        : []
+    ),
+    ...(
+      get(DefineParameter).includes('NOVA_TEMPLATES')
+        ? ['_maps/templates_nova.dm']
+        : []
+    ),
     `${DME_NAME}.dme`,
     NamedVersionFile,
   ],
@@ -329,7 +508,7 @@ export const AutowikiTarget = new Juke.Target({
 
 export const BunTarget = new Juke.Target({
   parameters: [CiParameter],
-  inputs: ['tgui/**/package.json'],
+  inputs: () => getTguiWorkspaceManifests(),
   executes: () => {
     return bun('install', '--frozen-lockfile', '--ignore-scripts');
   },
@@ -348,16 +527,24 @@ export const BiomeInstallTarget = new Juke.Target({
 
 export const TgFontTarget = new Juke.Target({
   dependsOn: [BunTarget],
-  inputs: [
-    'tgui/packages/tgfont/**/*.+(js|mjs|svg)',
+  inputs: () => [
     'tgui/packages/tgfont/package.json',
+    ...walkFiles('tgui/packages/tgfont', {
+      extensions: TGUI_SOURCE_EXTENSIONS,
+      excludeDirs: new Set(['dist', 'node_modules', 'static']),
+    }),
   ],
   outputs: [
     'tgui/packages/tgfont/dist/tgfont.css',
     'tgui/packages/tgfont/dist/tgfont.woff2',
+    'tgui/packages/tgfont/static/tgfont.css',
+    'tgui/packages/tgfont/static/tgfont.woff2',
   ],
   executes: async () => {
-    await bun('tgfont:build');
+    await Juke.exec('bun', ['run', 'tgfont:build'], {
+      cwd: './tgui/packages/tgfont',
+      shell: true,
+    });
     fs.mkdirSync('tgui/packages/tgfont/static', { recursive: true });
     fs.copyFileSync(
       'tgui/packages/tgfont/dist/tgfont.css',
@@ -371,12 +558,8 @@ export const TgFontTarget = new Juke.Target({
 });
 
 export const TguiTarget = new Juke.Target({
-  dependsOn: [BunTarget, BiomeInstallTarget],
-  inputs: [
-    'tgui/rspack.config.ts',
-    'tgui/**/package.json',
-    'tgui/packages/**/*.+(js|cjs|ts|tsx|jsx|scss)',
-  ],
+  dependsOn: [BunTarget, BiomeInstallTarget, TgFontTarget],
+  inputs: () => [...getTguiWorkspaceManifests(), ...getTguiWorkspaceSources()],
   outputs: [
     'tgui/public/tgui.bundle.css',
     'tgui/public/tgui.bundle.js',
@@ -418,6 +601,46 @@ export const TguiAnalyzeTarget = new Juke.Target({
   executes: () => bun('tgui:analyze'),
 });
 
+export const ContentValidateTarget = new Juke.Target({
+  inputs: () => [
+    'config/content/loadout_items.json',
+    'tools/build/validate_content_manifests.mjs',
+    ...getTrackedDmSubtypeFiles(),
+  ],
+  outputs: [CONTENT_VALIDATE_OUTPUT],
+  executes: () => bunRoot('tools/build/validate_content_manifests.mjs', CONTENT_VALIDATE_OUTPUT),
+});
+
+export const SubtypeReportTarget = new Juke.Target({
+  inputs: () => getTrackedDmSubtypeFiles(),
+  outputs: [SUBTYPE_REPORT_OUTPUT],
+  executes: async () => {
+    const report = {
+      generatedAt: new Date().toISOString(),
+      trackedRoots: Object.fromEntries(
+        TRACKED_SUBTYPE_ROOTS.map((root) => [root, 0]),
+      ) as Record<(typeof TRACKED_SUBTYPE_ROOTS)[number], number>,
+      fileCount: 0,
+    };
+
+    for (const filePath of getTrackedDmSubtypeFiles()) {
+      const counts = countTrackedSubtypes(fs.readFileSync(filePath, 'utf8'));
+      report.fileCount += 1;
+      for (const root of TRACKED_SUBTYPE_ROOTS) {
+        report.trackedRoots[root] += counts[root];
+      }
+    }
+
+    fs.mkdirSync(path.dirname(SUBTYPE_REPORT_OUTPUT), { recursive: true });
+    fs.writeFileSync(SUBTYPE_REPORT_OUTPUT, JSON.stringify(report, null, 2));
+
+    const summary = TRACKED_SUBTYPE_ROOTS.map(
+      (root) => `${root}=${report.trackedRoots[root]}`,
+    ).join(', ');
+    Juke.logger.info(`Subtype report updated: ${summary}`);
+  },
+});
+
 export const TestTarget = new Juke.Target({
   dependsOn: [DmTestTarget, TguiTestTarget],
 });
@@ -427,7 +650,7 @@ export const LintTarget = new Juke.Target({
 });
 
 export const BuildTarget = new Juke.Target({
-  dependsOn: [TguiTarget, DmTarget],
+  dependsOn: [ContentValidateTarget, SubtypeReportTarget, TguiTarget, DmTarget],
 });
 
 export const ServerTarget = new Juke.Target({
@@ -453,6 +676,7 @@ export const TguiCleanTarget = new Juke.Target({
     Juke.rm('tgui/public/*.map');
     Juke.rm('tgui/public/*.{chunk,bundle,hot-update}.*');
     Juke.rm('tgui/packages/tgfont/dist', { recursive: true });
+    Juke.rm('tgui/packages/tgfont/static', { recursive: true });
     Juke.rm('tgui/node_modules', { recursive: true });
     Juke.rm('tgui/packages/*/node_modules', { recursive: true });
   },
@@ -463,6 +687,10 @@ export const CleanTarget = new Juke.Target({
   executes: async () => {
     Juke.rm('*.{dmb,rsc}');
     Juke.rm('_maps/templates.dm');
+    Juke.rm('_maps/templates_nova.dm');
+    Juke.rm(BUILD_PROFILE_OUTPUT);
+    Juke.rm(CONTENT_VALIDATE_OUTPUT);
+    Juke.rm(SUBTYPE_REPORT_OUTPUT);
   },
 });
 

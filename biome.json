@@ -24,6 +24,9 @@
 			"!tgui/public",
 			"tgui/public/tgui.html",
 			"!tgui/packages/tgui-setup/helpers.js",
+			"!tgui/packages/tgfont/dist",
+			"!tgui/packages/tgfont/static",
+			"!tools/build/juke",
 			"!**/bun.lock"
 		]
 	},

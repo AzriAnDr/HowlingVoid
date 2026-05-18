@@ -29,38 +29,6 @@
 *	ITEMS BELOW HERE
 */
 
-/datum/loadout_item/glasses/biker
-	name = "Biker Goggles"
-	item_path = /obj/item/clothing/glasses/biker
-
-/datum/loadout_item/glasses/retinal_projector
-	name = "Civilian Retinal Projector"
-	item_path = /obj/item/clothing/glasses/hud/ar/projector
-
-/datum/loadout_item/glasses/aviator_fake
-	name = "Fake Aviators"
-	item_path = /obj/item/clothing/glasses/fake_sunglasses/aviator
-
-/datum/loadout_item/glasses/geist_glasses
-	name = "Geist Gazers"
-	item_path = /obj/item/clothing/glasses/geist_gazers
-
-/datum/loadout_item/glasses/osi
-	name = "OSI Glasses"
-	item_path = /obj/item/clothing/glasses/osi
-
-/datum/loadout_item/glasses/phantom
-	name = "Phantom Glasses"
-	item_path = /obj/item/clothing/glasses/phantom
-
-/datum/loadout_item/glasses/psych_glasses
-	name = "Psych Glasses"
-	item_path = /obj/item/clothing/glasses/psych
-
-/*
- *	PRESCRIPTION GLASSES
- */
-
 /datum/loadout_item/glasses/regular
 	//"Glasses"
 	group = "Prescription"
@@ -81,54 +49,6 @@
 	//"Jamjar Glasses"
 	group = "Prescription"
 
-/datum/loadout_item/glasses/better
-	name = "Modern Glasses"
-	item_path = /obj/item/clothing/glasses/regular/modern
-	reskin_datum = /datum/atom_skin/modern_glasses
-	group = "Prescription"
-
-/datum/loadout_item/glasses/thin
-	name = "Thin-Framed Glasses"
-	item_path = /obj/item/clothing/glasses/regular/thin
-	group = "Prescription"
-
-/*
-*	Eyepatches/Blindfolds
-*/
-
-/datum/loadout_item/glasses/white_eyepatch
-	name = "Eyepatch (White)"
-	item_path = /obj/item/clothing/glasses/eyepatch/white
-
-/datum/loadout_item/glasses/medical_eyepatch
-	name = "Eyepatch - Medical"
-	item_path = /obj/item/clothing/glasses/eyepatch/medical
-
-/datum/loadout_item/glasses/eyewrap
-	name = "Eyepatch - Wrap"
-	item_path = /obj/item/clothing/glasses/eyepatch/wrap
-
-/datum/loadout_item/glasses/blindfold
-	name = "Blindfold"
-	item_path = /obj/item/clothing/glasses/blindfold
-
-/datum/loadout_item/glasses/blindfold/color
-	name = "Blindfold - Blind Personnel"
-	item_path = /obj/item/clothing/glasses/blindfold/color
-
-/datum/loadout_item/glasses/fakeblindfold
-	name = "Blindfold - Fake"
-	item_path = /obj/item/clothing/glasses/trickblindfold
-
-/datum/loadout_item/glasses/obsoleteblindfold
-	name = "Blindfold - Obselete HUD"
-	item_path = /obj/item/clothing/glasses/trickblindfold/obsolete
-
-/*
- *	JOB-LOCKED
-*/
-
-//Diagnostic
 /datum/loadout_item/glasses/robopatch
 	name = "Diagnostic HUD - Eyepatch"
 	item_path = /obj/item/clothing/glasses/hud/eyepatch/diagnostic
@@ -303,7 +223,3 @@
 /datum/loadout_item/glasses/donator
 	abstract_type = /datum/loadout_item/glasses/donator
 	donator_only = TRUE
-
-/datum/loadout_item/glasses/donator/fake_sunglasses
-	name = "Fake Sunglasses"
-	item_path = /obj/item/clothing/glasses/fake_sunglasses

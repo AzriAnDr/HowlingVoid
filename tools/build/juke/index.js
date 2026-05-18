@@ -4349,10 +4349,99 @@ var chdir = (directory, relativeTo) => {
 
 // pnp:/Users/style/Documents/Projects/juke-build/src/exec.ts
 var import_chalk = __toModule(require_source());
+var import_async_hooks = __toModule(require("async_hooks"));
 var import_child_process = __toModule(require("child_process"));
 var import_fs2 = __toModule(require("fs"));
 var import_path2 = __toModule(require("path"));
 var children = new Set();
+var hasCliFlag = (flag) => process.argv.includes(flag) || process.argv.some((arg) => arg.startsWith(`${flag}=`));
+var profileBuildEnabled = process.env.JUKE_PROFILE_BUILD === "1" || hasCliFlag("--profile-build");
+var explainRebuildEnabled = process.env.JUKE_EXPLAIN_REBUILD === "1" || hasCliFlag("--explain-rebuild");
+var profileAsyncStorage = new import_async_hooks.AsyncLocalStorage();
+var buildProfilePath = "tmp/build/build-profile.json";
+var targetProfiles = new Map();
+var getTargetProfile = (name) => {
+  let profile = targetProfiles.get(name);
+  if (!profile) {
+    profile = {
+      name,
+      status: "pending",
+      dependencies: [],
+      inputCount: 0,
+      outputCount: 0,
+      reason: null,
+      durationMs: 0,
+      peakChildRssBytes: 0,
+      childProcesses: []
+    };
+    targetProfiles.set(name, profile);
+  }
+  return profile;
+};
+var toProfilePath = (filePath) => {
+  try {
+    return (0, import_path2.relative)(process.cwd(), filePath).replaceAll("\\", "/") || filePath;
+  } catch {
+    return filePath;
+  }
+};
+var getProcessRssBytes = (pid) => {
+  try {
+    if (!pid) {
+      return 0;
+    }
+    if (process.platform === "win32") {
+      const output = import_child_process.execFileSync("powershell", [
+        "-NoProfile",
+        "-Command",
+        `(Get-Process -Id ${pid} -ErrorAction SilentlyContinue | Select-Object -ExpandProperty WorkingSet64)`
+      ], {
+        encoding: "utf8",
+        windowsHide: true
+      });
+      const digits = output.replace(/[^\d]/g, "");
+      return digits ? Number.parseInt(digits, 10) : 0;
+    }
+    if (process.platform === "linux") {
+      const status = import_fs2.default.readFileSync(`/proc/${pid}/status`, "utf8");
+      const match = status.match(/VmRSS:\s+(\d+)\s+kB/i);
+      return match ? Number.parseInt(match[1], 10) * 1024 : 0;
+    }
+    const output = import_child_process.execFileSync("ps", ["-o", "rss=", "-p", String(pid)], {
+      encoding: "utf8"
+    }).trim();
+    const digits = output.replace(/[^\d]/g, "");
+    return digits ? Number.parseInt(digits, 10) * 1024 : 0;
+  } catch {
+    return 0;
+  }
+};
+var recordExecProfile = (profile) => {
+  if (!profileBuildEnabled) {
+    return;
+  }
+  const store = profileAsyncStorage.getStore();
+  if (!store || !store.targetName) {
+    return;
+  }
+  const targetProfile = getTargetProfile(store.targetName);
+  targetProfile.peakChildRssBytes = Math.max(targetProfile.peakChildRssBytes || 0, profile.peakRssBytes || 0);
+  targetProfile.childProcesses.push(profile);
+};
+var writeBuildProfile = () => {
+  if (!profileBuildEnabled) {
+    return;
+  }
+  import_fs2.default.mkdirSync((0, import_path2.dirname)(buildProfilePath), {
+    recursive: true
+  });
+  const targets = Array.from(targetProfiles.values()).sort((left, right) => left.name.localeCompare(right.name));
+  import_fs2.default.writeFileSync(buildProfilePath, JSON.stringify({
+    generatedAt: (/* @__PURE__ */ new Date()).toISOString(),
+    cwd: process.cwd(),
+    targets
+  }, null, 2));
+};
 var killChildren = () => {
   for (const child of children) {
     child.kill("SIGTERM");
@@ -4409,6 +4498,14 @@ var exec = (executable, args = [], options = {}) => {
     let stdout = "";
     let stderr = "";
     let combined = "";
+    let peakRssBytes = 0;
+    const updatePeakRss = () => {
+      peakRssBytes = Math.max(peakRssBytes, getProcessRssBytes(child.pid));
+    };
+    const rssSampler = profileBuildEnabled ? setInterval(updatePeakRss, 1000) : null;
+    if (rssSampler && rssSampler.unref) {
+      rssSampler.unref();
+    }
     child.stdout.on("data", (data) => {
       if (!silent) {
         process.stdout.write(data);
@@ -4426,6 +4523,17 @@ var exec = (executable, args = [], options = {}) => {
     child.on("error", (err) => reject(err));
     child.on("exit", (code, signal) => {
       children.delete(child);
+       if (rssSampler) {
+        clearInterval(rssSampler);
+      }
+      updatePeakRss();
+      recordExecProfile({
+        executable: toProfilePath(executable),
+        args,
+        code,
+        signal,
+        peakRssBytes
+      });
       if (code !== 0 && canThrow) {
         const error = new ExitCode(code);
         error.code = code;
@@ -4438,7 +4546,8 @@ var exec = (executable, args = [], options = {}) => {
         signal,
         stdout,
         stderr,
-        combined
+        combined,
+        peakRssBytes
       });
     });
   });
@@ -4749,6 +4858,36 @@ var compareFiles = (sources, targets) => {
   }
   return false;
 };
+var summarizeFileComparison = (sources, targets) => {
+  let bestSource = null;
+  let bestTarget = null;
+  for (const file of sources) {
+    if (!file.exists()) {
+      continue;
+    }
+    if (!bestSource || file.mtime > bestSource.mtime) {
+      bestSource = file;
+    }
+  }
+  for (const file of targets) {
+    if (!file.exists()) {
+      return `target '${toProfilePath(file.path)}' is missing`;
+    }
+    if (!bestTarget || file.mtime < bestTarget.mtime) {
+      bestTarget = file;
+    }
+  }
+  if (!bestSource && bestTarget) {
+    return `no existing sources were found; oldest target is '${toProfilePath(bestTarget.path)}'`;
+  }
+  if (!bestSource && !bestTarget) {
+    return "no known sources or targets";
+  }
+  if (bestSource && !bestTarget) {
+    return `no targets were specified; newest source is '${toProfilePath(bestSource.path)}'`;
+  }
+  return `newest source '${toProfilePath(bestSource.path)}' is not newer than oldest target '${toProfilePath(bestTarget.path)}'`;
+};
 var glob = (globPath) => {
   const unsafePaths = import_glob.glob.sync(globPath, {
     strict: false,
@@ -4900,11 +5039,15 @@ var runner = new class Runner {
       worker.onFail(() => resolve(false));
       worker.start();
     })));
+    writeBuildProfile();
     const hasFailedWorkers = resolutions.includes(false);
     if (!hasFailedWorkers) {
       const time = (Date.now() - startedAt) / 1e3 + "s";
       const timeStr = import_chalk3.default.magenta(time);
       logger.action(`Done in ${timeStr}`);
+    }
+    if (profileBuildEnabled) {
+      logger.info(`Wrote build profile to '${import_chalk3.default.cyan(buildProfilePath)}'`);
     }
     return Number(hasFailedWorkers);
   }
@@ -4945,6 +5088,10 @@ var Worker = class {
   }
   async *process() {
     const nameStr = import_chalk3.default.cyan(this.target.name);
+    const targetProfile = profileBuildEnabled ? getTargetProfile(this.target.name) : null;
+    if (targetProfile) {
+      targetProfile.dependencies = this.dependsOn.map((dependency) => dependency.name);
+    }
     this.debugLog("Waiting for dependencies");
     while (true) {
       if (this.dependencies.size === 0) {
@@ -4955,6 +5102,10 @@ var Worker = class {
     if (this.hasFailed) {
       const nameStr2 = import_chalk3.default.cyan(this.target.name);
       logger.error(`Target '${nameStr2}' failed`);
+      if (targetProfile) {
+        targetProfile.status = "blocked";
+        targetProfile.reason = "dependency failed";
+      }
       this.emitter.emit("fail");
       return;
     }
@@ -4962,6 +5113,10 @@ var Worker = class {
       const result = await this.target.onlyWhen(this.context);
       if (!result) {
         logger.info(`Skipping '${nameStr}' (condition unmet)`);
+        if (targetProfile) {
+          targetProfile.status = "skipped";
+          targetProfile.reason = "condition unmet";
+        }
         this.emitter.emit("finish");
         return;
       }
@@ -4975,21 +5130,47 @@ var Worker = class {
     };
     const inputs = await fileMapper(this.target.inputs);
     const outputs = await fileMapper(this.target.outputs);
+    if (targetProfile) {
+      targetProfile.inputCount = inputs.length;
+      targetProfile.outputCount = outputs.length;
+    }
     if (inputs.length > 0) {
       const needsRebuild = compareFiles(inputs, outputs);
       if (!needsRebuild) {
-        logger.info(`Skipping '${nameStr}' (up to date)`);
+        const comparisonSummary = summarizeFileComparison(inputs, outputs);
+        if (targetProfile) {
+          targetProfile.status = "skipped";
+          targetProfile.reason = comparisonSummary;
+        }
+        if (explainRebuildEnabled) {
+          logger.info(`Skipping '${nameStr}' (up to date: ${comparisonSummary})`);
+        } else {
+          logger.info(`Skipping '${nameStr}' (up to date)`);
+        }
         this.emitter.emit("finish");
         return;
       } else {
+        if (targetProfile) {
+          targetProfile.reason = needsRebuild;
+        }
+        if (explainRebuildEnabled) {
+          logger.info(`Rebuilding '${nameStr}' (${needsRebuild})`);
+        }
         this.debugLog("Needs rebuild, reason:", needsRebuild);
       }
     } else {
+      if (targetProfile) {
+        targetProfile.reason = "no inputs to compare";
+      }
       this.debugLog("Nothing to compare");
     }
     if (this.hasFailed) {
       const nameStr2 = import_chalk3.default.cyan(this.target.name);
       logger.error(`Target '${nameStr2}' failed (at file comparison stage)`);
+      if (targetProfile) {
+        targetProfile.status = "blocked";
+        targetProfile.reason = "dependency failed at file comparison stage";
+      }
       this.emitter.emit("fail");
       return;
     }
@@ -4997,10 +5178,19 @@ var Worker = class {
       logger.action(`Starting '${nameStr}'`);
       const startedAt = Date.now();
       try {
-        await this.target.executes(this.context);
+        await profileAsyncStorage.run({
+          targetName: this.target.name
+        }, async () => {
+          await this.target.executes(this.context);
+        });
       } catch (err) {
-        const time2 = (Date.now() - startedAt) / 1e3 + "s";
+        const durationMs2 = Date.now() - startedAt;
+        const time2 = durationMs2 / 1e3 + "s";
         const timeStr2 = import_chalk3.default.magenta(time2);
+        if (targetProfile) {
+          targetProfile.status = "failed";
+          targetProfile.durationMs = durationMs2;
+        }
         if (err instanceof ExitCode) {
           const codeStr = import_chalk3.default.red(err.code);
           logger.error(`Target '${nameStr}' failed in ${timeStr2}, exit code: ${codeStr}`);
@@ -5011,9 +5201,16 @@ var Worker = class {
         this.emitter.emit("fail");
         return;
       }
-      const time = (Date.now() - startedAt) / 1e3 + "s";
+      const durationMs = Date.now() - startedAt;
+      if (targetProfile) {
+        targetProfile.status = "rebuilt";
+        targetProfile.durationMs = durationMs;
+      }
+      const time = durationMs / 1e3 + "s";
       const timeStr = import_chalk3.default.magenta(time);
       logger.action(`Finished '${nameStr}' in ${timeStr}`);
+    } else if (targetProfile) {
+      targetProfile.status = "touched";
     }
     if (outputs.length > 0) {
       for (const file of outputs) {

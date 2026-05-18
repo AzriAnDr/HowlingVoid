@@ -15,21 +15,3 @@
 		if(outfit.l_hand)
 			LAZYADD(outfit.backpack_contents, outfit.l_hand)
 		outfit.l_hand = item_path
-
-/datum/loadout_item/inhand/cane
-	name = "Cane"
-	item_path = /obj/item/cane
-
-/* NOVA EDIT REMOVAL - Already exists in our loadout
-/datum/loadout_item/inhand/cane_white
-	name = "White Cane"
-	item_path = /obj/item/cane/white
-*/ // NOVA REMOVAL END
-
-/datum/loadout_item/inhand/briefcase
-	name = "Briefcase (Leather)"
-	item_path = /obj/item/storage/briefcase
-
-/datum/loadout_item/inhand/briefcase_secure
-	name = "Briefcase (Secure)"
-	item_path = /obj/item/storage/briefcase/secure

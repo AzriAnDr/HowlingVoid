@@ -20,9 +20,21 @@
 /datum/loadout_category/New()
 	. = ..()
 	associated_items = get_items()
-	for(var/datum/loadout_item/item as anything in associated_items)
+	for(var/i = associated_items.len, i >= 1, i--)
+		var/datum/loadout_item/item = associated_items[i]
+		if(!ispath(item?.item_path, /obj/item))
+			associated_items.Cut(i, i + 1)
+			if(item)
+				qdel(item, force = TRUE)
+			continue
+
 		if(GLOB.all_loadout_datums[item.item_path])
-			stack_trace("Loadout datum collision - [item.item_path] is shared between multiple loadout datums.")
+			var/datum/loadout_item/existing_item = GLOB.all_loadout_datums[item.item_path]
+			stack_trace("Duplicate loadout item_path [item.item_path] for [item.type] in [type]. Already registered by [existing_item?.type] in [existing_item?.category?.type]. Ignoring duplicate entry.")
+			associated_items.Cut(i, i + 1)
+			qdel(item, force = TRUE)
+			continue
+
 		GLOB.all_loadout_datums[item.item_path] = item
 
 /datum/loadout_category/Destroy(force, ...)
@@ -36,15 +48,32 @@
 /// Return a list of all /datum/loadout_items in this category.
 /datum/loadout_category/proc/get_items() as /list
 	var/list/all_items = list()
+	var/list/handled_manifest_ids = list()
 	for(var/datum/loadout_item/found_type as anything in typesof(type_to_generate))
-		if(found_type == initial(found_type.abstract_type))
+		var/manifest_id = "[found_type]"
+		var/list/manifest_entry = get_loadout_manifest_entry(manifest_id)
+		if(manifest_entry)
+			handled_manifest_ids[manifest_id] = TRUE
+
+		var/abstract_type = initial(found_type.abstract_type)
+		if(manifest_entry && manifest_entry["abstract_type"])
+			abstract_type = loadout_manifest_json_to_typepath(manifest_entry["abstract_type"], /datum/loadout_item) || abstract_type
+
+		if(found_type == abstract_type)
 			continue
 
-		if(!ispath(initial(found_type.item_path), /obj/item))
-			stack_trace("Loadout get_items(): Attempted to instantiate a loadout item ([found_type]) with an invalid or null typepath! (got path: [initial(found_type.item_path)])")
+		var/item_path = initial(found_type.item_path)
+		if(manifest_entry && manifest_entry["item_path"])
+			item_path = loadout_manifest_json_to_typepath(manifest_entry["item_path"], /obj/item)
+
+		if(!ispath(item_path, /obj/item))
 			continue
 
-		var/datum/loadout_item/spawned_type = new found_type(src)
+		var/datum/loadout_item/spawned_type = manifest_entry ? new found_type(src, manifest_entry, manifest_id) : new found_type(src)
+		if(!ispath(spawned_type?.item_path, /obj/item))
+			if(spawned_type)
+				qdel(spawned_type, force = TRUE)
+			continue
 
 		// Let's sanitize in case somebody inserted the player's byond name instead of ckey in canonical form
 		if(spawned_type.ckeywhitelist)
@@ -52,6 +81,26 @@
 				spawned_type.ckeywhitelist[i] = ckey(spawned_type.ckeywhitelist[i])
 
 		all_items += spawned_type
+
+	for(var/list/manifest_entry as anything in ensure_loadout_manifest_entries())
+		var/manifest_id = "[manifest_entry["id"]]"
+		if(handled_manifest_ids[manifest_id])
+			continue
+
+		var/template_type = loadout_manifest_json_to_typepath(manifest_entry["template_type"], /datum/loadout_item)
+		if(!ispath(template_type, type_to_generate))
+			continue
+
+		var/datum/loadout_item/manifest_item = new template_type(src, manifest_entry, manifest_entry["id"])
+		if(!ispath(manifest_item.item_path, /obj/item))
+			qdel(manifest_item, force = TRUE)
+			continue
+
+		if(manifest_item.ckeywhitelist)
+			for(var/i = 1, i <= length(manifest_item.ckeywhitelist), i++)
+				manifest_item.ckeywhitelist[i] = ckey(manifest_item.ckeywhitelist[i])
+
+		all_items += manifest_item
 
 	return all_items
 

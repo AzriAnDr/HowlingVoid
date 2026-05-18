@@ -26,17 +26,3 @@
 		outfit.suit_store = null
 
 	outfit.suit = item_path
-
-/datum/loadout_item/suit/overall
-	name = "Overall"
-	item_path = /obj/item/clothing/suit/apron/overalls
-	loadout_flags = LOADOUT_FLAG_JOB_GREYSCALING
-	job_greyscale_palettes = list(
-		/datum/job/assistant = COLOR_JOB_DEFAULT,
-		/datum/job/botanist = /obj/item/clothing/suit/apron/overalls::greyscale_colors,
-		/datum/job/captain = COLOR_JOB_COMMAND_GENERIC,
-		/datum/job/head_of_personnel = COLOR_JOB_COMMAND_GENERIC,
-		/datum/job/head_of_security = COLOR_JOB_DEFAULT,
-		/datum/job/paramedic = "#28324b",
-		/datum/job/prisoner = "#ff8b00",
-	)

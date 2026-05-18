@@ -98,13 +98,13 @@
 	if(jammed)
 		to_chat(user, span_warning("The Syndicate is jamming the console!"))
 		return
-	if(!shuttle_port && !SSshuttle.getShuttle(shuttleId))
+	if(!shuttle_port && !SSshuttle.getShuttle(shuttleId, FALSE))
 		to_chat(user,span_warning("Warning: Shuttle connection severed!"))
 		return
 	return ..()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/CreateEye()
-	shuttle_port = SSshuttle.getShuttle(shuttleId)
+	shuttle_port = SSshuttle.getShuttle(shuttleId, FALSE)
 	if(QDELETED(shuttle_port))
 		shuttle_port = null
 		return
