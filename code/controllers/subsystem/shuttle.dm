@@ -324,7 +324,8 @@ SUBSYSTEM_DEF(shuttle)
 	emergency_no_recall = FALSE
 
 /datum/controller/subsystem/shuttle/proc/getShuttle(id, warn_if_missing = TRUE)
-	if(!length(id))
+	// Some callers probe shuttle bindings before ids are configured.
+	if(isnull(id) || id == "")
 		return null
 	for(var/obj/docking_port/mobile/M in mobile_docking_ports)
 		if(M.shuttle_id == id)
@@ -333,7 +334,8 @@ SUBSYSTEM_DEF(shuttle)
 		WARNING("couldn't find shuttle with id: [id]")
 
 /datum/controller/subsystem/shuttle/proc/getDock(id, warn_if_missing = TRUE)
-	if(!length(id))
+	// Some callers probe dock bindings before ids are configured.
+	if(isnull(id) || id == "")
 		return null
 	for(var/obj/docking_port/stationary/S in stationary_docking_ports)
 		if(S.shuttle_id == id)

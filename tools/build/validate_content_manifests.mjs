@@ -21,21 +21,6 @@ const MANIFESTS = [
     },
     uniqueFields: ['id', 'item_path'],
   },
-  {
-    kind: 'supply_packs',
-    file: 'config/content/supply_packs.json',
-    requiredFields: ['id', 'template_type', 'name'],
-    pathFields: {
-      template_type: '/datum/supply_pack',
-      crate_type: '/obj',
-      storage_override: '/obj',
-      special_pod: '/obj',
-    },
-    assocPathKeyFields: {
-      contains: '/atom/movable',
-    },
-    uniqueFields: ['id'],
-  },
 ];
 
 function normalizePath(filePath) {

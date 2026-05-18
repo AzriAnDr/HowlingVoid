@@ -604,7 +604,6 @@ export const TguiAnalyzeTarget = new Juke.Target({
 export const ContentValidateTarget = new Juke.Target({
   inputs: () => [
     'config/content/loadout_items.json',
-    'config/content/supply_packs.json',
     'tools/build/validate_content_manifests.mjs',
     ...getTrackedDmSubtypeFiles(),
   ],
