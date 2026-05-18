@@ -77,14 +77,12 @@
 
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
 	new /obj/item/clothing/suit/hooded/hostile_environment(src)
-	var/loot = rand(1,3)
+	var/loot = rand(1,2)
 	switch(loot)
 		if(1)
 			new /obj/item/bloodcrawl_bottle(src) //NOVA EDIT CHANGE - ORIGINAL : new /obj/item/mayhem(src)
 		if(2)
 			new /obj/item/soulscythe(src)
-		if(3)
-			new /obj/item/gun/magic/staff/spellblade(src)
 
 /obj/structure/closet/crate/necropolis/bubblegum/crusher
 	name = "bloody bubblegum chest"
