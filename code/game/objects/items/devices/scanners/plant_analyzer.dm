@@ -219,6 +219,7 @@
 	)
 
 	if(tray)
+		var/list/storyteller_anomaly = tray.get_storyteller_growth_scan_data()
 		last_scan_data["tray_data"] = list(
 			"plant_health" = tray.plant_health,
 			"plant_age" = tray.age,
@@ -241,6 +242,11 @@
 			"toxins" = tray.toxic,
 			"toxins_max" = MAX_TRAY_TOXINS,
 			"reagents" = list(),
+			"storyteller_anomaly_title" = storyteller_anomaly?["title"],
+			"storyteller_anomaly_description" = storyteller_anomaly?["description"],
+			"storyteller_anomaly_positive" = storyteller_anomaly?["positive"],
+			"storyteller_anomaly_remaining" = storyteller_anomaly?["remaining"],
+			"storyteller_anomaly_modifier" = storyteller_anomaly?["modifier"],
 		)
 		for(var/datum/reagent/reagent as anything in tray.reagents.reagent_list)
 			last_scan_data["tray_data"]["reagents"] += list(list(

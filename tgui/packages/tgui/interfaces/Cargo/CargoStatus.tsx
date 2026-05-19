@@ -4,12 +4,23 @@ import {
   Button,
   LabeledList,
   Section,
+  Stack,
 } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
 
 import { useBackend } from '../../backend';
 import { usePreferencesLocalization } from '../localization';
 import type { CargoData } from './types';
+
+const formatDeciseconds = (deciseconds = 0) => {
+  const totalSeconds = Math.max(0, Math.floor(deciseconds / 10));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  if (!minutes) {
+    return `${seconds}s`;
+  }
+  return `${minutes}m ${seconds}s`;
+};
 
 export function CargoStatus(props) {
   const { act, data } = useBackend<CargoData>();
@@ -26,6 +37,11 @@ export function CargoStatus(props) {
     points,
     requestonly,
     can_send,
+    storytellerCargoModifier,
+    storytellerCargoModifierDescription,
+    storytellerCargoModifierLabel,
+    storytellerCargoModifierRemaining,
+    storytellerIncomingPods,
   } = data;
 
   return (
@@ -70,6 +86,44 @@ export function CargoStatus(props) {
             ) : (
               <Box color="bad">{t('ui.cargo.loaned_to_centcom')}</Box>
             )}
+          </LabeledList.Item>
+        )}
+        {!!storytellerCargoModifierLabel && (
+          <LabeledList.Item label="Trade Climate">
+            <Box color={(storytellerCargoModifier || 1) >= 1 ? 'good' : 'bad'}>
+              {storytellerCargoModifierLabel}
+              {!!storytellerCargoModifierRemaining &&
+                ` (${formatDeciseconds(storytellerCargoModifierRemaining)} left)`}
+            </Box>
+            {!!storytellerCargoModifierDescription && (
+              <Box color="label" mt={0.5}>
+                {storytellerCargoModifierDescription}
+              </Box>
+            )}
+          </LabeledList.Item>
+        )}
+        {!!storytellerIncomingPods?.length && (
+          <LabeledList.Item label="Incoming Relief Pods">
+            <Stack vertical fill>
+              {storytellerIncomingPods.map((delivery) => (
+                <Button
+                  key={delivery.id}
+                  fluid
+                  icon="crosshairs"
+                  tooltip={`${delivery.areaName}${
+                    delivery.summary ? `: ${delivery.summary}` : ''
+                  }`}
+                  tooltipPosition="right"
+                  onClick={() =>
+                    act('storytellerShowLanding', {
+                      delivery_id: delivery.id,
+                    })
+                  }
+                >
+                  {delivery.name} ({formatDeciseconds(delivery.remaining)})
+                </Button>
+              ))}
+            </Stack>
           </LabeledList.Item>
         )}
       </LabeledList>

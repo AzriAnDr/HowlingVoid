@@ -7,6 +7,10 @@ export type Data = {
   has_blood: BooleanLike;
   is_ready: BooleanLike;
   resistances?: Resistance[];
+  storytellerReplicationDescription?: string | null;
+  storytellerReplicationLabel?: string | null;
+  storytellerReplicationRemaining?: number;
+  storytellerReplicationSpeed?: number;
   viruses?: Virus[];
 };
 

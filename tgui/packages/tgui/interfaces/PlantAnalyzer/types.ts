@@ -31,6 +31,11 @@ type TrayData = {
   plant_health: number;
   reagents: ReagentVolume[];
   self_sustaining: BooleanLike;
+  storyteller_anomaly_description?: string | null;
+  storyteller_anomaly_modifier?: number;
+  storyteller_anomaly_positive?: BooleanLike;
+  storyteller_anomaly_remaining?: number;
+  storyteller_anomaly_title?: string | null;
   toxins: number;
   toxins_max: number;
   water: number;

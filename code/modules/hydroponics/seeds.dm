@@ -200,7 +200,7 @@
 		if(parent.yieldmod == 0)
 			return_yield = min(return_yield, 1)//1 if above zero, 0 otherwise
 		else
-			return_yield *= (parent.yieldmod)
+			return_yield *= (parent.yieldmod * parent.get_storyteller_botany_modifier())
 
 	return round(return_yield)
 

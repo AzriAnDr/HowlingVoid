@@ -83,6 +83,28 @@ export function PlantAnalyzerTrayStats(props) {
           </Stack>
         </Stack.Item>
         <Stack.Item width="100%">
+          {!!tray_data.storyteller_anomaly_title && (
+            <NoticeBox
+              mb={1}
+              info={!!tray_data.storyteller_anomaly_positive}
+              warning={!tray_data.storyteller_anomaly_positive}
+            >
+              <Box bold>
+                Detected botanical anomaly: {tray_data.storyteller_anomaly_title}
+              </Box>
+              {!!tray_data.storyteller_anomaly_description && (
+                <Box mt={0.5}>{tray_data.storyteller_anomaly_description}</Box>
+              )}
+              <Box mt={0.5} color="label">
+                Estimated dissipation:{' '}
+                {formatDeciseconds(tray_data.storyteller_anomaly_remaining || 0)}
+                {!!tray_data.storyteller_anomaly_modifier &&
+                  ` | Measured bias ${Math.round(
+                    ((tray_data.storyteller_anomaly_modifier || 1) - 1) * 100,
+                  )}%`}
+              </Box>
+            </NoticeBox>
+          )}
           <LabeledList>
             <LabeledList.Item
               label={t('ui.plant_analyzer.water')}
@@ -257,4 +279,14 @@ function nutriToColor(nutri: number, maxNutri: number) {
   if (nutri < maxNutri * 0.3) return 'red';
   if (nutri < maxNutri * 0.7) return 'yellow';
   return 'green';
+}
+
+function formatDeciseconds(deciseconds = 0) {
+  const totalSeconds = Math.max(0, Math.floor(deciseconds / 10));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  if (!minutes) {
+    return `${seconds}s`;
+  }
+  return `${minutes}m ${seconds}s`;
 }

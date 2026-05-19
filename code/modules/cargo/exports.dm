@@ -169,6 +169,8 @@ Then the player gets the profit from selling his own wasted time.
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/total = get_base_cost(exported_item) * get_amount(exported_item)
+	if(sales_market == EXPORT_MARKET_STATION)
+		total *= SSeconomy.get_cargo_sale_modifier()
 	if(apply_elastic && initial(k_elasticity) > 0)
 		total *= k_elasticity
 	return ROUND_UP(total)
@@ -253,4 +255,3 @@ Then the player gets the profit from selling his own wasted time.
 
 	msg += "."
 	return msg
-

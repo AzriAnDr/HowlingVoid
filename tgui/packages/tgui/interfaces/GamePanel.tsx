@@ -26,7 +26,7 @@ export const GamePanel = () => {
             <Button
               icon="hat-wizard"
               fluid
-              content="Dynamic Panel"
+              content="Storyteller Panel"
               onClick={() => act('storyteller')}
             />
           </Stack.Item>

@@ -216,6 +216,41 @@ SUBSYSTEM_DEF(economy)
 	inflation_value = max(round(((station_total / bank_accounts_by_id.len) / station_target), 0.1), 1.0)
 	return inflation_value
 
+/datum/controller/subsystem/economy/proc/get_storyteller_modifier_value(modifier_id, default_value = 1)
+	if(!SSstoryteller)
+		return default_value
+	return SSstoryteller.get_modifier_value(modifier_id, default_value)
+
+/datum/controller/subsystem/economy/proc/get_storyteller_modifier_remaining(modifier_id)
+	if(!SSstoryteller)
+		return 0
+	return SSstoryteller.get_modifier_remaining(modifier_id)
+
+/datum/controller/subsystem/economy/proc/get_storyteller_modifier_label(modifier_id)
+	if(!SSstoryteller)
+		return null
+	return SSstoryteller.get_modifier_label(modifier_id)
+
+/datum/controller/subsystem/economy/proc/get_storyteller_modifier_description(modifier_id)
+	if(!SSstoryteller)
+		return null
+	return SSstoryteller.get_modifier_description(modifier_id)
+
+/datum/controller/subsystem/economy/proc/get_cargo_sale_modifier()
+	return get_storyteller_modifier_value(STORYTELLER_MOD_CARGO_SALES, 1)
+
+/datum/controller/subsystem/economy/proc/get_cargo_sale_modifier_remaining()
+	return get_storyteller_modifier_remaining(STORYTELLER_MOD_CARGO_SALES)
+
+/datum/controller/subsystem/economy/proc/get_cargo_sale_modifier_label()
+	return get_storyteller_modifier_label(STORYTELLER_MOD_CARGO_SALES)
+
+/datum/controller/subsystem/economy/proc/get_cargo_sale_modifier_description()
+	return get_storyteller_modifier_description(STORYTELLER_MOD_CARGO_SALES)
+
+/datum/controller/subsystem/economy/proc/get_techweb_bounty_value()
+	return round(techweb_bounty * get_storyteller_modifier_value(STORYTELLER_MOD_SCIENCE_PATENTS, 1))
+
 /**
  * Proc that adds a set of strings and ints to the audit log, tracked by the economy SS.
  *

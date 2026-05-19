@@ -65,6 +65,7 @@ SUBSYSTEM_DEF(statpanels)
 			"Connected Players: [GLOB.clients.len]",
 			" ",
 			"OOC: [GLOB.ooc_allowed ? "Enabled" : "Disabled"]",
+			SSstoryteller?.is_enabled() ? "Storyteller Mode: [capitalize(SSstoryteller.round_mode)]" : "Storyteller: Disabled",
 			" ",
 			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]",
 			"Station Time: [station_time_timestamp()]",

@@ -64,7 +64,7 @@
 		if("storyteller")
 			if(!check_rights(R_ADMIN))
 				return
-			dynamic_panel(usr)
+			storyteller_panel(usr)
 		if("spawn_panel")
 			if(!check_rights(R_SPAWN))
 				return

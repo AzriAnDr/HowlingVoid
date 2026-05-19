@@ -8,7 +8,8 @@ export type UIElementType =
   | 'interaction'
   | 'antag_info'
   | 'rnd'
-  | 'announce';
+  | 'announce'
+  | 'storyteller';
 
 const PANEL_LANGUAGE_PREFIX = 'howling_void.panel_language.';
 const PANEL_LANGUAGE_GLOBAL = '__HOWLING_PANEL_LANGUAGES';

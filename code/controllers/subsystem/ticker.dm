@@ -262,7 +262,10 @@ SUBSYSTEM_DEF(ticker)
 	CHECK_TICK
 	//Configure mode and assign player to antagonists
 	var/can_continue = FALSE
-	can_continue = SSdynamic.select_roundstart_antagonists() //Choose antagonists
+	if(SSstoryteller.is_enabled())
+		can_continue = SSstoryteller.prepare_roundstart_actions()
+	else
+		can_continue = SSdynamic.select_roundstart_antagonists() //Choose antagonists
 	CHECK_TICK
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PRE_JOBS_ASSIGNED, src)
 	can_continue = can_continue && SSjob.divide_occupations() //Distribute jobs
@@ -332,10 +335,13 @@ SUBSYSTEM_DEF(ticker)
 	set waitfor = FALSE
 
 	// Spawn traitors and stuff
-	for(var/datum/dynamic_ruleset/roundstart/ruleset in SSdynamic.queued_rulesets)
-		ruleset.execute()
-		SSdynamic.unqueue_ruleset(ruleset)
-		SSdynamic.executed_rulesets += ruleset
+	if(SSstoryteller.is_enabled())
+		SSstoryteller.execute_roundstart_actions()
+	else
+		for(var/datum/dynamic_ruleset/roundstart/ruleset in SSdynamic.queued_rulesets)
+			ruleset.execute()
+			SSdynamic.unqueue_ruleset(ruleset)
+			SSdynamic.executed_rulesets += ruleset
 	// Queue roundstart intercept report
 	/* // NOVA EDIT REMOVAL START
 	if(!CONFIG_GET(flag/no_intercept_report))
