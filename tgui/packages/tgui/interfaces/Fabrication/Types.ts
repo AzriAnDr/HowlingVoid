@@ -90,6 +90,12 @@ export type FabricatorData = {
   fabName: string;
 
   /**
+   * Warning shown when the machine cannot be used until it is linked to an
+   * R&D server / techweb.
+   */
+  techwebLinkNotice?: string | null;
+
+  /**
    * Whether mineral access is disabled from the ore silo (contact the
    * quartermaster).
    */

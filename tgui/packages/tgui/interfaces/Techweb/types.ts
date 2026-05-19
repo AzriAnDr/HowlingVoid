@@ -55,6 +55,7 @@ export type TechWebData = {
   queue_nodes: Record<string, string>[];
   researched_designs: StoredDesigns;
   sec_protocols: BooleanLike;
+  show_experiments: BooleanLike;
   static_data: StaticData;
   stored_research: BooleanLike;
   t_disk: TechDisk | null;

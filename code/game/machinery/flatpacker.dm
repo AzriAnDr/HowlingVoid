@@ -33,6 +33,8 @@
 	var/max_component_tier = 1
 	/// The selected tier for generic machine stock parts inside the produced flatpack.
 	var/selected_component_tier = 1
+	/// The selected deploy direction for flatpacked computer boards.
+	var/selected_computer_direction = SOUTH
 	/// time needed to produce a flatpacked machine
 	var/flatpack_time = 4.5 SECONDS
 
@@ -151,6 +153,7 @@
 		needed_mats = list()
 		print_tier = 1
 		selected_component_tier = 1
+		selected_computer_direction = SOUTH
 		update_appearance(UPDATE_OVERLAYS)
 	if(gone in flatpacked_components)
 		flatpacked_components -= gone
@@ -467,6 +470,8 @@
 			"selectedPartTier" = selected_component_tier,
 			"maxPartTier" = max_component_tier,
 			"supportsPartTierSelection" = !!istype(inserted_board, /obj/item/circuitboard/machine),
+			"selectedDirection" = dir2text(selected_computer_direction),
+			"supportsDirectionSelection" = !!istype(inserted_board, /obj/item/circuitboard/computer),
 		)
 	.["design"] = design
 
@@ -519,6 +524,17 @@
 			recalculate_needed_materials()
 			return TRUE
 
+		if("setDirection")
+			if(QDELETED(inserted_board) || !istype(inserted_board, /obj/item/circuitboard/computer))
+				return
+
+			var/new_direction = text2dir(params["direction"])
+			if(!(new_direction in GLOB.cardinals))
+				return
+
+			selected_computer_direction = new_direction
+			return TRUE
+
 		if("eject")
 			var/datum/material/material = locate(params["ref"])
 			if(!istype(material))
@@ -559,7 +575,10 @@
 	var/obj/item/circuitboard/machine/machine_board = board
 	if(istype(machine_board))
 		machine_board.replacement_parts = generate_replacement_parts()
+	var/computer_deploy_direction = selected_computer_direction
 	var/obj/item/flatpack/box = new (drop_location(), board)
+	if(istype(board, /obj/item/circuitboard/computer))
+		box.deploy_direction = computer_deploy_direction
 	if(istype(machine_board))
 		for(var/obj/item/component as anything in flatpacked_components)
 			component.forceMove(box)
