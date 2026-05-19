@@ -281,6 +281,11 @@ Nothing else in the console has ID requirements.
 		"t_disk" = null,
 		"d_disk" = null,
 	)
+	data["storytellerPatentModifier"] = SSeconomy.get_storyteller_modifier_value(STORYTELLER_MOD_SCIENCE_PATENTS, 1)
+	data["storytellerPatentRemaining"] = SSeconomy.get_storyteller_modifier_remaining(STORYTELLER_MOD_SCIENCE_PATENTS)
+	data["storytellerPatentLabel"] = SSeconomy.get_storyteller_modifier_label(STORYTELLER_MOD_SCIENCE_PATENTS)
+	data["storytellerPatentDescription"] = SSeconomy.get_storyteller_modifier_description(STORYTELLER_MOD_SCIENCE_PATENTS)
+	data["storytellerTechwebBounty"] = SSeconomy.get_techweb_bounty_value()
 
 	if (t_disk)
 		data["t_disk"] = list (

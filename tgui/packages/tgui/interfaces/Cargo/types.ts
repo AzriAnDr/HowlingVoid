@@ -20,7 +20,20 @@ export type CargoData = {
   requests: Request[];
   requestonly: BooleanLike;
   self_paid: BooleanLike;
+  storytellerCargoModifier?: number;
+  storytellerCargoModifierDescription?: string | null;
+  storytellerCargoModifierLabel?: string | null;
+  storytellerCargoModifierRemaining?: number;
+  storytellerIncomingPods?: StorytellerIncomingPod[];
   supplies: Record<string, SupplyCategory>;
+};
+
+type StorytellerIncomingPod = {
+  areaName: string;
+  id: string;
+  name: string;
+  remaining: number;
+  summary?: string | null;
 };
 
 export type SupplyCategory = {

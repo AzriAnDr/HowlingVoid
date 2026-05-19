@@ -90,6 +90,9 @@ SUBSYSTEM_DEF(events)
 //checks if we should select a random event yet, and reschedules if necessary
 /datum/controller/subsystem/events/proc/checkEvent()
 	if(scheduled <= world.time)
+		if(SSstoryteller.owns_pacing())
+			reschedule()
+			return
 #ifdef MAP_TEST
 		message_admins("Random event skipped (Game is compiled in MAP_TEST mode)")
 #else
@@ -109,6 +112,8 @@ SUBSYSTEM_DEF(events)
  */
 /datum/controller/subsystem/events/proc/spawnEvent(datum/round_event_control/excluded_event)
 	set waitfor = FALSE //for the admin prompt
+	if(SSstoryteller.owns_pacing())
+		return
 	if(!CONFIG_GET(flag/allow_random_events))
 		return
 

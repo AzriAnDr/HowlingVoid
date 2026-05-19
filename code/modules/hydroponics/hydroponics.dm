@@ -65,6 +65,16 @@
 	var/tray_flags = HYDROPONIC
 	///How many extra px to offset the plant sprite on the y axis, gets passed to the seed and added to the seeds offset
 	var/plant_offset_y = 0
+	/// Localized storyteller growth anomaly multiplier for this tray.
+	var/storyteller_growth_modifier = 1
+	/// Whether the localized storyteller anomaly is beneficial.
+	var/storyteller_growth_positive = FALSE
+	/// When the localized storyteller anomaly ends.
+	var/storyteller_growth_until = 0
+	/// Short anomaly title shown by scanners.
+	var/storyteller_growth_title
+	/// Scanner-facing anomaly description.
+	var/storyteller_growth_description
 
 
 /obj/machinery/hydroponics/Initialize(mapload)
@@ -263,6 +273,8 @@
 
 /obj/machinery/hydroponics/process(seconds_per_tick)
 	var/needs_update = FALSE // Checks if the icon needs updating so we don't redraw empty trays every time
+	var/storyteller_botany_modifier = get_storyteller_botany_modifier()
+	var/storyteller_mutation_modifier = get_storyteller_botany_mutation_modifier()
 
 	if(!isnull(our_snail))
 		handle_snail()
@@ -285,7 +297,7 @@
 		if(myseed && plant_status != HYDROTRAY_PLANT_DEAD)
 			var/is_fungus = myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 			// Advance age, if planted in mushroom friendly soil and we are a mushroom we mature 40% faster.
-			age +=  1 * (is_fungus && (tray_flags & FAST_MUSHROOMS)) ? FAST_MUSH_MODIFIER : 1
+			age += ((is_fungus && (tray_flags & FAST_MUSHROOMS)) ? FAST_MUSH_MODIFIER : 1) * storyteller_botany_modifier
 			if(age < myseed.maturation)
 				lastproduce = age
 			needs_update = TRUE
@@ -384,10 +396,10 @@
 			if(myseed.instability >= 80)
 				traitmutate(myseed.instability - 75) //Scaling odds of a random trait or chemical
 			if(myseed.instability >= 60)
-				if(prob((myseed.instability)/2) && !self_sustaining && LAZYLEN(myseed.mutatelist) && !myseed.get_gene(/datum/plant_gene/trait/never_mutate)) //Minimum 30%, Maximum 50% chance of mutating every age tick when not on autogrow or having Prosophobic Inclination trait.
+				if(prob(clamp((myseed.instability / 2) * storyteller_mutation_modifier, 0, 100)) && !self_sustaining && LAZYLEN(myseed.mutatelist) && !myseed.get_gene(/datum/plant_gene/trait/never_mutate)) //Minimum 30%, Maximum 50% chance of mutating every age tick when not on autogrow or having Prosophobic Inclination trait.
 					mutatespecie()
 					myseed.set_instability(myseed.instability/2)
-			if(myseed.instability >= 20 && prob(myseed.instability) && !myseed.get_gene(/datum/plant_gene/trait/stable_stats)) //No hardmutation if Symbiotic Resilience trait is present.
+			if(myseed.instability >= 20 && prob(clamp(myseed.instability * storyteller_mutation_modifier, 0, 100)) && !myseed.get_gene(/datum/plant_gene/trait/stable_stats)) //No hardmutation if Symbiotic Resilience trait is present.
 				if(myseed.instability >= 40)
 					hardmutate(stabmut = myseed.instability >= 80 ? 5 : 0)
 				else
@@ -639,6 +651,57 @@
 		. += span_warning("It's filled with weeds!")
 	if(pestlevel >= 5)
 		. += span_warning("It's filled with tiny worms!")
+
+/obj/machinery/hydroponics/proc/get_storyteller_botany_modifier()
+	if(!has_storyteller_growth_anomaly())
+		return 1
+	return clamp(storyteller_growth_modifier, 0.25, 2)
+
+/obj/machinery/hydroponics/proc/get_storyteller_botany_mutation_modifier()
+	var/storyteller_botany_modifier = get_storyteller_botany_modifier()
+	if(storyteller_botany_modifier >= 1)
+		return 1
+	return 1 + ((1 - storyteller_botany_modifier) * 2)
+
+/obj/machinery/hydroponics/proc/has_storyteller_growth_anomaly()
+	if(storyteller_growth_until <= world.time || storyteller_growth_modifier <= 0)
+		clear_storyteller_growth_anomaly()
+		return FALSE
+	return TRUE
+
+/obj/machinery/hydroponics/proc/clear_storyteller_growth_anomaly()
+	storyteller_growth_modifier = 1
+	storyteller_growth_positive = FALSE
+	storyteller_growth_until = 0
+	storyteller_growth_title = null
+	storyteller_growth_description = null
+
+/obj/machinery/hydroponics/proc/apply_storyteller_growth_anomaly(modifier, duration, title, description, positive = TRUE)
+	if(!isnum(duration) || duration <= 0)
+		clear_storyteller_growth_anomaly()
+		return FALSE
+	storyteller_growth_modifier = clamp(modifier, 0.25, 2)
+	storyteller_growth_positive = !!positive
+	storyteller_growth_until = world.time + duration
+	storyteller_growth_title = title || "Localized growth anomaly"
+	storyteller_growth_description = description
+	return TRUE
+
+/obj/machinery/hydroponics/proc/get_storyteller_growth_remaining()
+	if(!has_storyteller_growth_anomaly())
+		return 0
+	return max(storyteller_growth_until - world.time, 0)
+
+/obj/machinery/hydroponics/proc/get_storyteller_growth_scan_data()
+	if(!has_storyteller_growth_anomaly())
+		return null
+	return list(
+		"title" = storyteller_growth_title,
+		"description" = storyteller_growth_description,
+		"positive" = storyteller_growth_positive,
+		"remaining" = get_storyteller_growth_remaining(),
+		"modifier" = get_storyteller_botany_modifier(),
+	)
 
 /**
  * What happens when a tray's weeds grow too large.

@@ -24,6 +24,8 @@
 			return /datum/preference/choiced/panel_language/rnd
 		if("announce")
 			return /datum/preference/choiced/panel_language/announce
+		if("storyteller")
+			return /datum/preference/choiced/panel_language/storyteller
 
 	return null
 
@@ -56,6 +58,7 @@
 		"antag_info" = preferences.read_preference(/datum/preference/choiced/panel_language/antag_info),
 		"rnd" = preferences.read_preference(/datum/preference/choiced/panel_language/rnd),
 		"announce" = preferences.read_preference(/datum/preference/choiced/panel_language/announce),
+		"storyteller" = preferences.read_preference(/datum/preference/choiced/panel_language/storyteller),
 	)
 
 /datum/preference/choiced/panel_language/preferences
@@ -92,4 +95,10 @@
 	savefile_key = "panel_language_announce"
 
 /datum/preference/choiced/panel_language/announce/apply_to_client(client/client, value)
+	return
+
+/datum/preference/choiced/panel_language/storyteller
+	savefile_key = "panel_language_storyteller"
+
+/datum/preference/choiced/panel_language/storyteller/apply_to_client(client/client, value)
 	return

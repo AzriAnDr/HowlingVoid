@@ -35,17 +35,52 @@ type Data = {
   selectedAlloy: string | null;
   state: boolean;
   SHEET_MATERIAL_AMOUNT: number;
+  storytellerProcessingDescription?: string | null;
+  storytellerProcessingLabel?: string | null;
+  storytellerProcessingModifier?: number;
+  storytellerProcessingRemaining?: number;
+};
+
+const formatDeciseconds = (deciseconds = 0) => {
+  const totalSeconds = Math.max(0, Math.floor(deciseconds / 10));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  if (!minutes) {
+    return `${seconds}s`;
+  }
+  return `${minutes}m ${seconds}s`;
 };
 
 export const ProcessingConsole = (props: any) => {
   const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<Data>();
-  const { state } = data;
+  const {
+    state,
+    storytellerProcessingDescription,
+    storytellerProcessingLabel,
+    storytellerProcessingModifier,
+    storytellerProcessingRemaining,
+  } = data;
 
   return (
     <Window title={t('ui.processing_console.title')} width={580} height={500}>
       <Window.Content>
         <Stack fill vertical>
+          {!!storytellerProcessingLabel && (
+            <Stack.Item>
+              <NoticeBox
+                info={(storytellerProcessingModifier || 1) >= 1}
+                warning={(storytellerProcessingModifier || 1) < 1}
+              >
+                {storytellerProcessingLabel}
+                {!!storytellerProcessingRemaining &&
+                  ` (${formatDeciseconds(storytellerProcessingRemaining)} left)`}
+                {!!storytellerProcessingDescription && (
+                  <Box mt={0.5}>{storytellerProcessingDescription}</Box>
+                )}
+              </NoticeBox>
+            </Stack.Item>
+          )}
           <Stack.Item grow basis={0}>
             <Stack fill>
               <Stack.Item grow={1.2} basis={0}>

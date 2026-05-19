@@ -38,8 +38,22 @@ type User = {
 type Data = {
   disconnected: BooleanLike;
   materials: Material[];
+  storytellerProcessingDescription?: string | null;
+  storytellerProcessingLabel?: string | null;
+  storytellerProcessingModifier?: number;
+  storytellerProcessingRemaining?: number;
   unclaimedPoints: number;
   user: User;
+};
+
+const formatDeciseconds = (deciseconds = 0) => {
+  const totalSeconds = Math.max(0, Math.floor(deciseconds / 10));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  if (!minutes) {
+    return `${seconds}s`;
+  }
+  return `${minutes}m ${seconds}s`;
 };
 
 export function OreRedemptionMachine(props) {
@@ -190,7 +204,14 @@ function IDSection(props: IDSectionProps) {
 function PointsSection(props) {
   const { act, data } = useBackend<Data>();
   const { t } = usePreferencesLocalization(data);
-  const { disconnected, unclaimedPoints } = data;
+  const {
+    disconnected,
+    storytellerProcessingDescription,
+    storytellerProcessingLabel,
+    storytellerProcessingModifier,
+    storytellerProcessingRemaining,
+    unclaimedPoints,
+  } = data;
 
   return (
     <Section>
@@ -213,6 +234,20 @@ function PointsSection(props) {
           </Button>
         </Stack.Item>
       </Stack>
+      {!!storytellerProcessingLabel && (
+        <NoticeBox
+          mt={1}
+          info={(storytellerProcessingModifier || 1) >= 1}
+          warning={(storytellerProcessingModifier || 1) < 1}
+        >
+          {storytellerProcessingLabel}
+          {!!storytellerProcessingRemaining &&
+            ` (${formatDeciseconds(storytellerProcessingRemaining)} left)`}
+          {!!storytellerProcessingDescription && (
+            <Box mt={0.5}>{storytellerProcessingDescription}</Box>
+          )}
+        </NoticeBox>
+      )}
     </Section>
   );
 }

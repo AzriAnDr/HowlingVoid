@@ -22,7 +22,7 @@
 
 /// Returns the adjusted reward for this bounty, taking into account any global modifiers.
 /datum/bounty/proc/get_bounty_reward()
-	return reward * SSeconomy.bounty_modifier
+	return round(reward * SSeconomy.bounty_modifier * SSeconomy.get_cargo_sale_modifier())
 
 /// Called when this bounty is selected by the passed ID card
 /datum/bounty/proc/on_selected(obj/item/card/id/id_card)

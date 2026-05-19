@@ -90,6 +90,11 @@
 	if(istype(gathered_ore) && gathered_ore.refined_type)
 		points += gathered_ore.points * point_upgrade * gathered_ore.amount
 
+/obj/machinery/mineral/ore_redemption/proc/get_storyteller_processing_modifier()
+	if(!SSstoryteller)
+		return 1
+	return max(SSstoryteller.get_modifier_value(STORYTELLER_MOD_CARGO_PROCESSING, 1), 0.25)
+
 /// Returns the amount of a specific alloy design, based on the accessible materials
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/design)
 	var/datum/material_container/mat_container = materials.mat_container
@@ -168,7 +173,8 @@
 		if(isnull(smelted_ore))
 			continue
 
-		if(materials.insert_item(smelted_ore, ore_multiplier, ID_DATA(user)) <= 0)
+		var/effective_multiplier = ore_multiplier * get_storyteller_processing_modifier()
+		if(materials.insert_item(smelted_ore, effective_multiplier, ID_DATA(user)) <= 0)
 			unload_mineral(smelted_ore)
 
 	return ITEM_INTERACT_SUCCESS
@@ -200,7 +206,8 @@
 		if(isnull(smelted_ore))
 			continue
 
-		if(materials.insert_item(smelted_ore, ore_multiplier, user_data) <= 0)
+		var/effective_multiplier = ore_multiplier * get_storyteller_processing_modifier()
+		if(materials.insert_item(smelted_ore, effective_multiplier, user_data) <= 0)
 			unload_mineral(smelted_ore) //if rejected unload
 
 	if(!console_notify_timer)
@@ -297,12 +304,16 @@
 				"cash" = card.registered_account.mining_points,
 			)
 
-		else if(issilicon(user))
-			var/mob/living/silicon/silicon_player = user
-			data["user"] = list(
-				"name" = silicon_player.name,
-				"cash" = "No valid account",
-			)
+	else if(issilicon(user))
+		var/mob/living/silicon/silicon_player = user
+		data["user"] = list(
+			"name" = silicon_player.name,
+			"cash" = "No valid account",
+		)
+	data["storytellerProcessingModifier"] = get_storyteller_processing_modifier()
+	data["storytellerProcessingRemaining"] = SSstoryteller?.get_modifier_remaining(STORYTELLER_MOD_CARGO_PROCESSING) || 0
+	data["storytellerProcessingLabel"] = SSstoryteller?.get_modifier_label(STORYTELLER_MOD_CARGO_PROCESSING)
+	data["storytellerProcessingDescription"] = SSstoryteller?.get_modifier_description(STORYTELLER_MOD_CARGO_PROCESSING)
 	return data
 
 /obj/machinery/mineral/ore_redemption/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

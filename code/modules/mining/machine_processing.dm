@@ -169,6 +169,11 @@
 	stored_research = null
 	return ..()
 
+/obj/machinery/mineral/processing_unit/proc/get_storyteller_processing_modifier()
+	if(!SSstoryteller)
+		return 1
+	return max(SSstoryteller.get_modifier_value(STORYTELLER_MOD_CARGO_PROCESSING, 1), 0.25)
+
 /obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/O)
 	if(QDELETED(O))
 		return
@@ -222,6 +227,10 @@
 	data["selectedAlloy"] = selected_alloy
 
 	data["state"] = on
+	data["storytellerProcessingModifier"] = get_storyteller_processing_modifier()
+	data["storytellerProcessingRemaining"] = SSstoryteller?.get_modifier_remaining(STORYTELLER_MOD_CARGO_PROCESSING) || 0
+	data["storytellerProcessingLabel"] = SSstoryteller?.get_modifier_label(STORYTELLER_MOD_CARGO_PROCESSING)
+	data["storytellerProcessingDescription"] = SSstoryteller?.get_modifier_description(STORYTELLER_MOD_CARGO_PROCESSING)
 
 	return data
 
@@ -244,7 +253,8 @@
 	var/datum/material/mat = selected_material
 	if(!mat)
 		return
-	var/sheets_to_remove = (materials.materials[mat] >= (SHEET_MATERIAL_AMOUNT * SMELT_AMOUNT * seconds_per_tick) ) ? SMELT_AMOUNT * seconds_per_tick : round(materials.materials[mat] /  SHEET_MATERIAL_AMOUNT)
+	var/effective_smelt_amount = max(1, round(SMELT_AMOUNT * seconds_per_tick * get_storyteller_processing_modifier()))
+	var/sheets_to_remove = (materials.materials[mat] >= (SHEET_MATERIAL_AMOUNT * effective_smelt_amount) ) ? effective_smelt_amount : round(materials.materials[mat] /  SHEET_MATERIAL_AMOUNT)
 	if(!sheets_to_remove)
 		on = FALSE
 	else
@@ -271,7 +281,7 @@
 	if(design.make_reagent)
 		return FALSE
 
-	var/build_amount = SMELT_AMOUNT * seconds_per_tick
+	var/build_amount = max(1, round(SMELT_AMOUNT * seconds_per_tick * get_storyteller_processing_modifier()))
 
 	for(var/mat_cat, required_amount in design.materials)
 		var/amount = materials.materials[mat_cat]
