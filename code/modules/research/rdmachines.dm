@@ -53,6 +53,8 @@
 	. += span_notice("A [EXAMINE_HINT("multitool")] with techweb designs can be uploaded here.")
 	if(manual_techweb_link_requires_alt)
 		. += span_notice("Use [EXAMINE_HINT("Alt-click")] with a linked multitool to connect this machine to a techweb.")
+	if(!stored_research)
+		. += span_warning(get_techweb_link_notice())
 	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("Use a [EXAMINE_HINT("multitool")] or [EXAMINE_HINT("wirecutters")] to interact with wires.")
@@ -137,6 +139,20 @@
 	stored_research = new_techweb
 	if(!isnull(stored_research))
 		on_connected_techweb()
+
+/obj/machinery/rnd/proc/get_techweb_link_notice()
+	if(manual_techweb_link_requires_alt)
+		return "This machine is not linked to an R&D server. Alt-click it with a multitool linked to an R&D server first."
+	return "This machine is not linked to an R&D server and cannot print designs."
+
+/obj/machinery/rnd/proc/notify_missing_techweb_link(mob/user)
+	var/message = get_techweb_link_notice()
+	if(user)
+		balloon_alert(user, "link R&D server first")
+		to_chat(user, span_warning(message))
+	else
+		say(message)
+	return FALSE
 
 ///Called post-connection to a new techweb.
 /obj/machinery/rnd/proc/on_connected_techweb()

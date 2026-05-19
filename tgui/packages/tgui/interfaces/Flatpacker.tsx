@@ -33,6 +33,20 @@ type Design = {
   disableReason?: string;
   selectedPartTier: number;
   maxPartTier: number;
+  selectedDirection: Direction;
+  supportsPartTierSelection: BooleanLike;
+  supportsDirectionSelection: BooleanLike;
+};
+
+type Direction = 'north' | 'east' | 'south' | 'west';
+
+const directionOrder: Direction[] = ['north', 'east', 'south', 'west'];
+
+const directionIcons: Record<Direction, string> = {
+  north: 'arrow-up',
+  east: 'arrow-right',
+  south: 'arrow-down',
+  west: 'arrow-left',
 };
 
 export const Flatpacker = (props: any) => {
@@ -94,6 +108,9 @@ export const Flatpacker = (props: any) => {
                     design={design}
                     onPrint={() => act('build')}
                     onSelectTier={(tier) => act('setPartTier', { tier })}
+                    onSelectDirection={(direction) =>
+                      act('setDirection', { direction })
+                    }
                   />
                 </Stack.Item>
                 <Stack.Item grow>
@@ -128,10 +145,11 @@ type BoardPreviewProps = {
   design: Design;
   onPrint: () => void;
   onSelectTier: (tier: number) => void;
+  onSelectDirection: (direction: Direction) => void;
 };
 
 const BoardPreview = (props: BoardPreviewProps) => {
-  const { design, onPrint, onSelectTier } = props;
+  const { design, onPrint, onSelectTier, onSelectDirection } = props;
   const { t } = usePreferencesLocalization();
   const tiers = Array.from(
     { length: design.maxPartTier },
@@ -151,21 +169,41 @@ const BoardPreview = (props: BoardPreviewProps) => {
               />
             </Stack.Item>
             <Stack.Item width="100%">
-              <Section title="Component tier">
-                <Stack>
-                  {tiers.map((tier) => (
-                    <Stack.Item key={tier} grow>
-                      <Button
-                        fluid
-                        selected={design.selectedPartTier === tier}
-                        onClick={() => onSelectTier(tier)}
-                      >
-                        {`T${tier}`}
-                      </Button>
-                    </Stack.Item>
-                  ))}
-                </Stack>
-              </Section>
+              {!!design.supportsPartTierSelection && (
+                <Section title="Component tier">
+                  <Stack>
+                    {tiers.map((tier) => (
+                      <Stack.Item key={tier} grow>
+                        <Button
+                          fluid
+                          selected={design.selectedPartTier === tier}
+                          onClick={() => onSelectTier(tier)}
+                        >
+                          {`T${tier}`}
+                        </Button>
+                      </Stack.Item>
+                    ))}
+                  </Stack>
+                </Section>
+              )}
+              {!!design.supportsDirectionSelection && (
+                <Section title={t('ui.common.direction')}>
+                  <Stack vertical>
+                    {directionOrder.map((direction) => (
+                      <Stack.Item key={direction}>
+                        <Button
+                          fluid
+                          icon={directionIcons[direction]}
+                          selected={design.selectedDirection === direction}
+                          onClick={() => onSelectDirection(direction)}
+                        >
+                          {t(`ui.common.direction_${direction}`)}
+                        </Button>
+                      </Stack.Item>
+                    ))}
+                  </Stack>
+                </Section>
+              )}
             </Stack.Item>
           </Stack>
         </Stack.Item>

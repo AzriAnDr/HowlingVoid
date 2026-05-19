@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Section, Stack } from 'tgui-core/components';
+import { Box, Button, Icon, NoticeBox, Section, Stack } from 'tgui-core/components';
 import { Tooltip } from 'tgui-core/components';
 import { type BooleanLike, classes } from 'tgui-core/react';
 
@@ -22,7 +22,7 @@ type ExosuitFabricatorData = FabricatorData & {
 export const ExosuitFabricator = (props) => {
   const { t } = usePreferencesLocalization();
   const { act, data } = useBackend<ExosuitFabricatorData>();
-  const { materials, SHEET_MATERIAL_AMOUNT } = data;
+  const { materials, SHEET_MATERIAL_AMOUNT, techwebLinkNotice } = data;
 
   const availableMaterials: MaterialMap = {};
 
@@ -36,6 +36,11 @@ export const ExosuitFabricator = (props) => {
         <Stack fill>
           <Stack.Item grow>
             <Stack fill vertical>
+              {!!techwebLinkNotice && (
+                <Stack.Item>
+                  <NoticeBox>{techwebLinkNotice}</NoticeBox>
+                </Stack.Item>
+              )}
               <Stack.Item grow>
                 <DesignBrowser
                   designs={Object.values(data.designs)}

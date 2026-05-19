@@ -33,6 +33,7 @@ export function TechNode(props: Props) {
     nodes,
     point_types_abbreviations = [],
     queue_nodes = [],
+    show_experiments,
   } = data;
   const { node, nodetails, nocontrols } = props;
   const {
@@ -54,9 +55,9 @@ export function TechNode(props: Props) {
   } = node_cache[id];
   const [techwebRoute, setTechwebRoute] = useTechWebRoute();
 
-  const expcompl = required_experiments.filter(
-    (x) => experiments[x]?.completed,
-  ).length;
+  const expcompl = show_experiments
+    ? required_experiments.filter((x) => experiments[x]?.completed).length
+    : 0;
   const experimentProgress = (
     <ProgressBar
       ranges={{
@@ -88,11 +89,13 @@ export function TechNode(props: Props) {
 
   // Notice that this logic will have to be changed if we make the discounts
   // pool-specific
-  const nodeDiscount = Object.keys(discount_experiments)
-    .filter((x) => experiments[x]?.completed)
-    .reduce((tot, curr) => {
-      return tot + discount_experiments[curr];
-    }, 0);
+  const nodeDiscount = show_experiments
+    ? Object.keys(discount_experiments)
+        .filter((x) => experiments[x]?.completed)
+        .reduce((tot, curr) => {
+          return tot + discount_experiments[curr];
+        }, 0)
+    : 0;
 
   return (
     <Section
@@ -178,7 +181,7 @@ export function TechNode(props: Props) {
               {techProgress}
             </Stack.Item>
           )}
-          {required_experiments.length > 0 && (
+          {!!show_experiments && required_experiments.length > 0 && (
             <Stack.Item grow basis={0}>
               {experimentProgress}
             </Stack.Item>
@@ -198,7 +201,7 @@ export function TechNode(props: Props) {
           />
         ))}
       </Box>
-      {required_experiments.length > 0 && (
+      {!!show_experiments && required_experiments.length > 0 && (
         <Collapsible
           className="Techweb__NodeExperimentsRequired"
           title={t('ui.techweb.required_experiments')}
@@ -212,7 +215,7 @@ export function TechNode(props: Props) {
           })}
         </Collapsible>
       )}
-      {Object.keys(discount_experiments).length > 0 && (
+      {!!show_experiments && Object.keys(discount_experiments).length > 0 && (
         <Collapsible
           className="TechwebNodeExperimentsRequired"
           title={t('ui.techweb.discount_eligible_experiments')}

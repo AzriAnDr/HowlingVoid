@@ -13,6 +13,8 @@
 
 	/// The board we deploy
 	var/obj/item/circuitboard/board
+	/// Which direction a flatpacked computer should face when deployed.
+	var/deploy_direction = SOUTH
 
 /obj/item/flatpack/Initialize(mapload, obj/item/circuitboard/new_board)
 	if(isnull(board) && isnull(new_board))
@@ -50,6 +52,9 @@
 			. += span_warning("Can't deploy in this location")
 		else if(location.is_blocked_turf(source_atom = src))
 			. += span_warning("No space for deployment")
+
+	if(istype(board, /obj/item/circuitboard/computer))
+		. += span_notice("It is configured to deploy facing <b>[dir2text(deploy_direction)]</b>.")
 
 /obj/item/flatpack/multitool_act(mob/living/user, obj/item/tool)
 	. = NONE
@@ -109,6 +114,8 @@
 /obj/item/flatpack/proc/deploy_computer_flatpack(obj/item/circuitboard/computer/leaving_circuit, mob/living/user)
 	board = null
 	var/obj/machinery/computer/new_computer = new leaving_circuit.build_path(loc)
+	if(deploy_direction in GLOB.cardinals)
+		new_computer.setDir(deploy_direction)
 	new_computer.clear_components()
 	new_computer.set_anchored(TRUE)
 	new_computer.component_parts = list(leaving_circuit)

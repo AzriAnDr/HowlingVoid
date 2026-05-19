@@ -186,6 +186,8 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.")
 		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
+		if(!stored_research)
+			. += span_warning(get_techweb_link_notice())
 
 /obj/machinery/mecha_part_fabricator/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
 	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
@@ -219,6 +221,20 @@
 		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 
 	update_static_data_for_all_viewers()
+
+/obj/machinery/mecha_part_fabricator/proc/get_techweb_link_notice()
+	if(manual_techweb_link_requires_alt)
+		return "This machine is not linked to an R&D server. Alt-click it with a multitool linked to an R&D server first."
+	return "This machine is not linked to an R&D server and cannot print designs."
+
+/obj/machinery/mecha_part_fabricator/proc/notify_missing_techweb_link(mob/user)
+	var/message = get_techweb_link_notice()
+	if(user)
+		balloon_alert(user, "link R&D server first")
+		to_chat(user, span_warning(message))
+	else
+		say(message)
+	return FALSE
 
 /**
  * Intended to be called when an item starts printing.
@@ -426,6 +442,7 @@
 		)
 
 	data["designs"] = designs
+	data["techwebLinkNotice"] = stored_research ? null : get_techweb_link_notice()
 
 	return data
 
@@ -469,6 +486,8 @@
 
 	switch(action)
 		if("build")
+			if(!stored_research)
+				return notify_missing_techweb_link(ui.user)
 			if(!rmat.can_use_resource(user_data = ID_DATA(usr)))
 				return
 			var/designs = params["designs"]
