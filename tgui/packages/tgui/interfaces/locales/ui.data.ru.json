@@ -385,6 +385,8 @@
 	"ui.character.data.quirk_geneticmutation_description": "По той или иной причине у вас имеется необычная генетическая мутация. Всё остальное решит судьба.",
 	"ui.character.data.quirk_radfiend_name": "Рад-маньяк",
 	"ui.character.data.quirk_radfiend_description": "Вас благословил согревающий свет Черенкова. Радиация не способна пробить ваш защитный барьер.",
+	"ui.character.data.quirk_rhotacism_name": "Картавость",
+	"ui.character.data.quirk_rhotacism_description": "Вам трудно выговаривать букву «Р».",
 	"ui.character.data.quirk_sensitivehearing_name": "Чувствительный слух",
 	"ui.character.data.quirk_sensitivehearing_description": "Вы слышите даже самые тихие звуки, но из-за этого же сильнее подвержены повреждению слуха.",
 	"ui.character.data.quirk_throwingarm_name": "Бросковая рука",
