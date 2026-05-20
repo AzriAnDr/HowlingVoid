@@ -408,11 +408,15 @@
 
 /datum/preference_importer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		update_preview(user)
-		ui = new(user, src, "PreferenceImporter")
-		ui.set_autoupdate(FALSE)
-		ui.open()
+	if(ui)
+		preview_view?.display_to(user, ui.window)
+		return
+
+	update_preview(user)
+	ui = new(user, src, "PreferenceImporter")
+	ui.set_autoupdate(FALSE)
+	ui.open()
+	preview_view?.display_to(user, ui.window)
 
 /datum/preference_importer/ui_state(mob/user)
 	return GLOB.always_state
@@ -456,8 +460,8 @@
 	data["import_character"] = import_character
 	data["preview_direction"] = dir2text(preview_view?.dir || SOUTH)
 	data["preview_url"] = preview_view?.get_preview_url(user)
-	data["preview_urls"] = preview_view?.get_preview_urls(user)
-	data["preview_animations"] = preview_view?.get_preview_animations(user)
+	data["preview_urls"] = null
+	data["preview_animations"] = null
 	data["preview_item_animations_enabled"] = !!target_prefs?.preview_item_animations_enabled
 	data["preview_map"] = preview_view?.assigned_map
 	data["preview_mode"] = preview_mode
@@ -520,7 +524,6 @@
 			if(!requested_direction)
 				requested_direction = SOUTH
 			preview_view?.setDir(requested_direction)
-			preview_view?.get_preview_url(ui.user, requested_direction)
 			SStgui.update_uis(src)
 			return TRUE
 
@@ -555,6 +558,7 @@
 	var/datum/tgui/ui = new(user, src, "CharacterPreviewWindow", "Character Preview", 700, 760)
 	ui.open()
 	ui.set_autoupdate(TRUE)
+	preview_view?.display_to(user, ui.window)
 	return TRUE
 
 /datum/preference_importer/proc/update_preview(mob/user)
@@ -596,12 +600,11 @@
 	if(!preview_view || QDELETED(preview_view))
 		var/dummy_key = user.ckey ? "import_preview_[user.ckey]" : null
 		preview_view = new(null, target_prefs, dummy_key)
+		preview_view.generate_view("import_preview_[REF(src)]")
 		preview_view.preferences = target_prefs
 		preview_view.show_job_clothes = FALSE
 
 	preview_view.update_body()
-	if(user && target_prefs?.parent == user.client)
-		preview_view.preload_preview_assets(user)
 
 	target_prefs.value_cache = original_cache
 	target_prefs.body_markings = original_body_markings
