@@ -419,6 +419,19 @@
 
 /datum/config_entry/flag/dynamic_config_enabled
 
+/datum/config_entry/flag/storyteller_enabled
+	default = FALSE
+
+/datum/config_entry/flag/storyteller_full_owner
+	default = TRUE
+
+/datum/config_entry/number/storyteller_phase_max
+	default = 3
+	min_val = 1
+
+/datum/config_entry/flag/storyteller_debug_logging
+	default = TRUE
+
 /datum/config_entry/flag/events_config_enabled
 
 /datum/config_entry/string/drone_required_role

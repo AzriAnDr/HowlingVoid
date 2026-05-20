@@ -103,7 +103,21 @@ const categories: Array<{
     },
     ru: {
       name: 'Оповещения',
-      description: 'Станционные тревоги, анонсы событий и служебные объявления.',
+      description:
+        'Станционные тревоги, анонсы событий и служебные объявления.',
+    },
+  },
+  {
+    id: 'storyteller',
+    en: {
+      name: 'Storyteller panel',
+      description:
+        'Storyteller control, pacing overview, queued antagonists, and diagnostic tabs.',
+    },
+    ru: {
+      name: 'Панель сторителлера',
+      description:
+        'Управление сторителлером, обзор темпа раунда, очередь антагонистов и диагностические вкладки.',
     },
   },
 ];

@@ -60,6 +60,8 @@ SUBSYSTEM_DEF(dynamic)
 	var/antag_events_enabled = TRUE
 
 /datum/controller/subsystem/dynamic/fire(resumed)
+	if(SSstoryteller.owns_pacing())
+		return
 	if(!COOLDOWN_FINISHED(src, midround_cooldown) || EMERGENCY_PAST_POINT_OF_NO_RETURN)
 		return
 
@@ -463,6 +465,10 @@ SUBSYSTEM_DEF(dynamic)
 		unqueue_ruleset(queued)
 		executed_rulesets += queued
 		queued.execute()
+		return
+
+	if(SSstoryteller.is_enabled())
+		SSstoryteller.handle_latejoin(latejoiner)
 		return
 
 	if(COOLDOWN_FINISHED(src, latejoin_ruleset_start) && COOLDOWN_FINISHED(src, latejoin_cooldown))

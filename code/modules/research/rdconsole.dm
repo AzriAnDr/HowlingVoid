@@ -267,10 +267,12 @@ Nothing else in the console has ID requirements.
 	data["locked"] = board.locked
 	if(!stored_research) //lack of a research node is all we care about.
 		return data
+	var/show_experiments = !istype(stored_research, /datum/techweb/blackmarket)
 	data += list(
 		"nodes" = list(),
 		"queue_nodes" = stored_research.research_queue_nodes,
 		"experiments" = list(),
+		"show_experiments" = show_experiments,
 		"researched_designs" = stored_research.researched_designs,
 		"points" = stored_research.research_points,
 		"points_last_tick" = stored_research.last_bitcoins,
@@ -279,6 +281,11 @@ Nothing else in the console has ID requirements.
 		"t_disk" = null,
 		"d_disk" = null,
 	)
+	data["storytellerPatentModifier"] = SSeconomy.get_storyteller_modifier_value(STORYTELLER_MOD_SCIENCE_PATENTS, 1)
+	data["storytellerPatentRemaining"] = SSeconomy.get_storyteller_modifier_remaining(STORYTELLER_MOD_SCIENCE_PATENTS)
+	data["storytellerPatentLabel"] = SSeconomy.get_storyteller_modifier_label(STORYTELLER_MOD_SCIENCE_PATENTS)
+	data["storytellerPatentDescription"] = SSeconomy.get_storyteller_modifier_description(STORYTELLER_MOD_SCIENCE_PATENTS)
+	data["storytellerTechwebBounty"] = SSeconomy.get_techweb_bounty_value()
 
 	if (t_disk)
 		data["t_disk"] = list (
@@ -312,11 +319,12 @@ Nothing else in the console has ID requirements.
 		))
 
 	// Get experiments and serialize them
-	var/list/exp_to_process = stored_research.available_experiments.Copy()
-	for (var/e in stored_research.completed_experiments)
-		exp_to_process += stored_research.completed_experiments[e]
-	for (var/datum/experiment/ex as anything in exp_to_process)
-		data["experiments"][ex.type] = ex.to_ui_data()
+	if(show_experiments)
+		var/list/exp_to_process = stored_research.available_experiments.Copy()
+		for (var/e in stored_research.completed_experiments)
+			exp_to_process += stored_research.completed_experiments[e]
+		for (var/datum/experiment/ex as anything in exp_to_process)
+			data["experiments"][ex.type] = ex.to_ui_data()
 	return data
 
 /**

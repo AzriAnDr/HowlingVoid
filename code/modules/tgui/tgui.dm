@@ -263,6 +263,8 @@
  * return list
  */
 /datum/tgui/proc/get_payload(custom_data, with_data, with_static_data)
+	if(QDELETED(user) || !user?.client || QDELETED(src_object) || isnull(src_object))
+		return list()
 	var/list/json_data = list()
 	json_data["config"] = list(
 		"title" = title,

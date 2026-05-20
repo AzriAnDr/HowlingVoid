@@ -47,6 +47,11 @@
 	QDEL_NULL(beaker)
 	return ..()
 
+/obj/machinery/computer/pandemic/proc/get_storyteller_replication_speed()
+	if(!SSstoryteller)
+		return 1
+	return max(SSstoryteller.get_modifier_value(STORYTELLER_MOD_MEDICAL_REPLICATION, 1), 0.25)
+
 /obj/machinery/computer/pandemic/examine(mob/user)
 	. = ..()
 	if(beaker)
@@ -132,6 +137,10 @@
 /obj/machinery/computer/pandemic/ui_data(mob/user)
 	var/list/data = list()
 	data["is_ready"] = !wait
+	data["storytellerReplicationSpeed"] = get_storyteller_replication_speed()
+	data["storytellerReplicationRemaining"] = SSstoryteller?.get_modifier_remaining(STORYTELLER_MOD_MEDICAL_REPLICATION) || 0
+	data["storytellerReplicationLabel"] = SSstoryteller?.get_modifier_label(STORYTELLER_MOD_MEDICAL_REPLICATION)
+	data["storytellerReplicationDescription"] = SSstoryteller?.get_modifier_description(STORYTELLER_MOD_MEDICAL_REPLICATION)
 	if(!beaker)
 		data["has_beaker"] = FALSE
 		data["has_blood"] = FALSE
@@ -211,7 +220,7 @@
 	update_appearance()
 	var/turf/source_turf = get_turf(src)
 	log_virus("A culture tube was printed for the virus [adv_disease.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
-	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), max(round((5 SECONDS) / get_storyteller_replication_speed()), 1 SECONDS))
 	return TRUE
 
 /// Tries to locate a reagent with valid blood_type data
@@ -236,7 +245,7 @@
 	bottle.reagents.add_reagent(/datum/reagent/vaccine, 15, list(id))
 	wait = TRUE
 	update_appearance()
-	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), 20 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), max(round((20 SECONDS) / get_storyteller_replication_speed()), 2 SECONDS))
 	return TRUE
 
 /**

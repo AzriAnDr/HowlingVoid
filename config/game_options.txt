@@ -152,6 +152,18 @@ ALLOW_LATEJOIN_ANTAGONISTS
 ## Uncomment to enable dynamic ruleset config file.
 DYNAMIC_CONFIG_ENABLED
 
+## Uncomment to enable the storyteller subsystem.
+STORYTELLER_ENABLED
+
+## If TRUE / 1, storyteller suppresses natural dynamic midrounds and random events while enabled.
+STORYTELLER_FULL_OWNER 1
+
+## Maximum enabled storyteller phase.
+STORYTELLER_PHASE_MAX 3
+
+## If TRUE / 1, storyteller decisions are mirrored to admin chat and game logs.
+STORYTELLER_DEBUG_LOGGING 1
+
 ## Uncomment to enable event editing config file.
 #EVENTS_CONFIG_ENABLED
 

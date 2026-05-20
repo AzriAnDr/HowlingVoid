@@ -1,9 +1,19 @@
-import { Button, Flex, LabeledList } from 'tgui-core/components';
+import { Box, Button, Flex, LabeledList } from 'tgui-core/components';
 
 import { usePreferencesLocalization } from '../localization';
 import { useRemappedBackend } from './helpers';
 import { useTechWebRoute } from './hooks';
 import { TechwebRouter } from './Router';
+
+const formatDeciseconds = (deciseconds = 0) => {
+  const totalSeconds = Math.max(0, Math.floor(deciseconds / 10));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  if (!minutes) {
+    return `${seconds}s`;
+  }
+  return `${minutes}m ${seconds}s`;
+};
 
 export function TechwebContent(props) {
   const { act, data } = useRemappedBackend();
@@ -16,6 +26,11 @@ export function TechwebContent(props) {
     points,
     queue_nodes = [],
     sec_protocols,
+    storytellerPatentDescription,
+    storytellerPatentLabel,
+    storytellerPatentModifier,
+    storytellerPatentRemaining,
+    storytellerTechwebBounty,
     t_disk,
   } = data;
   const [techwebRoute, setTechwebRoute] = useTechWebRoute();
@@ -43,6 +58,31 @@ export function TechwebContent(props) {
                   {!!points_last_tick[k] && ` (+${points_last_tick[k]}/sec)`}
                 </LabeledList.Item>
               ))}
+              {!!storytellerTechwebBounty && (
+                <LabeledList.Item label={t('ui.techweb.patent_payout', 'Patent Payout')}>
+                  <b>{storytellerTechwebBounty}</b>
+                </LabeledList.Item>
+              )}
+              {!!storytellerPatentLabel && (
+                <LabeledList.Item
+                  label={t('ui.techweb.patent_flow', 'Patent Flow')}
+                >
+                  <span
+                    className={
+                      (storytellerPatentModifier || 1) >= 1
+                        ? 'color-good'
+                        : 'color-bad'
+                    }
+                  >
+                    {storytellerPatentLabel}
+                    {!!storytellerPatentRemaining &&
+                      ` (${formatDeciseconds(storytellerPatentRemaining)} left)`}
+                  </span>
+                  {!!storytellerPatentDescription && (
+                    <Box color="label">{storytellerPatentDescription}</Box>
+                  )}
+                </LabeledList.Item>
+              )}
               <LabeledList.Item label={t('ui.techweb.queue')}>
                 {queue_nodes.length !== 0
                   ? Object.keys(queue_nodes).map((node_id) => (

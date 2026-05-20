@@ -477,6 +477,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	data["gas_composition"] = formatted_gas_percentage
 	data["gas_temperature"] = absorbed_gasmix.temperature
 	data["gas_total_moles"] = absorbed_gasmix.total_moles()
+	data["storytellerPowerModifier"] = get_storyteller_engineering_modifier()
+	data["storytellerPowerRemaining"] = SSstoryteller?.get_modifier_remaining(STORYTELLER_MOD_ENGINEERING_POWER) || 0
+	data["storytellerPowerLabel"] = SSstoryteller?.get_modifier_label(STORYTELLER_MOD_ENGINEERING_POWER)
+	data["storytellerPowerDescription"] = SSstoryteller?.get_modifier_description(STORYTELLER_MOD_ENGINEERING_POWER)
 	return data
 
 /obj/machinery/power/supermatter_crystal/ui_data(mob/user)
@@ -694,6 +698,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(disable_power_change)
 		return
 	var/list/additive_power = list()
+	var/storyteller_power_modifier = get_storyteller_engineering_modifier()
 
 	/// If we have a small amount of external_power_trickle we just round it up to 40.
 	additive_power[SM_POWER_EXTERNAL_TRICKLE] = external_power_trickle ? max(external_power_trickle/MATTER_POWER_CONVERSION, 40) : 0
@@ -701,6 +706,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	additive_power[SM_POWER_EXTERNAL_IMMEDIATE] = external_power_immediate
 	external_power_immediate = 0
 	additive_power[SM_POWER_HEAT] = gas_heat_power_generation * absorbed_gasmix.temperature * GAS_HEAT_POWER_SCALING_COEFFICIENT
+	if(storyteller_power_modifier != 1 && additive_power[SM_POWER_HEAT])
+		additive_power["Storyteller Grid Condition"] = additive_power[SM_POWER_HEAT] * (storyteller_power_modifier - 1)
 	additive_power[SM_POWER_HEAT] && log_activation(who = "environmental factors")
 
 	// I'm sorry for this, but we need to calculate power lost immediately after power gain.
@@ -837,6 +844,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	var/list/additive_damage = list()
 	var/total_moles = absorbed_gasmix.total_moles()
+	var/storyteller_power_modifier = get_storyteller_engineering_modifier()
 
 	// We dont let external factors deal more damage than the emergency point.
 	// Only cares about the damage before this proc is run. We ignore soon-to-be-applied damage.
@@ -846,6 +854,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	additive_damage[SM_DAMAGE_HEAT] = clamp((absorbed_gasmix.temperature - temp_limit) / 24000, 0, 0.15)
 	additive_damage[SM_DAMAGE_POWER] = clamp((internal_energy - POWER_PENALTY_THRESHOLD) / 40000, 0, 0.1)
 	additive_damage[SM_DAMAGE_MOLES] = clamp((total_moles - MOLE_PENALTY_THRESHOLD) / 3200, 0, 0.1)
+	if(storyteller_power_modifier < 1)
+		additive_damage["Storyteller Instability"] = clamp((1 - storyteller_power_modifier) * 0.06, 0, 0.1)
 
 	var/is_spaced = FALSE
 	if(isturf(src.loc))
@@ -865,6 +875,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	damage += total_damage
 	damage = max(damage, 0)
 	return additive_damage
+
+/obj/machinery/power/supermatter_crystal/proc/get_storyteller_engineering_modifier()
+	if(!SSstoryteller)
+		return 1
+	return clamp(SSstoryteller.get_modifier_value(STORYTELLER_MOD_ENGINEERING_POWER, 1), 0.25, 2)
 
 /**
  * Sets the delam of our sm.

@@ -102,6 +102,11 @@
 	if(SSshuttle.supply_blocked)
 		message = blockade_warning
 	data["message"] = message
+	data["storytellerCargoModifier"] = SSeconomy.get_cargo_sale_modifier()
+	data["storytellerCargoModifierRemaining"] = SSeconomy.get_cargo_sale_modifier_remaining()
+	data["storytellerCargoModifierLabel"] = SSeconomy.get_cargo_sale_modifier_label()
+	data["storytellerCargoModifierDescription"] = SSeconomy.get_cargo_sale_modifier_description()
+	data["storytellerIncomingPods"] = SSstoryteller.get_pending_pod_delivery_ui_data(ACCOUNT_CAR)
 
 	var/cart_list = list()
 	for(var/datum/supply_order/order in SSshuttle.shopping_list)
@@ -458,6 +463,8 @@
 				ui.user.investigate_log("accepted a shuttle loan event.", INVESTIGATE_CARGO)
 				ui.user.log_message("accepted a shuttle loan event.", LOG_GAME)
 				. = TRUE
+		if("storytellerShowLanding")
+			return SSstoryteller.show_pending_pod_delivery(params["delivery_id"], ui.user)
 		if("add")
 			return add_item(ui.user, params["id"])
 		if("add_by_name")

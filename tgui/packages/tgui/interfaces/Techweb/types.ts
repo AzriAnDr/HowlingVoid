@@ -55,7 +55,13 @@ export type TechWebData = {
   queue_nodes: Record<string, string>[];
   researched_designs: StoredDesigns;
   sec_protocols: BooleanLike;
+  show_experiments: BooleanLike;
   static_data: StaticData;
   stored_research: BooleanLike;
+  storytellerPatentDescription?: string | null;
+  storytellerPatentLabel?: string | null;
+  storytellerPatentModifier?: number;
+  storytellerPatentRemaining?: number;
+  storytellerTechwebBounty?: number;
   t_disk: TechDisk | null;
 };

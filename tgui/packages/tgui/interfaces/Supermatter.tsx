@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   LabeledList,
+  NoticeBox,
   ProgressBar,
   Section,
   Stack,
@@ -54,6 +55,20 @@ type SupermatterProps = {
   gas_temperature: number;
   gas_total_moles: number;
   gas_metadata: SMGasMetadata;
+  storytellerPowerDescription?: string | null;
+  storytellerPowerLabel?: string | null;
+  storytellerPowerModifier?: number;
+  storytellerPowerRemaining?: number;
+};
+
+const formatDeciseconds = (deciseconds = 0) => {
+  const totalSeconds = Math.max(0, Math.floor(deciseconds / 10));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  if (!minutes) {
+    return `${seconds}s`;
+  }
+  return `${minutes}m ${seconds}s`;
 };
 
 // LabeledList but stack and with a chevron dropdown.
@@ -132,7 +147,7 @@ export const SupermatterContent = (props: SupermatterProps) => {
       ([gas_path, amount]) => amount !== 0,
     );
   }
-  gas_composition = sortBy(gas_composition, [([gas_path, amount]) => -amount]);
+    gas_composition = sortBy(gas_composition, [([gas_path, amount]) => -amount]);
 
   return (
     <Stack height="100%">
@@ -144,6 +159,21 @@ export const SupermatterContent = (props: SupermatterProps) => {
           buttons={sectionButton}
         >
           <Stack vertical>
+            {!!props.storytellerPowerLabel && (
+              <Stack.Item>
+                <NoticeBox
+                  info={(props.storytellerPowerModifier || 1) >= 1}
+                  warning={(props.storytellerPowerModifier || 1) < 1}
+                >
+                  {props.storytellerPowerLabel}
+                  {!!props.storytellerPowerRemaining &&
+                    ` (${formatDeciseconds(props.storytellerPowerRemaining)} left)`}
+                  {!!props.storytellerPowerDescription && (
+                    <Box mt={0.5}>{props.storytellerPowerDescription}</Box>
+                  )}
+                </NoticeBox>
+              </Stack.Item>
+            )}
             <SupermatterEntry
               title={t('ui.supermatter.integrity')}
               alwaysShowChevron

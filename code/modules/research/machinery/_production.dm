@@ -271,6 +271,7 @@
 
 	data["designs"] = designs
 	data["fabName"] = name
+	data["techwebLinkNotice"] = stored_research ? null : get_techweb_link_notice()
 
 	return data
 
@@ -316,6 +317,8 @@
 			if(busy)
 				say("Warning: fabricator is busy!")
 				return
+			if(!stored_research)
+				return notify_missing_techweb_link(ui.user)
 
 			//validate design
 			var/design_id = params["ref"]

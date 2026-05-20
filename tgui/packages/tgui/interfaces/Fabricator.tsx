@@ -3,6 +3,7 @@ import {
   Button,
   Dimmer,
   Icon,
+  NoticeBox,
   Section,
   Stack,
   Tooltip,
@@ -18,7 +19,14 @@ import type { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
 
 export const Fabricator = (props) => {
   const { act, data } = useBackend<FabricatorData>();
-  const { fabName, onHold, designs, busy, SHEET_MATERIAL_AMOUNT } = data;
+  const {
+    fabName,
+    onHold,
+    designs,
+    busy,
+    SHEET_MATERIAL_AMOUNT,
+    techwebLinkNotice,
+  } = data;
 
   // Reduce the material count array to a map of actually available materials.
   const availableMaterials: MaterialMap = {};
@@ -31,6 +39,11 @@ export const Fabricator = (props) => {
     <Window title={fabName} width={670} height={600}>
       <Window.Content>
         <Stack vertical fill>
+          {!!techwebLinkNotice && (
+            <Stack.Item>
+              <NoticeBox>{techwebLinkNotice}</NoticeBox>
+            </Stack.Item>
+          )}
           <Stack.Item grow>
             <DesignBrowser
               busy={!!busy}

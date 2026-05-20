@@ -146,6 +146,7 @@
 		stored_research = new /datum/techweb/blackmarket
 
 	var/datum/techweb/blackmarket/blackmarket_web = stored_research
+	blackmarket_web.ignore_required_experiments = TRUE
 	blackmarket_web.initialize_blackmarket_nodes()
 	blackmarket_web.techweb_servers |= src
 
