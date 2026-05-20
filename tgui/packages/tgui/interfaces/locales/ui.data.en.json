@@ -387,6 +387,8 @@
     "ui.character.data.quirk_geneticmutation_description": "For one reason or another, you've got an unusual genetic mutation. The rest is up to fate.",
     "ui.character.data.quirk_radfiend_name": "Rad Fiend",
     "ui.character.data.quirk_radfiend_description": "You've been blessed by Cherenkov's warming light. Radiation cannot penetrate your protective barrier.",
+    "ui.character.data.quirk_rhotacism_name": "Rhotacism",
+    "ui.character.data.quirk_rhotacism_description": "You have trouble pronouncing the letter R.",
     "ui.character.data.quirk_sensitivehearing_name": "Sensitive Hearing",
     "ui.character.data.quirk_sensitivehearing_description": "You can hear even the quietest sounds, but you're more vulnerable to hearing damage as a result.",
     "ui.character.data.quirk_throwingarm_name": "Throwing Arm",
