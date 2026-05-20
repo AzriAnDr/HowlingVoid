@@ -16,6 +16,10 @@
 	return
 
 /datum/preference/choiced/menu_chapter/is_accessible(datum/preferences/preferences)
+	. = ..()
+	if (!.)
+		return FALSE
+
 	return FALSE
 
 #undef HOWLING_MENU_CHAPTER_SAVEFILE_KEY

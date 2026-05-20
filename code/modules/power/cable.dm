@@ -477,6 +477,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 ////////////////////////////////
 
 #define CABLE_RESTRAINTS_COST 15
+#define CABLE_NOOSE_COST 30
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
@@ -576,6 +577,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	var/image/restraints_icon = image(icon = 'icons/obj/weapons/restraints.dmi', icon_state = "cuff")
 	restraints_icon.maptext = MAPTEXT("<span [amount >= CABLE_RESTRAINTS_COST ? "" : "style='color: red'"]>[CABLE_RESTRAINTS_COST]</span>")
 	restraints_icon.color = color
+	var/image/noose_icon = image(icon = 'icons/obj/chairs.dmi', icon_state = "noose")
+	noose_icon.maptext = MAPTEXT("<span [amount >= CABLE_NOOSE_COST ? "" : "style='color: red'"]>[CABLE_NOOSE_COST]</span>")
 
 	var/list/radial_menu = list(
 	"Layer 1" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-red"),
@@ -583,7 +586,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	"Layer 3" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-blue"),
 	"Multilayer cable hub" = image(icon = 'icons/obj/pipes_n_cables/structures.dmi', icon_state = "cable_bridge"),
 	"Multi Z layer cable hub" = image(icon = 'icons/obj/pipes_n_cables/structures.dmi', icon_state = "cablerelay-broken-cable"),
-	"Cable restraints" = restraints_icon
+	"Cable restraints" = restraints_icon,
+	"Noose" = noose_icon,
 	)
 
 	var/layer_result = show_radial_menu(user, src, radial_menu, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
@@ -631,6 +635,26 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 				if(use(CABLE_RESTRAINTS_COST))
 					var/obj/item/restraints/handcuffs/cable/restraints = new(null, cable_color)
 					user.put_in_hands(restraints)
+		if("Noose")
+			if(amount < CABLE_NOOSE_COST)
+				to_chat(user, span_notice("You don't have enough cable to make a noose."))
+				return
+
+			var/turf/user_turf = get_turf(user)
+			var/has_platform = (locate(/obj/structure/chair) in user_turf) || \
+				(locate(/obj/structure/bed) in user_turf) || \
+				(locate(/obj/structure/table) in user_turf) || \
+				(locate(/obj/structure/toilet) in user_turf)
+			if(!has_platform)
+				to_chat(user, span_warning("You need to stand on a chair, bed, table, or toilet to make a noose."))
+				return
+
+			to_chat(user, span_notice("You start making a cable noose..."))
+			if(!do_after(user, 3 SECONDS, user) || !use(CABLE_NOOSE_COST))
+				to_chat(user, span_notice("You fail to make the noose. You need to stand still."))
+				return
+
+			new /obj/structure/chair/noose(user_turf)
 	update_appearance()
 
 
@@ -748,6 +772,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	update_appearance()
 
 #undef CABLE_RESTRAINTS_COST
+#undef CABLE_NOOSE_COST
 #undef UNDER_SMES
 #undef UNDER_TERMINAL
 
