@@ -649,7 +649,7 @@ SUBSYSTEM_DEF(storyteller)
 		var/area/location_area = get_area(location)
 		if(!istype(location_area) || !(location_area.type in GLOB.the_station_areas))
 			continue
-		if(found_window.atom_integrity < found_window.max_integrity)
+		if(found_window.get_integrity() < found_window.max_integrity)
 			snapshot.damaged_window_count++
 		CHECK_TICK
 
@@ -660,7 +660,7 @@ SUBSYSTEM_DEF(storyteller)
 		var/area/location_area = get_area(location)
 		if(!istype(location_area) || !(location_area.type in GLOB.the_station_areas))
 			continue
-		if(found_grille.atom_integrity < found_grille.max_integrity)
+		if(found_grille.get_integrity() < found_grille.max_integrity)
 			snapshot.damaged_grille_count++
 		CHECK_TICK
 
