@@ -1,15 +1,5 @@
 import { CheckboxInput, type Feature, type FeatureToggle, FeatureSliderInput } from '../base';
 
-export const darkened_flash: FeatureToggle = {
-  name: 'Enable darkened flashes',
-  category: 'ACCESSIBILITY',
-  description: `
-    When toggled, being flashed will show a dark screen rather than a
-    bright one.
-  `,
-  component: CheckboxInput,
-};
-
 export const screen_shake_darken: FeatureToggle = {
   name: 'Darken screen shake',
   category: 'ACCESSIBILITY',

@@ -1,6 +1,9 @@
 /mob/living
 	/// Lightweight hydration reserve used by Ghost Cafe and IC quick spawn supply actions.
 	var/water_level = 400
+	/// Timer ID for removing the screenblur from being flashed.
+	/// Needed to prevent jank where being re-flashed while the blur is fading out can just completely remove the blur.
+	var/flash_timer
 
 /mob/living/proc/can_replenish_thirst()
 	if(!iscarbon(src))
@@ -42,6 +45,10 @@
 	med_hud_set_status()
 
 /mob/living/Destroy()
+	if(flash_timer)
+		deltimer(flash_timer)
+		flash_timer = null
+
 	for(var/datum/status_effect/effect as anything in status_effects)
 		// The status effect calls on_remove when its mob is deleted
 		if(effect.on_remove_on_mob_delete)
