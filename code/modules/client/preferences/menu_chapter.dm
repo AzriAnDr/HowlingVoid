@@ -15,5 +15,8 @@
 /datum/preference/choiced/menu_chapter/apply_to_client(client/client, value)
 	return
 
+/datum/preference/choiced/menu_chapter/is_accessible(datum/preferences/preferences)
+	return FALSE
+
 #undef HOWLING_MENU_CHAPTER_SAVEFILE_KEY
 #undef DEFAULT_HOWLING_MENU_CHAPTER

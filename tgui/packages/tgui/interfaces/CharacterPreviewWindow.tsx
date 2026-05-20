@@ -15,6 +15,8 @@ type PreviewAnimationData = {
 };
 
 type CharacterPreviewWindowData = {
+  character_preview_view?: string | null;
+  preview_map?: string | null;
   preview_item_animations_enabled?: boolean | number;
   preview_animations?: Record<string, PreviewAnimationData | null> | null;
   preview_direction?: string | null;
@@ -24,8 +26,13 @@ type CharacterPreviewWindowData = {
 
 const PREVIEW_DIRECTION_CYCLE = ['south', 'west', 'north', 'east'];
 
-function rotatePreviewDirection(direction: string | null | undefined, step: -1 | 1) {
-  const currentDirection = (direction || PREVIEW_DIRECTION_CYCLE[0]).toLowerCase();
+function rotatePreviewDirection(
+  direction: string | null | undefined,
+  step: -1 | 1,
+) {
+  const currentDirection = (
+    direction || PREVIEW_DIRECTION_CYCLE[0]
+  ).toLowerCase();
   const currentIndex = PREVIEW_DIRECTION_CYCLE.indexOf(currentDirection);
   const safeIndex = currentIndex >= 0 ? currentIndex : 0;
   const nextIndex =
@@ -49,7 +56,11 @@ export function CharacterPreviewWindow() {
   }, [data.preview_direction]);
 
   return (
-    <Window width={760} height={840} title={t('ui.character.limbs_character_preview')}>
+    <Window
+      width={760}
+      height={840}
+      title={t('ui.character.limbs_character_preview')}
+    >
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -92,6 +103,7 @@ export function CharacterPreviewWindow() {
                 <CharacterPreview
                   animationMap={data.preview_animations}
                   direction={previewDirection}
+                  id={data.preview_map || data.character_preview_view}
                   imageMap={data.preview_urls}
                   imageUrl={data.preview_url}
                   height="100%"
@@ -106,7 +118,10 @@ export function CharacterPreviewWindow() {
                 <Button
                   icon="undo"
                   onClick={() => {
-                    const nextDirection = rotatePreviewDirection(previewDirection, 1);
+                    const nextDirection = rotatePreviewDirection(
+                      previewDirection,
+                      1,
+                    );
                     act('prime_preview_direction', {
                       direction: nextDirection,
                     });
@@ -119,7 +134,10 @@ export function CharacterPreviewWindow() {
                 <Button
                   icon="repeat"
                   onClick={() => {
-                    const nextDirection = rotatePreviewDirection(previewDirection, -1);
+                    const nextDirection = rotatePreviewDirection(
+                      previewDirection,
+                      -1,
+                    );
                     act('prime_preview_direction', {
                       direction: nextDirection,
                     });

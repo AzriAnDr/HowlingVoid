@@ -103,11 +103,15 @@
 		owner.adjust_eye_blur(20 SECONDS)
 		human_owner.set_heartattack(TRUE)
 		owner.apply_status_effect(/datum/status_effect/heart_desperation) // To give the victim a final chance to shock their heart before losing consciousness
-		var/flash_type = /atom/movable/screen/fullscreen/flash
-		if(owner.client?.prefs?.read_preference(/datum/preference/toggle/darkened_flash))
-			flash_type = /atom/movable/screen/fullscreen/flash/black
-		owner.overlay_fullscreen("flash", flash_type)
-		addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, clear_fullscreen), "flash", 1 SECONDS), 1 SECONDS)
+		var/flash_mode = owner.client?.prefs?.read_preference(/datum/preference/choiced/flash_visuals)
+		if(flash_mode == "Blur")
+			owner.apply_status_effect(/datum/status_effect/flash_blur, 1 SECONDS)
+		else
+			var/flash_type = /atom/movable/screen/fullscreen/flash
+			if(flash_mode == "Dark")
+				flash_type = /atom/movable/screen/fullscreen/flash/black
+			owner.overlay_fullscreen("flash", flash_type)
+			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, clear_fullscreen), "flash", 1 SECONDS), 1 SECONDS)
 		qdel(src)
 		return FALSE
 
