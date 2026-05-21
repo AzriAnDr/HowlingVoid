@@ -26,11 +26,6 @@
 *	ITEMS BELOW HERE
 */
 
-/datum/loadout_item/mask/masquerade
-	name = "Masquerade Mask"
-	item_path = /obj/item/clothing/mask/masquerade
-	group = "Costumes"
-
 /datum/loadout_item/mask/whistlesec
 	name = "Police Whistle"
 	item_path = /obj/item/clothing/mask/whistle

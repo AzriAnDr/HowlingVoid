@@ -445,25 +445,28 @@ function parseTopLevelBlocks(fileContents) {
     blocks.push(current);
   };
 
-  const typeHeaderPattern = /^\/datum\/loadout_item\/[^\s(]*\s*$/;
-  const procHeaderPattern = /^\/datum\/loadout_item\/[^\s]*\s*\(.*$/;
+  const typeHeaderPattern = /^\/datum\/loadout_item\/[^\s(]*\s*(?:(?=\/\/)\/\/.*)?$/;
+  const procHeaderPattern = /^\/datum\/loadout_item\/[^\s]*\s*\(.*\)\s*(?:(?=\/\/)\/\/.*)?$/;
 
   for (const line of lines) {
-    if (typeHeaderPattern.test(line.trim())) {
+    const trimmedLine = line.trim();
+    const normalizedHeader = trimmedLine.replace(/\s*\/\/.*$/, '').trim();
+
+    if (typeHeaderPattern.test(trimmedLine)) {
       flush();
       current = {
         kind: 'type',
-        path: line.trim(),
+        path: normalizedHeader,
         lines: [line],
       };
       continue;
     }
-    if (procHeaderPattern.test(line.trim())) {
+    if (procHeaderPattern.test(trimmedLine)) {
       flush();
       current = {
         kind: 'proc',
-        path: line.trim(),
-        ownerPath: ownerPathForProc(line.trim()),
+        path: normalizedHeader,
+        ownerPath: ownerPathForProc(normalizedHeader),
         lines: [line],
       };
       continue;

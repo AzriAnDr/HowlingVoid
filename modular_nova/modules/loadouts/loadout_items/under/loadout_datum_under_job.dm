@@ -3,11 +3,6 @@
 *	For job gear or otherwise work-related attire. PPE, Department Equipment, or Job-Locked.
 */
 
-/datum/loadout_item/under/jumpsuit/cargo
-	name = "Cargo Technician's Jumpsuit"
-	item_path = /obj/item/clothing/under/rank/cargo/tech
-	group = "Workwear"
-
 /datum/loadout_item/under/jumpsuit/utility
 	name = "Utility Uniform"
 	item_path = /obj/item/clothing/under/misc/nova/utility
