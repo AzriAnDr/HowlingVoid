@@ -9,7 +9,7 @@
 	ascended_mob.density = 0 // Cant be moved by walking into them
 	ADD_TRAIT(ascended_mob, TRAIT_NO_TELEPORT, SMITE_TRAIT)
 	ascended_mob.move_resist = MOVE_RESIST_DEFAULT * 1000
-	playsound(gods_turf, 'modularhowling_void/modules/custom_smites/sounds/heaven.ogg', 50, 0)
+	playsound(gods_turf, 'sound/effects/smites/heaven.ogg', 50, 0)
 	animate(lightbeam, alpha=255, time=4.5 SECONDS)
 	sleep(4.5 SECONDS)
 	animate(ascended_mob, pixel_y = 160, time = 12 SECONDS, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
@@ -22,7 +22,7 @@
 	qdel(ascended_mob)
 
 /obj/effect/heavenly_light
-	icon = 'modularhowling_void/modules/custom_smites/icons/32x192.dmi'
+	icon = 'icons/effects/smites/32x192.dmi'
 	icon_state = "heavenlight"
 	layer = EFFECTS_LAYER
 	blend_mode = BLEND_ADD

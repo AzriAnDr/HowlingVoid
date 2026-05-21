@@ -23,7 +23,7 @@
 		span_bolddanger("Your leg gets stuck in the floor crack below, but something isn't right. The tile begins to move..."),
 		blind_message = span_hear("You hear someone's horny laughs."),
 	)
-	playsound(the_turf, 'modularhowling_void/modules/custom_smites/sounds/floor_clown_ambience.ogg', 70, TRUE)
+	playsound(the_turf, 'sound/effects/smites/floor_clown_ambience.ogg', 70, TRUE)
 
 	var/mob/living/carbon/human/species/vulpkanin/gib_vulp/horny1 = new /mob/living/carbon/human/species/vulpkanin/gib_vulp(the_turf)
 	horny1.pixel_x = -12
@@ -85,7 +85,7 @@
 
 	animate_slide(the_turf, 0, 0, 5 SECONDS)
 	// The show begins
-	playsound(the_turf, 'modularhowling_void/modules/custom_smites/sounds/dont_leave_me_here.ogg', 60, FALSE)
+	playsound(the_turf, 'sound/effects/smites/dont_leave_me_here.ogg', 60, FALSE)
 	sleep(1 SECONDS)
 	playsound(the_turf, 'sound/effects/emotes/kiss.ogg', 40, TRUE)
 	sleep(0.5 SECONDS)

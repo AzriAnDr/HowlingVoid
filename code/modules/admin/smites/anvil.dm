@@ -17,14 +17,14 @@
 	var/obj/effect/smash_shadow/anvil_shadow = new /obj/effect/smash_shadow(get_turf(poor_soul))
 	animate(anvil_shadow, alpha = 150, transform = matrix(0.25, 0, 0, 0, 0.17, 0), easing = EASE_IN | QUAD_EASING, time = 1.75 SECONDS, flags = ANIMATION_PARALLEL)
 
-	playsound(get_turf(poor_soul), 'modularhowling_void/modules/custom_smites/sounds/cartoon_fall.ogg', 50, FALSE)
+	playsound(get_turf(poor_soul), 'sound/effects/smites/cartoon_fall.ogg', 50, FALSE)
 	sleep(1.6 SECONDS)
 	poor_soul.gib()
 	anvil.anchored = FALSE
 	qdel(anvil_shadow)
 
 /obj/effect/smash_shadow
-	icon = 'modularhowling_void/modules/custom_smites/icons/96x96.dmi'
+	icon = 'icons/effects/smites/96x96.dmi'
 	icon_state="circle"
 	mouse_opacity = 0
 	color = "#000000"

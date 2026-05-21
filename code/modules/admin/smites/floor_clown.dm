@@ -23,7 +23,7 @@
 		span_bolddanger("HE IS COMING FOR YOU. YOU CAN'T ESCAPE."),
 		blind_message = span_hear("You hear someone's evil laugh."),
 	)
-	playsound(the_turf, 'modularhowling_void/modules/custom_smites/sounds/floor_clown_ambience.ogg', 70, TRUE)
+	playsound(the_turf, 'sound/effects/smites/floor_clown_ambience.ogg', 70, TRUE)
 
 	var/mob/living/carbon/human/floor_clown/floorcluwne = new /mob/living/carbon/human/floor_clown(the_turf)
 
@@ -68,7 +68,7 @@
 
 	var/image/underlay
 	if (isturf(to_animate))
-		underlay = image('modularhowling_void/modules/custom_smites/icons/floors.dmi', icon_state = "solid_black")
+		underlay = image('icons/effects/smites/floors.dmi', icon_state = "solid_black")
 		underlay.appearance_flags |= RESET_TRANSFORM
 		underlay.plane = -8
 		to_animate.underlays += underlay
