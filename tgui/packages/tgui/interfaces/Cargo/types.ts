@@ -49,6 +49,7 @@ export type Supply = {
   first_item_icon_state: string | null;
   goody: BooleanLike;
   id: string;
+  is_company: BooleanLike;
   name: string;
   small_item: BooleanLike;
   contraband: BooleanLike;

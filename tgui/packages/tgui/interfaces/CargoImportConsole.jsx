@@ -94,9 +94,11 @@ export const CargoImportConsole = (props) => {
                               >
                                 <Image
                                   src={`data:image/jpeg;base64,${item.icon}`}
+                                  height="32px"
+                                  width="32px"
                                   style={{
-                                    'vertical-align': 'middle',
-                                    'horizontal-align': 'middle',
+                                    objectFit: 'contain',
+                                    verticalAlign: 'middle',
                                   }}
                                 />
                                 &nbsp;{item.name}
@@ -121,11 +123,11 @@ export const CargoImportConsole = (props) => {
                             <Stack.Item>
                               <Image
                                 src={`data:image/jpeg;base64,${item.icon}`}
-                                height={'100%'}
-                                width={'100%'}
+                                height="96px"
+                                width="96px"
                                 style={{
-                                  'vertical-align': 'middle',
-                                  'horizontal-align': 'middle',
+                                  objectFit: 'contain',
+                                  verticalAlign: 'middle',
                                 }}
                               />
                             </Stack.Item>

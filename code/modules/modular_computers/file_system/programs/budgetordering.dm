@@ -113,6 +113,7 @@
 			"first_item_icon" = first_item?.icon,
 			"first_item_icon_state" = first_item?.icon_state,
 			"goody" = P.order_flags & ORDER_GOODY,
+			"is_company" = istype(P, /datum/supply_pack/companies),
 			"access" = P.access,
 			"contains" = P.get_contents_ui_data(),
 		))
@@ -340,6 +341,14 @@
 			. = TRUE
 		if("toggleprivate")
 			self_paid = !self_paid
+			. = TRUE
+		if("company_import_window")
+			var/datum/component/armament/company_imports/import_component = computer.GetComponent(/datum/component/armament/company_imports)
+			if(!import_component)
+				computer.AddComponent(/datum/component/armament/company_imports)
+				import_component = computer.GetComponent(/datum/component/armament/company_imports)
+			import_component.parent_prog ||= src
+			import_component.ui_interact(user)
 			. = TRUE
 	if(.)
 		post_signal(cargo_shuttle)

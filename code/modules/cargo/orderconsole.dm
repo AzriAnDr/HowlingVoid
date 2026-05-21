@@ -208,6 +208,7 @@
 			"first_item_icon" = first_item?.icon,
 			"first_item_icon_state" = first_item?.icon_state,
 			"goody" = (pack.order_flags & ORDER_GOODY),
+			"is_company" = istype(pack, /datum/supply_pack/companies),
 			"access" = pack.access,
 			"contraband" = (pack.order_flags & ORDER_CONTRABAND),
 			"contains" = pack.get_contents_ui_data(),

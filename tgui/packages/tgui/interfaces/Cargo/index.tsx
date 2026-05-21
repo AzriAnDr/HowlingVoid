@@ -81,6 +81,12 @@ export function CargoContent(props) {
             >
               Requests ({requests.length})
             </Tabs.Tab>
+            <Tabs.Tab
+              icon="clipboard-list"
+              onClick={() => act('company_import_window')}
+            >
+              Company Imports
+            </Tabs.Tab>
             {!requestonly && (
               <>
                 <Tabs.Tab

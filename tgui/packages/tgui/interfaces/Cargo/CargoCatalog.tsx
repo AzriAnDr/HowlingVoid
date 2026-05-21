@@ -28,7 +28,16 @@ export function CargoCatalog(props: Props) {
   usePreferencesLocalization(data);
   const { express } = props;
 
-  const supplies = Object.values(data.supplies);
+  const supplies = useMemo(
+    () =>
+      Object.values(data.supplies)
+        .map((supply) => ({
+          ...supply,
+          packs: supply.packs.filter((pack) => !pack.is_company),
+        }))
+        .filter((supply) => supply.packs.length > 0),
+    [data.supplies],
+  );
   const [showContents, setShowContents] = useState('');
   const [searchText, setSearchText] = useSharedState('search_text', '');
   const [activeSupplyName, setActiveSupplyName] = useSharedState(
