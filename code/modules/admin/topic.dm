@@ -75,8 +75,8 @@
 	else if(href_list["editrights"])
 		edit_rights_topic(href_list)
 
-	else if(href_list["gamemode_panel"])
-		dynamic_panel(usr)
+	else if(href_list["storyteller_panel"])
+		storyteller_panel(usr)
 
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))

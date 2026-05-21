@@ -86,7 +86,7 @@ export const FishingCalculator = (props) => {
             <Table>
               <Table.Row header>
                 <Table.Cell>{t('ui.fishing_calculator.outcome')}</Table.Cell>
-                <Table.Cell>{t('ui.dynamic_tester.weight')}</Table.Cell>
+                <Table.Cell>{t('ui.fishing_calculator.weight')}</Table.Cell>
                 <Table.Cell>{t('ui.fishing_calculator.probability')}</Table.Cell>
                 <Table.Cell>{t('ui.fishing_calculator.difficulty')}</Table.Cell>
                 <Table.Cell>{t('ui.fishing_calculator.count')}</Table.Cell>
