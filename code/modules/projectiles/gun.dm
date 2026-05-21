@@ -80,7 +80,7 @@
 
 	/// The most reasonable way to modify projectile speed values for projectile fired from this gun. Honest.
 	/// Lower values are worse, higher values are better.
-	var/projectile_speed_multiplier = 1
+	var/projectile_speed_multiplier = 1.5
 
 	var/spread = 0 //Spread induced by the gun itself.
 	var/randomspread = 1 //Set to 0 for shotguns. This is used for weapons that don't fire all their bullets at once.

@@ -225,27 +225,20 @@
 	friction = 0.1
 
 /obj/effect/temp_visual/explosion
-	name = "boom"
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "explosion"
 	light_system = COMPLEX_LIGHT
 	duration = 25
-	///smoke wave particle holder
+	/// Smoke wave particle holder.
 	var/obj/effect/abstract/particle_holder/smoke_wave
-	///explosion smoke particle holder
+	/// Explosion smoke particle holder.
 	var/obj/effect/abstract/particle_holder/explosion_smoke
-	///debris dirt kickup particle holder
+	/// Debris dirt kickup particle holder.
 	var/obj/effect/abstract/particle_holder/dirt_kickup
-	///falling debris particle holder
+	/// Falling debris particle holder.
 	var/obj/effect/abstract/particle_holder/falling_debris
-	///sparks particle holder
+	/// Sparks particle holder.
 	var/obj/effect/abstract/particle_holder/sparks
-	///large dirt kickup particle holder
+	/// Large dirt kickup particle holder.
 	var/obj/effect/abstract/particle_holder/large_kickup
-
-/obj/effect/temp_visual/explosion/fast
-	icon_state = "explosionfast"
-	duration = 4
 
 /obj/effect/temp_visual/explosion/Initialize(mapload, radius = 3, color = LIGHT_COLOR_FIRE, small = FALSE, large = FALSE)
 	. = ..()
@@ -254,14 +247,13 @@
 	if(iswaterturf(get_turf(src)))
 		icon_state = null
 		return
-	var/image/I = image(icon, src, icon_state, 10, -32, -32)
+	var/image/explosion_overlay = image(icon, src, icon_state, 10, -32, -32)
 	var/matrix/rotate = matrix()
 	rotate.Turn(rand(0, 359))
-	I.transform = rotate
-	overlays += I //we use an overlay so the explosion and light source are both in the correct location plus so the particles don't rotate with the explosion
+	explosion_overlay.transform = rotate
+	overlays += explosion_overlay
 	icon_state = null
 
-///Generate the particles
 /obj/effect/temp_visual/explosion/proc/generate_particles(radius, small = FALSE, large = FALSE)
 	var/turf/turf_type = get_turf(src)
 	if(iswaterturf(turf_type))
@@ -326,7 +318,6 @@
 	QDEL_NULL(dirt_kickup)
 	return ..()
 
-// Integrate ported explosion visuals into the default explosion effect system.
 /datum/effect_system/explosion/start()
 	new /obj/effect/temp_visual/explosion(location)
 	var/datum/effect_system/basic/expl_particles/boom_particles = new(location)
