@@ -129,3 +129,26 @@
 	erp_item = TRUE
 	group = "Bunny Suit"
 	restricted_roles = list(ALL_JOBS_SEC)
+
+/datum/loadout_item/under/jumpsuit/cargo
+	name = "Cargo Technician's Jumpsuit"
+	item_path = /obj/item/clothing/under/rank/cargo/tech
+	group = "Workwear"
+
+/datum/loadout_item/under/jumpsuit/cargo/skirt
+	name = "Cargo Technician's Skirt"
+	item_path = /obj/item/clothing/under/rank/cargo/tech/skirt
+	group = "Workwear"
+
+/datum/loadout_item/under/jumpsuit/colonial_uniform
+	name = "Colonial Uniform"
+	item_path = /obj/item/clothing/under/colonial
+	group = "Workwear"
+	species_blacklist = list(SPECIES_TESHARI)
+
+/datum/loadout_item/under/bunny/sec/det
+	name = "Bunny Suit (Detective)"
+	item_path = /obj/item/clothing/under/rank/security/detective_bunnysuit
+	erp_item = TRUE
+	group = "Bunny Suit"
+	restricted_roles = list(JOB_DETECTIVE)

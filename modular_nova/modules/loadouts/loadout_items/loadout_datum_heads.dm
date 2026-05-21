@@ -206,3 +206,12 @@
 /datum/loadout_item/head/donator/rainbow_bunch/get_item_information()
 	. = ..()
 	.[FA_ICON_DICE] = TOOLTIP_RANDOM_COLOR
+
+/datum/loadout_item/head/frontiercap
+	name = "Cap - Frontier"
+	item_path = /obj/item/clothing/head/soft/frontier_colonist
+
+/datum/loadout_item/head/rabbit
+	name = "Playbunny Ears"
+	item_path = /obj/item/clothing/head/playbunnyears
+	group = "Costumes"

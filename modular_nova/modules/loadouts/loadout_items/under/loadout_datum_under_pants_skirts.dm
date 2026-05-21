@@ -45,3 +45,8 @@
 	item_path = /obj/item/clothing/under/sweater
 	reskin_datum = /datum/atom_skin/cableknit_sweater
 	group = "Casualwear"
+
+/datum/loadout_item/under/miscellaneous/wedding_dress
+	name = "Dress - Wedding"
+	item_path = /obj/item/clothing/under/dress/wedding_dress
+	group = "Casualwear"

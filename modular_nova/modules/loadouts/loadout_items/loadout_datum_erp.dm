@@ -34,3 +34,35 @@
 /*
 *	SEX TOYS
 */
+
+/datum/loadout_item/erp/egg
+	name = "Vibrating Egg"
+	item_path = /obj/item/clothing/sextoy/eggvib
+
+/datum/loadout_item/erp/dildo
+	name = "Dildo"
+	item_path = /obj/item/clothing/sextoy/dildo
+
+/datum/loadout_item/erp/shibari
+	name = "Shibari Ropes"
+	item_path = /obj/item/stack/shibari_rope/full
+
+/datum/loadout_item/erp/ballgag
+	name = "Ball Gag"
+	item_path = /obj/item/clothing/mask/muzzle/ballgag
+
+/datum/loadout_item/erp/crocin
+	name = "Crocin Bottle"
+	item_path = /obj/item/reagent_containers/cup/bottle/crocin
+
+/datum/loadout_item/erp/camphor
+	name = "Camphor Bottle"
+	item_path = /obj/item/reagent_containers/cup/bottle/camphor
+
+/datum/loadout_item/erp/hexacrocin
+	name = "Hexacrocin Bottle"
+	item_path = /obj/item/reagent_containers/cup/bottle/hexacrocin
+
+/datum/loadout_item/erp/pentacamphor
+	name = "Pentacamphor Bottle"
+	item_path = /obj/item/reagent_containers/cup/bottle/pentacamphor
