@@ -203,6 +203,14 @@
 	name = "Mammal, Long"
 	icon_state = "lcanid"
 
+/datum/sprite_accessory/snouts/mammal/vulpkanin/howling_void/vulp
+	name = "Vulpkanin"
+	icon_state = "vulp"
+
+/datum/sprite_accessory/snouts/mammal/vulpkanin/howling_void/vulp2
+	name = "Vulpkanin Two"
+	icon_state = "vulp2"
+
 /datum/sprite_accessory/snouts/mammal/lcanidalt
 	name = "Mammal, Long ALT"
 	icon_state = "lcanidalt"
@@ -214,6 +222,10 @@
 /datum/sprite_accessory/snouts/mammal/lcanidstripedalt
 	name = "Mammal, Long, Striped ALT"
 	icon_state = "lcanidstripealt"
+
+/datum/sprite_accessory/snouts/mammal/noodle
+	name = "Noodle"
+	icon_state = "noodle"
 
 /datum/sprite_accessory/snouts/mammal/tajaran/scanid
 	name = "Mammal, Short"
