@@ -40,3 +40,7 @@ SPECIES RESTRICTED
 	species_whitelist = list(SPECIES_PLASMAMAN)
 	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_CORRECTIONS_OFFICER)
 	group = "Species-Unique"
+
+/datum/loadout_item/inhand/guncase_large
+	name = "Empty Gun Case (Black, Large)"
+	item_path = /obj/item/storage/toolbox/guncase/nova

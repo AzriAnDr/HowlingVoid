@@ -38,3 +38,13 @@
 /datum/loadout_item/mask/donator
 	abstract_type = /datum/loadout_item/mask/donator
 	donator_only = TRUE
+
+/datum/loadout_item/mask/masquerade
+	name = "Masquerade Mask"
+	item_path = /obj/item/clothing/mask/masquerade
+	group = "Costumes"
+
+/datum/loadout_item/mask/masquerade/two_colors
+	name = "Masquerade Mask - Split"
+	item_path = /obj/item/clothing/mask/masquerade/two_colors
+	group = "Costumes"

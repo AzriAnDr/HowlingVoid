@@ -12,3 +12,7 @@
 	if(outfit.glasses)
 		LAZYADD(outfit.backpack_contents, outfit.glasses)
 	outfit.glasses = item_path
+
+/datum/loadout_item/glasses/eyepatch
+	name = "Eyepatch"
+	item_path = /obj/item/clothing/glasses/eyepatch

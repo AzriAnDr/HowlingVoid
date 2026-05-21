@@ -86,7 +86,7 @@
   },
   "/datum/loadout_item/glasses/eyepatch/medical": {
     "id": "/datum/loadout_item/glasses/eyepatch/medical",
-    "template_type": "/datum/loadout_item/glasses",
+    "template_type": "/datum/loadout_item/glasses/eyepatch",
     "name": "Medical Eyepatch",
     "item_path": "/obj/item/clothing/glasses/eyepatch/medical"
   },
@@ -672,8 +672,8 @@
   "/datum/loadout_item/shoes/jackboots": {
     "id": "/datum/loadout_item/shoes/jackboots",
     "template_type": "/datum/loadout_item/shoes",
-    "name": "Workboots (Black)",
-    "item_path": "/obj/item/clothing/shoes/workboots/black"
+    "name": "Boots - Jackboots",
+    "item_path": "/obj/item/clothing/shoes/jackboots"
   },
   "/datum/loadout_item/suit/overall": {
     "id": "/datum/loadout_item/suit/overall",
@@ -745,7 +745,7 @@
   },
   "/datum/loadout_item/under/jumpsuit/paddedunder/alt": {
     "id": "/datum/loadout_item/under/jumpsuit/paddedunder/alt",
-    "template_type": "/datum/loadout_item/under/jumpsuit",
+    "template_type": "/datum/loadout_item/under/jumpsuit/paddedunder",
     "name": "Feathered Serenity Dress",
     "item_path": "/obj/item/clothing/under/padded/alt",
     "ckeywhitelist": [
@@ -754,7 +754,7 @@
   },
   "/datum/loadout_item/neck/padded/alt": {
     "id": "/datum/loadout_item/neck/padded/alt",
-    "template_type": "/datum/loadout_item/neck",
+    "template_type": "/datum/loadout_item/neck/padded",
     "name": "Feathered Serenity Cloak",
     "item_path": "/obj/item/clothing/neck/padded/alt",
     "ckeywhitelist": [
@@ -763,7 +763,7 @@
   },
   "/datum/loadout_item/neck/padded/security": {
     "id": "/datum/loadout_item/neck/padded/security",
-    "template_type": "/datum/loadout_item/neck",
+    "template_type": "/datum/loadout_item/neck/padded",
     "name": "Vanguard Cloak",
     "item_path": "/obj/item/clothing/neck/padded/security",
     "ckeywhitelist": [
@@ -1233,7 +1233,7 @@
   },
   "/datum/loadout_item/under/jumpsuit/lannese/vambrace": {
     "id": "/datum/loadout_item/under/jumpsuit/lannese/vambrace",
-    "template_type": "/datum/loadout_item/under/jumpsuit",
+    "template_type": "/datum/loadout_item/under/jumpsuit/lannese",
     "name": "Lannese Dress w/ Vambraces",
     "item_path": "/obj/item/clothing/under/custom/lannese/vambrace",
     "ckeywhitelist": [
@@ -1765,7 +1765,7 @@
   },
   "/datum/loadout_item/toys/plush/plushie_razurath/second": {
     "id": "/datum/loadout_item/toys/plush/plushie_razurath/second",
-    "template_type": "/datum/loadout_item/toys/plush",
+    "template_type": "/datum/loadout_item/toys/plush/plushie_razurath",
     "name": "Dwarf Shark Plushie",
     "item_path": "/obj/item/toy/plush/nova/donator/plushie_razurath/second",
     "ckeywhitelist": [
@@ -3021,7 +3021,7 @@
   },
   "/datum/loadout_item/erp/egg/signal": {
     "id": "/datum/loadout_item/erp/egg/signal",
-    "template_type": "/datum/loadout_item/erp",
+    "template_type": "/datum/loadout_item/erp/egg",
     "name": "Signal Vibrating Egg",
     "item_path": "/obj/item/clothing/sextoy/eggvib/signalvib"
   },
@@ -3039,13 +3039,13 @@
   },
   "/datum/loadout_item/erp/dildo/custom": {
     "id": "/datum/loadout_item/erp/dildo/custom",
-    "template_type": "/datum/loadout_item/erp",
+    "template_type": "/datum/loadout_item/erp/dildo",
     "name": "Custom Dildo",
     "item_path": "/obj/item/clothing/sextoy/dildo/custom_dildo"
   },
   "/datum/loadout_item/erp/dildo/double": {
     "id": "/datum/loadout_item/erp/dildo/double",
-    "template_type": "/datum/loadout_item/erp",
+    "template_type": "/datum/loadout_item/erp/dildo",
     "name": "Double Dildo",
     "item_path": "/obj/item/clothing/sextoy/dildo/double_dildo"
   },
@@ -3123,13 +3123,13 @@
   },
   "/datum/loadout_item/erp/shibari/glow": {
     "id": "/datum/loadout_item/erp/shibari/glow",
-    "template_type": "/datum/loadout_item/erp",
+    "template_type": "/datum/loadout_item/erp/shibari",
     "name": "Glowy Shibari Ropes",
     "item_path": "/obj/item/stack/shibari_rope/glow/full"
   },
   "/datum/loadout_item/erp/ballgag/choking": {
     "id": "/datum/loadout_item/erp/ballgag/choking",
-    "template_type": "/datum/loadout_item/erp",
+    "template_type": "/datum/loadout_item/erp/ballgag",
     "name": "Phallic Ball Gag",
     "item_path": "/obj/item/clothing/mask/muzzle/ballgag/choking",
     "reskin_datum": "/datum/atom_skin/ballgag"
@@ -3251,25 +3251,25 @@
   },
   "/datum/loadout_item/erp/crocin/pill": {
     "id": "/datum/loadout_item/erp/crocin/pill",
-    "template_type": "/datum/loadout_item/erp",
+    "template_type": "/datum/loadout_item/erp/crocin",
     "name": "Crocin Pill",
     "item_path": "/obj/item/reagent_containers/applicator/pill/crocin"
   },
   "/datum/loadout_item/erp/camphor/pill": {
     "id": "/datum/loadout_item/erp/camphor/pill",
-    "template_type": "/datum/loadout_item/erp",
+    "template_type": "/datum/loadout_item/erp/camphor",
     "name": "Camphor Pill",
     "item_path": "/obj/item/reagent_containers/applicator/pill/camphor"
   },
   "/datum/loadout_item/erp/hexacrocin/pill": {
     "id": "/datum/loadout_item/erp/hexacrocin/pill",
-    "template_type": "/datum/loadout_item/erp",
+    "template_type": "/datum/loadout_item/erp/hexacrocin",
     "name": "Hexacrocin Pill",
     "item_path": "/obj/item/reagent_containers/applicator/pill/hexacrocin"
   },
   "/datum/loadout_item/erp/pentacamphor/pill": {
     "id": "/datum/loadout_item/erp/pentacamphor/pill",
-    "template_type": "/datum/loadout_item/erp",
+    "template_type": "/datum/loadout_item/erp/pentacamphor",
     "name": "Pentacamphor Pill",
     "item_path": "/obj/item/reagent_containers/applicator/pill/pentacamphor"
   },
@@ -3672,7 +3672,7 @@
   },
   "/datum/loadout_item/head/frontiercap/medic": {
     "id": "/datum/loadout_item/head/frontiercap/medic",
-    "template_type": "/datum/loadout_item/head",
+    "template_type": "/datum/loadout_item/head/frontiercap",
     "name": "Cap - Frontier Medical",
     "item_path": "/obj/item/clothing/head/soft/frontier_colonist/medic"
   },
@@ -4402,21 +4402,21 @@
   },
   "/datum/loadout_item/head/rabbit/playbunnymedviro": {
     "id": "/datum/loadout_item/head/rabbit/playbunnymedviro",
-    "template_type": "/datum/loadout_item/head",
+    "template_type": "/datum/loadout_item/head/rabbit",
     "name": "Pathological Bunny Ears",
     "item_path": "/obj/item/clothing/head/playbunnyears/pathologist",
     "group": "Costumes"
   },
   "/datum/loadout_item/head/rabbit/playbunnymedcoroner": {
     "id": "/datum/loadout_item/head/rabbit/playbunnymedcoroner",
-    "template_type": "/datum/loadout_item/head",
+    "template_type": "/datum/loadout_item/head/rabbit",
     "name": "Coroner Bunny Ears",
     "item_path": "/obj/item/clothing/head/playbunnyears/coroner",
     "group": "Costumes"
   },
   "/datum/loadout_item/head/rabbit/playbunnymedcmo": {
     "id": "/datum/loadout_item/head/rabbit/playbunnymedcmo",
-    "template_type": "/datum/loadout_item/head",
+    "template_type": "/datum/loadout_item/head/rabbit",
     "name": "Chief Medical Bunny Ears",
     "item_path": "/obj/item/clothing/head/playbunnyears/cmo",
     "restricted_roles": [
@@ -4676,7 +4676,7 @@
   },
   "/datum/loadout_item/inhand/guncase_large/yellow": {
     "id": "/datum/loadout_item/inhand/guncase_large/yellow",
-    "template_type": "/datum/loadout_item/inhand",
+    "template_type": "/datum/loadout_item/inhand/guncase_large",
     "name": "Empty Gun Case (Yellow, Large)",
     "item_path": "/obj/item/storage/toolbox/guncase/nova/carwo_large_case"
   },
@@ -5056,14 +5056,14 @@
   },
   "/datum/loadout_item/mask/masquerade/feathered": {
     "id": "/datum/loadout_item/mask/masquerade/feathered",
-    "template_type": "/datum/loadout_item/mask",
+    "template_type": "/datum/loadout_item/mask/masquerade",
     "name": "Masquerade Mask - Feathered",
     "item_path": "/obj/item/clothing/mask/masquerade/feathered",
     "group": "Costumes"
   },
   "/datum/loadout_item/mask/masquerade/two_colors/feathered": {
     "id": "/datum/loadout_item/mask/masquerade/two_colors/feathered",
-    "template_type": "/datum/loadout_item/mask",
+    "template_type": "/datum/loadout_item/mask/masquerade/two_colors",
     "name": "Masquerade Mask - Feathered, Split",
     "item_path": "/obj/item/clothing/mask/masquerade/two_colors/feathered",
     "group": "Costumes"
@@ -6302,7 +6302,7 @@
   },
   "/datum/loadout_item/shoes/jackboots/frontier": {
     "id": "/datum/loadout_item/shoes/jackboots/frontier",
-    "template_type": "/datum/loadout_item/shoes",
+    "template_type": "/datum/loadout_item/shoes/jackboots",
     "name": "Boots - Heavy Frontier",
     "item_path": "/obj/item/clothing/shoes/jackboots/frontier_colonist"
   },
@@ -6320,19 +6320,19 @@
   },
   "/datum/loadout_item/shoes/jackboots/toeless": {
     "id": "/datum/loadout_item/shoes/jackboots/toeless",
-    "template_type": "/datum/loadout_item/shoes",
+    "template_type": "/datum/loadout_item/shoes/jackboots",
     "name": "Toeless Jackboots",
     "item_path": "/obj/item/clothing/shoes/jackboots/toeless"
   },
   "/datum/loadout_item/shoes/jackboots/heel": {
     "id": "/datum/loadout_item/shoes/jackboots/heel",
-    "template_type": "/datum/loadout_item/shoes",
+    "template_type": "/datum/loadout_item/shoes/jackboots",
     "name": "Boots - Jackboots, High-Heel",
     "item_path": "/obj/item/clothing/shoes/jackboots/heel"
   },
   "/datum/loadout_item/shoes/kneeboot/recolorable": {
     "id": "/datum/loadout_item/shoes/kneeboot/recolorable",
-    "template_type": "/datum/loadout_item/shoes",
+    "template_type": "/datum/loadout_item/shoes/kneeboot",
     "name": "Boots - Jackboots, Knee (Colorable)",
     "item_path": "/obj/item/clothing/shoes/jackboots/knee/recolorable"
   },
@@ -6368,7 +6368,7 @@
   },
   "/datum/loadout_item/shoes/work_boots/toeless": {
     "id": "/datum/loadout_item/shoes/work_boots/toeless",
-    "template_type": "/datum/loadout_item/shoes",
+    "template_type": "/datum/loadout_item/shoes/work_boots",
     "name": "Toeless Workboots",
     "item_path": "/obj/item/clothing/shoes/workboots/toeless"
   },
@@ -6629,7 +6629,7 @@
   },
   "/datum/loadout_item/suit/winter_coat/christmas/green": {
     "id": "/datum/loadout_item/suit/winter_coat/christmas/green",
-    "template_type": "/datum/loadout_item/suit",
+    "template_type": "/datum/loadout_item/suit/winter_coat/christmas",
     "name": "Winter Coat - Christmas (Green)",
     "item_path": "/obj/item/clothing/suit/hooded/wintercoat/nova/christmas/green"
   },
@@ -6893,13 +6893,13 @@
   },
   "/datum/loadout_item/suit/leather_jacket/hooded": {
     "id": "/datum/loadout_item/suit/leather_jacket/hooded",
-    "template_type": "/datum/loadout_item/suit",
+    "template_type": "/datum/loadout_item/suit/leather_jacket",
     "name": "Leather Jacket with Hoodie",
     "item_path": "/obj/item/clothing/suit/hooded/leather"
   },
   "/datum/loadout_item/suit/leather_jacket/biker": {
     "id": "/datum/loadout_item/suit/leather_jacket/biker",
-    "template_type": "/datum/loadout_item/suit",
+    "template_type": "/datum/loadout_item/suit/leather_jacket",
     "name": "Leather Jacket with Zipper",
     "item_path": "/obj/item/clothing/suit/jacket/leather/biker"
   },
@@ -7165,7 +7165,7 @@
   },
   "/datum/loadout_item/suit/frontierjacket/short/medical": {
     "id": "/datum/loadout_item/suit/frontierjacket/short/medical",
-    "template_type": "/datum/loadout_item/suit/frontierjacket",
+    "template_type": "/datum/loadout_item/suit/frontierjacket/short",
     "name": "Frontier Jacket - Medical (Short)",
     "item_path": "/obj/item/clothing/suit/jacket/frontier_colonist/medical",
     "group": "Workwear"
@@ -8783,7 +8783,7 @@
   },
   "/datum/loadout_item/under/formal/recolorable_suit/casual": {
     "id": "/datum/loadout_item/under/formal/recolorable_suit/casual",
-    "template_type": "/datum/loadout_item/under/formal",
+    "template_type": "/datum/loadout_item/under/formal/recolorable_suit",
     "name": "Buttondown Suit - Collared",
     "item_path": "/obj/item/clothing/under/suit/nova/recolorable/casual"
   },
@@ -8795,7 +8795,7 @@
   },
   "/datum/loadout_item/under/formal/recolorable_suit/executive": {
     "id": "/datum/loadout_item/under/formal/recolorable_suit/executive",
-    "template_type": "/datum/loadout_item/under/formal",
+    "template_type": "/datum/loadout_item/under/formal/recolorable_suit",
     "name": "Executive Suit (Colorable)",
     "item_path": "/obj/item/clothing/under/suit/nova/recolorable/executive"
   },
@@ -9346,14 +9346,14 @@
   },
   "/datum/loadout_item/under/formal/kimono/purple": {
     "id": "/datum/loadout_item/under/formal/kimono/purple",
-    "template_type": "/datum/loadout_item/under/formal",
+    "template_type": "/datum/loadout_item/under/formal/kimono",
     "name": "Kimono (Purple)",
     "item_path": "/obj/item/clothing/under/costume/kimono/purple",
     "group": "Costumes"
   },
   "/datum/loadout_item/under/formal/kimono/red": {
     "id": "/datum/loadout_item/under/formal/kimono/red",
-    "template_type": "/datum/loadout_item/under/formal",
+    "template_type": "/datum/loadout_item/under/formal/kimono",
     "name": "Kimono (Red)",
     "item_path": "/obj/item/clothing/under/costume/kimono/red",
     "group": "Costumes"
@@ -9676,14 +9676,14 @@
   },
   "/datum/loadout_item/under/miscellaneous/yukata/green": {
     "id": "/datum/loadout_item/under/miscellaneous/yukata/green",
-    "template_type": "/datum/loadout_item/under/miscellaneous",
+    "template_type": "/datum/loadout_item/under/miscellaneous/yukata",
     "name": "Yukata (Green)",
     "item_path": "/obj/item/clothing/under/costume/yukata/green",
     "group": "Costumes"
   },
   "/datum/loadout_item/under/miscellaneous/yukata/white": {
     "id": "/datum/loadout_item/under/miscellaneous/yukata/white",
-    "template_type": "/datum/loadout_item/under/miscellaneous",
+    "template_type": "/datum/loadout_item/under/miscellaneous/yukata",
     "name": "Yukata (White)",
     "item_path": "/obj/item/clothing/under/costume/yukata/white",
     "group": "Costumes"
@@ -9697,14 +9697,14 @@
   },
   "/datum/loadout_item/under/formal/azulea_oldblood/skirt": {
     "id": "/datum/loadout_item/under/formal/azulea_oldblood/skirt",
-    "template_type": "/datum/loadout_item/under/formal",
+    "template_type": "/datum/loadout_item/under/formal/azulea_oldblood",
     "name": "Oldblood's Royal Regalia (Skirt)",
     "item_path": "/obj/item/clothing/under/rank/azulean/old_blood/skirt",
     "group": "Species-Unique"
   },
   "/datum/loadout_item/under/formal/azulea_upstart/skirt": {
     "id": "/datum/loadout_item/under/formal/azulea_upstart/skirt",
-    "template_type": "/datum/loadout_item/under/formal",
+    "template_type": "/datum/loadout_item/under/formal/azulea_upstart",
     "name": "Upstart's Noble Getup (Skirt)",
     "item_path": "/obj/item/clothing/under/rank/azulean/upstart/skirt",
     "group": "Species-Unique"
@@ -9749,7 +9749,7 @@
   },
   "/datum/loadout_item/under/jumpsuit/cargo/skirt/alt": {
     "id": "/datum/loadout_item/under/jumpsuit/cargo/skirt/alt",
-    "template_type": "/datum/loadout_item/under/jumpsuit",
+    "template_type": "/datum/loadout_item/under/jumpsuit/cargo/skirt",
     "name": "Cargo Technician's Skirt (Short)",
     "item_path": "/obj/item/clothing/under/rank/cargo/tech/skirt/alt",
     "group": "Workwear"
@@ -9798,14 +9798,14 @@
   },
   "/datum/loadout_item/under/jumpsuit/colonial_uniform/coalition_police_uniform": {
     "id": "/datum/loadout_item/under/jumpsuit/colonial_uniform/coalition_police_uniform",
-    "template_type": "/datum/loadout_item/under/jumpsuit",
+    "template_type": "/datum/loadout_item/under/jumpsuit/colonial_uniform",
     "name": "Coalition Police Uniform",
     "item_path": "/obj/item/clothing/under/colonial/hc_police",
     "group": "Workwear"
   },
   "/datum/loadout_item/under/jumpsuit/colonial_uniform/coalition_police_skirt": {
     "id": "/datum/loadout_item/under/jumpsuit/colonial_uniform/coalition_police_skirt",
-    "template_type": "/datum/loadout_item/under/jumpsuit",
+    "template_type": "/datum/loadout_item/under/jumpsuit/colonial_uniform",
     "name": "Coalition Police Skirt",
     "item_path": "/obj/item/clothing/under/colonial/hc_police/skirt",
     "group": "Workwear"
@@ -10128,7 +10128,7 @@
   },
   "/datum/loadout_item/under/jumpsuit/cargo/qm": {
     "id": "/datum/loadout_item/under/jumpsuit/cargo/qm",
-    "template_type": "/datum/loadout_item/under/jumpsuit",
+    "template_type": "/datum/loadout_item/under/jumpsuit/cargo",
     "name": "Quartermaster's Uniform",
     "item_path": "/obj/item/clothing/under/rank/cargo/qm",
     "restricted_roles": [
@@ -10333,7 +10333,7 @@
   },
   "/datum/loadout_item/under/bunny/sec/det/noir": {
     "id": "/datum/loadout_item/under/bunny/sec/det/noir",
-    "template_type": "/datum/loadout_item/under/bunny/sec",
+    "template_type": "/datum/loadout_item/under/bunny/sec/det",
     "name": "Bunny Suit (Noir Detective)",
     "item_path": "/obj/item/clothing/under/rank/security/detective_bunnysuit/noir",
     "erp_item": true,
@@ -10453,7 +10453,7 @@
   },
   "/datum/loadout_item/under/miscellaneous/wedding_dress/ribbon": {
     "id": "/datum/loadout_item/under/miscellaneous/wedding_dress/ribbon",
-    "template_type": "/datum/loadout_item/under/miscellaneous",
+    "template_type": "/datum/loadout_item/under/miscellaneous/wedding_dress",
     "name": "Dress - Wedding w/ Ribbon",
     "item_path": "/obj/item/clothing/under/dress/wedding_dress/ribbon",
     "group": "Casualwear"
@@ -10726,5 +10726,328 @@
     "template_type": "/datum/loadout_item/inhand",
     "name": "flag of the Novaya Rossiyskaya Imperiya",
     "item_path": "/obj/item/sign/flag/nri"
+  },
+  "/datum/loadout_item/glasses/eyepatch": {
+    "id": "/datum/loadout_item/glasses/eyepatch",
+    "template_type": "/datum/loadout_item/glasses",
+    "name": "Eyepatch",
+    "item_path": "/obj/item/clothing/glasses/eyepatch"
+  },
+  "/datum/loadout_item/pocket_items/lipstick": {
+    "id": "/datum/loadout_item/pocket_items/lipstick",
+    "template_type": "/datum/loadout_item/pocket_items",
+    "name": "Lipstick",
+    "item_path": "/obj/item/lipstick"
+  },
+  "/datum/loadout_item/pocket_items/wallet": {
+    "id": "/datum/loadout_item/pocket_items/wallet",
+    "template_type": "/datum/loadout_item/pocket_items",
+    "name": "Wallet",
+    "item_path": "/obj/item/storage/wallet"
+  },
+  "/datum/loadout_item/pocket_items/borg_me_dogtag": {
+    "id": "/datum/loadout_item/pocket_items/borg_me_dogtag",
+    "template_type": "/datum/loadout_item/pocket_items",
+    "name": "Pre-Approved Cyborg Candidate Dogtag",
+    "item_path": "/obj/item/clothing/accessory/dogtag/borg_ready"
+  },
+  "/datum/loadout_item/inhand/plasteel_chef": {
+    "id": "/datum/loadout_item/inhand/plasteel_chef",
+    "template_type": "/datum/loadout_item/inhand",
+    "name": "émincer",
+    "item_path": "/obj/item/knife/kitchen/plasteel_chef",
+    "ckeywhitelist": [
+      "bearagon",
+      "mrsanderp"
+    ]
+  },
+  "/datum/loadout_item/under/jumpsuit/paddedunder": {
+    "id": "/datum/loadout_item/under/jumpsuit/paddedunder",
+    "template_type": "/datum/loadout_item/under/jumpsuit",
+    "name": "Feathered Serenity Suit",
+    "item_path": "/obj/item/clothing/under/padded",
+    "ckeywhitelist": [
+      "thedragmeme"
+    ]
+  },
+  "/datum/loadout_item/neck/padded": {
+    "id": "/datum/loadout_item/neck/padded",
+    "template_type": "/datum/loadout_item/neck",
+    "name": "Feathered Serenity Cloak",
+    "item_path": "/obj/item/clothing/neck/padded",
+    "ckeywhitelist": [
+      "thedragmeme",
+      "SomeNetwork"
+    ]
+  },
+  "/datum/loadout_item/under/jumpsuit/lannese": {
+    "id": "/datum/loadout_item/under/jumpsuit/lannese",
+    "template_type": "/datum/loadout_item/under/jumpsuit",
+    "name": "Lannese Dress",
+    "item_path": "/obj/item/clothing/under/custom/lannese",
+    "ckeywhitelist": [
+      "kathrinbailey"
+    ]
+  },
+  "/datum/loadout_item/toys/plush/plushie_razurath": {
+    "id": "/datum/loadout_item/toys/plush/plushie_razurath",
+    "template_type": "/datum/loadout_item/toys/plush",
+    "name": "Science Shark Plushie",
+    "item_path": "/obj/item/toy/plush/nova/donator/plushie_razurath",
+    "ckeywhitelist": [
+      "razurath"
+    ]
+  },
+  "/datum/loadout_item/accessory/bone_charm": {
+    "id": "/datum/loadout_item/accessory/bone_charm",
+    "template_type": "/datum/loadout_item/accessory",
+    "name": "Heirloom Bone Talisman",
+    "item_path": "/obj/item/clothing/accessory/talisman/armourless"
+  },
+  "/datum/loadout_item/accessory/bone_codpiece": {
+    "id": "/datum/loadout_item/accessory/bone_codpiece",
+    "template_type": "/datum/loadout_item/accessory",
+    "name": "Heirloom Skull Codpiece",
+    "item_path": "/obj/item/clothing/accessory/skullcodpiece/armourless"
+  },
+  "/datum/loadout_item/accessory/sinew_kilt": {
+    "id": "/datum/loadout_item/accessory/sinew_kilt",
+    "template_type": "/datum/loadout_item/accessory",
+    "name": "Heirloom Sinew Skirt",
+    "item_path": "/obj/item/clothing/accessory/skilt/armourless"
+  },
+  "/datum/loadout_item/erp/egg": {
+    "id": "/datum/loadout_item/erp/egg",
+    "template_type": "/datum/loadout_item/erp",
+    "name": "Vibrating Egg",
+    "item_path": "/obj/item/clothing/sextoy/eggvib"
+  },
+  "/datum/loadout_item/erp/dildo": {
+    "id": "/datum/loadout_item/erp/dildo",
+    "template_type": "/datum/loadout_item/erp",
+    "name": "Dildo",
+    "item_path": "/obj/item/clothing/sextoy/dildo"
+  },
+  "/datum/loadout_item/erp/shibari": {
+    "id": "/datum/loadout_item/erp/shibari",
+    "template_type": "/datum/loadout_item/erp",
+    "name": "Shibari Ropes",
+    "item_path": "/obj/item/stack/shibari_rope/full"
+  },
+  "/datum/loadout_item/erp/ballgag": {
+    "id": "/datum/loadout_item/erp/ballgag",
+    "template_type": "/datum/loadout_item/erp",
+    "name": "Ball Gag",
+    "item_path": "/obj/item/clothing/mask/muzzle/ballgag"
+  },
+  "/datum/loadout_item/erp/crocin": {
+    "id": "/datum/loadout_item/erp/crocin",
+    "template_type": "/datum/loadout_item/erp",
+    "name": "Crocin Bottle",
+    "item_path": "/obj/item/reagent_containers/cup/bottle/crocin"
+  },
+  "/datum/loadout_item/erp/camphor": {
+    "id": "/datum/loadout_item/erp/camphor",
+    "template_type": "/datum/loadout_item/erp",
+    "name": "Camphor Bottle",
+    "item_path": "/obj/item/reagent_containers/cup/bottle/camphor"
+  },
+  "/datum/loadout_item/erp/hexacrocin": {
+    "id": "/datum/loadout_item/erp/hexacrocin",
+    "template_type": "/datum/loadout_item/erp",
+    "name": "Hexacrocin Bottle",
+    "item_path": "/obj/item/reagent_containers/cup/bottle/hexacrocin"
+  },
+  "/datum/loadout_item/erp/pentacamphor": {
+    "id": "/datum/loadout_item/erp/pentacamphor",
+    "template_type": "/datum/loadout_item/erp",
+    "name": "Pentacamphor Bottle",
+    "item_path": "/obj/item/reagent_containers/cup/bottle/pentacamphor"
+  },
+  "/datum/loadout_item/gloves/yellow": {
+    "id": "/datum/loadout_item/gloves/yellow",
+    "template_type": "/datum/loadout_item/gloves",
+    "name": "Gloves (Yellow)",
+    "item_path": "/obj/item/clothing/gloves/color/ffyellow"
+  },
+  "/datum/loadout_item/head/frontiercap": {
+    "id": "/datum/loadout_item/head/frontiercap",
+    "template_type": "/datum/loadout_item/head",
+    "name": "Cap - Frontier",
+    "item_path": "/obj/item/clothing/head/soft/frontier_colonist"
+  },
+  "/datum/loadout_item/head/maidhead": {
+    "id": "/datum/loadout_item/head/maidhead",
+    "template_type": "/datum/loadout_item/head",
+    "name": "Maid Headband - Simple",
+    "item_path": "/obj/item/clothing/head/costume/nova/maid",
+    "group": "Costumes"
+  },
+  "/datum/loadout_item/head/maidhead2": {
+    "id": "/datum/loadout_item/head/maidhead2",
+    "template_type": "/datum/loadout_item/head",
+    "name": "Maid Headband - Frilly",
+    "item_path": "/obj/item/clothing/head/costume/maid_headband",
+    "group": "Costumes"
+  },
+  "/datum/loadout_item/head/rabbit": {
+    "id": "/datum/loadout_item/head/rabbit",
+    "template_type": "/datum/loadout_item/head",
+    "name": "Playbunny Ears",
+    "item_path": "/obj/item/clothing/head/playbunnyears",
+    "group": "Costumes"
+  },
+  "/datum/loadout_item/head/donator/rainbow_bunch": {
+    "id": "/datum/loadout_item/head/donator/rainbow_bunch",
+    "template_type": "/datum/loadout_item/head/donator",
+    "name": "Flower - Rainbow Bunch",
+    "item_path": "/obj/item/food/grown/rainbow_flower",
+    "group": "Miscellaneous"
+  },
+  "/datum/loadout_item/inhand/guncase_large": {
+    "id": "/datum/loadout_item/inhand/guncase_large",
+    "template_type": "/datum/loadout_item/inhand",
+    "name": "Empty Gun Case (Black, Large)",
+    "item_path": "/obj/item/storage/toolbox/guncase/nova"
+  },
+  "/datum/loadout_item/mask/masquerade": {
+    "id": "/datum/loadout_item/mask/masquerade",
+    "template_type": "/datum/loadout_item/mask",
+    "name": "Masquerade Mask",
+    "item_path": "/obj/item/clothing/mask/masquerade",
+    "group": "Costumes"
+  },
+  "/datum/loadout_item/mask/masquerade/two_colors": {
+    "id": "/datum/loadout_item/mask/masquerade/two_colors",
+    "template_type": "/datum/loadout_item/mask/masquerade",
+    "name": "Masquerade Mask - Split",
+    "item_path": "/obj/item/clothing/mask/masquerade/two_colors",
+    "group": "Costumes"
+  },
+  "/datum/loadout_item/shoes/kneeboot": {
+    "id": "/datum/loadout_item/shoes/kneeboot",
+    "template_type": "/datum/loadout_item/shoes",
+    "name": "Boots - Jackboots, Knee",
+    "item_path": "/obj/item/clothing/shoes/jackboots/knee"
+  },
+  "/datum/loadout_item/shoes/work_boots": {
+    "id": "/datum/loadout_item/shoes/work_boots",
+    "template_type": "/datum/loadout_item/shoes",
+    "name": "Boots - Work",
+    "item_path": "/obj/item/clothing/shoes/workboots"
+  },
+  "/datum/loadout_item/shoes/clown_shoes/pink_heels_mute": {
+    "id": "/datum/loadout_item/shoes/clown_shoes/pink_heels_mute",
+    "template_type": "/datum/loadout_item/shoes/clown_shoes",
+    "name": "Pink Clown Heels (No Clown Effects)",
+    "item_path": "/obj/item/clothing/shoes/pink_clown_heels",
+    "restricted_roles": null,
+    "group": "Costumes"
+  },
+  "/datum/loadout_item/suit/winter_coat": {
+    "id": "/datum/loadout_item/suit/winter_coat",
+    "template_type": "/datum/loadout_item/suit",
+    "name": "Winter Coat",
+    "item_path": "/obj/item/clothing/suit/hooded/wintercoat"
+  },
+  "/datum/loadout_item/suit/winter_coat/christmas": {
+    "id": "/datum/loadout_item/suit/winter_coat/christmas",
+    "template_type": "/datum/loadout_item/suit/winter_coat",
+    "name": "Winter Coat - Christmas",
+    "item_path": "/obj/item/clothing/suit/hooded/wintercoat/nova/christmas"
+  },
+  "/datum/loadout_item/suit/frontierjacket/short": {
+    "id": "/datum/loadout_item/suit/frontierjacket/short",
+    "template_type": "/datum/loadout_item/suit/frontierjacket",
+    "name": "Frontier Jacket (Short)",
+    "item_path": "/obj/item/clothing/suit/jacket/frontier_colonist/short"
+  },
+  "/datum/loadout_item/suit/leather_jacket": {
+    "id": "/datum/loadout_item/suit/leather_jacket",
+    "template_type": "/datum/loadout_item/suit",
+    "name": "Leather Jacket",
+    "item_path": "/obj/item/clothing/suit/jacket/leather"
+  },
+  "/datum/loadout_item/under/formal/pencil": {
+    "id": "/datum/loadout_item/under/formal/pencil",
+    "template_type": "/datum/loadout_item/under/formal",
+    "name": "Pencilskirt",
+    "item_path": "/obj/item/clothing/under/suit/nova/pencil"
+  },
+  "/datum/loadout_item/under/formal/recolorable_suit": {
+    "id": "/datum/loadout_item/under/formal/recolorable_suit",
+    "template_type": "/datum/loadout_item/under/formal",
+    "name": "Suit  (Colorable)",
+    "item_path": "/obj/item/clothing/under/suit/nova/recolorable"
+  },
+  "/datum/loadout_item/under/formal/kimono": {
+    "id": "/datum/loadout_item/under/formal/kimono",
+    "template_type": "/datum/loadout_item/under/formal",
+    "name": "Kimono (Black)",
+    "item_path": "/obj/item/clothing/under/costume/kimono",
+    "group": "Costumes"
+  },
+  "/datum/loadout_item/under/miscellaneous/yukata": {
+    "id": "/datum/loadout_item/under/miscellaneous/yukata",
+    "template_type": "/datum/loadout_item/under/miscellaneous",
+    "name": "Yukata (Black)",
+    "item_path": "/obj/item/clothing/under/costume/yukata",
+    "group": "Costumes"
+  },
+  "/datum/loadout_item/under/formal/azulea_oldblood": {
+    "id": "/datum/loadout_item/under/formal/azulea_oldblood",
+    "template_type": "/datum/loadout_item/under/formal",
+    "name": "Oldblood's Royal Regalia",
+    "item_path": "/obj/item/clothing/under/rank/azulean/old_blood",
+    "group": "Species-Unique"
+  },
+  "/datum/loadout_item/under/formal/azulea_upstart": {
+    "id": "/datum/loadout_item/under/formal/azulea_upstart",
+    "template_type": "/datum/loadout_item/under/formal",
+    "name": "Upstart's Noble Getup",
+    "item_path": "/obj/item/clothing/under/rank/azulean/upstart",
+    "group": "Species-Unique"
+  },
+  "/datum/loadout_item/under/jumpsuit/cargo": {
+    "id": "/datum/loadout_item/under/jumpsuit/cargo",
+    "template_type": "/datum/loadout_item/under/jumpsuit",
+    "name": "Cargo Technician's Jumpsuit",
+    "item_path": "/obj/item/clothing/under/rank/cargo/tech",
+    "group": "Workwear"
+  },
+  "/datum/loadout_item/under/jumpsuit/cargo/skirt": {
+    "id": "/datum/loadout_item/under/jumpsuit/cargo/skirt",
+    "template_type": "/datum/loadout_item/under/jumpsuit/cargo",
+    "name": "Cargo Technician's Skirt",
+    "item_path": "/obj/item/clothing/under/rank/cargo/tech/skirt",
+    "group": "Workwear"
+  },
+  "/datum/loadout_item/under/jumpsuit/colonial_uniform": {
+    "id": "/datum/loadout_item/under/jumpsuit/colonial_uniform",
+    "template_type": "/datum/loadout_item/under/jumpsuit",
+    "name": "Colonial Uniform",
+    "item_path": "/obj/item/clothing/under/colonial",
+    "group": "Workwear",
+    "species_blacklist": [
+      "teshari"
+    ]
+  },
+  "/datum/loadout_item/under/bunny/sec/det": {
+    "id": "/datum/loadout_item/under/bunny/sec/det",
+    "template_type": "/datum/loadout_item/under/bunny/sec",
+    "name": "Bunny Suit (Detective)",
+    "item_path": "/obj/item/clothing/under/rank/security/detective_bunnysuit",
+    "erp_item": true,
+    "group": "Bunny Suit",
+    "restricted_roles": [
+      "Detective"
+    ]
+  },
+  "/datum/loadout_item/under/miscellaneous/wedding_dress": {
+    "id": "/datum/loadout_item/under/miscellaneous/wedding_dress",
+    "template_type": "/datum/loadout_item/under/miscellaneous",
+    "name": "Dress - Wedding",
+    "item_path": "/obj/item/clothing/under/dress/wedding_dress",
+    "group": "Casualwear"
   }
 }

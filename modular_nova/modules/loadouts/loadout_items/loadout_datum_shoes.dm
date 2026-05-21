@@ -117,3 +117,15 @@
 /datum/loadout_item/shoes/donator
 	abstract_type = /datum/loadout_item/shoes/donator
 	donator_only = TRUE
+
+/datum/loadout_item/shoes/jackboots
+	name = "Boots - Jackboots"
+	item_path = /obj/item/clothing/shoes/jackboots
+
+/datum/loadout_item/shoes/kneeboot
+	name = "Boots - Jackboots, Knee"
+	item_path = /obj/item/clothing/shoes/jackboots/knee
+
+/datum/loadout_item/shoes/work_boots
+	name = "Boots - Work"
+	item_path = /obj/item/clothing/shoes/workboots

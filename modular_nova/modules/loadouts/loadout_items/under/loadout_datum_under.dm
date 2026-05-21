@@ -104,3 +104,7 @@
 /datum/loadout_item/under/bunny
 	abstract_type = /datum/loadout_item/under/bunny
 	group = "Bunny Suits"
+
+/datum/loadout_item/under/formal/recolorable_suit
+	name = "Suit  (Colorable)"
+	item_path = /obj/item/clothing/under/suit/nova/recolorable

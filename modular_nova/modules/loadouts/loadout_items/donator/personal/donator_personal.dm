@@ -29,3 +29,23 @@
 	item_path = /obj/item/clothing/glasses/hud/security/sunglasses/gars/giga/roselia
 	ckeywhitelist = list("ultimarifox")
 	restricted_roles = list(ALL_JOBS_DEPTGUARD, ALL_JOBS_SEC,)
+
+/datum/loadout_item/under/jumpsuit/paddedunder
+	name = "Feathered Serenity Suit"
+	item_path = /obj/item/clothing/under/padded
+	ckeywhitelist = list("thedragmeme")
+
+/datum/loadout_item/neck/padded
+	name = "Feathered Serenity Cloak"
+	item_path = /obj/item/clothing/neck/padded
+	ckeywhitelist = list("thedragmeme", "SomeNetwork")
+
+/datum/loadout_item/under/jumpsuit/lannese
+	name = "Lannese Dress"
+	item_path = /obj/item/clothing/under/custom/lannese
+	ckeywhitelist = list("kathrinbailey")
+
+/datum/loadout_item/toys/plush/plushie_razurath
+	name = "Science Shark Plushie"
+	item_path = /obj/item/toy/plush/nova/donator/plushie_razurath
+	ckeywhitelist = list("razurath")
