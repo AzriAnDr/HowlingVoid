@@ -859,3 +859,482 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vodka, 32)
 	icon_state = "ninja"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ninja, 32)
+
+
+// Howling Void posters
+/*
+*
+*			CONTRABAND
+*
+*/
+
+/obj/structure/sign/poster/contraband/vulpes
+	name = "Vulpies"
+	desc = "Looks like an ad for a movie about vulpkanins."
+	icon_state = "poster_vulp1"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes, 32)
+
+/obj/structure/sign/poster/contraband/vulpes/vulp2
+	name = "Vulpies and Beer!"
+	desc = "This poster says: 'Foxes, boobs and beer!'. Probably a new Space Beer campaign."
+	icon_state = "poster_vulp2"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp2, 32)
+
+/obj/structure/sign/poster/contraband/vulpes/vulp3
+	name = "Nurse Vulp"
+	desc = "A white vulpkanin on the background of a green cross, one of the interplanetary symbols of health and aid."
+	icon_state = "poster_vulp3"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp3, 32)
+
+/obj/structure/sign/poster/contraband/vulpes/vulp5
+	name = "VULPENTIDE"
+	desc = "A rebellious poster symbolizing solidarity between vulpkanins and assistants."
+	icon_state = "poster_vulp5"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp5, 32)
+
+/obj/structure/sign/poster/contraband/vulpes/vulp6
+	name = "Vulp Hacking Manual"
+	desc = "This poster depicts a vulpkanin hacking an airlock somewhere in maintenance tunnels."
+	icon_state = "poster_vulp6"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp6, 32)
+
+/obj/structure/sign/poster/contraband/vulpes/vulp7
+	name = "Syndi-Vulp"
+	desc = "A poster depicting the infamous criminal conglomerate as a nude vulpkanin. It bears the Syndicate emblem."
+	icon_state = "poster_vulp7"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp7, 32)
+
+/obj/structure/sign/poster/contraband/vulpes/vulp8
+	name = "Nanotrasen Vulp"
+	desc = "A poster depicting a famous vulpkanin in the uniform of a well-known megacorp. It bears the Nanotrasen logo."
+	icon_state = "poster_vulp8"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp8, 32)
+
+/obj/structure/sign/poster/contraband/vulpes/vulp9
+	name = "Stockings"
+	desc = "A poster advertising Vulp's Secret new underwear collection."
+	icon_state = "stockings"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp9, 32)
+
+/obj/structure/sign/poster/contraband/vulpes/vulp10
+	name = "Paws!"
+	desc = "This lewd poster depicts a vulpkanin waiting for their partner."
+	icon_state = "paws"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp10, 32)
+
+/obj/structure/sign/poster/contraband/vulpes/vulp10/alt
+	icon_state = "vulp-paws"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/vulpes/vulp10/alt, 32)
+
+
+//INTEQ//
+/obj/structure/sign/poster/contraband/modular
+	name = "InteQ Recruitment"
+	desc = "See the galaxy! Earn money! Enlist today!"
+	icon_state = "poster_inteq"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular, 32)
+
+/obj/structure/sign/poster/contraband/modular/inteq_sign
+	name = "InteQ poster"
+	desc = "A private military company that protects private enterprises and fulfills contracts. At the moment they are engaged in piracy across Nanotrasen holdings..."
+	icon_state = "poster_inteq_baza"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/inteq_sign, 32)
+
+/obj/structure/sign/poster/contraband/modular/inteq_no_sex
+	name = "No SEX"
+	desc = "Stop jerking off, enlist in PMC 'InteQ'!"
+	icon_state = "poster_inteq_no_sex"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/inteq_no_sex, 32)
+
+/obj/structure/sign/poster/contraband/modular/inteq_vulp
+	name = "InteQ Recruitment"
+	desc = "A brown poster. It says: 'Even if you jerk off to vulps, enlist in PMC 'InteQ'. We'll crush our enemies together!'."
+	icon_state = "poster_inteq_vulp"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/inteq_vulp, 32)
+
+/obj/structure/sign/poster/contraband/modular/sisyphus
+	name = "Sisyphus"
+	desc = "A poster showing a man endlessly rolling a huge boulder up a steep hill."
+	icon_state = "sisyphus"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/sisyphus, 32)
+
+/obj/structure/sign/poster/contraband/modular/cybersun
+	name = "Cybersun"
+	desc = "A poster decipting the Syndicate subsidary known as Cybersun's insignia."
+	icon_state = "poster_cybersun"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/cybersun, 32)
+
+/obj/structure/sign/poster/contraband/modular/medborg
+	name = "Medical Cyborg"
+	desc = "A poster decipting a Cybersun medical cyborg."
+	icon_state = "poster_medborg"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/medborg, 32)
+
+/obj/structure/sign/poster/contraband/modular/bulldog
+	name = "Bulldog"
+	desc = "A poster advertising the Scarborough Arms bulldog shotgun."
+	icon_state = "poster_bulldog"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/bulldog, 32)
+
+/obj/structure/sign/poster/contraband/modular/gl
+	name = "M-90gl"
+	desc = "A poster advertising the Scarborough Arms M-90gl carbine."
+	icon_state = "poster_gl"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/gl, 32)
+
+/obj/structure/sign/poster/contraband/modular/femsec
+	name = "Fem-sec"
+	desc = "What is it? Your masculinity is too fragile to wear these tactical socks?"
+	icon_state = "poster_femsec"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/femsec, 32)
+
+/obj/structure/sign/poster/contraband/modular/erthelp
+	name = "No one will help you"
+	desc = "Outdated poster of Gorlex Marouders. It's says :- ERT won't help you. Just give up."
+	icon_state = "poster_erthelp"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/erthelp, 32)
+
+/obj/structure/sign/poster/contraband/modular/joy
+	name = "Happiness Pill"
+	desc = "Dive into a world of happiness."
+	icon_state = "joy"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/joy, 32)
+
+/obj/structure/sign/poster/contraband/modular/poly
+	name = "Snuff The Mascots"
+	desc = "No heroes, no mascots. The InteQ cuts deeper."
+	icon_state = "poster_deadpoly"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/poly, 32)
+
+/obj/structure/sign/poster/contraband/modular/fox
+	name = "Fox"
+	desc = "This poster depicts seriously looking fox."
+	icon_state = "fox"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/fox, 32)
+
+/obj/structure/sign/poster/contraband/modular/panties
+	name = "Panties"
+	desc = "This lewd poster depicts a half-naked vulpkanin."
+	icon_state = "panties"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/panties, 32)
+
+/obj/structure/sign/poster/contraband/modular/stockings
+	name = "Stockings"
+	desc = "A poster advertising the Vulp's Secret new collection of underwear."
+	icon_state = "stockings"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/stockings, 32)
+
+/obj/structure/sign/poster/contraband/modular/paws
+	name = "Paws"
+	desc = "This lewd poster depicts a vulpkanine preparing to mate."
+	icon_state = "paws"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/paws, 32)
+
+/obj/structure/sign/poster/contraband/modular/dancing_honk
+	name = "DANCE"
+	desc = "This poster depicts a 'HONK' class mech ontop of a stage, next to a pole."
+	icon_state = "poster_sr_honkdance"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/dancing_honk, 32)
+
+/obj/structure/sign/poster/contraband/modular/bread
+	name = "Love"
+	desc = "Everyone's favorite bread in space."
+	icon_state = "poster_bread"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/bread, 32)
+
+/obj/structure/sign/poster/contraband/modular/woof
+	name = "Woof"
+	desc = "Emma, the trustworthy fox of brig."
+	icon_state = "poster_woof"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/woof, 32)
+
+/obj/structure/sign/poster/contraband/modular/slep
+	name = "Sleep"
+	desc = "An advertisement for healthy sleep with cute fox on it."
+	icon_state = "poster_slep"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/modular/slep, 32)
+
+
+
+/*
+Original: https://github.com/Skyrat-SS13/Skyrat13
+License: GNU APGLv3
+*/
+/obj/structure/sign/poster/contraband/nri
+	name = "Commonwealth military rations ad"
+	desc = "This poster appears to advertise military rations produced by a private company under Defense Collegium contract. The admiral's right hand does look genuinely excited."
+	icon_state = "nri_rations"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/nri, 32)
+
+/obj/structure/sign/poster/contraband/nri/texto
+	name = "NRI declaration of sovereignity"
+	desc = "This poster references the translated copy of Novaya Rossiyskaya Imperiya's declaration of sovereignity."
+	icon_state = "nri_texto"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/nri/texto, 32)
+
+/obj/structure/sign/poster/contraband/nri/voskhod
+	name = "VOSKHOD combat armor advertisement"
+	desc = "A poster showcasing recently developed VOSKHOD combat armor currently in use by Commonwealth's troops and infantry across the border. The word 'DRIP' is written top to bottom on the left side, presumably boasting about the suit's superior design."
+	icon_state = "nri_voskhod"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/nri/voskhod, 32)
+
+/obj/structure/sign/poster/contraband/nri/pistol
+	name = "Szabo-Ivanek service pistol technical poster"
+	desc = "This poster seems to be a technical documentation for Szabo-Ivanek service pistol in use by most of the Commonwealth's state police and military institutions. Sadly, it's all written in Interslavic."
+	icon_state = "nri_pistol"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/nri/pistol, 32)
+
+/obj/structure/sign/poster/contraband/nri/engineer
+	name = "Build, Now"
+	desc = "This poster shows you an imperial combat engineer staring somewhere to the left of the viewer. The words 'Build, Now' are written on top and bottom of the poster."
+	icon_state = "nri_engineer"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/nri/engineer, 32)
+
+/obj/structure/sign/poster/contraband/nri/radar
+	name = "Imperial navy enlistment poster"
+	desc = "Enlist with the imperial navy today! See the galaxy, shoot Terrans, get PTSD!"
+	icon_state = "nri_radar"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/nri/radar, 32)
+
+
+/*
+*
+*			OFFICIAL
+*
+*/
+
+
+
+// Howling Void poster contest posters
+/obj/structure/sign/poster/contraband/ff_contest
+	name = "Fem-sec"
+	desc = "\"What is it? Your masculinity is too fragile to wear these tactical socks?\""
+	icon_state = "fem_sec"
+
+/obj/structure/sign/poster/contraband/ff_contest/cheese_propaganda
+	name = "Cheese Propaganda"
+	desc = "A half-naked anthropomorphic mouse covers its chest with a piece of cheese... A strange advertisement for cheese. But money doesn't stink. Unlike cheese."
+	icon_state = "cheese_propaganda"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/cheese_propaganda, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/fem_sec
+	name = "Fem-sec"
+	desc = "\"What is it? Your masculinity is too fragile to wear these tactical socks?\""
+	icon_state = "fem_sec"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/fem_sec, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/kft_crazy_nuggets
+	name = "KFT - Crazy Nuggets Bucket!"
+	desc = "Because of recent Teshari's Independence Day, Crazy Nuggets Buckets are available - for only 4 credits!"
+	icon_state = "kft_crazy_nuggets"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/kft_crazy_nuggets, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/snuff_the_mascots
+	name = "Snuff the Mascots"
+	desc = "No heroes, no mascots. The Syndicate cuts deeper."
+	icon_state = "snuff_the_mascots"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/snuff_the_mascots, 32)
+
+
+/obj/structure/sign/poster/contraband/ff_contest/mouse_riot
+	name = "Mouse Riot"
+	desc = "The little mouse on the poster is staging his little rebellion and sabotaging the power grid. Why are you any worse?! Get off your ass and make a revolution!!!"
+	icon_state = "mouse_riot"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/mouse_riot, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/slay_them
+	name = "Slay Them!"
+	desc = "Man, this station stinks. I fucking hate these crew."
+	icon_state = "slay_them"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/slay_them, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/lust_fish
+	name = "Lust Fish"
+	desc = "A suggestive fat shark tail, promoting you to visit LushFish.nt - a newest competitor to the most popular erotic site in the NTnet, WetSkrells. Slogans promise 'most delicate slices of agurkraal and russian akulas you ever seen from all around the galaxy'. Something seems fishy about it."
+	icon_state = "lust_fish"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/lust_fish, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/no_one_will_help
+	name = "No one will help you."
+	desc = "ERT won't help you. Just give up."
+	icon_state = "no_one_will_help"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/no_one_will_help, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/skrell_it
+	name = "Skrell It!"
+	desc = "Hot and wet Skrells are already waiting for you on WetSkrells.nt."
+	icon_state = "skrell_it"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/skrell_it, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/into_nuclear_ashes
+	name = "Into Nuclear Ashes"
+	desc = "The Syndicate declares its intentions to fight the corporocracy by any means necessary."
+	icon_state = "into_nuclear_ashes"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/into_nuclear_ashes, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/cult_con_25xx
+	name = "Cult Con 25XX"
+	desc = "The poster encourages you to join the annual Cult Con. Even if you can't read, that shouldn't be a problem."
+	icon_state = "cult_con_25xx"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/cult_con_25xx, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/interdine_medication
+	name = "Interdine medication for everyone!"
+	desc = "The poster is an advert for the services and medicine produced by Interdine. And it gives off a weird vibe... I'll have to buy some headache pills from them."
+	icon_state = "interdine_medication"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/interdine_medication, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/melty_mel
+	name = "Melty Mel"
+	desc = "\"Don't worry, she is professional. She won't bite... She will swallow! Melt in the pleasure!\""
+	icon_state = "melty_mel"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/melty_mel, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/bunny_skrell
+	name = "Bunny Skrell"
+	desc = "Be like a skrell - be a bunny"
+	icon_state = "bunny_skrell"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/bunny_skrell, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/time_to_choose
+	name = "Time to Choose"
+	desc = "It's time to choose between bad and terrible."
+	icon_state = "time_to_choose"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/time_to_choose, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/party_proud
+	name = "Party Proud"
+	desc = "What if you +15 credits blowing up station?"
+	icon_state = "party_proud"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/party_proud, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/nobody
+	name = "Nobody"
+	desc = "They laughed at you... Mocked your stutter... Cooked chicken wings right in front of you and offered you to eat them. They didn't notice you... To them, you were nobody. It's time for revenge."
+	icon_state = "nobody"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/nobody, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/they_laughed_at_you
+	name = "They Laughed at You"
+	desc = "They laughed at you... Mocked your stutter... Cooked chicken wings right in front of you and offered you to eat them. And you ate, but not just the wings..."
+	icon_state = "they_laughed_at_you"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/they_laughed_at_you, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/blood_red_flag
+	name = "Blood-red Flag"
+	desc = "They fell so long ago, but the workers don't stop believing. The flag smelled of gunpowder and iron... Wait, who printed it as a poster?!"
+	icon_state = "blood_red_flag"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/blood_red_flag, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/trust
+	name = "Trust"
+	desc = "One person, two sides. Will you be able to trust your people in this tin can when you find out who they really are?..."
+	icon_state = "trust"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/trust, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/wanted_by_syndicate_1
+	name = "Wanted by the Syndicate - 1"
+	desc = "These individuals are wanted by the Syndicate, and there is a high reward for their heads... However, it seems that the names and prices have long been erased."
+	icon_state = "wanted_by_syndicate_1"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/wanted_by_syndicate_1, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/wanted_by_syndicate_2
+	name = "Wanted by the Syndicate - 2"
+	desc = "These individuals are wanted by the Syndicate, and there is a high reward for their heads... However, it seems that the names and prices have long been erased."
+	icon_state = "wanted_by_syndicate_2"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/wanted_by_syndicate_2, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/spiders
+	name = "Spiders!"
+	desc = "This poster explains how to deal with spiders at the station... But, can spiders hack the airlock and be invisible?"
+	icon_state = "spiders"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/spiders, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/borers
+	name = "Borers!"
+	desc = "The Borers are not evil at all! They came to help us, to make us better! Let Borer in, get his love."
+	icon_state = "borers"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/borers, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/ai_friend_question
+	name = "AI your friend?"
+	desc = "Be careful, AI may not be as good a friend as you are told."
+	icon_state = "ai_friend_question"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/ai_friend_question, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/cursed_love
+	name = "Cursed Love"
+	desc = "The entire contents of the poster were crossed out... In blood? The only inscription read - run. It looks very suspicious."
+	icon_state = "cursed_love"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/cursed_love, 32)
+
+/obj/structure/sign/poster/contraband/ff_contest/worker_and_peasant
+	name = "Worker and Peasant"
+	desc = "The poster has been battered by time. The text on the poster is now impossible to read, but it still evokes some strange feelings."
+	icon_state = "worker_and_peasant"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/ff_contest/worker_and_peasant, 32)
+
