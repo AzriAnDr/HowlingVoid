@@ -1,12 +1,8 @@
 /obj/item/buckshot_game
 	name = "buckshot game item"
-	// РћРїРёСЃР°РЅРёРµ РїСЂРµРґРјРµС‚Р° РґР»СЏ РёРіСЂС‹
 	var/use_desc = "This item is used to manage a game of buckshot roulette."
-	// Р’Р»Р°РґРµР»РµС† РїСЂРµРґРјРµС‚Р°
 	var/mob/living/carbon/human/owner_player = null
-	// РџР°С‚Рё Рє РєРѕС‚РѕСЂРѕР№ РїСЂРёРІСЏР·Р°РЅ РїСЂРµРґРјРµС‚
 	var/datum/buckshoot_roulette_party/party = null
-	// РњРѕР¶РЅРѕ Р»Рё РїСЂРёРјРµРЅРёС‚СЊ РїСЂРµРґРјРµС‚ Рє РјРµСЂС‚РѕРјСѓ РёРіСЂРѕРєСѓ
 	var/use_on_death = FALSE
 
 	obj_flags = INDESTRUCTIBLE|BOMB_PROOF|LAVA_PROOF|FIRE_PROOF
@@ -107,7 +103,7 @@
 	if(participant.lives >= 3)
 		to_chat(player, span_warning("You already have the maximum number of lives!"))
 		return
-	playsound(src, 'modularhowling_void/modules/buckshoot/sounds/item_cigarettes.ogg', 50, 1)
+	party.play_game_sound('sound/buckshot_roulette/item_cigarettes.ogg', 70)
 	if(!do_after(player, 5 SECONDS))
 		return
 	participant.add_lives(1)
@@ -127,7 +123,7 @@
 		to_chat(player, span_warning("There is no shell in the chamber!"))
 		return
 	player.balloon_alert_to_viewers("inspects the chamber")
-	playsound(src, 'modularhowling_void/modules/buckshoot/sounds/item_magnifier.ogg', 50, 1)
+	party.play_game_sound('sound/buckshot_roulette/item_magnifier.ogg', 70)
 	if(!do_after(player, 3 SECONDS))
 		return
 	var/obj/item/ammo_casing/shotgun/buckshoot/round = gun.chambered
@@ -151,7 +147,7 @@
 
 /obj/item/buckshot_game/beer/use_on_shotgun(obj/item/gun/ballistic/shotgun/buckshot_game/gun, mob/living/carbon/human/player)
 	. = ..()
-	playsound(src, 'modularhowling_void/modules/buckshoot/sounds/item_beer.ogg', 50, 1)
+	party.play_game_sound('sound/buckshot_roulette/item_beer.ogg', 70)
 	player.balloon_alert_to_viewers("drinks beer")
 	if(!do_after(player, 5 SECONDS))
 		return

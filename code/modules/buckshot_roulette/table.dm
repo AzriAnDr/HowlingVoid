@@ -14,6 +14,19 @@
 		return
 	return ..()
 
+/obj/structure/chair/buckshot/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
+	. = ..()
+	if(. || !party || party.game_started || M != user || M.buckled || !Adjacent(user))
+		return
+	if(!isturf(user.loc) || user.incapacitated || user.anchored)
+		return FALSE
+	var/turf/old_turf = get_turf(M)
+	M.forceMove(get_turf(src))
+	. = buckle_mob(M, check_loc = TRUE)
+	if(!. && old_turf)
+		M.forceMove(old_turf)
+	if(.)
+		buckle_feedback(M, user)
 
 /obj/structure/chair/buckshot/unbuckle_mob(mob/living/buckled_mob, force, can_fall)
 	if(!party)
@@ -50,14 +63,13 @@
 	name = "crt"
 	desc = "A device equipped with a defibrillator, a blood transfusion system, and medication. It has several charges."
 
-	icon = 'modularhowling_void/modules/buckshoot/icons/crt.dmi'
+	icon = 'icons/buckshot_roulette/crt.dmi'
 	icon_state = "crt0"
 	base_icon_state = "crt"
+	layer = ABOVE_OBJ_LAYER
 	obj_flags = INDESTRUCTIBLE|BOMB_PROOF|LAVA_PROOF|FIRE_PROOF
 
-	// РЎСЃС‹Р»РєР° РЅР° РєРѕРјРїРѕРЅРµРЅС‚ СѓС‡Р°СЃС‚РЅРёРєР° РїР°С‚Рё
 	var/datum/component/buckshoot_roulette_participant/participant_comp = null
-	// РЎРЎС‹Р»РєР° РЅР° СЃС‚РѕР»
 	var/obj/structure/table/buckshot/main_table = null
 
 
@@ -91,11 +103,10 @@
 		return
 	if(player.stat != DEAD)
 		return
-	playsound(src, 'modularhowling_void/modules/buckshoot/sounds/defib_discharge.ogg', 75, TRUE)
-	SEND_SOUND(player, 'modularhowling_void/modules/buckshoot/sounds/defib_discharge.ogg')
+	participant_comp.play_game_sound('sound/buckshot_roulette/defib_discharge.ogg', 75)
 	sleep(1.5 SECONDS)
 	player.notify_revival("Your heart is being defibrillated!")
-	player.grab_ghost() // Р’РѕР·СЂР°С‰Р°РµРј РїСЂРёР·СЂР°РєР° РІ С‚РµР»Рѕ
+	player.grab_ghost()
 
 	player.revive(HEAL_DAMAGE | HEAL_ORGANS | HEAL_BLOOD)
 	player.set_heartattack(FALSE)
@@ -113,19 +124,18 @@
 	player.flash_act()
 	log_game("[key_name(player)] was forcibly revived by Buckshoot crt device.")
 	to_chat(player, span_userdanger("Your heart explodes back to life! You're back in the game!"))
-	SEND_SOUND(player, 'modularhowling_void/modules/buckshoot/sounds/heartbeat_effect.ogg')
+	SEND_SOUND(player, sound('sound/buckshot_roulette/heartbeat_effect.ogg', volume = 75))
 
 
 
 /obj/structure/table/buckshot_table_part
-	// icon_state - СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚СЃСЏ РґРёРЅР°РјРёС‡РµСЃРєРё
 	icon = null
 	icon_state = ""
 	base_icon_state = ""
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
-	icon = 'modularhowling_void/modules/buckshoot/icons/crt.dmi'
+	icon = 'icons/buckshot_roulette/crt.dmi'
 	obj_flags = INDESTRUCTIBLE|BOMB_PROOF|LAVA_PROOF|FIRE_PROOF
 
 	var/obj/structure/table/buckshot/main_table = null
@@ -149,7 +159,7 @@
 /obj/structure/table/buckshot
 	name = "buckshot table"
 	desc = "A sturdy table used in the game of buckshot roulette."
-	icon = 'modularhowling_void/modules/buckshoot/icons/buckshot_table.dmi'
+	icon = 'icons/buckshot_roulette/buckshot_table.dmi'
 	icon_state = "multi-main"
 	base_icon_state = "multi"
 	smoothing_flags = NONE
@@ -158,9 +168,7 @@
 
 
 	obj_flags = INDESTRUCTIBLE|BOMB_PROOF|LAVA_PROOF|FIRE_PROOF
-	// РџР°С‚Рё С‡С‚Рѕ РїСЂРёРІСЏР·Р°РЅР° Рє СЃС‚РѕР»Сѓ
 	var/datum/buckshoot_roulette_party/party = null
-	// Р§Р°СЃС‚Рё СЃС‚РѕР»Р°, РґР»СЏ Р±РѕР»СЊС€РѕРіРѕ СЃС‚РѕР»Р° 3 РЅР° 3
 	var/list/parts
 
 	var/list/crts_by_dirs = list()
@@ -195,7 +203,7 @@
 		for(var/j = -1; j <= 1; j++)
 			if(i == 0 && j == 0)
 				icon_state = base_icon_state + "-center"
-				continue // РїСЂРѕРїСѓСЃРєР°РµРј С†РµС‚СЂР°Р»СЊРЅСѓСЋ С‡Р°СЃС‚СЊ
+				continue
 			var/i_str = (i < 0 ? "n" + "[abs(i)]" : "[i]")
 			var/j_str = (j < 0 ? "n" + "[abs(j)]" : "[j]")
 			var/obj/structure/table/buckshot_table_part/part = new(src)
@@ -242,6 +250,12 @@
 	to_give = count
 	player = owner
 	party = party_instance
+	party?.register_item_box(src)
+
+/obj/structure/box_with_item/Destroy(force)
+	party?.unregister_item_box(src)
+	party = null
+	return ..()
 
 /obj/structure/box_with_item/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -260,14 +274,20 @@
 	given_count += 1
 	party.item_gived(item, user)
 	visible_message(span_notice("[user.name] takes [item.name] from the box."))
-	playsound(src, 'modularhowling_void/modules/buckshoot/sounds/item_pickup.ogg', 50, 1)
+	party.play_game_sound('sound/buckshot_roulette/item_pickup.ogg', 55)
 	if(given_count >= to_give)
 		to_chat(user, span_notice("You take the last item from the box."))
 		qdel(src)
 
 /obj/structure/table/buckshot/proc/create_item_boxes(itemps_per_player)
 	for(var/mob/living/carbon/human/player in party.get_players())
-		var/turf/target_turf = get_ranged_target_turf(src, get_dir(src, get_turf(player)), 1)
+		var/datum/component/buckshoot_roulette_participant/participant = player.GetComponent(/datum/component/buckshoot_roulette_participant)
+		if(!participant || participant.has_died_in_party)
+			continue
+		var/player_direction = get_cardinal_direction_to(player)
+		var/turf/target_turf = player_direction ? get_turf_in_angle(dir2angle(player_direction), get_turf(src), 1) : null
+		if(!target_turf)
+			target_turf = get_turf(player)
 		new /obj/structure/box_with_item(target_turf, itemps_per_player, player, party)
 
 /obj/structure/table/buckshot/proc/get_parts()
@@ -293,6 +313,23 @@
 /obj/structure/table/buckshot/proc/get_crt_by_direction(direction)
 	return crts_by_dirs[num2text(direction)]
 
+/obj/structure/table/buckshot/proc/get_cardinal_direction_to(atom/target)
+	if(!target)
+		return NONE
+
+	var/turf/source_turf = get_turf(src)
+	var/turf/target_turf = get_turf(target)
+	if(!source_turf || !target_turf)
+		return NONE
+
+	var/dx = target_turf.x - source_turf.x
+	var/dy = target_turf.y - source_turf.y
+	if(!dx && !dy)
+		return NONE
+	if(abs(dy) >= abs(dx))
+		return dy >= 0 ? NORTH : SOUTH
+	return dx >= 0 ? EAST : WEST
+
 /obj/structure/table/buckshot/proc/get_all_crts()
 	var/list/crts = list()
 	for(var/dir in crts_by_dirs)
@@ -302,7 +339,7 @@
 	return crts
 
 /obj/structure/table/buckshot/proc/get_ctr_for_player(mob/living/carbon/human/player)
-	return get_crt_by_direction(get_dir(src, player))
+	return get_crt_by_direction(get_cardinal_direction_to(player))
 
 /obj/structure/table/buckshot/proc/on_shotgun_begin_reload(obj/item/gun/ballistic/shotgun/buckshot_game/gun)
 

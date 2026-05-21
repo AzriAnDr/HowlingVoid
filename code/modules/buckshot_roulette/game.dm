@@ -1,29 +1,22 @@
 #define TIME_TO_TURN (1 MINUTES)
+#define ITEM_BOX_TIMEOUT (1 MINUTES)
+#define CRT_DEFIB_DELAY (1 SECONDS)
+#define LIFE_LOSS_DELAY (6 SECONDS)
+#define MAX_BUCKSHOT_LIVES 3
 #define SHOOT_RESULT_LIVE "live"
 #define SHOOT_RESULT_BLANK "blank"
 
 /datum/buckshoot_roulette_party
-	// РЈРЅРёРєР°Р»СЊРЅРѕРµ Р°Р№РґРё СЌС‚РѕР№ РїР°СЂС‚РёРё
 	var/id
-	// РЎРїРёСЃРѕРє РІСЃРµС… С‚РµРєСѓС‰РёС… РёРіСЂРѕРєРѕРІ РїР°СЂС‚РёРё
 	VAR_PRIVATE/list/players
-	// Р’СЃРµ РёРіСЂРѕРІС‹Рµ РјРµСЃС‚Р°, С‡С‚Рѕ Р·Р°РґРµР№СЃС‚РІРѕРІР°РЅРЅС‹ РІ РїР°СЂС‚РёРё (weakrefs)
 	VAR_PRIVATE/list/chairs
-	// weakref РЅР° РґСЂРѕР±РѕРІРёРє
 	VAR_FINAL/datum/weakref/shotgun_weakref
-	// weakref РЅР° РёРіСЂРѕРІРѕР№ СЃС‚РѕР»
 	VAR_FINAL/datum/weakref/table_weakref
-	// РќР° РєР°РєРѕРј СЂР°СѓРЅРґРµ РїСЂРѕРёСЃС…РѕРґРёС‚ РѕР±СЂРµР·Р°РЅРёРµ СЃРёСЃС‚РµРјС‹ Р¶РёР·РЅРµРѕР±РµСЃРїРµС‡РµРЅРёСЏ
-	VAR_FINAL/death_round_teshoold = 3
-	// РЎС‚Р°СЂС‚РѕРІР°Р»Р° Р»Рё РёРіСЂР°
+	VAR_FINAL/death_round_threshold = 3
 	var/game_started = FALSE
-	// РњРѕР¶РµС‚ Р»Рё РёРіСЂРѕРє СЃРІРѕР±РґРЅРѕ РІС‹РѕР№С‚Рё РёР· РёРіСЂС‹
 	var/can_free_exit = FALSE
-	// РЎРїРёСЃРѕРє РёРіСЂРѕРєРѕРІ, РѕР¶РёРґР°СЋС‰РёС… РЅР°С‡Р°Р»Р° РёРіСЂС‹
 	var/awaiting_players = list()
-	// РРґС‘С‚ Р»Рё СЂРµРіРёСЃС‚СЂР°С†РёСЏ РёРіСЂРѕРєРѕРІ
 	var/registration = FALSE
-	// Р”РѕР»Р¶РµРЅ Р»Рё СЃС‚РѕР» РѕР·РІСѓС‡РёРІР°С‚СЊ РїСЂР°РІРёР»Р° РІ РЅР°С‡Р°Р»Рµ РёРіСЂС‹
 	var/should_say_rules = TRUE
 	var/static/list/rules = list(
 		"1. Each round loads the shotgun with live and blank shells in a random order.",
@@ -33,37 +26,24 @@
 		"5. The last living player wins.",
 	)
 
-	// РЎРїРёСЃРѕРє РёРіСЂРѕРє СЃ РєР»СЋС‡Р°РјРё РїРѕ РёРјРµРЅР°Рј
 	var/list/player_by_names = list() // assoc list(mob/living/carbon/human => string)
-	/* РџРµСЂРµРјРµРЅРЅС‹Рµ РѕС‚РЅРѕСЃСЏС‰РёРµСЃСЏ Рє РїСЂРѕС†РµСЃСЃСѓ РёРіСЂС‹*/
 
-	// РўРµРєСѓС‰РёР№ СЂР°СѓРЅРґ РёРіСЂС‹
 	var/round = 0
-	// РЇРІР»СЏРµС‚СЃСЏ Р»Рё С‚РµРєСѓС‰РёР№ СЂР°СѓРЅРґ РїРѕСЃР»РµРґРЅРёРј
 	var/is_last_round = FALSE
-	// РќР°С‡Р°Р»СЃСЏ Р»Рё С‚РµРєСѓС‰РёР№ СЂР°СѓРЅРґ
 	var/round_started = FALSE
-	// Р’СЂРµРјСЏ РЅР°С‡Р°Р»Р° С‚РµРєСѓС‰РµРіРѕ С…РѕРґР°
 	var/current_turn_start_time = 0
-	// РўРµРєСѓС‰РёР№ РёРіСЂРѕРє, РєРѕС‚РѕСЂС‹Р№ РґРµР»Р°РµС‚ С…РѕРґ
 	var/current_turn_player = null
-	// РџРѕСЃР»РµРґРЅРёР№ РёРіСЂРѕРє, РєРѕС‚РѕСЂС‹Р№ СЃРґРµР»Р°Р» С…РѕРґ
 	var/last_turn_player = null
-	// РРґРµС‚ Р»Рё РїРµСЂРµРґР°С‡Р° С…РѕРґР°
+	var/list/turn_order = list()
 	var/turn_transition_in_progress = FALSE
-	// Р’СЂРµРјСЏ Р·Р° РєРѕС‚РѕСЂРѕРµ РёРіСЂРѕРє РґРѕР»Р¶РµРЅ СЃРґРµР»Р°С‚СЊ С…РѕРґ
 	var/turn_time = TIME_TO_TURN
 
-	// Р’СЃРµ РїСЂРµРґРјРµС‚С‹ СЂРѕР·РґР°РЅРЅС‹Рµ РёРіСЂРѕР№
 	var/list/all_items = list()
-	// РџСЂРµРґРјРµС‚С‹ СЃРѕР±СЂР°РЅРЅС‹Рµ РїРѕ РёРіСЂРѕРєР°Рј РєР»СЋС‡Р°Рј
 	var/list/items_by_players = list() // assoc list(mob/living/carbon/human => list(obj/item))
+	var/list/pending_item_boxes = list()
 
-	// РРґРµС‚ Р»Рё Р·Р°РіСЂСѓР·РєР° РїР°С‚СЂРѕРЅРѕРІ РІ РґСЂРѕР±РѕРІРёРє
 	var/loading_ammo = FALSE
-	// РћР±СЊСЏРІР»РµРЅС‹ Р»Рё С‚РёРїС‹ РїР°С‚СЂРѕРЅРѕРІ
 	var/ammo_declared = FALSE
-	// РЎС‚РѕРёС‚ Р»Рё РёРіСЂР° РЅР° РїР°СѓР·Рµ
 	var/pause = FALSE
 
 /datum/buckshoot_roulette_party/New(obj/structure/table/game_table)
@@ -141,7 +121,6 @@
 		return FALSE
 	if(!ishuman(player))
 		return FALSE
-	// РџСЂРѕРІРµСЂРєР° РєР»РёРµРЅС‚Р°
 	if(HAS_TRAIT(player, TRAIT_PACIFISM))
 		return FALSE
 	return TRUE
@@ -149,7 +128,6 @@
 /datum/buckshoot_roulette_party/proc/check_ready(force_start = FALSE)
 	if(game_started)
 		return
-	// РџСЂРѕРІРµСЂРєР°, С‡С‚Рѕ РІСЃРµ РёРіСЂРѕРєРё Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅС‹
 	for(var/datum/weakref/chair_weakref in chairs)
 		var/obj/structure/chair/buckshot/chair_instance = chair_weakref?.resolve()
 		if(!chair_instance)
@@ -171,12 +149,10 @@
 
 	awaiting_players = null
 	registration = FALSE
-	// Р’СЃРµ РёРіСЂРѕРєРё Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅС‹, СЃС‚Р°СЂС‚СѓРµРј РёРіСЂСѓ
 	INVOKE_ASYNC(src, PROC_REF(start_game))
 
 
 /datum/buckshoot_roulette_party/proc/register_player(mob/living/carbon/human/player, name)
-	// РџСЂРѕРІРµСЂРєР° РЅР° СѓРЅРёРєР°Р»СЊРЅРѕСЃС‚СЊ РёРјРµРЅРё
 	for(var/datum/weakref/player_ref in players)
 		var/mob/living/carbon/human/existing_player = player_ref?.resolve()
 		var/datum/component/buckshoot_roulette_participant/participant = existing_player?.GetComponent(/datum/component/buckshoot_roulette_participant)
@@ -207,16 +183,17 @@
 	var/obj/structure/table/table = table_weakref?.resolve()
 	if(!table)
 		return
-	playsound(table, 'modularhowling_void/modules/buckshoot/sounds/defib_bootup.ogg', 50, 1)
+	play_game_sound('sound/buckshot_roulette/defib_bootup.ogg', 60)
 	if(should_say_rules)
 		for(var/rule in rules)
 			table.say(rule)
 			sleep(3 SECONDS)
 		sleep(3 SECONDS)
-	next_round()
 	game_started = TRUE
+	build_turn_order()
 	SEND_SIGNAL(src, COMSIG_BUCKSHOOT_GAME_STARTED, rules)
 	START_PROCESSING(SSobj, src)
+	next_round()
 
 /datum/buckshoot_roulette_party/proc/end_game()
 	if(!game_started)
@@ -235,8 +212,10 @@
 	players = list()
 	last_turn_player = null
 	current_turn_player = null
+	turn_order = list()
 	current_turn_start_time = 0
 	round = 0
+	pending_item_boxes = list()
 
 /datum/buckshoot_roulette_party/proc/get_players()
 	var/list/to_return = list()
@@ -246,7 +225,51 @@
 			to_return += player
 	return to_return
 
-/* РџР РћР¦Р•РЎРЎ РР“Р Р« */
+/datum/buckshoot_roulette_party/proc/play_game_sound(soundin, volume = 75)
+	var/list/notified_clients = list()
+	for(var/mob/living/carbon/human/player in get_players())
+		var/client/listener = player.client
+		if(!listener)
+			listener = player.mind?.current?.client
+		if(listener)
+			notified_clients |= listener
+			SEND_SOUND(listener, sound(soundin, volume = volume))
+	var/obj/structure/table/table = table_weakref?.resolve()
+	if(!table)
+		return
+	for(var/mob/listening_mob as anything in hearers(7, table))
+		if(!listening_mob.client || (listening_mob.client in notified_clients))
+			continue
+		SEND_SOUND(listening_mob.client, sound(soundin, volume = volume))
+
+/datum/buckshoot_roulette_party/proc/build_turn_order()
+	var/obj/structure/table/buckshot/table = table_weakref?.resolve()
+	if(!table)
+		turn_order = shuffle(get_players())
+		return
+
+	var/list/players_by_direction = list()
+	for(var/mob/living/carbon/human/player in get_players())
+		var/direction = table.get_cardinal_direction_to(player)
+		if(!direction)
+			continue
+		players_by_direction["[direction]"] = player
+
+	var/list/clockwise_players = list()
+	for(var/direction in list(NORTH, EAST, SOUTH, WEST))
+		var/mob/living/carbon/human/player = players_by_direction["[direction]"]
+		if(player)
+			clockwise_players += player
+
+	if(!length(clockwise_players))
+		turn_order = shuffle(get_players())
+		return
+
+	var/start_index = rand(1, length(clockwise_players))
+	turn_order = list()
+	for(var/i in 0 to length(clockwise_players) - 1)
+		turn_order += clockwise_players[((start_index + i - 1) % length(clockwise_players)) + 1]
+
 
 /datum/buckshoot_roulette_party/proc/create_shotgun()
 	var/obj/structure/table/table = table_weakref?.resolve()
@@ -302,6 +325,8 @@
 	var/obj/item/gun/ballistic/shotgun/buckshot_game/shotgun = get_shotgun()
 	if(!shotgun)
 		return FALSE
+	if(istype(shotgun.chambered, /obj/item/ammo_casing/shotgun/buckshoot/live))
+		return FALSE
 	for(var/obj/item/ammo_casing/casing in shotgun.chambers)
 		if(istype(casing, /obj/item/ammo_casing/shotgun/buckshoot/live))
 			return FALSE
@@ -322,26 +347,24 @@
 
 
 /datum/buckshoot_roulette_party/proc/pick_next_player()
-	if(!length(players))
+	if(!length(turn_order))
+		build_turn_order()
+	if(!length(turn_order))
 		return null
 
-	// Р•СЃР»Рё РЅРёРєС‚Рѕ РµС‰С‘ РЅРµ С…РѕРґРёР» вЂ” РЅР°С‡РёРЅР°РµРј СЃ РїРµСЂРІРѕРіРѕ Р¶РёРІРѕРіРѕ
 	if(!last_turn_player)
-		for(var/datum/weakref/ref in players)
-			var/mob/living/carbon/human/candidate = ref.resolve()
+		for(var/mob/living/carbon/human/candidate as anything in turn_order)
 			var/datum/component/buckshoot_roulette_participant/P = candidate?.GetComponent(/datum/component/buckshoot_roulette_participant)
 			if(P && P.can_perform_turn())
 				return candidate
 
-	// РРЅР°С‡Рµ РёС‰РµРј СЃР»РµРґСѓСЋС‰РµРіРѕ Р¶РёРІРѕРіРѕ РёРіСЂРѕРєР° РїРѕ РєСЂСѓРіСѓ
-	var/start_idx = players.Find(WEAKREF(last_turn_player))
-	if(start_idx == 0) // С‚РµРєСѓС‰РёР№ РёРіСЂРѕРє СѓР¶Рµ СѓРґР°Р»С‘РЅ РёР· СЃРїРёСЃРєР° РёР»Рё РЅРµ РЅР°Р№РґРµРЅ
-		start_idx = length(players)
+	var/start_idx = turn_order.Find(last_turn_player)
+	if(start_idx == 0)
+		start_idx = length(turn_order)
 
-	for(var/i in 1 to length(players))
-		var/idx = (start_idx + i - 1) % length(players) + 1 // +1 РїРѕС‚РѕРјСѓ С‡С‚Рѕ СЃРїРёСЃРѕРє СЃ 1
-		var/datum/weakref/ref = players[idx]
-		var/mob/living/carbon/human/candidate = ref?.resolve()
+	for(var/i in 1 to length(turn_order))
+		var/idx = (start_idx + i - 1) % length(turn_order) + 1
+		var/mob/living/carbon/human/candidate = turn_order[idx]
 		if(!candidate)
 			continue
 
@@ -444,6 +467,34 @@
 		items_by_players[player] = list()
 	LAZYADD(items_by_players[player], item)
 
+/datum/buckshoot_roulette_party/proc/register_item_box(obj/structure/box_with_item/box)
+	if(!box)
+		return
+	LAZYADD(pending_item_boxes, WEAKREF(box))
+
+/datum/buckshoot_roulette_party/proc/unregister_item_box(obj/structure/box_with_item/box)
+	for(var/datum/weakref/box_ref as anything in pending_item_boxes)
+		if(box_ref?.resolve() == box)
+			pending_item_boxes -= box_ref
+			return
+
+/datum/buckshoot_roulette_party/proc/get_pending_item_box_count()
+	var/valid_boxes = 0
+	for(var/datum/weakref/box_ref as anything in pending_item_boxes.Copy())
+		var/obj/structure/box_with_item/box = box_ref?.resolve()
+		if(!box || QDELETED(box))
+			pending_item_boxes -= box_ref
+			continue
+		valid_boxes += 1
+	return valid_boxes
+
+/datum/buckshoot_roulette_party/proc/clear_pending_item_boxes()
+	for(var/datum/weakref/box_ref as anything in pending_item_boxes.Copy())
+		var/obj/structure/box_with_item/box = box_ref?.resolve()
+		if(box && !QDELETED(box))
+			qdel(box)
+	pending_item_boxes = list()
+
 /datum/buckshoot_roulette_party/proc/give_items()
 	var/items_per_player = min(6, 2 * round)
 	var/obj/structure/table/buckshot/table = table_weakref?.resolve()
@@ -453,7 +504,6 @@
 	table.create_item_boxes(items_per_player)
 
 /datum/buckshoot_roulette_party/proc/clean_items()
-	// РЈРґР°Р»СЏРµРј РІСЃРµ РІС‹РґР°РЅРЅС‹Рµ РїСЂРµРґРјРµС‚С‹
 	QDEL_LIST(all_items)
 	all_items = list()
 	items_by_players = list()
@@ -462,13 +512,26 @@
 	round += 1
 	ammo_declared = FALSE
 	current_turn_player = null
+	last_turn_player = null
 	var/obj/structure/table/table = table_weakref?.resolve()
-	SEND_SIGNAL(src, COMSIG_BUCKSHOOT_NEXT_ROUND, (round >= death_round_teshoold))
-	if(table)
-		table.say("Round [round] begins!")
-		playsound(table, 'modularhowling_void/modules/buckshoot/sounds/new_round.ogg', 50, 1)
+	if(round >= death_round_threshold)
+		is_last_round = TRUE
+	SEND_SIGNAL(src, COMSIG_BUCKSHOOT_NEXT_ROUND, is_last_round)
 	if(round > 1)
 		give_items()
+	var/item_wait_ends_at = world.time + ITEM_BOX_TIMEOUT
+	while(get_pending_item_box_count() > 0 && world.time < item_wait_ends_at)
+		stoplag(1)
+	if(get_pending_item_box_count() > 0)
+		if(table)
+			table.say("Item selection timed out.")
+		clear_pending_item_boxes()
+	if(table)
+		table.say("Round [round] begins!")
+		play_game_sound('sound/buckshot_roulette/new_round.ogg', 60)
+		if(is_last_round)
+			play_game_sound('sound/buckshot_roulette/crt_turn_off.ogg', 65)
+			table.say("Final round. Revival systems are offline!")
 	sleep(3 SECONDS)
 	pause = FALSE
 
@@ -486,11 +549,6 @@
 		return
 	if(table)
 		table.say("Round [round] is over!")
-	if(round >= death_round_teshoold)
-		if(table)
-			playsound(table, 'modularhowling_void/modules/buckshoot/sounds/crt_turn_off.ogg', 50, 1)
-			table.say("Final round. Revival systems are offline!")
-		is_last_round = TRUE
 	sleep(1 SECONDS)
 	next_round()
 
@@ -512,22 +570,16 @@
 
 
 /datum/component/buckshoot_roulette_participant
-	// weakref РЅР° РїР°СЂС‚РёСЋ, РІ РєРѕС‚РѕСЂРѕР№ СѓС‡Р°СЃС‚РІСѓРµС‚ СЌС‚РѕС‚ РёРіСЂРѕРє
 	VAR_PRIVATE/datum/weakref/party_weakref
-	// weakref РЅР° СЃРёСЃС‚РµРјСѓ СЂРµР°РЅРёРјР°С†РёРё
 	VAR_PRIVATE/datum/weakref/crt_weakref
-	// Р‘С‹Р» Р»Рё СЌС‚РѕС‚ РёРіСЂРѕРє СѓР¶Рµ СѓР±РёС‚ РІ С‚РµРєСѓС‰РµР№ РїР°СЂС‚РёРё
 	var/has_died_in_party = FALSE
-	// РЎСЃС‹Р»РєР° РЅР° С‚РµРєСѓС‰РµРіРѕ РёРіСЂРѕРєР°
 	var/mob/living/carbon/human/player
-	// РРјСЏ С‚РµРєСѓС‰РµРіРѕ РёРіСЂРѕРєР°
 	var/player_name = ""
-	// РљРѕР»РёС‡РµСЃС‚РІРѕ РѕС‡РєРѕРІ Р·Р° РїРѕР±РµРґСѓ РёРіСЂРѕРєРІ СЂР°СѓРЅРґРµ
 	var/srcore = 0
-	// РљРѕР»РёС‡РµСЃС‚РІРѕ Р¶РёР·РЅРµР№ РёРіСЂРѕРєР°
-	var/lives = 3
-	// Р’РєР»СЋС‡РµРЅР° Р»Рё СЃРёСЃС‚РµРјР° СЂРµР°РЅРёРјР°С†РёРё РґР»СЏ СЌС‚РѕРіРѕ РёРіСЂРѕРєР°
+	var/lives = MAX_BUCKSHOT_LIVES
 	var/crt_enabled = TRUE
+	var/pending_life_loss = FALSE
+	var/pending_lives_after_loss = 0
 
 	var/static/list/forbiden_names = list(
 		"host",
@@ -636,46 +688,76 @@
 	var/obj/structure/crt_mechanims/crt = crt_weakref?.resolve()
 	if(!party || !crt)
 		return
-
+	if(pending_life_loss)
+		return
 	if(lives <= 0)
 		has_died_in_party = TRUE
+		crt.update_icon_state()
 		crt.say("[player_name] is out!")
 		to_chat(player, span_userdanger("You are dead. The game is over for you."))
 		return
 
-	lives -= 1
+	pending_lives_after_loss = max(0, lives - 1)
+	pending_life_loss = TRUE
+	crt.say("[player_name]'s CRT is charging.")
+	addtimer(CALLBACK(crt, TYPE_PROC_REF(/obj/structure/crt_mechanims, revive_player)), CRT_DEFIB_DELAY)
+	addtimer(CALLBACK(src, PROC_REF(apply_life_loss)), CRT_DEFIB_DELAY + LIFE_LOSS_DELAY)
+
+/datum/component/buckshoot_roulette_participant/proc/apply_life_loss()
+	var/obj/structure/crt_mechanims/crt = crt_weakref?.resolve()
+	if(!crt)
+		pending_life_loss = FALSE
+		return
+	lives = pending_lives_after_loss
 	crt.update_icon_state()
+	play_game_sound('sound/buckshot_roulette/defib_reduce_health.ogg', 75)
+	pending_life_loss = FALSE
+	pending_lives_after_loss = 0
+
+	if(lives <= 0)
+		crt.say("[player_name]: no lives remaining.")
+		to_chat(player, span_userdanger("Your CRT has no lives remaining. The next death is final."))
+		return
+
 	crt.say("[player_name]: [lives] lives remaining.")
-	playsound(crt, 'modularhowling_void/modules/buckshoot/sounds/defib_reduce_health.ogg', 60, TRUE)
-	addtimer(CALLBACK(crt, TYPE_PROC_REF(/obj/structure/crt_mechanims, revive_player)), 2 SECONDS)
 
 
 /datum/component/buckshoot_roulette_participant/proc/on_next_round(datum/buckshoot_roulette_party/party, death_round)
 	SIGNAL_HANDLER
-	lives = death_round ? 0 : 3
+	lives = death_round ? 0 : MAX_BUCKSHOT_LIVES
 	has_died_in_party = FALSE
+	pending_life_loss = FALSE
+	pending_lives_after_loss = 0
 	crt_enabled = !death_round
 	if(death_round)
 		to_chat(player, span_userdanger("The revival system is offline. You have no extra lives."))
 	var/obj/structure/crt_mechanims/crt_instance = crt_weakref?.resolve()
 	if(!crt_instance)
 		return
-	if(player.stat == DEAD)
+	if(player.stat == DEAD && !pending_life_loss && !has_died_in_party && (death_round || lives > 0))
 		addtimer(CALLBACK(crt_instance, TYPE_PROC_REF(/obj/structure/crt_mechanims, revive_player)), 5)
 	crt_instance.update_icon_state()
 
 /datum/component/buckshoot_roulette_participant/proc/on_game_start(/datum/buckshoot_roulette_party/party, rules)
 	SIGNAL_HANDLER
 	ADD_TRAIT(player, TRAIT_BUCKSHOOT_PLAYER, INNATE_TRAIT)
+	var/obj/structure/crt_mechanims/crt_instance = crt_weakref?.resolve()
+	crt_instance?.update_icon_state()
 	to_chat(player, span_big("The game has started! You have [lives] lives."))
-	SEND_SOUND(player, 'modularhowling_void/modules/buckshoot/sounds/crt_display_health.ogg')
+	SEND_SOUND(player, sound('sound/buckshot_roulette/crt_display_health.ogg', volume = 75))
 
+/datum/component/buckshoot_roulette_participant/proc/play_game_sound(soundin, volume = 75)
+	var/datum/buckshoot_roulette_party/party = party_weakref?.resolve()
+	if(party)
+		party.play_game_sound(soundin, volume)
+	else if(player?.client)
+		SEND_SOUND(player, sound(soundin, volume = volume))
 
 
 /datum/component/buckshoot_roulette_participant/proc/add_lives(num)
 	if(!crt_enabled)
 		return
-	lives += num
+	lives = min(MAX_BUCKSHOT_LIVES, lives + num)
 	var/obj/structure/crt_mechanims/crt_instance = crt_weakref?.resolve()
 	if(crt_instance)
 		crt_instance.update_icon_state()

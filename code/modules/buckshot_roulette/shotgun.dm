@@ -102,6 +102,19 @@
 			return TRUE
 	return FALSE
 
+/obj/item/gun/ballistic/shotgun/buckshot_game/proc/can_target_player(mob/living/target, mob/living/user, datum/buckshoot_roulette_party/party)
+	if(!party.is_participant(target))
+		user.balloon_alert(user, "not in the game!")
+		return FALSE
+	if(target.stat == DEAD)
+		user.balloon_alert(user, "already dead!")
+		return FALSE
+	var/datum/component/buckshoot_roulette_participant/participant = target.GetComponent(/datum/component/buckshoot_roulette_participant)
+	if(!participant || participant.player_completely_dead())
+		user.balloon_alert(user, "out of the game!")
+		return FALSE
+	return TRUE
+
 /obj/item/gun/ballistic/shotgun/buckshot_game/try_fire_gun(atom/target, mob/living/user, params)
 	if(!party_ref)
 		return ..()
@@ -113,8 +126,7 @@
 	if(!ishuman(target))
 		return
 	var/mob/living/living_target = target
-	if(!party.is_participant(living_target))
-		user.balloon_alert(user, "not a player!")
+	if(!can_target_player(living_target, user, party))
 		return
 	if(target == user && !shotingself)
 		INVOKE_ASYNC(src, PROC_REF(attempt_shotself), user)
@@ -147,8 +159,7 @@
 	if(safety_comp && safety_comp.safety_currently_on)
 		safety_comp.toggle_safeties(user)
 
-	if(!party.is_participant(living_target))
-		user.balloon_alert(user, "not a player!")
+	if(!can_target_player(living_target, user, party))
 		return
 	if(living_target != user)
 		if(!check_gunpoint(user, living_target))
@@ -194,16 +205,17 @@
 	chambers.Cut(1, 2)
 
 /obj/item/gun/ballistic/shotgun/buckshot_game/proc/load_rounds(live_count = 0, blank_count = 0)
+	var/datum/buckshoot_roulette_party/party = party_ref?.resolve()
 	QDEL_LIST(chambers)
 	chambers = list()
 	qdel(chambered)
 	for(var/i in 1 to live_count)
 		chambers += new /obj/item/ammo_casing/shotgun/buckshoot/live(src)
-		playsound(get_turf(src), 'modularhowling_void/modules/buckshoot/sounds/load_shell.ogg', 100, TRUE)
+		party?.play_game_sound('sound/buckshot_roulette/load_shell.ogg', 70)
 		sleep(0.2 SECONDS)
 	for(var/i in 1 to blank_count)
 		chambers += new /obj/item/ammo_casing/shotgun/buckshoot/blank(src)
-		playsound(get_turf(src), 'modularhowling_void/modules/buckshoot/sounds/load_shell.ogg', 100, TRUE)
+		party?.play_game_sound('sound/buckshot_roulette/load_shell.ogg', 70)
 		sleep(0.2 SECONDS)
 	for(var/i = 1 to 3)
 		chambers = shuffle(chambers)
