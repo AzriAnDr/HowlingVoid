@@ -309,8 +309,16 @@
   "/datum/loadout_item/head/wig": {
     "id": "/datum/loadout_item/head/wig",
     "template_type": "/datum/loadout_item/head",
-    "name": "Natural Wig",
-    "item_path": "/obj/item/clothing/head/wig/natural"
+    "name": "Wig",
+    "item_path": "/obj/item/clothing/head/wig",
+    "group": "Miscellaneous"
+  },
+  "/datum/loadout_item/head/wignatural": {
+    "id": "/datum/loadout_item/head/wignatural",
+    "template_type": "/datum/loadout_item/head",
+    "name": "Wig - Natural",
+    "item_path": "/obj/item/clothing/head/wig/natural",
+    "group": "Miscellaneous"
   },
   "/datum/loadout_item/head/santa": {
     "id": "/datum/loadout_item/head/santa",
@@ -3757,8 +3765,8 @@
   "/datum/loadout_item/head/warning_cone": {
     "id": "/datum/loadout_item/head/warning_cone",
     "template_type": "/datum/loadout_item/head",
-    "name": "Wig",
-    "item_path": "/obj/item/clothing/head/wig",
+    "name": "Warning Cone",
+    "item_path": "/obj/item/clothing/head/cone",
     "group": "Miscellaneous"
   },
   "/datum/loadout_item/head/floral_garland": {
@@ -4723,11 +4731,17 @@
   "/datum/loadout_item/inhand/toolbox": {
     "id": "/datum/loadout_item/inhand/toolbox",
     "template_type": "/datum/loadout_item/inhand",
-    "name": "Riding Saddle (Leather)",
-    "item_path": "/obj/item/riding_saddle/leather",
+    "name": "Full Toolbox",
+    "item_path": "/obj/item/storage/toolbox/mechanical",
     "blacklisted_roles": [
       "Prisoner"
     ]
+  },
+  "/datum/loadout_item/inhand/saddle": {
+    "id": "/datum/loadout_item/inhand/saddle",
+    "template_type": "/datum/loadout_item/inhand",
+    "name": "Riding Saddle (Leather)",
+    "item_path": "/obj/item/riding_saddle/leather"
   },
   "/datum/loadout_item/inhand/saddle_blue": {
     "id": "/datum/loadout_item/inhand/saddle_blue",
@@ -5042,14 +5056,14 @@
   },
   "/datum/loadout_item/mask/masquerade/feathered": {
     "id": "/datum/loadout_item/mask/masquerade/feathered",
-    "template_type": "/datum/loadout_item/mask/masquerade",
+    "template_type": "/datum/loadout_item/mask",
     "name": "Masquerade Mask - Feathered",
     "item_path": "/obj/item/clothing/mask/masquerade/feathered",
     "group": "Costumes"
   },
   "/datum/loadout_item/mask/masquerade/two_colors/feathered": {
     "id": "/datum/loadout_item/mask/masquerade/two_colors/feathered",
-    "template_type": "/datum/loadout_item/mask/masquerade",
+    "template_type": "/datum/loadout_item/mask",
     "name": "Masquerade Mask - Feathered, Split",
     "item_path": "/obj/item/clothing/mask/masquerade/two_colors/feathered",
     "group": "Costumes"
@@ -5486,6 +5500,13 @@
   },
   "/datum/loadout_item/neck/gags_mantle": {
     "id": "/datum/loadout_item/neck/gags_mantle",
+    "template_type": "/datum/loadout_item/neck",
+    "name": "Mantle (Colorable)",
+    "item_path": "/obj/item/clothing/neck/mantle/recolorable",
+    "group": "Cloaks and Shrouds"
+  },
+  "/datum/loadout_item/neck/gags_boat": {
+    "id": "/datum/loadout_item/neck/gags_boat",
     "template_type": "/datum/loadout_item/neck",
     "name": "Mantle - Long (Colorable)",
     "item_path": "/obj/item/clothing/neck/cloak/colourable/boat",
@@ -6300,6 +6321,12 @@
   "/datum/loadout_item/shoes/jackboots/toeless": {
     "id": "/datum/loadout_item/shoes/jackboots/toeless",
     "template_type": "/datum/loadout_item/shoes",
+    "name": "Toeless Jackboots",
+    "item_path": "/obj/item/clothing/shoes/jackboots/toeless"
+  },
+  "/datum/loadout_item/shoes/jackboots/heel": {
+    "id": "/datum/loadout_item/shoes/jackboots/heel",
+    "template_type": "/datum/loadout_item/shoes",
     "name": "Boots - Jackboots, High-Heel",
     "item_path": "/obj/item/clothing/shoes/jackboots/heel"
   },
@@ -6602,7 +6629,7 @@
   },
   "/datum/loadout_item/suit/winter_coat/christmas/green": {
     "id": "/datum/loadout_item/suit/winter_coat/christmas/green",
-    "template_type": "/datum/loadout_item/suit/winter_coat",
+    "template_type": "/datum/loadout_item/suit",
     "name": "Winter Coat - Christmas (Green)",
     "item_path": "/obj/item/clothing/suit/hooded/wintercoat/nova/christmas/green"
   },
@@ -7932,6 +7959,12 @@
   "/datum/loadout_item/suit/donator/blondie": {
     "id": "/datum/loadout_item/suit/donator/blondie",
     "template_type": "/datum/loadout_item/suit/donator",
+    "name": "Cowboy Vest",
+    "item_path": "/obj/item/clothing/suit/cowboyvest"
+  },
+  "/datum/loadout_item/suit/digicoat_glitched": {
+    "id": "/datum/loadout_item/suit/digicoat_glitched",
+    "template_type": "/datum/loadout_item/suit",
     "name": "Digicoat - Glitched",
     "item_path": "/obj/item/clothing/suit/toggle/digicoat/glitched"
   },
@@ -7961,6 +7994,12 @@
   },
   "/datum/loadout_item/suit/donator/creamfurredjacket": {
     "id": "/datum/loadout_item/suit/donator/creamfurredjacket",
+    "template_type": "/datum/loadout_item/suit/donator",
+    "name": "Furred Jacket (Cream)",
+    "item_path": "/obj/item/clothing/suit/brownfurrich/cream"
+  },
+  "/datum/loadout_item/suit/donator/chokha": {
+    "id": "/datum/loadout_item/suit/donator/chokha",
     "template_type": "/datum/loadout_item/suit/donator",
     "name": "Iseurian Chokha",
     "item_path": "/obj/item/clothing/suit/chokha"
@@ -8624,8 +8663,14 @@
     "id": "/datum/loadout_item/under/jumpsuit/refit_wetsuit",
     "template_type": "/datum/loadout_item/under/jumpsuit",
     "name": "Refitted Shoredress Wetsuit",
-    "item_path": "/obj/item/clothing/under/akula_wetsuit/refit",
-    "abstract_type": "/datum/loadout_item/under/miscellaneous"
+    "item_path": "/obj/item/clothing/under/akula_wetsuit/refit"
+  },
+  "/datum/loadout_item/under/jumpsuit/utility": {
+    "id": "/datum/loadout_item/under/jumpsuit/utility",
+    "template_type": "/datum/loadout_item/under/jumpsuit",
+    "name": "Utility Uniform",
+    "item_path": "/obj/item/clothing/under/misc/nova/utility",
+    "group": "Workwear"
   },
   "/datum/loadout_item/under/miscellaneous/gear_harness": {
     "id": "/datum/loadout_item/under/miscellaneous/gear_harness",
@@ -9704,7 +9749,7 @@
   },
   "/datum/loadout_item/under/jumpsuit/cargo/skirt/alt": {
     "id": "/datum/loadout_item/under/jumpsuit/cargo/skirt/alt",
-    "template_type": "/datum/loadout_item/under/jumpsuit/cargo",
+    "template_type": "/datum/loadout_item/under/jumpsuit",
     "name": "Cargo Technician's Skirt (Short)",
     "item_path": "/obj/item/clothing/under/rank/cargo/tech/skirt/alt",
     "group": "Workwear"
@@ -10083,7 +10128,7 @@
   },
   "/datum/loadout_item/under/jumpsuit/cargo/qm": {
     "id": "/datum/loadout_item/under/jumpsuit/cargo/qm",
-    "template_type": "/datum/loadout_item/under/jumpsuit/cargo",
+    "template_type": "/datum/loadout_item/under/jumpsuit",
     "name": "Quartermaster's Uniform",
     "item_path": "/obj/item/clothing/under/rank/cargo/qm",
     "restricted_roles": [

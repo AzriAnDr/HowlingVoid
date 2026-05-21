@@ -15,10 +15,6 @@
 *	ITEMS BELOW HERE
 */
 
-/datum/loadout_item/suit/winter_coat
-	name = "Winter Coat"
-	item_path = /obj/item/clothing/suit/hooded/wintercoat
-
 /datum/loadout_item/suit/frontierjacket
 	abstract_type = /datum/loadout_item/suit/frontierjacket
 
