@@ -66,6 +66,7 @@ GLOBAL_LIST_INIT(extra_inventory_ui_styles, list(
 	var/atom/movable/screen/ammo_counter //NOVA EDIT ADDITION
 	var/atom/movable/screen/alien_plasma_display
 	var/atom/movable/screen/alien_queen_finder
+	var/atom/movable/screen/holomap/holomap
 
 	var/atom/movable/screen/action_intent
 	var/atom/movable/screen/zone_select
@@ -169,6 +170,12 @@ GLOBAL_LIST_INIT(extra_inventory_ui_styles, list(
 	screentip_images = preferences?.read_preference(/datum/preference/toggle/screentip_images)
 	screentip_text = new(null, src)
 	static_inventory += screentip_text
+
+	holomap = new /atom/movable/screen/holomap(null, src)
+	holomap.name = "holomap"
+	holomap.icon = null
+	holomap.screen_loc = ui_holomap
+	holomap.mouse_opacity = MOUSE_OPACITY_ICON
 
 	for(var/mytype in subtypesof(/atom/movable/plane_master_controller))
 		var/atom/movable/plane_master_controller/controller_instance = new mytype(null,src)
