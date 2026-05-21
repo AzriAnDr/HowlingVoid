@@ -654,3 +654,20 @@
 /datum/sprite_accessory/ears/external/fennecl/large/flatsharp
 	name = "Fennec Large Flat Sharp"
 	icon_state = "fennecl_large_flatsharp"
+
+// HowlingVoid shadekin ears integration.
+/datum/sprite_accessory/ears/shadekin_gradient
+	name = "Shade Gradient"
+	icon_state = "shadekingradient"
+	icon = 'modular_nova/modules/shadekin/icons/ears_hv.dmi'
+
+/datum/sprite_accessory/ears/shadekin_fluffy_gradient
+	name = "Shade Fluffy Gradient"
+	icon_state = "shadekinfluffygradient"
+	icon = 'modular_nova/modules/shadekin/icons/ears_hv.dmi'
+
+/datum/sprite_accessory/ears/shadekin_saggy_gradient
+	name = "Shade Saggy Gradient"
+	icon_state = "shadekinsaggygradient"
+	icon = 'modular_nova/modules/shadekin/icons/ears_hv.dmi'
+

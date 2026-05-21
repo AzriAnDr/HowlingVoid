@@ -2,15 +2,7 @@
 	"": [
 		{
 			"type": "icon_state",
-			"icon_state": "belt",
-			"blend_mode": "overlay",
-			"color_ids": [1]
-		}
-	],
-	"nabber_tie": [
-		{
-			"type": "icon_state",
-			"icon_state": "belt",
+			"icon_state": "tie",
 			"blend_mode": "overlay",
 			"color_ids": [1]
 		}

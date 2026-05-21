@@ -6,13 +6,5 @@
 			"blend_mode": "overlay",
 			"color_ids": [1]
 		}
-	],
-	"nabber_gloves": [
-		{
-			"type": "icon_state",
-			"icon_state": "gloves",
-			"blend_mode": "overlay",
-			"color_ids": [1]
-		}
 	]
 }

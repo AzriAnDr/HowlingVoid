@@ -51,6 +51,34 @@
 	express_lock = FALSE
 	order_flags = ORDER_COMPANY
 
+/datum/supply_pack/companies/ballistics/nt/akmcivvie
+	contains = list(/obj/item/gun/ballistic/automatic/akm/civvie)
+	cost = CARGO_CRATE_VALUE * 7.5
+
+/datum/supply_pack/companies/ballistics/nt/akm
+	contains = list(/obj/item/gun/ballistic/automatic/akm)
+	cost = CARGO_CRATE_VALUE * 8.5
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
+/datum/supply_pack/companies/ballistics/nt/akmnri
+	contains = list(/obj/item/gun/ballistic/automatic/akm/nri)
+	cost = CARGO_CRATE_VALUE * 10
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
+/datum/supply_pack/companies/ballistics/nt/akmmodern
+	contains = list(/obj/item/gun/ballistic/automatic/akm/modern)
+	cost = CARGO_CRATE_VALUE * 12.5
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
+/datum/supply_pack/companies/ballistics/nt/bison
+	contains = list(/obj/item/gun/ballistic/automatic/bison)
+	cost = CARGO_CRATE_VALUE * 6
+
+/datum/supply_pack/companies/ballistics/nt/bisonnri
+	contains = list(/obj/item/gun/ballistic/automatic/bison/nri)
+	cost = CARGO_CRATE_VALUE * 6
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
 // Sol Fed Weapons
 /datum/supply_pack/companies/ballistics/sol_fed
 
@@ -73,6 +101,7 @@
 /datum/supply_pack/companies/ballistics/sol_fed/sidearm/skild
 	contains = list(/obj/item/gun/ballistic/automatic/pistol/trappiste)
 	cost = CARGO_CRATE_VALUE * 3
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
 /datum/supply_pack/companies/ballistics/sol_fed/sidearm/takbok
 	contains = list(/obj/item/gun/ballistic/revolver/takbok)
@@ -117,6 +146,7 @@
 /datum/supply_pack/companies/ballistics/sol_fed/longarm/elite
 	contains = list(/obj/item/gun/ballistic/automatic/sol_classic/marksman)
 	cost = CARGO_CRATE_VALUE * 6
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
 /datum/supply_pack/companies/ballistics/sol_fed/longarm/bogseo
 	contains = list(/obj/item/gun/ballistic/automatic/xhihao_smg)
@@ -125,6 +155,7 @@
 /datum/supply_pack/companies/ballistics/sol_fed/longarm/jager
 	contains = list(/obj/item/gun/ballistic/shotgun/katyusha/jager)
 	cost = CARGO_CRATE_VALUE * 8
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
 /datum/supply_pack/companies/ballistics/sol_fed/longarm/infanterie
 	contains = list(/obj/item/gun/ballistic/automatic/sol_classic)
@@ -139,6 +170,26 @@
 /datum/supply_pack/companies/ballistics/sol_fed/longarm/kiboko
 	contains = list(/obj/item/gun/ballistic/automatic/sol_grenade_launcher)
 	cost = CARGO_CRATE_VALUE * 23
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
+/datum/supply_pack/companies/ballistics/sol_fed/longarm/scar
+	contains = list(/obj/item/gun/ballistic/automatic/scar)
+	cost = CARGO_CRATE_VALUE * 15
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
+/datum/supply_pack/companies/ballistics/sol_fed/longarm/m16
+	contains = list(/obj/item/gun/ballistic/automatic/m16)
+	cost = CARGO_CRATE_VALUE * 15
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
+/datum/supply_pack/companies/ballistics/sol_fed/longarm/m16modern
+	contains = list(/obj/item/gun/ballistic/automatic/m16/modern)
+	cost = CARGO_CRATE_VALUE * 16
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
+/datum/supply_pack/companies/ballistics/sol_fed/longarm/mp5
+	contains = list(/obj/item/gun/ballistic/automatic/mp5)
+	cost = CARGO_CRATE_VALUE * 6.25
 
 // HC Surplus
 
@@ -157,7 +208,7 @@
 	access = FALSE
 	access_view = FALSE
 	express_lock = FALSE
-	order_flags = ORDER_COMPANY
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
 /datum/supply_pack/companies/ballistics/hc_surplus/miecz
 	contains = list(/obj/item/gun/ballistic/automatic/miecz)
@@ -166,6 +217,7 @@
 /datum/supply_pack/companies/ballistics/hc_surplus/napad
 	contains = list(/obj/item/gun/ballistic/automatic/napad)
 	cost = CARGO_CRATE_VALUE * 6
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
 /datum/supply_pack/companies/ballistics/hc_surplus/sakhno_rifle
 	contains = list(/obj/item/gun/ballistic/rifle/boltaction)
@@ -174,10 +226,12 @@
 /datum/supply_pack/companies/ballistics/hc_surplus/lanca
 	contains = list(/obj/item/gun/ballistic/automatic/lanca)
 	cost = CARGO_CRATE_VALUE * 7
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
 /datum/supply_pack/companies/ballistics/hc_surplus/anti_materiel_rifle
 	contains = list(/obj/item/gun/ballistic/automatic/wylom)
 	cost = CARGO_CRATE_VALUE * 8
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
 // Donk
 

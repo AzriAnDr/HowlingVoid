@@ -99,6 +99,9 @@
 /datum/mod_theme/frontline
 	hardlight_theme = ALERT_AMBER
 
+/datum/mod_theme/policing
+	hardlight_theme = ALERT_AMBER
+
 /datum/mod_theme/marines
 	hardlight_theme = COSMIC_BLUE
 

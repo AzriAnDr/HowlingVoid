@@ -68,6 +68,16 @@
 /obj/item/clothing/shoes/jackboots/sec
 	icon_state = "jackboots_sec"
 
+/obj/item/clothing/shoes/jackboots/tall
+	name = "tall jackboots"
+	desc = "A pair of knee-high jackboots, complete with heels. All style, all the time."
+	icon_state = "jackboots-tall"
+	worn_icon_digi = DIGITIGRADE_SHOES_FILE
+
+/obj/item/clothing/shoes/jackboots/tall/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/squeak, list('modular_nova/master_files/sound/effects/footstep/highheel1.ogg' = 1, 'modular_nova/master_files/sound/effects/footstep/highheel2.ogg' = 1), 20)
+
 /obj/item/clothing/shoes/jackboots/floortile
 	name = "floortile camouflage jackboots"
 	desc = "Is it just me or is there a pair of jackboots on the floor?"

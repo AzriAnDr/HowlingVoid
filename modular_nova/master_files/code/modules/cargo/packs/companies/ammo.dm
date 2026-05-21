@@ -99,6 +99,66 @@
 	express_lock = TRUE
 	order_flags = ORDER_GOODY
 
+/datum/supply_pack/companies/mags_and_ammo/akm
+	contains = list(/obj/item/ammo_box/magazine/akm)
+	cost = CARGO_CRATE_VALUE * 0.4
+
+/datum/supply_pack/companies/mags_and_ammo/akmricochet
+	contains = list(/obj/item/ammo_box/magazine/akm/ricochet)
+	cost = CARGO_CRATE_VALUE * 0.4
+
+/datum/supply_pack/companies/mags_and_ammo/akmfire
+	contains = list(/obj/item/ammo_box/magazine/akm/fire)
+	cost = CARGO_CRATE_VALUE * 0.4
+
+/datum/supply_pack/companies/mags_and_ammo/akmap
+	contains = list(/obj/item/ammo_box/magazine/akm/ap)
+	cost = CARGO_CRATE_VALUE * 0.4
+
+/datum/supply_pack/companies/mags_and_ammo/akmemp
+	contains = list(/obj/item/ammo_box/magazine/akm/emp)
+	cost = CARGO_CRATE_VALUE * 0.4
+
+/datum/supply_pack/companies/mags_and_ammo/akmrubber
+	contains = list(/obj/item/ammo_box/magazine/akm/rubber)
+	cost = CARGO_CRATE_VALUE * 0.4
+
+/datum/supply_pack/companies/mags_and_ammo/akmbanana
+	contains = list(/obj/item/ammo_box/magazine/akm/banana)
+	cost = CARGO_CRATE_VALUE * 0.4
+
+/datum/supply_pack/companies/mags_and_ammo/akmcivvie
+	contains = list(/obj/item/ammo_box/magazine/akm/civvie)
+	cost = CARGO_CRATE_VALUE * 0.25
+
+/datum/supply_pack/companies/mags_and_ammo/bison
+	contains = list(/obj/item/ammo_box/magazine/bison)
+	cost = CARGO_CRATE_VALUE * 0.35
+
+/datum/supply_pack/companies/mags_and_ammo/mp5
+	contains = list(/obj/item/ammo_box/magazine/mp5)
+	cost = CARGO_CRATE_VALUE * 0.3
+
+/datum/supply_pack/companies/mags_and_ammo/m16
+	contains = list(/obj/item/ammo_box/magazine/m16)
+	cost = CARGO_CRATE_VALUE * 0.5
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
+/datum/supply_pack/companies/mags_and_ammo/m16vintage
+	contains = list(/obj/item/ammo_box/magazine/m16/vintage)
+	cost = CARGO_CRATE_VALUE * 0.25
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
+/datum/supply_pack/companies/mags_and_ammo/m16patriot
+	contains = list(/obj/item/ammo_box/magazine/m16/patriot)
+	cost = CARGO_CRATE_VALUE * 1.5
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
+/datum/supply_pack/companies/mags_and_ammo/scar
+	contains = list(/obj/item/ammo_box/magazine/scar)
+	cost = CARGO_CRATE_VALUE * 0.5
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
 // HC Mags
 
 /datum/supply_pack/companies/mags_and_ammo/hc_surplus

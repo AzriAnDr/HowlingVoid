@@ -2,15 +2,7 @@
 	"": [
 		{
 			"type": "icon_state",
-			"icon_state": "poncho",
-			"blend_mode": "overlay",
-			"color_ids": [1]
-		}
-	],
-	"nabber_scarf": [
-		{
-			"type": "icon_state",
-			"icon_state": "poncho",
+			"icon_state": "tie",
 			"blend_mode": "overlay",
 			"color_ids": [1]
 		}

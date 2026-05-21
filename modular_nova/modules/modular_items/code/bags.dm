@@ -138,6 +138,30 @@
 		/obj/item/healthanalyzer/simple = 1,
 	))
 
+/obj/item/storage/pouch/medical/medpens
+	name = "medpen pouch"
+	desc = "A pouch containing several different types of lifesaving medipens."
+	icon_state = "medpen_pouch"
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
+	storage_type = /datum/storage/pouch/medical/medpens
+
+/datum/storage/pouch/medical/medpens
+	max_specific_storage = WEIGHT_CLASS_NORMAL
+	max_total_storage = 30
+	max_slots = 5
+	numerical_stacking = FALSE
+
+/datum/storage/pouch/medical/medpens/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+	set_holdable(list(/obj/item/reagent_containers/hypospray))
+
+/obj/item/storage/pouch/medical/medpens/PopulateContents()
+	new /obj/item/reagent_containers/hypospray/medipen/blood_loss(src)
+	new /obj/item/reagent_containers/hypospray/medipen/oxandrolone(src)
+	new /obj/item/reagent_containers/hypospray/medipen/salacid(src)
+	new /obj/item/reagent_containers/hypospray/medipen/salbutamol(src)
+	new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
+
 /// It's... not as egregious as a full pocket medkit.
 /obj/item/storage/pouch/medical/firstaid
 	name = "first aid pouch"

@@ -1448,3 +1448,13 @@
 
 /datum/emote/living/carbon/whistle/get_sound(mob/living/user)
 	return 'sound/mobs/humanoids/human/whistle/whistle1.ogg'
+
+// HowlingVoid shadekin emote integration.
+/datum/emote/living/mar
+	key = "mar"
+	key_third_person = "mars"
+	message = "lets out a mar!"
+	emote_type = EMOTE_AUDIBLE
+	vary = TRUE
+	sound = 'sound/mobs/humanoids/shadekin/sound_voice_mar.ogg' // Credit to vorestation
+

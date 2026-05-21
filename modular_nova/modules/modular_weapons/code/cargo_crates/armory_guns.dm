@@ -21,6 +21,7 @@
 	name = "Kiboko Grenade Launcher Crate"
 	desc = "Contains a single Kiboko grenade launcher for replacing the one found in the armory, alongside the equipment that comes with it."
 	cost = CARGO_CRATE_VALUE * 30
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 	contains = list(
 		/obj/item/storage/toolbox/guncase/nova/carwo_large_case/kiboko_magless = 1,
 		/obj/item/ammo_box/c980grenade = 2,

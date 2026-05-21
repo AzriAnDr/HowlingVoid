@@ -219,6 +219,23 @@
 	greyscale_colors = "#403c46"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+/obj/item/clothing/under/dress/bubber
+	name = "formal evening gown"
+	desc = "A richly made dress of quality fabrics, but not much of them."
+	icon = 'modular_nova/master_files/icons/obj/clothing/under/skirts_dresses.dmi'
+	worn_icon = 'modular_nova/master_files/icons/mob/clothing/under/skirts_dresses.dmi'
+	icon_state = "dress_strapped"
+	body_parts_covered = CHEST|GROIN|LEGS
+
+/obj/item/clothing/under/dress/performer
+	name = "colorable performers one piece"
+	icon = 'modular_nova/master_files/icons/obj/clothing/under/skirts_dresses.dmi'
+	worn_icon = 'modular_nova/master_files/icons/mob/clothing/under/skirts_dresses.dmi'
+	icon_state = "poly_performer"
+	can_adjust = FALSE
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	flags_1 = IS_PLAYER_COLORABLE_1
+
 /obj/item/clothing/under/dress/nova/jute
 	name = "jacarta dress"
 	desc = "A thick dress with a strong rough exterior layer; lined with a soft breathable thin layer. It's loose-fitting, and has a tag inside that says 'Made in Jacarta'."

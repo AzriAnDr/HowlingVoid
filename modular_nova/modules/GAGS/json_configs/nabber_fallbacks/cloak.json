@@ -2,17 +2,15 @@
 	"": [
 		{
 			"type": "icon_state",
-			"icon_state": "poncho",
+			"icon_state": "cloak0",
 			"blend_mode": "overlay",
 			"color_ids": [1]
-		}
-	],
-	"nabber_cloak": [
+		},
 		{
 			"type": "icon_state",
-			"icon_state": "poncho",
+			"icon_state": "cloak1",
 			"blend_mode": "overlay",
-			"color_ids": [1]
+			"color_ids": [2]
 		}
 	]
 }

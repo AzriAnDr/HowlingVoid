@@ -117,6 +117,11 @@
 	cost = CARGO_CRATE_VALUE * 2
 	auto_name = FALSE
 
+/datum/supply_pack/companies/armor/voskhod_helmet
+	contains = list(/obj/item/clothing/head/helmet/space/voskhod)
+	cost = 500
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
 /datum/supply_pack/companies/armor/hc_surplus/clothing/helmet
 	contains = list(/obj/item/clothing/head/helmet/cin_surplus_helmet/random_color)
 
@@ -171,4 +176,3 @@
 
 /datum/supply_pack/companies/armor/donk/fake_syndie_suit
 	contains = list(/obj/item/storage/box/fakesyndiesuit)
-

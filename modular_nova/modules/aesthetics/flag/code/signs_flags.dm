@@ -99,6 +99,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/syndicate, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/interdyne, 32)
 
+/obj/structure/sign/flag/nri
+	name = "flag of the Novaya Rossiyskaya Imperiya"
+	desc = "The flag of the Novaya Rossiyskaya Imperiya. The yellow, black, and white colors represent its sovereignty, spirituality, and purity."
+	icon_state = "flag_nri"
+	item_flag = /obj/item/sign/flag/nri
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/nri, 32)
+
 /obj/item/sign/flag
 	name = "folded blank flag"
 	desc = "The folded flag of nothing. It has nothing on it. Beautiful."
@@ -180,3 +188,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/interdyne, 32)
 	special_desc_requirement = EXAMINE_CHECK_JOB
 	special_desc_jobs = list(JOB_MIME) // this will probably never happen. but it will amuse someone when it does.
 	special_desc = "The folded flag of Interdyne Pharmaceuticals. For some reason, it reminds you of the home of the mimes."
+
+/obj/item/sign/flag/nri
+	name = "folded flag of the Novaya Rossiyskaya Imperiya"
+	desc = "The folded flag of the Novaya Rossiyskaya Imperiya."
+	icon_state = "folded_nri"
+	sign_path = /obj/structure/sign/flag/nri
