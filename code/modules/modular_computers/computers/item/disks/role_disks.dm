@@ -23,6 +23,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/records/medical,
+		/datum/computer_file/program/payroll_adjustment,
 	)
 
 /obj/item/disk/computer/command/cmo
@@ -53,6 +54,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/job_management,
+		/datum/computer_file/program/payroll_adjustment,
 	)
 
 /obj/item/disk/computer/command/ce
@@ -124,4 +126,3 @@
 		/datum/computer_file/program/supermatter_monitor,
 
 	)
-

@@ -26,6 +26,9 @@
 	greyscale_config = /datum/greyscale_config/tablet/captain
 	greyscale_colors = "#2C7CB2#FF0000#FFFFFF#FFD55B"
 	inserted_item = /obj/item/pen/fountain/captain
+	starting_programs = list(
+		/datum/computer_file/program/payroll_adjustment,
+	)
 
 /obj/item/modular_computer/pda/heads/captain/Initialize(mapload)
 	. = ..()
@@ -45,6 +48,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/job_management,
+		/datum/computer_file/program/payroll_adjustment,
 	)
 
 /obj/item/modular_computer/pda/heads/hos

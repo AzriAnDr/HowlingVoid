@@ -39,6 +39,14 @@
 	var/list/redeemed_coupons
 	/// How many paychecks to skip when payday is called.
 	var/paydays_to_skip = 0
+	/// Flat per-payday payroll adjustment set by authorized command staff.
+	var/paycheck_adjustment = 0
+	/// Reason recorded for the active payroll adjustment.
+	var/paycheck_adjustment_reason
+	/// Basis recorded for the active payroll adjustment.
+	var/paycheck_adjustment_basis
+	/// Name recorded for whoever authorized the active payroll adjustment.
+	var/paycheck_adjustment_authorized_by
 
 /datum/bank_account/New(newname, job, modifier = 1, player_account = TRUE)
 	account_holder = newname
@@ -205,9 +213,10 @@
 	if(amount_of_paychecks <= 0)
 		return FALSE
 
-	var/money_to_transfer = round(account_job.paycheck * payday_modifier * amount_of_paychecks)
+	var/base_paycheck = round(account_job.paycheck * payday_modifier * amount_of_paychecks)
 	if(amount_of_paychecks == 1)
-		money_to_transfer = clamp(money_to_transfer, 0, PAYCHECK_CREW) //We want to limit single, passive paychecks to regular crew income.
+		base_paycheck = clamp(base_paycheck, 0, PAYCHECK_CREW) //We want to limit single, passive paychecks to regular crew income.
+	var/money_to_transfer = max(0, base_paycheck + (paycheck_adjustment * amount_of_paychecks))
 	if(free)
 		adjust_money(money_to_transfer, "Nanotrasen: Shift Payment")
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
@@ -218,9 +227,16 @@
 	if(isnull(department_account))
 		bank_card_talk("ERROR: [event] aborted, unable to contact departmental account.")
 		return FALSE
-	if(!transfer_money(department_account, money_to_transfer))
+	var/station_payroll_adjustment = max(0, money_to_transfer - base_paycheck)
+	var/department_transfer = money_to_transfer - station_payroll_adjustment
+	if(department_transfer > 0 && !transfer_money(department_account, department_transfer))
 		bank_card_talk("ERROR: [event] aborted, departmental funds insufficient.")
 		return FALSE
+	if(station_payroll_adjustment > 0)
+		var/datum/bank_account/station_account = SSeconomy.get_dep_account(ACCOUNT_CIV)
+		if(isnull(station_account) || !transfer_money(station_account, station_payroll_adjustment, "Nanotrasen: Payroll Adjustment"))
+			bank_card_talk("ERROR: [event] adjustment skipped, station budget funds insufficient.")
+			return TRUE
 	bank_card_talk("[event] processed, account now holds [account_balance] [MONEY_SYMBOL].")
 	return TRUE
 

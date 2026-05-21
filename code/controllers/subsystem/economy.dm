@@ -51,6 +51,8 @@ SUBSYSTEM_DEF(economy)
 	 * Added to any time when player accounts purchase something.
 	 */
 	var/list/audit_log = list()
+	/// Recent command payroll adjustments.
+	var/list/payroll_adjustment_log = list()
 
 	/// Number of mail items generated.
 	var/mail_waiting = 0
@@ -131,13 +133,15 @@ SUBSYSTEM_DEF(economy)
 			return D
 
 /**
- * Departmental income payments are kept static and linear for every department, and paid out once every 5 minutes, as determined by MAX_GRANT_DPT.
- * Iterates over every department account for the same payment.
+ * Departmental income payments are kept static and linear for every funded department, and paid out once every 5 minutes, as determined by MAX_GRANT_DPT.
+ * Cargo and the civil station budget rely on active income sources instead of passive budget grants.
  */
 /datum/controller/subsystem/economy/proc/departmental_payouts()
 	// son sonic speed? cache? hot over in cold food why? (datum var accesses are slow, cache lists for sonic speed)
 	var/list/cached_processing = src.cached_processing
 	for(var/i in 1 to length(cached_processing))
+		if(cached_processing[i] == ACCOUNT_CAR || cached_processing[i] == ACCOUNT_CIV)
+			continue
 		var/datum/bank_account/dept_account = get_dep_account(cached_processing[i])
 		if(!dept_account)
 			continue

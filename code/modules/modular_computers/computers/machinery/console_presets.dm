@@ -61,6 +61,7 @@
 		/datum/computer_file/program/chatclient,
 		/datum/computer_file/program/card_mod,
 		/datum/computer_file/program/job_management,
+		/datum/computer_file/program/payroll_adjustment,
 		/datum/computer_file/program/crew_manifest,
 	)
 

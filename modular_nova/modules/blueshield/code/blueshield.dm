@@ -79,6 +79,7 @@
 	greyscale_colors = "#2B356D#1E1E1E"
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/payroll_adjustment,
 		/datum/computer_file/program/robocontrol,
 	)
 
