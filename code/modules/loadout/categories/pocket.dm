@@ -166,6 +166,7 @@
 		wallet.atom_storage.attempt_insert(thing, override = TRUE, force = STORAGE_FULLY_LOCKED, messages = FALSE)
 
 /datum/loadout_item/pocket_items/borg_me_dogtag
+	name = "Pre-Approved Cyborg Candidate Dogtag"
 	item_path = /obj/item/clothing/accessory/dogtag/borg_ready
 
 /datum/loadout_item/pocket_items/borg_me_dogtag/on_equip_item(obj/item/equipped_item, list/item_details, mob/living/carbon/human/equipper, datum/outfit/job/outfit, visuals_only)

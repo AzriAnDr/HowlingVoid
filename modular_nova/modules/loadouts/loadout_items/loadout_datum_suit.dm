@@ -106,3 +106,19 @@
 
 /datum/loadout_item/suit/donator/digicoat
 	abstract_type = /datum/loadout_item/suit/donator/digicoat
+
+/datum/loadout_item/suit/winter_coat
+	name = "Winter Coat"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat
+
+/datum/loadout_item/suit/winter_coat/christmas
+	name = "Winter Coat - Christmas"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat/nova/christmas
+
+/datum/loadout_item/suit/frontierjacket/short
+	name = "Frontier Jacket (Short)"
+	item_path = /obj/item/clothing/suit/jacket/frontier_colonist/short
+
+/datum/loadout_item/suit/leather_jacket
+	name = "Leather Jacket"
+	item_path = /obj/item/clothing/suit/jacket/leather

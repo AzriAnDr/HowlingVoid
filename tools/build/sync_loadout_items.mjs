@@ -554,10 +554,6 @@ function rewriteLoadoutFile(filePath) {
 
     const hasChildren = (childCounts.get(block.path) ?? 0) > 0;
     const hasBehavior = procOwners.has(block.path);
-    if (hasChildren || hasBehavior) {
-      keptBlocks.push(block);
-      continue;
-    }
 
     let properties;
     try {
@@ -591,6 +587,12 @@ function rewriteLoadoutFile(filePath) {
       manifestEntries[block.path] = entry;
       exportedCount += 1;
     } catch {
+      keptBlocks.push(block);
+      continue;
+    }
+
+    // Keep non-leaf or behaviorful definitions in DM so child template types and procs remain intact.
+    if (hasChildren || hasBehavior) {
       keptBlocks.push(block);
     }
   }
