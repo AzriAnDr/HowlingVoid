@@ -246,12 +246,38 @@
 /obj/item/gun/proc/muzzle_flash_off()
 	set_light_on(FALSE)
 
+/obj/item/gun/proc/create_firing_smoke(atom/target)
+	if(!(gun_flags & GUN_SMOKE_PARTICLES))
+		return
+	if(suppressed)
+		return
+	var/fired_projectile_type = chambered?.projectile_type
+	if(ispath(fired_projectile_type, /obj/projectile/beam) || ispath(fired_projectile_type, /obj/projectile/energy))
+		return
+
+	var/turf/smoke_turf = get_turf(src)
+	if(!smoke_turf)
+		return
+
+	var/atom/smoke_target = target
+	if(!smoke_target)
+		smoke_target = get_step(src, dir)
+	var/smoke_angle = get_angle(smoke_turf, smoke_target)
+	var/forward_x = sin(smoke_angle)
+	var/forward_y = cos(smoke_angle)
+	var/obj/effect/abstract/particle_holder/gun_smoke = new(smoke_turf, /particles/firing_smoke)
+	gun_smoke.particles.velocity = list(forward_x * 40, forward_y * 40)
+	addtimer(VARSET_CALLBACK(gun_smoke.particles, count, 0), 5)
+	addtimer(VARSET_CALLBACK(gun_smoke.particles, drift, 0), 3)
+	QDEL_IN(gun_smoke, 0.6 SECONDS)
+
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
 	if(!tk_firing(user))
 		var/actual_angle = get_angle((user || get_turf(src)), pbtarget)
 		simulate_recoil(user, recoil, actual_angle)
 	fire_sounds()
 	muzzle_flash_on()
+	create_firing_smoke(pbtarget)
 	if(suppressed || !message)
 		return FALSE
 	if(tk_firing(user))

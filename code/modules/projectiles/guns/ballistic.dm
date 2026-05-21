@@ -5,6 +5,7 @@
 	desc = "Now comes in flavors like GUN. Uses 10mm ammo, for some reason."
 	icon_state = "debug"
 	abstract_type = /obj/item/gun/ballistic
+	gun_flags = GUN_SMOKE_PARTICLES
 	w_class = WEIGHT_CLASS_NORMAL
 	pickup_sound = 'sound/items/handling/gun/gun_pick_up.ogg'
 	drop_sound = 'sound/items/handling/gun/gun_drop.ogg'

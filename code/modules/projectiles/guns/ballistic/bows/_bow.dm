@@ -3,6 +3,7 @@
 	icon = 'icons/obj/weapons/bows/bows.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/bows_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bows_righthand.dmi'
+	gun_flags = NONE
 	name = "bow"
 	desc = "Seems out-of-place in this day and age, but at least it's reliable."
 	icon_state = "bow"
