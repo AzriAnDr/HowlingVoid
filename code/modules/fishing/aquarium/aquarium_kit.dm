@@ -79,6 +79,11 @@
 		/obj/item/fish/moonfish = 1,
 	))
 
+/obj/item/storage/fish_case/electro
+
+/obj/item/storage/fish_case/electro/get_fish_type()
+	return /obj/item/fish/jumpercable
+
 ///Subtype bought from the blackmarket at a gratuitously cheap price. The catch? The fish inside it is dead.
 /obj/item/storage/fish_case/blackmarket
 	name = "ominous fish case"
