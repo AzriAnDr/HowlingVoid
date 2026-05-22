@@ -53,7 +53,7 @@
 
 /datum/supply_pack/companies/ballistics/nt/akmcivvie
 	contains = list(/obj/item/gun/ballistic/automatic/akm/civvie)
-	cost = CARGO_CRATE_VALUE * 6
+	cost = CARGO_CRATE_VALUE * 7.5
 
 /datum/supply_pack/companies/ballistics/nt/akm
 	contains = list(/obj/item/gun/ballistic/automatic/akm)
@@ -72,7 +72,12 @@
 
 /datum/supply_pack/companies/ballistics/nt/bison
 	contains = list(/obj/item/gun/ballistic/automatic/bison)
-	cost = CARGO_CRATE_VALUE * 6.5
+	cost = CARGO_CRATE_VALUE * 6
+
+/datum/supply_pack/companies/ballistics/nt/bisonnri
+	contains = list(/obj/item/gun/ballistic/automatic/bison/nri)
+	cost = CARGO_CRATE_VALUE * 6
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
 // Sol Fed Weapons
 /datum/supply_pack/companies/ballistics/sol_fed
@@ -154,7 +159,7 @@
 
 /datum/supply_pack/companies/ballistics/sol_fed/longarm/infanterie
 	contains = list(/obj/item/gun/ballistic/automatic/sol_classic)
-	cost = CARGO_CRATE_VALUE * 6.5
+	cost = CARGO_CRATE_VALUE * 7
 
 /* //
 /datum/supply_pack/companies/ballistics/sol_fed/longarm/outomaties
