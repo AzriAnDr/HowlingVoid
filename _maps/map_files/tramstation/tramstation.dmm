@@ -629,6 +629,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
 	},
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "acs" = (
@@ -8240,6 +8241,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
+"bNT" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/station_map/engineering/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/service)
 "bNV" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
@@ -10549,6 +10557,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
+/obj/machinery/station_map/engineering/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
 "cAI" = (
@@ -21227,6 +21236,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
 	},
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "grN" = (
@@ -26963,6 +26973,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/light/directional/south,
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "iBa" = (
@@ -27894,6 +27905,13 @@
 "iTz" = (
 /turf/closed/wall,
 /area/station/service/lawoffice)
+"iTD" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/station_map/engineering/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "iTI" = (
 /obj/effect/turf_decal/trimline/white/line{
 	dir = 10
@@ -30512,6 +30530,7 @@
 "jKg" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/light/directional/south,
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "jKq" = (
@@ -37358,6 +37377,7 @@
 	},
 /obj/effect/landmark/start/assistant,
 /obj/machinery/light/directional/east,
+/obj/structure/sign/clock/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "lSQ" = (
@@ -37456,6 +37476,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 10
 	},
+/obj/machinery/station_map/engineering/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "lUa" = (
@@ -37598,6 +37619,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "lWs" = (
@@ -38741,6 +38763,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"mrD" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/station_map/engineering/directional/south,
+/turf/open/floor/wood/large,
+/area/station/service/theater)
 "mrF" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
@@ -39743,6 +39773,16 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/circuit/green,
 /area/station/science/robotics/mechbay)
+"mKk" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/obj/machinery/station_map/engineering/directional/west,
+/turf/open/floor/iron,
+/area/station/commons/fitness/recreation)
 "mKq" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -52178,6 +52218,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 10
 	},
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "rmI" = (
@@ -56037,6 +56078,7 @@
 	dir = 8
 	},
 /obj/machinery/status_display/ai/directional/south,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/ai/satellite/foyer)
 "sEW" = (
@@ -59071,6 +59113,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/machinery/camera/autoname/directional/east,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/escapepodbay)
 "tHj" = (
@@ -62198,6 +62241,13 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/tram/mid)
+"uGH" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/station_map/engineering/directional/west,
+/turf/open/floor/iron,
+/area/station/commons/dorms)
 "uGL" = (
 /obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/bot,
@@ -63218,6 +63268,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
 	},
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
 "uYx" = (
@@ -63738,7 +63789,7 @@
 /obj/machinery/computer/cargo/request{
 	dir = 8
 	},
-/obj/structure/sign/clock/directional/east,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "vhu" = (
@@ -70456,6 +70507,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/event_spawn,
+/obj/machinery/station_map/engineering/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "xFm" = (
@@ -71622,6 +71674,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "ycB" = (
@@ -92170,7 +92223,7 @@ jzz
 kNn
 nmW
 eeP
-sbD
+uGH
 sbD
 nmW
 mQS
@@ -102412,7 +102465,7 @@ tlP
 sbx
 sbx
 sbx
-sbx
+bNT
 sbx
 qXg
 tlP
@@ -157452,7 +157505,7 @@ uKr
 uZs
 uZs
 ica
-uZs
+mKk
 uZs
 uZs
 qdG
@@ -171564,7 +171617,7 @@ mER
 dai
 nMe
 voS
-bHq
+mrD
 izU
 nTo
 eSz
@@ -190593,7 +190646,7 @@ uCy
 pFH
 gTN
 eAk
-gTN
+iTD
 tgP
 gTN
 oXC

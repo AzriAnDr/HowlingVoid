@@ -32022,6 +32022,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer2{
 	dir = 6
 	},
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/aft)
 "jhn" = (
@@ -33831,6 +33832,7 @@
 /area/space/nearstation)
 "jEK" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
@@ -39501,6 +39503,19 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/command)
+"lgu" = (
+/obj/effect/turf_decal/trimline/dark_red/arrow_cw{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/station_map/engineering/directional/north,
+/turf/open/floor/iron/small,
+/area/station/hallway/primary/central)
 "lgE" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -47415,6 +47430,7 @@
 	dir = 10
 	},
 /obj/machinery/light/warm/directional/south,
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron/small,
 /area/station/commons/dorms)
 "npi" = (
@@ -57100,6 +57116,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
+/obj/machinery/station_map/engineering/directional/west,
 /turf/open/floor/wood/large,
 /area/station/hallway/primary/fore)
 "pWl" = (
@@ -77568,6 +77585,7 @@
 	dir = 10
 	},
 /obj/machinery/light/cold/directional/north,
+/obj/machinery/station_map/engineering/directional/north,
 /turf/open/floor/iron/dark/smooth_edge,
 /area/station/hallway/primary/fore)
 "vyI" = (
@@ -78774,6 +78792,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/hangover,
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
@@ -81849,6 +81868,11 @@
 	},
 /turf/open/floor/wood,
 /area/station/commons/fitness/recreation/entertainment)
+"wFX" = (
+/obj/effect/turf_decal/trimline/dark_red/arrow_ccw,
+/obj/machinery/station_map/engineering/directional/south,
+/turf/open/floor/iron/small,
+/area/station/hallway/secondary/exit/departure_lounge)
 "wFY" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -82609,6 +82633,15 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/smooth_large,
 /area/station/cargo/sorting)
+"wQe" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 4
+	},
+/obj/machinery/station_map/engineering/directional/east,
+/turf/open/floor/iron/edge{
+	dir = 8
+	},
+/area/station/commons/fitness/recreation/entertainment)
 "wQg" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -123202,7 +123235,7 @@ naW
 ewm
 bcw
 uuO
-rHw
+lgu
 cVF
 owi
 xLZ
@@ -123485,7 +123518,7 @@ ufu
 gpr
 tSO
 osL
-osL
+wQe
 pvl
 wZT
 kHe
@@ -130143,7 +130176,7 @@ iEu
 lry
 mAV
 oth
-gtH
+wFX
 tuq
 xMq
 odJ

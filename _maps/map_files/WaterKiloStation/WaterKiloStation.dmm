@@ -3618,6 +3618,7 @@
 /area/station/maintenance/port/greater)
 "bji" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "bjk" = (
@@ -23196,6 +23197,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/station_map/engineering/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "hsg" = (
@@ -23340,9 +23342,6 @@
 /obj/item/reagent_containers/chem_pack{
 	pixel_x = 10;
 	pixel_y = 10
-	},
-/obj/item/stack/medical/gauze{
-	pixel_x = 8
 	},
 /obj/item/stack/medical/mesh{
 	pixel_x = -4;
@@ -25400,6 +25399,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "hZP" = (
@@ -38956,12 +38956,12 @@
 /area/station/cargo/office)
 "mlz" = (
 /obj/structure/table,
-/obj/item/stack/medical/gauze,
 /obj/item/stack/medical/mesh,
 /obj/item/stack/medical/suture,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/stack/medical/wrap/gauze/twelve,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/lobby)
 "mlB" = (
@@ -41358,6 +41358,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/station_map/engineering/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "nax" = (
@@ -42130,6 +42131,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "npR" = (
@@ -63287,6 +63289,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "ucG" = (
@@ -65983,7 +65986,6 @@
 	})
 "uWS" = (
 /obj/structure/rack,
-/obj/item/stack/medical/gauze,
 /obj/item/stack/medical/bruise_pack,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/small/directional/north,
@@ -68215,6 +68217,15 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
+"vEf" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/station_map/engineering/directional/west,
+/turf/open/floor/iron/dark/corner{
+	dir = 8
+	},
+/area/station/hallway/primary/port)
 "vEl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -73591,6 +73602,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/station_map/engineering/directional/north,
 /turf/open/floor/iron/dark/corner{
 	dir = 4
 	},
@@ -100320,7 +100332,7 @@ rVA
 pZO
 eQE
 otS
-uAA
+vEf
 otb
 lXe
 rhN

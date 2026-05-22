@@ -2746,6 +2746,7 @@
 /obj/item/storage/medkit/emergency{
 	pixel_y = 4
 	},
+/obj/machinery/station_map/engineering/directional/north,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -5458,6 +5459,7 @@
 /obj/effect/turf_decal/trimline/white/filled/warning{
 	dir = 9
 	},
+/obj/machinery/station_map/engineering/directional/north,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -7235,6 +7237,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/hedge,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
@@ -11377,15 +11380,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "dcx" = (
-/obj/item/stack/medical/gauze/twelve{
-	pixel_x = 5
-	},
-/obj/item/stack/medical/gauze/twelve{
-	pixel_y = 11;
-	pixel_x = -7
-	},
 /obj/structure/table/glass,
 /obj/item/reagent_containers/syringe,
+/obj/item/stack/medical/wrap/sticky_tape/surgical,
 /turf/open/floor/iron/white,
 /area/station/medical/exam_room)
 "dcB" = (
@@ -18379,7 +18376,6 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/stack/medical/gauze,
 /obj/structure/sign/warning/no_smoking/directional/west,
 /turf/open/floor/iron/white/smooth_edge{
 	dir = 8
@@ -28454,6 +28450,16 @@
 	dir = 1
 	},
 /area/station/hallway/primary/aft)
+"iiD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/trimline/white/filled/warning{
+	dir = 6
+	},
+/obj/machinery/station_map/engineering/directional/south,
+/turf/open/floor/iron/edge,
+/area/station/hallway/primary/port)
 "iiF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -30579,6 +30585,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
 	dir = 8
 	},
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
@@ -37906,7 +37913,6 @@
 	dir = 5
 	},
 /obj/structure/table/glass,
-/obj/item/stack/medical/gauze,
 /obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = 7;
 	pixel_y = 1
@@ -39073,6 +39079,14 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics)
+"liO" = (
+/obj/structure/hedge,
+/obj/effect/turf_decal/trimline/white/filled,
+/obj/machinery/light/warm/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/station_map/engineering/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/dorms)
 "liS" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -45421,6 +45435,13 @@
 	},
 /obj/structure/cable,
 /obj/item/reagent_containers/syringe,
+/obj/item/stack/medical/wrap/gauze/twelve{
+	pixel_x = -15
+	},
+/obj/item/stack/medical/wrap/gauze{
+	pixel_x = -15;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/white/smooth_edge,
 /area/station/medical/medbay/lobby)
 "ncW" = (
@@ -52829,6 +52850,13 @@
 /obj/machinery/meter,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
+"oVF" = (
+/obj/effect/turf_decal/trimline/white/filled/warning{
+	dir = 9
+	},
+/obj/machinery/station_map/engineering/directional/north,
+/turf/open/floor/iron/corner,
+/area/station/hallway/primary/starboard)
 "oVH" = (
 /obj/structure/sign/calendar/directional/west,
 /obj/machinery/digital_clock/directional/west{
@@ -53540,6 +53568,7 @@
 /obj/effect/turf_decal/trimline/white/filled/line{
 	dir = 1
 	},
+/obj/machinery/station_map/engineering/directional/north,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -56561,6 +56590,7 @@
 /obj/structure/cable,
 /obj/machinery/light/warm/directional/east,
 /obj/item/kirbyplants/random,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron/corner{
 	dir = 1
 	},
@@ -60999,7 +61029,6 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/secure_closet/medical2,
-/obj/item/stack/sticky_tape/surgical,
 /obj/item/stack/medical/bone_gel,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -61923,7 +61952,6 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/stack/medical/gauze,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
@@ -63513,6 +63541,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/disposal/incinerator)
+"rSP" = (
+/obj/effect/turf_decal/trimline/white/filled/line,
+/obj/machinery/station_map/engineering/directional/south,
+/turf/open/floor/iron/edge,
+/area/station/hallway/secondary/command)
 "rSR" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8
@@ -68419,6 +68452,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/science/explab)
+"tid" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 8;
+	pixel_y = 0
+	},
+/obj/effect/spawner/random/trash/mess,
+/obj/machinery/station_map/engineering/directional/west,
+/turf/open/floor/iron/edge{
+	dir = 8
+	},
+/area/station/hallway/primary/fore)
 "tin" = (
 /obj/effect/turf_decal/trimline/white/filled/warning{
 	dir = 5
@@ -70328,6 +70372,7 @@
 	},
 /obj/item/kirbyplants/random,
 /obj/machinery/light/warm/directional/south,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron/corner{
 	dir = 1
 	},
@@ -73791,7 +73836,6 @@
 "uUh" = (
 /obj/structure/closet/secure_closet/medical2,
 /obj/effect/turf_decal/bot,
-/obj/item/stack/sticky_tape/surgical,
 /obj/item/stack/medical/bone_gel,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -77633,6 +77677,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron/edge,
 /area/station/hallway/primary/port)
 "vZb" = (
@@ -84034,6 +84079,7 @@
 	dir = 8
 	},
 /obj/machinery/light/warm/directional/east,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron/edge{
 	dir = 4
 	},
@@ -101344,7 +101390,7 @@ kMs
 kMs
 kMs
 kMs
-pwZ
+liO
 rXf
 ktY
 nnd
@@ -107264,7 +107310,7 @@ jCY
 dzP
 iZB
 apj
-uAL
+tid
 apj
 kuN
 ekC
@@ -110587,7 +110633,7 @@ xLs
 bBZ
 yfF
 oYi
-chG
+iiD
 vSt
 vSt
 oos
@@ -112929,7 +112975,7 @@ wRm
 cRd
 rqs
 mYV
-sVz
+rSP
 fon
 rFu
 oAA
@@ -113995,7 +114041,7 @@ oif
 pGh
 iCW
 jsp
-sJv
+oVF
 oPW
 oBh
 evw

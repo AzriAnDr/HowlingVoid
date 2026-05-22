@@ -2135,6 +2135,13 @@
 	dir = 8
 	},
 /area/station/science/ordnance/office)
+"aDi" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/station_map/engineering/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "aDl" = (
 /obj/structure/rack,
 /obj/item/bouquet,
@@ -5211,6 +5218,7 @@
 	pixel_x = -5;
 	pixel_y = -27
 	},
+/obj/machinery/station_map/engineering/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "bta" = (
@@ -5353,6 +5361,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
+"buW" = (
+/obj/machinery/station_map/engineering/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "buY" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5663,6 +5675,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
+"byF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/station_map/engineering/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "byH" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
 /turf/open/floor/iron/dark,
@@ -24741,6 +24760,13 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
+"gVi" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/station_map/engineering/directional/west,
+/turf/open/floor/iron,
+/area/station/commons/dorms)
 "gVm" = (
 /obj/item/coin/silver{
 	pixel_x = -5;
@@ -24994,6 +25020,7 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
 	},
+/obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "gXY" = (
@@ -41796,6 +41823,7 @@
 "lIR" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron/dark/side,
 /area/mine/eva/lower)
 "lIW" = (
@@ -49900,7 +49928,7 @@
 	},
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
-/obj/structure/sign/poster/official/random/directional/south,
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "nZw" = (
@@ -50817,6 +50845,16 @@
 /obj/effect/mapping_helpers/airlock/red_alert_access,
 /turf/open/floor/iron/smooth,
 /area/station/security/processing)
+"ome" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/station_map/engineering/directional/east,
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
+/area/station/hallway/secondary/entry)
 "omg" = (
 /obj/effect/spawner/random/clothing/wardrobe_closet_colored,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -51628,6 +51666,7 @@
 /obj/machinery/light/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/half/contrasted,
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron/dark/side,
 /area/mine/eva)
 "oxi" = (
@@ -55148,6 +55187,7 @@
 /area/station/ai/satellite/maintenance)
 "pua" = (
 /obj/machinery/light/directional/south,
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "puc" = (
@@ -56280,6 +56320,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "pJE" = (
@@ -57752,6 +57793,7 @@
 	},
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/ai/satellite/interior)
 "qdY" = (
@@ -64239,6 +64281,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "rVd" = (
@@ -76085,6 +76128,16 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"vrA" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/station_map/engineering/directional/east,
+/turf/open/floor/iron/white/corner,
+/area/station/hallway/secondary/entry)
 "vrC" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -85612,6 +85665,10 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/engineering/storage)
+"ycL" = (
+/obj/machinery/station_map/engineering/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/primary/port)
 "ycO" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
@@ -85824,6 +85881,11 @@
 /obj/structure/sign/warning/electric_shock/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"ygo" = (
+/obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/machinery/station_map/engineering/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "ygv" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -229882,7 +229944,7 @@ eTe
 wvx
 wvx
 aLf
-wvx
+vrA
 wvx
 fwM
 fsv
@@ -229894,7 +229956,7 @@ xFs
 fsv
 dpU
 thX
-thX
+ome
 kSR
 thX
 thX
@@ -232973,7 +233035,7 @@ jxI
 hjv
 pXh
 rOb
-gpp
+ycL
 tKI
 dat
 kDv
@@ -248383,7 +248445,7 @@ rMN
 agp
 alO
 rMN
-alO
+gVi
 alO
 qCI
 fhg
@@ -250447,7 +250509,7 @@ oUO
 kHO
 mQi
 uja
-kyL
+aDi
 hNU
 kyL
 kyL
@@ -250477,7 +250539,7 @@ ivo
 ikC
 xdW
 dnq
-dnq
+buW
 dnq
 tmr
 cvS
@@ -262798,7 +262860,7 @@ jbG
 lso
 cYE
 lso
-hDb
+ygo
 ult
 ult
 ult
@@ -267933,7 +267995,7 @@ ejn
 ejn
 jOD
 tGx
-ejn
+byF
 uvv
 ejn
 uvv
