@@ -12,6 +12,8 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	ambience_index = AMBIENCE_AWAY
 	sound_environment = SOUND_ENVIRONMENT_ROOM
 
+/// Gulag
+
 /area/awaymission/outdoors
 	name = "Outdoors"
 
@@ -103,3 +105,22 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 /area/awaymission/secret/powered/fullbright
 	static_lighting = FALSE
 	base_lighting_alpha = 255
+
+
+/// Backrooms
+
+/area/awaymission/backrooms
+	icon_state = "unknown"
+	requires_power = FALSE
+
+/area/awaymission/backrooms/level_one
+	name = "Level 1"
+	icon_state = "away1"
+
+/area/awaymission/backrooms/level_two
+	name = "Level 2"
+	icon_state = "away2"
+
+/area/awaymission/backrooms/level_three
+	name = "Level 3"
+	icon_state = "away3"
