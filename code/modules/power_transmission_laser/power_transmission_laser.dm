@@ -371,17 +371,25 @@ GLOBAL_LIST_EMPTY(ptl_lasers)
 	if(unsent_earnings > 200)
 		var/cargo_cut = round(unsent_earnings * PTL_MEDIUM_CUT_RATIO)
 		var/engineering_cut = round(unsent_earnings * PTL_HIGH_CUT_RATIO)
+		var/recorded_power_income = 0
 
 		var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		var/datum/bank_account/engineering_account = SSeconomy.get_dep_account(ACCOUNT_ENG)
 
 		if(cargo_account)
 			cargo_account.adjust_money(cargo_cut, "PTL: Power Sale")
+			SSeconomy.record_department_income(ACCOUNT_CAR, "ptl_power_sales", cargo_cut)
+			recorded_power_income += cargo_cut
 			unsent_earnings -= cargo_cut
 
 		if(engineering_account)
 			engineering_account.adjust_money(engineering_cut, "PTL: Power Sale")
+			SSeconomy.record_department_income(ACCOUNT_ENG, "ptl_power_sales", engineering_cut)
+			recorded_power_income += engineering_cut
 			unsent_earnings -= engineering_cut
+
+		if(recorded_power_income)
+			SSeconomy.record_gsp("ptl_power_sales", recorded_power_income)
 
 /// Setup or refresh the beam visual
 /obj/machinery/power/transmission_laser/proc/setup_lasers()

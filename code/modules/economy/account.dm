@@ -218,13 +218,19 @@
 		base_paycheck = clamp(base_paycheck, 0, PAYCHECK_CREW) //We want to limit single, passive paychecks to regular crew income.
 	var/money_to_transfer = max(0, base_paycheck + (paycheck_adjustment * amount_of_paychecks))
 	if(free)
-		adjust_money(money_to_transfer, "Nanotrasen: Shift Payment")
+		// NOVA EDIT ADDITION START - Corporate economy wage tracking
+		var/free_payday_success = !money_to_transfer || adjust_money(money_to_transfer, "Nanotrasen: Shift Payment")
+		if(money_to_transfer && free_payday_success)
+			SSeconomy.record_wages(money_to_transfer)
+		// NOVA EDIT ADDITION END
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
 		SSeconomy.station_target += money_to_transfer
 		log_econ("[money_to_transfer] [MONEY_NAME] were given to [src.account_holder]'s account from income.")
-		return TRUE
+		return free_payday_success
 	var/datum/bank_account/department_account = SSeconomy.get_dep_account(account_job.paycheck_department)
 	if(isnull(department_account))
+		if(corporate_economy_is_external_budget_id(account_job.paycheck_department))
+			return FALSE
 		bank_card_talk("ERROR: [event] aborted, unable to contact departmental account.")
 		return FALSE
 	var/station_payroll_adjustment = max(0, money_to_transfer - base_paycheck)
@@ -232,11 +238,18 @@
 	if(department_transfer > 0 && !transfer_money(department_account, department_transfer))
 		bank_card_talk("ERROR: [event] aborted, departmental funds insufficient.")
 		return FALSE
+	// NOVA EDIT ADDITION START - Corporate economy wage tracking
+	if(department_transfer > 0)
+		SSeconomy.record_wages(department_transfer)
+	// NOVA EDIT ADDITION END
 	if(station_payroll_adjustment > 0)
 		var/datum/bank_account/station_account = SSeconomy.get_dep_account(ACCOUNT_CIV)
 		if(isnull(station_account) || !transfer_money(station_account, station_payroll_adjustment, "Nanotrasen: Payroll Adjustment"))
 			bank_card_talk("ERROR: [event] adjustment skipped, station budget funds insufficient.")
 			return TRUE
+		// NOVA EDIT ADDITION START - Corporate economy wage tracking
+		SSeconomy.record_wages(station_payroll_adjustment)
+		// NOVA EDIT ADDITION END
 	bank_card_talk("[event] processed, account now holds [account_balance] [MONEY_SYMBOL].")
 	return TRUE
 

@@ -37,21 +37,23 @@
 
 /datum/round_event/market_crash/start()
 	. = ..()
+	ADD_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, MARKET_CRASH_EVENT_TRAIT)
+	SSeconomy.market_crash_price_index = max(SSeconomy.economic_price_index, 2.5)
 	SSeconomy.update_vending_prices()
 	SSeconomy.price_update()
-	ADD_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, MARKET_CRASH_EVENT_TRAIT)
 
 /datum/round_event/market_crash/end()
 	. = ..()
 	REMOVE_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, MARKET_CRASH_EVENT_TRAIT)
+	SSeconomy.market_crash_price_index = 1
 	SSeconomy.price_update()
 	SSeconomy.update_vending_prices()
 	priority_announce("Prices for on-station vendors have now stabilized.", "Nanotrasen Accounting Division", text_ru = "Цены в торговых автоматах на станции стабилизировались.", title_ru = "Бухгалтерский департамент Nanotrasen")
 
 /datum/round_event/market_crash/tick()
 	. = ..()
-	tick_counter = tick_counter++
-	SSeconomy.inflation_value = 5.5*(log(activeFor+1))
-	if(tick_counter == 5)
+	tick_counter++
+	SSeconomy.market_crash_price_index = max(2.5, 5.5 * log(activeFor + 1))
+	if(tick_counter >= 5)
 		tick_counter = 1
 		SSeconomy.update_vending_prices()

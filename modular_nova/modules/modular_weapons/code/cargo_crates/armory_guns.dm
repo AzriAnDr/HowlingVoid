@@ -1,7 +1,7 @@
 /datum/supply_pack/security/armory/sindano
 	name = "Sindano Submachinegun Crate"
 	desc = "Three entirely proprietary Sindano kits, chambered in .35 Sol Short. Each kit contains three empty magazines and a box each of incapacitator and lethal rounds."
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 7
 	contains = list(
 		/obj/item/storage/toolbox/guncase/nova/carwo_large_case/sindano = 3,
 	)
@@ -10,7 +10,7 @@
 /datum/supply_pack/security/armory/renoster
 	name = "M64 Riot Shotgun Crate"
 	desc = "Three M64 12ga riot shotguns, with matching bandoliers for each."
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 7
 	contains = list(
 		/obj/item/gun/ballistic/shotgun/riot/sol = 3,
 		/obj/item/storage/belt/bandolier = 3,
@@ -20,7 +20,7 @@
 /datum/supply_pack/security/armory/kiboko
 	name = "Kiboko Grenade Launcher Crate"
 	desc = "Contains a single Kiboko grenade launcher for replacing the one found in the armory, alongside the equipment that comes with it."
-	cost = CARGO_CRATE_VALUE * 30
+	cost = CARGO_CRATE_VALUE * 12
 	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 	contains = list(
 		/obj/item/storage/toolbox/guncase/nova/carwo_large_case/kiboko_magless = 1,
@@ -33,7 +33,7 @@
 /datum/supply_pack/security/armory/short_mod_laser
 	name = "Modular Laser Carbine Crate"
 	desc = "Five 'Hoshi' modular laser carbines, compact energy weapons that can be rapidly reconfigured into different firing modes."
-	cost = CARGO_CRATE_VALUE * 12
+	cost = CARGO_CRATE_VALUE * 8
 	contains = list(
 		/obj/item/gun/energy/modular_laser_rifle/carbine,
 		/obj/item/gun/energy/modular_laser_rifle/carbine,
@@ -46,7 +46,7 @@
 /datum/supply_pack/security/armory/big_mod_laser
 	name = "Modular Laser Rifle Crate"
 	desc = "Three 'Hyeseong' modular laser rifles, bulky energy weapons that can be rapidly reconfigured into different firing modes."
-	cost = CARGO_CRATE_VALUE * 12
+	cost = CARGO_CRATE_VALUE * 8
 	contains = list(
 		/obj/item/gun/energy/modular_laser_rifle,
 		/obj/item/gun/energy/modular_laser_rifle,

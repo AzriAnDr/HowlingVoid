@@ -59,7 +59,7 @@
 
 	data["budget_name"] = budget_name
 	data["budget_points"] = self_paid ? id_card?.registered_account?.account_balance : buyer?.account_balance
-	data["cant_buy_restricted"] = cannot_buy_restricted(id_card)
+	data["cant_buy_restricted"] = FALSE // NOVA EDIT CHANGE - Restricted imports are orderable; suspicious orders are announced to supply.
 	data["self_paid"] = !!self_paid
 	data["armaments_list"] = get_company_import_data()
 	return data
@@ -257,6 +257,11 @@
 		SSshuttle.request_list += created_order
 	else
 		SSshuttle.shopping_list += created_order
+	// NOVA EDIT ADDITION START - Sensitive company import orders are allowed, but reported to supply.
+	var/payment_source = self_paid ? (buyer?.account_holder || "private account") : (buyer?.account_holder || "Cargo Budget")
+	if(corporate_economy_lacks_supply_pack_access(pack, id_card?.GetAccess()))
+		corporate_economy_announce_sensitive_cargo_order(parent_atom, pack, name, rank, payment_source)
+	// NOVA EDIT ADDITION END
 	return TRUE
 
 /datum/component/armament/company_imports/proc/should_request_order()
@@ -284,8 +289,7 @@
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
 			if(!is_company_pack_visible(pack))
 				return
-			if(cannot_buy_restricted(get_user_id(ui.user)) && (pack.access || pack.access_view))
-				return
+			// NOVA EDIT REMOVAL - Restricted imports are orderable; suspicious orders are announced to supply.
 			. = order_pack(ui.user, pack)
 			if(.)
 				SStgui.update_uis(src)

@@ -41,7 +41,7 @@
 	name = "Big Band Instrument Collection"
 	desc = "Get your sad station movin' and groovin' with this fine collection! \
 		Contains nine different instruments!"
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 6
 	crate_name = "Big band musical instruments collection"
 	contains = list(/obj/item/instrument/violin,
 					/obj/item/instrument/guitar,
@@ -166,7 +166,7 @@
 	name = "Religious Supplies Crate"
 	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your \
 		cargo bay. Contains two bottles of holy water, bibles, chaplain robes, and burial garments."
-	cost = CARGO_CRATE_VALUE * 6 // it costs so much because the Space Church needs funding to build a cathedral
+	cost = CARGO_CRATE_VALUE * 4 // it costs so much because the Space Church needs funding to build a cathedral
 	access_view = ACCESS_CHAPEL_OFFICE
 	contains = list(/obj/item/reagent_containers/cup/glass/bottle/holywater = 2,
 					/obj/item/book/bible/booze = 2,
@@ -194,7 +194,7 @@
 	name = "Toner Crate (Large)"
 	desc = "Tired of changing toner cartridges? These six extra heavy duty refills contain \
 		roughly five times as much toner as the base model!"
-	cost = CARGO_CRATE_VALUE * 6
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/toner/large = 6)
 	crate_name = "large toner crate"
 
@@ -266,6 +266,6 @@
 /datum/supply_pack/misc/punch_cooler
 	name = "Liquid Cooler - Fruit Punch"
 	desc = "A liquid cooler, stocked with exotic fruit punch that can heal injuries! Be sure to remain near the liquid cooler while drinking, for your own health and safety. Seriously, do NOT drink this stuff away from the cooler."
-	cost = CARGO_CRATE_VALUE * 6
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/structure/reagent_dispensers/water_cooler/jugless = 1, /obj/item/reagent_containers/cooler_jug/punch = 1)
 	crate_name = "punch cooler crate"

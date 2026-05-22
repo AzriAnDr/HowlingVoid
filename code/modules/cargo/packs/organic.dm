@@ -136,7 +136,7 @@
 	desc = "Designed by Aussec's Advanced Warfare Research Division, \
 		these high-yield, Clown-grade cream pies are powered by a synergy \
 		of performance and efficiency. Guaranteed to provide maximum results."
-	cost = CARGO_CRATE_VALUE * 12
+	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/storage/backpack/duffelbag/clown/cream_pie)
 	crate_name = "party equipment crate"
 	order_flags = ORDER_CONTRABAND
@@ -175,7 +175,7 @@
 	name = "Pizza Crate"
 	desc = "Why visit the kitchen when you can have five random pizzas in a fraction of the time? \
 			Best prices this side of the galaxy! All deliveries are guaranteed to be 99% anomaly-free."
-	cost = CARGO_CRATE_VALUE * 10 // Best prices this side of the galaxy.
+	cost = CARGO_CRATE_VALUE * 5 // Best prices this side of the galaxy.
 	contains = list()
 	crate_name = "pizza crate"
 
@@ -372,7 +372,7 @@
 	order_flags = ORDER_CONTRABAND
 	name = "Contraband Syrups Box"
 	desc = "A packaged box containing illegal coffee syrups. Possession of these carries a penalty established in the galactic penal code."
-	cost = CARGO_CRATE_VALUE * 6
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(
 		/obj/item/reagent_containers/cup/bottle/syrup_bottle/laughsyrup = 2,
 	)
@@ -394,7 +394,7 @@
 	desc = "The perfect way to start your shift... or end it. \
 	Contains a full barrel of Nanotrasen brewed, low-grade alcoholic beverage, \
 	perfect for getting loose after a hard day of not dying."
-	cost = CARGO_CRATE_VALUE * 6.25
+	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/structure/reagent_dispensers/beerkeg)
 	crate_name = "beer keg crate"
 	crate_type = /obj/structure/closet/crate/wooden

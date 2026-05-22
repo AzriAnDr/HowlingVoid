@@ -56,6 +56,7 @@
 	dispatched = TRUE
 	var/datum/bank_account/dep_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	dep_account?.adjust_money(situation.bonus_points)
+	SSeconomy.record_grant("shuttle_loan", situation.bonus_points, ACCOUNT_CAR)
 	end_when = activeFor + 1
 
 	SSshuttle.supply.mode = SHUTTLE_CALL

@@ -4,7 +4,7 @@
 /datum/supply_pack/costumes_toys/randomised
 	name = "Collectable Hats Crate"
 	desc = "Flaunt your status with three unique, highly-collectable hats!"
-	cost = CARGO_CRATE_VALUE * 40
+	cost = CARGO_CRATE_VALUE * 8
 	var/num_contained = 3 //number of items picked to be contained in a randomised crate
 	contains = list(/obj/item/clothing/head/collectable/chef,
 					/obj/item/clothing/head/collectable/paper,
@@ -73,7 +73,7 @@
 /datum/supply_pack/costumes_toys/clownpin
 	name = "Hilarious Firing Pin Crate"
 	desc = "I uh... I'm not really sure what this does. Wanna buy it?"
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 4
 	order_flags = ORDER_CONTRABAND
 	contains = list(/obj/item/firing_pin/clown)
 	crate_name = "toy crate" // It's /technically/ a toy. For the clown, at least.
@@ -178,7 +178,7 @@
 	desc = "Who cares about pride and accomplishment? Skip the gaming and get straight \
 		to the sweet rewards with this product! Contains five random toys. Warranty void \
 		if used to prank research directors."
-	cost = CARGO_CRATE_VALUE * 8 // or play the arcade machines ya lazy bum
+	cost = CARGO_CRATE_VALUE * 4 // or play the arcade machines ya lazy bum
 	num_contained = 5
 	contains = list()
 	crate_name = "toy crate"
@@ -285,7 +285,7 @@
 /datum/supply_pack/costumes_toys/christmas
 	name = "Surplus Christmas Gifts"
 	desc = "This crate contains pre-wrapped gifts addressed to station employees, sourced at random from Nanotrasen surplus as part of a morale boosting initiative."
-	cost = CARGO_CRATE_VALUE * 30
+	cost = CARGO_CRATE_VALUE * 6
 	contains = list()
 	order_flags = ORDER_SPECIAL
 	crate_type = /obj/structure/closet/crate/mail

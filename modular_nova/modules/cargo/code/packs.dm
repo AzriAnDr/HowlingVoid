@@ -110,7 +110,7 @@
 /datum/supply_pack/medical/modsuit_medical
 	name = "Medical MODsuit Crate"
 	desc = "Contains a single MODsuit, built to standard medical specifications."
-	cost = CARGO_CRATE_VALUE * 13
+	cost = CARGO_CRATE_VALUE * 8
 	access = ACCESS_MEDICAL
 	contains = list(/obj/item/mod/control/pre_equipped/medical)
 	crate_name = "medical MODsuit crate"
@@ -127,7 +127,7 @@
 /datum/supply_pack/medical/medigun
 	name = "CWM-479 Medigun"
 	desc = "Contains a single Vey-Medical CWM-479 model medigun; medicells not included."
-	cost = CARGO_CRATE_VALUE * 30
+	cost = CARGO_CRATE_VALUE * 12
 	access = ACCESS_MEDICAL
 	contains = list(/obj/item/storage/briefcase/medicalgunset/standard)
 	crate_name = "CWM-479 medigun crate"
@@ -151,7 +151,7 @@
 /datum/supply_pack/security/MODsuit_security
 	name = "Security MODsuit Crate"
 	desc = "Contains a single armored up MODsuit, built to standard security specifications."
-	cost = CARGO_CRATE_VALUE * 16
+	cost = CARGO_CRATE_VALUE * 9
 	access_view = ACCESS_SECURITY
 	contains = list(/obj/item/mod/control/pre_equipped/security)
 	crate_name = "security MODsuit crate"
@@ -190,7 +190,7 @@
 */
 
 /datum/supply_pack/security/armory/battle_rifle
-	cost = CARGO_CRATE_VALUE * 15
+	cost = CARGO_CRATE_VALUE * 10
 	contains = list(
 		/obj/item/gun/ballistic/automatic/battle_rifle = 3,
 		/obj/item/ammo_box/magazine/m38 = 6,
@@ -230,7 +230,7 @@
 		/obj/item/storage/pouch/material,
 		/obj/item/storage/pouch/material,
 	)
-	cost = CARGO_CRATE_VALUE * 15
+	cost = CARGO_CRATE_VALUE * 6
 	crate_name = "material pouches crate"
 
 /datum/supply_pack/engineering/doublecap_tanks
@@ -243,7 +243,7 @@
 		/obj/item/tank/internals/emergency_oxygen/double,
 		/obj/item/tank/internals/emergency_oxygen/double,
 	)
-	cost = CARGO_CRATE_VALUE * 15
+	cost = CARGO_CRATE_VALUE * 5
 	crate_name = "double extended emergency tank crate"
 
 /datum/supply_pack/engineering/advanced_extinguisher
@@ -255,7 +255,7 @@
 		/obj/item/extinguisher/advanced,
 		/obj/item/extinguisher/advanced,
 	)
-	cost = CARGO_CRATE_VALUE * 18
+	cost = CARGO_CRATE_VALUE * 7
 	crate_name = "advanced extinguisher crate"
 
 /datum/supply_pack/engineering/modsuit_engineering
@@ -263,7 +263,7 @@
 	desc = "Contains a single MODsuit, built to standard engineering specifications."
 	access = ACCESS_ENGINE_EQUIP
 	contains = list(/obj/item/mod/control/pre_equipped/engineering)
-	cost = CARGO_CRATE_VALUE * 13
+	cost = CARGO_CRATE_VALUE * 8
 	crate_name = "engineering MODsuit crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 
@@ -272,7 +272,7 @@
 	desc = "Contains a single MODsuit, built to standard atmospherics specifications."
 	access = ACCESS_ENGINE_EQUIP
 	contains = list(/obj/item/mod/control/pre_equipped/atmospheric)
-	cost = CARGO_CRATE_VALUE * 16
+	cost = CARGO_CRATE_VALUE * 9
 	crate_name = "atmospherics MODsuit crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 
@@ -292,7 +292,7 @@
 	desc = "Contains a single gas miner delivery beacon, for the ordering of one gas miner."
 	access = ACCESS_ATMOSPHERICS
 	contains = list(/obj/item/summon_beacon/gas_miner)
-	cost = CARGO_CRATE_VALUE * 50
+	cost = CARGO_CRATE_VALUE * 15
 	crate_name = "gas miner delivery beacon crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 
@@ -300,7 +300,7 @@
 	name = "Improved RCD Crate"
 	desc = "Contains 3 upgraded RCDs featuring superior material storage. Each comes with complimentary frames and circuitry upgrades to boot!"
 	access = ACCESS_ENGINE_EQUIP
-	cost = CARGO_CRATE_VALUE * 18
+	cost = CARGO_CRATE_VALUE * 9
 	contains = list(
 		/obj/item/construction/rcd/improved,
 		/obj/item/construction/rcd/improved,
@@ -322,7 +322,7 @@
 	name = "RBMK2 circuit boards and rods"
 	desc = "Contains four RBMK2 circuit boards for construction and fuel rods. Does not come with the required materials to construct them. Comes with a printed guide."
 	access = ACCESS_ENGINE_EQUIP
-	cost = CARGO_CRATE_VALUE * 55
+	cost = CARGO_CRATE_VALUE * 15
 	contains = list(
 		/obj/item/circuitboard/machine/rbmk2,
 		/obj/item/circuitboard/machine/rbmk2,
@@ -371,7 +371,7 @@
 /datum/supply_pack/service/paintcan
 	name = "Adaptive Paintcan"
 	desc = "Give things a splash of color with this experimental color-changing can of paint! Sellers note: We are not responsible for lynchings carried out by angry janitors, security officers, or any other crewmembers as a result of you using this."
-	cost = CARGO_CRATE_VALUE * 15
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/paint/anycolor)
 
 /datum/supply_pack/misc/coloredsheets
@@ -679,7 +679,7 @@
 /datum/supply_pack/service/medieval
 	name = "Authentic Renaissance Faire Crate"
 	desc = "Contains two authentic suits of armor, swords, and two bows and cuirass' for the cowards hiding in the back."
-	cost = CARGO_CRATE_VALUE * 30
+	cost = CARGO_CRATE_VALUE * 10
 	order_flags = ORDER_CONTRABAND
 	contains = list(
 		/obj/item/clothing/suit/armor/riot/knight/larp/red,
@@ -707,7 +707,7 @@
 /datum/supply_pack/organic/lavalandsamples
 	name = "Planetary Flora Samples"
 	desc = "A box of samples taken from the surface of Lavaland. Resold to you - yes, you! - at a premium. Requires Hydroponics access to open."
-	cost = CARGO_CRATE_VALUE * 36
+	cost = CARGO_CRATE_VALUE * 10
 	access_view = ACCESS_HYDROPONICS
 	contains = list(
 		/obj/item/seeds/lavaland/polypore,
@@ -724,7 +724,7 @@
 /datum/supply_pack/service/MODsuit_cargo
 	name = "Cargo Loader MODsuit Crate"
 	desc = "Contains a single quad-armed MODsuit, built to standard cargo specifications."
-	cost = CARGO_CRATE_VALUE * 13
+	cost = CARGO_CRATE_VALUE * 8
 	access_view = ACCESS_CARGO
 	contains = list(/obj/item/mod/control/pre_equipped/loader)
 	crate_name = "cargo MODsuit crate"
@@ -783,7 +783,7 @@
 	)
 
 /datum/supply_pack/imports/error
-	cost = CARGO_CRATE_VALUE * 400 // 20k is a lot on TG, it's not as much here. Upped to 80k
+	cost = CARGO_CRATE_VALUE * 30 // Still premium, but compatible with HV manual economy.
 
 /datum/supply_pack/misc/ancient_paperwork
 	name = "Unfiled Paperwork"

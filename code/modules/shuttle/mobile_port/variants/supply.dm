@@ -227,8 +227,11 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			paying_for_this.bank_card_talk(receiver_message)
 			SSeconomy.add_audit_entry(paying_for_this, price, spawning_order.pack.name)
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
-			cargo.adjust_money(price - pack_cost) //Cargo gets the handling fee
+			var/cargo_handling_fee = price - pack_cost
+			cargo.adjust_money(cargo_handling_fee) //Cargo gets the handling fee
+			SSeconomy.record_department_income(ACCOUNT_CAR, "cargo_handling_fees", cargo_handling_fee)
 		value += pack_cost
+		SSeconomy.record_import_cost("cargo_imports", pack_cost, ACCOUNT_CAR)
 
 		if(!(spawning_order.pack.order_flags & ORDER_GOODY) && !(spawning_order?.paying_account in forced_briefcases)) //we handle goody crates below // NOVA EDIT CHANGE - ORIGINAL : if(!(spawning_order.pack.order_flags & ORDER_GOODY)) //we handle goody crates below
 			var/obj/structure/closet/crate = spawning_order.generate(pick_n_take(empty_turfs))
@@ -320,11 +323,26 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		if(!export_text)
 			continue
 
-		msg += export_text + "\n"
-		cargo_budget.adjust_money(report.total_value[exported_datum])
+		// NOVA EDIT ADDITION START - Corporate economy export extraction
+		var/gross_export_value = report.gross_value[exported_datum] || report.total_value[exported_datum]
+		var/station_export_value = report.total_value[exported_datum]
+		var/export_source = istype(exported_datum, /datum/export/bounty_box) ? "bounties" : "cargo_exports"
+		var/take_rate = SSeconomy.get_corporate_export_take_rate(istype(exported_datum, /datum/export/bounty_box))
+		var/corporate_take = round(gross_export_value * take_rate)
+		var/station_share = max(0, station_export_value - corporate_take + SSeconomy.get_station_export_allocation_bonus(gross_export_value))
+
+		msg += "[export_text] [SSeconomy.get_export_split_summary(gross_export_value, corporate_take, station_share)]\n"
+		if(station_share)
+			cargo_budget.adjust_money(station_share, "Cargo: Export revenue after corporate remittance")
+		SSeconomy.record_gsp(export_source, gross_export_value, corporate_take)
+		// NOVA EDIT ADDITION END
 
 	SSshuttle.centcom_message = msg
 	if(report.exported_atoms.len)
+		// NOVA EDIT ADDITION START - Corporate economy export visibility
+		msg += "Cargo budget received [cargo_budget.account_balance - presale_points] [MONEY_NAME] from this shuttle after corporate remittance. Corporate performance remains visible and excellent.\n"
+		SSshuttle.centcom_message = msg
+		// NOVA EDIT ADDITION END
 		investigate_log("contents sold for [cargo_budget.account_balance - presale_points] [MONEY_NAME]. Contents: [report.exported_atoms.Join(",")]. Message: [msg]", INVESTIGATE_CARGO)
 
 /*

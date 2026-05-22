@@ -1,5 +1,37 @@
 //================================STOCKING IN ITEMS=================================
 
+// NOVA EDIT ADDITION START - HowlingVoid explicit vending prices
+/obj/machinery/vending/proc/get_vending_brand_jitter(obj/item/product_path, adjusted_price)
+	SHOULD_BE_PURE(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/price_seed = "[product_path]"
+	var/price_hash = 0
+	for(var/i in 1 to length(price_seed))
+		price_hash += text2ascii(price_seed, i)
+
+	var/jitter_span = 1
+	if(adjusted_price >= 10 && adjusted_price <= 50)
+		jitter_span = clamp(round(adjusted_price * 0.1), 2, 5)
+	else if(adjusted_price > 50)
+		jitter_span = clamp(round(adjusted_price * 0.06), 3, 25)
+
+	var/brand_jitter = (price_hash % ((jitter_span * 2) + 1)) - jitter_span
+	if(!brand_jitter)
+		brand_jitter = (price_hash % 2) ? 1 : -1
+	return brand_jitter
+
+/obj/machinery/vending/proc/get_custom_vending_price(obj/item/product_path, custom_price)
+	SHOULD_BE_PURE(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	if(custom_price <= 0)
+		return custom_price
+
+	var/adjusted_price = max(round(custom_price * SSeconomy.get_effective_price_index()), 1)
+	return max(adjusted_price + get_vending_brand_jitter(product_path, adjusted_price), 1)
+// NOVA EDIT ADDITION END
+
 /**
  * Build the inventory of the vending machine from its product and record lists
  *
@@ -14,6 +46,13 @@
 /obj/machinery/vending/proc/get_product_price(obj/item/product_path, premium = FALSE, stock_amount = 1)
 	SHOULD_BE_PURE(TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
+
+	// NOVA EDIT ADDITION START - HowlingVoid explicit vending prices
+	var/obj/item/product = product_path
+	var/custom_price = initial(product.custom_price)
+	if(!isnull(custom_price))
+		return get_custom_vending_price(product_path, custom_price)
+	// NOVA EDIT ADDITION END
 
 	var/base_price = premium ? extra_price : default_price
 	if(base_price <= 0)
@@ -43,9 +82,9 @@
 /obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE, premium = FALSE)
 	PRIVATE_PROC(TRUE)
 
-	var/inflation_value = HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING) ? SSeconomy.inflation_value() : 1
-	default_price = round(initial(default_price) * inflation_value)
-	extra_price = round(initial(extra_price) * inflation_value)
+	var/effective_price_index = SSeconomy.get_effective_price_index()
+	default_price = round(initial(default_price) * effective_price_index)
+	extra_price = round(initial(extra_price) * effective_price_index)
 
 	QDEL_LIST(recordlist)
 
@@ -308,6 +347,13 @@
 
 	//transfer money to machine
 	SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
-	log_econ("[price_to_use] [MONEY_NAME] were inserted into [src] by [account.account_holder] to buy [product_to_vend].")
+	var/account_holder = account?.account_holder || "unknown account"
+	log_econ("[price_to_use] [MONEY_NAME] were inserted into [src] by [account_holder] to buy [product_to_vend].")
+	// NOVA EDIT ADDITION START - Corporate economy vending consumption
+	if(!istype(src, /obj/machinery/vending/custom))
+		SSeconomy.record_consumption("vending", price_to_use, round(price_to_use * SSeconomy.corporate_retail_take_rate))
+		if(account)
+			SSeconomy.add_audit_entry(account, price_to_use, src)
+	// NOVA EDIT ADDITION END
 	credits_contained += round(price_to_use * VENDING_CREDITS_COLLECTION_AMOUNT)
 	return TRUE

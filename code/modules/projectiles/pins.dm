@@ -302,6 +302,7 @@
 			if(!gun.can_shoot())
 				return TRUE //So you don't get charged for attempting to fire an empty gun.
 			if(credit_card_details.adjust_money(-payment_amount, "Firing Pin: Gun Rent"))
+				SSeconomy.record_transfer_activity("gun_rent", payment_amount)
 				if(pin_owner)
 					pin_owner.adjust_money(payment_amount, "Firing Pin: Payout For Gun Rent")
 				return TRUE
@@ -325,6 +326,7 @@
 				to_chat(user, span_notice("Gun rental terms agreed to, have a secure day!"))
 
 			else if(credit_card_details.adjust_money(-payment_amount, "Firing Pin: Gun License"))
+				SSeconomy.record_transfer_activity("gun_license", payment_amount)
 				if(pin_owner)
 					pin_owner.adjust_money(payment_amount, "Firing Pin: Gun License Bought")
 				gun_owners += credit_card_details

@@ -27,6 +27,10 @@ Then the player gets the profit from selling his own wasted time.
 	var/list/total_amount = list()
 	///export instance => total value of sold objects
 	var/list/total_value = list()
+	// NOVA EDIT ADDITION START - Corporate economy gross export tracking
+	///export instance => gross value before pricetag payouts or corporate remittance
+	var/list/gross_value = list()
+	// NOVA EDIT ADDITION END
 	///set to false if any objects in a dry run were unscannable
 	var/all_contents_scannable = TRUE
 
@@ -206,6 +210,10 @@ Then the player gets the profit from selling his own wasted time.
 
 	if(export_amount <= 0 || (export_value <= 0 && !allow_negative_cost))
 		return EXPORT_NOT_SOLD
+
+	// NOVA EDIT ADDITION START - Corporate economy gross export tracking
+	report.gross_value[src] += export_value
+	// NOVA EDIT ADDITION END
 
 	// If we're not doing a dry run, send COMSIG_ITEM_EXPORTED to the sold item
 	var/export_result

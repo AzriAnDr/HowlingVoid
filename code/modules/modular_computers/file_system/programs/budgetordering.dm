@@ -90,8 +90,12 @@
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
 		if(P.order_flags & ORDER_INVISIBLE)
 			continue
-		if(!is_visible_pack(user, P.access_view , null, (P.order_flags & ORDER_CONTRABAND)) || (P.order_flags & ORDER_EMAG_ONLY))
+		if((P.order_flags & ORDER_CONTRABAND) && !contraband)
 			continue
+		// NOVA EDIT CHANGE START - Sensitive supply packs are visible to non-security buyers; orders are announced instead of hard-blocked.
+		if((!corporate_economy_is_sensitive_supply_pack(P) && !is_visible_pack(user, P.access_view , null, (P.order_flags & ORDER_CONTRABAND))) || (P.order_flags & ORDER_EMAG_ONLY))
+			continue
+		// NOVA EDIT CHANGE END
 		if(!data["supplies"][P.group])
 			data["supplies"][P.group] = list(
 				"name" = P.group,
@@ -266,7 +270,6 @@
 				if(isnull(reason) || ..())
 					return
 
-			var/uses_cargo_budget = FALSE // NOVA EDIT ADDITION - boolean flag to check if we are using the cargo budget without doing excesive shenanigans.
 			if(id_card_customer?.registered_account?.account_job && !self_paid) //Find a budget to pull from
 				personal_department = SSeconomy.get_dep_account(id_card_customer.registered_account.account_job.paycheck_department)
 				if(!(personal_department.account_holder == "Cargo Budget"))
@@ -275,16 +278,6 @@
 						return
 					if(dept_choice == "Cargo Budget")
 						personal_department = null
-						uses_cargo_budget = TRUE // NOVA EDIT ADDITION
-				// NOVA EDIT ADDITION START
-				else
-					uses_cargo_budget = TRUE // NOVA EDIT ADDITION
-				// NOVA EDIT ADDITION END
-
-			if(((pack.order_flags & ORDER_GOODY) && (!(pack.order_flags & ORDER_DEPARTMENTAL_GOODY) || uses_cargo_budget)) && !self_paid) // NOVA EDIT CHANGE - ORIGINAL: if((pack.order_flags & ORDER_GOODY) && !self_paid)
-				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-				computer.say("ERROR: Small crates may only be purchased by private accounts.")
-				return
 
 			if(SSshuttle.supply.get_order_count(pack) == OVER_ORDER_LIMIT)
 				playsound(computer, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
@@ -303,6 +296,11 @@
 				SSshuttle.shopping_list += SO
 				if(self_paid)
 					computer.say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
+			// NOVA EDIT ADDITION START - Sensitive cargo orders are allowed, but reported to supply.
+			var/payment_source = self_paid ? (account?.account_holder || "private account") : (account?.account_holder || "Cargo Budget")
+			if(corporate_economy_lacks_supply_pack_access(pack, id_card_customer?.GetAccess()))
+				corporate_economy_announce_sensitive_cargo_order(computer.physical, pack, name, rank, payment_source)
+			// NOVA EDIT ADDITION END
 			playsound(computer, 'sound/effects/coin2.ogg', 40, TRUE)
 			. = TRUE
 		if("remove")

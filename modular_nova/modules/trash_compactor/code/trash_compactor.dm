@@ -191,6 +191,7 @@
 	if(is_janitor(user))
 		if(user_account)
 			user_account.adjust_money(JANITOR_WAGE_BONUS, "Trash Compactor: Wage Bonus")
+			SSeconomy.record_transfer_activity("trash_compactor_bonus", JANITOR_WAGE_BONUS)
 			say("[JANITOR_WAGE_BONUS] credits added to your bank account! Thank you for your service.")
 		else
 			new /obj/item/stack/spacecash/c100(drop_location())

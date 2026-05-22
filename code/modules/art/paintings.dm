@@ -283,6 +283,8 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 
 	var/datum/bank_account/service_account = SSeconomy.get_dep_account(ACCOUNT_SRV)
 	service_account.adjust_money(offer_amount * SERVICE_PERCENTILE_CUT)
+	SSeconomy.record_consumption("art_patronage", offer_amount)
+	SSeconomy.record_department_income(ACCOUNT_SRV, "art_patronage", offer_amount * SERVICE_PERCENTILE_CUT)
 	///We give the curator(s) a cut (unless they're themselves the patron), as it's their job to curate and promote art among other things.
 	if(SSeconomy.bank_accounts_by_job[/datum/job/curator])
 		var/list/curator_accounts = SSeconomy.bank_accounts_by_job[/datum/job/curator] - account
@@ -292,6 +294,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 			if(curator_cut)
 				for(var/datum/bank_account/curator as anything in curator_accounts)
 					curator.adjust_money(curator_cut, "Painting: Patronage cut")
+					SSeconomy.record_transfer_activity("art_patronage_curator_cut", curator_cut)
 					curator.bank_card_talk("Cut on patronage received, account now holds [curator.account_balance] [MONEY_SYMBOL].")
 
 	if(istype(loc, /obj/structure/sign/painting))

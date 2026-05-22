@@ -13,11 +13,6 @@
 #define PAYCHECK_CREW 50
 ///Legacy command-tier price/paygrade anchor.
 #define PAYCHECK_COMMAND 100
-
-
-
-#define STATION_TARGET_BUFFER 25
-
 ///The coefficient for the amount of dosh that's collected everytime some is earned or received.
 #define DEBT_COLLECTION_COEFF 0.75
 

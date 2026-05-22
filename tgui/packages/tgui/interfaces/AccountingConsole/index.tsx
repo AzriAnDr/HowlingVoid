@@ -2,15 +2,20 @@ import { Button, DmIcon, Stack } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
+import { usePreferencesLocalization } from '../localization';
 import { AuditScreen } from './AuditScreen';
 import { FakeDesktopButton } from './FakeDesktopButton';
 import { FakeToolbarButton } from './FakeToolbarButton';
 import { FakeWindow, FakeWindowIan } from './FakeWindow';
+import { MacroScreen } from './MacroScreen';
 import { type Data, SCREENS } from './types';
 import { UsersScreen } from './UsersScreen';
 
+const accountingKey = (key: string) => `ui.accounting_console.${key}`;
+
 export const AccountingConsole = () => {
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const {
     station_time = '00:00',
     pic_file_format = 'png',
@@ -33,26 +38,39 @@ export const AccountingConsole = () => {
                   <Stack.Item>
                     <Stack vertical align="center">
                       <FakeDesktopButton
-                        name="paychecks.exe"
+                        name={t(accountingKey('paychecks_exe'))}
                         setScreenmode={setScreenmode}
                         ownerScreenMode={SCREENS.users}
                       >
                         <DmIcon
-                          width="70px"
-                          height="70px"
+                          width="58px"
+                          height="58px"
                           mt={1}
                           icon="icons/obj/card.dmi"
                           icon_state="budgetcard"
                         />
                       </FakeDesktopButton>
                       <FakeDesktopButton
-                        name="audit.exe"
+                        name={t(accountingKey('audit_exe'))}
                         setScreenmode={setScreenmode}
                         ownerScreenMode={SCREENS.audit}
                       >
                         <DmIcon
-                          width="70px"
-                          height="70px"
+                          width="58px"
+                          height="58px"
+                          mt={1}
+                          icon="icons/obj/service/bureaucracy.dmi"
+                          icon_state="docs_verified"
+                        />
+                      </FakeDesktopButton>
+                      <FakeDesktopButton
+                        name={t(accountingKey('macro_exe'))}
+                        setScreenmode={setScreenmode}
+                        ownerScreenMode={SCREENS.macro}
+                      >
+                        <DmIcon
+                          width="58px"
+                          height="58px"
                           mt={1}
                           icon="icons/obj/service/bureaucracy.dmi"
                           icon_state="docs_verified"
@@ -64,8 +82,8 @@ export const AccountingConsole = () => {
                         ownerScreenMode={SCREENS.ian}
                       >
                         <DmIcon
-                          width="70px"
-                          height="70px"
+                          width="58px"
+                          height="58px"
                           mt={1}
                           icon="icons/mob/simple/pets.dmi"
                           icon_state={young_ian ? 'puppy' : 'corgi'}
@@ -78,7 +96,7 @@ export const AccountingConsole = () => {
               {screenmode === SCREENS.users && (
                 <Stack.Item grow ml={3}>
                   <FakeWindow
-                    name="Crew Account Summary"
+                    name={t(accountingKey('crew_account_summary'))}
                     setScreenmode={setScreenmode}
                   >
                     <UsersScreen />
@@ -87,8 +105,21 @@ export const AccountingConsole = () => {
               )}
               {screenmode === SCREENS.audit && (
                 <Stack.Item grow ml={3}>
-                  <FakeWindow name="Audit Log" setScreenmode={setScreenmode}>
+                  <FakeWindow
+                    name={t(accountingKey('audit_log'))}
+                    setScreenmode={setScreenmode}
+                  >
                     <AuditScreen />
+                  </FakeWindow>
+                </Stack.Item>
+              )}
+              {screenmode === SCREENS.macro && (
+                <Stack.Item grow ml={3}>
+                  <FakeWindow
+                    name={t(accountingKey('nt_economic_performance'))}
+                    setScreenmode={setScreenmode}
+                  >
+                    <MacroScreen />
                   </FakeWindow>
                 </Stack.Item>
               )}
@@ -125,7 +156,7 @@ export const AccountingConsole = () => {
               </Stack.Item>
               <Stack.Item mr={1}>
                 <FakeToolbarButton
-                  name="Account Management"
+                  name={t(accountingKey('account_management'))}
                   currentScreenMode={screenmode}
                   setScreenmode={setScreenmode}
                   ownerScreenMode={SCREENS.users}
@@ -133,10 +164,18 @@ export const AccountingConsole = () => {
               </Stack.Item>
               <Stack.Item mr={1}>
                 <FakeToolbarButton
-                  name="Audit Log"
+                  name={t(accountingKey('audit_log'))}
                   currentScreenMode={screenmode}
                   setScreenmode={setScreenmode}
                   ownerScreenMode={SCREENS.audit}
+                />
+              </Stack.Item>
+              <Stack.Item mr={1}>
+                <FakeToolbarButton
+                  name={t(accountingKey('macro_report'))}
+                  currentScreenMode={screenmode}
+                  setScreenmode={setScreenmode}
+                  ownerScreenMode={SCREENS.macro}
                 />
               </Stack.Item>
               <Stack.Item mr={1}>

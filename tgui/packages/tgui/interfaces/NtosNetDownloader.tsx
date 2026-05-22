@@ -47,6 +47,18 @@ type ProgramData = {
   verifiedsource: BooleanLike;
 };
 
+const normalizeProgramKey = (value: string | undefined) =>
+  (value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_|_$/g, '');
+
+const programNameKey = (filedesc: string) =>
+  `ui.ntos_program.${normalizeProgramKey(filedesc)}.name`;
+
+const programDescKey = (filedesc: string) =>
+  `ui.ntos_program.${normalizeProgramKey(filedesc)}.desc`;
+
 export const NtosNetDownloader = (props) => {
   const { act, data } = useBackend<Data>();
   const { t } = usePreferencesLocalization(data);
@@ -70,7 +82,7 @@ export const NtosNetDownloader = (props) => {
   const [searchItem, setSearchItem] = useState('');
   const search = createSearch<ProgramData>(
     searchItem,
-    (program) => program.filedesc,
+    (program) => t(programNameKey(program.filedesc), program.filedesc),
   );
   let items =
     searchItem.length > 0
@@ -81,7 +93,7 @@ export const NtosNetDownloader = (props) => {
   // This sorts all programs in the lists by name and compatibility
   items = sortBy(items, [
     (program: ProgramData) => !program.compatible,
-    (program: ProgramData) => program.filedesc,
+    (program: ProgramData) => t(programNameKey(program.filedesc), program.filedesc),
   ]);
   if (!emagged) {
     // This filters the list to only contain verified programs
@@ -189,12 +201,14 @@ const Program = (props) => {
     emagged,
   } = data;
   const disk_free = disk_size - disk_used;
+  const programName = t(programNameKey(program.filedesc), program.filedesc);
+  const programDescription = t(programDescKey(program.filedesc), program.fileinfo);
   return (
     <Section>
       <Stack align="baseline">
         <Stack.Item grow bold>
           <Icon name={program.icon} mr={1} />
-          {program.filedesc}
+          {programName}
         </Stack.Item>
         <Stack.Item
           shrink={0}
@@ -261,7 +275,7 @@ const Program = (props) => {
         </Stack.Item>
       </Stack>
       <Box mt={1} italic color="label">
-        {program.fileinfo}
+        {programDescription}
       </Box>
       {!program.verifiedsource && (
         <NoticeBox mt={1} mb={0} danger fontSize="12px">

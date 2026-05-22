@@ -19,7 +19,7 @@ import { NtosWindow } from '../layouts';
 import { usePreferencesLocalization } from './localization';
 
 type AdjustmentMode = 'amount' | 'percent';
-type PayrollTab = 'adjustment' | 'history' | 'overview';
+type PayrollTab = 'adjustment' | 'history' | 'overview' | 'budgets';
 
 type PayrollAccount = {
   id: string;
@@ -46,13 +46,25 @@ type PayrollLog = {
   authorized_by: string;
 };
 
+type DepartmentBudget = {
+  id: string;
+  name: string;
+  balance: number;
+  role: string;
+  is_station: BooleanLike;
+  is_cargo: BooleanLike;
+};
+
 type PayrollData = {
   authed: BooleanLike;
   station_budget: number;
+  total_department_budget: number;
+  visible_station_budget: number;
   max_adjustment: number;
   positive_adjustments: number;
   basis_options: string[];
   accounts: PayrollAccount[];
+  department_budgets: DepartmentBudget[];
   payroll_log: PayrollLog[];
 };
 
@@ -148,6 +160,14 @@ const PayrollConsole = () => {
                   >
                     {t(payrollKey('tab_overview'))}
                   </Button>
+                  <Button
+                    fluid
+                    icon="building-columns"
+                    selected={tab === 'budgets'}
+                    onClick={() => setTab('budgets')}
+                  >
+                    {t(payrollKey('tab_budgets'), 'Budgets')}
+                  </Button>
                 </Section>
               </Stack.Item>
               <Stack.Item>
@@ -168,6 +188,7 @@ const PayrollConsole = () => {
             )}
             {tab === 'history' && <HistoryTab />}
             {tab === 'overview' && <OverviewTab />}
+            {tab === 'budgets' && <BudgetsTab />}
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -629,6 +650,95 @@ const HistoryTab = () => {
         ))}
       </Table>
     </Section>
+  );
+};
+
+const BudgetsTab = () => {
+  const { data } = useBackend<PayrollData>();
+  const { t } = usePreferencesLocalization(data);
+  const {
+    department_budgets = [],
+    total_department_budget = 0,
+    visible_station_budget = 0,
+  } = data;
+
+  return (
+    <Stack fill vertical>
+      <Stack.Item>
+        <Section
+          title={t(payrollKey('budget_summary'), 'Budget Summary')}
+          style={panelStyle}
+        >
+          <Stack>
+            <Stack.Item grow>
+              <Box color="label">
+                {t(payrollKey('department_total'), 'Department Total')}
+              </Box>
+              <Box fontSize="20px" bold>
+                {formatCredits(total_department_budget)}
+              </Box>
+            </Stack.Item>
+            <Stack.Item grow>
+              <Box color="label">
+                {t(
+                  payrollKey('visible_station_budget'),
+                  'Visible Station Budget',
+                )}
+              </Box>
+              <Box fontSize="20px" bold>
+                {formatCredits(visible_station_budget)}
+              </Box>
+            </Stack.Item>
+          </Stack>
+        </Section>
+      </Stack.Item>
+      <Stack.Item grow>
+        <Section
+          fill
+          scrollable
+          title={t(payrollKey('department_budgets'), 'Department Budgets')}
+          style={panelStyle}
+        >
+          <Table>
+            <Table.Row header>
+              <Table.Cell>
+                {t(payrollKey('department'), 'Department')}
+              </Table.Cell>
+              <Table.Cell>{t(payrollKey('role'), 'Role')}</Table.Cell>
+              <Table.Cell textAlign="right">
+                {t(payrollKey('balance'), 'Balance')}
+              </Table.Cell>
+            </Table.Row>
+            {department_budgets.map((budget) => (
+              <Table.Row key={budget.id} className="candystripe">
+                <Table.Cell>
+                  <Box bold>{budget.name}</Box>
+                  <Box color="label">{budget.id}</Box>
+                </Table.Cell>
+                <Table.Cell>
+                  <Box
+                    color={
+                      budget.is_station
+                        ? 'blue'
+                        : budget.is_cargo
+                          ? 'orange'
+                          : 'label'
+                    }
+                  >
+                    {budget.role}
+                  </Box>
+                </Table.Cell>
+                <Table.Cell textAlign="right">
+                  <Box color={budget.balance > 0 ? 'green' : 'red'} bold>
+                    {formatCredits(budget.balance)}
+                  </Box>
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table>
+        </Section>
+      </Stack.Item>
+    </Stack>
   );
 };
 

@@ -69,7 +69,7 @@
 /datum/supply_pack/vending/imported
 	name = "Imported Vending Machines"
 	desc = "Vending machines famous in other parts of the galaxy."
-	cost = CARGO_CRATE_VALUE * 5
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/vending_refill/sustenance,
 					/obj/item/vending_refill/robotics,
 					/obj/item/vending_refill/sovietsoda,
@@ -170,7 +170,7 @@
 	name = "General Wardrobes Supply Crate"
 	desc = "This crate contains refills for the CuraDrobe, BarDrobe, \
 		ChefDrobe and ChapDrobe."
-	cost = CARGO_CRATE_VALUE * 6
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/vending_refill/wardrobe/curator_wardrobe,
 					/obj/item/vending_refill/wardrobe/bar_wardrobe,
 					/obj/item/vending_refill/wardrobe/chef_wardrobe,
@@ -196,7 +196,7 @@
 	name = "Medical Wardrobe Supply Crate"
 	desc = "This crate contains refills for the MediDrobe, \
 		ChemDrobe, ViroDrobe, and MortiDrobe."
-	cost = CARGO_CRATE_VALUE * 6
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/vending_refill/wardrobe/medi_wardrobe,
 					/obj/item/vending_refill/wardrobe/chem_wardrobe,
 					/obj/item/vending_refill/wardrobe/viro_wardrobe,
@@ -208,7 +208,7 @@
 	name = "Science Wardrobe Supply Crate"
 	desc = "This crate contains refills for the SciDrobe, \
 		GeneDrobe, and RoboDrobe."
-	cost = CARGO_CRATE_VALUE * 4.5
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/vending_refill/wardrobe/robo_wardrobe,
 					/obj/item/vending_refill/wardrobe/gene_wardrobe,
 					/obj/item/vending_refill/wardrobe/science_wardrobe,

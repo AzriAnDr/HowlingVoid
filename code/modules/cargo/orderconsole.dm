@@ -254,16 +254,18 @@
 		rank = "Silicon"
 
 	var/datum/bank_account/account
+	var/list/buyer_access = list()
+	var/bypass = FALSE
 
 	if(isliving(user))
 		var/mob/living/living_user = user
 		var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
 
-		var/bypass = FALSE
 		if(istype(id_card, /obj/item/card/id/advanced/chameleon)) //We'll bypass access restrictions
 			bypass = TRUE
 
 		account = id_card?.registered_account // We can still assign an account for request department purposes.
+		buyer_access = id_card?.GetAccess() || list()
 		if(self_paid)
 			if(!istype(id_card))
 				say("No ID card detected.")
@@ -274,8 +276,8 @@
 			if(!istype(account))
 				say("Invalid bank account.")
 				return
-			var/list/access = id_card.GetAccess()
-			if((pack.access_view && !(pack.access_view in access)) && !bypass)
+			var/sensitive_pack = corporate_economy_is_sensitive_supply_pack(pack)
+			if((pack.access_view && !(pack.access_view in buyer_access)) && !bypass && !sensitive_pack)
 				say("[id_card] lacks the requisite access for this purchase.")
 				return
 
@@ -283,7 +285,6 @@
 	var/list/working_list = SSshuttle.shopping_list
 	var/reason = ""
 	var/datum/bank_account/personal_department
-	var/uses_cargo_budget = FALSE // NOVA EDIT ADDITION - boolean flag to check if we are using the cargo budget without doing excessive shenanigans.
 	if(requestonly && !self_paid && (!(pack.order_flags & ORDER_GOODY) || (pack.order_flags & ORDER_DEPARTMENTAL_GOODY))) // NOVA EDIT CHANGE - should never have a dept goodie thats not a goody. ORIGINAL: if(requestonly && !self_paid && !(pack.order_flags & ORDER_GOODY))
 		working_list = SSshuttle.request_list
 		reason = tgui_input_text(user, "Reason", name, max_length = MAX_MESSAGE_LEN)
@@ -299,11 +300,6 @@
 					return
 				if(dept_choice == "Cargo Budget")
 					personal_department = null
-					uses_cargo_budget = TRUE // NOVA EDIT ADDITION
-			// NOVA EDIT ADDITION START
-			else
-				uses_cargo_budget = TRUE // NOVA EDIT ADDITION
-			// NOVA EDIT ADDITION END
 
 
 		if(isliving(user))
@@ -313,17 +309,12 @@
 			if(!id_card || !living_user || !access)
 				living_user = user
 				id_card = living_user.get_idcard(TRUE)
-			if(pack.access_view && !(pack.access_view in access) && personal_department)
+			if(pack.access_view && !(pack.access_view in access) && personal_department && !corporate_economy_is_sensitive_supply_pack(pack))
 				// We want to block cargo requests when a player is requesting a restricted pack that they don't have access to.
 				// BUT only when it's requested with non-cargo funds, as cargo had direct oversight over their own purchases with their own budget.
 				// HOWEVER, this shouldn't prevent someone from buying something using their own personal funds.
 				say("ERROR: User lacks the requisite access for this purchase request.")
 				return
-
-	if(((pack.order_flags & ORDER_GOODY) && (!(pack.order_flags & ORDER_DEPARTMENTAL_GOODY) || uses_cargo_budget)) && (!self_paid || !requestonly))
-		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-		say("ERROR: Small crates may only be purchased by private accounts.")
-		return
 
 	var/similar_count = SSshuttle.supply.get_order_count(pack)
 	if(similar_count == OVER_ORDER_LIMIT)
@@ -333,12 +324,6 @@
 
 	if(!self_paid)
 		account = personal_department
-		// NOVA EDIT ADDITION START
-		if ((uses_cargo_budget || !requestonly) && ((pack.order_flags & ORDER_COMPANY) == ORDER_COMPANY))
-			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
-			say("ERROR: Small crates may only be purchased by private accounts.")
-			return
-		// NOVA EDIT ADDITION END
 
 	amount = clamp(amount, 1, CARGO_MAX_ORDER - similar_count)
 	for(var/count in 1 to amount)
@@ -360,6 +345,12 @@
 			coupon = applied_coupon,
 		)
 		working_list += order
+
+	// NOVA EDIT ADDITION START - Sensitive cargo orders are allowed, but reported to supply.
+	var/payment_source = self_paid ? (account?.account_holder || "private account") : (account?.account_holder || "Cargo Budget")
+	if(corporate_economy_lacks_supply_pack_access(pack, buyer_access, bypass))
+		corporate_economy_announce_sensitive_cargo_order(src, pack, name, rank, payment_source)
+	// NOVA EDIT ADDITION END
 
 	if(self_paid)
 		say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")

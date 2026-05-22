@@ -4,6 +4,7 @@ export type Data = {
   accounts: PlayerAccount[];
   audit_log: AuditLog[];
   crashing: BooleanLike;
+  macro: MacroReport;
   pic_file_format: string;
   max_pay_mod: number;
   min_pay_mod: number;
@@ -22,16 +23,44 @@ type PlayerAccount = {
 };
 
 type AuditLog = {
-  account: number;
+  account: string;
   cost: number;
   vendor: string;
   stationtime: string;
+};
+
+type MacroReport = {
+  gross_station_product: number;
+  real_station_product: number;
+  corporate_surplus: number;
+  employee_wage_pool: number;
+  wage_share: number;
+  crew_consumption: number;
+  basket_price: number;
+  price_index: number;
+  average_paycheck: number;
+  paycheck_pps: number;
+  poverty_count: number;
+  crew_account_count: number;
+  hardship_status: string;
+  hardship_commentary: string;
+  economic_shock_name: string;
+  economic_shock_report: string;
+  gsp_by_source: SourceBreakdown[];
+  consumption_by_sink: SourceBreakdown[];
+  corporate_surplus_by_source: SourceBreakdown[];
+};
+
+export type SourceBreakdown = {
+  source: string;
+  amount: number;
 };
 
 export enum SCREENS {
   none,
   users,
   audit,
+  macro,
   ian,
 }
 

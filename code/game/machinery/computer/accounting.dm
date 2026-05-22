@@ -38,6 +38,30 @@
 	data["audit_log"] = SSeconomy.audit_log
 	data["crashing"] = HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING)
 	data["station_time"] = station_time_timestamp("hh:mm")
+	// NOVA EDIT ADDITION START - Corporate economy macro report
+	var/list/hardship_report = SSeconomy.get_hardship_report_data()
+	data["macro"] = list(
+		"gross_station_product" = round(SSeconomy.gross_station_product),
+		"real_station_product" = round(SSeconomy.get_real_gsp()),
+		"corporate_surplus" = round(SSeconomy.corporate_surplus),
+		"employee_wage_pool" = round(SSeconomy.employee_wage_pool),
+		"wage_share" = SSeconomy.get_wage_share(),
+		"crew_consumption" = round(SSeconomy.crew_consumption),
+		"basket_price" = SSeconomy.get_current_basket_price(),
+		"price_index" = SSeconomy.get_price_index(),
+		"average_paycheck" = SSeconomy.get_average_paycheck(),
+		"paycheck_pps" = SSeconomy.get_paycheck_pps(),
+		"poverty_count" = SSeconomy.get_poverty_count(),
+		"crew_account_count" = SSeconomy.get_crew_account_count(),
+		"hardship_status" = hardship_report["status"],
+		"hardship_commentary" = hardship_report["commentary"],
+		"economic_shock_name" = SSeconomy.economic_shock_name,
+		"economic_shock_report" = SSeconomy.get_economic_shock_report(),
+		"gsp_by_source" = corporate_economy_source_breakdown(SSeconomy.gsp_by_source),
+		"consumption_by_sink" = corporate_economy_source_breakdown(SSeconomy.consumption_by_sink),
+		"corporate_surplus_by_source" = corporate_economy_source_breakdown(SSeconomy.corporate_surplus_by_source),
+	)
+	// NOVA EDIT ADDITION END
 	return data
 
 /obj/machinery/computer/accounting/ui_static_data(mob/user)

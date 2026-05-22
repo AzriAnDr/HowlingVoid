@@ -24,7 +24,7 @@
 	desc = "A collection of surplus equipment sourced from the Coalition of Independent Nations' military stockpiles. \
 	Likely to contain old and outdated equipment, as is the nature of surplus."
 	order_flags = ORDER_CONTRABAND
-	cost = CARGO_CRATE_VALUE * 20
+	cost = CARGO_CRATE_VALUE * 8
 	contains = list(
 		// Clothing
 		/obj/item/clothing/under/syndicate/rus_army/cin_surplus/random_color = ITEM_WEIGHT_CLOTHING,
@@ -95,7 +95,7 @@
 /datum/supply_pack/imports/budgeted/vanguard_surplus
 	name = "Vanguard Expeditionary Corps Surplus"
 	desc = "Contains an assortment of surplus equipment from the now-defunct Vanguard Expeditionary Corps. May or may not just be things they stole from other stations."
-	cost = CARGO_CRATE_VALUE * 20
+	cost = CARGO_CRATE_VALUE * 8
 	order_flags = ORDER_GOODY
 	// note: weights are entirely arbitrary. also arbitrarily sorted by weight
 	contains = list(

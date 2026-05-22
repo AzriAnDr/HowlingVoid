@@ -161,7 +161,9 @@
 
 	to_chat(user, span_notice("You loaded [restocked] items in [src][credits_contained > 0 ? ", and are rewarded [credits_contained] [MONEY_NAME]." : "."]"))
 	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	cargo_account.adjust_money(round(credits_contained * 0.5), "Vending: Restock")
+	var/cargo_restock_income = round(credits_contained * 0.5)
+	cargo_account.adjust_money(cargo_restock_income, "Vending: Restock")
+	SSeconomy.record_department_income(ACCOUNT_CAR, "vending_restock", cargo_restock_income)
 	var/obj/item/holochip/payday = new(src, credits_contained)
 	try_put_in_hand(payday, user)
 	credits_contained = 0

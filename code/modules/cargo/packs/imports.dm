@@ -61,7 +61,7 @@
 /datum/supply_pack/imports/bamboo50
 	name = "50 Bamboo Cuttings"
 	desc = "You have no idea how many pandas we had to kill to get this bamboo."
-	cost = CARGO_CRATE_VALUE * 15
+	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/item/stack/sheet/mineral/bamboo/fifty)
 	crate_name = "bamboo cuttings crate"
 
@@ -76,7 +76,7 @@
 /datum/supply_pack/imports/bananium
 	name = "A Single Sheet of Bananium"
 	desc = "Don't let the clown know that he can order this. It costs a fortune even for this much."
-	cost = CARGO_CRATE_VALUE * 100
+	cost = CARGO_CRATE_VALUE * 15
 	contains = list(/obj/item/stack/sheet/mineral/bananium)
 	crate_name = "bananium sheet crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
@@ -112,7 +112,7 @@
 		Due to Nanotrasen's failure to secure exclusive manufacturing rights \
 		during the Spinward Hunting and Shooting policy hearings, this import \
 		is heavily taxed, despite being 'legal'. I hope the price tag is worth it."
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 5
 	access = ACCESS_ARMORY
 	access_view = ACCESS_ARMORY
 	contains = list(
@@ -124,7 +124,7 @@
 /datum/supply_pack/imports/error
 	name = "NULL_ENTRY"
 	desc = "(*!&@#OKAY, OPERATIVE, WE SEE HOW MUCH MONEY YOU'RE FLAUNTING. FINE. HAVE THIS, AND GOOD LUCK PUTTING IT TOGETHER!#@*$"
-	cost = CARGO_CRATE_VALUE * 100
+	cost = CARGO_CRATE_VALUE * 30
 	order_flags = ORDER_EMAG_ONLY
 	contains = list(/obj/item/book/granter/crafting_recipe/regal_condor)
 
@@ -149,7 +149,7 @@
 	desc = "Psst.. bud... want some contraband? I can get you a poster, some nice cigs, dank, even some \
 		sponsored items...you know, the good stuff. Just keep it away from the cops, kay?"
 	order_flags = ORDER_CONTRABAND
-	cost = CARGO_CRATE_VALUE * 20
+	cost = CARGO_CRATE_VALUE * 8
 	contains = list(
 		/obj/effect/spawner/random/contraband = 5,
 	)
@@ -163,7 +163,7 @@
 		SERVICE AUTORIFLES. DON'T WORRY, THE RUMORS ABOUT THE GUN MELTING YOU ARE JUST THAT! RUMORS! \
 		THESE THINGS WORK FINE! MIGHT BE SLIGHTLY DIRTY.!#@*$"
 	order_flags = ORDER_EMAG_ONLY
-	cost = CARGO_CRATE_VALUE * 7
+	cost = CARGO_CRATE_VALUE * 5
 	contains = list(
 		/obj/item/gun/ballistic/automatic/wt550 = 2,
 		/obj/item/ammo_box/magazine/wt550m9 = 2,
@@ -174,7 +174,7 @@
 	name = "Smuggled WT-550 Ammo Crate"
 	desc = "(*!&@#OPERATIVE, YOU LIKE THAT WT-550? THEN WHY NOT EQUIP YOURSELF WITH SOME MORE AMMO!!#@*$"
 	order_flags = ORDER_EMAG_ONLY
-	cost = CARGO_CRATE_VALUE * 4
+	cost = CARGO_CRATE_VALUE * 3
 	contains = list(
 		/obj/item/ammo_box/magazine/wt550m9 = 2,
 		/obj/item/ammo_box/magazine/wt550m9/wtap = 2,
@@ -188,7 +188,7 @@
 	desc = "(*!&@#WANT TO PUT THE FEAR OF DEATH INTO YOUR ENEMIES? THIS CRATE OF GOODIES CAN HELP MAKE THAT A REALITY. \
 		CONTAINS AN ARMOR VEST AND HELMET, A BOX OF FIVE EMP GRENADES, THREE SMOKEBOMBS, TWO GLUON GRENADES AND TWO FRAG GRENADES!#@*$"
 	order_flags = ORDER_EMAG_ONLY
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 7
 	contains = list(
 		/obj/item/storage/box/emps,
 		/obj/item/grenade/smokebomb = 3,
@@ -204,7 +204,7 @@
 	desc = "(*!&@#THE PIGS ON YOUR TAIL? MAYBE YOU CAN BUY SOME TIME WITH THIS CRATE! \
 		CONTAINS A CHAMELEON MASK, BELT AND JUMPSUIT, MIRAGE GRENADES AND AN AGENT CARD! AND A KNIFE!!#@*$"
 	order_flags = ORDER_EMAG_ONLY
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 7
 	contains = list(
 		/obj/item/clothing/mask/chameleon,
 		/obj/item/clothing/under/chameleon,
@@ -221,7 +221,7 @@
 		we have the most modern russian military equipment the black market can offer, for the right price of course. \
 		No lock, best price."
 	order_flags = ORDER_CONTRABAND
-	cost = CARGO_CRATE_VALUE * 12
+	cost = CARGO_CRATE_VALUE * 8
 	contains = list(
 		/obj/item/food/rationpack,
 		/obj/item/ammo_box/speedloader/strilka310,
@@ -253,7 +253,7 @@
 		We don't have enough spare ammo, so you'll have to pick up the weapon of \
 		dead comrade when you run out."
 	order_flags = ORDER_EMAG_ONLY
-	cost = CARGO_CRATE_VALUE * 6
+	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/gun/ballistic/rifle/boltaction = 6)
 
 /datum/supply_pack/imports/vehicle
@@ -276,7 +276,7 @@
 /datum/supply_pack/imports/abandoned
 	name = "Abandoned Crate"
 	desc = "...wait, how did this get here?"
-	cost = CARGO_CRATE_VALUE * 50
+	cost = CARGO_CRATE_VALUE * 20
 	contains = list()
 	crate_type = /obj/structure/closet/crate/secure/loot
 	crate_name = "abandoned crate"
@@ -286,7 +286,7 @@
 /datum/supply_pack/imports/shambler_evil
 	name = "Shamber's Juice Eldritch Energy! Crate"
 	desc = "~J'I'CE!~"
-	cost = CARGO_CRATE_VALUE * 50
+	cost = CARGO_CRATE_VALUE * 15
 	contains = list(/obj/item/reagent_containers/cup/soda_cans/shamblers/eldritch = 1)
 	crate_name = "illegal shambler's juice crate"
 	order_flags = ORDER_CONTRABAND
@@ -295,7 +295,7 @@
 	name = "Animal Hide Crate"
 	desc = "Want to not bother slaughtering a bunch of innocent creatures? Here, have some animal pelts! \
 		Just don't ask where they came from..."
-	cost = CARGO_CRATE_VALUE * 30
+	cost = CARGO_CRATE_VALUE * 10
 	contains = list(/obj/effect/spawner/random/animalhide = 5)
 	crate_name = "animal hide crate"
 	test_ignored = TRUE
@@ -310,7 +310,7 @@
 /datum/supply_pack/imports/giant_wrench_parts
 	name = "Big Slappy parts"
 	desc = "Illegal Big Slappy parts. The fastest and statistically most dangerous wrench."
-	cost = CARGO_CRATE_VALUE * 22
+	cost = CARGO_CRATE_VALUE * 7
 	order_flags = ORDER_CONTRABAND
 	contains = list(/obj/item/weaponcrafting/giant_wrench)
 	crate_name = "unknown parts crate"
@@ -359,7 +359,7 @@
 	desc = "Need a faster and better way of transporting your illegal goods from and to the \
 		station? Fear not, the Long-To-Short-Range-Bluespace-Transceiver (LTSRBT for short) \
 		is here to help. Contains a LTSRBT circuit, two bluespace crystals, and one ansible."
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 7
 	order_flags = ORDER_CONTRABAND
 	contains = list(
 		/obj/item/circuitboard/machine/ltsrbt,
@@ -372,7 +372,7 @@
 	name = "Cargo Shuttle Upgrade: Air Renewal"
 	desc = "Do you or your coworkers have a bad habit of leaving your cargo shuttle shutter doors open to the cold, cold, vaccuum of space? \
 		With this handy engineering retrofit, your shuttle will now be equip with a few handy plastic flaps and a subscription for air refills."
-	cost = CARGO_CRATE_VALUE * 40 // HELLA expensive.
+	cost = CARGO_CRATE_VALUE * 12 // Expensive, but no longer mathematically unreachable.
 	order_flags = ORDER_NOT_DEPARTMENTAL
 	access_view = ACCESS_CARGO
 	storage_override = /obj/item/folder

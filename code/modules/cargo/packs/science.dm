@@ -21,7 +21,7 @@
 
 // Dummy type used in generating anomaly core supply packs, not actually orderable
 /datum/supply_pack/science/raw_anomaly
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 6
 	access = ACCESS_ORDNANCE
 	access_view = ACCESS_ORDNANCE
 	crate_type = /obj/structure/closet/crate/secure/science
@@ -81,7 +81,7 @@
 	name = "Tank Transfer Valves Crate"
 	desc = "The key ingredient for making a lot of people very angry very fast. \
 		Contains two tank transfer valves."
-	cost = CARGO_CRATE_VALUE * 12
+	cost = CARGO_CRATE_VALUE * 8
 	access = ACCESS_RD
 	contains = list(/obj/item/transfer_valve = 2)
 	crate_name = "tank transfer valves crate"

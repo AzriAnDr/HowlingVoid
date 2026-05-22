@@ -165,6 +165,15 @@
 		atom_parent.balloon_alert(user, "needs [total_cost] [MONEY_NAME_AUTOPURAL(total_cost)]!")
 		return FALSE
 	target_acc.transfer_money(idcard.registered_account, total_cost, "Nanotrasen: Usage of Corporate Machinery")
+	// NOVA EDIT ADDITION START - Corporate economy retail extraction
+	var/corporate_take = round(total_cost * SSeconomy.corporate_retail_take_rate)
+	var/actual_corporate_take = 0
+	if(corporate_take > 0 && target_acc)
+		actual_corporate_take = min(corporate_take, target_acc.account_balance)
+		if(actual_corporate_take > 0)
+			target_acc.adjust_money(-actual_corporate_take, "Nanotrasen: Retail Margin")
+	SSeconomy.record_consumption("retail", total_cost, actual_corporate_take)
+	// NOVA EDIT ADDITION END
 	log_econ("[total_cost] [MONEY_NAME] were spent on [parent] by [user] via [idcard.registered_account.account_holder]'s card.")
 	idcard.registered_account.bank_card_talk("[total_cost] [MONEY_NAME] deducted from your account.")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)

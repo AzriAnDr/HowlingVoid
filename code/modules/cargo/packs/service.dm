@@ -109,7 +109,7 @@
 	name = "Exotic Carpet Crate"
 	desc = "Exotic carpets straight from Space Russia, for all your decorating needs. \
 		Contains 100 tiles each of 8 different flooring patterns."
-	cost = CARGO_CRATE_VALUE * 8
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/stack/tile/carpet/blue/fifty = 2,
 					/obj/item/stack/tile/carpet/cyan/fifty = 2,
 					/obj/item/stack/tile/carpet/green/fifty = 2,
@@ -126,7 +126,7 @@
 	name = "Simple Neon Carpet Crate"
 	desc = "Simple rubbery mats with phosphorescent lining. Contains 120 tiles \
 		each of 13 color variants. Limited edition release."
-	cost = CARGO_CRATE_VALUE * 15
+	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/stack/tile/carpet/neon/simple/white/sixty = 2,
 					/obj/item/stack/tile/carpet/neon/simple/black/sixty = 2,
 					/obj/item/stack/tile/carpet/neon/simple/red/sixty = 2,
@@ -205,7 +205,7 @@
 	name = "Silver ID Card Crate"
 	desc = "Did we forget to hire any Heads of Staff? Recruit your own with this high value ID card \
 		capable of holding advanced levels of access in a handy wallet-sized form factor."
-	cost = CARGO_CRATE_VALUE * 7
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/card/id/advanced/silver)
 	crate_name = "silver id card crate"
 
@@ -289,7 +289,7 @@
 /datum/supply_pack/service/bar_sign
 	name = "Bar Sign Replacement Kit"
 	desc = "A replacement bar sign, perfect for drawing in customers to your bar, tavern, inn, nightclub, or even coffeehouse!"
-	cost = CARGO_CRATE_VALUE * 14
+	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/wallframe/barsign/all_access)
 	crate_name = "bar sign crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE

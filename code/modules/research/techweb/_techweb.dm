@@ -413,6 +413,8 @@
 		var/datum/bank_account/science_department_bank_account = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		var/techweb_reward = SSeconomy.get_techweb_bounty_value()
 		science_department_bank_account?.adjust_money(techweb_reward)
+		SSeconomy.record_department_income(ACCOUNT_SCI, "science_patents", techweb_reward)
+		SSeconomy.record_gsp("science_patents", techweb_reward)
 		log_message += ", gaining [techweb_reward] to [science_department_bank_account] for it."
 
 	// Avoid logging the same 300+ lines at the beginning of every round

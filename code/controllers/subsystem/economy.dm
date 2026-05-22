@@ -12,9 +12,6 @@ SUBSYSTEM_DEF(economy)
 										ACCOUNT_CAR = ACCOUNT_CAR_NAME,
 										// NOVA EDIT ADDITION START
 										ACCOUNT_CMD = ACCOUNT_CMD_NAME,
-										ACCOUNT_DS2 = ACCOUNT_DS2_NAME,
-										ACCOUNT_INT = ACCOUNT_INT_NAME,
-										ACCOUNT_TI = ACCOUNT_TI_NAME,
 										// NOVA EDIT ADDITION END
 										ACCOUNT_SEC = ACCOUNT_SEC_NAME)
 	var/list/departmental_accounts = list()
@@ -34,10 +31,8 @@ SUBSYSTEM_DEF(economy)
 	var/station_total = 0
 	/// A var that tracks how much money is expected to be on station at a given time. If less than station_total prices go up in vendors.
 	var/station_target = 1
-	/// A passively increasing buffer to help alliviate inflation later into the shift, but to a lesser degree.
-	var/station_target_buffer = 0
-	/// A var that displays the result of inflation_value for easier debugging and tracking.
-	var/inflation_value = 1
+	/// Temporary price index used by market crash events. Normal vending inflation uses economic_price_index.
+	var/market_crash_price_index = 1
 	/// How many civilain bounties have been completed so far this shift? Affects civilian budget payout values.
 	var/civ_bounty_tracker = 0
 	/// Contains the message to send to newscasters about price inflation and earnings, updated on price_update()
@@ -75,8 +70,9 @@ SUBSYSTEM_DEF(economy)
 	if(time2text(world.timeofday, "DDD") == SUNDAY)
 		mail_blocked = TRUE
 	for(var/dep_id in department_accounts)
-		if(dep_id == ACCOUNT_CAR) //cargo starts with NOTHING
-			new /datum/bank_account/department(dep_id, 0, player_account = FALSE)
+		// NOVA EDIT CHANGE - Cargo starts with a small active-economy budget instead of passive grants.
+		if(dep_id == ACCOUNT_CAR)
+			new /datum/bank_account/department(dep_id, 2500, player_account = FALSE)
 			continue
 		new /datum/bank_account/department(dep_id, budget_to_hand_out, player_account = FALSE)
 	return SS_INIT_SUCCESS
@@ -87,7 +83,6 @@ SUBSYSTEM_DEF(economy)
 	dep_cards = SSeconomy.dep_cards
 
 /// Processing step defines, to track what we've done so far
-#define ECON_DEPARTMENT_STEP "econ_dpt_stp"
 #define ECON_ACCOUNT_STEP "econ_act_stp"
 #define ECON_PRICE_UPDATE_STEP "econ_prc_stp"
 
@@ -95,31 +90,29 @@ SUBSYSTEM_DEF(economy)
 	var/seconds_per_tick = wait / (5 MINUTES)
 	if(!resumed)
 		temporary_total = 0
-		processing_part = ECON_DEPARTMENT_STEP
-		cached_processing = department_accounts.Copy()
-
-	if(processing_part == ECON_DEPARTMENT_STEP)
-		if(!departmental_payouts())
-			return
-
+		station_total = 0
 		processing_part = ECON_ACCOUNT_STEP
 		cached_processing = bank_accounts_by_id.Copy()
-		station_total = 0
-		station_target_buffer += STATION_TARGET_BUFFER
 
 	if(processing_part == ECON_ACCOUNT_STEP)
 		if(!issue_paydays())
 			return
 
 		processing_part = ECON_PRICE_UPDATE_STEP
-		station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
+		station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)), 1)
 
 	if(processing_part == ECON_PRICE_UPDATE_STEP)
+		// NOVA EDIT ADDITION START - Soft station price index
+		update_economic_price_index()
+		if(should_update_vending_prices())
+			update_vending_prices()
+		capture_economic_snapshot()
+		// NOVA EDIT ADDITION END
 		if(!HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING) && !price_update())
 			return
 
 	if(times_fired % ticks_per_mail == 0)
-		var/effective_mailcount = round(living_player_count() / (inflation_value - 0.5)) //More mail at low inflation, and vis versa.
+		var/effective_mailcount = round(living_player_count() / (get_effective_price_index() - 0.5)) //More mail at low inflation, and vis versa.
 		mail_waiting += clamp(effective_mailcount, 1, ticks_per_mail * MAX_MAIL_PER_MINUTE * seconds_per_tick)
 
 	SSstock_market.news_string = ""
@@ -131,25 +124,6 @@ SUBSYSTEM_DEF(economy)
 	for(var/datum/bank_account/department/D in departmental_accounts)
 		if(D.department_id == dep_id)
 			return D
-
-/**
- * Departmental income payments are kept static and linear for every funded department, and paid out once every 5 minutes, as determined by MAX_GRANT_DPT.
- * Cargo and the civil station budget rely on active income sources instead of passive budget grants.
- */
-/datum/controller/subsystem/economy/proc/departmental_payouts()
-	// son sonic speed? cache? hot over in cold food why? (datum var accesses are slow, cache lists for sonic speed)
-	var/list/cached_processing = src.cached_processing
-	for(var/i in 1 to length(cached_processing))
-		if(cached_processing[i] == ACCOUNT_CAR || cached_processing[i] == ACCOUNT_CIV)
-			continue
-		var/datum/bank_account/dept_account = get_dep_account(cached_processing[i])
-		if(!dept_account)
-			continue
-		dept_account.adjust_money(MAX_GRANT_DPT)
-		if(MC_TICK_CHECK)
-			cached_processing.Cut(1, i + 1)
-			return FALSE
-	return TRUE
 
 /**
  * Issues all our bank-accounts paydays, and gets an idea of how much money is in circulation
@@ -178,15 +152,25 @@ SUBSYSTEM_DEF(economy)
 	return max(0, round(job.starting_funds))
 
 /**
- * Updates the the inflation_value, effecting newscaster alerts and the mail system.
+ * Updates the economic price report, affecting newscaster alerts and the mail system.
  **/
 /datum/controller/subsystem/economy/proc/price_update()
-	var/fluff_string = ""
+	var/price_status = "Vendor prices follow current station money pressure. Current pressure signal: [last_price_pressure_reason]."
 	if(!HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
-		fluff_string = ", but company countermeasures protect <b>YOU</b> from being affected!"
+		price_status = "Vendor prices follow current station money pressure. Current pressure signal: [last_price_pressure_reason]."
 	else
-		fluff_string = ", and company countermeasures are failing to protect <b>YOU</b> from being affected. We're all doomed!"
-	earning_report = "<b>Sector Economic Report</b><br><br> Sector vendor prices is currently at <b>[SSeconomy.inflation_value()*100]%</b>[fluff_string]<br><br> The station spending power is currently <b>[station_total] [MONEY_NAME_CAPITALIZED]</b>, and the crew's targeted allowance is at <b>[station_target] [MONEY_NAME_CAPITALIZED]</b>.<br><br>[SSstock_market.news_string]"
+		price_status = "A temporary market shock is active above normal station money pressure."
+	earning_report = "<b>Sector Economic Report</b><br><br>Sector vendor prices are currently at <b>[round(SSeconomy.get_effective_price_index() * 100, 0.1)]%</b>. [price_status]<br><br>The station spending power is currently <b>[station_total] [MONEY_NAME_CAPITALIZED]</b>, and the crew's targeted allowance is at <b>[station_target] [MONEY_NAME_CAPITALIZED]</b>.<br><br>Retail consumption includes vending purchases and payment-machine transactions.<br><br>[SSstock_market.news_string]"
+	// NOVA EDIT ADDITION START - Corporate economy newscaster summary
+	earning_report += "<br><br>Nanotrasen reports strong sector productivity. Corporate surplus has reached <b>[round(corporate_surplus)] [MONEY_NAME_CAPITALIZED]</b> against <b>[round(gross_station_product)] [MONEY_NAME_CAPITALIZED]</b> in gross station product. Wage share is stable at <b>[round(get_wage_share() * 100, 0.1)]%</b>, while average crew purchasing power remains <b>[get_paycheck_pps()]</b> basic baskets per payday. This is considered a successful labor-cost containment outcome.<br><br>"
+	var/list/hardship_report = get_hardship_report_data()
+	var/hardship_status = hardship_report["status"]
+	var/hardship_commentary = hardship_report["commentary"]
+	earning_report += "<b>[hardship_status]</b>: [hardship_commentary]<br><br>"
+	var/shock_report = get_economic_shock_report()
+	if(shock_report)
+		earning_report += "<b>[economic_shock_name]</b>: [shock_report]<br><br>"
+	// NOVA EDIT ADDITION END
 	var/update_alerts = FALSE
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_ECONOMY_ALERTS) && (living_player_count() > 1))
 		var/datum/bank_account/moneybags
@@ -206,19 +190,12 @@ SUBSYSTEM_DEF(economy)
 	return TRUE
 
 /**
- * Proc that returns a value meant to shift inflation values in vendors, based on how much money exists on the station.
+ * Legacy wrapper for callers that still ask for the old inflation value.
  *
- * If crew are somehow aquiring far too much money, this value will dynamically cause vendables across the station to skyrocket in price until some money is spent.
- * Additionally, civilain bounties will cost less, and cargo goodies will increase in price as well.
- * The goal here is that if you want to spend money, you'll have to get it, and the most efficient method is typically from other players.
+ * Returns the effective vending price index, including market crash shock when active.
  **/
 /datum/controller/subsystem/economy/proc/inflation_value()
-	if(!bank_accounts_by_id.len)
-		return 1
-	if(HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
-		return inflation_value //early return instead of the actual check
-	inflation_value = max(round(((station_total / bank_accounts_by_id.len) / station_target), 0.1), 1.0)
-	return inflation_value
+	return get_effective_price_index()
 
 /datum/controller/subsystem/economy/proc/get_storyteller_modifier_value(modifier_id, default_value = 1)
 	if(!SSstoryteller)
@@ -295,9 +272,12 @@ SUBSYSTEM_DEF(economy)
 	for(var/i in 1 to length(prices_to_update))
 		var/obj/machinery/vending/vending = prices_to_update[i]
 		vending.reset_prices(vending.product_records, vending.coin_records + vending.hidden_records)
+	// NOVA EDIT ADDITION START - Soft station price index
+	last_vending_price_index = get_effective_price_index()
+	// NOVA EDIT ADDITION END
 
 /**
- * Reassign the prices of the vending machine as a result of the inflation value, as provided by SSeconomy
+ * Reassign vending prices from the current effective price index, as provided by SSeconomy.
  *
  * This rebuilds both /datum/data/vending_products lists using the vending machine's Howling Void price tier.
  * Arguments:
@@ -305,9 +285,9 @@ SUBSYSTEM_DEF(economy)
  * * premiumlist - the list of premium product datums in the vendor to refresh their prices.
  */
 /obj/machinery/vending/proc/reset_prices(list/recordlist, list/premiumlist)
-	var/inflation_value = HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING) ? SSeconomy.inflation_value() : 1
-	default_price = round(initial(default_price) * inflation_value)
-	extra_price = round(initial(extra_price) * inflation_value)
+	var/effective_price_index = SSeconomy.get_effective_price_index()
+	default_price = round(initial(default_price) * effective_price_index)
+	extra_price = round(initial(extra_price) * effective_price_index)
 
 	for(var/datum/data/vending_product/record as anything in recordlist)
 		record.price = get_product_price(record.product_path, premium = FALSE, stock_amount = record.max_amount)
@@ -326,6 +306,5 @@ SUBSYSTEM_DEF(economy)
 	card_holder.adjust_timed_status_effect(wait, /datum/status_effect/spotlight_light)
 	return TRUE
 
-#undef ECON_DEPARTMENT_STEP
 #undef ECON_ACCOUNT_STEP
 #undef ECON_PRICE_UPDATE_STEP

@@ -49,6 +49,7 @@
 	foodtypes = MEAT | GRAIN | DAIRY
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+	custom_price = 12
 	///Does this food have the steam effect on it when initialized
 	var/hot_and_steamy = TRUE
 
@@ -71,6 +72,7 @@
 	icon_state = "foodtray_burg"
 	tastes = list("bread" = 2, "meat?" = 2, "cheese?" = 2, "laziness" = 1)
 	foodtypes = MEAT | GRAIN | DAIRY
+	custom_price = 12
 
 /obj/item/food/vendor_tray_meal/chicken_sandwich
 	name = "\improper NT-Meal: Spicy Chicken Sandwich"
@@ -79,6 +81,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/capsaicin = 10)
 	tastes = list("bread" = 2, "chicken?" = 2, "overwhelming spice" = 2, "laziness" = 1)
 	foodtypes = MEAT | GRAIN | DAIRY
+	custom_price = 13
 
 /*
 *	Yangyu Meals
@@ -90,6 +93,7 @@
 	icon_state = "foodtray_noodle"
 	tastes = list("cheap noodles" = 2, "laziness" = 1)
 	foodtypes = GRAIN | VEGETABLES
+	custom_price = 12
 
 /obj/item/food/vendor_tray_meal/sushi
 	name = "\improper Meinkosu: Fresh Carp Rolls"
@@ -97,6 +101,7 @@
 	icon_state = "foodtray_gas_station_sushi"
 	tastes = list("imitation space carp" = 2, "stale rice" = 2, "laziness" = 1)
 	foodtypes = GRAIN | SEAFOOD
+	custom_price = 14
 
 /obj/item/food/vendor_tray_meal/beef_rice
 	name = "\improper Meinkosu: Beef and Fried Rice"
@@ -104,6 +109,7 @@
 	icon_state = "foodtray_beef_n_rice"
 	tastes = list("cheap beef" = 1, "rice" = 3, "laziness" = 1)
 	foodtypes = GRAIN | MEAT
+	custom_price = 13
 
 /*
 *	Mothic Meals
@@ -115,6 +121,7 @@
 	icon_state = "foodtray_pesto_pizza"
 	tastes = list("tomato?" = 2, "cheese?" = 2, "herbs" = 1, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | VEGETABLES
+	custom_price = 13
 
 /obj/item/food/vendor_tray_meal/baked_rice
 	name = "\improper Main Course - Type M: Baked Rice and Grilled Cheese"
@@ -122,6 +129,7 @@
 	icon_state = "foodtray_rice_n_grilled_cheese"
 	tastes = list("rice" = 2, "peppers" = 2, "charred cheese" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | VEGETABLES
+	custom_price = 14
 
 /obj/item/food/vendor_tray_meal/fueljack
 	name = "\improper Main Course - Type M: Fueljack's Tray"
@@ -129,6 +137,7 @@
 	icon_state = "foodtray_fuel_jacks_meal"
 	tastes = list("potato" = 2, "cabbage" = 2, "cheese?" = 2, "laziness" = 1)
 	foodtypes = DAIRY | VEGETABLES
+	custom_price = 14
 
 /*
 *	Tiziran Meals
@@ -140,6 +149,7 @@
 	icon_state = "foodtray_moonfish_nizaya"
 	tastes = list("fish?" = 2, "cheap noodles" = 2, "laziness" = 1)
 	foodtypes = VEGETABLES | NUTS | SEAFOOD
+	custom_price = 16
 
 /obj/item/food/vendor_tray_meal/emperor_roll
 	name = "\improper Tizira Imports: Emperor Roll"
@@ -147,6 +157,7 @@
 	icon_state = "foodtray_emperor_roll"
 	tastes = list("bread" = 2, "cheese?" = 2, "liver?" = 2, "laziness" = 1)
 	foodtypes = VEGETABLES | NUTS | MEAT | GORE
+	custom_price = 18
 
 /obj/item/food/vendor_tray_meal/mushroom_fry
 	name = "\improper Tizira Imports: Mushroom Stirfry"
@@ -154,6 +165,7 @@
 	icon_state = "foodtray_shroom_fry"
 	tastes = list("mushroom" = 4, "becoming rich" = 1, "laziness" = 1)
 	foodtypes = VEGETABLES
+	custom_price = 15
 
 /* SIDES */
 
@@ -186,19 +198,21 @@
 	tastes = list("tough bread" = 2, "peanut butter" = 2)
 	foodtypes = GRAIN
 	hot_and_steamy = FALSE
-	custom_price = PAYCHECK_LOWER * 2.5
+	custom_price = 6
 
 /obj/item/food/vendor_tray_meal/side/crackers_and_jam
 	name = "\improper NT-Side: Flatbread and Berry Jelly"
 	desc = "A small stack of tough flatbread, and a small spread of nondescript berry jelly for each."
 	tastes = list("tough bread" = 2, "berries" = 2)
 	foodtypes = GRAIN | FRUIT
+	custom_price = 6
 
 /obj/item/food/vendor_tray_meal/side/crackers_and_cheese
 	name = "\improper NT-Side: Flatbread and Cheese Spread"
 	desc = "A small stack of tough flatbread, and a small spread of cheese for each."
 	tastes = list("tough bread" = 2, "cheese" = 2)
 	foodtypes = GRAIN | DAIRY
+	custom_price = 7
 
 /*
 *	Yangyu Sides
@@ -222,6 +236,7 @@
 	trash_type = /obj/item/trash/empty_side_pack/yangyu
 	tastes = list("miso" = 2)
 	foodtypes = VEGETABLES
+	custom_price = 5
 
 /obj/item/food/vendor_tray_meal/side/rice
 	name = "\improper Fukusai: White Rice"
@@ -230,6 +245,7 @@
 	trash_type = /obj/item/trash/empty_side_pack/yangyu
 	tastes = list("old rice" = 2)
 	foodtypes = GRAIN
+	custom_price = 5
 
 /obj/item/food/vendor_tray_meal/side/pickled_vegetables
 	name = "\improper Fukusai: Pickled Vegetables"
@@ -238,6 +254,7 @@
 	trash_type = /obj/item/trash/empty_side_pack/yangyu
 	tastes = list("vinegar" = 4)
 	foodtypes = VEGETABLES
+	custom_price = 6
 
 /*
 *	Mothic Sides
@@ -261,6 +278,7 @@
 	trash_type = /obj/item/trash/empty_side_pack/moth
 	tastes = list("fabric?" = 2, "sugar" = 2)
 	foodtypes = CLOTH | GRAIN | SUGAR
+	custom_price = 6
 
 /obj/item/food/vendor_tray_meal/side/cornbread
 	name = "\improper Side Course - Type M: Cornbread"
@@ -269,6 +287,7 @@
 	trash_type = /obj/item/trash/empty_side_pack/moth
 	tastes = list("cornbread" = 2, "sweetness" = 2)
 	foodtypes = GRAIN | SUGAR
+	custom_price = 7
 
 /obj/item/food/vendor_tray_meal/side/roasted_seeds
 	name = "\improper Side Course - Type M: Roasted Seeds"
@@ -277,6 +296,7 @@
 	trash_type = /obj/item/trash/empty_side_pack/moth
 	tastes = list("seeds" = 2, "char" = 2)
 	foodtypes = NUTS
+	custom_price = 6
 
 /*
 *	Tiziran Sides
@@ -300,6 +320,7 @@
 	trash_type = /obj/item/trash/empty_side_pack/tizira
 	tastes = list("tough rootbread" = 2, "pate" = 2)
 	foodtypes = VEGETABLES | NUTS | MEAT
+	custom_price = 8
 
 /obj/item/food/vendor_tray_meal/side/korta_brittle
 	name = "\improper Tizira Imports: Korta Brittle"
@@ -308,6 +329,7 @@
 	trash_type = /obj/item/trash/empty_side_pack/tizira
 	tastes = list("peppery heat" = 2)
 	foodtypes = NUTS
+	custom_price = 7
 
 /obj/item/food/vendor_tray_meal/side/crispy_headcheese
 	name = "\improper Tizira Imports: Crisped Headcheese"
@@ -316,3 +338,4 @@
 	trash_type = /obj/item/trash/empty_side_pack/tizira
 	tastes = list("cheese" = 1, "oil" = 1)
 	foodtypes = MEAT | VEGETABLES | NUTS | GORE
+	custom_price = 8

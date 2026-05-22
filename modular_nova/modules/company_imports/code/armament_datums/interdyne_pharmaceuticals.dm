@@ -26,26 +26,26 @@
 	name = "Multi Pack of Interdyne Hypospray Kits"
 	desc = "Multi pack of Specially made interdyne hypospray kits, designed with proprietary technology and the patient first, this set of hyposprays will \
 	make any doctor and patient happy!"
-	cost = CARGO_CRATE_VALUE * 11.5
+	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/storage/hypospraykit/interdyne = 3)
 
 /datum/supply_pack/companies/medical/interdyne/premium_meds
 	name = "Interdyne Premium Medicines"
 	desc = "A specially curated box of various advanced medicines designed for frontier activity, by doctors for doctors!"
-	cost = CARGO_CRATE_VALUE * 8
+	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/storage/box/evilmeds/interdyne)
 
 /datum/supply_pack/companies/medical/interdyne/premium_meds_bulk
 	name = "Multi Pack of Interdyne Premium Medicines"
 	desc = "A set of specially curated box of various advanced medicines designed for frontier activity, by doctors for doctors!"
 	contains = list(/obj/item/storage/box/evilmeds/interdyne = 3)
-	cost = CARGO_CRATE_VALUE * 22
+	cost = CARGO_CRATE_VALUE * 10
 
 /datum/supply_pack/companies/medical/interdyne/nvg_medhugs
 	name = "Night Vision Medhuds Crate"
 	desc = "A box of state of the art medical night vision goggles, designed to assure medical staff can operate and see IN THE DARK!"
 	contains = list(/obj/item/clothing/glasses/hud/health/night/science = 3)
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 6
 
 /datum/supply_pack/companies/medical/interdyne/emptysmallkit
 	name = "Empty Small Interdyne Kits"
@@ -69,25 +69,25 @@
 	name = "Interdyne Doctor Kit"
 	desc = "A surgical kit designed for surgical aid, made by doctors for doctors!"
 	contains = list(/obj/item/storage/medkit/tactical/premium/interdyne )
-	cost = CARGO_CRATE_VALUE * 5
+	cost = CARGO_CRATE_VALUE * 4
 
 /datum/supply_pack/companies/medical/interdyne/doctorkit_bulk
 	name = "Multi Pack of Interdyne Doctor Kits"
 	desc = "Multiple surgical trauma kits, made by doctors, for doctors."
 	contains = list(/obj/item/storage/medkit/tactical/premium/interdyne = 3 )
-	cost = CARGO_CRATE_VALUE * 13.5
+	cost = CARGO_CRATE_VALUE * 8
 
 /datum/supply_pack/companies/medical/interdyne/large_traumakit
 	name = "Interdyne Large Trauma Kits"
 	desc = "A trauma kit designed for immediate medical aid, made by doctors for doctors!"
 	contains = list(/obj/item/storage/medkit/tactical/premium/interdyne )
-	cost = CARGO_CRATE_VALUE * 5
+	cost = CARGO_CRATE_VALUE * 4
 
 /datum/supply_pack/companies/medical/interdyne/large_traumakit_bulk
 	name = "Multi Pack of Interdyne Large Trauma Kits"
 	desc = "A pack of trauma kits designed for immediate medical aid, made by doctors for doctors!"
 	contains = list(/obj/item/storage/medkit/tactical/premium/interdyne = 3 )
-	cost = CARGO_CRATE_VALUE * 13.5
+	cost = CARGO_CRATE_VALUE * 8
 
 /datum/supply_pack/companies/medical/interdyne/medium_kit
 	name = "Interdyne Medical Kit"
@@ -99,7 +99,7 @@
 	name = "Multi Pack of Interdyne Medical Kit"
 	desc = "A pack of standard medical kit designed around various traumas, made by doctors, for doctors."
 	contains = list(/obj/item/storage/medkit/tactical/premium/interdyne/medium = 3)
-	cost = CARGO_CRATE_VALUE * 9
+	cost = CARGO_CRATE_VALUE * 6
 
 /datum/supply_pack/companies/medical/interdyne/medium_kit_surgical
 	name = "Interdyne Surgical Kit"
@@ -111,7 +111,7 @@
 	name = "Multi Pack of Interdyne Surgical Kit"
 	desc = "Multiple surgical kits, made by doctors, for doctors."
 	contains = list(/obj/item/storage/medkit/tactical/premium/interdyne/medium/surgical = 3)
-	cost = CARGO_CRATE_VALUE * 9
+	cost = CARGO_CRATE_VALUE * 6
 
 /datum/supply_pack/companies/medical/interdyne/medium_kit_oxytoxloss
 	name = "Interdyne OxyTox Trauma Kit"
@@ -123,7 +123,7 @@
 	name = "Multi Pack of Interdyne OxyTox Trauma Kit"
 	desc = "Multiple trauma kits filled with oxygen and toxins related ailments, made by doctors, for doctors."
 	contains = list(/obj/item/storage/medkit/tactical/premium/interdyne/medium/Tox_Oxy = 3)
-	cost = CARGO_CRATE_VALUE * 9
+	cost = CARGO_CRATE_VALUE * 6
 
 /datum/supply_pack/companies/medical/interdyne/firstaidkit
 	name = "Interdyne First Aid Kit"
@@ -135,7 +135,7 @@
 	name = "Multi Pack of Interdyne First Aid Kit"
 	desc = "A pack of first aid kits designed for various traumas!"
 	contains = list(/obj/item/storage/pouch/medical/firstaid/interdyne = 3)
-	cost = CARGO_CRATE_VALUE * 8
+	cost = CARGO_CRATE_VALUE * 5
 
 /datum/supply_pack/companies/medical/interdyne/firstaidburnkit
 	name = "Interdyne First Aid Kit (Burn)"
@@ -147,7 +147,7 @@
 	name = "Multi Pack of Interdyne First Aid Kit (Burn)"
 	desc = "A pack of first aid kits designed for burn related traumas!"
 	contains = list(/obj/item/storage/pouch/medical/firstaid/interdyne/burn = 3)
-	cost = CARGO_CRATE_VALUE * 8
+	cost = CARGO_CRATE_VALUE * 5
 
 /datum/supply_pack/companies/medical/interdyne/firstaidbrutekit
 	name = "Interdyne First Aid Kit (Brute)"
@@ -159,7 +159,7 @@
 	name = "Multi Pack of Interdyne First Aid Kit (Brute)"
 	desc = "A pack of first aid kits designed for brute related traumas!"
 	contains = list(/obj/item/storage/pouch/medical/firstaid/interdyne/brute = 3)
-	cost = CARGO_CRATE_VALUE * 8
+	cost = CARGO_CRATE_VALUE * 5
 
 /datum/supply_pack/companies/medical/interdyne/firstaidtoxinkit
 	name = "Interdyne First Aid Kit (Toxin)"
@@ -171,7 +171,7 @@
 	name = "Multi Pack of Interdyne First Aid Kit (Toxin)"
 	desc = "A pack of first aid kits designed for toxin related traumas!"
 	contains = list(/obj/item/storage/pouch/medical/firstaid/interdyne/toxin = 3)
-	cost = CARGO_CRATE_VALUE * 8
+	cost = CARGO_CRATE_VALUE * 5
 
 /datum/supply_pack/companies/medical/interdyne/firstaidoxykit
 	name = "Interdyne First Aid Kit (Oxygen)"
@@ -183,7 +183,7 @@
 	name = "Multi Pack of Interdyne First Aid Kit (Oxygen)"
 	desc = "A pack of first aid kits designed for oxygen related traumas!"
 	contains = list(/obj/item/storage/pouch/medical/firstaid/interdyne/oxygen = 3)
-	cost = CARGO_CRATE_VALUE * 8
+	cost = CARGO_CRATE_VALUE * 5
 
 /datum/supply_pack/companies/medical/interdyne/biohazard_box
 	name = "Interdyne Biohazard Response Box"
@@ -200,7 +200,7 @@
 		/obj/item/storage/box/masks,
 		/obj/item/storage/box/gloves,
 		)
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 7
 	crate_name = "Interdyne Biohazard Response Crate"
 
 
@@ -250,13 +250,13 @@
 	name = "Morale Boosting Maid Outfit"
 	desc = "A morale boosting, kevlar lined, maid outfit, guarenteed to boost the morale of either you or your fellow personnel around you, SLIGHTLY!"
 	contains = list(/obj/item/storage/backpack/duffelbag/syndie/interdyne/maidkit_sing)
-	cost = CARGO_CRATE_VALUE * 5
+	cost = CARGO_CRATE_VALUE * 3
 
 /datum/supply_pack/companies/apparel/interdyne/maidset_bulk
 	name = "Pack of Morale Boosting Maid Outfit"
 	desc = "What's better than one morale boosting, kevlar lined, maid outfit, guarenteed to boost the morale of either you or your fellow personnel around you only SLIGHTLY? THREE OF THEM!"
 	contains = list(/obj/item/storage/backpack/duffelbag/syndie/interdyne/maidkit_sing = 3)
-	cost = CARGO_CRATE_VALUE * 14.5
+	cost = CARGO_CRATE_VALUE * 7
 
 /*
 	SCIFI NERD CONTENT
@@ -277,7 +277,7 @@
 	name = "Interdyne Proprietary Frontier Modsuit"
 	desc = "A proprietary Interdyne Modsuit, Built to be useful, carrying the Interdyne Pharmaceuticals branding gloriously."
 	contains = list(/obj/item/mod/control/pre_equipped/interdyne/nerfed)
-	cost = CARGO_CRATE_VALUE * 25
+	cost = CARGO_CRATE_VALUE * 12
 
 /datum/supply_pack/companies/modsuits/interdyne/surg_processor
 	name = "Preloaded Surgical processor"
@@ -289,7 +289,7 @@
 	name = "Multi Pack of Preloaded Surgical processor"
 	desc = "A set of preloaded surgical processors, each loaded with many different surgeries, built for areas without adequate scientific capabilities or studies!"
 	contains = list(/obj/item/mod/module/surgical_processor/preloaded = 3)
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 6
 
 /*
 	Anything AI/Borg/Machine

@@ -1794,6 +1794,7 @@
 	var/amount = round(clamp((snapshot.danger_score - snapshot.control_score) * 75, 1500, 5000), 100)
 	if(!owner.grant_department_budget(ACCOUNT_CAR, amount, "Storyteller relief grant"))
 		return FALSE
+	SSeconomy.record_grant("storyteller_cargo_budget_grant", amount, ACCOUNT_CAR)
 	owner.announce_storyteller_notice(
 		"Central Command has approved an emergency logistics subsidy for Cargo operations.",
 		"Cargo Budget Grant",

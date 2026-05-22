@@ -107,6 +107,30 @@
 
 	var/datum/bank_account/station_account = SSeconomy.get_dep_account(ACCOUNT_CIV)
 	data["station_budget"] = station_account?.account_balance || 0
+	// NOVA EDIT ADDITION START - Department budget visibility
+	var/list/department_budgets = list()
+	var/total_department_budget = 0
+	for(var/datum/bank_account/department/department_account in SSeconomy.departmental_accounts)
+		var/balance = round(department_account.account_balance)
+		total_department_budget += balance
+		var/role = "Department"
+		if(department_account.department_id == ACCOUNT_CIV)
+			role = "Station payroll fund"
+		else if(department_account.department_id == ACCOUNT_CAR)
+			role = "Cargo operations"
+
+		department_budgets += list(list(
+			"id" = department_account.department_id,
+			"name" = department_account.account_holder,
+			"balance" = balance,
+			"role" = role,
+			"is_station" = department_account.department_id == ACCOUNT_CIV,
+			"is_cargo" = department_account.department_id == ACCOUNT_CAR,
+		))
+	data["department_budgets"] = department_budgets
+	data["total_department_budget"] = total_department_budget
+	data["visible_station_budget"] = total_department_budget
+	// NOVA EDIT ADDITION END
 
 	var/list/accounts = list()
 	var/total_positive_adjustments = 0

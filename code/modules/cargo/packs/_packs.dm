@@ -82,6 +82,9 @@
 /datum/supply_pack/proc/get_cost()
 	. = cost
 	. *= SSeconomy.pack_price_modifier
+	// NOVA EDIT ADDITION - Corporate economy temporary import-market shocks.
+	. *= SSeconomy.get_supply_pack_event_price_modifier(src)
+	. = round(.)
 
 /**
  * Takes a provided container, iterates, and spawns the full quantity of items within it, and applies and necessary status effects when the crate is populated.

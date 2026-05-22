@@ -196,6 +196,7 @@
 		to_chat(user, span_warning("This rite requires more money!"))
 		return FALSE
 	account.adjust_money(-money_cost, "Church Donation: Rite")
+	SSeconomy.record_consumption("church_rites", money_cost)
 	. = ..()
 
 /datum/religion_rites/greed/vendatray

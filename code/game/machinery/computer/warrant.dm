@@ -128,6 +128,7 @@
 
 	var/datum/bank_account/sec_account = SSeconomy.get_dep_account(ACCOUNT_SEC)
 	sec_account.adjust_money(amount)
+	SSeconomy.record_tax_fine("security_fines", amount, ACCOUNT_SEC)
 	SSblackbox.ReportCitation(REF(warrant), paid = warrant.paid)
 
 	if(warrant.fine != 0 || target.name == user)

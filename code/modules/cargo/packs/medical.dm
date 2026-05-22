@@ -6,7 +6,7 @@
 /datum/supply_pack/medical/bloodpacks
 	name = "Blood Pack Variety Crate"
 	desc = "Contains ten different blood packs for reintroducing blood to patients."
-	cost = CARGO_CRATE_VALUE * 7
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(
 		/obj/item/reagent_containers/blood = 2,
 		/obj/item/reagent_containers/blood/a_plus,
@@ -134,7 +134,7 @@
 	desc = "Do you want to perform surgery, but don't have one of those fancy \
 		shmancy degrees? Just get started with this crate containing a DeForest surgery tray, \
 		Sterilizine spray and collapsible roller bed."
-	cost = CARGO_CRATE_VALUE * 6
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(
 		/obj/item/surgery_tray/full,
 		/obj/item/reagent_containers/medigel/sterilizine,
@@ -149,7 +149,7 @@
 		should last several days, with a large pump to fill containers with. Direct injection \
 		of saline should be left to medical professionals as the pump is capable of overdosing \
 		patients."
-	cost = CARGO_CRATE_VALUE * 6
+	cost = CARGO_CRATE_VALUE * 4
 	access = ACCESS_MEDICAL
 	contains = list(/obj/machinery/iv_drip/saline)
 	crate_type = /obj/structure/closet/crate/large
@@ -190,7 +190,7 @@
 /datum/supply_pack/medical/arm_implants
 	name = "Strong-Arm Implant Set"
 	desc = "A crate containing two implants, which can be surgically implanted to empower the strength of human arms. Warranty void if exposed to electromagnetic pulses."
-	cost = CARGO_CRATE_VALUE * 6
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/organ/cyberimp/arm/strongarm = 2)
 	crate_name = "Strong-Arm implant crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE

@@ -15,7 +15,7 @@
 	name = "APLU MK-I Crate"
 	desc = "A do-it-yourself kit for building an ALPU MK-I \"Ripley\", designed for lifting, \
 		carrying heavy equipment, and other station tasks. Batteries not included."
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 7
 	access_view = ACCESS_ROBOTICS
 	contains = list(/obj/item/mecha_parts/chassis/ripley,
 					/obj/item/mecha_parts/part/ripley_torso,
@@ -63,7 +63,7 @@
 	name = "Insulated Gloves Crate"
 	desc = "The backbone of modern society. Barely ever ordered for actual engineering. \
 		Contains three insulated gloves."
-	cost = CARGO_CRATE_VALUE * 8 //Made of pure-grade bullshittinium
+	cost = CARGO_CRATE_VALUE * 5 //Made of pure-grade bullshittinium
 	access_view = ACCESS_ENGINE_EQUIP
 	contains = list(/obj/item/clothing/gloves/color/yellow = 3)
 	crate_name = "insulated gloves crate"
@@ -159,7 +159,7 @@
 	desc = "The pride of Nanotrasen Naval Command. The legendary Bluespace Artillery Cannon is a \
 		devastating feat of human engineering and testament to wartime determination. \
 		Highly advanced research is required for proper construction."
-	cost = CARGO_CRATE_VALUE * 30
+	cost = CARGO_CRATE_VALUE * 15
 	order_flags = ORDER_SPECIAL
 	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/paper/guides/jobs/engineering/bsa,
@@ -173,7 +173,7 @@
 /datum/supply_pack/engineering/bluespace_shield_generator
 	name = "Bluespace Shield Field Generator Parts"
 	desc = "Unlock the potential of advanced protective systems with this experimental bluespace shield generator. It projects a station-wide hull barrier capable of resisting breaches and other large-scale threats."
-	cost = 35000
+	cost = 4500
 	order_flags = ORDER_SPECIAL
 	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/circuitboard/machine/bluespace_shield_generator)
@@ -184,7 +184,7 @@
 	desc = "Secure the longevity of the current state of humanity within this massive \
 		library of scientific knowledge, capable of granting superhuman powers and abilities. \
 		Highly advanced research is required for proper construction. Also contains five DNA probes."
-	cost = CARGO_CRATE_VALUE * 24
+	cost = CARGO_CRATE_VALUE * 12
 	order_flags = ORDER_SPECIAL
 	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/circuitboard/machine/dna_vault,
@@ -215,7 +215,7 @@
 /datum/supply_pack/engineering/shield_sat_control
 	name = "Shield System Control Board"
 	desc = "A control system for the Shield Generator Satellite system."
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 7
 	access_view = ACCESS_COMMAND
 	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
@@ -280,7 +280,7 @@
 /datum/supply_pack/engine/supermatter_shard
 	name = "Supermatter Shard Crate"
 	desc = "The power of the heavens condensed into a single crystal."
-	cost = CARGO_CRATE_VALUE * 20
+	cost = CARGO_CRATE_VALUE * 12
 	access = ACCESS_CE
 	contains = list(/obj/machinery/power/supermatter_crystal/shard)
 	crate_name = "supermatter shard crate"
@@ -292,7 +292,7 @@
 	name = "Tesla Coil Crate"
 	desc = "Whether it's high-voltage executions, creating research points, or just plain old \
 		assistant electrofrying: this pack of four Tesla coils can do it all!"
-	cost = CARGO_CRATE_VALUE * 10
+	cost = CARGO_CRATE_VALUE * 8
 	contains = list(/obj/machinery/power/energy_accumulator/tesla_coil = 4)
 	crate_name = "tesla coil crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
@@ -300,7 +300,7 @@
 /datum/supply_pack/engine/hypertorus_fusion_reactor
 	name = "HFR Crate"
 	desc = "The new and improved fusion reactor."
-	cost = CARGO_CRATE_VALUE * 23
+	cost = CARGO_CRATE_VALUE * 15
 	access = ACCESS_CE
 	contains = list(/obj/item/hfr_box/corner = 4,
 					/obj/item/hfr_box/body/fuel_input,
@@ -348,7 +348,7 @@
 	name = "Golf Cart Parts Kit Crate"
 	desc = "Contains the parts to build a cart intended for moving heavy machinery and cargo across the station. \
 		Nanotrasen assumes no liability for carts operated as 'party wagons'."
-	cost = CARGO_CRATE_VALUE * 11
+	cost = CARGO_CRATE_VALUE * 7
 	access_view = ACCESS_ENGINEERING
 	contains = list(/obj/item/golfcart_kit = 1, /obj/item/key/golfcart = 2, /obj/item/stock_parts/power_store/cell/lead = 1)
 	crate_name = "golf cart parts kit"

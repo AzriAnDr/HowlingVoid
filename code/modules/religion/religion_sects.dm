@@ -286,6 +286,7 @@
 			return BLESSING_IGNORED
 
 	account.adjust_money(-GREEDY_HEAL_COST, "Church Donation: Treatment")
+	SSeconomy.record_consumption("church_treatment", GREEDY_HEAL_COST)
 	var/heal_amt = 30
 	var/list/hurt_limbs = blessed.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
 	if(!length(hurt_limbs))
