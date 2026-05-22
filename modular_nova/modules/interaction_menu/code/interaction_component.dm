@@ -32,11 +32,23 @@
 	for(var/iterating_interaction_id in GLOB.interaction_instances)
 		var/datum/interaction/interaction = GLOB.interaction_instances[iterating_interaction_id]
 		if(interaction.lewd)
+			if(is_erp_panel_blocked_mob(self))
+				continue
 			if(!self.client?.prefs?.read_preference(/datum/preference/toggle/erp))
 				continue
 			if(interaction.sexuality != "" && interaction.sexuality != self.client?.prefs?.read_preference(/datum/preference/choiced/erp_sexuality))
 				continue
 		interactions.Add(interaction)
+
+/datum/component/interactable/proc/is_erp_panel_blocked_mob(mob/target)
+	if(!target)
+		return FALSE
+	if(isanimal_or_basicmob(target) || issilicon(target))
+		return TRUE
+	var/mob/living/carbon/human/human_target = target
+	if(!istype(human_target))
+		return FALSE
+	return human_target.dna?.species?.type == /datum/species/monkey
 
 /datum/component/interactable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_CLICK_CTRL_SHIFT, PROC_REF(open_interaction_menu))
@@ -62,6 +74,8 @@
 
 /datum/component/interactable/proc/can_interact(datum/interaction/interaction, mob/living/carbon/human/target)
 	var/mob/living/carbon/human/actual_target = interaction.usage == INTERACTION_SELF ? target : self
+	if(interaction.lewd && (is_erp_panel_blocked_mob(target) || is_erp_panel_blocked_mob(actual_target)))
+		return FALSE
 	if(!interaction.allow_act(target, actual_target))
 		return FALSE
 	if(interaction.lewd && !actual_target.client?.prefs?.read_preference(/datum/preference/toggle/erp))
@@ -177,6 +191,7 @@
 	var/list/erp_categories = list()
 	var/list/colors = list()
 	var/list/interaction_usages = list()
+	var/erp_panel_blocked = is_erp_panel_blocked_mob(user) || is_erp_panel_blocked_mob(self)
 
 	has_erp_interaction = FALSE
 
@@ -244,11 +259,11 @@
 	data["block_interact"] = interact_next >= world.time
 	data["use_subtler"] = use_subtler
 	data["erp_subtle_max_length"] = erp_subtle_max_length
-	data["erp_interaction"] = self.client?.prefs?.read_preference(/datum/preference/toggle/erp)
+	data["erp_interaction"] = !erp_panel_blocked && self.client?.prefs?.read_preference(/datum/preference/toggle/erp)
 	data["has_erp_interaction"] = has_erp_interaction
 	var/datum/component/interactable/user_component = user?.GetComponent(/datum/component/interactable)
 	data["auto_interaction_info"] = user_component?.auto_interaction_info || list()
-	data["erp_preferences"] = build_erp_preferences_data(user)
+	data["erp_preferences"] = erp_panel_blocked ? list() : build_erp_preferences_data(user)
 	data["content_preferences"] = list()
 
 	var/mob/living/carbon/human/human_user = user
@@ -280,7 +295,7 @@
 
 	var/list/parts = list()
 
-	if(ishuman(user) && can_lewd_strip(user, self))
+	if(!erp_panel_blocked && ishuman(user) && can_lewd_strip(user, self))
 		if(self.client?.prefs?.read_preference(/datum/preference/toggle/erp/sex_toy))
 			if(self.has_vagina())
 				parts += list(generate_strip_entry(ORGAN_SLOT_VAGINA, self, user, self.vagina))
@@ -475,6 +490,8 @@
 
 	if(action == "set_preference")
 		var/mob/living/carbon/human/user = ui.user
+		if(is_erp_panel_blocked_mob(user) || is_erp_panel_blocked_mob(self))
+			return FALSE
 		var/datum/preferences/preferences = user?.client?.prefs
 		var/pref_id = params["preference_id"]
 		var/pref_path = get_interaction_preference_path(pref_id)
@@ -495,6 +512,8 @@
 
 	if(action == "send_subtle_message")
 		var/mob/living/carbon/human/user = ui.user
+		if(is_erp_panel_blocked_mob(user) || is_erp_panel_blocked_mob(self))
+			return FALSE
 		var/message = trim(html_encode(params["message"] || ""), erp_subtle_max_length)
 		if(!length(message))
 			return FALSE
@@ -509,6 +528,8 @@
 
 	if(action == "auto_interaction")
 		var/mob/living/carbon/human/user = ui.user
+		if(is_erp_panel_blocked_mob(user) || is_erp_panel_blocked_mob(self))
+			return FALSE
 		var/datum/component/interactable/user_component = user?.GetComponent(/datum/component/interactable)
 		if(!user_component)
 			return FALSE
@@ -573,6 +594,8 @@
 		if(interaction)
 			var/mob/living/carbon/human/user = locate(params["userref"])
 			var/mob/living/carbon/human/interaction_target = interaction.usage == INTERACTION_SELF ? user : locate(params["selfref"])
+			if(interaction.lewd && (is_erp_panel_blocked_mob(user) || is_erp_panel_blocked_mob(interaction_target)))
+				return FALSE
 			if(!can_interact(interaction, user))
 				return FALSE
 			interaction.act(user, interaction_target, use_subtler)
@@ -587,6 +610,8 @@
 		var/item_index = params["item_slot"]
 		var/mob/living/carbon/human/source = locate(params["userref"])
 		var/mob/living/carbon/human/target = locate(params["selfref"])
+		if(is_erp_panel_blocked_mob(source) || is_erp_panel_blocked_mob(target))
+			return FALSE
 		var/obj/item/clothing/sextoy/new_item = source.get_active_held_item()
 		var/obj/item/clothing/sextoy/existing_item = target.vars[item_index]
 
