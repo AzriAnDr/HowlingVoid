@@ -1,6 +1,6 @@
 /datum/vote/storyteller_mode
 	name = "Storyteller Mode"
-	override_question = "Select the storyteller mode for this round."
+	override_question = "Round Storyteller Selection"
 	default_choices = list(
 		"Dynamic",
 		"Extended",
@@ -20,6 +20,10 @@
 	if(SSticker.current_state != GAME_STATE_PREGAME)
 		return "The storyteller mode vote can only be started during pregame."
 	return VOTE_AVAILABLE
+
+/datum/vote/storyteller_mode/initiate_vote(initiator, duration)
+	. = ..()
+	return "[.] Dynamic mode adds a short storyteller preparation phase after the lobby countdown ends. During that setup window, ready, observe, and character changes are temporarily locked while the final round roster is finalized."
 
 /datum/vote/storyteller_mode/finalize_vote(winning_option)
 	if(SSstoryteller.manual_round_mode_override)

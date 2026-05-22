@@ -40,11 +40,11 @@ const UI_TEXT: Record<PanelLanguage, Record<string, string>> = {
     alive_crew: 'Alive Crew',
     living_antags: 'Living Antags',
     station_integrity: 'Station Integrity',
-    stage_one_notice: 'Current config only exposes stage-1 storyteller content.',
+    stage_one_notice:
+      'Current config only exposes stage-1 storyteller content.',
     manual_stage_notice:
       'Content stage is currently pinned by an admin override.',
-    auto_stage_notice:
-      'Content stage is currently escalating automatically.',
+    auto_stage_notice: 'Content stage is currently escalating automatically.',
     budgets_pressure: 'Budgets & Pressure',
     control_score: 'Control Score',
     danger_score: 'Danger Score',
@@ -74,16 +74,52 @@ const UI_TEXT: Record<PanelLanguage, Record<string, string>> = {
     auto: 'Auto',
     set_content_stage: 'Set Content Stage',
     set_stage: 'Set Stage',
+    queue_delay: 'Queue Delay',
+    dynamic_backend: 'Dynamic Backend',
+    dynamic_backend_notice:
+      'These controls mirror the legacy Dynamic Panel inside the storyteller workflow so you can manage raw SSdynamic rulesets without leaving this interface.',
+    dynamic_tier: 'Dynamic Tier',
+    set_dynamic_tier: 'Set Tier',
+    dynamic_antag_events: 'Dynamic Antag Events',
+    dynamic_ruleset_counts: 'Dynamic Ruleset Counts',
+    dynamic_disable_all: 'Disable All Rulesets',
+    dynamic_enable_all: 'Enable All Rulesets',
+    dynamic_backend_status: 'Dynamic Backend Status',
+    dynamic_light_unlock: 'Light Pool Unlock',
+    dynamic_heavy_unlock: 'Heavy Pool Unlock',
+    dynamic_latejoin_unlock: 'Latejoin Pool Unlock',
+    dynamic_next_midround: 'Next Midround Roll',
+    dynamic_next_latejoin: 'Next Latejoin Roll',
+    dynamic_failed_latejoins: 'Failed Latejoins',
+    dynamic_light_chance: 'Light Ruleset Chance',
+    dynamic_heavy_chance: 'Heavy Ruleset Chance',
+    dynamic_latejoin_chance: 'Latejoin Chance',
+    dynamic_force_chance: 'Force 100%',
+    dynamic_forced: 'forced',
+    dynamic_reset: 'Reset',
+    dynamic_ruleset_search: 'Dynamic Ruleset Search',
+    search_dynamic_rulesets: 'Search dynamic rulesets',
+    dynamic_roundstart_rulesets: 'Roundstart Rulesets',
+    dynamic_light_rulesets: 'Light Midround Rulesets',
+    dynamic_heavy_rulesets: 'Heavy Midround Rulesets',
+    dynamic_latejoin_rulesets: 'Latejoin Rulesets',
+    dynamic_queued_rulesets: 'Queued Dynamic Rulesets',
+    dynamic_active_rulesets: 'Executed Dynamic Rulesets',
+    no_dynamic_queued: 'No raw SSdynamic rulesets are currently queued.',
+    no_dynamic_active: 'No raw SSdynamic rulesets have executed yet.',
+    no_dynamic_rulesets_filtered:
+      'No Dynamic rulesets matched the current filter.',
     force_action: 'Force Action',
     force_next: 'Force Next',
     force_now: 'Force NOW',
     force_now_confirm: 'Force Now?',
     action_search: 'Action Search',
     search_storyteller_actions: 'Search storyteller actions',
-    search_all_actions:
-      'Search positive, negative, and antagonist actions',
+    search_all_actions: 'Search positive, negative, and antagonist actions',
     detected_needs: 'Detected Needs',
     no_detected_needs: 'No actionable department needs detected.',
+    scheduled_actions: 'Scheduled Actions',
+    no_scheduled_actions: 'No storyteller actions are currently waiting in the delayed queue.',
     queued_next_actions: 'Queued Next Actions',
     no_queued_next: 'No storyteller pulse overrides are currently queued.',
     positive_channel: 'Positive Channel',
@@ -141,10 +177,29 @@ const UI_TEXT: Record<PanelLanguage, Record<string, string>> = {
     targets_need: 'Targets need',
     discard: 'Discard',
     discarded: 'Discarded',
+    disabled: 'Disabled',
     return_action: 'Return',
     cancel: 'Cancel',
     cancel_queue_confirm: 'Cancel queue?',
     refund_threat: 'Refund',
+    scheduled_for: 'Scheduled for',
+    source_storyteller: 'Storyteller',
+    source_admin: 'Administrator',
+    enable: 'Enable',
+    disable: 'Disable',
+    queue: 'Queue',
+    move_up: 'Up',
+    move_down: 'Down',
+    move_to_top: 'Top',
+    move_to_bottom: 'Bottom',
+    set_timer: 'Set Timer',
+    minutes_short: 'min',
+    execute_now: 'Execute NOW',
+    remove_from_queue: 'Remove',
+    hide_from_roundend: 'Hide from Roundend',
+    hidden_from_roundend: 'hidden from roundend',
+    show_in_roundend: 'Restore to Roundend',
+    selected_players: 'Selected players',
     pref: 'Pref',
     unknown: 'Unknown',
     severity: 'Severity',
@@ -194,10 +249,8 @@ const UI_TEXT: Record<PanelLanguage, Record<string, string>> = {
     station_integrity: 'Целостность станции',
     stage_one_notice:
       'Сейчас в конфигурации открыт только контент первого уровня.',
-    manual_stage_notice:
-      'Уровень эскалации сейчас зафиксирован админом.',
-    auto_stage_notice:
-      'Уровень эскалации сейчас меняется автоматически.',
+    manual_stage_notice: 'Уровень эскалации сейчас зафиксирован админом.',
+    auto_stage_notice: 'Уровень эскалации сейчас меняется автоматически.',
     budgets_pressure: 'Давление и бюджеты',
     control_score: 'Уровень контроля',
     danger_score: 'Уровень опасности',
@@ -227,6 +280,42 @@ const UI_TEXT: Record<PanelLanguage, Record<string, string>> = {
     auto: 'Авто',
     set_content_stage: 'Ручной выбор этапа',
     set_stage: 'Применить',
+    queue_delay: 'Задержка очереди',
+    dynamic_backend: 'Низкоуровневый Dynamic',
+    dynamic_backend_notice:
+      'Здесь продублированы основные настройки legacy Dynamic Panel, чтобы можно было управлять сырым SSdynamic прямо из панели storyteller.',
+    dynamic_tier: 'Уровень Dynamic',
+    set_dynamic_tier: 'Применить уровень',
+    dynamic_antag_events: 'Dynamic-антагонисты',
+    dynamic_ruleset_counts: 'Счётчики Dynamic-правил',
+    dynamic_disable_all: 'Отключить все правила',
+    dynamic_enable_all: 'Включить все правила',
+    dynamic_backend_status: 'Состояние Dynamic',
+    dynamic_light_unlock: 'Открытие лёгкого пула',
+    dynamic_heavy_unlock: 'Открытие тяжёлого пула',
+    dynamic_latejoin_unlock: 'Открытие лейтджоин-пула',
+    dynamic_next_midround: 'Следующий midround-бросок',
+    dynamic_next_latejoin: 'Следующий latejoin-бросок',
+    dynamic_failed_latejoins: 'Пропущенные latejoin-попытки',
+    dynamic_light_chance: 'Шанс лёгкого правила',
+    dynamic_heavy_chance: 'Шанс тяжёлого правила',
+    dynamic_latejoin_chance: 'Шанс latejoin-правила',
+    dynamic_force_chance: 'Сделать 100%',
+    dynamic_forced: 'принудительно',
+    dynamic_reset: 'Сбросить',
+    dynamic_ruleset_search: 'Поиск Dynamic-правил',
+    search_dynamic_rulesets: 'Поиск Dynamic-правил',
+    dynamic_roundstart_rulesets: 'Roundstart-правила',
+    dynamic_light_rulesets: 'Лёгкие midround-правила',
+    dynamic_heavy_rulesets: 'Тяжёлые midround-правила',
+    dynamic_latejoin_rulesets: 'Latejoin-правила',
+    dynamic_queued_rulesets: 'Очередь Dynamic-правил',
+    dynamic_active_rulesets: 'Уже запущенные Dynamic-правила',
+    no_dynamic_queued:
+      'В сырой очереди SSdynamic сейчас нет подготовленных правил.',
+    no_dynamic_active: 'SSdynamic ещё не запускал правила в текущем раунде.',
+    no_dynamic_rulesets_filtered:
+      'По текущему фильтру Dynamic-правила не найдены.',
     force_action: 'Принудительный запуск',
     force_next: 'Следующим',
     force_now: 'Запустить сейчас',
@@ -236,19 +325,17 @@ const UI_TEXT: Record<PanelLanguage, Record<string, string>> = {
     search_all_actions:
       'Искать среди положительных, отрицательных и антагонистических событий',
     detected_needs: 'Выявленные проблемы',
-    no_detected_needs:
-      'Проблем, требующих вмешательства, сейчас не выявлено.',
+    no_detected_needs: 'Проблем, требующих вмешательства, сейчас не выявлено.',
+    scheduled_actions: 'Отложенные события',
+    no_scheduled_actions: 'Сейчас нет storyteller-событий, ожидающих срабатывания в отложенной очереди.',
     queued_next_actions: 'Очередь следующих событий',
-    no_queued_next:
-      'Очередь принудительных событий сейчас пуста.',
+    no_queued_next: 'Очередь принудительных событий сейчас пуста.',
     positive_channel: 'Положительное событие',
     negative_channel: 'Отрицательное событие',
     queued_antagonists: 'Очередь антагонистов',
-    no_queued_antags:
-      'Подготовленных антагонистов в очереди сейчас нет.',
+    no_queued_antags: 'Подготовленных антагонистов в очереди сейчас нет.',
     active_modifiers: 'Активные эффекты',
-    no_active_modifiers:
-      'Сейчас нет активных временных эффектов сторителлера.',
+    no_active_modifiers: 'Сейчас нет активных временных эффектов сторителлера.',
     positive_actions: 'Положительные события',
     negative_actions: 'Отрицательные события',
     antagonist_actions: 'События с антагонистами',
@@ -298,10 +385,29 @@ const UI_TEXT: Record<PanelLanguage, Record<string, string>> = {
     targets_need: 'Решает проблему',
     discard: 'Отключить',
     discarded: 'Отключено',
+    disabled: 'Отключено',
     return_action: 'Вернуть',
     cancel: 'Отменить',
     cancel_queue_confirm: 'Отменить очередь?',
     refund_threat: 'Возврат',
+    scheduled_for: 'Сработает в',
+    source_storyteller: 'Сторителлер',
+    source_admin: 'Администратор',
+    enable: 'Включить',
+    disable: 'Отключить',
+    queue: 'В очередь',
+    move_up: 'Выше',
+    move_down: 'Ниже',
+    move_to_top: 'В начало',
+    move_to_bottom: 'В конец',
+    set_timer: 'Поставить таймер',
+    minutes_short: 'мин',
+    execute_now: 'Запустить сейчас',
+    remove_from_queue: 'Убрать',
+    hide_from_roundend: 'Скрыть из roundend',
+    hidden_from_roundend: 'скрыто из roundend',
+    show_in_roundend: 'Вернуть в roundend',
+    selected_players: 'Выбранные игроки',
     pref: 'Преф',
     unknown: 'Неизвестно',
     severity: 'Критичность',
@@ -353,10 +459,7 @@ export const resolveStorytellerLanguage = (
   return 'english';
 };
 
-export const formatTime = (
-  deciseconds: number,
-  language: PanelLanguage,
-) => {
+export const formatTime = (deciseconds: number, language: PanelLanguage) => {
   const totalSeconds = Math.max(0, Math.floor(deciseconds / 10));
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
@@ -621,41 +724,80 @@ export const translateProfileName = (
   return translated === profileId ? fallback : translated;
 };
 
-export const translateReason = (
-  language: PanelLanguage,
-  reason?: string,
-) => {
+export const translateReason = (language: PanelLanguage, reason?: string) => {
   if (!reason || language !== 'russian') {
     return reason;
   }
   const exact: Record<string, string> = {
     Ready: 'Готово',
-    'Disabled in storyteller config':
-      'Отключено в настройках сторителлера',
+    'Disabled in storyteller config': 'Отключено в настройках сторителлера',
+    'Disabled in Dynamic admin panel': 'Отключено в админской панели Dynamic',
     'Discarded by an administrator for this round':
       'Отключено администратором до конца раунда',
     'Discarded for the current storyteller rotation':
       'Отключено на текущую ротацию сторителлера',
     'Blocked by current storyteller mode':
       'Заблокировано текущим режимом сторителлера',
-    'Blocked by storyteller phase':
-      'Заблокировано текущим уровнем эскалации',
-    'Requires a matching storyteller need':
-      'Нужна подходящая проблема станции',
+    'Blocked by storyteller phase': 'Заблокировано текущим уровнем эскалации',
+    'Requires a matching storyteller need': 'Нужна подходящая проблема станции',
     'Need does not match this action':
       'Для этого события нужна другая проблема',
     'Family cooldown active': 'Это семейство событий ещё на кулдауне',
     'Latejoin hostile lock active': 'Лейтджоин-антаги пока заблокированы',
     'Threat budget below cost': 'Не хватает бюджета давления',
     'Aid budget below cost': 'Не хватает бюджета поддержки',
+    'Failed to create ruleset': 'Не удалось создать ruleset',
+    'Ruleset cannot currently be selected':
+      'Сейчас этот ruleset нельзя выбрать',
+    'Round event control unavailable': 'Контроллер события недоступен',
     'Event preconditions failed': 'Событие не прошло встроенные проверки',
+    'Conflicting storyteller modifier already active':
+      'Уже активен конфликтующий модификатор сторителлера',
     'Admin force bypassed availability checks':
       'Админский форс проигнорировал обычные проверки доступности',
+    'No cargo staff are available to capitalize on a logistics contract':
+      'В карго нет сотрудников, которые смогли бы воспользоваться логистическим контрактом',
     'No mining or cargo staff are available to use refinery assistance':
       'В карго и на шахте нет людей, которые смогли бы воспользоваться бонусом плавки',
+    'No science staff are available to benefit from accelerated patent handling':
+      'В научном отделе нет сотрудников, которым пригодилось бы ускоренное оформление патентов',
+    'No medical staff are available to benefit from a replication fast-track':
+      'В медотсеке нет сотрудников, которым пригодилось бы ускорение репликации',
+    'No botanists are available to benefit from accelerated growth':
+      'В гидропонике нет ботаников, которые смогли бы воспользоваться ускоренным ростом',
+    'No station hydroponics trays are available for a localized growth anomaly':
+      'На станции нет доступных гидропонных лотков для локальной аномалии роста',
+    'No engineering staff are available to benefit from an engine performance surge':
+      'В инженерном отделе нет сотрудников, которым пригодился бы скачок мощности двигателя',
+    'No supermatter engine is available for a power surge':
+      'На станции нет суперматерии, подходящей для события с энергетическим всплеском',
+    'No cargo staff are present for a customs slowdown to matter':
+      'В карго нет сотрудников, для которых таможенная задержка имела бы значение',
+    'No cargo or mining staff are present for refinery slagging to matter':
+      'В карго и на шахте нет сотрудников, для которых засорение печей имело бы значение',
+    'No science staff are present for a patent review delay to matter':
+      'В научном отделе нет сотрудников, для которых задержка патентной проверки имела бы значение',
+    'No medical staff are present for a replication slowdown to matter':
+      'В медотсеке нет сотрудников, для которых замедление репликации имело бы значение',
+    'No botanists are present for a hydroponics setback to matter':
+      'В гидропонике нет ботаников, для которых эта неудача имела бы значение',
+    'No supermatter engine is available for an instability event':
+      'На станции нет суперматерии, подходящей для события с нестабильностью',
+    'No station cables are available for a fault event':
+      'На станции нет кабелей, подходящих для аварии электросети',
+    'No station APCs are available for a reboot wave':
+      'На станции нет АПЦ, подходящих для волны перезагрузки',
+    'Cargo budget already healthy':
+      'Бюджет карго и так находится в хорошем состоянии',
   };
   if (exact[reason]) {
     return exact[reason];
+  }
+  if (reason === 'Already queued in the storyteller schedule') {
+    return 'Событие уже стоит в очереди сторителлера и ждёт своего времени';
+  }
+  if (reason === 'A related storyteller action is already queued') {
+    return 'В очереди сторителлера уже стоит родственное событие';
   }
   if (reason.includes('channel fatigue lock active')) {
     return reason.startsWith('Positive')
@@ -830,6 +972,14 @@ const RUSSIAN_TOOLTIPS: Record<string, string> = {
   )]:
     'Позволяет найти событие в каталоге сторителлера, поставить его следующим или запустить сразу. «Запустить сейчас» игнорирует обычные проверки доступности.',
   [normalizeTooltip(
+    'Delay used by the Queue buttons in the positive, negative, and antagonist lists. Automatic storyteller-picked midround actions use their own fixed five-minute preparation delay.',
+  )]:
+    'Задержка для кнопки «В очередь» в списках положительных, отрицательных и антагонистических событий. Автоматически выбранные storyteller-события используют отдельную фиксированную пятиминутную подготовку.',
+  [normalizeTooltip(
+    'All storyteller actions currently waiting in the delayed execution queue, whether they were placed there automatically by storyteller cadence or manually by an administrator.',
+  )]:
+    'Все события storyteller, которые сейчас стоят в отложенной очереди: как добавленные самим сторителлером по таймингу раунда, так и поставленные администратором вручную.',
+  [normalizeTooltip(
     'Antagonists already armed for roundstart, latejoin, or the next storyteller hostile window. Canceling a queued storyteller antag refunds any reserved threat budget.',
   )]:
     'Антагонисты, уже поставленные в очередь для раундстарта, лейтджоина или ближайшего отрицательного окна. При отмене возвращается зарезервированный бюджет давления.',
@@ -895,8 +1045,7 @@ const RUSSIAN_TOOLTIPS: Record<string, string> = {
     'Количество активных событий раунда, которые сторителлер сейчас учитывает в своём состоянии.',
   [normalizeTooltip(
     'The number of active alarms currently contributing to the danger picture.',
-  )]:
-    'Количество тревог, которые сейчас участвуют в общей оценке опасности.',
+  )]: 'Количество тревог, которые сейчас участвуют в общей оценке опасности.',
   [normalizeTooltip(
     'A live type breakdown of antagonists the storyteller sees in the current round snapshot.',
   )]:
@@ -909,9 +1058,7 @@ const RUSSIAN_TOOLTIPS: Record<string, string> = {
     'The supply side of the storyteller snapshot: money, food, ore-silo stock, loose materials, and recent material intake.',
   )]:
     'Снабженческая часть состояния станции: деньги, еда, материалы в силосе, свободные ресурсы на станции и недавний приток сырья.',
-  [normalizeTooltip(
-    'Current cargo budget available to the station economy.',
-  )]:
+  [normalizeTooltip('Current cargo budget available to the station economy.')]:
     'Текущий бюджет карго, доступный экономике станции.',
   [normalizeTooltip(
     'Food stock the storyteller counts in kitchen and service spaces.',
@@ -919,8 +1066,7 @@ const RUSSIAN_TOOLTIPS: Record<string, string> = {
     'Запасы еды, которые сторителлер учитывает в кухонных и сервисных помещениях.',
   [normalizeTooltip(
     'Total raw materials currently accessible in the ore silo.',
-  )]:
-    'Общий объём сырья, который сейчас доступен в рудном силосе.',
+  )]: 'Общий объём сырья, который сейчас доступен в рудном силосе.',
   [normalizeTooltip(
     'Total loose material stacks found around the station during the heavy scan.',
   )]:
@@ -935,12 +1081,10 @@ const RUSSIAN_TOOLTIPS: Record<string, string> = {
     'Баланс счетов по отделам, который сторителлер использует для помощи и событий, завязанных на бюджет.',
   [normalizeTooltip(
     'Raw material stock currently detected in the ore silo, grouped by material type.',
-  )]:
-    'Сырьё, обнаруженное в рудном силосе, с разбивкой по типам материалов.',
+  )]: 'Сырьё, обнаруженное в рудном силосе, с разбивкой по типам материалов.',
   [normalizeTooltip(
     'Loose station-side material stacks grouped by material type.',
-  )]:
-    'Свободные стопки материалов на станции, сгруппированные по типам.',
+  )]: 'Свободные стопки материалов на станции, сгруппированные по типам.',
   [normalizeTooltip(
     'Structural health metrics used to estimate station integrity and the engineering repair backlog.',
   )]:
@@ -965,12 +1109,81 @@ const RUSSIAN_TOOLTIPS: Record<string, string> = {
     'Family cooldowns that temporarily block repeated actions from the same storyteller family, to prevent immediate repetition.',
   )]:
     'Кулдауны семейств событий, которые временно не дают сторителлеру сразу повторять однотипные действия.',
+  [normalizeTooltip(
+    'Low-level SSdynamic controls mirrored here so storyteller admins no longer need to switch back to the legacy Dynamic Panel for common ruleset management.',
+  )]:
+    'Низкоуровневые настройки SSdynamic, перенесённые сюда, чтобы админам больше не приходилось возвращаться в старую Dynamic Panel ради обычного управления правилами.',
+  [normalizeTooltip(
+    'The current Dynamic ruleset tier. This mostly matters before round start, since it seeds category counts and timing thresholds for the underlying dynamic backend.',
+  )]:
+    'Текущий уровень Dynamic. В основном важен до старта раунда, потому что именно он задаёт базовые счётчики категорий и таймеры для внутреннего backend-а Dynamic.',
+  [normalizeTooltip(
+    'Master low-level toggle for SSdynamic antagonist events. Storyteller can still suppress its own hostile pacing, but this controls whether the backend itself is allowed to pick antag rulesets.',
+  )]:
+    'Главный низкоуровневый переключатель antag-событий SSdynamic. Сторителлер всё ещё может отдельно подавлять собственное враждебное давление, но именно этот флаг решает, может ли backend Dynamic вообще выбирать антагонистические ruleset-ы.',
+  [normalizeTooltip(
+    'Raw ruleset counters that the dynamic backend still keeps for roundstart, light midround, heavy midround, and latejoin categories.',
+  )]:
+    'Сырые счётчики ruleset-ов, которые backend Dynamic по-прежнему хранит отдельно для roundstart, лёгкого midround, тяжёлого midround и latejoin категорий.',
+  [normalizeTooltip(
+    'A live readout of the underlying dynamic backend: raw unlock timers, cooldowns, base chances, and whether the next backend roll is being forced.',
+  )]:
+    'Живой срез состояния внутреннего backend-а Dynamic: таймеры открытия пулов, кулдауны, базовые шансы и факт принудительного следующего броска.',
+  [normalizeTooltip(
+    'The currently active Dynamic tier. This is the backend difficulty band storyteller still relies on for dynamic ruleset baselines.',
+  )]:
+    'Текущий активный уровень Dynamic. Это внутренняя полоска сложности, на которую storyteller всё ещё опирается при работе с базовыми настройками dynamic ruleset-ов.',
+  [normalizeTooltip(
+    'Time until the backend light midround pool unlocks naturally.',
+  )]:
+    'Сколько осталось до естественного открытия лёгкого midround-пула в backend-е Dynamic.',
+  [normalizeTooltip(
+    'Time until the backend heavy midround pool unlocks naturally.',
+  )]:
+    'Сколько осталось до естественного открытия тяжёлого midround-пула в backend-е Dynamic.',
+  [normalizeTooltip(
+    'Time until the backend latejoin antagonist pool unlocks naturally.',
+  )]:
+    'Сколько осталось до естественного открытия latejoin-пула антагонистов в backend-е Dynamic.',
+  [normalizeTooltip(
+    'The current backend cooldown before it may attempt another midround ruleset roll.',
+  )]:
+    'Текущий кулдаун backend-а Dynamic перед следующей попыткой броска midround ruleset-а.',
+  [normalizeTooltip(
+    'The current backend cooldown before it may attempt another latejoin ruleset roll.',
+  )]:
+    'Текущий кулдаун backend-а Dynamic перед следующей попыткой броска latejoin ruleset-а.',
+  [normalizeTooltip(
+    'How many latejoin antagonist attempts the backend has skipped because no eligible joining player satisfied the selected ruleset.',
+  )]:
+    'Сколько latejoin-попыток backend Dynamic пропустил из-за отсутствия подходящего присоединившегося игрока под выбранный ruleset.',
+  [normalizeTooltip(
+    'The backend light-midround pick chance after all tier settings and current modifiers are applied.',
+  )]:
+    'Шанс выбора лёгкого midround-правила после применения всех настроек уровня Dynamic и текущих модификаторов.',
+  [normalizeTooltip(
+    'The backend heavy-midround pick chance after all tier settings and current modifiers are applied.',
+  )]:
+    'Шанс выбора тяжёлого midround-правила после применения всех настроек уровня Dynamic и текущих модификаторов.',
+  [normalizeTooltip(
+    'The backend latejoin pick chance after all tier settings and current modifiers are applied.',
+  )]:
+    'Шанс выбора latejoin-правила после применения всех настроек уровня Dynamic и текущих модификаторов.',
+  [normalizeTooltip(
+    'Searches the mirrored SSdynamic ruleset catalog, queued rulesets, and active executed rulesets by name, config id, typepath, and category.',
+  )]:
+    'Ищет по зеркалу каталога SSdynamic ruleset-ов, очередям и уже запущенным правилам по имени, config id, typepath и категории.',
+  [normalizeTooltip(
+    'Rulesets currently queued in the raw SSdynamic backend. Roundstart and latejoin entries here are armed independently of storyteller candidate weighting.',
+  )]:
+    'Ruleset-ы, которые сейчас стоят в сырой очереди SSdynamic. Записи roundstart и latejoin здесь вооружаются независимо от весов storyteller-кандидатов.',
+  [normalizeTooltip(
+    'Rulesets the raw dynamic backend has already executed this round. You can hide or restore them in the round-end report here.',
+  )]:
+    'Ruleset-ы, которые raw backend Dynamic уже успел запустить в этом раунде. Здесь их можно скрыть из round-end отчёта или вернуть обратно.',
 };
 
-export const translateTooltip = (
-  language: PanelLanguage,
-  tooltip: string,
-) => {
+export const translateTooltip = (language: PanelLanguage, tooltip: string) => {
   if (language !== 'russian') {
     return tooltip;
   }

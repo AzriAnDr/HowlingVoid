@@ -40,3 +40,29 @@
 		TEST_FAIL("called 'export_single_item', but no export report was returned.")
 	value = counterlist_sum(report_two.total_value)
 	TEST_ASSERT_EQUAL(value, PAYCHECK_LOWER, "'export_single_item' value didn't match expected value")
+
+	var/obj/item/documents/syndicate/red/secret_documents = allocate(/obj/item/documents/syndicate/red)
+	var/datum/export_report/secret_documents_report = export_single_item(secret_documents, apply_elastic = FALSE)
+	value = counterlist_sum(secret_documents_report.total_value)
+	TEST_ASSERT_EQUAL(value, CARGO_CRATE_VALUE * 10, "Secret documents should sell for 2000 credits.")
+
+	var/obj/item/documents/photocopy/copied_documents = allocate(/obj/item/documents/photocopy)
+	var/datum/export_report/copied_documents_report = export_single_item(copied_documents, apply_elastic = FALSE)
+	value = counterlist_sum(copied_documents_report.total_value)
+	TEST_ASSERT_EQUAL(value, 0, "Photocopied secret documents should not be exportable.")
+
+	var/obj/item/disk/design_disk/bepis/remove_tech/reformatted_disk = allocate(/obj/item/disk/design_disk/bepis/remove_tech)
+	var/datum/export_report/reformatted_disk_report = export_single_item(reformatted_disk, apply_elastic = FALSE)
+	value = counterlist_sum(reformatted_disk_report.total_value)
+	TEST_ASSERT_EQUAL(value, CARGO_CRATE_VALUE * 5, "Unused reformatted technology disks should sell for 1000 credits.")
+
+	var/mob/living/carbon/human/consistent/scientist = allocate(/mob/living/carbon/human/consistent)
+	var/obj/machinery/computer/rdconsole/rd_console = allocate(/obj/machinery/computer/rdconsole)
+	var/obj/item/disk/design_disk/bepis/remove_tech/spent_reformatted_disk = allocate(/obj/item/disk/design_disk/bepis/remove_tech)
+	scientist.put_in_hands(spent_reformatted_disk)
+	rd_console.item_interaction(scientist, spent_reformatted_disk, list())
+	TEST_ASSERT(spent_reformatted_disk.rnd_console_inserted, "Reformatted technology disks should be marked after insertion into an R&D console.")
+
+	var/datum/export_report/spent_reformatted_disk_report = export_single_item(spent_reformatted_disk, apply_elastic = FALSE)
+	value = counterlist_sum(spent_reformatted_disk_report.total_value)
+	TEST_ASSERT_EQUAL(value, 0, "Reformatted technology disks inserted into an R&D console should sell for 0 credits.")

@@ -71,8 +71,20 @@
 /mob/dead/new_player/proc/is_ready_to_play()
 	return ready == PLAYER_READY_TO_PLAY
 
+/mob/dead/new_player/proc/is_storyteller_lobby_locked(show_message = FALSE)
+	var/remaining = SSstoryteller.get_roundstart_prep_remaining()
+	if(remaining <= 0)
+		return FALSE
+	if(show_message)
+		to_chat(src, span_warning("The storyteller is finalizing the dynamic round setup. Lobby participation is locked for [DisplayTimeText(remaining, round_seconds_to = 1)]."))
+	return TRUE
+
 //When you cop out of the round (NB: this HAS A SLEEP FOR PLAYER INPUT IN IT)
 /mob/dead/new_player/proc/make_me_an_observer()
+	if(is_storyteller_lobby_locked(TRUE))
+		ready = PLAYER_NOT_READY
+		return FALSE
+
 	if(QDELETED(src) || !src.client)
 		ready = PLAYER_NOT_READY
 		return FALSE

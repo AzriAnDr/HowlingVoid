@@ -105,6 +105,13 @@
 			result["reason"] = "Aid budget below cost"
 			return result
 
+	if(!forced && istype(owner) && !context_data["scheduled"])
+		var/conflict_reason = owner.get_scheduled_action_conflict_reason(src)
+		if(conflict_reason)
+			result["available"] = FALSE
+			result["reason"] = conflict_reason
+			return result
+
 	var/list/custom_result = check_additional_availability(owner, snapshot, context_data)
 	if(forced)
 		return list(

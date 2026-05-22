@@ -5,6 +5,12 @@
 	exclude_types = list(/obj/item/paperwork/photocopy) //Has its own category
 	allow_negative_cost = TRUE
 
+/datum/export/secret_documents
+	cost = CARGO_CRATE_VALUE * 10
+	unit_name = "set of secret documents"
+	export_types = list(/obj/item/documents)
+	exclude_types = list(/obj/item/documents/photocopy)
+
 /datum/export/paperwork/get_base_cost(obj/item/paperwork/sold_paperwork)
 	return sold_paperwork.stamped ? ..() : -cost
 

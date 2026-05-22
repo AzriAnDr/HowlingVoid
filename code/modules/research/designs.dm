@@ -132,6 +132,10 @@ other types of metals and chemistry for reagents).
 /obj/item/disk/design_disk/proc/get_rd_blueprints()
 	return isnull(rd_blueprints) ? blueprints : rd_blueprints
 
+/// Called when the disk is inserted into an R&D console.
+/obj/item/disk/design_disk/proc/on_rnd_inserted(atom/research_source)
+	return
+
 /**
  * Used for special interactions with a techweb when uploading the designs.
  * Args:
@@ -169,6 +173,11 @@ other types of metals and chemistry for reagents).
 /obj/item/disk/design_disk/bepis/remove_tech
 	name = "Reformatted technology disk"
 	desc = "A disk containing a new, completed tech from the B.E.P.I.S. Upload the disk to an R&D Console to redeem the tech."
+	/// Tracks whether the disk has already been inserted into an R&D console.
+	var/rnd_console_inserted = FALSE
+
+/obj/item/disk/design_disk/bepis/remove_tech/on_rnd_inserted(atom/research_source)
+	rnd_console_inserted = TRUE
 
 /obj/item/disk/design_disk/bepis/remove_tech/Initialize(mapload)
 	. = ..()

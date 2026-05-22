@@ -1,4 +1,9 @@
-import { CheckboxInput, type FeatureToggle } from '../base';
+import {
+  CheckboxInput,
+  type FeatureChoiced,
+  type FeatureToggle,
+} from '../base';
+import { FeatureDropdownInput } from '../dropdowns';
 
 export const tgui_input: FeatureToggle = {
   name: 'Input: Enable TGUI',
@@ -26,6 +31,20 @@ export const tgui_lock: FeatureToggle = {
   category: 'UI',
   description: 'Locks TGUI windows to your main monitor.',
   component: CheckboxInput,
+};
+
+export const tgui_window_theme: FeatureChoiced = {
+  name: 'Window theme',
+  category: 'UI',
+  description: 'Sets the default theme for standard TGUI windows.',
+  component: FeatureDropdownInput,
+};
+
+export const tgui_window_backdrop: FeatureChoiced = {
+  name: 'Window backdrop',
+  category: 'UI',
+  description: 'Sets the default background art for standard TGUI windows.',
+  component: FeatureDropdownInput,
 };
 
 export const ui_scale: FeatureToggle = {

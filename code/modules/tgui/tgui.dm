@@ -265,27 +265,34 @@
 /datum/tgui/proc/get_payload(custom_data, with_data, with_static_data)
 	if(QDELETED(user) || !user?.client || QDELETED(src_object) || isnull(src_object))
 		return list()
+	var/datum/preferences/preferences = user.client.prefs
 	var/list/json_data = list()
 	json_data["config"] = list(
 		"title" = title,
 		"status" = status,
 		"interface" = list(
 			"name" = interface,
-			"layout" = user.client.prefs.read_preference(src_object.layout_prefs_used),
+			"layout" = preferences.read_preference(src_object.layout_prefs_used),
 		),
 		"refreshing" = refreshing,
 		"window" = list(
 			"key" = window_key,
 			"size" = window_size,
-			"locked" = user.client.prefs.read_preference(/datum/preference/toggle/tgui_lock),
-			"scale" = user.client.prefs.read_preference(/datum/preference/toggle/ui_scale),
+			"locked" = preferences.read_preference(/datum/preference/toggle/tgui_lock),
+			"scale" = preferences.read_preference(/datum/preference/toggle/ui_scale),
+			"theme" = preferences.read_preference(/datum/preference/choiced/tgui_window_theme),
+			"theme_options" = assoc_to_keys(GLOB.tgui_window_themes),
+			"theme_display_names" = GLOB.tgui_window_themes.Copy(),
+			"backdrop" = preferences.read_preference(/datum/preference/choiced/tgui_window_backdrop),
+			"backdrop_options" = assoc_to_keys(GLOB.tgui_window_backdrops),
+			"backdrop_display_names" = GLOB.tgui_window_backdrops.Copy(),
 		),
 		"client" = list(
 			"ckey" = user.client.ckey,
 			"address" = user.client.address,
 			"computer_id" = user.client.computer_id,
-			"interface_language" = user.client.prefs.read_preference(/datum/preference/choiced/interface_language),
-			"panel_languages" = build_panel_languages_payload(user.client.prefs),
+			"interface_language" = preferences.read_preference(/datum/preference/choiced/interface_language),
+			"panel_languages" = build_panel_languages_payload(preferences),
 		),
 		"user" = list(
 			"name" = "[user]",
@@ -399,5 +406,35 @@
 /datum/tgui/proc/on_act_message(act_type, payload, state)
 	if(QDELETED(src) || QDELETED(src_object))
 		return
+	if(try_set_window_appearance(act_type, payload))
+		return
 	if(src_object.ui_act(act_type, payload, src, state))
 		SStgui.update_uis(src_object)
+
+/datum/tgui/proc/try_set_window_appearance(act_type, list/payload)
+	var/client/client = user?.client
+	if(!client?.prefs)
+		return FALSE
+
+	var/preference_type
+	var/payload_key
+	switch(act_type)
+		if("__tgui_set_theme")
+			preference_type = /datum/preference/choiced/tgui_window_theme
+			payload_key = "theme"
+		if("__tgui_set_backdrop")
+			preference_type = /datum/preference/choiced/tgui_window_backdrop
+			payload_key = "backdrop"
+		else
+			return FALSE
+
+	var/datum/preference/preference = GLOB.preference_entries[preference_type]
+	if(isnull(preference))
+		return TRUE
+
+	if(!client.prefs.update_preference(preference, payload?[payload_key]))
+		return TRUE
+
+	client.prefs.save_preferences()
+	send_full_update(force = TRUE, always_instant = TRUE)
+	return TRUE

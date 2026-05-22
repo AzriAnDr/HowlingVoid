@@ -1,0 +1,32 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+:root.backdrop-nanotrasen .Layout__content {
+  background-image: url('tgui-core/assets/bg-nanotrasen.svg');
+}
+
+:root.backdrop-neutral .Layout__content {
+  background-image: url('tgui-core/assets/bg-neutral.svg');
+}
+
+:root.backdrop-syndicate .Layout__content {
+  background-image: url('tgui-core/assets/bg-syndicate.svg');
+}
+
+:root.backdrop-wizard .Layout__content {
+  background-image: url('tgui-core/assets/bg-wizard.svg');
+}
+
+:root.backdrop-admin .Layout__content {
+  background-image: url('tgui-core/assets/bg-admin.svg');
+}
+
+:root.backdrop-spooky .Layout__content {
+  background-image: url('tgui-core/assets/bg-spookycomp-compressed.svg');
+}
+
+:root.backdrop-none .Layout__content {
+  background-image: none;
+}

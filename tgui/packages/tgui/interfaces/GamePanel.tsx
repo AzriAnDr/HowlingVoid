@@ -19,17 +19,9 @@ export const GamePanel = () => {
       : undefined;
 
   return (
-    <Window title="Game Panel" theme="admin" width={320} height={240}>
+    <Window title="Game Panel" theme="admin" width={320} height={200}>
       <Window.Content>
         <Stack vertical>
-          <Stack.Item>
-            <Button
-              icon="hat-wizard"
-              fluid
-              content="Storyteller Panel"
-              onClick={() => act('storyteller')}
-            />
-          </Stack.Item>
           <Stack.Item>
             <Section title="Creation Tools">
               <Stack vertical>

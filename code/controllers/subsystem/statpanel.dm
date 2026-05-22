@@ -72,6 +72,11 @@ SUBSYSTEM_DEF(statpanels)
 			"Round Timer: [ROUND_TIME()]",
 			"Actual Round Timer: [time2text(real_round_time, "hh:mm:ss", 0)]"
 		)
+		if(SSstoryteller?.is_roundstart_prep_active())
+			global_data += list(
+				"Round Setup: Storyteller preparation phase in progress",
+				"Preparation Remaining: [DisplayTimeText(SSstoryteller.get_roundstart_prep_remaining(), round_seconds_to = 1)]",
+			)
 		// NOVA EDIT ADDITION END
 
 		if(SSshuttle.emergency)

@@ -16,6 +16,8 @@
 		return
 
 	if(href_list["observe"])
+		if(is_storyteller_lobby_locked(TRUE))
+			return
 		play_lobby_button_sound()
 		make_me_an_observer()
 		return
@@ -36,6 +38,8 @@
 		return
 
 	if(href_list["toggle_antag"])
+		if(is_storyteller_lobby_locked(TRUE))
+			return
 		play_lobby_button_sound()
 		var/datum/preferences/preferences = client.prefs
 		preferences.write_preference(GLOB.preference_entries[/datum/preference/toggle/be_antag], !preferences.read_preference(/datum/preference/toggle/be_antag))
@@ -43,6 +47,8 @@
 		return
 
 	if(href_list["character_setup"])
+		if(is_storyteller_lobby_locked(TRUE))
+			return
 		play_lobby_button_sound()
 		var/datum/preferences/preferences = client.prefs
 		preferences.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES

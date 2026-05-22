@@ -33,7 +33,7 @@
 	SSholomaps.station_holomaps += src
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/station_map/LateInitialize(mapload_arg)
+/obj/machinery/station_map/post_machine_initialize()
 	. = ..()
 	if(SSholomaps.initialized)
 		setup_holomap()
@@ -252,6 +252,9 @@
 	update_icon()
 
 /obj/machinery/station_map/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(severity == EMP_LIGHT && !prob(50))
 		return
 

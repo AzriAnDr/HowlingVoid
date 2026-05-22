@@ -1,3 +1,32 @@
+GLOBAL_LIST_INIT(tgui_window_themes, list(
+	"nanotrasen" = "Nanotrasen",
+	"midnight" = "Midnight",
+	"neutral" = "Neutral",
+	"syndicate" = "Syndicate",
+	"wizard" = "Wizard",
+	"retro" = "Retro",
+	"paper" = "Paper",
+	"hackerman" = "Hackerman",
+	"admin" = "Admin",
+	"clockwork" = "Clockwork",
+))
+
+GLOBAL_LIST_INIT(tgui_window_backdrops, list(
+	"nanotrasen" = "Nanotrasen",
+	"neutral" = "Neutral",
+	"syndicate" = "Syndicate",
+	"wizard" = "Wizard",
+	"admin" = "Admin",
+	"spooky" = "Spooky",
+	"none" = "None",
+))
+
+/proc/refresh_client_tgui_appearance(client/client)
+	for(var/datum/tgui/tgui as anything in SStgui.all_uis)
+		if(tgui.user?.client != client)
+			continue
+		tgui.send_full_update(force = TRUE, always_instant = TRUE)
+
 // Determines if input boxes are in tgui or old fashioned
 /datum/preference/toggle/tgui_input
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
@@ -72,6 +101,54 @@
 
 /datum/preference/toggle/tgui_say_light_mode/apply_to_client(client/client)
 	client.tgui_say?.load()
+
+/datum/preference/choiced/tgui_window_appearance
+	abstract_type = /datum/preference/choiced/tgui_window_appearance
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/choiced/tgui_window_appearance/compile_constant_data()
+	var/list/data = ..()
+	data["display_names"] = get_display_names().Copy()
+	return data
+
+/datum/preference/choiced/tgui_window_appearance/apply_to_client(client/client, value)
+	refresh_client_tgui_appearance(client)
+
+/datum/preference/choiced/tgui_window_appearance/proc/get_display_names()
+	RETURN_TYPE(/list)
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("get_display_names() was not implemented for [type]!")
+
+/datum/preference/choiced/tgui_window_theme
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "tgui_window_theme"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/choiced/tgui_window_theme/init_possible_values()
+	return assoc_to_keys(GLOB.tgui_window_themes)
+
+/datum/preference/choiced/tgui_window_theme/create_default_value()
+	return "nanotrasen"
+
+/datum/preference/choiced/tgui_window_theme/proc/get_display_names()
+	RETURN_TYPE(/list)
+	return GLOB.tgui_window_themes
+
+/datum/preference/choiced/tgui_window_backdrop
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "tgui_window_backdrop"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/choiced/tgui_window_backdrop/init_possible_values()
+	return assoc_to_keys(GLOB.tgui_window_backdrops)
+
+/datum/preference/choiced/tgui_window_backdrop/create_default_value()
+	return "nanotrasen"
+
+/datum/preference/choiced/tgui_window_backdrop/proc/get_display_names()
+	RETURN_TYPE(/list)
+	return GLOB.tgui_window_backdrops
 
 /datum/preference/toggle/ui_scale
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES

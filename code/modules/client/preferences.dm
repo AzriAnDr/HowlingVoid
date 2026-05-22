@@ -161,6 +161,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// I'm making the assumption that ui close will be called whenever a user logs out, or loses a window
 	// If this isn't the case, kill me and restore the code, thanks
 
+	if(is_storyteller_character_edit_locked(user))
+		return
+
 	// We need IconForge and the assets to be ready before allowing the menu to open
 	if(SSearly_assets.initialized != INITIALIZATION_INNEW_REGULAR)
 		return
@@ -183,6 +186,31 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 // they had the ref to Topic to.
 /datum/preferences/ui_status(mob/user, datum/ui_state/state)
 	return user.client == parent ? UI_INTERACTIVE : UI_CLOSE
+
+/datum/preferences/proc/is_storyteller_character_edit_locked(mob/user)
+	if(!isnewplayer(user) || current_window != PREFERENCE_TAB_CHARACTER_PREFERENCES)
+		return FALSE
+
+	var/remaining = SSstoryteller.get_roundstart_prep_remaining()
+	if(remaining <= 0)
+		return FALSE
+
+	to_chat(user, span_warning("Character setup is temporarily locked while the storyteller finalizes the dynamic round roster. Try again in [DisplayTimeText(remaining, round_seconds_to = 1)]."))
+	return TRUE
+
+/datum/preferences/proc/is_storyteller_locked_preferences_action(action)
+	return action in list(
+		"change_slot",
+		"remove_current_slot",
+		"import_character",
+		"set_preference",
+		"set_color_preference",
+		"set_tricolor_preference",
+		"open_food",
+		"set_job_preference",
+		"set_job_title",
+		"update_background",
+	)
 
 /datum/preferences/ui_data(mob/user)
 	var/list/data = list()
@@ -262,6 +290,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(SSlag_switch.measures[DISABLE_CREATOR] && action != "change_slot")
 		to_chat(usr, "The creator has been disabled. Please do not ahelp.")
 		return
+
+	var/mob/request_user = ui?.user || usr
+	if(is_storyteller_locked_preferences_action(action) && is_storyteller_character_edit_locked(request_user))
+		return TRUE
 
 	log_creator("[key_name(usr)] ACTED [action] | PREFERENCE: [params["preference"]] | VALUE: [params["value"]]")
 

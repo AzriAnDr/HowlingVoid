@@ -15,7 +15,7 @@
   align-items: center;
   width: vp(100vw);
   height: base.rem(32px);
-  background-color: var(--titlebar-background);
+  background: var(--titlebar-background);
   border-bottom: var(--border-thickness-tiny) solid var(--titlebar-shadow-core);
   box-shadow: 0px 0px base.em(6px) base.em(-1px) var(--titlebar-shadow-color);
   z-index: 101; // More than Dimmer
@@ -44,11 +44,83 @@
 
   &__buttons {
     pointer-events: all;
-    overflow: hidden;
+    overflow: visible;
     white-space: nowrap;
     display: inline-block;
     margin: 0 base.rem(9px);
     z-index: 102;
+  }
+
+  &__appearance {
+    position: relative;
+    display: inline-flex;
+    align-items: stretch;
+    height: 100%;
+  }
+
+  &__appearanceTrigger {
+    min-width: base.rem(36px);
+    padding: 0 base.rem(10px);
+    border-radius: 0;
+    height: 100%;
+    color: var(--titlebar-text);
+    opacity: 0.72;
+
+    &:hover,
+    &--active {
+      opacity: 1;
+      background-color: rgba(0, 0, 0, 0.18);
+    }
+  }
+
+  &__appearanceMenu {
+    position: absolute;
+    top: calc(100% + base.rem(4px));
+    right: 0;
+    width: base.rem(232px);
+    padding: base.rem(10px);
+    background: linear-gradient(
+      180deg,
+      hsl(228, 22%, 15%),
+      hsl(228, 18%, 10%)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 base.rem(10px) base.rem(28px) rgba(0, 0, 0, 0.7);
+    z-index: 103;
+  }
+
+  &__appearanceMenuHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: base.rem(8px);
+    color: var(--titlebar-text);
+    font-size: base.rem(16px);
+    font-weight: 600;
+  }
+
+  &__appearanceMenuClose {
+    min-width: base.rem(24px);
+    padding: 0;
+    color: var(--titlebar-text);
+    opacity: 0.75;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__appearanceField + &__appearanceField {
+    margin-top: base.rem(8px);
+  }
+
+  &__appearanceLabel {
+    margin-bottom: base.rem(4px);
+    color: rgba(255, 255, 255, 0.82);
+    font-size: base.rem(12px);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: base.rem(0.4px);
   }
 
   &__KitchenSink {

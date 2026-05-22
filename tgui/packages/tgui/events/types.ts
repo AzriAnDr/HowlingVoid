@@ -8,6 +8,7 @@ type Client = {
   address: string;
   ckey: string;
   computer_id: string;
+  interface_language?: string;
 };
 
 type IFace = {
@@ -16,11 +17,17 @@ type IFace = {
 };
 
 type TguiWindow = {
+  backdrop?: string;
+  backdrop_display_names?: Record<string, string>;
+  backdrop_options?: string[];
   fancy: BinaryIO;
   key: string;
   locked: BinaryIO;
   scale: BinaryIO;
   size: [number, number];
+  theme?: string;
+  theme_display_names?: Record<string, string>;
+  theme_options?: string[];
 };
 
 type User = {

@@ -230,6 +230,10 @@
 	if(!.)
 		return
 
+	var/mob/dead/new_player/new_player = hud.mymob
+	if(new_player.is_storyteller_lobby_locked(TRUE))
+		return
+
 	var/datum/preferences/preferences = hud.mymob.canon_client.prefs
 	preferences.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
 	preferences.update_static_data(usr)
@@ -807,6 +811,9 @@
 	maptext = MAPTEXT(new_maptext)
 
 /atom/movable/screen/lobby/new_player_info/proc/time_remaining_str()
+	if(SSstoryteller?.is_roundstart_prep_active())
+		return "storyteller prep ([round(SSstoryteller.get_roundstart_prep_remaining() / 10)]s)"
+
 	var/time_remaining = SSticker.GetTimeLeft()
 	if(time_remaining > 0)
 		time_remaining = "[round(time_remaining/10)]s"

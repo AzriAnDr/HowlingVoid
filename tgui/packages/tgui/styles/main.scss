@@ -14,6 +14,9 @@
 // Tgui core bulk imports
 @include meta.load-css('~tgui-core/styles/all-atomic.scss');
 @include meta.load-css('~tgui-core/styles/all-themes.scss');
+@include meta.load-css('./themes/clockwork.scss');
+@include meta.load-css('./themes/midnight.scss');
+@include meta.load-css('./themes/backdrops.scss');
 
 // Interfaces
 @include meta.load-css('./interfaces/Accounting.scss');
@@ -52,7 +55,6 @@
 // NOVA EDIT ADDITION START
 @include meta.load-css('./interfaces/ClockworkResearch.scss');
 @include meta.load-css('./interfaces/ClockworkSlab.scss');
-@include meta.load-css('./themes/clockwork.scss');
 // NOVA EDIT ADDITION END
 
 // Layouts

@@ -155,7 +155,9 @@ Nothing else in the console has ID requirements.
 		to_chat(user, span_warning("[tool] is stuck to your hand!"))
 		return ITEM_INTERACT_BLOCKING
 
-	d_disk = tool
+	var/obj/item/disk/design_disk/design_disk = tool
+	d_disk = design_disk
+	design_disk.on_rnd_inserted(src)
 	to_chat(user, span_notice("You insert [tool] into \the [src]!"))
 	return ITEM_INTERACT_SUCCESS
 

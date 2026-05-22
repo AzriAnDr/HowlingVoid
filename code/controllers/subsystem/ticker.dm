@@ -253,6 +253,9 @@ SUBSYSTEM_DEF(ticker)
 	return player_states
 
 /datum/controller/subsystem/ticker/proc/setup()
+	if(SSstoryteller.is_enabled() && SSstoryteller.hold_round_setup_for_prep_phase())
+		return TRUE
+
 	to_chat(world, span_boldannounce("Starting game..."))
 	var/init_start = world.timeofday
 

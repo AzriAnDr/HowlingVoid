@@ -13,21 +13,27 @@ import { computeBoxClassName, computeBoxProps } from 'tgui-core/ui';
 type BoxProps = React.ComponentProps<typeof Box>;
 
 type Props = Partial<{
+  backdrop: string;
   theme: string;
 }> &
   BoxProps;
 
 export function Layout(props: Props) {
-  const { className, theme = 'nanotrasen', children, ...rest } = props;
+  const { className, theme = 'nanotrasen', backdrop, children, ...rest } =
+    props;
 
   const themeClass = `theme-${theme}`;
+  const rootClasses = classes([
+    themeClass,
+    backdrop && `backdrop-${backdrop}`,
+  ]);
 
   useEffect(() => {
-    document.documentElement.className = themeClass;
-  }, [themeClass]);
+    document.documentElement.className = rootClasses;
+  }, [rootClasses]);
 
   return (
-    <div className={themeClass}>
+    <div className={rootClasses}>
       <div
         className={classes(['Layout', className, computeBoxClassName(rest)])}
         {...computeBoxProps(rest)}

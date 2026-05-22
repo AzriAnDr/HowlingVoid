@@ -35,6 +35,7 @@ SUBSYSTEM_DEF(storyteller)
 	var/list/admin_discarded_actions = list()
 	var/list/reserved_action_budgets = list()
 	var/list/queued_antag_metadata = list()
+	var/list/scheduled_action_queue = list()
 	var/list/decision_history = list()
 	var/list/prepared_roundstart_entries = list()
 	var/last_snapshot_refresh = 0
@@ -48,10 +49,14 @@ SUBSYSTEM_DEF(storyteller)
 	var/baseline_broken_floor_count = 0
 	var/baseline_damaged_window_count = 0
 	var/baseline_damaged_grille_count = 0
+	var/prep_phase_active = FALSE
+	var/prep_phase_started_at = 0
+	var/prep_phase_ends_at = 0
 	var/threat_budget = 0
 	var/aid_budget = 0
 	var/current_phase_max = 1
 	var/phase_cap = 1
+	var/automatic_phase_floor = 1
 	var/manual_phase_override = FALSE
 	var/manual_profile_override = FALSE
 	var/paused = FALSE
@@ -75,6 +80,7 @@ SUBSYSTEM_DEF(storyteller)
 	var/last_negative_action_impact = 0
 	var/queued_positive_action_id
 	var/queued_negative_action_id
+	var/next_scheduled_action_queue_id = 1
 	var/list/active_modifiers = list()
 	var/list/pending_pod_deliveries = list()
 
@@ -132,6 +138,12 @@ SUBSYSTEM_DEF(storyteller)
 	update_scores()
 	evaluate_needs()
 	update_budgets()
+	var/processed_scheduled_actions = process_scheduled_action_queue()
+	if(processed_scheduled_actions && SSticker.IsRoundInProgress())
+		refresh_snapshot(TRUE)
+		update_scores()
+		evaluate_needs()
+		update_budgets()
 
 	if(!SSticker.IsRoundInProgress())
 		return
@@ -279,6 +291,11 @@ SUBSYSTEM_DEF(storyteller)
 
 /datum/controller/subsystem/storyteller/proc/clear_manual_profile(mob/user)
 	manual_profile_override = FALSE
+	if(is_roundstart_prep_active())
+		profile_selected = FALSE
+		select_profile_for_roster(build_pregame_roster_data())
+		record_decision("[key_name(user)] returned storyteller profile selection to automatic frozen-roster picks.")
+		return TRUE
 	if(SSticker.IsRoundInProgress())
 		profile_selected = FALSE
 		select_profile_for_population(max(current_snapshot?.alive_crew || 0, current_snapshot?.active_population || 0))
@@ -303,6 +320,173 @@ SUBSYSTEM_DEF(storyteller)
 	apply_profile_type(chosen_profile_type)
 	profile_selected = TRUE
 	record_decision("Selected storyteller profile [profile.name] for population [player_count].")
+
+/datum/controller/subsystem/storyteller/proc/should_run_roundstart_prep_phase()
+	return is_enabled() && round_mode == STORYTELLER_ROUND_MODE_DYNAMIC && SSticker.current_state == GAME_STATE_SETTING_UP && !SSticker.HasRoundStarted()
+
+/datum/controller/subsystem/storyteller/proc/is_roundstart_prep_active()
+	return prep_phase_active && should_run_roundstart_prep_phase()
+
+/datum/controller/subsystem/storyteller/proc/get_roundstart_prep_remaining()
+	if(!is_roundstart_prep_active())
+		return 0
+	return max(prep_phase_ends_at - world.time, 0)
+
+/datum/controller/subsystem/storyteller/proc/build_pregame_roster_data()
+	RETURN_TYPE(/list)
+	var/list/department_intents = list()
+	var/list/job_intents = list()
+	var/list/key_job_intents = list()
+	var/ready_count = 0
+	var/list/relevant_departments = list(
+		ACCOUNT_CMD,
+		ACCOUNT_SEC,
+		ACCOUNT_ENG,
+		ACCOUNT_MED,
+		ACCOUNT_SCI,
+		ACCOUNT_CAR,
+		ACCOUNT_SRV,
+	)
+
+	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
+		if(QDELETED(player) || player.ready != PLAYER_READY_TO_PLAY || !player.client?.prefs)
+			continue
+
+		ready_count++
+		var/datum/job/intended_job = player.client.prefs.get_highest_priority_job()
+		if(!intended_job)
+			continue
+
+		job_intents[intended_job.title] = (job_intents[intended_job.title] || 0) + 1
+		if(intended_job.title in profile.key_jobs)
+			key_job_intents[intended_job.title] = TRUE
+
+		var/department_id = intended_job.paycheck_department
+		if(!department_id)
+			continue
+		department_intents[department_id] = (department_intents[department_id] || 0) + 1
+
+	var/department_coverage = 0
+	for(var/department_id in relevant_departments)
+		if((department_intents[department_id] || 0) > 0)
+			department_coverage++
+
+	return list(
+		"readyCount" = ready_count,
+		"departmentIntents" = department_intents,
+		"jobIntents" = job_intents,
+		"keyJobIntentCount" = length(key_job_intents),
+		"departmentCoverage" = department_coverage,
+	)
+
+/datum/controller/subsystem/storyteller/proc/pick_profile_type_for_roster(list/roster_data)
+	if(!islist(roster_data))
+		return pick_profile_type(0)
+
+	var/ready_count = roster_data["readyCount"] || 0
+	var/key_job_intents = roster_data["keyJobIntentCount"] || 0
+	var/department_coverage = roster_data["departmentCoverage"] || 0
+	var/list/department_intents = roster_data["departmentIntents"] || list()
+	var/command_intents = department_intents[ACCOUNT_CMD] || 0
+	var/anchor_support = 0
+
+	for(var/department_id in list(ACCOUNT_ENG, ACCOUNT_MED, ACCOUNT_SEC, ACCOUNT_SCI, ACCOUNT_CAR))
+		if((department_intents[department_id] || 0) > 0)
+			anchor_support++
+
+	var/list/profile_weights = list(
+		/datum/storyteller/profile/passive = max(15, 70 - (ready_count * 2)) + max(0, 5 - key_job_intents) * 12 + max(0, 4 - department_coverage) * 10,
+		/datum/storyteller/profile = 45 + ready_count + (department_coverage * 5),
+		/datum/storyteller/profile/aggressive = max(5, (ready_count * 2) - 10) + (key_job_intents * 9) + (department_coverage * 6) + (anchor_support * 4) + (command_intents > 0 ? 6 : 0),
+	)
+
+	return pick_weight(profile_weights)
+
+/datum/controller/subsystem/storyteller/proc/select_profile_for_roster(list/roster_data)
+	if(profile_selected)
+		return
+	var/ready_count = islist(roster_data) ? (roster_data["readyCount"] || 0) : 0
+	var/chosen_profile_type = pick_profile_type_for_roster(roster_data)
+	apply_profile_type(chosen_profile_type)
+	profile_selected = TRUE
+	record_decision("Selected storyteller profile [profile.name] from a frozen lobby roster of [ready_count] ready players.")
+
+/datum/controller/subsystem/storyteller/proc/calculate_initial_content_stage_for_roster(list/roster_data)
+	var/stage = 1
+	if(phase_cap <= 1 || !islist(roster_data))
+		return stage
+
+	var/ready_count = roster_data["readyCount"] || 0
+	var/key_job_intents = roster_data["keyJobIntentCount"] || 0
+	var/department_coverage = roster_data["departmentCoverage"] || 0
+	var/list/department_intents = roster_data["departmentIntents"] || list()
+	var/engineering_intents = department_intents[ACCOUNT_ENG] || 0
+	var/medical_intents = department_intents[ACCOUNT_MED] || 0
+	var/security_intents = department_intents[ACCOUNT_SEC] || 0
+
+	if(phase_cap >= 2 && (ready_count >= 22 || (ready_count >= 16 && key_job_intents >= 5 && department_coverage >= 5 && engineering_intents > 0 && medical_intents > 0)))
+		stage = 2
+	if(phase_cap >= 3 && (ready_count >= 38 || (ready_count >= 30 && key_job_intents >= 6 && department_coverage >= 6 && engineering_intents > 0 && medical_intents > 0 && security_intents > 0)))
+		stage = 3
+	if(phase_cap >= 4 && (ready_count >= 52 || (ready_count >= 42 && key_job_intents >= 7 && department_coverage >= 7 && engineering_intents >= 2 && medical_intents >= 2 && security_intents > 0)))
+		stage = 4
+
+	return clamp(stage, 1, phase_cap)
+
+/datum/controller/subsystem/storyteller/proc/select_initial_content_stage_for_roster(list/roster_data)
+	if(manual_phase_override)
+		return
+	var/ready_count = islist(roster_data) ? (roster_data["readyCount"] || 0) : 0
+	var/initial_phase = calculate_initial_content_stage_for_roster(roster_data)
+	current_phase_max = initial_phase
+	automatic_phase_floor = initial_phase
+	record_decision("Locked storyteller starting content stage to [current_phase_max] from a frozen lobby roster of [ready_count] ready players.")
+
+/datum/controller/subsystem/storyteller/proc/begin_roundstart_prep_phase()
+	if(prep_phase_active)
+		return
+	if(!mode_vote_finalized)
+		record_decision("Storyteller mode vote did not finalize before preparation; using [capitalize(round_mode)] mode.")
+		mode_vote_finalized = TRUE
+
+	prep_phase_active = TRUE
+	prep_phase_started_at = world.time
+	prep_phase_ends_at = world.time + STORYTELLER_DEFAULT_SETUP_PREP_DURATION
+
+	var/list/roster_data = build_pregame_roster_data()
+	if(!manual_profile_override)
+		select_profile_for_roster(roster_data)
+	if(!manual_phase_override)
+		select_initial_content_stage_for_roster(roster_data)
+
+	record_decision("Started storyteller setup preparation for [DisplayTimeText(STORYTELLER_DEFAULT_SETUP_PREP_DURATION, round_seconds_to = 1)].")
+	to_chat(world, span_notice("The storyteller is finalizing the dynamic round setup. Character editing, observation, and round-entry changes are locked for [DisplayTimeText(STORYTELLER_DEFAULT_SETUP_PREP_DURATION, round_seconds_to = 1)]."))
+
+/datum/controller/subsystem/storyteller/proc/finish_roundstart_prep_phase()
+	if(!prep_phase_active)
+		return
+	prep_phase_active = FALSE
+	prep_phase_started_at = 0
+	prep_phase_ends_at = 0
+	record_decision("Storyteller setup preparation completed. Proceeding with dynamic round setup.")
+
+/datum/controller/subsystem/storyteller/proc/hold_round_setup_for_prep_phase()
+	if(!prep_phase_active && !should_run_roundstart_prep_phase())
+		return FALSE
+
+	if(prep_phase_active && !should_run_roundstart_prep_phase())
+		finish_roundstart_prep_phase()
+		return FALSE
+
+	if(!prep_phase_active)
+		begin_roundstart_prep_phase()
+		return TRUE
+
+	if(world.time < prep_phase_ends_at)
+		return TRUE
+
+	finish_roundstart_prep_phase()
+	return FALSE
 
 /datum/controller/subsystem/storyteller/proc/allow_roundstart_hostiles()
 	return round_mode == STORYTELLER_ROUND_MODE_DYNAMIC
@@ -369,6 +553,9 @@ SUBSYSTEM_DEF(storyteller)
 	last_negative_action_cost = 0
 	last_positive_action_impact = 0
 	last_negative_action_impact = 0
+	prep_phase_active = FALSE
+	prep_phase_started_at = 0
+	prep_phase_ends_at = 0
 	positive_fatigue_locked_until = 0
 	negative_fatigue_locked_until = 0
 	family_cooldowns.Cut()
@@ -376,13 +563,16 @@ SUBSYSTEM_DEF(storyteller)
 	admin_discarded_actions.Cut()
 	reserved_action_budgets.Cut()
 	queued_antag_metadata.Cut()
+	scheduled_action_queue.Cut()
 	active_modifiers.Cut()
 	pending_pod_deliveries.Cut()
 	queued_positive_action_id = null
 	queued_negative_action_id = null
+	next_scheduled_action_queue_id = 1
 	manual_phase_override = FALSE
 	manual_profile_override = FALSE
 	current_phase_max = 1
+	automatic_phase_floor = 1
 	baseline_structure_captured = FALSE
 	baseline_station_breach_tiles = 0
 	baseline_broken_floor_count = 0
@@ -761,6 +951,7 @@ SUBSYSTEM_DEF(storyteller)
 	if(phase_cap >= 4 && (elapsed >= 75 MINUTES || population >= 45 || danger >= 80 || active_antags >= 6 || deaths >= 6 || explosions >= 4))
 		stage = 4
 
+	stage = max(stage, automatic_phase_floor)
 	return clamp(stage, 1, phase_cap)
 
 /datum/controller/subsystem/storyteller/proc/update_content_stage()
@@ -773,6 +964,8 @@ SUBSYSTEM_DEF(storyteller)
 	record_decision("Storyteller content stage advanced to [current_phase_max].")
 
 /datum/controller/subsystem/storyteller/proc/is_channel_ready(action_polarity)
+	if(has_pending_storyteller_scheduled_action(action_polarity))
+		return FALSE
 	switch(action_polarity)
 		if(STORYTELLER_POLARITY_POSITIVE)
 			return world.time >= positive_channel_ready_at
@@ -970,6 +1163,285 @@ SUBSYSTEM_DEF(storyteller)
 		return 0
 	threat_budget = min(profile?.budget_cap || 100, threat_budget + refund)
 	return refund
+
+/datum/controller/subsystem/storyteller/proc/copy_storyteller_context_data(list/context_data)
+	RETURN_TYPE(/list)
+	if(!islist(context_data))
+		return list()
+	return context_data.Copy()
+
+/datum/controller/subsystem/storyteller/proc/has_pending_storyteller_scheduled_action(action_polarity)
+	if(!action_polarity)
+		return FALSE
+	prune_scheduled_action_queue()
+	for(var/list/entry as anything in scheduled_action_queue)
+		if(!islist(entry))
+			continue
+		if(entry["polarity"] == action_polarity)
+			return TRUE
+	return FALSE
+
+/datum/controller/subsystem/storyteller/proc/get_scheduled_action_conflict_reason(datum/storyteller/action/action)
+	if(!istype(action))
+		return null
+	prune_scheduled_action_queue()
+	for(var/list/entry as anything in scheduled_action_queue)
+		if(!islist(entry))
+			continue
+		if(entry["actionId"] == action.id)
+			return "Already queued in the storyteller schedule"
+		if(action.family && entry["family"] == action.family)
+			return "A related storyteller action is already queued"
+	return null
+
+/datum/controller/subsystem/storyteller/proc/prune_scheduled_action_queue()
+	if(!length(scheduled_action_queue))
+		return
+	for(var/index = length(scheduled_action_queue), index >= 1, index--)
+		var/list/entry = scheduled_action_queue[index]
+		if(!islist(entry))
+			scheduled_action_queue.Cut(index, index + 1)
+			continue
+		if(!entry["queueId"] || !entry["actionId"])
+			scheduled_action_queue.Cut(index, index + 1)
+			continue
+		if(!catalog?.get_action(entry["actionId"]))
+			scheduled_action_queue.Cut(index, index + 1)
+
+/datum/controller/subsystem/storyteller/proc/get_scheduled_action_queue_index(queue_id)
+	if(!queue_id || !length(scheduled_action_queue))
+		return 0
+	for(var/index in 1 to length(scheduled_action_queue))
+		var/list/entry = scheduled_action_queue[index]
+		if(!islist(entry))
+			continue
+		if(entry["queueId"] == queue_id)
+			return index
+	return 0
+
+/datum/controller/subsystem/storyteller/proc/get_scheduled_action_queue_entry(queue_id)
+	RETURN_TYPE(/list)
+	var/index = get_scheduled_action_queue_index(queue_id)
+	if(index <= 0)
+		return null
+	var/list/entry = scheduled_action_queue[index]
+	if(!islist(entry))
+		return null
+	return entry
+
+/datum/controller/subsystem/storyteller/proc/build_scheduled_action_context(datum/storyteller/action/action, list/context_data, forced = FALSE, mob/user)
+	RETURN_TYPE(/list)
+	var/list/stored_context = copy_storyteller_context_data(context_data)
+	stored_context["selection_context"] = action?.context || stored_context["selection_context"]
+	stored_context["scheduled"] = TRUE
+	if(forced && istype(action))
+		stored_context |= build_forced_context_data(action, user)
+	return stored_context
+
+/datum/controller/subsystem/storyteller/proc/schedule_action_entry(datum/storyteller/action/action, list/context_data, delay, source = STORYTELLER_QUEUE_SOURCE_ADMIN, storyteller_generated = FALSE, mob/user)
+	if(!istype(action))
+		return FALSE
+	prune_scheduled_action_queue()
+	var/normalized_delay = max(0, round(delay))
+	var/source_name = source == STORYTELLER_QUEUE_SOURCE_ADMIN ? key_name(user) : "Storyteller"
+	scheduled_action_queue += list(list(
+		"queueId" = "storyteller_queue_[next_scheduled_action_queue_id++]",
+		"actionId" = action.id,
+		"name" = action.name,
+		"context" = action.context,
+		"polarity" = action.polarity,
+		"family" = action.family,
+		"source" = source,
+		"sourceName" = source_name,
+		"storytellerGenerated" = storyteller_generated,
+		"scheduledAt" = world.time,
+		"executeAt" = world.time + normalized_delay,
+		"delay" = normalized_delay,
+		"contextData" = build_scheduled_action_context(action, context_data, source == STORYTELLER_QUEUE_SOURCE_ADMIN, user),
+	))
+	return TRUE
+
+/datum/controller/subsystem/storyteller/proc/schedule_storyteller_action(datum/storyteller/action/action, list/context_data)
+	if(!istype(action))
+		return FALSE
+	var/delay = STORYTELLER_DEFAULT_ACTION_QUEUE_DELAY
+	if(!schedule_action_entry(action, context_data, delay, STORYTELLER_QUEUE_SOURCE_STORYTELLER, TRUE, null))
+		return FALSE
+	record_decision("Queued storyteller action [action.name] to trigger in [DisplayTimeText(delay, round_seconds_to = 1)].")
+	return TRUE
+
+/datum/controller/subsystem/storyteller/proc/queue_action_with_delay(action_id, delay, mob/user)
+	var/datum/storyteller/action/action = catalog.get_action(action_id)
+	if(!istype(action))
+		return FALSE
+	var/normalized_delay = max(0, round(delay))
+	var/list/context_data = build_forced_context_data(action, user)
+	if(!schedule_action_entry(action, context_data, normalized_delay, STORYTELLER_QUEUE_SOURCE_ADMIN, FALSE, user))
+		return FALSE
+	record_decision("[key_name(user)] queued storyteller action [action.name] to trigger in [DisplayTimeText(normalized_delay, round_seconds_to = 1)].")
+	return TRUE
+
+/datum/controller/subsystem/storyteller/proc/remove_scheduled_action(queue_id, mob/user)
+	prune_scheduled_action_queue()
+	var/index = get_scheduled_action_queue_index(queue_id)
+	if(index <= 0)
+		return FALSE
+	var/list/entry = scheduled_action_queue[index]
+	scheduled_action_queue.Cut(index, index + 1)
+	record_decision("[key_name(user)] removed queued storyteller action [entry["name"]].")
+	return TRUE
+
+/datum/controller/subsystem/storyteller/proc/set_scheduled_action_delay(queue_id, delay, mob/user)
+	prune_scheduled_action_queue()
+	var/index = get_scheduled_action_queue_index(queue_id)
+	if(index <= 0)
+		return FALSE
+	var/list/entry = scheduled_action_queue[index]
+	if(!islist(entry))
+		return FALSE
+	var/normalized_delay = max(0, round(delay))
+	entry["scheduledAt"] = world.time
+	entry["executeAt"] = world.time + normalized_delay
+	entry["delay"] = normalized_delay
+	record_decision("[key_name(user)] changed queued storyteller action [entry["name"]] timer to [DisplayTimeText(normalized_delay, round_seconds_to = 1)].")
+	return TRUE
+
+/datum/controller/subsystem/storyteller/proc/move_scheduled_action(queue_id, direction, mob/user)
+	prune_scheduled_action_queue()
+	var/index = get_scheduled_action_queue_index(queue_id)
+	if(index <= 0)
+		return FALSE
+	var/list/entry = scheduled_action_queue[index]
+	if(!islist(entry))
+		return FALSE
+	var/target_index = index
+	switch(direction)
+		if("up")
+			target_index = max(1, index - 1)
+		if("down")
+			target_index = min(length(scheduled_action_queue), index + 1)
+		if("top")
+			target_index = 1
+		if("bottom")
+			target_index = length(scheduled_action_queue)
+		else
+			return FALSE
+	if(target_index == index)
+		return FALSE
+	scheduled_action_queue.Cut(index, index + 1)
+	var/list/new_queue = list()
+	var/inserted = FALSE
+	for(var/i in 1 to (length(scheduled_action_queue) + 1))
+		if(i == target_index && !inserted)
+			new_queue += list(entry)
+			inserted = TRUE
+		if(i <= length(scheduled_action_queue))
+			new_queue += list(scheduled_action_queue[i])
+	if(!inserted)
+		new_queue += list(entry)
+	scheduled_action_queue = new_queue
+	record_decision("[key_name(user)] moved queued storyteller action [entry["name"]] to position [target_index].")
+	return TRUE
+
+/datum/controller/subsystem/storyteller/proc/force_scheduled_action(queue_id, mob/user)
+	prune_scheduled_action_queue()
+	var/index = get_scheduled_action_queue_index(queue_id)
+	if(index <= 0)
+		return FALSE
+	var/list/entry = scheduled_action_queue[index]
+	if(!islist(entry))
+		return FALSE
+	var/datum/storyteller/action/action = catalog.get_action(entry["actionId"])
+	if(!istype(action))
+		record_decision("[key_name(user)] failed to force queued storyteller action [entry["name"]].")
+		return FALSE
+
+	refresh_snapshot(TRUE)
+	update_scores()
+	evaluate_needs()
+
+	var/list/context_data = copy_storyteller_context_data(entry["contextData"])
+	if(!length(context_data))
+		context_data = list("selection_context" = action.context)
+	context_data |= build_forced_context_data(action, user)
+
+	if(!action.force_execute(src, current_snapshot, context_data))
+		record_decision("[key_name(user)] failed to force queued storyteller action [action.name].")
+		return FALSE
+
+	scheduled_action_queue.Cut(index, index + 1)
+	if(action.context == STORYTELLER_CONTEXT_ROUNDSTART || action.context == STORYTELLER_CONTEXT_LATEJOIN)
+		record_decision("[key_name(user)] armed queued storyteller action [action.name] immediately.")
+	else
+		record_decision("[key_name(user)] forced queued storyteller action [action.name] immediately.")
+	return TRUE
+
+/datum/controller/subsystem/storyteller/proc/execute_scheduled_action_entry(list/entry)
+	if(!islist(entry))
+		return FALSE
+	var/datum/storyteller/action/action = catalog.get_action(entry["actionId"])
+	if(!istype(action))
+		return FALSE
+	var/list/context_data = copy_storyteller_context_data(entry["contextData"])
+	if(!length(context_data))
+		context_data = list("selection_context" = action.context)
+	var/success = FALSE
+	if(entry["source"] == STORYTELLER_QUEUE_SOURCE_ADMIN)
+		success = action.force_execute(src, current_snapshot, context_data)
+	else
+		success = action.execute(src, current_snapshot, context_data)
+	if(!success)
+		record_decision("Queued storyteller action [action.name] failed to trigger.")
+	return success
+
+/datum/controller/subsystem/storyteller/proc/process_scheduled_action_queue()
+	prune_scheduled_action_queue()
+	if(!length(scheduled_action_queue))
+		return FALSE
+	var/processed_anything = FALSE
+	for(var/index = 1, index <= length(scheduled_action_queue), )
+		var/list/entry = scheduled_action_queue[index]
+		if(!islist(entry))
+			scheduled_action_queue.Cut(index, index + 1)
+			continue
+		var/action_context = entry["context"]
+		if(action_context == STORYTELLER_CONTEXT_ROUNDSTART)
+			if(SSticker.current_state > GAME_STATE_SETTING_UP)
+				record_decision("Queued storyteller action [entry["name"]] expired because the roundstart setup window has already passed.")
+				scheduled_action_queue.Cut(index, index + 1)
+				continue
+		else if(!SSticker.IsRoundInProgress())
+			index++
+			continue
+		if(world.time < (entry["executeAt"] || 0))
+			index++
+			continue
+		scheduled_action_queue.Cut(index, index + 1)
+		processed_anything = execute_scheduled_action_entry(entry) || processed_anything
+	return processed_anything
+
+/datum/controller/subsystem/storyteller/proc/get_scheduled_action_queue_ui_data()
+	RETURN_TYPE(/list)
+	prune_scheduled_action_queue()
+	var/list/data = list()
+	var/position = 1
+	for(var/list/entry as anything in scheduled_action_queue)
+		if(!islist(entry))
+			continue
+		data += list(list(
+			"id" = entry["queueId"],
+			"name" = entry["name"],
+			"context" = entry["context"],
+			"polarity" = entry["polarity"],
+			"source" = entry["source"],
+			"sourceName" = entry["sourceName"],
+			"storytellerGenerated" = !!entry["storytellerGenerated"],
+			"remaining" = max((entry["executeAt"] || 0) - world.time, 0),
+			"scheduledFor" = station_time_timestamp("hh:mm:ss", entry["executeAt"]),
+			"position" = position,
+		))
+		position++
+	return data
 
 /datum/controller/subsystem/storyteller/proc/prune_queued_antag_metadata()
 	if(!length(queued_antag_metadata))
@@ -1400,7 +1872,7 @@ SUBSYSTEM_DEF(storyteller)
 	var/list/context_data = selected["context_data"]
 	if(!istype(action) || !islist(context_data))
 		return FALSE
-	return action.execute(src, current_snapshot, context_data)
+	return schedule_storyteller_action(action, context_data)
 
 /datum/controller/subsystem/storyteller/proc/try_run_negative_action()
 	if(!allow_negative_midround())
@@ -1421,7 +1893,7 @@ SUBSYSTEM_DEF(storyteller)
 	var/datum/storyteller/action/action = select_action(STORYTELLER_CONTEXT_MIDROUND, STORYTELLER_POLARITY_NEGATIVE, context_data)
 	if(!istype(action))
 		return FALSE
-	return action.execute(src, current_snapshot, context_data)
+	return schedule_storyteller_action(action, context_data)
 
 /datum/controller/subsystem/storyteller/proc/select_positive_action()
 	RETURN_TYPE(/list)
@@ -2734,6 +3206,7 @@ SUBSYSTEM_DEF(storyteller)
 	data["latejoinRoundstartRemaining"] = max(latejoin_roundstart_locked_until - world.time, 0)
 	data["skipNextPulse"] = skip_next_pulse
 	data["roundStarted"] = SSticker.HasRoundStarted()
+	data["defaultQueueDelay"] = STORYTELLER_DEFAULT_ACTION_QUEUE_DELAY
 	data["snapshot"] = current_snapshot?.to_ui_data() || list()
 	data["decisionHistory"] = decision_history.Copy()
 	data["activeModifiers"] = list()
@@ -2787,6 +3260,7 @@ SUBSYSTEM_DEF(storyteller)
 	data["eligiblePositiveActions"] = get_action_ui_entries_for_polarity(STORYTELLER_POLARITY_POSITIVE, FALSE)
 	data["eligibleNegativeActions"] = get_action_ui_entries_for_polarity(STORYTELLER_POLARITY_NEGATIVE, FALSE)
 	data["eligibleAntagActions"] = get_antag_action_ui_entries()
+	data["scheduledActions"] = get_scheduled_action_queue_ui_data()
 	data["queuedAntagActions"] = get_queued_antag_ui_entries()
 
 	data["allActions"] = list()
@@ -2831,6 +3305,10 @@ SUBSYSTEM_DEF(storyteller)
 			return TRUE
 		if("auto_phase")
 			manual_phase_override = FALSE
+			if(is_roundstart_prep_active())
+				select_initial_content_stage_for_roster(build_pregame_roster_data())
+				record_decision("[key_name(ui.user)] returned storyteller content stage control to automatic frozen-roster escalation.")
+				return TRUE
 			update_content_stage()
 			record_decision("[key_name(ui.user)] returned storyteller content stage control to automatic escalation.")
 			return TRUE
@@ -2856,11 +3334,39 @@ SUBSYSTEM_DEF(storyteller)
 			if(!action_id)
 				return
 			return queue_action_for_next(action_id, ui.user)
+		if("queue_action_delayed")
+			var/action_id = params["action_id"]
+			var/delay = text2num(params["delay"])
+			if(!action_id || !isnum(delay))
+				return
+			return queue_action_with_delay(action_id, delay, ui.user)
 		if("discard_action")
 			var/action_id = params["action_id"]
 			if(!action_id)
 				return
 			return discard_action(action_id, ui.user)
+		if("remove_scheduled_action")
+			var/queue_id = params["queue_id"]
+			if(!queue_id)
+				return
+			return remove_scheduled_action(queue_id, ui.user)
+		if("set_scheduled_action_delay")
+			var/queue_id = params["queue_id"]
+			var/delay = text2num(params["delay"])
+			if(!queue_id || !isnum(delay))
+				return
+			return set_scheduled_action_delay(queue_id, delay, ui.user)
+		if("move_scheduled_action")
+			var/queue_id = params["queue_id"]
+			var/direction = params["direction"]
+			if(!queue_id || !direction)
+				return
+			return move_scheduled_action(queue_id, direction, ui.user)
+		if("force_scheduled_action")
+			var/queue_id = params["queue_id"]
+			if(!queue_id)
+				return
+			return force_scheduled_action(queue_id, ui.user)
 		if("cancel_queued_antag")
 			var/queue_id = params["queue_id"]
 			if(!queue_id)

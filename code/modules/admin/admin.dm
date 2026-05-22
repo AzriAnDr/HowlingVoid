@@ -61,10 +61,6 @@
 		return
 
 	switch(action)
-		if("storyteller")
-			if(!check_rights(R_ADMIN))
-				return
-			storyteller_panel(usr)
 		if("spawn_panel")
 			if(!check_rights(R_SPAWN))
 				return
