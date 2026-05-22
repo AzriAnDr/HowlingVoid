@@ -24881,6 +24881,7 @@
 /obj/machinery/modular_computer/preset/cargochat/engineering{
 	dir = 8
 	},
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/engineering/break_room)
 "eXo" = (
@@ -28909,6 +28910,12 @@
 /obj/structure/flora/bush/flowers_br/style_3,
 /turf/open/floor/grass,
 /area/station/hallway/primary/port)
+"fOY" = (
+/obj/machinery/station_map/engineering/directional/north,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/station/hallway/secondary/command)
 "fPj" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
 /obj/structure/sign/warning/vacuum/external/directional/east,
@@ -31270,6 +31277,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"gnA" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/station_map/engineering/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "gnB" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -32045,6 +32059,7 @@
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron/stairs{
 	dir = 1
 	},
@@ -36888,6 +36903,13 @@
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
+"hwu" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/station_map/engineering/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/primary/port)
 "hwx" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -43779,6 +43801,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
 "iTX" = (
@@ -46321,6 +46344,7 @@
 /obj/machinery/cryopod{
 	dir = 4
 	},
+/obj/machinery/station_map/engineering/directional/west,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/common/cryopods)
 "jtB" = (
@@ -47054,6 +47078,7 @@
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 8
 	},
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
@@ -47506,6 +47531,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/command/teleporter)
+"jFB" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/station_map/engineering/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "jFE" = (
 /obj/machinery/modular_computer/preset/id,
 /obj/effect/turf_decal/stripes,
@@ -57830,6 +57862,14 @@
 /obj/machinery/photocopier/prebuilt,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/nt_rep)
+"lKr" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/station_map/engineering/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/primary/aft)
 "lKw" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/ears/earmuffs{
@@ -59713,6 +59753,13 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/command)
+"mde" = (
+/obj/structure/cable,
+/obj/machinery/station_map/engineering/directional/east,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/station/hallway/primary/port)
 "mdj" = (
 /obj/structure/table,
 /obj/machinery/recharger{
@@ -62911,6 +62958,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "mKQ" = (
@@ -64524,6 +64572,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"ncc" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/station_map/engineering/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/primary/port)
 "ncg" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
@@ -69358,6 +69416,13 @@
 "ocA" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/disposal)
+"ocF" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/station_map/engineering/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/aft)
 "ocG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -109438,6 +109503,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"vVw" = (
+/obj/machinery/station_map/engineering/directional/east,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/station/hallway/primary/port)
 "vVy" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -116132,6 +116203,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/library/private)
+"xmY" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/station_map/engineering/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/dorms)
 "xne" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/portable_atmospherics/scrubber,
@@ -117987,6 +118065,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "xGF" = (
@@ -120024,6 +120103,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/station_map/engineering/directional/west,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -143913,7 +143993,7 @@ hgM
 oXX
 apW
 wTr
-kxO
+vVw
 kxO
 ieG
 kSS
@@ -144898,7 +144978,7 @@ uez
 ieG
 ieG
 ieG
-ieG
+mde
 ieG
 jte
 cxE
@@ -146237,7 +146317,7 @@ tJV
 hyA
 deD
 oXz
-feR
+hwu
 jQA
 kcg
 jQA
@@ -148250,7 +148330,7 @@ gIc
 obS
 pgK
 uDg
-dGz
+ncc
 qku
 ofm
 lAZ
@@ -150106,7 +150186,7 @@ bkw
 ail
 wGh
 slp
-amx
+lKr
 uTj
 xMs
 lwf
@@ -151052,7 +151132,7 @@ www
 vzz
 www
 fKc
-tyH
+gnA
 tyH
 mSG
 tyH
@@ -151366,7 +151446,7 @@ lKx
 lKx
 lKx
 ejo
-lKx
+ocF
 dQf
 oPG
 lKx
@@ -157811,7 +157891,7 @@ pwF
 cVz
 vkd
 pEc
-sNz
+jFB
 wHI
 fZh
 pqq
@@ -214274,7 +214354,7 @@ gLc
 gLc
 gLc
 asd
-mdb
+fOY
 nnS
 jYp
 poi
@@ -215336,7 +215416,7 @@ fKf
 fKf
 aex
 mqh
-reJ
+xmY
 myG
 pHY
 rpQ

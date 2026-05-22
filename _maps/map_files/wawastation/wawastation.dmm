@@ -4406,6 +4406,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"bAg" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/station_map/engineering/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "bAn" = (
 /obj/effect/spawner/random/engineering/vending_restock,
 /obj/effect/spawner/random/structure/closet_empty/crate,
@@ -4984,6 +4989,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/station_map/engineering/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bKL" = (
@@ -21374,6 +21380,14 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/service)
+"hsg" = (
+/obj/machinery/light/directional/east,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/station_map/engineering/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "hsj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -31238,6 +31252,11 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
+"kJx" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/station_map/engineering/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "kJH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -35913,6 +35932,7 @@
 /obj/machinery/modular_computer/preset/civilian{
 	dir = 8
 	},
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "mpA" = (
@@ -39552,6 +39572,14 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/space/openspace,
 /area/space/nearstation)
+"nDa" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/station_map/engineering/directional/south,
+/turf/open/floor/iron/dark,
+/area/station/hallway/secondary/exit/departure_lounge)
 "nDC" = (
 /obj/machinery/holopad,
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -42040,6 +42068,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "oBH" = (
@@ -42620,6 +42649,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
+"oKP" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/station_map/engineering/directional/east,
+/turf/open/floor/wood,
+/area/station/service/library)
 "oLe" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/plating/airless,
@@ -48097,6 +48134,15 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
+"qBQ" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/station_map/engineering/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/primary/fore)
 "qCd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -90566,7 +90612,7 @@ vZP
 qvK
 rRK
 rRK
-ydk
+qBQ
 ehO
 pyq
 aSZ
@@ -90590,7 +90636,7 @@ gPn
 aQS
 tht
 aQS
-aQS
+bAg
 aQS
 wQW
 aQS
@@ -90605,7 +90651,7 @@ axI
 gag
 dhg
 prW
-anT
+hsg
 sOA
 prW
 prW
@@ -97047,7 +97093,7 @@ lTp
 vHY
 pUH
 amZ
-aaB
+nDa
 nHK
 cLf
 dUc
@@ -104453,7 +104499,7 @@ xMk
 aQS
 vTx
 aQS
-aQS
+bAg
 aQS
 aQS
 aly
@@ -107576,7 +107622,7 @@ dFi
 lvT
 vHf
 fzY
-jFc
+kJx
 jFc
 gVe
 jFc
@@ -166672,7 +166718,7 @@ fvf
 fUn
 aEh
 eAg
-dFb
+oKP
 dFb
 dFb
 anZ

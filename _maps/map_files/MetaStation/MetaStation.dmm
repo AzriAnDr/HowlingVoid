@@ -8811,6 +8811,7 @@
 	pixel_y = 5
 	},
 /obj/item/wrench,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "deb" = (
@@ -15124,6 +15125,11 @@
 	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/medbay/central)
+"fiJ" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/station_map/engineering/directional/south,
+/turf/open/floor/iron,
+/area/station/commons/locker)
 "fiK" = (
 /obj/structure/table/glass,
 /obj/machinery/airalarm/directional/south,
@@ -19007,6 +19013,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/station_map/engineering/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "gES" = (
@@ -35200,6 +35207,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/station_map/engineering/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "mbS" = (
@@ -36135,6 +36143,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/machinery/station_map/engineering/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "mtb" = (
@@ -40476,6 +40485,16 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
+"nNX" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/station_map/engineering/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "nNY" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -42382,6 +42401,11 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
+"ozr" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/station_map/engineering/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/primary/aft)
 "ozs" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Starboard Bow Solar Access"
@@ -43128,6 +43152,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/light/directional/south,
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "oKU" = (
@@ -48566,6 +48591,7 @@
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "qGv" = (
@@ -50890,6 +50916,7 @@
 "rtD" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/machinery/light/directional/east,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "rtG" = (
@@ -63012,6 +63039,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/secondary/entry)
 "vxC" = (
@@ -65250,6 +65278,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "whs" = (
@@ -96416,7 +96445,7 @@ jay
 mRy
 wBW
 eje
-eje
+nNX
 qTJ
 eAe
 mGy
@@ -98961,7 +98990,7 @@ ure
 dXQ
 gmt
 qsx
-gmt
+ozr
 wtD
 uzk
 gmt
@@ -104301,7 +104330,7 @@ nFn
 uJB
 qsK
 pJE
-uUl
+fiJ
 qXB
 xNv
 mqK

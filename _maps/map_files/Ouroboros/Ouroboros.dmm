@@ -6442,6 +6442,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Chapel - Hallway"
 	},
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/recreation)
 "bUN" = (
@@ -7269,6 +7270,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -11371,6 +11373,7 @@
 	},
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/station_map/engineering/directional/east,
 /turf/open/floor/iron/small,
 /area/station/hallway/secondary/entry)
 "dse" = (
@@ -12176,6 +12179,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/hangover,
+/obj/machinery/station_map/engineering/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "dEQ" = (
@@ -12320,6 +12324,7 @@
 /obj/effect/turf_decal/siding/wood/end{
 	dir = 8
 	},
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/carpet/green,
 /area/station/hallway/secondary/exit/departure_lounge)
 "dHo" = (
@@ -24591,6 +24596,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Central Primary Hallway - Brig Entrance"
 	},
+/obj/machinery/station_map/engineering/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "hiV" = (
@@ -31665,6 +31671,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/upper)
+"jgL" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/station_map/engineering/directional/east,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "jgX" = (
 /obj/structure/rack/shelf,
 /obj/effect/spawner/random/maintenance,
@@ -46664,6 +46679,7 @@
 	c_tag = "Arrivals - Upper Hallway"
 	},
 /obj/effect/landmark/start/assistant,
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "npX" = (
@@ -67403,6 +67419,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/south,
+/obj/machinery/station_map/engineering/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "tyC" = (
@@ -82826,6 +82843,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/directional/north,
+/obj/machinery/station_map/engineering/directional/north,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/hallway/secondary/command)
 "xTd" = (
@@ -114220,7 +114238,7 @@ aBk
 aBk
 cJE
 vcr
-gIp
+jgL
 dyr
 dyr
 lGt
