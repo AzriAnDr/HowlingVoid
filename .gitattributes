@@ -42,11 +42,3 @@
 *.obj binary
 *.tga binary
 *.mp3 binary
-*.jpg !text !filter !merge !diff
-*.png !text !filter !merge !diff
-*.dmi !text !filter !merge !diff
-*.wav !text !filter !merge !diff
-*.ogg !text !filter !merge !diff
-*.obj !text !filter !merge !diff
-*.tga !text !filter !merge !diff
-*.mp3 !text !filter !merge !diff
