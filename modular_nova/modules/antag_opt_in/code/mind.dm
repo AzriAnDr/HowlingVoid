@@ -1,6 +1,8 @@
 /// If a player has any of these enabled, they are forced to use a minimum of OPT_IN_ANTAG_ENABLED_LEVEL antag optin. Dynamic - checked on the fly, not cached.
 GLOBAL_LIST_INIT(optin_forcing_midround_antag_categories, list(
 	ROLE_CHANGELING_MIDROUND,
+	ROLE_CLOCK_CULTIST_MIDROUND,
+	ROLE_HERETIC_MIDROUND,
 	ROLE_MALF_MIDROUND,
 	ROLE_OBSESSED,
 	ROLE_SLEEPER_AGENT,

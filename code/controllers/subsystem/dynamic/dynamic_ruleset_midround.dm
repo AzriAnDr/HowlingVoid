@@ -1157,6 +1157,19 @@
 		"[command_name()] High-Priority Update",
 	)
 
+/datum/dynamic_ruleset/midround/from_living/heretic
+	name = "Heretic"
+	config_tag = "Midround Heretic"
+	preview_antag_datum = /datum/antagonist/heretic
+	midround_type = LIGHT_MIDROUND
+	pref_flag = ROLE_HERETIC_MIDROUND
+	jobban_flag = ROLE_HERETIC
+	weight = 3
+	min_pop = 30
+
+/datum/dynamic_ruleset/midround/from_living/heretic/assign_role(datum/mind/candidate)
+	candidate.add_antag_datum(/datum/antagonist/heretic)
+
 /datum/dynamic_ruleset/midround/from_living/traitor/mass
 	name = "Mass Traitors"
 	config_tag = "Mass Traitors"

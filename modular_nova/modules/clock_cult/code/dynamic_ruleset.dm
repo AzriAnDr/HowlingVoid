@@ -50,3 +50,40 @@
 
 	SSticker.mode_result = "loss - ratvar trapped"
 	return TRUE
+
+/datum/dynamic_ruleset/midround/from_living/clock_cultist
+	name = "Clock Cultist"
+	config_tag = "Midround Clock Cultist"
+	preview_antag_datum = /datum/antagonist/clock_cultist
+	midround_type = HEAVY_MIDROUND
+	pref_flag = ROLE_CLOCK_CULTIST_MIDROUND
+	jobban_flag = ROLE_CLOCK_CULTIST
+	ruleset_flags = RULESET_HIGH_IMPACT
+	weight = alist(
+		DYNAMIC_TIER_LOW = 0,
+		DYNAMIC_TIER_LOWMEDIUM = 0,
+		DYNAMIC_TIER_MEDIUMHIGH = 1,
+		DYNAMIC_TIER_HIGH = 2,
+	)
+	min_pop = 30
+	blacklisted_roles = list(
+		JOB_AI,
+		JOB_CAPTAIN,
+		JOB_CYBORG,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	repeatable = FALSE
+
+/datum/dynamic_ruleset/midround/from_living/clock_cultist/get_always_blacklisted_roles()
+	return ..() | JOB_CHAPLAIN
+
+/datum/dynamic_ruleset/midround/from_living/clock_cultist/assign_role(datum/mind/candidate)
+	GLOB.clock_installed_cogs = max(GLOB.clock_installed_cogs, CLOCK_CULT_STARTING_COGS)
+	var/datum/antagonist/clock_cultist/solo/servant = new
+	servant.give_slab = TRUE
+	candidate.add_antag_datum(servant)

@@ -493,6 +493,24 @@
 	cost = 16
 	weight = 9
 
+/datum/storyteller/action/dynamic_midround/heretic
+	id = "midround_heretic"
+	name = "Heretic"
+	dynamic_ruleset_type = /datum/dynamic_ruleset/midround/from_living/heretic
+	family = "midround_heretic"
+	cost = 22
+	weight = 4
+	stage = 2
+
+/datum/storyteller/action/dynamic_midround/clock_cultist
+	id = "midround_clock_cultist"
+	name = "Clock Cultist"
+	dynamic_ruleset_type = /datum/dynamic_ruleset/midround/from_living/clock_cultist
+	family = "midround_clock_cultist"
+	cost = 30
+	weight = 2
+	stage = 3
+
 /datum/storyteller/action/dynamic_midround/spiders
 	id = "midround_spiders"
 	name = "Spiders"

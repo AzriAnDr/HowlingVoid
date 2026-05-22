@@ -38,6 +38,8 @@
 	migrate_antagonist(ROLE_REV_HEAD, list(ROLE_PROVOCATEUR))
 	migrate_antagonist(ROLE_TRAITOR, list(ROLE_SYNDICATE_INFILTRATOR, ROLE_SLEEPER_AGENT))
 	migrate_antagonist(ROLE_WIZARD, list(ROLE_WIZARD_MIDROUND))
+	migrate_antagonist(ROLE_HERETIC, list(ROLE_HERETIC_MIDROUND))
+	migrate_antagonist(ROLE_CLOCK_CULTIST, list(ROLE_CLOCK_CULTIST_MIDROUND))
 
 
 // If you have an antagonist enabled, it will add the alternative preferences for said antag in be_special.

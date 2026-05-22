@@ -498,6 +498,35 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
+["Midround Heretic"]
+weight = 3
+min_pop = 30
+blacklisted_roles = []
+repeatable_weight_decrease = 2
+repeatable = 1
+minimum_required_age = 0
+
+["Midround Clock Cultist"]
+weight.1 = 0
+weight.2 = 0
+weight.3 = 1
+weight.4 = 2
+min_pop = 30
+blacklisted_roles = [
+	"AI",
+	"Captain",
+	"Cyborg",
+	"Detective",
+	"Head of Personnel",
+	"Head of Security",
+	"Prisoner",
+	"Security Officer",
+	"Warden",
+]
+repeatable_weight_decrease = 2
+repeatable = 0
+minimum_required_age = 0
+
 ["Midround Mass Traitors"]
 weight.1 = 0
 weight.2 = 3

@@ -31,6 +31,7 @@
 #define ROLE_BLOOD_WORM_INFESTATION "Blood Worm Infestation"
 #define ROLE_CHANGELING_MIDROUND "Changeling (Midround)"
 #define ROLE_FUGITIVE "Fugitive"
+#define ROLE_HERETIC_MIDROUND "Heretic (Midround)"
 #define ROLE_LONE_OPERATIVE "Lone Operative"
 #define ROLE_MALF_MIDROUND "Malf AI (Midround)"
 #define ROLE_NIGHTMARE "Nightmare"
@@ -46,6 +47,7 @@
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
 //NOVA EDIT ADDITION START
 #define ROLE_BORER "Borer"
+#define ROLE_CLOCK_CULTIST_MIDROUND "Clock Cultist (Midround)"
 #define ROLE_DRIFTING_CONTRACTOR "Drifting Contractor"
 #define ROLE_MARAUDER "Marauder"
 #define ROLE_MUTANT "Mutated Abomination"
