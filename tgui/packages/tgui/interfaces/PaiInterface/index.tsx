@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
 import { Window } from 'tgui/layouts';
 import { Stack, Tabs } from 'tgui-core/components';
 
@@ -10,7 +11,8 @@ import { InstalledDisplay } from './Installed';
 import { SystemDisplay } from './System';
 
 export function PaiInterface(props) {
-  const { t } = usePreferencesLocalization();
+  const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const [tab, setTab] = useState(PAI_TAB.System);
 
   return (

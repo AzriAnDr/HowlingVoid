@@ -12,8 +12,8 @@ type Data = {
 };
 
 export const PaiSubmit = (props) => {
-  const { t } = usePreferencesLocalization();
   const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { comments, description, name } = data;
   const [input, setInput] = useState({
     comments,
@@ -42,7 +42,8 @@ export const PaiSubmit = (props) => {
 
 /** Displays basic info about playing pAI */
 const DetailsDisplay = (props) => {
-  const { t } = usePreferencesLocalization();
+  const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   return (
     <Section fill scrollable title={t('ui.common.details')}>
       <Box color="label">
@@ -57,7 +58,8 @@ const DetailsDisplay = (props) => {
 
 /** Input boxes for submission details */
 const InputDisplay = (props) => {
-  const { t } = usePreferencesLocalization();
+  const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { input, setInput } = props;
   const { name, description, comments } = input;
 
@@ -104,8 +106,8 @@ const InputDisplay = (props) => {
 
 /** Gives the user a submit button */
 const ButtonsDisplay = (props) => {
-  const { t } = usePreferencesLocalization();
-  const { act } = useBackend<Data>();
+  const { act, data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   const { input } = props;
   const { comments, description, name } = input;
 

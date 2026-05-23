@@ -626,16 +626,7 @@ export function getCharacterPreferencesLanguage(
     return rememberedLanguage;
   }
 
-  // Final fallback for interfaces that do not receive language in payload.
-  // Keep this after backend candidates so user preference always wins.
-  const navigatorDetected = normalizeLanguage(
-    (globalThis as any)?.navigator?.language,
-  );
-  if (navigatorDetected) {
-    rememberInterfaceLanguage(navigatorDetected);
-    return navigatorDetected;
-  }
-
+  // Localization must be driven by the saved interface language preference.
   return 'english';
 }
 
