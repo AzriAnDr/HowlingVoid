@@ -14,9 +14,10 @@ import { GasmixParser } from './common/GasmixParser';
 import { usePreferencesLocalization } from './localization';
 
 export const AnomalyRefinery = (props) => {
-  const { t } = usePreferencesLocalization();
+  const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   return (
-    <Window title={t('ui.anomaly_refinery.title')} width={550} height={350}>
+    <Window title={t('ui.anomaly_refinery.title')} width={620} height={360}>
       <Window.Content>
         <AnomalyRefineryContent />
       </Window.Content>
@@ -81,6 +82,15 @@ const CoreCompressorContent = (props) => {
   const { t } = usePreferencesLocalization(data);
   const { core, requiredRadius, gasList, valveReady, active, valvePresent } =
     data;
+  const tankStatus = (gasmix) =>
+    `${gasmix.total_moles ? String(gasmix.total_moles.toFixed(2)) : '-'} ${t(
+      'ui.anomaly_refinery.moles_at',
+    )} ${
+      gasmix.total_moles ? String(gasmix.temperature.toFixed(2)) : '-'
+    } ${t('ui.anomaly_refinery.kelvin')}`;
+  const tankPressure = (gasmix) =>
+    `${gasmix.total_moles ? String(gasmix.pressure.toFixed(2)) : '-'} kPa`;
+
   return (
     <>
       <Stack.Item grow>
@@ -109,7 +119,7 @@ const CoreCompressorContent = (props) => {
             </LabeledList.Item>
             <LabeledList.Item label={t('ui.anomaly_refinery.required_radius')}>
               {requiredRadius
-                ? `${requiredRadius} tiles`
+                ? `${requiredRadius} ${t('ui.anomaly_refinery.tiles')}`
                 : t('ui.anomaly_refinery.implosion_not_possible')}
             </LabeledList.Item>
           </LabeledList>
@@ -143,21 +153,10 @@ const CoreCompressorContent = (props) => {
                   ')'}
               </Box>
               <Box height={2} width="100%">
-                {(gasList[1].total_moles
-                  ? String(gasList[0].total_moles.toFixed(2))
-                  : '-') +
-                  ' moles at ' +
-                  (gasList[1].total_moles
-                    ? String(gasList[1].temperature.toFixed(2))
-                    : '-') +
-                  ' Kelvin'}
+                {tankStatus(gasList[1])}
               </Box>
               <Box height={2} width="100%">
-                {`${
-                  gasList[1].total_moles
-                    ? String(gasList[1].pressure.toFixed(2))
-                    : '-'
-                } kPa`}
+                {tankPressure(gasList[1])}
               </Box>
             </Stack.Item>
             <Stack.Item>
@@ -171,21 +170,10 @@ const CoreCompressorContent = (props) => {
                   ')'}
               </Box>
               <Box height={2} width="100%">
-                {(gasList[0].total_moles
-                  ? String(gasList[0].total_moles.toFixed(2))
-                  : '-') +
-                  ' moles at ' +
-                  (gasList[0].total_moles
-                    ? String(gasList[0].temperature.toFixed(2))
-                    : '-') +
-                  ' Kelvin'}
+                {tankStatus(gasList[0])}
               </Box>
               <Box height={2} width="100%">
-                {`${
-                  gasList[1].total_moles
-                    ? String(gasList[0].pressure.toFixed(2))
-                    : '-'
-                } kPa`}
+                {tankPressure(gasList[0])}
               </Box>
             </Stack.Item>
           </Stack>

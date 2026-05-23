@@ -200,7 +200,8 @@ const TransactionHistory = (props) => {
 
 /** Renders a set of sticky headers */
 const TableHeaders = (props) => {
-  const { t } = usePreferencesLocalization();
+  const { data } = useBackend<Data>();
+  const { t } = usePreferencesLocalization(data);
   return (
     <Table>
       <Table.Row>

@@ -174,7 +174,8 @@ export const NovaCharacterDirectory = (props) => {
 
 const ViewCharacter = (props) => {
   const { overlay, updateOverlay, assignedView } = props;
-  const { t } = usePreferencesLocalization();
+  const { data } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const [oocNotesIndex, setOocNotesIndex] = useState('SFW');
   const [flavorTextIndex, setFlavorTextIndex] = useState('SFW');
 
