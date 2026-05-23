@@ -4,7 +4,6 @@
 	name = "Giant Armored Serpentid"
 	id = SPECIES_NABBER
 	can_augment = FALSE
-	nova_stars_only = TRUE
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CHUNKYFINGERS_IGNORE_BATON,
