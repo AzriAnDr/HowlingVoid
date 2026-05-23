@@ -115,7 +115,7 @@ const ResearchSection = (props) => {
       <Stack.Item>
         <Section fill title={t('ui.clockwork_research.basic_research')}>
           <div style={{ textAlign: 'center' }}>
-            {ResearchNode(data.starting_research, act)}
+            {ResearchNode(data.starting_research, act, t)}
           </div>
         </Section>
       </Stack.Item>
@@ -130,7 +130,7 @@ const ResearchSection = (props) => {
               <Stack.Item key={single_research.name}>
                 <Section fill>
                   <div style={{ textAlign: 'center' }}>
-                    {ResearchNode(single_research, act)}
+                    {ResearchNode(single_research, act, t)}
                   </div>
                 </Section>
               </Stack.Item>
@@ -142,7 +142,7 @@ const ResearchSection = (props) => {
   );
 };
 
-const ResearchNode = (research: Research, act: any) => {
+const ResearchNode = (research: Research, act: any, t: (key: string) => string) => {
   return (
     <Box>
       <Stack.Item bold fontSize="15px">
