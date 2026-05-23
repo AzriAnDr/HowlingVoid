@@ -8,13 +8,15 @@ export const getQuirkStrings = (string: string) => {
 };
 
 /** We need an active reference and this a pain to rewrite */
-export const getMedicalRecord = () => {
+export const useMedicalRecord = () => {
   const [selectedRecord] = useLocalState<MedicalRecord | undefined>(
     'medicalRecord',
     undefined,
   );
-  if (!selectedRecord) return;
   const { data } = useBackend<MedicalRecordData>();
+
+  if (!selectedRecord) return;
+
   const { records = [] } = data;
   const foundRecord = records.find(
     (record) => record.crew_ref === selectedRecord.crew_ref,

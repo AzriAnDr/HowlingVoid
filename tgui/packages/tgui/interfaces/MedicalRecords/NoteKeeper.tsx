@@ -11,24 +11,25 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 
-import { getMedicalRecord } from './helpers';
+import { useMedicalRecord } from './helpers';
 import { usePreferencesLocalization } from '../localization';
 import type { MedicalNote, MedicalRecordData } from './types';
 
 /** Small section for adding notes. Passes a ref and note to Byond. */
 export const NoteKeeper = (props) => {
-  const foundRecord = getMedicalRecord();
-  if (!foundRecord) return;
-
+  const foundRecord = useMedicalRecord();
   const { act, data } = useBackend<MedicalRecordData>();
   const { t } = usePreferencesLocalization(data);
-  const { crew_ref } = foundRecord;
 
   const [selectedNote, setSelectedNote] = useLocalState<
     MedicalNote | undefined
   >('selectedNote', undefined);
 
   const [writing, setWriting] = useLocalState('note', false);
+
+  if (!foundRecord) return;
+
+  const { crew_ref } = foundRecord;
 
   const addNote = (value: string) => {
     act('add_note', {
@@ -89,9 +90,7 @@ export const NoteKeeper = (props) => {
 
 /** Displays the notes with an add tab next to. */
 const NoteTabs = (props) => {
-  const foundRecord = getMedicalRecord();
-  if (!foundRecord) return;
-  const { notes } = foundRecord;
+  const foundRecord = useMedicalRecord();
   const { data } = useBackend<MedicalRecordData>();
   const { t } = usePreferencesLocalization(data);
 
@@ -99,6 +98,10 @@ const NoteTabs = (props) => {
     MedicalNote | undefined
   >('selectedNote', undefined);
   const [writing, setWriting] = useLocalState('note', false);
+
+  if (!foundRecord) return;
+
+  const { notes } = foundRecord;
 
   /** Selects or deselects a note. */
   const setNote = (note: MedicalNote) => {

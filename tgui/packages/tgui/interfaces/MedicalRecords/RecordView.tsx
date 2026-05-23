@@ -21,18 +21,19 @@ import {
   PHYSICALSTATUS2DESC,
   PHYSICALSTATUS2ICON,
 } from './constants';
-import { getMedicalRecord, getQuirkStrings } from './helpers';
+import { getQuirkStrings, useMedicalRecord } from './helpers';
 import { NoteKeeper } from './NoteKeeper';
 import type { MedicalRecordData } from './types';
 
 /** Views a selected record. */
 export const MedicalRecordView = (props) => {
-  const foundRecord = getMedicalRecord();
-  const { data } = useBackend<MedicalRecordData>();
+  const foundRecord = useMedicalRecord();
+  const { act, data } = useBackend<MedicalRecordData>();
   const { t } = usePreferencesLocalization(data);
+  const [isValid, setIsValid] = useState(true);
+
   if (!foundRecord) return <NoticeBox>{t('ui.medical_records.no_record_selected')}</NoticeBox>;
 
-  const { act } = useBackend<MedicalRecordData>();
   const { assigned_view, physical_statuses, mental_statuses, station_z } = data;
 
   // const { min_age, max_age } = data; // ORIGINAL
@@ -62,8 +63,6 @@ export const MedicalRecordView = (props) => {
   const minor_disabilities_array = getQuirkStrings(minor_disabilities);
   const major_disabilities_array = getQuirkStrings(major_disabilities);
   const quirk_notes_array = getQuirkStrings(quirk_notes);
-
-  const [isValid, setIsValid] = useState(true);
 
   return (
     <Stack fill vertical>
