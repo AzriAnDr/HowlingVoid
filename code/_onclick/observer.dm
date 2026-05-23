@@ -8,6 +8,8 @@
 
 	// Otherwise jump
 	else if(A.loc)
+		if(!can_view_room_atom(A))
+			return
 		abstract_move(get_turf(A))
 
 /mob/dead/observer/ClickOn(atom/A, params)
@@ -84,5 +86,10 @@
 	if(!target)
 		power_station.teleporter_console.target_ref = null
 		return ..()
+
+	if(isobserver(user))
+		var/mob/dead/observer/ghost = user
+		if(!ghost.can_view_room_atom(target))
+			return TRUE
 
 	user.abstract_move(get_turf(target))

@@ -397,6 +397,15 @@ GLOBAL_LIST_EMPTY(room_controller_by_area)
 		return null
 	return GLOB.room_controller_by_area[target_area]
 
+/mob/dead/observer/proc/can_view_room_atom(atom/target, silent = FALSE)
+	var/obj/machinery/room_controller/controller = get_room_controller_for_atom(target)
+	if(!controller || !controller.should_block_ghosts() || controller.can_ghost_observe_room(src))
+		return TRUE
+
+	if(!silent)
+		to_chat(src, span_notice("That room is private."))
+	return FALSE
+
 /obj/machinery/room_controller/proc/eject_ghost(mob/dead/observer/ghost)
 	if(!ghost || ghost.client?.holder || !should_block_ghosts() || get_area(ghost) != managed_area || can_ghost_observe_room(ghost))
 		return FALSE
@@ -405,6 +414,10 @@ GLOBAL_LIST_EMPTY(room_controller_by_area)
 	if(!redirect_turf)
 		return FALSE
 
+	if(ghost.observetarget && get_area(ghost.observetarget) == managed_area)
+		ghost.reset_perspective(null)
+	if(ghost.orbit_target && get_area(ghost.orbit_target) == managed_area)
+		ghost.orbiting?.end_orbit(ghost)
 	ghost.abstract_move(redirect_turf)
 	to_chat(ghost, span_notice("[get_ghost_kick_message()]"))
 	notify_room_kick(ghost)

@@ -34,6 +34,8 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 				return TRUE
 
 			var/mob/dead/observer/user = usr
+			if(!user.can_view_room_atom(poi))
+				return TRUE
 			user.ManualFollow(poi)
 			user.reset_perspective(null)
 			user.orbiting_ref = ref

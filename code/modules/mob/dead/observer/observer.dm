@@ -484,7 +484,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, span_warning("No area available."))
 		return
 
-	usr.abstract_move(pick(L))
+	var/turf/destination = pick(L)
+	if(!can_view_room_atom(destination))
+		return
+	usr.abstract_move(destination)
 
 /mob/dead/observer/verb/follow()
 	set name = "Orbit"
@@ -516,6 +519,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/turf/destination_turf = get_turf(destination_mob) //Turf of the destination mob
 
 	if(isturf(destination_turf))
+		if(!can_view_room_atom(destination_mob))
+			return
 		source_mob.abstract_move(destination_turf)
 	else
 		to_chat(source_mob, span_danger("This mob is not located in the game world."))
@@ -593,6 +598,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if (chosen_target == usr)
 		return
 
+	if(!can_view_room_atom(chosen_target))
+		return
+
 	do_observe(chosen_target)
 
 /mob/dead/observer/verb/tray_view()
@@ -666,6 +674,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
 	if (!istype(target) || (is_secret_level(target.z) && !client?.holder))
+		return
+	if(!can_view_room_atom(target))
 		return
 
 	var/list/icon_dimensions = get_icon_dimensions(target.icon)
@@ -813,6 +823,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/tz = text2num(href_list["z"])
 			var/turf/target = locate(tx, ty, tz)
 			if(istype(target))
+				if(!can_view_room_atom(target))
+					return
 				abstract_move(target)
 				return
 
@@ -834,6 +846,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(isnull(target) || target == src)
 		return
 
+	if(!can_view_room_atom(target))
+		return
+
 	ManualFollow(target)
 	target.attack_ghost(usr)
 
@@ -843,6 +858,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	if(isturf(target))
+		if(!can_view_room_atom(target))
+			return
 		abstract_move(target)
 		return
 
@@ -937,6 +954,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	if(HAS_TRAIT(src, TRAIT_NO_OBSERVE))
+		return
+
+	if(!can_view_room_atom(mob_eye))
 		return
 
 	//Istype so we filter out points of interest that are not mobs
