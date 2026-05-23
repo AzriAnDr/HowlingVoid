@@ -416,11 +416,13 @@ SUBSYSTEM_DEF(dynamic)
  * * alert_admins_on_fail - If TRUE, alert admins if the ruleset fails to prepare/execute
  * * mob/admin - The admin who is forcing the ruleset, used for configuring the ruleset if possible
  */
-/datum/controller/subsystem/dynamic/proc/force_run_midround(midround_typepath, forced_max_cap, alert_admins_on_fail = FALSE, mob/admin)
+/datum/controller/subsystem/dynamic/proc/force_run_midround(midround_typepath, forced_max_cap, alert_admins_on_fail = FALSE, mob/admin, bypass_preference_checks = FALSE)
 	if(!ispath(midround_typepath, /datum/dynamic_ruleset/midround))
 		CRASH("force_run_midround() was called with an invalid midround type: [midround_typepath]")
 
 	var/datum/dynamic_ruleset/midround/running = new midround_typepath(dynamic_config)
+	if(admin || bypass_preference_checks)
+		running.bypass_preference_checks = TRUE
 	if(isnum(forced_max_cap) && forced_max_cap > 0)
 		running.min_antag_cap = min(forced_max_cap, running.min_antag_cap)
 		running.max_antag_cap = forced_max_cap

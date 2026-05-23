@@ -420,6 +420,7 @@
 	desc = "A coat usually worn by bunny themed waiters and the like."
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
 	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	greyscale_config_worn_teshari_fallback = null
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	icon_state = "/obj/item/clothing/suit/jacket/tailcoat"
 	post_init_icon_state = "tailcoat"
@@ -489,6 +490,7 @@
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
 	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	greyscale_config_worn_teshari_fallback = null
 	icon_state = "tailcoat_wiz"
 	post_init_icon_state = null
 	greyscale_config = null
@@ -557,6 +559,8 @@
 	inhand_icon_state = null
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
+	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	greyscale_config_worn_teshari_fallback = null
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	dog_fashion = null
@@ -660,6 +664,7 @@
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
 	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	greyscale_config_worn_teshari_fallback = null
 	w_class = WEIGHT_CLASS_NORMAL
 	body_parts_covered = CHEST|GROIN|ARMS
 	slowdown = 0
@@ -688,6 +693,7 @@
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
 	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	greyscale_config_worn_teshari_fallback = null
 	w_class = WEIGHT_CLASS_NORMAL
 	body_parts_covered = CHEST|GROIN|ARMS
 	slowdown = 0
@@ -717,6 +723,13 @@
 	icon_state = "doctor"
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
+	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	worn_icon_teshari = null
+	post_init_icon_state = null
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
+	greyscale_config_worn_teshari_fallback = null
 
 /obj/item/clothing/suit/toggle/labcoat/paramedic/doctor_tailcoat
 	name = "paramedic's tailcoat"
@@ -724,6 +737,13 @@
 	icon_state = "paramedic"
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
+	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	worn_icon_teshari = null
+	post_init_icon_state = null
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
+	greyscale_config_worn_teshari_fallback = null
 
 /obj/item/clothing/suit/toggle/labcoat/chemist/doctor_tailcoat
 	name = "chemist's tailcoat"
@@ -731,10 +751,13 @@
 	icon_state = "chem"
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
+	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	worn_icon_teshari = null
 	post_init_icon_state = null
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
+	greyscale_config_worn_teshari_fallback = null
 
 /obj/item/clothing/suit/toggle/labcoat/virologist/doctor_tailcoat
 	name = "pathologist's tailcoat"
@@ -742,10 +765,13 @@
 	icon_state = "virologist"
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
+	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	worn_icon_teshari = null
 	post_init_icon_state = null
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
+	greyscale_config_worn_teshari_fallback = null
 
 /obj/item/clothing/suit/toggle/labcoat/coroner/doctor_tailcoat
 	name = "coroner's tailcoat"
@@ -753,10 +779,13 @@
 	icon_state = "coroner"
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
+	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	worn_icon_teshari = null
 	post_init_icon_state = null
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
+	greyscale_config_worn_teshari_fallback = null
 
 /obj/item/clothing/suit/toggle/labcoat/cmo/doctor_tailcoat
 	name = "chief medical officer's tailcoat"
@@ -764,6 +793,13 @@
 	icon_state = "cmo"
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
+	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	worn_icon_teshari = null
+	post_init_icon_state = null
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
+	greyscale_config_worn_teshari_fallback = null
 
 //SCIENCE
 
@@ -773,10 +809,13 @@
 	icon_state = "science"
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
+	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	worn_icon_teshari = null
 	post_init_icon_state = null
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
+	greyscale_config_worn_teshari_fallback = null
 
 /obj/item/clothing/suit/toggle/labcoat/roboticist/doctor_tailcoat
 	name = "roboticist's tailcoat"
@@ -784,10 +823,13 @@
 	icon_state = "roboticist"
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
+	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	worn_icon_teshari = null
 	post_init_icon_state = null
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
+	greyscale_config_worn_teshari_fallback = null
 
 
 /obj/item/clothing/suit/toggle/labcoat/genetics/doctor_tailcoat
@@ -796,10 +838,13 @@
 	icon_state = "genetics"
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
+	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	worn_icon_teshari = null
 	post_init_icon_state = null
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
+	greyscale_config_worn_teshari_fallback = null
 
 /obj/item/clothing/suit/toggle/labcoat/research_director/tailcoat
 	name = "research director's tailcoat"
@@ -807,10 +852,13 @@
 	icon_state = "rd"
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
+	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	worn_icon_teshari = null
 	post_init_icon_state = null
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
+	greyscale_config_worn_teshari_fallback = null
 
 //SECURITY
 
@@ -822,6 +870,7 @@
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
 	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	greyscale_config_worn_teshari_fallback = null
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	dog_fashion = null
@@ -843,6 +892,13 @@
 	icon_state = "brig_phys"
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
+	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	worn_icon_teshari = null
+	post_init_icon_state = null
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
+	greyscale_config_worn_teshari_fallback = null
 	blood_overlay_type = "coat"
 
 
@@ -852,6 +908,8 @@
 	icon_state = "detective"
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
+	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	greyscale_config_worn_teshari_fallback = null
 
 /obj/item/clothing/suit/jacket/det_suit/tailcoat/noir
 	name = "noir detective's tailcoat"
@@ -866,6 +924,7 @@
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
 	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	greyscale_config_worn_teshari_fallback = null
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	dog_fashion = null
@@ -882,6 +941,7 @@
 	icon = 'modular_nova/master_files/icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/suits/jacket.dmi'
 	worn_icon_digi = 'modular_nova/master_files/icons/mob/clothing/suits/jacket_digi.dmi'
+	greyscale_config_worn_teshari_fallback = null
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	dog_fashion = null
@@ -1052,5 +1112,3 @@
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
-
-

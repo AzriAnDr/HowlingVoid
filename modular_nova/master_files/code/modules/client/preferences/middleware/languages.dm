@@ -44,11 +44,7 @@
 /datum/preference_middleware/languages/post_set_preference(mob/user, preference, value)
 	if(preference != "species")
 		return
-	preferences.languages = list()
-	var/datum/species/species_type = preferences.read_preference(/datum/preference/choiced/species)
-	var/datum/language_holder/lang_holder = GLOB.prototype_language_holders[species_type::species_language_holder]
-	for(var/language in lang_holder.spoken_languages)
-		preferences.languages[language] = LANGUAGE_SPOKEN
+	preferences.reset_languages_to_species_defaults()
 
 /datum/preference_middleware/languages/get_ui_data(mob/user)
 	if(length(name_to_language) != length(GLOB.all_languages))
@@ -61,9 +57,7 @@
 	var/datum/species/species = GLOB.species_prototypes[species_type]
 	var/datum/language_holder/lang_holder = GLOB.prototype_language_holders[species.species_language_holder]
 	if(!preferences.languages || !preferences.languages.len || (preferences.languages && preferences.languages.len > max_languages)) // Too many languages, or no languages.
-		preferences.languages = list()
-		for(var/language in lang_holder.spoken_languages)
-			preferences.languages[language] = LANGUAGE_SPOKEN
+		preferences.reset_languages_to_species_defaults()
 
 	var/list/selected_languages = list()
 	var/list/unselected_languages = list()

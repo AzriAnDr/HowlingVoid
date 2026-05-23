@@ -19,7 +19,8 @@
 	var/list/visited_body_zones = list()
 	for(var/key, augment_path in preferences.augments)
 		var/visited_body_zone
-		if(is_aug_valid_for_prefs(GLOB.augment_items[augment_path], target, preferences))
+		var/datum/augment_item/selected_augment = GLOB.augment_items[augment_path]
+		if(is_aug_valid_for_prefs(selected_augment, target, preferences, validate_cost = FALSE))
 			var/datum/augment_item/aug = new augment_path()
 			visited_body_zone = aug.apply(target, visuals_only, prefs = preferences)
 			qdel(aug)
@@ -255,7 +256,10 @@
 	return data
 
 /// Performs DM-side validation for anything we are reading from prefs
-/datum/preference_middleware/limbs_and_markings/proc/is_aug_valid_for_prefs(datum/augment_item/aug, mob/user, datum/preferences/prefs)
+/datum/preference_middleware/limbs_and_markings/proc/is_aug_valid_for_prefs(datum/augment_item/aug, mob/user, datum/preferences/prefs, validate_cost = TRUE)
+	if(isnull(aug) || isnull(prefs))
+		return FALSE
+
 	var/species_type = prefs.read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = GLOB.species_prototypes[species_type]
 	if(aug.species_blacklist && aug.species_blacklist[species.id])
@@ -267,14 +271,15 @@
 		var/datum/augment_item/limb/limb_aug = astype(aug, /datum/augment_item/limb)
 		if(limb_aug?.slot_flag && (limb_aug.slot_flag & (LEG_LEFT|LEG_RIGHT)) && !limb_aug.supports_digitigrade)
 			return FALSE
-	if(aug.ckey_whitelist && !LAZYFIND(aug.ckey_whitelist, user?.client?.ckey))
+	var/user_ckey = user?.client?.ckey || prefs.parent?.ckey
+	if(aug.ckey_whitelist && !LAZYFIND(aug.ckey_whitelist, user_ckey))
 		return FALSE
 	var/datum/preference/choiced/mutant_choice/taur/taur_choice = GLOB.preference_entries[/datum/preference/choiced/mutant_choice/taur]
 	if(taur_choice.is_accessible(prefs) && prefs.read_preference(/datum/preference/choiced/mutant_choice/taur) != SPRITE_ACCESSORY_NONE)
 		var/datum/augment_item/limb/limb_aug = astype(aug, /datum/augment_item/limb)
 		if(limb_aug?.slot_flag && (limb_aug.slot_flag & (LEG_LEFT|LEG_RIGHT)))
 			return FALSE
-	if(!CONFIG_GET(flag/disable_quirk_points) && aug.cost > 0)
+	if(validate_cost && !CONFIG_GET(flag/disable_quirk_points) && aug.cost > 0)
 		if((prefs.GetQuirkBalance() - aug.cost) < 0)
 			return FALSE
 	return TRUE

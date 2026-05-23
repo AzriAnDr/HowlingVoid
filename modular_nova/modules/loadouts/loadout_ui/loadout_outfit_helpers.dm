@@ -8,6 +8,17 @@
 	. = ..()
 	user.equip_outfit_and_loadout(new /datum/outfit(), user.client.prefs)
 
+/obj/item/storage/box/loadout_job_gear
+	name = "job equipment box"
+	desc = "A box containing job equipment moved aside by your loadout choices."
+	illustration = "writing"
+	storage_type = /datum/storage/box/loadout_job_gear
+
+/datum/storage/box/loadout_job_gear
+	max_slots = 16
+	max_specific_storage = WEIGHT_CLASS_BULKY
+	max_total_storage = 64
+
 /*
  * Actually equip our mob with our job outfit and our loadout items.
  * Loadout items override the pre-existing item in the corresponding slot of the job outfit.
@@ -43,9 +54,12 @@
 		CRASH("Outfit passed to equip_outfit_and_loadout was neither a path nor an instantiated type!")
 
 	var/override_preference = preference_source.read_preference(/datum/preference/choiced/loadout_override_preference)
+	var/list/job_gear_snapshot
+	var/list/replaced_job_gear
+	if(override_preference == LOADOUT_OVERRIDE_BACKPACK && !visuals_only)
+		job_gear_snapshot = get_loadout_job_gear_snapshot(equipped_outfit)
 
-	var/list/item_details = preference_source.read_preference(/datum/preference/loadout)
-	var/list/loadout_list = item_details[preference_source.read_preference(/datum/preference/loadout_index)]
+	var/list/loadout_list = get_active_loadout_list(preference_source)
 	var/list/loadout_datums = loadout_list_to_datums(loadout_list)
 	var/obj/item/storage/briefcase/empty/briefcase
 	var/obj/item/storage/box/erp/erpbox
@@ -64,7 +78,7 @@
 
 		briefcase.name = "[preference_source.read_preference(/datum/preference/name/real_name)]'s travel suitcase"
 		equipOutfit(equipped_outfit, visuals_only)
-		INVOKE_ASYNC(src, PROC_REF(put_in_hands), briefcase)
+		put_in_hands(briefcase)
 	else
 		for(var/datum/loadout_item/item as anything in loadout_datums)
 			if (erp_enabled && item.erp_box)
@@ -79,13 +93,16 @@
 				var/datum/outfit/outfit_important_for_life = dna.species.outfit_important_for_life
 				if(!outfit_important_for_life || !item.pre_equip_item(equipped_outfit, outfit_important_for_life, src, visuals_only))
 					item.insert_path_into_outfit(equipped_outfit, src, visuals_only, override_preference)
+		if(job_gear_snapshot)
+			replaced_job_gear = get_replaced_loadout_job_gear(equipped_outfit, job_gear_snapshot)
+			remove_loadout_job_gear_from_backpack_contents(equipped_outfit, replaced_job_gear)
 		equipOutfit(equipped_outfit, visuals_only)
 
 	var/list/new_contents = isnull(briefcase) ? get_all_gear() : briefcase.get_all_contents()
 
 	var/update = NONE
 	for(var/datum/loadout_item/item as anything in loadout_datums)
-		if(!item.is_equippable(src, item_details?[item.item_path] || list()))
+		if(!item.is_equippable(src, loadout_list?[item.item_path] || list()))
 			loadout_datums -= item
 			continue
 		if(item.restricted_roles && equipping_job && !(equipping_job.title in item.restricted_roles))
@@ -108,13 +125,15 @@
 			visuals_only = visuals_only,
 		)
 
+	equip_loadout_job_gear_box(replaced_job_gear, equipping_job)
+
 	if(preference_source?.read_preference(/datum/preference/toggle/green_pin))
 		var/obj/item/clothing/under/uniform = w_uniform
 		uniform?.attach_accessory(new /obj/item/clothing/accessory/green_pin(), src, FALSE)
 
 	if (!isnull(erpbox))
 		if (!isnull(briefcase))
-			briefcase.contents += erpbox
+			erpbox.forceMove(briefcase)
 		else
 			erpbox.equip_to_best_slot(src)
 
@@ -122,6 +141,98 @@
 		update_clothing(update)
 
 	return TRUE
+
+/proc/get_loadout_job_gear_snapshot(datum/outfit/outfit)
+	RETURN_TYPE(/list)
+
+	var/static/list/loadout_replacement_slots = list(
+		"accessory",
+		"belt",
+		"ears",
+		"glasses",
+		"gloves",
+		"head",
+		"l_hand",
+		"mask",
+		"neck",
+		"r_hand",
+		"shoes",
+		"suit",
+		"uniform",
+	)
+
+	var/list/snapshot = list()
+	for(var/slot_name in loadout_replacement_slots)
+		var/item_path = outfit.vars[slot_name]
+		if(ispath(item_path, /obj/item))
+			snapshot[slot_name] = item_path
+
+	return snapshot
+
+/proc/get_replaced_loadout_job_gear(datum/outfit/outfit, list/job_gear_snapshot)
+	RETURN_TYPE(/list)
+
+	var/list/replaced_job_gear = list()
+	for(var/slot_name in job_gear_snapshot)
+		var/item_path = job_gear_snapshot[slot_name]
+		if(outfit.vars[slot_name] == item_path)
+			continue
+		replaced_job_gear[item_path] = (replaced_job_gear[item_path] || 0) + 1
+
+	return replaced_job_gear
+
+/proc/remove_loadout_job_gear_from_backpack_contents(datum/outfit/outfit, list/replaced_job_gear)
+	if(!length(replaced_job_gear) || !length(outfit.backpack_contents))
+		return
+
+	for(var/item_path in replaced_job_gear)
+		var/amount_to_remove = replaced_job_gear[item_path]
+		if(!isnum(amount_to_remove))
+			amount_to_remove = 1
+		for(var/i in 1 to amount_to_remove)
+			remove_loadout_backpack_content(outfit, item_path)
+
+/proc/remove_loadout_backpack_content(datum/outfit/outfit, item_path)
+	if(!length(outfit.backpack_contents))
+		return
+
+	var/current_amount = outfit.backpack_contents[item_path]
+	if(isnum(current_amount))
+		if(current_amount > 1)
+			outfit.backpack_contents[item_path] = current_amount - 1
+		else
+			outfit.backpack_contents -= item_path
+	else
+		outfit.backpack_contents -= item_path
+
+	if(!length(outfit.backpack_contents))
+		outfit.backpack_contents = null
+
+/mob/living/carbon/human/proc/equip_loadout_job_gear_box(list/replaced_job_gear, datum/job/equipping_job)
+	if(!length(replaced_job_gear))
+		return
+
+	var/obj/item/storage/box/loadout_job_gear/job_gear_box = new(drop_location())
+	if(equipping_job)
+		job_gear_box.name = "[equipping_job.title] equipment box"
+
+	for(var/item_path in replaced_job_gear)
+		if(!ispath(item_path, /obj/item))
+			continue
+		var/amount_to_create = replaced_job_gear[item_path]
+		if(!isnum(amount_to_create))
+			amount_to_create = 1
+		for(var/i in 1 to amount_to_create)
+			SSwardrobe.provide_type(item_path, job_gear_box)
+
+	if(!length(job_gear_box.contents))
+		qdel(job_gear_box)
+		return
+
+	if(equip_to_storage(job_gear_box, ITEM_SLOT_BACK, indirect_action = TRUE))
+		return
+
+	put_in_hands(job_gear_box)
 
 // cyborgs can wear hats from loadout
 /*
@@ -139,8 +250,10 @@
  * equipping_job - The job that's being applied.
  */
 /mob/living/silicon/robot/proc/equip_outfit_and_loadout(datum/outfit/outfit, datum/preferences/preference_source = GLOB.preference_entries_by_key[ckey], visuals_only = FALSE, datum/job/equipping_job)
-	var/list/item_details = preference_source.read_preference(/datum/preference/loadout)
-	var/list/loadout_datums = loadout_list_to_datums(item_details[preference_source.read_preference(/datum/preference/loadout_index)])
+	if(!preference_source)
+		return
+
+	var/list/loadout_datums = loadout_list_to_datums(get_active_loadout_list(preference_source))
 	for (var/datum/loadout_item/head/item in loadout_datums)
 		if (!item.can_be_applied_to(src, preference_source, equipping_job, visuals_only))
 			continue

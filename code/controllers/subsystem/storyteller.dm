@@ -1668,6 +1668,15 @@ SUBSYSTEM_DEF(storyteller)
 		"weighted_actions" = weighted_actions,
 	)
 
+/datum/controller/subsystem/storyteller/proc/get_midround_candidate_pool(action_polarity)
+	RETURN_TYPE(/list)
+	switch(action_polarity)
+		if(STORYTELLER_POLARITY_POSITIVE)
+			return get_positive_candidate_pool()
+		if(STORYTELLER_POLARITY_NEGATIVE)
+			return get_negative_candidate_pool()
+	return null
+
 /datum/controller/subsystem/storyteller/proc/get_positive_candidate_pool()
 	RETURN_TYPE(/list)
 	var/list/attempted_ids = list()
@@ -1853,6 +1862,8 @@ SUBSYSTEM_DEF(storyteller)
 	return action.execute(src, current_snapshot, context_data)
 
 /datum/controller/subsystem/storyteller/proc/try_run_positive_action()
+	if(try_run_interim_channel_action(STORYTELLER_POLARITY_POSITIVE))
+		return TRUE
 	if(!is_channel_ready(STORYTELLER_POLARITY_POSITIVE))
 		return FALSE
 	if(queued_positive_action_id)
@@ -1875,6 +1886,8 @@ SUBSYSTEM_DEF(storyteller)
 	return schedule_storyteller_action(action, context_data)
 
 /datum/controller/subsystem/storyteller/proc/try_run_negative_action()
+	if(try_run_interim_channel_action(STORYTELLER_POLARITY_NEGATIVE))
+		return TRUE
 	if(!allow_negative_midround())
 		return FALSE
 	if(!is_channel_ready(STORYTELLER_POLARITY_NEGATIVE))
@@ -1895,9 +1908,102 @@ SUBSYSTEM_DEF(storyteller)
 		return FALSE
 	return schedule_storyteller_action(action, context_data)
 
+/datum/controller/subsystem/storyteller/proc/get_channel_ready_at(action_polarity)
+	switch(action_polarity)
+		if(STORYTELLER_POLARITY_POSITIVE)
+			return positive_channel_ready_at
+		if(STORYTELLER_POLARITY_NEGATIVE)
+			return negative_channel_ready_at
+	return 0
+
+/datum/controller/subsystem/storyteller/proc/get_channel_fatigue_unlock_at(action_polarity)
+	switch(action_polarity)
+		if(STORYTELLER_POLARITY_POSITIVE)
+			return positive_fatigue_locked_until
+		if(STORYTELLER_POLARITY_NEGATIVE)
+			return negative_fatigue_locked_until
+	return 0
+
+/datum/controller/subsystem/storyteller/proc/get_channel_last_action_at(action_polarity)
+	switch(action_polarity)
+		if(STORYTELLER_POLARITY_POSITIVE)
+			return last_positive_action_at
+		if(STORYTELLER_POLARITY_NEGATIVE)
+			return last_negative_action_at
+	return 0
+
+/datum/controller/subsystem/storyteller/proc/get_channel_interim_tick_count(action_polarity)
+	var/fatigue_unlock_at = get_channel_fatigue_unlock_at(action_polarity)
+	var/channel_ready_at = get_channel_ready_at(action_polarity)
+	var/window_duration = max(channel_ready_at - fatigue_unlock_at, 0)
+	if(window_duration <= 0)
+		return 0
+	return max(1, CEILING(window_duration / max(wait, 1), 1))
+
+/datum/controller/subsystem/storyteller/proc/can_attempt_interim_channel_roll(action_polarity)
+	if(!SSticker.IsRoundInProgress())
+		return FALSE
+	if(action_polarity == STORYTELLER_POLARITY_NEGATIVE && !allow_negative_midround())
+		return FALSE
+	if(has_pending_storyteller_scheduled_action(action_polarity))
+		return FALSE
+	if(is_channel_ready(action_polarity))
+		return FALSE
+	if(is_polarity_fatigue_locked(action_polarity))
+		return FALSE
+	if(!get_channel_last_action_at(action_polarity))
+		return FALSE
+	var/channel_ready_at = get_channel_ready_at(action_polarity)
+	var/fatigue_unlock_at = get_channel_fatigue_unlock_at(action_polarity)
+	if(channel_ready_at <= 0 || channel_ready_at <= fatigue_unlock_at)
+		return FALSE
+	if(world.time <= fatigue_unlock_at || world.time >= channel_ready_at)
+		return FALSE
+	if(action_polarity == STORYTELLER_POLARITY_POSITIVE && queued_positive_action_id)
+		return FALSE
+	if(action_polarity == STORYTELLER_POLARITY_NEGATIVE && queued_negative_action_id)
+		return FALSE
+	return TRUE
+
+/datum/controller/subsystem/storyteller/proc/try_run_interim_channel_action(action_polarity)
+	if(!can_attempt_interim_channel_roll(action_polarity))
+		return FALSE
+
+	var/list/candidate_pool = get_midround_candidate_pool(action_polarity)
+	if(!islist(candidate_pool))
+		return FALSE
+
+	var/list/weighted_actions = candidate_pool["weighted_actions"]
+	var/list/context_data = candidate_pool["context_data"]
+	if(!islist(weighted_actions) || !length(weighted_actions) || !islist(context_data))
+		return FALSE
+
+	var/list/chance_map = get_action_chance_map(weighted_actions)
+	var/action_count = length(chance_map)
+	var/interim_tick_count = get_channel_interim_tick_count(action_polarity)
+	if(action_count <= 0 || interim_tick_count <= 0)
+		return FALSE
+
+	var/list/interim_weighted_actions = list()
+	for(var/datum/storyteller/action/action as anything in weighted_actions)
+		var/current_chance = chance_map[action] || 0
+		if(current_chance <= 0)
+			continue
+		var/tick_chance = clamp(current_chance / (action_count * interim_tick_count), 0, 100)
+		if(prob(tick_chance))
+			interim_weighted_actions[action] = weighted_actions[action]
+
+	if(!length(interim_weighted_actions))
+		return FALSE
+
+	var/datum/storyteller/action/picked_action = pick_weight(interim_weighted_actions)
+	if(!istype(picked_action))
+		return FALSE
+	return schedule_storyteller_action(picked_action, context_data)
+
 /datum/controller/subsystem/storyteller/proc/select_positive_action()
 	RETURN_TYPE(/list)
-	var/list/candidate_pool = get_positive_candidate_pool()
+	var/list/candidate_pool = get_midround_candidate_pool(STORYTELLER_POLARITY_POSITIVE)
 	if(!islist(candidate_pool))
 		return null
 	var/list/weighted_actions = candidate_pool["weighted_actions"]
@@ -2028,7 +2134,7 @@ SUBSYSTEM_DEF(storyteller)
 	record_decision("[key_name(user)] discarded storyteller action [action.name] for the current rotation.")
 	return TRUE
 
-/datum/controller/subsystem/storyteller/proc/queue_dynamic_ruleset_action(datum/storyteller/action/dynamic_base/action, mob/user)
+/datum/controller/subsystem/storyteller/proc/queue_dynamic_ruleset_action(datum/storyteller/action/dynamic_base/action, mob/user, bypass_preference_checks = FALSE)
 	if(!istype(action) || !action.dynamic_ruleset_type)
 		return FALSE
 	var/previous_length = length(SSdynamic.queued_rulesets)
@@ -2038,6 +2144,8 @@ SUBSYSTEM_DEF(storyteller)
 	var/datum/dynamic_ruleset/ruleset = SSdynamic.queued_rulesets[length(SSdynamic.queued_rulesets)]
 	if(!istype(ruleset))
 		return TRUE
+	if(user || bypass_preference_checks)
+		ruleset.bypass_preference_checks = TRUE
 	var/reserved_cost = 0
 	if(action.polarity == STORYTELLER_POLARITY_NEGATIVE && action.context != STORYTELLER_CONTEXT_ROUNDSTART)
 		reserved_cost = min(threat_budget, action.cost)
@@ -3340,6 +3448,12 @@ SUBSYSTEM_DEF(storyteller)
 			if(!action_id || !isnum(delay))
 				return
 			return queue_action_with_delay(action_id, delay, ui.user)
+		if("set_cadence_timer")
+			var/timer_id = params["timer_id"]
+			var/delay = text2num(params["delay"])
+			if(!timer_id || !isnum(delay))
+				return
+			return set_cadence_timer(timer_id, delay, ui.user)
 		if("discard_action")
 			var/action_id = params["action_id"]
 			if(!action_id)
@@ -3390,3 +3504,24 @@ SUBSYSTEM_DEF(storyteller)
 	else
 		record_decision("[key_name(user)] forced storyteller action [action.name].")
 	return TRUE
+
+/datum/controller/subsystem/storyteller/proc/set_cadence_timer(timer_id, delay, mob/user)
+	var/normalized_delay = max(0, round(delay))
+	switch(timer_id)
+		if("positive_lock")
+			positive_fatigue_locked_until = world.time + normalized_delay
+			record_decision("[key_name(user)] set the positive fatigue lock to [DisplayTimeText(normalized_delay, round_seconds_to = 1)].")
+			return TRUE
+		if("positive_window")
+			positive_channel_ready_at = world.time + normalized_delay
+			record_decision("[key_name(user)] set the next positive window to [DisplayTimeText(normalized_delay, round_seconds_to = 1)].")
+			return TRUE
+		if("negative_lock")
+			negative_fatigue_locked_until = world.time + normalized_delay
+			record_decision("[key_name(user)] set the negative fatigue lock to [DisplayTimeText(normalized_delay, round_seconds_to = 1)].")
+			return TRUE
+		if("negative_window")
+			negative_channel_ready_at = world.time + normalized_delay
+			record_decision("[key_name(user)] set the next negative window to [DisplayTimeText(normalized_delay, round_seconds_to = 1)].")
+			return TRUE
+	return FALSE

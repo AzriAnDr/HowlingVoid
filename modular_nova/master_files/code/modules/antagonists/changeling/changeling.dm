@@ -26,9 +26,6 @@
 		"Avian Traits",
 	)
 
-/datum/antagonist/changeling/forge_objectives()
-	return
-
 /datum/changeling_profile
 	/// The bra worn by the profile source
 	var/bra

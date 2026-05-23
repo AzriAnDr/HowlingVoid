@@ -1,5 +1,8 @@
 /// Cleans up any invalid languages. Typically happens on language renames and codedels.
 /datum/preferences/proc/sanitize_languages()
+	if(!islist(languages))
+		languages = list()
+
 	var/species_type = read_preference(/datum/preference/choiced/species)
 	var/datum/species/species = GLOB.species_prototypes[species_type]
 	var/list/whitelist = species.language_prefs_whitelist
@@ -25,6 +28,10 @@
 	// Only modify list once
 	if (length(to_remove))
 		languages -= to_remove
+		languages_edited = TRUE
+
+	if(!length(languages))
+		reset_languages_to_species_defaults()
 		languages_edited = TRUE
 
 	return languages_edited
