@@ -12,9 +12,8 @@ import {
   useLayoutEffect,
   useState,
 } from 'react';
-import { type Box, Button, Dropdown, KeyListener } from 'tgui-core/components';
+import { type Box, Button, Dropdown } from 'tgui-core/components';
 import { UI_DISABLED, UI_INTERACTIVE } from 'tgui-core/constants';
-import { KEY_ALT } from 'tgui-core/keycodes';
 import { type BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
 import { useBackend } from '../backend';
@@ -193,6 +192,10 @@ export function Window(props: Props) {
         className="Window__resizeHandle__se"
         onMouseDown={resizeStartHandler(1, 1) as any}
       />
+      <div
+        className="Window__resizeHandle__sw"
+        onMouseDown={resizeStartHandler(-1, 1) as any}
+      />
     </Layout>
   );
 }
@@ -208,13 +211,6 @@ type ContentProps = Partial<{
 
 function WindowContent(props: ContentProps) {
   const { className, fitted, children, ...rest } = props;
-  const [altDown, setAltDown] = useState(false);
-
-  function dragStartIfAltHeld(event: React.MouseEvent<HTMLDivElement>): void {
-    if (altDown) {
-      dragStartHandler(event);
-    }
-  }
 
   Byond.subscribeTo('resetposition', () => {
     setWindowPosition([0, 0]);
@@ -222,23 +218,7 @@ function WindowContent(props: ContentProps) {
   });
 
   return (
-    <Layout.Content
-      onMouseDown={dragStartIfAltHeld}
-      className={classes(['Window__content', className])}
-      {...rest}
-    >
-      <KeyListener
-        onKeyDown={(evt) => {
-          if (KEY_ALT === evt.code) {
-            setAltDown(true);
-          }
-        }}
-        onKeyUp={(evt) => {
-          if (KEY_ALT === evt.code) {
-            setAltDown(false);
-          }
-        }}
-      />
+    <Layout.Content className={classes(['Window__content', className])} {...rest}>
       {fitted ? (
         children
       ) : (

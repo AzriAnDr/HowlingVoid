@@ -26,7 +26,11 @@
 	name = "P.A.C.M.A.N. Generator"
 	description = "Our backup generator blew a fuse, we need a new P.A.C.M.A.N. ASAP."
 	reward = CARGO_CRATE_VALUE * 5
-	wanted_types = list(/obj/machinery/power/port_gen/pacman = TRUE)
+	wanted_types = list(
+		/obj/machinery/power/port_gen/pacman = TRUE,
+		/obj/machinery/power/port_gen/pacman/super = TRUE,
+		/obj/machinery/power/port_gen/pacman/mrs = TRUE,
+	)
 
 /datum/bounty/item/ds2_engie/field_gen
 	name = "Field Generator"
@@ -51,4 +55,3 @@
 	description = "We lost our communications array here, send us a new pre-constructed communications console."
 	reward = CARGO_CRATE_VALUE * 10
 	wanted_types = list(/obj/machinery/computer/communications = TRUE)
-

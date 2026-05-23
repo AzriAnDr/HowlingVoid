@@ -162,6 +162,26 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/board/pacman/super
+	name = "SUPERPACMAN Board"
+	desc = "The circuit board for a SUPERPACMAN-type portable generator."
+	id = "superpacman"
+	build_path = /obj/item/circuitboard/machine/pacman/super
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/pacman/mrs
+	name = "MRSPACMAN Board"
+	desc = "The circuit board for a MRSPACMAN-type portable generator."
+	id = "mrspacman"
+	build_path = /obj/item/circuitboard/machine/pacman/mrs
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/bioelec_gen
 	name = "Aquarium Bioelectricity Kit"
 	desc = "The required components to convert an aquarium into a bioelectricity generator."

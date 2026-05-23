@@ -307,22 +307,20 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/power/port_gen/pacman
 	req_components = list(
-		/obj/item/stack/cable_coil = 5,
-		/obj/item/stack/sheet/iron = 5
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/capacitor = 1,
+		/obj/item/stack/cable_coil = 2,
 	)
 	needs_anchored = FALSE
-	var/high_production_profile = FALSE
 
-/obj/item/circuitboard/machine/pacman/examine(mob/user)
-	. = ..()
-	var/message = high_production_profile ? "high-power uranium mode" : "medium-power plasma mode"
-	. += span_notice("It's set to [message].")
-	. += span_notice("You can switch the mode by using a screwdriver on [src].")
+/obj/item/circuitboard/machine/pacman/super
+	name = "SUPERPACMAN-type Generator"
+	build_path = /obj/machinery/power/port_gen/pacman/super
 
-/obj/item/circuitboard/machine/pacman/screwdriver_act(mob/living/user, obj/item/tool)
-	high_production_profile = !high_production_profile
-	var/message = high_production_profile ? "high-power uranium mode" : "medium-power plasma mode"
-	to_chat(user, span_notice("You set the board for [message]"))
+/obj/item/circuitboard/machine/pacman/mrs
+	name = "MRSPACMAN-type Generator"
+	build_path = /obj/machinery/power/port_gen/pacman/mrs
 
 /obj/item/circuitboard/machine/turbine_compressor
 	name = "Turbine - Inlet Compressor"
