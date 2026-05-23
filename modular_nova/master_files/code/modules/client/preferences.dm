@@ -49,8 +49,26 @@
 /datum/preferences/proc/species_updated(species_type)
 	all_quirks = list()
 	// Reset cultural stuff
-	languages[try_get_common_language()] = LANGUAGE_SPOKEN
+	reset_languages_to_species_defaults()
 	save_character()
+
+/datum/preferences/proc/reset_languages_to_species_defaults()
+	languages = get_default_species_languages()
+
+/datum/preferences/proc/get_default_species_languages()
+	var/list/default_languages = list()
+	var/datum/species/species_type = read_preference(/datum/preference/choiced/species)
+	if(!ispath(species_type))
+		return default_languages
+
+	var/datum/language_holder/language_holder = GLOB.prototype_language_holders[species_type::species_language_holder]
+	if(isnull(language_holder))
+		return default_languages
+
+	for(var/language in language_holder.spoken_languages)
+		default_languages[language] = LANGUAGE_SPOKEN
+
+	return default_languages
 
 /// Tries to get the topmost language of the language holder. Should be the species' native language, and if it isn't, you should pester a coder.
 /datum/preferences/proc/try_get_common_language()

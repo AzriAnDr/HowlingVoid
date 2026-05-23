@@ -746,7 +746,7 @@
 	default = FALSE
 
 /datum/config_entry/number/upload_limit
-	default = 524288
+	default = 3145728
 	min_val = 0
 
 /datum/config_entry/number/upload_limit_admin

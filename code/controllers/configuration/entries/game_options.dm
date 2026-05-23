@@ -476,8 +476,6 @@
 	default = 30
 	min_val = 0
 
-/datum/config_entry/flag/give_tutorials_without_db
-
 /datum/config_entry/string/new_player_alert_role_id
 
 /datum/config_entry/keyed_list/positive_station_traits

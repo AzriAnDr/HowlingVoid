@@ -82,6 +82,8 @@
 	VAR_PROTECTED/list/ruleset_lazy_templates
 	/// Extra logging information can be set here, to be output into any admin messaging and dynamic logs.
 	VAR_FINAL/log_data
+	/// Admin-forced executions can bypass player opt-in checks while still respecting other validity gates.
+	var/bypass_preference_checks = FALSE
 
 /datum/dynamic_ruleset/New(list/dynamic_config)
 	for(var/new_var in dynamic_config?[config_tag])
@@ -282,7 +284,7 @@
 			continue
 		if(candidate_client.get_remaining_days(minimum_required_age) > 0)
 			continue
-		if(pref_flag && !(pref_flag in candidate_client.prefs.be_special))
+		if(!bypass_preference_checks && pref_flag && !(pref_flag in candidate_client.prefs.be_special))
 			continue
 		if(is_banned_from(candidate.ckey, list(ROLE_SYNDICATE, jobban_flag || pref_flag)))
 			continue
@@ -321,7 +323,7 @@
 /datum/dynamic_ruleset/proc/is_valid_candidate(mob/candidate, client/candidate_client)
 	SHOULD_CALL_PARENT(TRUE)
 	// NOVA EDIT ADDITION START
-	if(!candidate_client.prefs.read_preference(/datum/preference/toggle/be_antag))
+	if(!bypass_preference_checks && !candidate_client.prefs.read_preference(/datum/preference/toggle/be_antag))
 		return FALSE
 	else if(is_banned_from(candidate_client.ckey, BAN_ANTAGONIST))
 		return FALSE

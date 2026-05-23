@@ -775,6 +775,22 @@ export const StorytellerPanel = () => {
     'storytellerQueueDelayMinutes',
     Math.max(1, Math.round((data.defaultQueueDelay || 0) / 600) || 5),
   );
+  const [positiveLockMinutes, setPositiveLockMinutes] = useLocalState(
+    'storytellerPositiveLockMinutes',
+    Math.round(((data.positiveFatigueRemaining || 0) / 600) * 10) / 10,
+  );
+  const [positiveWindowMinutes, setPositiveWindowMinutes] = useLocalState(
+    'storytellerPositiveWindowMinutes',
+    Math.round(((data.positiveChannelRemaining || 0) / 600) * 10) / 10,
+  );
+  const [negativeLockMinutes, setNegativeLockMinutes] = useLocalState(
+    'storytellerNegativeLockMinutes',
+    Math.round(((data.negativeFatigueRemaining || 0) / 600) * 10) / 10,
+  );
+  const [negativeWindowMinutes, setNegativeWindowMinutes] = useLocalState(
+    'storytellerNegativeWindowMinutes',
+    Math.round(((data.negativeChannelRemaining || 0) / 600) * 10) / 10,
+  );
   const [listSearch, setListSearch] = useLocalState(
     'storytellerListSearch',
     '',
@@ -1211,9 +1227,47 @@ export const StorytellerPanel = () => {
                       'A short fatigue lock after a positive action fires. While this is active, the aid channel cannot immediately fire again.',
                     )}
                   >
-                    {data.positiveFatigueRemaining > 0
-                      ? formatTime(data.positiveFatigueRemaining, language)
-                      : t(language, 'ready')}
+                    <Stack vertical fill>
+                      <Stack.Item>
+                        {data.positiveFatigueRemaining > 0
+                          ? formatTime(data.positiveFatigueRemaining, language)
+                          : t(language, 'ready')}
+                      </Stack.Item>
+                      <Stack.Item mt={0.5}>
+                        <Stack>
+                          <Stack.Item grow>
+                            <NumberInput
+                              fluid
+                              minValue={0}
+                              maxValue={180}
+                              step={0.5}
+                              format={(value) =>
+                                `${Number(value).toFixed(1)} ${t(language, 'minutes_short')}`
+                              }
+                              value={positiveLockMinutes}
+                              onChange={(value) =>
+                                setPositiveLockMinutes(Number(value) || 0)
+                              }
+                            />
+                          </Stack.Item>
+                          <Stack.Item>
+                            <Button
+                              onClick={() =>
+                                act('set_cadence_timer', {
+                                  timer_id: 'positive_lock',
+                                  delay: Math.max(
+                                    0,
+                                    Math.round(positiveLockMinutes * 600),
+                                  ),
+                                })
+                              }
+                            >
+                              {t(language, 'set_timer')}
+                            </Button>
+                          </Stack.Item>
+                        </Stack>
+                      </Stack.Item>
+                    </Stack>
                   </LabeledList.Item>
                   <LabeledList.Item
                     label={tooltipLabel(
@@ -1221,9 +1275,47 @@ export const StorytellerPanel = () => {
                       'Time until the positive channel is allowed to roll again. This scales with round state, population, and prior action impact.',
                     )}
                   >
-                    {data.positiveChannelRemaining > 0
-                      ? formatTime(data.positiveChannelRemaining, language)
-                      : t(language, 'ready')}
+                    <Stack vertical fill>
+                      <Stack.Item>
+                        {data.positiveChannelRemaining > 0
+                          ? formatTime(data.positiveChannelRemaining, language)
+                          : t(language, 'ready')}
+                      </Stack.Item>
+                      <Stack.Item mt={0.5}>
+                        <Stack>
+                          <Stack.Item grow>
+                            <NumberInput
+                              fluid
+                              minValue={0}
+                              maxValue={180}
+                              step={0.5}
+                              format={(value) =>
+                                `${Number(value).toFixed(1)} ${t(language, 'minutes_short')}`
+                              }
+                              value={positiveWindowMinutes}
+                              onChange={(value) =>
+                                setPositiveWindowMinutes(Number(value) || 0)
+                              }
+                            />
+                          </Stack.Item>
+                          <Stack.Item>
+                            <Button
+                              onClick={() =>
+                                act('set_cadence_timer', {
+                                  timer_id: 'positive_window',
+                                  delay: Math.max(
+                                    0,
+                                    Math.round(positiveWindowMinutes * 600),
+                                  ),
+                                })
+                              }
+                            >
+                              {t(language, 'set_timer')}
+                            </Button>
+                          </Stack.Item>
+                        </Stack>
+                      </Stack.Item>
+                    </Stack>
                   </LabeledList.Item>
                   <LabeledList.Item
                     label={tooltipLabel(
@@ -1231,9 +1323,47 @@ export const StorytellerPanel = () => {
                       'A short fatigue lock after a negative action fires. While this is active, the hostile channel cannot immediately fire again.',
                     )}
                   >
-                    {data.negativeFatigueRemaining > 0
-                      ? formatTime(data.negativeFatigueRemaining, language)
-                      : t(language, 'ready')}
+                    <Stack vertical fill>
+                      <Stack.Item>
+                        {data.negativeFatigueRemaining > 0
+                          ? formatTime(data.negativeFatigueRemaining, language)
+                          : t(language, 'ready')}
+                      </Stack.Item>
+                      <Stack.Item mt={0.5}>
+                        <Stack>
+                          <Stack.Item grow>
+                            <NumberInput
+                              fluid
+                              minValue={0}
+                              maxValue={180}
+                              step={0.5}
+                              format={(value) =>
+                                `${Number(value).toFixed(1)} ${t(language, 'minutes_short')}`
+                              }
+                              value={negativeLockMinutes}
+                              onChange={(value) =>
+                                setNegativeLockMinutes(Number(value) || 0)
+                              }
+                            />
+                          </Stack.Item>
+                          <Stack.Item>
+                            <Button
+                              onClick={() =>
+                                act('set_cadence_timer', {
+                                  timer_id: 'negative_lock',
+                                  delay: Math.max(
+                                    0,
+                                    Math.round(negativeLockMinutes * 600),
+                                  ),
+                                })
+                              }
+                            >
+                              {t(language, 'set_timer')}
+                            </Button>
+                          </Stack.Item>
+                        </Stack>
+                      </Stack.Item>
+                    </Stack>
                   </LabeledList.Item>
                   <LabeledList.Item
                     label={tooltipLabel(
@@ -1241,9 +1371,47 @@ export const StorytellerPanel = () => {
                       'Time until the negative channel is allowed to roll again. This is dynamically scaled by population, damage, casualties, and previous impact.',
                     )}
                   >
-                    {data.negativeChannelRemaining > 0
-                      ? formatTime(data.negativeChannelRemaining, language)
-                      : t(language, 'ready')}
+                    <Stack vertical fill>
+                      <Stack.Item>
+                        {data.negativeChannelRemaining > 0
+                          ? formatTime(data.negativeChannelRemaining, language)
+                          : t(language, 'ready')}
+                      </Stack.Item>
+                      <Stack.Item mt={0.5}>
+                        <Stack>
+                          <Stack.Item grow>
+                            <NumberInput
+                              fluid
+                              minValue={0}
+                              maxValue={180}
+                              step={0.5}
+                              format={(value) =>
+                                `${Number(value).toFixed(1)} ${t(language, 'minutes_short')}`
+                              }
+                              value={negativeWindowMinutes}
+                              onChange={(value) =>
+                                setNegativeWindowMinutes(Number(value) || 0)
+                              }
+                            />
+                          </Stack.Item>
+                          <Stack.Item>
+                            <Button
+                              onClick={() =>
+                                act('set_cadence_timer', {
+                                  timer_id: 'negative_window',
+                                  delay: Math.max(
+                                    0,
+                                    Math.round(negativeWindowMinutes * 600),
+                                  ),
+                                })
+                              }
+                            >
+                              {t(language, 'set_timer')}
+                            </Button>
+                          </Stack.Item>
+                        </Stack>
+                      </Stack.Item>
+                    </Stack>
                   </LabeledList.Item>
                   <LabeledList.Item
                     label={tooltipLabel(
@@ -2016,4 +2184,3 @@ export const StorytellerPanel = () => {
     </Window>
   );
 };
-

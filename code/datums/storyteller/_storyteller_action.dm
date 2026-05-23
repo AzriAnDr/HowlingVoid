@@ -246,7 +246,7 @@
 /datum/storyteller/action/dynamic_roundstart/force_execute(datum/controller/subsystem/storyteller/owner, datum/storyteller/state_snapshot/snapshot, list/context_data)
 	if(SSticker.current_state > GAME_STATE_SETTING_UP)
 		return FALSE
-	if(!owner.queue_dynamic_ruleset_action(src, context_data["admin_user"]))
+	if(!owner.queue_dynamic_ruleset_action(src, context_data["admin_user"], !!context_data["force"]))
 		return FALSE
 	owner.record_decision("Queued roundstart storyteller ruleset [name] for the upcoming spawn cycle.")
 	return TRUE
@@ -410,7 +410,7 @@
 	return TRUE
 
 /datum/storyteller/action/dynamic_latejoin/force_execute(datum/controller/subsystem/storyteller/owner, datum/storyteller/state_snapshot/snapshot, list/context_data)
-	if(!owner.queue_dynamic_ruleset_action(src, context_data["admin_user"]))
+	if(!owner.queue_dynamic_ruleset_action(src, context_data["admin_user"], !!context_data["force"]))
 		return FALSE
 	owner.record_decision("Queued latejoin storyteller ruleset [name] for the next eligible joining player.")
 	return TRUE
@@ -487,7 +487,7 @@
 
 /datum/storyteller/action/dynamic_midround/force_execute(datum/controller/subsystem/storyteller/owner, datum/storyteller/state_snapshot/snapshot, list/context_data)
 	var/mob/admin = context_data["admin_user"]
-	if(!SSdynamic.force_run_midround(dynamic_ruleset_type, alert_admins_on_fail = TRUE, admin = admin))
+	if(!SSdynamic.force_run_midround(dynamic_ruleset_type, alert_admins_on_fail = TRUE, admin = admin, bypass_preference_checks = !!context_data["force"]))
 		return FALSE
 	owner.record_action_execution(src, "Forced midround execution", spend_budget = FALSE)
 	return TRUE
