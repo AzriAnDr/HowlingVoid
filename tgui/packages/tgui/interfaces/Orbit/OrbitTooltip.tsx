@@ -1,4 +1,5 @@
-import { LabeledList, NoticeBox } from 'tgui-core/components';
+import type { ReactNode } from 'react';
+import { Box, NoticeBox } from 'tgui-core/components';
 import { usePreferencesLocalization } from '../localization';
 
 import type { Antagonist, Observable } from './types';
@@ -6,6 +7,22 @@ import type { Antagonist, Observable } from './types';
 type Props = {
   item: Observable | Antagonist;
   realNameDisplay: boolean;
+};
+
+type TooltipItemProps = {
+  label: string;
+  children: ReactNode;
+};
+
+const TooltipItem = (props: TooltipItemProps) => {
+  const { label, children } = props;
+
+  return (
+    <Box className="OrbitTooltip__item">
+      <Box className="OrbitTooltip__label">{label}</Box>
+      <Box className="OrbitTooltip__value">{children}</Box>
+    </Box>
+  );
 };
 
 /** Displays some info on the mob as a tooltip. */
@@ -30,41 +47,35 @@ export function OrbitTooltip(props: Props) {
       <NoticeBox textAlign="center" nowrap info={showAFK}>
         {t('ui.orbit.last_known_data')}
       </NoticeBox>
-      <LabeledList>
+      <Box className="OrbitTooltip">
         {extraInfo ? (
-          <LabeledList.Item label={extraInfo[0]}>
-            {extraInfo[1]}
-          </LabeledList.Item>
+          <TooltipItem label={extraInfo[0]}>{extraInfo[1]}</TooltipItem>
         ) : (
           <>
             {!!full_name && (
-              <LabeledList.Item label={t('ui.orbit.real_id')}>
+              <TooltipItem label={t('ui.orbit.real_id')}>
                 {full_name}
-              </LabeledList.Item>
+              </TooltipItem>
             )}
             {!!displayJob && (
-              <LabeledList.Item label={t('ui.common.job')}>
-                {displayJob}
-              </LabeledList.Item>
+              <TooltipItem label={t('ui.common.job')}>{displayJob}</TooltipItem>
             )}
             {!!antag && (
-              <LabeledList.Item label={t('ui.orbit.threat')}>
-                {antag}
-              </LabeledList.Item>
+              <TooltipItem label={t('ui.orbit.threat')}>{antag}</TooltipItem>
             )}
             {!!health && (
-              <LabeledList.Item label={t('ui.common.health')}>
+              <TooltipItem label={t('ui.common.health')}>
                 {displayHealth}
-              </LabeledList.Item>
+              </TooltipItem>
             )}
           </>
         )}
         {showAFK && (
-          <LabeledList.Item label={t('ui.common.status')}>
+          <TooltipItem label={t('ui.common.status')}>
             {t('ui.orbit.away')}
-          </LabeledList.Item>
+          </TooltipItem>
         )}
-      </LabeledList>
+      </Box>
     </>
   );
 }

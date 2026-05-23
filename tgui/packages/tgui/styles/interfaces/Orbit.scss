@@ -17,3 +17,24 @@
   border-top: 5px solid white;
   transform: translateX(-50%);
 }
+
+.OrbitTooltip {
+  max-width: 260px;
+}
+
+.OrbitTooltip__item {
+  margin-top: var(--space-s);
+  white-space: normal;
+}
+
+.OrbitTooltip__label {
+  color: var(--color-label);
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+
+.OrbitTooltip__value {
+  margin-top: var(--space-xxs);
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
