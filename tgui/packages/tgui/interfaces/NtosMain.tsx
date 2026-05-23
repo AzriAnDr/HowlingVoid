@@ -5,6 +5,15 @@ import { NtosWindow } from '../layouts';
 import type { NTOSData } from '../layouts/NtosWindow';
 import { usePreferencesLocalization } from './localization';
 
+const normalizeProgramKey = (value: string | undefined) =>
+  (value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_|_$/g, '');
+
+const programNameKey = (filedesc: string) =>
+  `ui.ntos_program.${normalizeProgramKey(filedesc)}.name`;
+
 export enum alert_relevancies {
   ALERT_RELEVANCY_SAFE,
   ALERT_RELEVANCY_WARN,
@@ -54,7 +63,7 @@ export const NtosMain = (props) => {
               {filtered_programs.map((app) => (
                 <Stack.Item key={app.name}>
                   <Button
-                    content={app.desc}
+                    content={t(programNameKey(app.desc), app.desc)}
                     icon={app.icon}
                     onClick={() =>
                       act('PC_runprogram', {
@@ -222,7 +231,7 @@ const ProgramsTable = (props) => {
                 fluid
                 color={program.alert ? 'yellow' : 'transparent'}
                 icon={program.icon}
-                content={program.desc}
+                content={t(programNameKey(program.desc), program.desc)}
                 onClick={() =>
                   act('PC_runprogram', {
                     name: program.name,
@@ -251,4 +260,3 @@ const ProgramsTable = (props) => {
     </Section>
   );
 };
-

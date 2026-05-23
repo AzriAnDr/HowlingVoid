@@ -39,7 +39,9 @@ export const InterfaceLockNoticeBox = (props) => {
               m={0}
               color={locked ? 'red' : 'green'}
               icon={locked ? 'lock' : 'unlock'}
-              content={locked ? 'Locked' : 'Unlocked'}
+              content={
+                locked ? t('ui.common.locked') : t('ui.common.unlocked')
+              }
               disabled={preventLocking}
               onClick={() => {
                 if (onLockStatusChange) {
@@ -55,7 +57,11 @@ export const InterfaceLockNoticeBox = (props) => {
   // For everyone else
   return (
     <NoticeBox>
-      Swipe {accessText} to {locked ? 'unlock' : 'lock'} this interface.
+      {accessText === 'an ID card'
+        ? locked
+          ? t('ui.common.swipe_id_to_unlock_interface')
+          : t('ui.common.swipe_id_to_lock_interface')
+        : `Swipe ${accessText} to ${locked ? 'unlock' : 'lock'} this interface.`}
     </NoticeBox>
   );
 };
