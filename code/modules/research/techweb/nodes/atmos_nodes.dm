@@ -61,6 +61,8 @@
 		"electrolyzer",
 		"pipe_scrubber",
 		"pacman",
+		"superpacman",
+		"mrspacman",
 		"mech_generator",
 		"plasmacutter",
 		"diode_disk_incendiary",
