@@ -3811,6 +3811,13 @@
     "item_path": "/obj/item/clothing/head/syndicatefake",
     "group": "Costumes"
   },
+  "/datum/loadout_item/head/skull": {
+    "id": "/datum/loadout_item/head/skull",
+    "template_type": "/datum/loadout_item/head",
+    "name": "Skull Helmet",
+    "item_path": "/obj/item/clothing/head/helmet/skull/fake",
+    "group": "Costumes"
+  },
   "/datum/loadout_item/head/blastwave_helmet": {
     "id": "/datum/loadout_item/head/blastwave_helmet",
     "template_type": "/datum/loadout_item/head",

@@ -221,6 +221,13 @@
 	. = ..()
 	AddComponent(/datum/component/armor_plate, upgrade_item = /obj/item/clothing/accessory/talisman)
 
+/obj/item/clothing/head/helmet/skull/fake
+	strip_delay = 2 SECONDS
+	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
+	armor_type = /datum/armor/none
+	resistance_flags = FIRE_PROOF
+
 /obj/item/clothing/suit/hooded/explorer/syndicate
 	name = "syndicate explorer suit"
 	desc = "An armoured suit for exploring harsh environments, dyed in the sinister red and black of the Syndicate. This one seems better armored than the ones Nanotrasen gives out."
