@@ -65,6 +65,7 @@ function JobEntry(props: JobEntryProps) {
           : job.prioritized
             ? '#16fc0f' // Bright green background
             : Color.fromHex(department.color).darken(10).toString(),
+        backgroundImage: 'none',
         color: job.unavailable_reason
           ? '#616161' // Dark grey font
           : Color.fromHex(department.color).darken(90).toString(),
