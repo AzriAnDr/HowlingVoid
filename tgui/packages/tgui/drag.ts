@@ -5,7 +5,7 @@
  */
 
 import { storage } from 'common/storage';
-import { vecAdd, vecMultiply, vecScale, vecSubtract } from 'tgui-core/vector';
+import { vecAdd, vecScale, vecSubtract } from 'tgui-core/vector';
 import type { BooleanLike } from 'tgui-core/react';
 import { createLogger } from './logging';
 
@@ -24,6 +24,7 @@ let screenOffset: Point = [0, 0];
 let screenOffsetPromise: Promise<Point>;
 let dragPointOffset: Point;
 let resizeMatrix: Point;
+let initialPosition: Point;
 let initialSize: Point;
 let size: Point;
 
@@ -316,10 +317,8 @@ export const resizeStartHandler =
     resizeMatrix = [x, y];
     logger.log('resize start', resizeMatrix);
     resizing = true;
-    dragPointOffset = vecSubtract(
-      [event.screenX * pixelRatio, event.screenY * pixelRatio],
-      getWindowPosition(),
-    ) as Point;
+    dragPointOffset = [event.screenX * pixelRatio, event.screenY * pixelRatio];
+    initialPosition = getWindowPosition();
     initialSize = getWindowSize();
     // Focus click target
     (event.target as HTMLElement)?.focus();
@@ -345,18 +344,40 @@ function resizeMoveHandler(event: MouseEvent): void {
     return;
   }
   event.preventDefault();
-  const currentOffset = vecSubtract(
+  const delta = vecSubtract(
     [event.screenX * pixelRatio, event.screenY * pixelRatio],
-    getWindowPosition(),
+    dragPointOffset,
   );
-  const delta = vecSubtract(currentOffset, dragPointOffset);
-  // Extra 1x1 area is added to ensure the browser can see the cursor
-  size = vecAdd(initialSize, vecMultiply(resizeMatrix, delta), [1, 1]) as [
-    number,
-    number,
-  ];
-  // Sane window size values
-  size[0] = Math.max(size[0], 150 * pixelRatio);
-  size[1] = Math.max(size[1], 50 * pixelRatio);
+  const minWidth = 150 * pixelRatio;
+  const minHeight = 50 * pixelRatio;
+  const nextPosition: Point = [...initialPosition];
+  size = [...initialSize] as Point;
+
+  if (resizeMatrix[0] === 1) {
+    size[0] = initialSize[0] + delta[0];
+  } else if (resizeMatrix[0] === -1) {
+    size[0] = initialSize[0] - delta[0];
+  }
+
+  if (resizeMatrix[1] === 1) {
+    size[1] = initialSize[1] + delta[1];
+  } else if (resizeMatrix[1] === -1) {
+    size[1] = initialSize[1] - delta[1];
+  }
+
+  size[0] = Math.max(size[0], minWidth);
+  size[1] = Math.max(size[1], minHeight);
+
+  if (resizeMatrix[0] === -1) {
+    nextPosition[0] = initialPosition[0] + initialSize[0] - size[0];
+  }
+
+  if (resizeMatrix[1] === -1) {
+    nextPosition[1] = initialPosition[1] + initialSize[1] - size[1];
+  }
+
+  if (resizeMatrix[0] === -1 || resizeMatrix[1] === -1) {
+    setWindowPositionBatched(nextPosition);
+  }
   setWindowSizeBatched(size);
 }

@@ -10,9 +10,9 @@
 	base_icon_state = "fuel_generator"
 	circuit = null
 	anchored = TRUE
-	max_sheets = 25 // 50% worse than pacman, 25% better than superpacman
-	time_per_sheet = parent_type::time_per_sheet // pacman is 180, superpacman is 60, this make it thrice as efficient as the super pacman
-	power_gen = parent_type::power_gen *2 // superpacman is 3, but, one sheet is consumed thrice as fast and they have a limit of 20 sheets.
+	max_sheets = 25
+	time_per_sheet = 180
+	power_gen = 20 KILO JOULES
 	drag_slowdown = 1.5
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	/// The item we turn into when repacked

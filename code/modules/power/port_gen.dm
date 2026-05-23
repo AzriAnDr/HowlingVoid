@@ -80,15 +80,17 @@
 /////////////////
 /obj/machinery/power/port_gen/pacman
 	name = "\improper P.A.C.M.A.N.-type portable generator"
+	icon = 'icons/obj/power.dmi'
 	circuit = /obj/item/circuitboard/machine/pacman
-	power_gen = 10 KILO JOULES
+	power_gen = 5 KILO JOULES
 	var/sheets = 0
-	var/max_sheets = 50
+	var/max_sheets = 100
 	var/sheet_name = ""
 	var/sheet_path = /obj/item/stack/sheet/mineral/plasma
 	var/sheet_left = 0 // How much is left of the sheet
-	var/time_per_sheet = 180
+	var/time_per_sheet = 260
 	var/current_heat = 0
+	var/consumption_modifier = 1
 
 /obj/machinery/power/port_gen/pacman/Initialize(mapload)
 	. = ..()
@@ -97,29 +99,43 @@
 
 	var/obj/S = sheet_path
 	sheet_name = initial(S.name)
+	RefreshParts()
 
 /obj/machinery/power/port_gen/pacman/on_deconstruction(disassembled)
 	DropFuel()
 	return ..()
 
-/obj/machinery/power/port_gen/pacman/on_construction(mob/user)
-	var/obj/item/circuitboard/machine/pacman/our_board = circuit
-	if(our_board.high_production_profile)
-		icon_state = "portgen1_0"
-		base_icon_state = "portgen1"
-		max_sheets = 20
-		time_per_sheet = 60
-		power_gen = 30 KILO JOULES
-		sheet_path = /obj/item/stack/sheet/mineral/uranium
+/obj/machinery/power/port_gen/pacman/RefreshParts()
+	. = ..()
+	max_sheets = initial(max_sheets)
+	power_gen = initial(power_gen)
+	consumption_modifier = 1
+	var/temp_rating = 0
+	var/consumption_coeff = 0
+	for(var/datum/stock_part/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/matter_bin))
+			max_sheets = stock_part.tier * stock_part.tier * 50
+		else if(istype(stock_part, /datum/stock_part/capacitor))
+			temp_rating += stock_part.tier
+		else
+			consumption_coeff += stock_part.tier
+
+	consumption_modifier = max(consumption_coeff, 1)
+	if(temp_rating)
+		power_gen = round(initial(power_gen) * temp_rating * 2)
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
 	. = ..()
 	. += span_notice("The generator has [sheets] units of [sheet_name] fuel left, producing [display_power(power_gen)].")
+	if(in_range(user, src) || isobserver(user))
+		. += span_notice("The status display reads: Fuel efficiency increased by <b>[(consumption_modifier * 100) - 100]%</b>.")
 	if(anchored)
 		. += span_notice("It is anchored to the ground.")
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
-	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
+	var/actual_consumption = max(consumption_modifier, 1)
+	var/fuel_per_cycle = time_per_sheet * actual_consumption / power_output
+	if(sheets >= 1 / fuel_per_cycle - sheet_left)
 		return TRUE
 	return FALSE
 
@@ -129,7 +145,8 @@
 		sheets = 0
 
 /obj/machinery/power/port_gen/pacman/UseFuel()
-	var/needed_sheets = 1 / (time_per_sheet / power_output)
+	var/actual_consumption = max(consumption_modifier, 1)
+	var/needed_sheets = 1 / (time_per_sheet * actual_consumption / power_output)
 	var/temp = min(needed_sheets, sheet_left)
 	needed_sheets -= temp
 	sheet_left -= temp
@@ -142,19 +159,19 @@
 	var/lower_limit = 56 + power_output * 10
 	var/upper_limit = 76 + power_output * 10
 	var/bias = 0
-	if (power_output > 4)
+	if(power_output > 4)
 		upper_limit = 400
-		bias = power_output - 3
-	if (current_heat < lower_limit)
-		current_heat += 3
+		bias = power_output - actual_consumption * (4 - actual_consumption)
+	if(current_heat < lower_limit)
+		current_heat += 4 - actual_consumption
 	else
 		current_heat += rand(-7 + bias, 7 + bias)
-		if (current_heat < lower_limit)
+		if(current_heat < lower_limit)
 			current_heat = lower_limit
-		if (current_heat > upper_limit)
+		if(current_heat > upper_limit)
 			current_heat = upper_limit
 
-	if (current_heat > 300)
+	if(current_heat > 300)
 		overheat()
 		qdel(src)
 
@@ -271,12 +288,28 @@
 				. = TRUE
 
 /obj/machinery/power/port_gen/pacman/super
+	name = "\improper S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
 	icon_state = "portgen1_0"
 	base_icon_state = "portgen1"
-	max_sheets = 20
-	time_per_sheet = 60
-	power_gen = 30 KILO JOULES
+	circuit = /obj/item/circuitboard/machine/pacman/super
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
+	power_gen = 15 KILO JOULES
+	time_per_sheet = 85
+
+/obj/machinery/power/port_gen/pacman/super/overheat()
+	explosion(src, devastation_range = 3, heavy_impact_range = 3, light_impact_range = 3, flash_range = -1)
+
+/obj/machinery/power/port_gen/pacman/mrs
+	name = "\improper M.R.S.P.A.C.M.A.N.-type portable generator"
+	base_icon_state = "portgen2"
+	icon_state = "portgen2_0"
+	circuit = /obj/item/circuitboard/machine/pacman/mrs
+	sheet_path = /obj/item/stack/sheet/mineral/diamond
+	power_gen = 40 KILO JOULES
+	time_per_sheet = 80
+
+/obj/machinery/power/port_gen/pacman/mrs/overheat()
+	explosion(src, devastation_range = 4, heavy_impact_range = 4, light_impact_range = 4, flash_range = -1)
 
 /obj/machinery/power/port_gen/pacman/pre_loaded
 	sheets = 15

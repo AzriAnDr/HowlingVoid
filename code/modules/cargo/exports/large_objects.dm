@@ -105,6 +105,21 @@
 	unit_name = "security barrier"
 	export_types = list(/obj/item/grenade/barrier, /obj/structure/barricade/security)
 
+/datum/export/pacman
+	cost = 125
+	unit_name = "pacman"
+	export_types = list(/obj/machinery/power/port_gen/pacman)
+
+/datum/export/pacman/super
+	cost = 150
+	unit_name = "super pacman"
+	export_types = list(/obj/machinery/power/port_gen/pacman/super)
+
+/datum/export/pacman/mrs
+	cost = 175
+	unit_name = "mrs super pacman"
+	export_types = list(/obj/machinery/power/port_gen/pacman/mrs)
+
 ///Maximum number of credits you can earn from selling your gas canister cause its theoritically infinite
 #define MAX_GAS_CREDITS 15000
 
