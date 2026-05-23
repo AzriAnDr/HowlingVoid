@@ -33,6 +33,12 @@ GLOBAL_LIST_EMPTY(objectives) //NOVA EDIT ADDITION
 	if(owner)
 		. += owner
 
+/datum/objective/proc/is_owned_by_changeling()
+	for(var/datum/mind/objective_owner as anything in get_owners())
+		if(objective_owner.has_antag_datum(/datum/antagonist/changeling))
+			return TRUE
+	return FALSE
+
 /datum/objective/proc/admin_edit(mob/admin)
 	return
 
@@ -134,6 +140,9 @@ GLOBAL_LIST_EMPTY(objectives) //NOVA EDIT ADDITION
 		return FALSE
 
 	if(possible_target.current.stat == DEAD)
+		return FALSE
+
+	if(is_owned_by_changeling() && issynthetic(possible_target.current))
 		return FALSE
 
 	var/target_area = get_area(possible_target.current)
@@ -802,11 +811,12 @@ GLOBAL_LIST_EMPTY(possible_items)
 	if (SSticker.current_state == GAME_STATE_SETTING_UP)
 		for(var/i in GLOB.new_player_list)
 			var/mob/dead/new_player/P = i
-			if(P.ready == PLAYER_READY_TO_PLAY && !(P.mind in owners))
+			var/datum/species/player_species = P.client?.prefs?.read_preference(/datum/preference/choiced/species)
+			if(P.ready == PLAYER_READY_TO_PLAY && !ispath(player_species, /datum/species/synthetic) && !(P.mind in owners))
 				n_p ++
 	else if (SSticker.IsRoundInProgress())
 		for(var/mob/living/carbon/human/P in GLOB.player_list)
-			if(!(IS_CHANGELING(P)) && !(P.mind in owners))
+			if(!IS_CHANGELING(P) && !issynthetic(P) && !(P.mind in owners))
 				n_p ++
 	target_amount = min(target_amount, n_p)
 

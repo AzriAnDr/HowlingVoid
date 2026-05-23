@@ -249,7 +249,7 @@
 		orderer_rank = rank,
 		orderer_ckey = user.ckey,
 		reason = reason,
-		paying_account = buyer == SSeconomy.get_dep_account(ACCOUNT_CAR) ? null : buyer,
+		paying_account = (buyer == SSeconomy.get_dep_account(ACCOUNT_CAR) && !(pack.order_flags & ORDER_GOODY)) ? null : buyer,
 		can_be_cancelled = TRUE,
 	)
 	created_order.generateRequisition(get_turf(parent))

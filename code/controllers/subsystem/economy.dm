@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(economy)
 	wait = 5 MINUTES
 	runlevels = RUNLEVEL_GAME
 	///How many credits does the in-game economy have in circulation at round start? Divided up among non-cargo department budgets.
-	var/budget_pool = 35000
+	var/budget_pool = 25000
 	var/list/department_accounts = list(ACCOUNT_CIV = ACCOUNT_CIV_NAME,
 										ACCOUNT_ENG = ACCOUNT_ENG_NAME,
 										ACCOUNT_SCI = ACCOUNT_SCI_NAME,
@@ -12,6 +12,9 @@ SUBSYSTEM_DEF(economy)
 										ACCOUNT_CAR = ACCOUNT_CAR_NAME,
 										// NOVA EDIT ADDITION START
 										ACCOUNT_CMD = ACCOUNT_CMD_NAME,
+										ACCOUNT_DS2 = ACCOUNT_DS2_NAME,
+										ACCOUNT_INT = ACCOUNT_INT_NAME,
+										ACCOUNT_TI = ACCOUNT_TI_NAME,
 										// NOVA EDIT ADDITION END
 										ACCOUNT_SEC = ACCOUNT_SEC_NAME)
 	var/list/departmental_accounts = list()

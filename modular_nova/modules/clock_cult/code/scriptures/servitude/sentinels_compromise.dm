@@ -46,7 +46,7 @@
 			if(!apply_heal(healed_mob))
 				break
 
-	clockwork_say(invoker, text2ratvar("Wounds will close."), TRUE)
+	clockwork_say(invoker, "Wounds will close.", TRUE)
 	new /obj/effect/temp_visual/heal(get_turf(healed_mob), "#1E8CE1")
 	return TRUE
 

@@ -32,7 +32,7 @@
 	if(!message)
 		return
 
-	user.whisper("Engine, V vaibxr gb-gur`r gb-pbzzhar gb-nyy.", language = /datum/language/common) //Ratvar, I invoke to-the`e to-commune to-all.
+	user.whisper("Ratvar, I invoke thee to commune to all.", language = /datum/language/ratvar)
 	user.whisper(html_decode(message), filterproof = TRUE)
 	send_clock_message(user, message)
 

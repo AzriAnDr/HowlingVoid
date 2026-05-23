@@ -325,7 +325,7 @@
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = "comment-slash",
 		SPECIES_PERK_NAME = "Alien Speech Pattern",
-		SPECIES_PERK_DESC = "By default they speak Xenocommon, while still understanding Sol Common.",
+		SPECIES_PERK_DESC = "By default they speak Xenocommon, while still being able to speak and understand Sol Common.",
 	))
 	perks += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
@@ -464,6 +464,7 @@
 		/datum/language/xenocommon = list(LANGUAGE_ATOM),
 	)
 	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM), // Sol Common
 		/datum/language/xenocommon = list(LANGUAGE_ATOM),
 	)
 	selected_language = /datum/language/xenocommon

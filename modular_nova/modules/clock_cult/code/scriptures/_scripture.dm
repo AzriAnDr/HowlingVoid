@@ -125,17 +125,17 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 			if(potential_invoker?.mind.has_antag_datum(/datum/antagonist/clock_cultist/solo)) // Solo cultists can use all scriptures alone, while group clock cult doesn't get so lucky
 				invokers_left = 0
-				clockwork_say(potential_invoker, text2ratvar(invocation_text[text_point]), TRUE)
+				clockwork_say(potential_invoker, invocation_text[text_point], TRUE)
 				break
 
 			if(potential_invoker.stat)
 				continue
 
 			if(IS_CLOCK(potential_invoker))
-				clockwork_say(potential_invoker, text2ratvar(invocation_text[text_point]), TRUE)
+				clockwork_say(potential_invoker, invocation_text[text_point], TRUE)
 				invokers_left--
 	else
-		clockwork_say(invoker, text2ratvar(invocation_text[text_point]), TRUE)
+		clockwork_say(invoker, invocation_text[text_point], TRUE)
 
 	if(recital_sound)
 		SEND_SOUND(invoker, recital_sound)
@@ -336,7 +336,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		return
 
 	if(after_use_text)
-		clockwork_say(invoker, text2ratvar(after_use_text), TRUE)
+		clockwork_say(invoker, after_use_text, TRUE)
 
 	end_invocation(TRUE)
 

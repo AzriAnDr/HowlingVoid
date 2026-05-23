@@ -90,18 +90,18 @@
 	text = replacetext(text, REVERSE_RATVAR_HYPHEN_ET_MATCH, REVERSE_RATVAR_HYPHEN_ET_REPLACEMENT)
 	return replacetext(text, REVERSE_RATVAR_HYPHEN_OF_MATCH, REVERSE_RATVAR_HYPHEN_OF_REPLACEMENT)
 
-/// Causes the mob or movable in question to speak a message; it assumes that the message is already translated to ratvar speech using text2ratvar()
+/// Causes the mob or movable in question to speak a message in Ratvarian.
 /proc/clockwork_say(atom/movable/movable_atom, message, whisper=FALSE)
 	var/list/spans = list(SPAN_ROBOT)
 
 	if(isliving(movable_atom))
 		var/mob/living/living_mob = movable_atom
 		if(!whisper)
-			living_mob.say(message, "clock", spans, language=/datum/language/common, ignore_spam = TRUE)
+			living_mob.say(message, "clock", spans, language = /datum/language/ratvar, ignore_spam = TRUE)
 		else
-			living_mob.whisper(message, "clock", spans, language=/datum/language/common)
+			living_mob.whisper(message, "clock", spans, language = /datum/language/ratvar)
 	else
-		movable_atom.say(message, language=/datum/language/common)
+		movable_atom.say(message, language = /datum/language/ratvar)
 
 
 #undef RATVAR_OF_MATCH

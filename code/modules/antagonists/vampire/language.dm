@@ -4,6 +4,7 @@
 	key = "l"
 	space_chance = 40
 	default_priority = 90
+	secret = TRUE
 
 	flags = TONGUELESS_SPEECH | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	syllables = list(

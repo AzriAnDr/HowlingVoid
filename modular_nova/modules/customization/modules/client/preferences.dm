@@ -19,7 +19,7 @@
 			continue
 
 		// If it's a secret language, ensure it's allowed
-		if (language_prototype.secret && whitelist && isnull(whitelist[lang_path]))
+		if (language_prototype.secret && (isnull(whitelist) || isnull(whitelist[lang_path])))
 			to_remove += lang_path
 
 	// Only modify list once
