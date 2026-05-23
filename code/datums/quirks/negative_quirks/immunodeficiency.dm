@@ -30,3 +30,8 @@
 			LOCATION_HANDS,
 		)
 	)
+
+/datum/quirk/item_quirk/immunodeficiency/is_species_appropriate(datum/species/mob_species)
+	if(ispath(mob_species, /datum/species/synthetic))
+		return FALSE
+	return ..()

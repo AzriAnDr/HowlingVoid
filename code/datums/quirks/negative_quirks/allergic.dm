@@ -48,6 +48,11 @@
 /datum/quirk/item_quirk/allergic/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK)
 
+/datum/quirk/item_quirk/allergic/is_species_appropriate(datum/species/mob_species)
+	if(ispath(mob_species, /datum/species/synthetic))
+		return FALSE
+	return ..()
+
 /datum/quirk/item_quirk/allergic/post_add()
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_allergy, allergy_string = allergy_string)
 	to_chat(quirk_holder, span_boldnotice("You are allergic to [allergy_string], make sure not to consume any of these!"))
