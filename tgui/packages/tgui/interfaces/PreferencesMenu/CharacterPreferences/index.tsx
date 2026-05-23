@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
-import { Box, Button, Dropdown, Flex, Stack } from 'tgui-core/components'; // NOVA EDIT CHANGE - ORIGINAL: import { Button, Stack } from 'tgui-core/components';
+import { Box, Dropdown, Flex, Stack } from 'tgui-core/components'; // NOVA EDIT CHANGE - ORIGINAL: import { Button, Stack } from 'tgui-core/components';
 import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
 import { PageButton } from '../components/PageButton';
@@ -28,22 +28,6 @@ enum Page {
   Limbs,
   Languages,
   // NOVA EDIT ADDITION END
-}
-
-const PREVIEW_DIRECTION_CYCLE = ['south', 'west', 'north', 'east'];
-
-function rotatePreviewDirection(direction: string | null, step: -1 | 1) {
-  // Match BYOND turn(dir, -90) ordering so local rotation mirrors server behavior.
-  const currentDirection = (
-    direction || PREVIEW_DIRECTION_CYCLE[0]
-  ).toLowerCase();
-  const currentIndex = PREVIEW_DIRECTION_CYCLE.indexOf(currentDirection);
-  const safeIndex = currentIndex >= 0 ? currentIndex : 0;
-  const nextIndex =
-    (safeIndex + step + PREVIEW_DIRECTION_CYCLE.length) %
-    PREVIEW_DIRECTION_CYCLE.length;
-
-  return PREVIEW_DIRECTION_CYCLE[nextIndex];
 }
 
 type ProfileProps = {
@@ -86,25 +70,6 @@ export function CharacterPreferenceWindow(props) {
   const { t } = usePreferencesLocalization(data);
 
   const [currentPage, setCurrentPage] = useState(Page.Main);
-  const [previewDirection, setPreviewDirection] = useState(
-    data.character_preview_direction || PREVIEW_DIRECTION_CYCLE[0],
-  );
-
-  useEffect(() => {
-    setPreviewDirection(
-      data.character_preview_direction || PREVIEW_DIRECTION_CYCLE[0],
-    );
-  }, [data.character_preview_direction]);
-
-  const rotatePreview = (step: -1 | 1) => {
-    setPreviewDirection((currentDirection) => {
-      const nextDirection = rotatePreviewDirection(currentDirection, step);
-      act('prime_preview_direction', {
-        direction: nextDirection,
-      });
-      return nextDirection;
-    });
-  };
 
   let pageContents;
 
@@ -117,20 +82,13 @@ export function CharacterPreferenceWindow(props) {
       break;
     case Page.Main:
       pageContents = (
-        <MainPage
-          openSpecies={() => setCurrentPage(Page.Species)}
-          previewDirection={previewDirection}
-          rotatePreview={rotatePreview}
-        />
+        <MainPage openSpecies={() => setCurrentPage(Page.Species)} />
       );
 
       break;
     case Page.Species:
       pageContents = (
-        <SpeciesPage
-          closeSpecies={() => setCurrentPage(Page.Main)}
-          previewDirection={previewDirection}
-        />
+        <SpeciesPage closeSpecies={() => setCurrentPage(Page.Main)} />
       );
 
       break;
@@ -139,20 +97,11 @@ export function CharacterPreferenceWindow(props) {
       break;
 
     case Page.Loadout:
-      pageContents = (
-        <LoadoutPage
-          previewDirection={previewDirection}
-          rotatePreview={rotatePreview}
-        />
-      );
+      pageContents = <LoadoutPage />;
       break;
     // NOVA EDIT ADDITION START
     case Page.Limbs:
-      pageContents = (
-        <LimbsPage
-          previewDirection={previewDirection}
-        />
-      );
+      pageContents = <LimbsPage />;
       break;
     case Page.Languages:
       pageContents = <LanguagesPage />;
@@ -188,24 +137,6 @@ export function CharacterPreferenceWindow(props) {
           </Box>
         </Stack.Item>
       )}
-      <Stack.Item>
-        <Stack align="center">
-          <Stack.Item>
-            <Button.Checkbox
-              className={`PreferencesMenu__Toggle ${
-                data.preview_item_animations_enabled
-                  ? 'PreferencesMenu__Toggle--checked'
-                  : ''
-              }`}
-              checked={!!data.preview_item_animations_enabled}
-              tooltip={t('ui.character.preview_item_animations_tooltip')}
-              onClick={() => act('toggle_preview_item_animations')}
-            >
-              {t('ui.character.preview_item_animations_label')}
-            </Button.Checkbox>
-          </Stack.Item>
-        </Stack>
-      </Stack.Item>
       <Stack.Divider />
       <Stack.Item className="PreferencesMenu__Character__TopTabs">
         <Stack fill>

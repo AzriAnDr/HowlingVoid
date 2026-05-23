@@ -723,9 +723,7 @@ const CenterColumnExtras = (props: {
 };
 
 // The character preview section at the top of the center column
-const PreviewSection = (props: {
-  previewDirection: string;
-}) => {
+const PreviewSection = () => {
   const { data, act } = useBackend<PreferencesMenuData>();
   const { t, localizeCharacterDataById } = usePreferencesLocalization(data);
   const previewDropdownOptions = data.preview_options.map((option) => ({
@@ -744,14 +742,9 @@ const PreviewSection = (props: {
     <Stack vertical fill>
       <Stack.Item grow align="center">
         <CharacterPreview
-          animationMap={data.character_preview_animations}
-          direction={props.previewDirection}
-          imageMap={data.character_preview_urls}
-          imageUrl={data.character_preview_url}
           height="100%"
-          width="100%"
-          onClick={() => act('open_preview_window')}
-          title={t('ui.character.preview_open_expanded')}
+          width="280px"
+          id={data.character_preview_view}
         />
       </Stack.Item>
       <Stack.Divider />
@@ -784,10 +777,8 @@ export enum AugmentsTab {
 
 export const LimbsPage = ({
   onTabChange,
-  previewDirection,
 }: {
   onTabChange?: (tab: AugmentsTab) => void;
-  previewDirection: string;
 }) => {
   const { data, act } = useBackend<PreferencesMenuData>();
   const { t } = usePreferencesLocalization(data);
@@ -1026,9 +1017,7 @@ export const LimbsPage = ({
                   height="45%"
                   style={{ overflow: 'hidden', position: 'relative' }}
                 >
-                  <PreviewSection
-                    previewDirection={previewDirection}
-                  />
+                  <PreviewSection />
                 </Stack.Item>
 
                 {/* Extras: anything rendering below the preview, takes remaining space */}

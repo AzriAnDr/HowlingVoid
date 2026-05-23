@@ -159,6 +159,8 @@
     "ui.character.data.quirk_Numb_description": "You can't feel pain at all.",
     "ui.character.data.quirk_Nyctophobia_name": "Nyctophobia",
     "ui.character.data.quirk_Nyctophobia_description": "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctively act carefully and constantly feel a sense of dread.",
+    "ui.character.data.quirk_noguns_name": "No Guns",
+    "ui.character.data.quirk_noguns_description": "For whatever reason, you are unable to use guns. The reasoning may vary, but is up to you to decide.",
     "ui.character.data.quirk_Pacifist_name": "Pacifist",
     "ui.character.data.quirk_Pacifist_description": "The thought of violence makes you sick. So much so, in fact, that you can't hurt anyone.",
     "ui.character.data.quirk_Paraplegic_name": "Paraplegic",

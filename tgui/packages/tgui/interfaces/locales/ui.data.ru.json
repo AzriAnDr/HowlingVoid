@@ -157,6 +157,8 @@
 	"ui.character.data.quirk_Numb_description": "Вы вообще не чувствуете боли.",
 	"ui.character.data.quirk_Nyctophobia_name": "Никтофобия",
 	"ui.character.data.quirk_Nyctophobia_description": "Сколько себя помните, вы всегда боялись темноты. Оказавшись в темноте без источника света, вы инстинктивно начинаете вести себя осторожнее и постоянно ощущаете тревогу.",
+	"ui.character.data.quirk_noguns_name": "Без оружия",
+	"ui.character.data.quirk_noguns_description": "По той или иной причине вы не можете пользоваться огнестрельным оружием. Причину можно выбрать самостоятельно.",
 	"ui.character.data.quirk_Pacifist_name": "Пацифист",
 	"ui.character.data.quirk_Pacifist_description": "От одной мысли о насилии вам становится дурно. Настолько, что вы буквально не можете никому навредить.",
 	"ui.character.data.quirk_Paraplegic_name": "Параплегия",

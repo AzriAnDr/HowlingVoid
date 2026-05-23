@@ -40,19 +40,6 @@ type PreferenceImporterData = {
   import_character: BooleanLike;
   export_version: number;
   preview_map: string | null;
-  preview_animations: Record<
-    string,
-    {
-      delays: number[] | null;
-      frames: number;
-      height: number;
-      rewind: BooleanLike;
-      width: number;
-    } | null
-  > | null;
-  preview_direction: string | null;
-  preview_url: string | null;
-  preview_urls: Record<string, string | null> | null;
   preview_mode: string;
   preview_options: string[];
 };
@@ -74,10 +61,6 @@ export function PreferenceImporter() {
     import_character,
     export_version,
     preview_map,
-    preview_animations,
-    preview_url,
-    preview_urls,
-    preview_direction,
     preview_mode,
     preview_options,
   } = data;
@@ -101,17 +84,11 @@ export function PreferenceImporter() {
             >
               <Stack vertical align="center" justify="center">
                 <Stack.Item>
-                  {preview_url || preview_map ? (
+                  {preview_map ? (
                     <CharacterPreview
-                      animationMap={preview_animations}
                       height="320px"
                       width="320px"
                       id={preview_map}
-                      direction={preview_direction}
-                      imageMap={preview_urls}
-                      imageUrl={preview_url}
-                      onClick={() => act('open_preview_window')}
-                      title={t('ui.character.preview_open_expanded')}
                     />
                   ) : (
                     <Box
