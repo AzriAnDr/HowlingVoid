@@ -245,6 +245,21 @@
 	jumpsuit.adjust_to_alt()
 	TEST_ASSERT(test_mob.is_location_accessible(BODY_ZONE_CHEST), "Chest should be accessible after rolling jumpsuit down")
 
+	var/obj/item/clothing/underwear/shirt/shirt = allocate(/obj/item/clothing/underwear/shirt)
+	test_mob.equip_to_slot_or_del(shirt, ITEM_SLOT_SHIRT)
+	TEST_ASSERT(!test_mob.is_location_accessible(BODY_ZONE_CHEST), "Chest should be inaccessible when wearing an undershirt")
+	TEST_ASSERT(test_mob.is_location_accessible(BODY_ZONE_CHEST, IGNORED_OPERATION_CLOTHING_SLOTS), "Chest should be accessible for surgery when wearing an undershirt")
+
+	var/obj/item/clothing/underwear/briefs/briefs = allocate(/obj/item/clothing/underwear/briefs)
+	test_mob.equip_to_slot_or_del(briefs, ITEM_SLOT_UNDERWEAR)
+	TEST_ASSERT(!test_mob.is_location_accessible(BODY_ZONE_PRECISE_GROIN), "Groin should be inaccessible when wearing underwear")
+	TEST_ASSERT(test_mob.is_location_accessible(BODY_ZONE_PRECISE_GROIN, IGNORED_OPERATION_CLOTHING_SLOTS), "Groin should be accessible for surgery when wearing underwear")
+
+	var/obj/item/clothing/underwear/socks/socks = allocate(/obj/item/clothing/underwear/socks)
+	test_mob.equip_to_slot_or_del(socks, ITEM_SLOT_SOCKS)
+	TEST_ASSERT(!test_mob.is_location_accessible(BODY_ZONE_PRECISE_L_FOOT), "Feet should be inaccessible when wearing socks")
+	TEST_ASSERT(test_mob.is_location_accessible(BODY_ZONE_PRECISE_L_FOOT, IGNORED_OPERATION_CLOTHING_SLOTS), "Feet should be accessible for surgery when wearing socks")
+
 /// Tests surgeries which just modify basic surgical states
 /datum/unit_test/state_surgeries
 

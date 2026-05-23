@@ -146,7 +146,7 @@ DEFINE_BITFIELD(operation_flags, list(
 ))
 
 /// All of these equipment slots are ignored when checking for clothing coverage during surgery
-#define IGNORED_OPERATION_CLOTHING_SLOTS (ITEM_SLOT_NECK)
+#define IGNORED_OPERATION_CLOTHING_SLOTS (ITEM_SLOT_NECK|ITEM_SLOT_UNDERWEAR|ITEM_SLOT_SOCKS|ITEM_SLOT_SHIRT|ITEM_SLOT_BRA)
 
 // Surgery related mood defines
 #define SURGERY_STATE_STARTED "surgery_started"
