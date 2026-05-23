@@ -652,9 +652,8 @@ const QuirkBalance = (props: {
     >
       <Stack justify="center">
         <Box
-          backgroundColor="#eee"
           bold
-          color="black"
+          className="PreferencesMenu__Augments__PointsValue"
           fontSize="1.2em"
           py={0.5}
           style={{ width: '20%', alignItems: 'center' }}

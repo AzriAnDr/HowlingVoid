@@ -7,6 +7,7 @@ GLOBAL_LIST_INIT(tgui_window_themes, list(
 	"retro" = "Retro",
 	"paper" = "Paper",
 	"hackerman" = "Hackerman",
+	"howlingvoid" = "Howling Void",
 	"admin" = "Admin",
 	"clockwork" = "Clockwork",
 ))
@@ -129,7 +130,7 @@ GLOBAL_LIST_INIT(tgui_window_backdrops, list(
 	return assoc_to_keys(GLOB.tgui_window_themes)
 
 /datum/preference/choiced/tgui_window_theme/create_default_value()
-	return "nanotrasen"
+	return "howlingvoid"
 
 /datum/preference/choiced/tgui_window_theme/proc/get_display_names()
 	RETURN_TYPE(/list)
