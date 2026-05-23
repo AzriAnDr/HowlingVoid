@@ -183,7 +183,11 @@
 	last_consumption_snapshot = crew_consumption
 
 /datum/controller/subsystem/economy/proc/should_update_vending_prices()
-	return abs(get_effective_price_index() - last_vending_price_index) >= vending_price_update_threshold
+	// return abs(get_effective_price_index() - last_vending_price_index) >= vending_price_update_threshold
+	// Temporarily disabled: refreshing every vending machine in one economy tick
+	// causes large server stalls. Keep the pricing code intact for a later
+	// lazy/per-machine refresh implementation.
+	return FALSE
 
 /datum/controller/subsystem/economy/proc/get_reference_basket_price()
 	return max(1, round((initial(/obj/machinery/vending/snack::default_price) * 2) + initial(/obj/machinery/vending/cola::default_price) + initial(/obj/machinery/vending/coffee::default_price) + initial(/obj/machinery/vending/medical::default_price) + initial(/obj/machinery/vending/tool::default_price)))
