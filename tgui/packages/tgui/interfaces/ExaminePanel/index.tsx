@@ -39,7 +39,7 @@ function formatURLs(text: string) {
 
 export function ExaminePanel(props) {
   const { data } = useBackend<ExaminePanelData>();
-  const { t } = usePreferencesLocalization();
+  const { t } = usePreferencesLocalization(data);
   const {
     character_name,
     assigned_map,
@@ -242,4 +242,3 @@ export function ExaminePanel(props) {
     </Window>
   );
 }
-

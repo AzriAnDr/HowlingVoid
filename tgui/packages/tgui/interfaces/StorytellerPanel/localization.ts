@@ -920,6 +920,22 @@ const RUSSIAN_TOOLTIPS: Record<string, string> = {
   )]:
     'Время до следующей проверки отрицательного события. Интервал динамически зависит от онлайна, повреждений станции, числа жертв и силы предыдущего события.',
   [normalizeTooltip(
+    'Set the remaining fatigue pause for the positive channel. While this lock is active, support actions cannot fire again.',
+  )]:
+    'Задает оставшуюся паузу усталости для положительного канала. Пока она действует, поддержка не сможет сработать снова.',
+  [normalizeTooltip(
+    'Set the remaining time until the positive channel can roll again.',
+  )]:
+    'Задает оставшееся время до следующего броска положительного канала.',
+  [normalizeTooltip(
+    'Set the remaining fatigue pause for the negative channel. While this lock is active, hostile actions cannot fire again.',
+  )]:
+    'Задает оставшуюся паузу усталости для отрицательного канала. Пока она действует, давление не сможет сработать снова.',
+  [normalizeTooltip(
+    'Set the remaining time until the negative channel can roll again.',
+  )]:
+    'Задает оставшееся время до следующего броска отрицательного канала.',
+  [normalizeTooltip(
     'Cooldown before another hostile latejoin storyteller antagonist can be assigned.',
   )]:
     'Время до момента, когда сторителлер снова сможет выдать враждебного лейтджоин-антагониста.',

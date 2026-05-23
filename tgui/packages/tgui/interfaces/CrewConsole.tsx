@@ -134,7 +134,8 @@ const HealthStat = (props: HealthStatProps) => {
 };
 
 export const CrewConsole = () => {
-  const { t } = usePreferencesLocalization();
+  const { data } = useBackend<CrewConsoleData>();
+  const { t } = usePreferencesLocalization(data);
   return (
     <Window title={t('ui.crew_console.title')} width={600} height={600}>
       <Window.Content scrollable>
