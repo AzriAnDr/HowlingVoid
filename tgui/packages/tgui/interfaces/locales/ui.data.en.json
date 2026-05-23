@@ -71,6 +71,8 @@
     "ui.character.data.quirk_Alcoholic_description": "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde.",
     "ui.character.data.quirk_AllNighter_name": "All Nighter",
     "ui.character.data.quirk_AllNighter_description": "You didn't get any sleep last night, and people can tell. You'll constantly be in a bad mood and will have a tendency to sleep longer. Stimulants or a nap might help, though.",
+    "ui.character.data.quirk_alexithymia_name": "Alexithymia",
+    "ui.character.data.quirk_alexithymia_description": "You cannot accurately assess your feelings.",
     "ui.character.data.quirk_Anosmia_name": "Anosmia",
     "ui.character.data.quirk_Anosmia_description": "For some reason, you can't smell anything.",
     "ui.character.data.quirk_Asthma_name": "Asthma",
