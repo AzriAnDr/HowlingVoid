@@ -74,7 +74,7 @@
 	. = ..()
 	var/mob/living/current = owner.current
 	current.remove_faction(FACTION_CLOCK)
-	current.remove_language(/datum/language/ratvar, TRUE, TRUE, LANGUAGE_CULTIST)
+	current.remove_language(/datum/language/ratvar, source = LANGUAGE_CULTIST)
 	communicate.Remove(current)
 	recall.Remove(current)
 	UnregisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED)

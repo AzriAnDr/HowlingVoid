@@ -383,6 +383,21 @@ Lizard subspecies: SILVER SCALED
 	var/datum/sprite_accessory/tails/tail_sprite = tail_accessories?[tail_part.name]
 	return tail_sprite?.organ_type || default_tail_type
 
+/proc/hv_regenerate_species_limb(mob/living/carbon/human/human, limb_zone)
+	if(!human.regenerate_limb(limb_zone))
+		return FALSE
+
+	var/obj/item/bodypart/new_limb = human.get_bodypart(limb_zone)
+	new_limb?.update_limb(is_creating = TRUE)
+	return TRUE
+
+/proc/hv_apply_species_tail_appearance(mob/living/carbon/human/human, obj/item/organ/tail/tail)
+	if(!human?.dna || !tail?.bodypart_overlay)
+		return
+
+	tail.bodypart_overlay.set_appearance_from_dna(human.dna)
+	tail.bodypart_owner?.update_limb(is_creating = TRUE)
+
 
 // Venomous bite
 /datum/action/cooldown/mob_cooldown/venomous_bite/lizard
@@ -469,14 +484,14 @@ Lizard subspecies: SILVER SCALED
 	if(do_after(H, 3 SECONDS, H))
 		if(H.nutrition >= limb_regeneration_cost * length(limbs_to_heal) + NUTRITION_LEVEL_HUNGRY)
 			for(var/limb_zone in limbs_to_heal)
-				H.regenerate_limb(limb_zone)
+				hv_regenerate_species_limb(H, limb_zone)
 			H.nutrition -= limb_regeneration_cost * length(limbs_to_heal)
 			to_chat(H, span_notice("...and moments later, you have them back!"))
 			return
 		else if(H.nutrition >= limb_regeneration_cost)
 			while(H.nutrition >= NUTRITION_LEVEL_HUNGRY + limb_regeneration_cost)
 				var/healed_limb = pick(limbs_to_heal)
-				H.regenerate_limb(healed_limb)
+				hv_regenerate_species_limb(H, healed_limb)
 				limbs_to_heal -= healed_limb
 				H.nutrition -= limb_regeneration_cost
 			to_chat(H, span_warning("...but you don't have enough energy! Eat more to fully recover!"))
@@ -541,6 +556,7 @@ Lizard subspecies: SILVER SCALED
 		to_chat(H, span_warning("Your tail fails to regrow."))
 		return FALSE
 
+	hv_apply_species_tail_appearance(H, new_tail)
 	H.nutrition -= tail_regeneration_cost
 	to_chat(H, span_notice("Your tail regrows."))
 	StartCooldown()

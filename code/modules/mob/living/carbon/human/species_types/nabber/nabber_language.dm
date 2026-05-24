@@ -42,7 +42,7 @@
 	return "<b>Implant Specifications:</b><BR> \
 		<b>Name:</b> Sol Government Giant Armored Serpentid Speech Synthesizer Beta v0.3<BR> \
 		<b>Life:</b> Activates upon speech attempt.<BR>\
-		<b>Important Notes:</b> Does not work on other species.<BR> \
+		<b>Important Notes:</b> Designed for GAS, but compatible with xenomorph hybrids.<BR> \
 		<HR> \
 		<b>Implant Details:</b><BR> \
 		<b>Function:</b> Contains a small electonic speech syntesizer, similar to the borg ones and AI-processing unit, which detects GASs attempt to speak and, \
@@ -50,19 +50,35 @@
 		<b>Changelog:</b> No longer causes infinite scream loop once GAS is angered.<BR>\
 		<b>Known bugs:</b> EMP tends to damage the implant power source. Will isolate it later.<BR>"
 
+/obj/item/implant/gas_sol_speaker/proc/can_support_speech(mob/living/target)
+	return isnabber(target) || isxenohybrid(target)
+
+/obj/item/implant/gas_sol_speaker/proc/apply_speech_synth(mob/living/target)
+	if(!can_support_speech(target) || QDELING(target))
+		return
+
+	ADD_TRAIT(target, TRAIT_SPEAKS_CLEARLY, REF(src))
+	if(isnabber(target))
+		target.grant_language(/datum/language/common, language_flags = SPOKEN_LANGUAGE, source = LANGUAGE_ATOM)
+
+/obj/item/implant/gas_sol_speaker/proc/remove_speech_synth(mob/living/target)
+	if(!can_support_speech(target) || QDELING(target))
+		return
+
+	REMOVE_TRAIT(target, TRAIT_SPEAKS_CLEARLY, REF(src))
+	if(isnabber(target))
+		target.remove_language(/datum/language/common, language_flags = SPOKEN_LANGUAGE)
+		if(target.has_status_effect(/datum/status_effect/speech/stutter/nabber))
+			target.remove_status_effect(/datum/status_effect/speech/stutter/nabber)
+
 /obj/item/implant/gas_sol_speaker/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
-	if(isnabber(target) && !QDELING(target))
-		var/mob/living/carbon/human/species/nabber/our_gas = target
-		our_gas.grant_language(/datum/language/common, language_flags = SPOKEN_LANGUAGE, source = LANGUAGE_ATOM)
+	if(.)
+		apply_speech_synth(target)
 
 /obj/item/implant/gas_sol_speaker/removed(mob/target, silent = FALSE, special = FALSE)
+	remove_speech_synth(target)
 	. = ..()
-	if(isnabber(target) && !QDELING(target))
-		var/mob/living/carbon/human/species/nabber/our_gas = target
-		our_gas.remove_language(/datum/language/common, language_flags = SPOKEN_LANGUAGE)
-		if(our_gas.has_status_effect(/datum/status_effect/speech/stutter/nabber))
-			our_gas.remove_status_effect(/datum/status_effect/speech/stutter/nabber)
 
 /obj/item/implant/gas_sol_speaker/emp_act(severity)
 	. = ..()
@@ -75,11 +91,8 @@
 				to_chat(imp_in, span_hear("You hear something inside of you zap silently."))
 		if (1)
 			emp_damage += 1
-			if(imp_in && isnabber(imp_in))
-				var/mob/living/carbon/human/species/nabber/our_gas = imp_in
-				our_gas.remove_language(/datum/language/common, language_flags = SPOKEN_LANGUAGE)
-				if(our_gas.has_status_effect(/datum/status_effect/speech/stutter/nabber))
-					our_gas.remove_status_effect(/datum/status_effect/speech/stutter/nabber)
+			if(imp_in && can_support_speech(imp_in))
+				remove_speech_synth(imp_in)
 				to_chat(imp_in, span_hear("You hear something inside of you zap silently."))
 		if (2)
 			if (imp_in)

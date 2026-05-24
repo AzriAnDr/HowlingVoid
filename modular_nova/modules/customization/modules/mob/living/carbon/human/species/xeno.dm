@@ -175,6 +175,8 @@
 	var/tmp/list/species_pounce_action = list()
 	/// Species-granted free resin action tracked for cleanup.
 	var/tmp/list/species_resin_action = list()
+	/// Species-granted speech synthesizer implant tracked for cleanup.
+	var/tmp/list/species_speech_implant = list()
 
 /datum/species/xeno/on_species_gain(mob/living/carbon/human/H, datum/species/old_species, pref_load, regenerate_icons, replace_missing)
 	. = ..()
@@ -206,10 +208,28 @@
 	new_resin.Grant(H)
 	species_resin_action[H] = new_resin
 
+	for(var/obj/item/implant/gas_sol_speaker/existing_synth as anything in H.implants)
+		existing_synth.apply_speech_synth(H)
+
+	var/obj/item/implant/gas_sol_speaker/old_synth = species_speech_implant[H]
+	if(old_synth)
+		qdel(old_synth)
+	species_speech_implant[H] = null
+
+	var/obj/item/implant/gas_sol_speaker/new_synth = new()
+	if(new_synth.implant(H, silent = TRUE, force = TRUE))
+		species_speech_implant[H] = new_synth
+	else
+		qdel(new_synth)
+
 	// Speaks Xenocommon by default, while still understanding Sol Common.
 	H.get_language_holder()?.selected_language = /datum/language/xenocommon
 
 /datum/species/xeno/on_species_loss(mob/living/carbon/human/H, datum/species/new_species, pref_load)
+	if(istype(H))
+		for(var/obj/item/implant/gas_sol_speaker/speech_synth as anything in H.implants)
+			speech_synth.remove_speech_synth(H)
+
 	. = ..()
 	if(!istype(H))
 		return
@@ -230,6 +250,11 @@
 		resin.Remove(H)
 		qdel(resin)
 	species_resin_action[H] = null
+
+	var/obj/item/implant/gas_sol_speaker/synth = species_speech_implant[H]
+	if(synth)
+		qdel(synth)
+	species_speech_implant[H] = null
 
 /datum/species/xeno/proc/on_xenohybrid_item_attack(mob/living/carbon/human/source, mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	SIGNAL_HANDLER
