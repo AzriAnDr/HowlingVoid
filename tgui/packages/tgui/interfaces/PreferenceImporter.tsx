@@ -35,9 +35,11 @@ type PreferenceImporterData = {
   active_slot: number;
   has_keybindings: BooleanLike;
   has_game_prefs: BooleanLike;
+  has_emote_panel: BooleanLike;
   import_keybindings: BooleanLike;
   import_game_prefs: BooleanLike;
   import_character: BooleanLike;
+  import_emote_panel: BooleanLike;
   export_version: number;
   preview_map: string | null;
   preview_mode: string;
@@ -56,9 +58,11 @@ export function PreferenceImporter() {
     active_slot,
     has_keybindings,
     has_game_prefs,
+    has_emote_panel,
     import_keybindings,
     import_game_prefs,
     import_character,
+    import_emote_panel,
     export_version,
     preview_map,
     preview_mode,
@@ -143,6 +147,11 @@ export function PreferenceImporter() {
                           <Button
                             fluid
                             selected={character.index === selected_character}
+                            color={
+                              character.index === selected_character
+                                ? undefined
+                                : 'transparent'
+                            }
                             icon={
                               character.index === selected_character
                                 ? 'check-circle'
@@ -188,10 +197,8 @@ export function PreferenceImporter() {
                             }
                             color={
                               slot.index === target_slot
-                                ? 'good'
-                                : slot.occupied
-                                  ? undefined
-                                  : 'transparent'
+                                ? undefined
+                                : 'transparent'
                             }
                             onClick={() =>
                               act('select_slot', { slot: slot.index })
@@ -256,6 +263,31 @@ export function PreferenceImporter() {
                         'ui.character.preference_importer.character_data_description',
                       )}
                     </LabeledList.Item>
+                    {has_emote_panel ? (
+                      <LabeledList.Item
+                        label={t(
+                          'ui.character.preference_importer.emote_panel',
+                        )}
+                        buttons={
+                          <Button
+                            icon={
+                              import_emote_panel ? 'toggle-on' : 'toggle-off'
+                            }
+                            selected={!!import_emote_panel}
+                            color={import_emote_panel ? 'good' : 'bad'}
+                            onClick={() => act('toggle_emote_panel')}
+                          >
+                            {import_emote_panel
+                              ? t('ui.character.preference_importer.import')
+                              : t('ui.character.preference_importer.skip')}
+                          </Button>
+                        }
+                      >
+                        {t(
+                          'ui.character.preference_importer.emote_panel_description',
+                        )}
+                      </LabeledList.Item>
+                    ) : null}
                     {has_keybindings ? (
                       <LabeledList.Item
                         label={t(
