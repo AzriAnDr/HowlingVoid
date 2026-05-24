@@ -730,30 +730,32 @@
 	if(active_ais.len && prob(100/GLOB.joined_player_list.len))
 		var/datum/objective/destroy/destroy_objective = new
 		destroy_objective.owner = owner
+		destroy_objective.enable_antag_opt_in_check()
 		destroy_objective.find_target()
 		objectives += destroy_objective
 	else
 		if(prob(70))
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = owner
+			kill_objective.enable_antag_opt_in_check()
 			kill_objective.find_target()
 			objectives += kill_objective
 		else
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = owner
+			maroon_objective.enable_antag_opt_in_check()
+			maroon_objective.find_target()
 
 			if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
 				var/datum/objective/escape/escape_with_identity/identity_theft = new
 				identity_theft.owner = owner
-				identity_theft.find_target()
+				identity_theft.target = maroon_objective.target
 				identity_theft.update_explanation_text()
 				escape_objective_possible = FALSE
-				maroon_objective.target = identity_theft.target || maroon_objective.find_target()
 				maroon_objective.update_explanation_text()
 				objectives += maroon_objective
 				objectives += identity_theft
 			else
-				maroon_objective.find_target()
 				objectives += maroon_objective
 
 

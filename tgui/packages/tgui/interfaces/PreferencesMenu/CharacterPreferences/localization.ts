@@ -1,18 +1,17 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useBackend } from 'tgui/backend';
 import {
   getInterfaceLanguageUpdatedEvent,
-  getRememberedUIElementLanguage,
-  getRememberedInterfaceLanguage,
   getLanguageUpdatedEvent,
+  getRememberedInterfaceLanguage,
+  getRememberedUIElementLanguage,
   rememberInterfaceLanguage,
   rememberUIElementLanguage,
   type UIElementType,
 } from 'common/panelLocalization';
-
-import type { PreferencesMenuData } from '../types';
-import { features } from '../preferences/features';
+import { useCallback, useEffect, useState } from 'react';
+import { useBackend } from 'tgui/backend';
 import { uiEn, uiRu } from '../../locales';
+import { features } from '../preferences/features';
+import type { PreferencesMenuData } from '../types';
 
 export type InterfaceLanguage = 'english' | 'russian';
 
@@ -33,6 +32,7 @@ const GENDER_TEXT_KEY_BY_ID: Record<string, string> = {
 // Feature IDs can differ from the normalized label ID.
 // Keep explicit aliases for Character tab mismatches so ID lookup stays primary.
 const CHARACTER_FEATURE_ID_ALIASES: Record<string, string> = {
+  antag_opt_in_status_pref: 'round_removal',
   tts_voice: 'voice',
   tts_voice_pitch: 'voice_pitch_adjustment',
   fallback_to_blooper: 'vocal_bark_fallback',
@@ -636,7 +636,9 @@ export function localizeCharacterFeatureNameById(
   fallback?: string,
 ): string {
   const key = resolveCharacterFeatureKey(featureId, 'name');
-  return key ? translateUi(language, key, fallback ?? featureId) : (fallback ?? featureId);
+  return key
+    ? translateUi(language, key, fallback ?? featureId)
+    : (fallback ?? featureId);
 }
 
 export function localizeCharacterFeatureDescriptionById(
@@ -832,7 +834,8 @@ export function usePreferencesLocalization(
   return {
     language,
     t,
-    localizeCharacterFeatureNameById: localizeCharacterFeatureNameByIdForLanguage,
+    localizeCharacterFeatureNameById:
+      localizeCharacterFeatureNameByIdForLanguage,
     localizeCharacterFeatureDescriptionById:
       localizeCharacterFeatureDescriptionByIdForLanguage,
     localizeCharacterDataLabelById: localizeCharacterDataLabelByIdForLanguage,

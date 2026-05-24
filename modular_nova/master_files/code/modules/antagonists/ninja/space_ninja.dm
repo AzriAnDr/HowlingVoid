@@ -43,13 +43,10 @@
 	for(var/datum/objective/assassinate/headhunter/obj in owner.objectives)
 		existing_targets |= obj.target
 
-	var/opt_in_disabled = CONFIG_GET(flag/disable_antag_opt_in_preferences)
 	for(var/mob/living/possible_target in get_active_player_list(TRUE, TRUE, TRUE))
 		if(possible_target.mind in existing_targets)
 			continue
 		if(!is_valid_target(possible_target.mind))
-			continue
-		if(!opt_in_disabled && !opt_in_valid(possible_target.mind))
 			continue
 		possible_targets += possible_target.mind
 
@@ -140,4 +137,3 @@
 /// removes ninja glove security records console interaction
 /obj/machinery/computer/records/security/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	balloon_alert(ninja, "nothing happens!")
-

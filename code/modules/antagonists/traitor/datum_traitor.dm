@@ -178,17 +178,20 @@
 		if(active_ais.len && prob(DESTROY_AI_PROB(GLOB.joined_player_list.len)))
 			var/datum/objective/destroy/destroy_objective = new()
 			destroy_objective.owner = owner
+			destroy_objective.enable_antag_opt_in_check()
 			destroy_objective.find_target()
 			return destroy_objective
 
 		if(prob(MAROON_PROB))
 			var/datum/objective/maroon/maroon_objective = new()
 			maroon_objective.owner = owner
+			maroon_objective.enable_antag_opt_in_check()
 			maroon_objective.find_target()
 			return maroon_objective
 
 		var/datum/objective/assassinate/kill_objective = new()
 		kill_objective.owner = owner
+		kill_objective.enable_antag_opt_in_check()
 		kill_objective.find_target()
 		return kill_objective
 
@@ -200,6 +203,7 @@
 /datum/antagonist/traitor/proc/forge_job_objective()
 	var/datum/objective/job_objective = owner.assigned_role.generate_traitor_objective() // can return null
 	job_objective?.owner = owner
+	job_objective?.enable_antag_opt_in_check()
 	return job_objective
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)

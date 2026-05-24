@@ -100,6 +100,8 @@
 			var/datum/objective/protect/yandere_one = new
 			yandere_one.owner = owner
 			objectives += yandere_one
+			yandere_one.default_opt_in_level = OPT_IN_YES_ROUND_REMOVE
+			yandere_one.enable_antag_opt_in_check()
 			yandere_one.find_target()
 			var/datum/objective/maroon/yandere_two = new
 			yandere_two.owner = owner

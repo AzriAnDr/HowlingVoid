@@ -165,12 +165,13 @@ GLOBAL_LIST_EMPTY(objectives) //NOVA EDIT ADDITION
 	if(!dupe_search_range)
 		dupe_search_range = get_owners()
 	var/list/possible_targets = list()
+	var/list/opted_in_targets = list()
 	var/try_target_late_joiners = FALSE
 	for(var/I in owners)
 		var/datum/mind/O = I
 		if(O.late_joiner)
 			try_target_late_joiners = TRUE
-	var/opt_in_disabled = CONFIG_GET(flag/disable_antag_opt_in_preferences) // NOVA EDIT ADDITION - ANTAG OPT-IN
+	var/use_antag_opt_in = should_check_antag_opt_in() // NOVA EDIT ADDITION - ANTAG OPT-IN
 	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if(possible_target in owners)
 			continue
@@ -180,11 +181,13 @@ GLOBAL_LIST_EMPTY(objectives) //NOVA EDIT ADDITION
 			continue
 		if(!is_valid_target(possible_target))
 			continue
-		// NOVA EDIT ADDITION START - Antag Opt In
-		if (!opt_in_disabled && !opt_in_valid(possible_target))
-			continue
-		// NOVA EDIT ADDITION END
 		possible_targets += possible_target
+		// NOVA EDIT ADDITION START - Antag Opt In
+		if(use_antag_opt_in && opt_in_valid(possible_target))
+			opted_in_targets += possible_target
+		// NOVA EDIT ADDITION END
+	if(use_antag_opt_in && length(opted_in_targets))
+		possible_targets = opted_in_targets
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
 		for(var/I in all_possible_targets)
@@ -895,16 +898,17 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/destroy/find_target(dupe_search_range, list/blacklist)
 	var/list/possible_targets = active_ais(TRUE)
 	possible_targets -= blacklist
-	//var/mob/living/silicon/ai/target_ai = pick(possible_targets) // NOVA EDIT REMOVAL - Uses the below loop
-	// NOVA EDIT ADDITION BEGIN - ANTAG OPTIN
-	var/mob/living/silicon/ai/target_ai
-	var/opt_in_disabled = CONFIG_GET(flag/disable_antag_opt_in_preferences) // NOVA EDIT ADDITION - ANTAG OPT-IN
-	for (var/mob/living/silicon/ai/possible_target as anything in shuffle(possible_targets))
-		if (!opt_in_disabled && !opt_in_valid(possible_target))
-			continue
-		target_ai = possible_target
+	// NOVA EDIT ADDITION BEGIN - ANTAG OPT-IN
+	if(should_check_antag_opt_in())
+		var/list/opted_in_targets = list()
+		for(var/mob/living/silicon/ai/possible_target as anything in possible_targets)
+			if(opt_in_valid(possible_target.mind))
+				opted_in_targets += possible_target
+		if(length(opted_in_targets))
+			possible_targets = opted_in_targets
 	// NOVA EDIT ADDITION END
-	target = target_ai.mind
+	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
+	target = target_ai?.mind
 	update_explanation_text()
 	return target
 
