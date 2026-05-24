@@ -786,6 +786,8 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/proc/find_clone()
 	var/list/possible_targets = list()
+	var/list/round_removal_targets = list()
+	var/use_round_removal_preference = !CONFIG_GET(flag/disable_antag_opt_in_preferences)
 
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
 		if(!player.client || !player.mind || player.stat != CONSCIOUS)
@@ -793,7 +795,11 @@
 		if(!(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 			continue
 		possible_targets += player
+		if(use_round_removal_preference && player.mind.get_target_opt_in_level() >= OPT_IN_YES_ROUND_REMOVE)
+			round_removal_targets += player
 
+	if(length(round_removal_targets))
+		return pick(round_removal_targets)
 	if(length(possible_targets))
 		return pick(possible_targets)
 	return null

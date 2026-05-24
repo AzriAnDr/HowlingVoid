@@ -6,7 +6,7 @@ Module ID: ANTAG_OPTIN
 
 ### Description:
 
-Adds functionality to allow players to 'opt-in' to being an antagonist's mechanical target, with three different levels of involvement - being temporarily inconvenienced, killed, and round removed. Command roles & security are automatically opted-in to at least 'KILL' level. Additionally, contractor & heretic have their objectives adjusted to only have command staff & security as their targets
+Adds functionality to let players set whether antagonist objective generation should prefer them for kill or round-removal targets. Round-removal objectives use this setting across antagonist types except heretic, which keeps its own target selection rules. Security jobs set to `No` are treated as `Yes - Kill Without Round Removal` for the current round. Command jobs and enabled antagonist preferences do not force this setting.
 
 ### TG Proc/File Changes:
 

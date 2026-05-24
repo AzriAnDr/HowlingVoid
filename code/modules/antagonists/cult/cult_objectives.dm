@@ -19,30 +19,33 @@
 		return
 	var/datum/team/cult/cult = team
 	var/list/target_candidates = list()
-	var/opt_in_disabled = CONFIG_GET(flag/disable_antag_opt_in_preferences) // NOVA EDIT ADDITION - ANTAG OPT-IN
+	var/list/opted_in_candidates = list()
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
-		// NOVA EDIT ADDITION START - Players in the interlink can't be obsession targets + Antag Optin
+		// NOVA EDIT ADDITION START - Players in the interlink can't be cult sacrifice targets
 		if(SSticker.IsRoundInProgress() && istype(get_area(player), /area/centcom/interlink))
-			continue
-		if (!opt_in_disabled && !opt_in_valid(player))
 			continue
 		// NOVA EDIT ADDITION END
 		if(player.mind && !IS_CULTIST(player) && !is_convertable_to_cult(player) && player.stat != DEAD && is_station_level(player.loc.z))
 			target_candidates += player.mind
+			if(should_check_antag_opt_in() && opt_in_valid(player.mind))
+				opted_in_candidates += player.mind
 	if(target_candidates.len == 0)
 		message_admins("Cult Sacrifice: Could not find unconvertible target, checking for convertible target.")
 		for(var/mob/living/carbon/human/player in GLOB.player_list)
-			// NOVA EDIT ADDITION START - Players in the interlink can't be obsession targets + Antag Optin
+			// NOVA EDIT ADDITION START - Players in the interlink can't be cult sacrifice targets
 			if(SSticker.IsRoundInProgress() && istype(get_area(player), /area/centcom/interlink))
-				continue
-			if (!opt_in_disabled && !opt_in_valid(player))
 				continue
 			// NOVA EDIT ADDITION END
 			if(player.mind && !IS_CULTIST(player) && player.stat != DEAD && is_station_level(player.loc.z))
 				target_candidates += player.mind
+				if(should_check_antag_opt_in() && opt_in_valid(player.mind))
+					opted_in_candidates += player.mind
 	list_clear_nulls(target_candidates)
 	if(LAZYLEN(target_candidates))
-		target = pick(target_candidates)
+		if(should_check_antag_opt_in() && LAZYLEN(opted_in_candidates))
+			target = pick(opted_in_candidates)
+		else
+			target = pick(target_candidates)
 		update_explanation_text()
 		// Register a bunch of signals to both the target mind and its body
 		// to stop cult from softlocking everytime the target is deleted before being actually sacrificed.

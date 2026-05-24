@@ -51,6 +51,7 @@
 
 /datum/job/head_of_personnel/generate_traitor_objective()
 	var/datum/objective/assassinate/captain_replacement/promotion = new()
+	promotion.enable_antag_opt_in_check()
 	promotion.target = promotion.find_target()
 	if(isnull(promotion.target))
 		qdel(promotion)
@@ -84,9 +85,17 @@
 	return FALSE
 
 /datum/objective/assassinate/captain_replacement/find_target(dupe_search_range, list/blacklist)
+	var/list/datum/mind/captain_targets = list()
+	var/list/datum/mind/opted_in_targets = list()
 	for(var/datum/mind/fellow_head as anything in SSjob.get_all_heads() - blacklist)
 		if(is_captain_job(fellow_head.assigned_role))
-			return fellow_head
+			captain_targets += fellow_head
+			if(should_check_antag_opt_in() && opt_in_valid(fellow_head))
+				opted_in_targets += fellow_head
+	if(should_check_antag_opt_in() && length(opted_in_targets))
+		return pick(opted_in_targets)
+	if(length(captain_targets))
+		return pick(captain_targets)
 	return null
 
 /datum/outfit/job/hop

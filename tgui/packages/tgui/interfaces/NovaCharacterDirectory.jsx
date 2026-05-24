@@ -17,8 +17,8 @@ import {
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { usePreferencesLocalization } from './localization';
 import { CharacterPreview } from './common/CharacterPreview';
+import { usePreferencesLocalization } from './localization';
 
 const formatURLs = (text) => {
   if (!text) return;
@@ -132,7 +132,9 @@ export const NovaCharacterDirectory = (props) => {
           <>
             <Section title={t('ui.character_directory.your_preferences')}>
               <LabeledList>
-                <LabeledList.Item label={t('ui.character_directory.attraction')}>
+                <LabeledList.Item
+                  label={t('ui.character_directory.attraction')}
+                >
                   <Button fluid>{personalAttraction}</Button>
                 </LabeledList.Item>
                 <LabeledList.Item label={t('ui.character_directory.gender')}>
@@ -281,22 +283,34 @@ const ViewCharacter = (props) => {
                   {oocNotesIndex === 'NSFW' && (
                     <>
                       <LabeledList>
-                        <LabeledList.Item label={t('ui.character_directory.attraction')}>
+                        <LabeledList.Item
+                          label={t('ui.character_directory.attraction')}
+                        >
                           {overlay.attraction}
                         </LabeledList.Item>
-                        <LabeledList.Item label={t('ui.character_directory.gender')}>
+                        <LabeledList.Item
+                          label={t('ui.character_directory.gender')}
+                        >
                           {overlay.gender}
                         </LabeledList.Item>
-                        <LabeledList.Item label={t('ui.character_directory.erp')}>
+                        <LabeledList.Item
+                          label={t('ui.character_directory.erp')}
+                        >
                           {overlay.erp}
                         </LabeledList.Item>
-                        <LabeledList.Item label={t('ui.character_directory.vore')}>
+                        <LabeledList.Item
+                          label={t('ui.character_directory.vore')}
+                        >
                           {overlay.vore}
                         </LabeledList.Item>
-                        <LabeledList.Item label={t('ui.character_directory.hypnosis')}>
+                        <LabeledList.Item
+                          label={t('ui.character_directory.hypnosis')}
+                        >
                           {overlay.hypno}
                         </LabeledList.Item>
-                        <LabeledList.Item label={t('ui.character_directory.noncon')}>
+                        <LabeledList.Item
+                          label={t('ui.character_directory.noncon')}
+                        >
                           {overlay.noncon}
                         </LabeledList.Item>
                       </LabeledList>
@@ -304,9 +318,7 @@ const ViewCharacter = (props) => {
                       {formatURLs(overlay.ooc_notes_nsfw)}
                     </>
                   )}
-                  {oocNotesIndex === 'SFW' && (
-                    formatURLs(overlay.ooc_notes)
-                  )}
+                  {oocNotesIndex === 'SFW' && formatURLs(overlay.ooc_notes)}
                 </Section>
               </Stack.Item>
               <Stack.Item grow>

@@ -1,4 +1,6 @@
 ///The plumbing RCD. All the blueprints are located in _globalvars > lists > construction.dm
+#define PLUMBING_SHEET_MATTER_AMOUNT 10
+
 /obj/item/construction/plumbing
 	name = "Plumbing Constructor"
 	desc = "An expertly modified RCD outfitted to construct plumbing machinery."
@@ -107,6 +109,25 @@
 	. = ..()
 	. += "You can scroll your mouse wheel to change the piping layer."
 	. += "You can right click a fluid duct to set the Plumbing RPD to its color and layer."
+
+/obj/item/construction/plumbing/loadwithsheets(obj/item/stack/the_stack, mob/user)
+	var/matter_per_unit = the_stack.matter_amount
+	if(istype(the_stack, /obj/item/stack/sheet/iron) || istype(the_stack, /obj/item/stack/sheet/glass))
+		matter_per_unit = PLUMBING_SHEET_MATTER_AMOUNT
+	if(matter_per_unit <= 0)
+		balloon_alert(user, "invalid sheets!")
+		return FALSE
+
+	var/free_matter = max(max_matter - matter, 0)
+	var/sheets_to_use = min(the_stack.amount, max(CEILING(free_matter / matter_per_unit, 1), 1))
+	if(sheets_to_use <= 0)
+		return FALSE
+	if(!free_matter)
+		balloon_alert(user, "storage full!")
+	the_stack.use(sheets_to_use)
+	matter = min(matter + matter_per_unit * sheets_to_use, max_matter)
+	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+	return TRUE
 
 /obj/item/construction/plumbing/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -245,15 +266,13 @@
 				continue
 
 			var/obj/machinery/machine_target = interacting_with
-			if(machine_target.anchored)
+			if(machine_target.anchored && !istype(machine_target, /obj/machinery/duct))
 				balloon_alert(user, "unanchor first!")
 				return ITEM_INTERACT_BLOCKING
 			if(do_after(user, 2 SECONDS, target = interacting_with))
 				var/design_cost = designs[machine_target.type]
-				var/to_return = min(design_cost, max_matter - matter) // Give back matter was used to create smth
-				if(to_return < design_cost)
-					balloon_alert(user, "storage full!")
-				matter += to_return
+				matter = min(matter + design_cost, max_matter)
+				update_appearance()
 				machine_target.deconstruct()
 				playsound(src, 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 			return ITEM_INTERACT_SUCCESS
@@ -350,3 +369,5 @@
 	plumbing_design_types = service_design_types
 
 	. = ..()
+
+#undef PLUMBING_SHEET_MATTER_AMOUNT
