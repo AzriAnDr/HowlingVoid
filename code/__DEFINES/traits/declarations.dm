@@ -550,6 +550,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CANNOT_BE_UNBUCKLED "cannot_be_unbuckled"
 /// from heparin and nitrous oxide, makes open bleeding wounds rapidly spill more blood
 #define TRAIT_BLOOD_FOUNTAIN "bloody_fountain"
+/// Trait for quirk: Burning Blood
+#define TRAIT_BURNING_BLOOD "burning_blood"
 /// from coagulant reagents, this doesn't affect the bleeding itself but does affect the bleed warning messages
 #define TRAIT_COAGULATING "coagulating"
 /// From anti-convulsant medication against seizures.
@@ -1318,6 +1320,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Immune to being irradiated
 #define TRAIT_RADIMMUNE "rad_immunity"
+/// Trait for quirk: Regeneration
+#define TRAIT_REGENERATION "regeneration"
 
 /// Harmful radiation effects, the toxin damage and the burns, will not occur while this trait is active
 #define TRAIT_HALT_RADIATION_EFFECTS "halt_radiation_effects"
@@ -1488,6 +1492,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_STUBBY_BODY "stubby_body" // you have a stubby body that lessens your agility
 #define TRAIT_BEAST_EMPATHY "beast_empathy" // you're good with animals, such as with taming them
 #define TRAIT_STURDY_FRAME "sturdy_frame" // you suffer much lesser effects from equipment that slows you down
+/// Trait for quirk: Tough
+#define TRAIT_TOUGH "tough"
 
 /// Has this mob been tamed?
 #define TRAIT_TAMED "tamed"

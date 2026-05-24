@@ -10752,6 +10752,12 @@
     "name": "Wallet",
     "item_path": "/obj/item/storage/wallet"
   },
+  "/datum/loadout_item/pocket_items/tailbag": {
+    "id": "/datum/loadout_item/pocket_items/tailbag",
+    "template_type": "/datum/loadout_item/pocket_items",
+    "name": "Tailbag",
+    "item_path": "/obj/item/storage/wallet/tailbag"
+  },
   "/datum/loadout_item/pocket_items/borg_me_dogtag": {
     "id": "/datum/loadout_item/pocket_items/borg_me_dogtag",
     "template_type": "/datum/loadout_item/pocket_items",

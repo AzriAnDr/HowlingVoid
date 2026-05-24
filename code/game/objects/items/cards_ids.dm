@@ -1716,7 +1716,7 @@
 
 /obj/item/card/id/advanced/chameleon
 	name = "agent card"
-	desc = "An advanced chameleon ID card. Swipe this card on another ID card, or a person wearing one, to copy access. \
+	desc = "An advanced chameleon ID card. Swipe this card on another ID card, a person wearing one, or a storage item containing one, to copy access. \
 		Has special magnetic properties which force it to the front of wallets."
 	trim = /datum/id_trim/chameleon
 	trim_changeable = FALSE
@@ -1729,10 +1729,23 @@
 	var/anyone = FALSE
 	/// Weak ref to the ID card we're currently attempting to steal access from.
 	var/datum/weakref/theft_target
+	/// Access copy uses remaining. Negative values mean unlimited uses.
+	var/access_copy_uses = 3
+	/// How long access copying takes.
+	var/access_copy_delay = 5 SECONDS
 
 /obj/item/card/id/advanced/chameleon/Destroy()
 	theft_target = null
 	return ..()
+
+/obj/item/card/id/advanced/chameleon/examine(mob/user)
+	. = ..()
+	if(access_copy_uses < 0)
+		. += span_notice("Its micro-scanners can copy access an unlimited number of times.")
+	else if(access_copy_uses > 0)
+		. += span_notice("It has [access_copy_uses] access copy use[access_copy_uses == 1 ? "" : "s"] remaining.")
+	else
+		. += span_warning("Its micro-scanners are burned out and can no longer copy access.")
 
 /obj/item/card/id/advanced/chameleon/equipped(mob/user, slot)
 	. = ..()
@@ -1748,10 +1761,44 @@
 
 	return COMPONENT_CANT_TRACK
 
+/obj/item/card/id/advanced/chameleon/proc/copy_access_from_id_cards(list/target_id_cards, atom/interacting_with, mob/living/user, hidden = FALSE)
+	if(access_copy_uses == 0)
+		interacting_with.balloon_alert(user, "out of uses!")
+		playsound(src, 'sound/effects/light_flicker.ogg', 40, TRUE)
+		return FALSE
+
+	if(!length(target_id_cards))
+		interacting_with.balloon_alert(user, "no IDs!")
+		return FALSE
+
+	interacting_with.balloon_alert(user, "copying access...")
+	playsound(src, 'sound/effects/light_flicker.ogg', 40, TRUE)
+
+	if(!do_after(user, access_copy_delay, interacting_with, hidden = hidden))
+		interacting_with.balloon_alert(user, "interrupted!")
+		return FALSE
+
+	var/access_copied = FALSE
+	for(var/obj/item/card/id/target_card as anything in target_id_cards)
+		if(!istype(target_card) || QDELETED(target_card) || target_card == src || !length(target_card.access))
+			continue
+		add_access(target_card.access, mode = FORCE_ADD_ALL)
+		access_copied = TRUE
+		LOG_ID_ACCESS_CHANGE(user, src, "copied all access from [target_card]")
+
+	if(!access_copied)
+		interacting_with.balloon_alert(user, "no access to copy!")
+		return FALSE
+
+	if(access_copy_uses > 0)
+		access_copy_uses--
+	interacting_with.balloon_alert(user, "access copied!")
+	to_chat(user, span_notice("The card's micro-scanners activate, copying access from [interacting_with]."))
+	return TRUE
+
 /obj/item/card/id/advanced/chameleon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(isidcard(interacting_with))
-		theft_target = WEAKREF(interacting_with)
-		ui_interact(user)
+		copy_access_from_id_cards(list(interacting_with), interacting_with, user)
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
@@ -1760,29 +1807,13 @@
 	// to sneakily steal their accesses by swiping our agent ID card near them. As a result, we
 	// return ITEM_INTERACT_BLOCKING to cancel any part of the following the attack chain.
 	if(ishuman(interacting_with))
-		interacting_with.balloon_alert(user, "scanning ID card...")
-
-		if(!do_after(user, 2 SECONDS, interacting_with, hidden = TRUE))
-			interacting_with.balloon_alert(user, "interrupted!")
-			return ITEM_INTERACT_BLOCKING
-
 		var/mob/living/carbon/human/human_target = interacting_with
 		var/list/target_id_cards = human_target.get_all_contents_type(/obj/item/card/id)
-
-		if(!length(target_id_cards))
-			interacting_with.balloon_alert(user, "no IDs!")
-			return ITEM_INTERACT_BLOCKING
-
-		var/selected_id = pick(target_id_cards)
-		interacting_with.balloon_alert(user, UNLINT("IDs synced"))
-		theft_target = WEAKREF(selected_id)
-		ui_interact(user)
-		return ITEM_INTERACT_SUCCESS
+		copy_access_from_id_cards(target_id_cards, interacting_with, user, hidden = TRUE)
+		return ITEM_INTERACT_BLOCKING
 
 	if(isitem(interacting_with))
 		var/obj/item/target_item = interacting_with
-
-		interacting_with.balloon_alert(user, "scanning ID card...")
 
 		var/list/target_id_cards = target_item.get_all_contents_type(/obj/item/card/id)
 		var/target_item_id = target_item.GetID()
@@ -1790,14 +1821,7 @@
 		if(target_item_id)
 			target_id_cards |= target_item_id
 
-		if(!length(target_id_cards))
-			interacting_with.balloon_alert(user, "no IDs!")
-			return ITEM_INTERACT_BLOCKING
-
-		var/selected_id = pick(target_id_cards)
-		interacting_with.balloon_alert(user, UNLINT("IDs synced"))
-		theft_target = WEAKREF(selected_id)
-		ui_interact(user)
+		copy_access_from_id_cards(target_id_cards, interacting_with, user)
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE
@@ -2015,7 +2039,7 @@
 
 /// Upgraded variant of agent id, can hold unlimited amount of accesses.
 /obj/item/card/id/advanced/chameleon/elite
-	desc = "A highly advanced chameleon ID card. Swipe this card on another ID card, or a person wearing one, to copy access. \
+	desc = "A highly advanced chameleon ID card. Swipe this card on another ID card, a person wearing one, or a storage item containing one, to copy access. \
 		Has special magnetic properties which force it to the front of wallets, and an embedded high-end microchip to hold unlimited access codes."
 	wildcard_slots = WILDCARD_LIMIT_GOLD
 

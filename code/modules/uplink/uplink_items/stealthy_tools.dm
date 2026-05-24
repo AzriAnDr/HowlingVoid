@@ -9,9 +9,9 @@
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification Card"
-	desc = "Agent cards prevent artificial intelligences from tracking the wearer, and hold up to 5 wildcards \
-			from other identification cards. In addition, they can be forged to display a new assignment, name and trim. \
-			This can be done an unlimited amount of times. Some Syndicate areas and devices can only be accessed \
+	desc = "Agent cards prevent artificial intelligences from tracking the wearer, and can copy access from identification cards, people, and storage items three times. \
+			Each copy takes five seconds and uses the card's micro-scanners. In addition, they can be forged to display a new assignment, name and trim. \
+			Forging can be done an unlimited amount of times. Some Syndicate areas and devices can only be accessed \
 			with these cards."
 	item = /obj/item/card/id/advanced/chameleon/elite
 	cost = 2

@@ -335,7 +335,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "balls_size"
 	relevant_mutant_bodypart = ORGAN_SLOT_TESTICLES
-	minimum = 0
+	minimum = TESTICLES_MIN_SIZE
 	maximum = TESTICLES_MAX_SIZE
 
 /datum/preference/numeric/balls_size/is_accessible(datum/preferences/preferences)
@@ -396,7 +396,7 @@
 	target.dna.features["butt_size"] = value
 
 /datum/preference/numeric/butt_size/create_default_value()
-	return BUTT_MIN_SIZE
+	return BUTT_DEFAULT_SIZE
 
 /datum/preference/tri_color/genital/butt
 	savefile_key = "butt_color"
@@ -569,7 +569,7 @@
 	maximum = BELLY_MAX_SIZE
 
 /datum/preference/numeric/belly_size/create_default_value()
-	return BELLY_MIN_SIZE
+	return BELLY_DEFAULT_SIZE
 
 /datum/preference/numeric/belly_size/is_accessible(datum/preferences/preferences)
 	var/passed_initial_check = ..(preferences)

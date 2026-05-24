@@ -474,7 +474,7 @@ function QuirkPage() {
     if (quirk.value > 0) {
       if (maxPositiveQuirks !== -1 && positiveQuirks >= maxPositiveQuirks) {
         return t('ui.character.quirks_no_more_positive');
-      } else if (pointsEnabled && balance + quirk.value > 0) {
+      } else if (pointsEnabled && balance - quirk.value < 0) {
         return t('ui.character.quirks_need_negative_balance');
       }
     }
@@ -484,7 +484,7 @@ function QuirkPage() {
     }
     // NOVA EDIT END
     const selectedQuirkNames = selectedQuirks.map((quirkKey) => {
-      return quirkInfo[quirkKey].name;
+      return quirkInfo[quirkKey]?.name;
     });
 
     for (const blacklist of quirkBlacklist) {
@@ -516,7 +516,7 @@ function QuirkPage() {
   function getReasonToNotRemove(quirkName: string) {
     const quirk = quirkInfo[quirkName];
 
-    if (pointsEnabled && balance - quirk.value > 0) {
+    if (pointsEnabled && balance + quirk.value < 0) {
       return t('ui.character.quirks_remove_positive_first');
     }
 

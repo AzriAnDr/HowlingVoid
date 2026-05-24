@@ -5,7 +5,7 @@
 	var/dynamic_report = SSdynamic.get_advisory_report()
 	if(isnull(greenshift)) // if we're not forced to be greenshift or not - check if we are an actual greenshift
 		greenshift = SSdynamic.current_tier.tier == 0 && dynamic_report == /datum/dynamic_tier/greenshift::advisory_report
-	SSstation.generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget))
+	SSstation.generate_station_goals(SSstation.get_roundstart_station_goal_budget(greenshift))
 
 	if(!length(SSstation.get_station_goals()))
 		. = "<hr><b>No assigned goals.</b><BR>"

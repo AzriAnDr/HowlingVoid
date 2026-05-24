@@ -411,8 +411,8 @@ const BodypartAugmentSection = (props: {
                   showCost &&
                   (option?.cost ?? 0) > 0 &&
                   balance -
-                    (limb.selectedAug?.cost ?? 0) +
-                    (option?.cost ?? 0) >
+                    (option?.cost ?? 0) +
+                    (limb.selectedAug?.cost ?? 0) <
                     0
                 )
                   return;
@@ -478,8 +478,8 @@ const BodypartAugmentSection = (props: {
                     showCost &&
                     (option?.cost ?? 0) > 0 &&
                     balance -
-                      (limb.selectedImplant?.cost ?? 0) +
-                      (option?.cost ?? 0) >
+                      (option?.cost ?? 0) +
+                      (limb.selectedImplant?.cost ?? 0) <
                       0
                   )
                     return;
@@ -553,8 +553,8 @@ const InternalImplantSection = (props: {
               showCost &&
               (option?.cost ?? 0) > 0 &&
               balance -
-                (internal_implant.selectedAug?.cost ?? 0) +
-                (option?.cost ?? 0) >
+                (option?.cost ?? 0) +
+                (internal_implant.selectedAug?.cost ?? 0) <
                 0
             )
               return;

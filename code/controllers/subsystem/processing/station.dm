@@ -1,3 +1,5 @@
+#define DYNAMIC_STATION_GOAL_POPULATION_STEP 15
+
 PROCESSING_SUBSYSTEM_DEF(station)
 	name = "Station"
 	ss_flags = SS_BACKGROUND
@@ -40,8 +42,34 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	goals_by_type = SSstation.goals_by_type
 	..()
 
-/// This gets called by SSdynamic during initial gamemode setup.
-/// This is done because for a greenshift we want all goals to be generated
+/// Returns the station goal budget for the initial roundstart report.
+/datum/controller/subsystem/processing/station/proc/get_roundstart_station_goal_budget(greenshift = FALSE)
+	if(greenshift || is_storyteller_extended_round())
+		return INFINITY
+
+	var/player_count = get_roundstart_ready_player_count()
+	var/population_budget = CEILING(player_count / DYNAMIC_STATION_GOAL_POPULATION_STEP, 1)
+	return max(CONFIG_GET(number/station_goal_budget), population_budget)
+
+/// Returns the locked roundstart ready count used for dynamic station goal scaling.
+/datum/controller/subsystem/processing/station/proc/get_roundstart_ready_player_count()
+	if(islist(SSstoryteller?.frozen_roster_data))
+		return SSstoryteller.frozen_roster_data["readyCount"] || 0
+
+	var/ready_count = 0
+	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
+		if(QDELETED(player) || player.ready != PLAYER_READY_TO_PLAY)
+			continue
+		ready_count++
+
+	return ready_count || SSticker.totalPlayersReady
+
+/// Returns whether the current storyteller round is running in Extended mode.
+/datum/controller/subsystem/processing/station/proc/is_storyteller_extended_round()
+	return SSstoryteller?.is_enabled() && SSstoryteller.round_mode == STORYTELLER_ROUND_MODE_EXTENDED
+
+/// This gets called during the initial roundstart report setup.
+/// This is done because some round modes want all goals to be generated.
 /datum/controller/subsystem/processing/station/proc/generate_station_goals(goal_budget)
 	var/list/possible = subtypesof(/datum/station_goal)
 
@@ -69,6 +97,8 @@ PROCESSING_SUBSYSTEM_DEF(station)
 /// Returns a specific station goal by type
 /datum/controller/subsystem/processing/station/proc/get_station_goal(goal_type)
 	return goals_by_type[goal_type]
+
+#undef DYNAMIC_STATION_GOAL_POPULATION_STEP
 
 ///Rolls for the amount of traits and adds them to the traits list
 /datum/controller/subsystem/processing/station/proc/SetupTraits()

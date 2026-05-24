@@ -200,6 +200,18 @@
 /datum/storyteller/action/dynamic_base/is_antag_action()
 	return TRUE
 
+/datum/storyteller/action/dynamic_base/get_effective_weight(datum/controller/subsystem/storyteller/owner)
+	var/base_weight = ..()
+	if(base_weight <= 0 || !istype(owner))
+		return base_weight
+
+	var/readiness_score = owner.get_antag_readiness_score(context)
+	var/readiness_ratio = clamp(readiness_score / 100, 0, 1)
+	var/harshness = clamp(((stage - 1) * 0.4) + (max(cost - 12, 0) / 24), 0.1, 1.5)
+	var/base_scale = 0.55 + (readiness_ratio * 0.75)
+	var/quality_scale = 1 + ((readiness_ratio - 0.5) * (0.25 + (harshness * 0.55)))
+	return max(1, round(base_weight * clamp(base_scale * quality_scale, 0.25, 2)))
+
 /datum/storyteller/action/dynamic_base/proc/build_ruleset()
 	if(!dynamic_ruleset_type)
 		return null

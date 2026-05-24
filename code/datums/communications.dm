@@ -103,10 +103,10 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 		. += "<hr><h3>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector:</h3>"
 		. += dynamic_report
 
-	SSstation.generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget))
+	SSstation.generate_station_goals(SSstation.get_roundstart_station_goal_budget(greenshift))
 
 	var/list/station_goal_strings = list()
-	if(greenshift)
+	if(greenshift && !SSstation.is_storyteller_extended_round())
 		station_goal_strings += "All special orders have been authorized for the shift. \
 			Feel free to pick one your crew wishes to specialize in - you are not expected to complete them all."
 

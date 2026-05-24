@@ -15,7 +15,14 @@
 	slot_flags = ITEM_SLOT_ID
 	worn_icon_state = "emag"
 	var/prox_check = TRUE //If the emag requires you to be in range
-	var/type_blacklist //List of types that require a specialized emag
+	/// Airlock override charges remaining.
+	var/charges = 3
+	/// Maximum airlock override charges.
+	var/max_charges = 3
+	/// Active charge timer ids.
+	var/list/charge_timers = list()
+	/// Time needed to recover one airlock override charge.
+	var/charge_time = 1800 // Three minutes.
 
 /obj/item/card/emag/get_displayed_name(honorifics = FALSE)
 	return name // That's Grey Tider (as "cryptographic sequencer")
@@ -138,10 +145,6 @@
 		log_bomber(user, "rigged to blow", src, "(emagging)")
 	return TRUE
 
-/obj/item/card/emag/Initialize(mapload)
-	. = ..()
-	type_blacklist = list(typesof(/obj/machinery/door/airlock) + typesof(/obj/machinery/door/window/) +  typesof(/obj/machinery/door/firedoor) - typesof(/obj/machinery/door/airlock/tram)) //list of all typepaths that require a specialized emag to hack.
-
 /obj/item/card/emag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
 		return NONE // lets us put things in bags without trying to emag them
@@ -149,6 +152,8 @@
 		return ITEM_INTERACT_BLOCKING
 	log_combat(user, interacting_with, "attempted to emag")
 	if(interacting_with.emag_act(user, src))
+		if(istype(interacting_with, /obj/machinery/door))
+			use_charge(user, interacting_with)
 		SSblackbox.record_feedback("tally", "atom_emagged", 1, interacting_with.type)
 		return ITEM_INTERACT_SUCCESS
 	return NONE // In a perfect world this would be blocking, but this is not a perfect world
@@ -157,11 +162,34 @@
 	return prox_check ? NONE : interact_with_atom(interacting_with, user)
 
 /obj/item/card/emag/proc/can_emag(atom/target, mob/user)
-	for (var/subtypelist in type_blacklist)
-		if (target.type in subtypelist)
-			to_chat(user, span_warning("The [target] cannot be affected by the [src]! A more specialized hacking device is required."))
-			return FALSE
+	if(istype(target, /obj/machinery/door) && charges <= 0)
+		to_chat(user, span_warning("[src] is recharging!"))
+		return FALSE
 	return TRUE
+
+/obj/item/card/emag/proc/use_charge(mob/user, atom/target = null)
+	if(!istype(target, /obj/machinery/door))
+		return
+	charges--
+	to_chat(user, span_notice("You use [src]. It now has [charges] charge[charges == 1 ? "" : "s"] remaining."))
+	charge_timers.Add(addtimer(CALLBACK(src, PROC_REF(recharge)), charge_time, TIMER_STOPPABLE))
+
+/obj/item/card/emag/proc/recharge()
+	charges = min(charges + 1, max_charges)
+	playsound(src, 'sound/machines/beep/twobeep.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+	charge_timers.Remove(charge_timers[1])
+
+/obj/item/card/emag/examine(mob/user)
+	. = ..()
+	if(max_charges <= 0)
+		return .
+	. += span_notice("It has [charges] airlock override charge[charges == 1 ? "" : "s"] remaining.")
+	if(length(charge_timers))
+		. += "[span_notice("<b>A small display on the back reads:</b>")]"
+	for(var/i in 1 to length(charge_timers))
+		var/timeleft = timeleft(charge_timers[i])
+		var/loadingbar = num2loadingbar(timeleft / charge_time)
+		. += span_notice("<b>CHARGE #[i]: [loadingbar] ([DisplayTimeText(timeleft)])</b>")
 
 /*
  * DOORMAG
@@ -172,10 +200,10 @@
 	icon_state = "doorjack"
 	worn_icon_state = "doorjack"
 	var/type_whitelist //List of types
-	var/charges = 3
-	var/max_charges = 3
-	var/list/charge_timers = list()
-	var/charge_time = 1800 //three minutes
+	charges = 3
+	max_charges = 3
+	charge_timers = list()
+	charge_time = 1800 //three minutes
 
 /obj/item/card/emag/doorjack/Initialize(mapload)
 	. = ..()
@@ -186,26 +214,6 @@
 	if(interacting_with.atom_storage)
 		return NONE
 	. = ..()
-
-/obj/item/card/emag/doorjack/proc/use_charge(mob/user)
-	charges --
-	to_chat(user, span_notice("You use [src]. It now has [charges] charge[charges == 1 ? "" : "s"] remaining."))
-	charge_timers.Add(addtimer(CALLBACK(src, PROC_REF(recharge)), charge_time, TIMER_STOPPABLE))
-
-/obj/item/card/emag/doorjack/proc/recharge(mob/user)
-	charges = min(charges+1, max_charges)
-	playsound(src,'sound/machines/beep/twobeep.ogg',10,TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
-	charge_timers.Remove(charge_timers[1])
-
-/obj/item/card/emag/doorjack/examine(mob/user)
-	. = ..()
-	. += span_notice("It has [charges] charges remaining.")
-	if (length(charge_timers))
-		. += "[span_notice("<b>A small display on the back reads:")]</b>"
-	for (var/i in 1 to length(charge_timers))
-		var/timeleft = timeleft(charge_timers[i])
-		var/loadingbar = num2loadingbar(timeleft/charge_time)
-		. += span_notice("<b>CHARGE #[i]: [loadingbar] ([DisplayTimeText(timeleft)])</b>")
 
 /obj/item/card/emag/doorjack/can_emag(atom/target, mob/user)
 	if (charges <= 0)
@@ -226,12 +234,14 @@
 	the ability to long-distance contact the Syndicate fleet."
 	icon_state = "battlecruisercaller"
 	worn_icon_state = "emag"
+	charges = 0
+	max_charges = 0
 	///whether we have called the battlecruiser
 	var/used = FALSE
 	/// The battlecruiser team that the battlecruiser will get added to
 	var/datum/team/battlecruiser/team
 
-/obj/item/card/emag/battlecruiser/proc/use_charge(mob/user)
+/obj/item/card/emag/battlecruiser/use_charge(mob/user, atom/target = null)
 	used = TRUE
 	to_chat(user, span_boldwarning("You use [src], and it interfaces with the communication console. No going back..."))
 

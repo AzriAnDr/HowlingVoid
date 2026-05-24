@@ -48,6 +48,7 @@ SUBSYSTEM_DEF(statpanels)
 		var/real_round_time = world.timeofday - SSticker.real_round_start_time
 		global_data = list(
 			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)",
+			"Station Name: [station_name()]",
 		)
 		if(isnull(SSmapping.current_map))
 			global_data += "Loading"

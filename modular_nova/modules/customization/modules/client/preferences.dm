@@ -39,16 +39,29 @@
 /// Cleans any quirks that should be hidden, or just simply don't exist from quirk code.
 /datum/preferences/proc/sanitize_quirks()
 	var/quirks_edited = FALSE
-	for(var/datum/quirk/quirk as anything in all_quirks)
-		if(!quirk || !(quirk in SSquirks.quirks))
-			all_quirks.Remove(quirk)
+	if(!islist(all_quirks))
+		all_quirks = list()
+		return TRUE
+
+	var/list/sanitized_quirks = list()
+	var/list/available_quirks = SSquirks.get_quirks()
+	for(var/quirk_name in all_quirks)
+		var/datum/quirk/quirk_type = available_quirks[quirk_name]
+		if(!quirk_name || !ispath(quirk_type, /datum/quirk))
 			quirks_edited = TRUE
 			continue
 
-		quirk = SSquirks.quirks[quirk]
-		// Explanation for this is above.
-		if(!quirk || initial(quirk.hidden_quirk))
-			all_quirks.Remove(quirk)
+		if(initial(quirk_type.hidden_quirk))
 			quirks_edited = TRUE
+			continue
+
+		if(quirk_name in sanitized_quirks)
+			quirks_edited = TRUE
+			continue
+
+		sanitized_quirks += quirk_name
+
+	if(quirks_edited)
+		all_quirks = sanitized_quirks
 
 	return quirks_edited

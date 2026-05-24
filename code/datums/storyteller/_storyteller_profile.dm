@@ -23,6 +23,8 @@
 	var/need_gain_divisor = 10
 	var/extended_threat_gain_divisor = 18
 	var/budget_cap = 100
+	var/escalation_rise_multiplier = 1
+	var/escalation_decay_multiplier = 1
 
 	var/list/key_jobs = list(
 		JOB_CAPTAIN,
@@ -137,6 +139,14 @@
 	if(!isnull(profile_config["budget_cap"]))
 		budget_cap = max(1, value)
 
+	value = text2num("[profile_config["escalation_rise_multiplier"]]")
+	if(!isnull(profile_config["escalation_rise_multiplier"]))
+		escalation_rise_multiplier = max(0.1, value)
+
+	value = text2num("[profile_config["escalation_decay_multiplier"]]")
+	if(!isnull(profile_config["escalation_decay_multiplier"]))
+		escalation_decay_multiplier = max(0.1, value)
+
 /datum/storyteller/profile/proc/apply_profile_bias()
 	return
 
@@ -202,6 +212,8 @@
 	aid_gain_divisor = max(1, round(aid_gain_divisor * 0.85))
 	need_gain_divisor = max(1, round(need_gain_divisor * 0.85))
 	extended_threat_gain_divisor = max(threat_gain_divisor, round(extended_threat_gain_divisor * 1.2))
+	escalation_rise_multiplier *= 0.85
+	escalation_decay_multiplier *= 1.3
 
 /datum/storyteller/profile/aggressive
 	id = "aggressive"
@@ -223,3 +235,5 @@
 	aid_gain_divisor = max(1, round(aid_gain_divisor * 1.05))
 	need_gain_divisor = max(1, round(need_gain_divisor * 1.1))
 	extended_threat_gain_divisor = max(threat_gain_divisor, round(extended_threat_gain_divisor * 0.85))
+	escalation_rise_multiplier *= 1.2
+	escalation_decay_multiplier *= 0.8

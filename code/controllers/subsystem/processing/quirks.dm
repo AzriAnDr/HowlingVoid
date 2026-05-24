@@ -196,13 +196,14 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /// Takes a list of quirk names and returns a new list of quirks that would
 /// be valid.
 /// If no changes need to be made, will return the same list.
-/// Expects all quirk names to be unique, but makes no other expectations.
+/// Deduplicates quirk names and makes no other expectations.
 /datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks, list/augments, datum/species/species_type = null) // NOVA EDIT CHANGE - AUGMENTS+ - ORIGINAL: /datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks) // Howling Void edit old:/datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks, list/augments)
 	var/list/new_quirks = list()
 	var/list/positive_quirks = list()
+	var/list/seen_quirks = list()
 	var/points_enabled = !CONFIG_GET(flag/disable_quirk_points)
 	var/max_positive_quirks = CONFIG_GET(number/max_positive_quirks)
-	// Keep validation math in sync with UI balance math (default points + species bonus - quirks + aug costs <= 0).
+	// Track spend as debt: positive values mean selected quirks/augments exceed available points.
 	var/balance = -CONFIG_GET(number/default_quirk_points) - get_species_quirk_points_bonus(species_type)
 
 	var/list/all_quirks = get_quirks()
@@ -210,9 +211,15 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	// NOVA EDIT BEGIN - AUGMENTS+
 	for(var/key in augments)
 		var/datum/augment_item/aug = GLOB.augment_items[augments[key]]
+		if(isnull(aug))
+			continue
 		balance += aug.cost
 	// NOVA EDIT END
 	for (var/quirk_name in quirks)
+		if(quirk_name in seen_quirks)
+			continue
+
+		seen_quirks += quirk_name
 		var/datum/quirk/quirk = all_quirks[quirk_name]
 		if (isnull(quirk))
 			continue
