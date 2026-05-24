@@ -33,7 +33,7 @@
 		return
 
 	user.whisper("Ratvar, I invoke thee to commune to all.", language = /datum/language/ratvar)
-	user.whisper(html_decode(message), filterproof = TRUE)
+	user.whisper(html_decode(message), language = /datum/language/ratvar, filterproof = TRUE)
 	send_clock_message(user, message)
 
 /// Send `sent_message` to all other clock cultists and ghosts from the user
