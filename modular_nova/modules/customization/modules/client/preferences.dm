@@ -43,15 +43,21 @@
 		all_quirks = list()
 		return TRUE
 
+	var/list/normalized_quirks = SSquirks.normalize_quirk_list(all_quirks)
+	if(normalized_quirks != all_quirks)
+		all_quirks = normalized_quirks
+		quirks_edited = TRUE
+
 	var/list/sanitized_quirks = list()
 	var/list/available_quirks = SSquirks.get_quirks()
 	for(var/quirk_name in all_quirks)
-		var/datum/quirk/quirk_type = available_quirks[quirk_name]
+		var/quirk_type = available_quirks[quirk_name]
 		if(!quirk_name || !ispath(quirk_type, /datum/quirk))
 			quirks_edited = TRUE
 			continue
 
-		if(initial(quirk_type.hidden_quirk))
+		var/datum/quirk/typed_quirk = quirk_type
+		if(initial(typed_quirk.hidden_quirk))
 			quirks_edited = TRUE
 			continue
 
