@@ -23,19 +23,24 @@
 
 	ideal_opt_in_level = preference_instance.read_preference(/datum/preference/choiced/antag_opt_in_status)
 
-/// Gets the saved opt-in level used for traitor and changeling target preference checks.
+/// Gets the effective opt-in level used for antagonist target preference checks.
 /datum/mind/proc/get_target_opt_in_level()
+	var/target_opt_in_level = ideal_opt_in_level
 	var/datum/preferences/preference_instance = GLOB.preferences_datums[ckey(key)]
 	if(!isnull(preference_instance))
-		return preference_instance.read_preference(/datum/preference/choiced/antag_opt_in_status)
-	return ideal_opt_in_level
+		target_opt_in_level = preference_instance.read_preference(/datum/preference/choiced/antag_opt_in_status)
+	if(target_opt_in_level == OPT_IN_NOT_TARGET)
+		return get_job_opt_in_level()
+	return target_opt_in_level
 
 /// Gets the opt-in level displayed in examine panels.
 /datum/mind/proc/get_effective_opt_in_level()
 	return get_target_opt_in_level()
 
-/// Jobs no longer force this preference.
+/// Security jobs are always valid for kill targets, but not automatic round removal.
 /datum/mind/proc/get_job_opt_in_level()
+	if(assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
+		return SECURITY_OPT_IN_LEVEL
 	return OPT_IN_NOT_TARGET
 
 /// Antagonist preferences no longer force this preference.

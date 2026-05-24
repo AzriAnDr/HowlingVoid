@@ -6,7 +6,7 @@ Module ID: ANTAG_OPTIN
 
 ### Description:
 
-Adds functionality to let players set whether antagonist objective generation should prefer them for kill or round-removal targets. Round-removal objectives use this setting across antagonist types except heretic, which keeps its own target selection rules. Jobs and enabled antagonist preferences do not force this setting.
+Adds functionality to let players set whether antagonist objective generation should prefer them for kill or round-removal targets. Round-removal objectives use this setting across antagonist types except heretic, which keeps its own target selection rules. Security jobs set to `No` are treated as `Yes - Kill Without Round Removal` for the current round. Command jobs and enabled antagonist preferences do not force this setting.
 
 ### TG Proc/File Changes:
 

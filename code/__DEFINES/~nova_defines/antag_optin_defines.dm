@@ -8,6 +8,9 @@
 /// Fine with being round removed.
 #define OPT_IN_YES_ROUND_REMOVE 3
 
+/// Security jobs are always at least kill-target eligible for the current round.
+#define SECURITY_OPT_IN_LEVEL OPT_IN_YES_KILL
+
 #define OPT_IN_YES_TEMP_STRING "Yes - Temporary/Inconvenience"
 #define OPT_IN_YES_KILL_STRING "Yes - Kill Without Round Removal"
 #define OPT_IN_YES_ROUND_REMOVE_STRING "Yes - Round Removal"
