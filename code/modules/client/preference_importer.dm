@@ -16,6 +16,7 @@
 	var/imported_chat_toggles
 	var/list/imported_be_special
 	var/import_character = TRUE
+	var/import_emote_panel = TRUE
 	var/preview_mode = PREVIEW_PREF_UNDERWEAR
 
 /datum/preference_importer/New(datum/preferences/prefs, list/data)
@@ -114,6 +115,17 @@
 	if(selected_character < 1 || selected_character > length(found_characters))
 		return null
 	return found_characters[selected_character]["data"]
+
+/datum/preference_importer/proc/get_selected_emote_panel_data()
+	var/list/char_data = get_selected_character_data()
+	if(!islist(char_data) || !("custom_emote_panel" in char_data))
+		return null
+
+	var/list/emote_panel_data = char_data["custom_emote_panel"]
+	if(!islist(emote_panel_data))
+		return null
+
+	return deep_copy_list(emote_panel_data)
 
 /datum/preference_importer/proc/get_character_species(list/char_data)
 	if(!islist(char_data))
@@ -458,6 +470,8 @@
 	data["import_game_prefs"] = import_game_prefs
 	data["export_version"] = export_version
 	data["import_character"] = import_character
+	data["has_emote_panel"] = !isnull(get_selected_emote_panel_data())
+	data["import_emote_panel"] = import_emote_panel
 	data["preview_map"] = preview_view?.assigned_map
 	data["preview_mode"] = preview_mode
 	data["preview_options"] = list(PREVIEW_PREF_LOADOUT, PREVIEW_PREF_UNDERWEAR, PREVIEW_PREF_NAKED, PREVIEW_PREF_NAKED_AROUSED)
@@ -496,6 +510,10 @@
 
 		if("toggle_character")
 			import_character = !import_character
+			return TRUE
+
+		if("toggle_emote_panel")
+			import_emote_panel = !import_emote_panel
 			return TRUE
 
 		if("set_preview_mode")
@@ -598,11 +616,28 @@
 
 	var/tree_key = "character[target_slot]"
 	var/reload_character = FALSE
+	var/emote_panel_imported = FALSE
+	var/list/imported_emote_panel = get_selected_emote_panel_data()
+	var/has_imported_emote_panel = !isnull(imported_emote_panel)
+	var/list/current_slot_data = target_prefs.savefile.get_entry(tree_key)
 
 	if(import_character)
 		var/list/sanitized_data = sanitize_character_import_data(char_data)
+		if(import_emote_panel && has_imported_emote_panel)
+			sanitized_data["custom_emote_panel"] = imported_emote_panel
+			emote_panel_imported = TRUE
+		else if(islist(current_slot_data?["custom_emote_panel"]))
+			sanitized_data["custom_emote_panel"] = deep_copy_list(current_slot_data["custom_emote_panel"])
+		else
+			sanitized_data -= "custom_emote_panel"
 		target_prefs.savefile.set_entry(tree_key, sanitized_data)
 		reload_character = TRUE
+
+	else if(import_emote_panel && has_imported_emote_panel && islist(current_slot_data))
+		current_slot_data["custom_emote_panel"] = imported_emote_panel
+		emote_panel_imported = TRUE
+		if(target_slot == target_prefs.default_slot)
+			target_prefs.custom_emote_panel = deep_copy_list(imported_emote_panel)
 
 	if(import_keybindings && has_keybindings && islist(imported_keybindings))
 		target_prefs.key_bindings = sanitize_keybindings(imported_keybindings)
@@ -648,6 +683,9 @@
 	else if(user)
 		target_prefs.update_static_data(user, always_instant = TRUE)
 
+	if(emote_panel_imported || reload_character)
+		target_prefs.parent?.tgui_panel?.emotes_send_list()
+
 	target_prefs.save_preferences()
 
 	if(target_prefs.parent)
@@ -656,6 +694,8 @@
 	var/list/imported_items = list()
 	if(import_character)
 		imported_items += "character"
+	if(emote_panel_imported)
+		imported_items += "emote panel"
 	if(import_keybindings && has_keybindings)
 		imported_items += "keybindings"
 	if(import_game_prefs && has_game_prefs)

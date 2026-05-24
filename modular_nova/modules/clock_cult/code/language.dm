@@ -16,7 +16,19 @@
 	secret = TRUE
 
 /datum/language/ratvar/scramble_sentence(input, list/mutual_languages)
-	return text2ratvar(input)
+	return text2ratvar(mask_non_ratvarian_text(input))
+
+/proc/mask_non_ratvarian_text(text)
+	var/text_length = length(text)
+	var/char = ""
+	. = ""
+	for(var/i = 1, i <= text_length, i += length(char))
+		char = text[i]
+		// Ratvarian's ROT13 only changes ASCII letters. Hide anything it would leave readable.
+		if(text2ascii(char) > 127)
+			. += "*"
+		else
+			. += char
 
 //Regexes used to alter english to ratvarian style
 
