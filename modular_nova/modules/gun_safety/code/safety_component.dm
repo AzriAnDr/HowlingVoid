@@ -1,7 +1,7 @@
 /// Component that will prevent a gun from firing if the safety is turned on
 /datum/component/gun_safety
 	/// Is the safety actually on?
-	var/safety_currently_on = TRUE
+	var/safety_currently_on = FALSE
 	/// Holder for the toggle safety action
 	var/datum/action/item_action/gun_safety_toggle/toggle_safety_action
 
@@ -90,4 +90,4 @@
 /datum/action/item_action/gun_safety_toggle
 	name = "Toggle Gun Safety"
 	button_icon = 'modular_nova/modules/gun_safety/icons/actions.dmi'
-	button_icon_state = "safety_on"
+	button_icon_state = "safety_off"

@@ -27,6 +27,8 @@
 	var/casedesc = "This basic model accepts both beakers and bottles. It heats contents by 10 K upon ignition."
 	/// Whether or not the grenade is currently acting as a landmine.
 	var/obj/item/assembly/prox_sensor/landminemode = null
+	/// Whether this casing should be deleted after a successful detonation.
+	var/delete_after_detonation = TRUE
 
 /obj/item/grenade/chem_grenade/Initialize(mapload)
 	. = ..()
@@ -283,6 +285,10 @@
 		// logs from custom assemblies priming are handled by the wire component
 		log_game("A grenade detonated at [AREACOORD(detonation_turf)]")
 
+	if (delete_after_detonation)
+		qdel(src)
+		return TRUE
+
 	active = FALSE
 	update_appearance()
 
@@ -397,12 +403,12 @@
 		total_volume += reagent_container.reagents.total_volume
 
 	if(!total_volume)
-		active = FALSE
-		update_appearance()
-		return
+		qdel(src)
+		return FALSE
 
-	var/fraction = unit_spread/total_volume
-	var/datum/reagents/reactants = new(unit_spread)
+	var/spread_amount = min(unit_spread, total_volume)
+	var/fraction = spread_amount / total_volume
+	var/datum/reagents/reactants = new(spread_amount)
 	reactants.my_atom = src
 	for(var/obj/item/reagent_containers/reagent_container in beakers)
 		reagent_container.reagents.trans_to(
@@ -414,8 +420,12 @@
 
 	var/turf/detonated_turf = get_turf(src)
 	chem_splash(detonated_turf, reagents, affected_area, list(reactants), ignition_temp, threatscale)
-	addtimer(CALLBACK(src, PROC_REF(detonate)), det_time)
 	log_game("A grenade detonated at [AREACOORD(detonated_turf)]")
+	if(total_volume <= unit_spread)
+		qdel(src)
+		return TRUE
+
+	addtimer(CALLBACK(src, PROC_REF(detonate)), det_time)
 
 // Premade grenades
 

@@ -17,7 +17,7 @@
 /// The dimensions of the chat message icons
 #define CHAT_MESSAGE_ICON_SIZE 9
 /// Font styling used for runechat text. TinyUnicode keeps Cyrillic readable in BYOND maptext.
-#define CHAT_MESSAGE_FONT_STYLE "font-family: \"TinyUnicode\"; font-size: 12pt; line-height: 0.75; -dm-text-outline: 1px black;"
+#define CHAT_MESSAGE_FONT_STYLE "font-family: \"TinyUnicode\"; font-size: 9pt; line-height: 1; -dm-text-outline: 1px black;"
 
 ///Base layer of chat elements
 #define CHAT_LAYER 1
@@ -185,9 +185,11 @@
 
 	// We dim italicized text to make it more distinguishable from regular text
 	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
+	var/list/display_classes = extra_classes.Copy()
+	display_classes -= "italics" // Italic TinyUnicode falls back to an unreadably small maptext font.
 
 	// Approximate text height
-	var/complete_text = MAPTEXT("<span style='[CHAT_MESSAGE_FONT_STYLE] color: [tgt_color]'><span class='center [extra_classes.Join(" ")]'>[owner.apply_message_emphasis(text)]</span></span>")
+	var/complete_text = MAPTEXT("<span style='[CHAT_MESSAGE_FONT_STYLE] color: [tgt_color]'><span class='center [display_classes.Join(" ")]'>[owner.apply_message_emphasis(text)]</span></span>")
 
 	var/mheight
 	WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH), mheight)

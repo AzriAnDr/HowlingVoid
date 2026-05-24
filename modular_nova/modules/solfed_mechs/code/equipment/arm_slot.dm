@@ -70,6 +70,7 @@
 	///icon_state for the detonated grenade.
 	det_time = 1 SECONDS
 	possible_fuse_time = list("10")
+	delete_after_detonation = FALSE
 	var/post_detonation_icon_state = null
 	///Has this exploded already?
 	var/detonated = FALSE

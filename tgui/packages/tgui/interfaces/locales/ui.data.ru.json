@@ -103,6 +103,8 @@
 	"ui.character.data.quirk_Deaf_description": "Вы неизлечимо глухи.",
 	"ui.character.data.quirk_Depression_name": "Депрессия",
 	"ui.character.data.quirk_Depression_description": "Иногда вы просто ненавидите жизнь.",
+	"ui.character.data.quirk_DorsualiphobicAugmentation_name": "Аугментация для дорсулиофоба",
+	"ui.character.data.quirk_DorsualiphobicAugmentation_description": "Вы переживаете за то, что кто-то увидит что-то на вашей спине, так что, вы установили себе имплант, что скрывает всё, что у вас надето на спине.",
 	"ui.character.data.quirk_EradicativeChronicIllness_name": "Эрадикационное хроническое заболевание",
 	"ui.character.data.quirk_EradicativeChronicIllness_description": "У вас аномальное хроническое заболевание, которое требует постоянного приёма лекарств, иначе начинается коррекция временного потока.",
 	"ui.character.data.quirk_Erratic_name": "Переменчивый",

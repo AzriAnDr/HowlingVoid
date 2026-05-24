@@ -105,6 +105,8 @@
     "ui.character.data.quirk_Deaf_description": "You are incurably deaf.",
     "ui.character.data.quirk_Depression_name": "Depression",
     "ui.character.data.quirk_Depression_description": "You sometimes just hate life.",
+    "ui.character.data.quirk_DorsualiphobicAugmentation_name": "Dorsualiphobic Augmentation",
+    "ui.character.data.quirk_DorsualiphobicAugmentation_description": "You despise being seen wearing back-mounted storage. A chameleon implant conceals anything worn in your back slot.",
     "ui.character.data.quirk_EradicativeChronicIllness_name": "Eradicative Chronic Illness",
     "ui.character.data.quirk_EradicativeChronicIllness_description": "You have an anomalous chronic illness that requires constant medication to keep under control, or else causes timestream correction.",
     "ui.character.data.quirk_Erratic_name": "Erratic",

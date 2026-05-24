@@ -35,9 +35,12 @@
 	beakers += beaker_two
 
 /obj/item/grenade/chem_grenade/rust_sower/detonate(mob/living/lanced_by)
+	var/turf/detonation_turf = get_turf(src)
 	. = ..()
-	playsound(src, 'sound/items/weapons/rust_sower_explode.ogg', 70, FALSE)
-	qdel(src)
+	if(!.)
+		return
+
+	playsound(detonation_turf, 'sound/items/weapons/rust_sower_explode.ogg', 70, FALSE)
 
 /obj/item/grenade/chem_grenade/rust_sower/screwdriver_act(mob/living/user, obj/item/tool)
 	return NONE
