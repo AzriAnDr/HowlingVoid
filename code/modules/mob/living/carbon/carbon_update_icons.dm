@@ -371,8 +371,10 @@
 		inv.update_appearance()
 
 	if(back)
-		overlays_standing[BACK_LAYER] = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi')
 		update_hud_back(back)
+		if(HAS_TRAIT(src, TRAIT_HIDE_BACK_SLOT))
+			return
+		overlays_standing[BACK_LAYER] = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi')
 
 	apply_overlay(BACK_LAYER)
 

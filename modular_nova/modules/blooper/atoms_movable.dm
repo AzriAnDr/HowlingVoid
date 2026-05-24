@@ -43,7 +43,7 @@
 	var/turf/our_turf = get_turf(src)
 	for(var/mob/mob_with_client in listeners)
 		if(!mob_with_client.client)
-			return
+			continue
 		var/user_volume_pref = mob_with_client.client.prefs.read_preference(/datum/preference/numeric/volume/sound_blooper_volume) // If we have a client adjust the volume to their prefs before playing the blooper
 		var/scaled_volume = volume * (user_volume_pref / 100)
 		mob_with_client.playsound_local(our_turf, vol = scaled_volume, vary = TRUE, frequency = pitch, max_distance = distance, falloff_distance = 0, falloff_exponent = BLOOPER_SOUND_FALLOFF_EXPONENT, sound_to_use = blooper, distance_multiplier = 1)
@@ -55,6 +55,7 @@
 	if(blooper || blooper_id)
 		for(var/mob/mob_with_client in listeners)
 			if(!mob_with_client.client)
+				listeners -= mob_with_client
 				continue
 			if(!(mob_with_client.client.prefs?.read_preference(/datum/preference/toggle/hear_sound_blooper)))
 				listeners -= mob_with_client
@@ -103,6 +104,7 @@
 	if(blooper || blooper_id)
 		for(var/mob/listener in listening)
 			if(!listener.client)
+				listening -= listener
 				continue
 
 			var/hear_blooper = listener.client.prefs?.read_preference(/datum/preference/toggle/hear_sound_blooper)

@@ -707,6 +707,8 @@ There are several things that need to be remembered:
 
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON))
 			return
+		if(HAS_TRAIT(src, TRAIT_HIDE_BACK_SLOT))
+			return
 
 		var/icon_file = 'icons/mob/clothing/back.dmi'
 

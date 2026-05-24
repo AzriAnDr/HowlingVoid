@@ -592,6 +592,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_AI_BAGATTACK "bagattack"
 /// This mobs bodyparts are invisible but still clickable.
 #define TRAIT_INVISIBLE_MAN "invisible_man"
+/// Don't draw the item worn in the back slot
+#define TRAIT_HIDE_BACK_SLOT "hide_back_slot"
 /// Don't draw external organs/species features like wings, horns, frills and stuff
 #define TRAIT_HIDE_EXTERNAL_ORGANS "hide_external_organs"
 ///When people are floating from zero-grav or something, we can move around freely!

@@ -78,7 +78,7 @@
 
 		briefcase.name = "[preference_source.read_preference(/datum/preference/name/real_name)]'s travel suitcase"
 		equipOutfit(equipped_outfit, visuals_only)
-		put_in_hands(briefcase)
+		put_in_hands_no_sleep(briefcase)
 	else
 		for(var/datum/loadout_item/item as anything in loadout_datums)
 			if (erp_enabled && item.erp_box)
@@ -232,7 +232,7 @@
 	if(equip_to_storage(job_gear_box, ITEM_SLOT_BACK, indirect_action = TRUE))
 		return
 
-	put_in_hands(job_gear_box)
+	put_in_hands_no_sleep(job_gear_box)
 
 // cyborgs can wear hats from loadout
 /*

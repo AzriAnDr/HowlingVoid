@@ -222,6 +222,26 @@
 /mob/proc/put_in_inactive_hand(obj/item/I, forced = FALSE, visuals_only = FALSE)
 	return put_in_hand(I, get_inactive_hand_index(), forced, visuals_only = visuals_only)
 
+/**
+ * Attempts to put an item in an available hand without stack merging or fallback drop logic.
+ *
+ * Use this in no-sleep contexts where [/mob/proc/put_in_hands]'s stack merge path is unsafe.
+ */
+/mob/proc/put_in_hands_no_sleep(obj/item/I, ignore_animation = TRUE, visuals_only = FALSE)
+	SHOULD_NOT_SLEEP(TRUE)
+	if(QDELETED(I))
+		return FALSE
+
+	if(put_in_active_hand(I, ignore_animation = ignore_animation, visuals_only = visuals_only))
+		return TRUE
+
+	var/hand = get_empty_held_index_for_side(LEFT_HANDS)
+	if(!hand)
+		hand = get_empty_held_index_for_side(RIGHT_HANDS)
+	if(hand && put_in_hand(I, hand, ignore_anim = ignore_animation, visuals_only = visuals_only))
+		return TRUE
+
+	return FALSE
 
 //Puts the item our active hand if possible. Failing that it tries other hands. Returns TRUE on success.
 //If both fail it drops it on the floor (or nearby tables if germ sensitive) and returns FALSE.
