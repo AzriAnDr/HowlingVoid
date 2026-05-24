@@ -164,6 +164,17 @@
 /datum/bodypart_overlay/mutant/genital/get_base_icon_state()
 	return sprite_suffix
 
+/datum/bodypart_overlay/mutant/genital/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	if(!..())
+		return FALSE
+
+	var/mob/living/carbon/human/human_owner = owner
+	if(!istype(human_owner) && ishuman(bodypart_owner?.owner))
+		human_owner = bodypart_owner.owner
+
+	var/obj/item/organ/genital/owning_organ = human_owner?.get_organ_slot(organ_slot)
+	return isnull(owning_organ) || owning_organ.genital_size > 0
+
 
 /datum/bodypart_overlay/mutant/genital/get_color_layer_names(icon_state_to_lookup)
 	if(length(sprite_datum.color_layer_names))

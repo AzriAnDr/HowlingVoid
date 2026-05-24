@@ -128,7 +128,7 @@
 		return FALSE
 
 	charges--
-	var/unlock_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
+	var/unlock_code = "[rand(100,999)] [pick(GLOB.uplink_unlock_words)]"
 	to_chat(user, span_notice("Success! The unlock code to the target is: [unlock_code]"))
 	var/datum/component/uplink/hidden_uplink = target.GetComponent(/datum/component/uplink)
 	if(!hidden_uplink)

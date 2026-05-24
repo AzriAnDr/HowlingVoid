@@ -5,7 +5,7 @@ export const getQuirkBalance = (
   serverData: ServerData | null | undefined,
   selectedQuirks = data.selected_quirks,
 ) => {
-  const fallbackBalance = -data.quirks_balance;
+  const fallbackBalance = data.quirks_balance;
 
   if (
     !serverData?.quirks?.quirk_info ||
@@ -16,12 +16,12 @@ export const getQuirkBalance = (
   }
 
   const quirkInfo = serverData.quirks.quirk_info;
-  let balance = -data.default_quirk_balance;
+  let balance = data.default_quirk_balance;
 
   for (const quirkKey of selectedQuirks) {
     const selectedQuirk = quirkInfo[quirkKey];
     if (!selectedQuirk) continue;
-    balance += selectedQuirk.value || 0;
+    balance -= selectedQuirk.value || 0;
   }
 
   return balance;
@@ -56,7 +56,7 @@ export const getCombinedQuirkAugmentBalance = (
   selectedQuirks = data.selected_quirks,
 ) => {
   return (
-    getQuirkBalance(data, serverData, selectedQuirks) +
+    getQuirkBalance(data, serverData, selectedQuirks) -
     getAugmentCostBalance(data, serverData)
   );
 };

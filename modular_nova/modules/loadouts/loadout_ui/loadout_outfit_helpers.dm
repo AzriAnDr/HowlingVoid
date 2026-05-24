@@ -61,33 +61,47 @@
 
 	var/list/loadout_list = get_active_loadout_list(preference_source)
 	var/list/loadout_datums = loadout_list_to_datums(loadout_list)
+	var/list/granted_loadout_datums = list()
 	var/obj/item/storage/briefcase/empty/briefcase
+	var/obj/item/storage/briefcase/empty/loadout_overflow_case
+	var/loadout_overflow_case_needs_equipping = FALSE
 	var/obj/item/storage/box/erp/erpbox
 	var/erp_enabled = !CONFIG_GET(flag/disable_erp_preferences)
 	if(override_preference == LOADOUT_OVERRIDE_CASE && !visuals_only)
 		briefcase = new(loc)
+		loadout_overflow_case = briefcase
 		for(var/datum/loadout_item/item as anything in loadout_datums)
+			var/list/item_details = loadout_list?[item.item_path] || list()
+			if(!item.is_equippable(src, item_details))
+				continue
 			if (erp_enabled && item.erp_box)
 				if (isnull(erpbox))
 					erpbox = new(loc)
 				new item.item_path(erpbox)
+				granted_loadout_datums += item
 			else
 				if (!item.can_be_applied_to(src, preference_source, equipping_job, allow_mechanical_loadout_items, visuals_only))
 					continue
 				new item.item_path(briefcase)
+				granted_loadout_datums += item
 
 		briefcase.name = "[preference_source.read_preference(/datum/preference/name/real_name)]'s travel suitcase"
 		equipOutfit(equipped_outfit, visuals_only)
 		put_in_hands_no_sleep(briefcase)
 	else
 		for(var/datum/loadout_item/item as anything in loadout_datums)
+			var/list/item_details = loadout_list?[item.item_path] || list()
+			if(!item.is_equippable(src, item_details))
+				continue
 			if (erp_enabled && item.erp_box)
 				if (isnull(erpbox))
 					erpbox = new(loc)
 				new item.item_path(erpbox)
+				granted_loadout_datums += item
 			else
 				if (!item.can_be_applied_to(src, preference_source, equipping_job, allow_mechanical_loadout_items, visuals_only))
 					continue
+				granted_loadout_datums += item
 
 				// Make sure the item is not overriding an important for life outfit item
 				var/datum/outfit/outfit_important_for_life = dna.species.outfit_important_for_life
@@ -101,12 +115,8 @@
 	var/list/new_contents = isnull(briefcase) ? get_all_gear() : briefcase.get_all_contents()
 
 	var/update = NONE
-	for(var/datum/loadout_item/item as anything in loadout_datums)
-		if(!item.is_equippable(src, loadout_list?[item.item_path] || list()))
-			loadout_datums -= item
-			continue
-		if(item.restricted_roles && equipping_job && !(equipping_job.title in item.restricted_roles))
-			continue
+	for(var/datum/loadout_item/item as anything in granted_loadout_datums)
+		var/list/item_details = loadout_list?[item.item_path] || list()
 
 		var/obj/item/equipped
 		if(erpbox && item.erp_box)
@@ -115,17 +125,34 @@
 			equipped = locate(item.item_path) in new_contents
 
 		if(isnull(equipped))
-			continue
+			if(istype(item, /datum/loadout_item/pocket_items/wallet))
+				update |= item.on_equip_item(
+					equipped_item = null,
+					item_details = item_details,
+					equipper = src,
+					outfit = equipped_outfit,
+					visuals_only = visuals_only,
+				)
+				continue
+			if(visuals_only)
+				continue
+			if(isnull(loadout_overflow_case))
+				loadout_overflow_case = new(drop_location())
+				loadout_overflow_case.name = "[preference_source.read_preference(/datum/preference/name/real_name)]'s travel suitcase"
+				loadout_overflow_case_needs_equipping = TRUE
+			equipped = new item.item_path(loadout_overflow_case)
 
 		update |= item.on_equip_item(
 			equipped_item = equipped,
-			item_details = loadout_list?[item.item_path] || list(),
+			item_details = item_details,
 			equipper = src,
 			outfit = equipped_outfit,
 			visuals_only = visuals_only,
 		)
 
 	equip_loadout_job_gear_box(replaced_job_gear, equipping_job)
+	if(loadout_overflow_case_needs_equipping)
+		equip_loadout_overflow_case(loadout_overflow_case)
 
 	if(preference_source?.read_preference(/datum/preference/toggle/green_pin))
 		var/obj/item/clothing/under/uniform = w_uniform
@@ -134,6 +161,8 @@
 	if (!isnull(erpbox))
 		if (!isnull(briefcase))
 			erpbox.forceMove(briefcase)
+		else if(!isnull(loadout_overflow_case) && !QDELETED(loadout_overflow_case))
+			erpbox.forceMove(loadout_overflow_case)
 		else
 			erpbox.equip_to_best_slot(src)
 
@@ -233,6 +262,26 @@
 		return
 
 	put_in_hands_no_sleep(job_gear_box)
+
+/mob/living/carbon/human/proc/equip_loadout_overflow_case(obj/item/storage/briefcase/empty/briefcase)
+	if(isnull(briefcase) || QDELETED(briefcase))
+		return
+
+	if(!length(briefcase.contents))
+		qdel(briefcase)
+		return
+
+	if(equip_to_storage(briefcase, ITEM_SLOT_BACK, indirect_action = TRUE))
+		return
+
+	if(put_in_hands_no_sleep(briefcase))
+		return
+
+	if(back)
+		briefcase.forceMove(back)
+		return
+
+	briefcase.forceMove(drop_location())
 
 // cyborgs can wear hats from loadout
 /*

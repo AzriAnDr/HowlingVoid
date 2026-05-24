@@ -38,6 +38,7 @@ SUBSYSTEM_DEF(storyteller)
 	var/list/scheduled_action_queue = list()
 	var/list/decision_history = list()
 	var/list/prepared_roundstart_entries = list()
+	var/list/frozen_roster_data
 	var/last_snapshot_refresh = 0
 	var/last_heavy_scan = 0
 	var/positive_fatigue_locked_until = 0
@@ -423,12 +424,16 @@ SUBSYSTEM_DEF(storyteller)
 	var/engineering_intents = department_intents[ACCOUNT_ENG] || 0
 	var/medical_intents = department_intents[ACCOUNT_MED] || 0
 	var/security_intents = department_intents[ACCOUNT_SEC] || 0
+	var/profile_scale = 1 + (((profile?.escalation_rise_multiplier || 1) - 1) * 0.6)
+	var/effective_ready_count = round(ready_count * profile_scale)
+	var/effective_key_job_intents = round(key_job_intents * profile_scale)
+	var/effective_department_coverage = round(department_coverage * profile_scale)
 
-	if(phase_cap >= 2 && (ready_count >= 22 || (ready_count >= 16 && key_job_intents >= 5 && department_coverage >= 5 && engineering_intents > 0 && medical_intents > 0)))
+	if(phase_cap >= 2 && (effective_ready_count >= 22 || (effective_ready_count >= 16 && effective_key_job_intents >= 5 && effective_department_coverage >= 5 && engineering_intents > 0 && medical_intents > 0)))
 		stage = 2
-	if(phase_cap >= 3 && (ready_count >= 38 || (ready_count >= 30 && key_job_intents >= 6 && department_coverage >= 6 && engineering_intents > 0 && medical_intents > 0 && security_intents > 0)))
+	if(phase_cap >= 3 && (effective_ready_count >= 38 || (effective_ready_count >= 30 && effective_key_job_intents >= 6 && effective_department_coverage >= 6 && engineering_intents > 0 && medical_intents > 0 && security_intents > 0)))
 		stage = 3
-	if(phase_cap >= 4 && (ready_count >= 52 || (ready_count >= 42 && key_job_intents >= 7 && department_coverage >= 7 && engineering_intents >= 2 && medical_intents >= 2 && security_intents > 0)))
+	if(phase_cap >= 4 && (effective_ready_count >= 52 || (effective_ready_count >= 42 && effective_key_job_intents >= 7 && effective_department_coverage >= 7 && engineering_intents >= 2 && medical_intents >= 2 && security_intents > 0)))
 		stage = 4
 
 	return clamp(stage, 1, phase_cap)
@@ -454,6 +459,7 @@ SUBSYSTEM_DEF(storyteller)
 	prep_phase_ends_at = world.time + STORYTELLER_DEFAULT_SETUP_PREP_DURATION
 
 	var/list/roster_data = build_pregame_roster_data()
+	frozen_roster_data = roster_data
 	if(!manual_profile_override)
 		select_profile_for_roster(roster_data)
 	if(!manual_phase_override)
@@ -573,6 +579,7 @@ SUBSYSTEM_DEF(storyteller)
 	manual_profile_override = FALSE
 	current_phase_max = 1
 	automatic_phase_floor = 1
+	frozen_roster_data = null
 	baseline_structure_captured = FALSE
 	baseline_station_breach_tiles = 0
 	baseline_broken_floor_count = 0
@@ -932,6 +939,64 @@ SUBSYSTEM_DEF(storyteller)
 	var/start_time = round_started_at || SSticker.round_start_time
 	return max(world.time - start_time, 0)
 
+/datum/controller/subsystem/storyteller/proc/get_security_readiness_score(datum/storyteller/state_snapshot/snapshot = current_snapshot)
+	if(!istype(snapshot))
+		return 0
+
+	var/crew_count = max(snapshot.alive_crew, snapshot.active_population, 1)
+	var/expected_security = max(round(crew_count / 8), 1)
+	var/staff_presence = clamp(snapshot.security_staff_count / expected_security, 0, 1.25)
+	var/staff_factor = clamp(snapshot.security_staff_count / expected_security, 0, 1)
+	var/casualty_resilience = clamp(1 - ((snapshot.recent_deaths + (snapshot.critical_crew_count * 0.5)) / max(snapshot.security_staff_count * 2, 1)), 0, 1)
+	var/alarm_control = clamp(1 - (snapshot.active_alarms / max(snapshot.security_staff_count * 6, 1)), 0, 1)
+	var/threat_control = clamp(1 - (snapshot.living_antag_count / max(snapshot.security_staff_count * 2, 1)), 0, 1)
+	var/readiness = (staff_presence * 50) + (casualty_resilience * 20 * staff_factor) + (alarm_control * 15 * staff_factor) + (threat_control * 15 * staff_factor)
+	return clamp(round(readiness), 0, 100)
+
+/datum/controller/subsystem/storyteller/proc/get_roundstart_security_readiness_score()
+	if(!islist(frozen_roster_data))
+		return 0
+
+	var/ready_count = frozen_roster_data["readyCount"] || 0
+	var/key_job_intents = frozen_roster_data["keyJobIntentCount"] || 0
+	var/department_coverage = frozen_roster_data["departmentCoverage"] || 0
+	var/list/department_intents = frozen_roster_data["departmentIntents"] || list()
+	var/security_intents = department_intents[ACCOUNT_SEC] || 0
+	var/expected_security = max(round(max(ready_count, 1) / 9), 1)
+	var/staff_presence = clamp(security_intents / expected_security, 0, 1.25)
+	var/staff_factor = clamp(security_intents / expected_security, 0, 1)
+	var/key_job_support = clamp(key_job_intents / 6, 0, 1)
+	var/coverage_support = clamp(department_coverage / 7, 0, 1)
+	var/readiness = (staff_presence * 70) + (key_job_support * 15 * staff_factor) + (coverage_support * 15 * staff_factor)
+	return clamp(round(readiness), 0, 100)
+
+/datum/controller/subsystem/storyteller/proc/get_antag_readiness_score(action_context)
+	if(action_context == STORYTELLER_CONTEXT_ROUNDSTART)
+		return get_roundstart_security_readiness_score()
+	return get_security_readiness_score()
+
+/datum/controller/subsystem/storyteller/proc/get_distress_stage_drop(datum/storyteller/state_snapshot/snapshot = current_snapshot)
+	if(!istype(snapshot) || !profile)
+		return 0
+
+	var/integrity_loss = clamp(1 - snapshot.station_integrity, 0, 1)
+	var/breach_pressure = clamp(snapshot.station_breach_tiles / 120, 0, 2)
+	var/floor_pressure = clamp(snapshot.broken_floor_count / 160, 0, 1.5)
+	var/frame_pressure = clamp((snapshot.damaged_window_count + snapshot.damaged_grille_count) / 120, 0, 1.5)
+	var/death_pressure = clamp(snapshot.recent_deaths / 3, 0, 2.5)
+	var/explosion_pressure = clamp(snapshot.recent_explosions / 2, 0, 2.5)
+	var/critical_pressure = clamp(snapshot.critical_crew_count / max(snapshot.alive_crew / 6, 1), 0, 2)
+	var/distress_score = ((death_pressure * 1) + (explosion_pressure * 1.15) + (breach_pressure * 0.9) + (floor_pressure * 0.45) + (frame_pressure * 0.4) + (integrity_loss * 1.4) + (critical_pressure * 0.75)) * profile.escalation_decay_multiplier
+
+	var/stage_drop = 0
+	if(distress_score >= 1.25)
+		stage_drop++
+	if(distress_score >= 2.75)
+		stage_drop++
+	if(distress_score >= 4.5)
+		stage_drop++
+	return stage_drop
+
 /datum/controller/subsystem/storyteller/proc/calculate_content_stage()
 	var/stage = 1
 	if(phase_cap <= 1)
@@ -939,19 +1004,28 @@ SUBSYSTEM_DEF(storyteller)
 
 	var/elapsed = get_round_elapsed()
 	var/population = max(current_snapshot?.alive_crew || 0, current_snapshot?.active_population || 0)
+	var/control = current_snapshot?.control_score || 0
 	var/danger = current_snapshot?.danger_score || 0
-	var/deaths = current_snapshot?.recent_deaths || 0
-	var/explosions = current_snapshot?.recent_explosions || 0
 	var/active_antags = current_snapshot?.living_antag_count || 0
+	var/security_readiness = get_security_readiness_score()
+	var/stability_margin = max(control - danger, 0)
+	var/rise_multiplier = profile?.escalation_rise_multiplier || 1
+	var/effective_elapsed = elapsed * rise_multiplier
+	var/effective_population = round(population * rise_multiplier)
+	var/effective_stability = round(stability_margin * rise_multiplier)
+	var/effective_security = round(security_readiness * rise_multiplier)
 
-	if(phase_cap >= 2 && (elapsed >= 25 MINUTES || population >= 18 || danger >= 35 || active_antags >= 2))
+	if(phase_cap >= 2 && (effective_elapsed >= 25 MINUTES || effective_population >= 18 || effective_stability >= 35 || (active_antags >= 2 && effective_security >= 35)))
 		stage = 2
-	if(phase_cap >= 3 && (elapsed >= 50 MINUTES || population >= 32 || danger >= 60 || active_antags >= 4 || deaths >= 3 || explosions >= 2))
+	if(phase_cap >= 3 && (effective_elapsed >= 50 MINUTES || effective_population >= 32 || effective_stability >= 55 || (active_antags >= 4 && effective_security >= 55)))
 		stage = 3
-	if(phase_cap >= 4 && (elapsed >= 75 MINUTES || population >= 45 || danger >= 80 || active_antags >= 6 || deaths >= 6 || explosions >= 4))
+	if(phase_cap >= 4 && (effective_elapsed >= 75 MINUTES || effective_population >= 45 || effective_stability >= 72 || (active_antags >= 6 && effective_security >= 70)))
 		stage = 4
 
-	stage = max(stage, automatic_phase_floor)
+	var/distress_stage_drop = get_distress_stage_drop()
+	stage = max(1, stage - distress_stage_drop)
+	var/floor_stage = max(1, automatic_phase_floor - distress_stage_drop)
+	stage = max(stage, floor_stage)
 	return clamp(stage, 1, phase_cap)
 
 /datum/controller/subsystem/storyteller/proc/update_content_stage()
@@ -960,8 +1034,12 @@ SUBSYSTEM_DEF(storyteller)
 	var/new_phase = calculate_content_stage()
 	if(new_phase == current_phase_max)
 		return
+	var/previous_phase = current_phase_max
 	current_phase_max = new_phase
-	record_decision("Storyteller content stage advanced to [current_phase_max].")
+	if(current_phase_max > previous_phase)
+		record_decision("Storyteller content stage advanced to [current_phase_max].")
+	else
+		record_decision("Storyteller content stage fell back to [current_phase_max].")
 
 /datum/controller/subsystem/storyteller/proc/is_channel_ready(action_polarity)
 	if(has_pending_storyteller_scheduled_action(action_polarity))

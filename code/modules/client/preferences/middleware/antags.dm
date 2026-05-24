@@ -56,6 +56,13 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 
 		antags += special_role
 
+	for(var/list/group as anything in get_linked_antag_preference_groups())
+		if(!islist(group) || !length(group))
+			continue
+		if(!length(antags & group))
+			continue
+		antags |= group
+
 	if (toggled)
 		preferences.be_special |= antags
 	else

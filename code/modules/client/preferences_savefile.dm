@@ -579,12 +579,28 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	importer.ui_interact(usr)
 
+/proc/get_linked_antag_preference_groups()
+	var/static/list/groups = list(
+		list(
+			ROLE_VAMPIRE,
+			ROLE_VAMPIRIC_ACCIDENT,
+		),
+	)
+	return groups
+
 /datum/preferences/proc/sanitize_be_special(list/input_be_special)
 	var/list/output = list()
 
 	for (var/role in input_be_special)
 		if (role in get_all_antag_flags())
 			output += role
+
+	for(var/list/group as anything in get_linked_antag_preference_groups())
+		if(!islist(group) || !length(group))
+			continue
+		if(!length(output & group))
+			continue
+		output |= group
 
 	return output.len == input_be_special.len ? input_be_special : output
 

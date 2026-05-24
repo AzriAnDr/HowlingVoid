@@ -175,10 +175,11 @@
 		var/list/primary_objectives = list()
 		for(var/datum/objective/task as anything in uplink_handler.primary_objectives)
 			var/list/task_data = list()
-			if(length(primary_objectives) > length(GLOB.phonetic_alphabet))
-				task_data["task_name"] = "DIRECTIVE [length(primary_objectives) + 1]" //The english alphabet is WEAK
+			var/directive_number = length(primary_objectives) + 1
+			if(directive_number > length(GLOB.uplink_unlock_words))
+				task_data["task_name"] = "DIRECTIVE [directive_number]"
 			else
-				task_data["task_name"] = "DIRECTIVE [uppertext(GLOB.phonetic_alphabet[length(primary_objectives) + 1])]"
+				task_data["task_name"] = "DIRECTIVE [uppertext(GLOB.uplink_unlock_words[directive_number])]"
 			task_data["task_text"] = task.explanation_text
 			primary_objectives += list(task_data)
 		data["primary_objectives"] = primary_objectives
@@ -393,10 +394,10 @@
 	var/returnable_code = ""
 
 	if(istype(parent, /obj/item/modular_computer))
-		returnable_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
+		returnable_code = "[rand(100,999)] [pick(GLOB.uplink_unlock_words)]"
 
 	else if(istype(parent, /obj/item/radio))
-		returnable_code = "[pick(GLOB.phonetic_alphabet)] [pick(GLOB.phonetic_alphabet)] [pick(GLOB.phonetic_alphabet)]"
+		returnable_code = "[pick(GLOB.uplink_unlock_words)] [pick(GLOB.uplink_unlock_words)] [pick(GLOB.uplink_unlock_words)]"
 
 	else if(istype(parent, /obj/item/pen))
 		returnable_code = list()

@@ -25,11 +25,11 @@
 //	cost = 5
 
 /datum/uplink_item/device_tools/emag
-	cost = /datum/uplink_item/low_cost::cost
-//	cost = 4
+	cost = 7
 
 /datum/uplink_item/device_tools/doorjack
 	cost = /datum/uplink_item/low_cost::cost
+	purchasable_from = NONE
 //	cost = 3
 
 /datum/uplink_item/device_tools/frame

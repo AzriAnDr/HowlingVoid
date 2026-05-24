@@ -11,6 +11,8 @@
 	var/list/combined_access
 	var/cached_flat_icon
 	var/overlay_icon_state = "wallet_overlay"
+	/// Controls whether the front ID's icon should be shown as an overlay.
+	var/show_front_id_overlay = TRUE
 
 /obj/item/storage/wallet/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -67,9 +69,11 @@
 	cached_flat_icon = null
 	if(!front_id)
 		return
-	. += mutable_appearance(front_id.icon, front_id.icon_state)
-	. += front_id.overlays
-	. += mutable_appearance(icon, overlay_icon_state)
+	if(show_front_id_overlay)
+		. += mutable_appearance(front_id.icon, front_id.icon_state)
+		. += front_id.overlays
+	if(overlay_icon_state)
+		. += mutable_appearance(icon, overlay_icon_state)
 
 /obj/item/storage/wallet/proc/get_cached_flat_icon()
 	if(!cached_flat_icon)
@@ -118,6 +122,25 @@
 		return combined_access
 	else
 		return ..()
+
+/obj/item/storage/wallet/tailbag
+	name = "tailbag"
+	desc = "A bag for holding small items. It fastens around the base of the tail."
+	icon_state = "tailbag"
+	worn_icon_state = "nothing"
+	overlay_icon_state = null
+	show_front_id_overlay = FALSE
+
+/obj/item/storage/wallet/tailbag/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 6
+	atom_storage.can_hold += typecacheof(list(
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/laser_pointer,
+		/obj/item/modular_computer/pda,
+		/obj/item/pai_card,
+	))
 
 /obj/item/storage/wallet/random
 	icon_state = "random_wallet" // for mapping purposes

@@ -9,12 +9,13 @@
 /datum/preference_middleware/quirks/pre_set_preference(mob/user, preference, value)
 	if(preference != "species")
 		return
+	preferences.sanitize_quirks()
 	var/list/incompatible_quirks
 	var/selected_species_type = GLOB.species_list[value]
 	for(var/quirk_name in preferences.all_quirks)
 		var/quirk_path = SSquirks.quirks[quirk_name]
 		var/datum/quirk/quirk_prototype = SSquirks.quirk_prototypes[quirk_path]
-		if(!quirk_prototype.is_species_appropriate(selected_species_type))
+		if(isnull(quirk_prototype) || !quirk_prototype.is_species_appropriate(selected_species_type))
 			LAZYADD(incompatible_quirks, quirk_name)
 	if(!LAZYLEN(incompatible_quirks))
 		return
@@ -106,6 +107,9 @@
 	//NOVA EDIT ADDITION
 	var/list/quirks = SSquirks.get_quirks()
 	var/datum/quirk/quirk = quirks[quirk_name]
+	if(isnull(quirk))
+		preferences.update_static_data(user, always_instant = TRUE)
+		return TRUE
 	if(initial(quirk.nova_stars_only) && !SSplayer_ranks.is_nova_star(preferences?.parent))
 		return FALSE
 	//NOVA EDIT END
@@ -146,15 +150,31 @@
 
 /datum/preference_middleware/quirks/proc/get_selected_quirks()
 	var/list/selected_quirks = list()
+	if(!islist(preferences.all_quirks))
+		preferences.all_quirks = list()
+		return selected_quirks
+
+	var/list/sanitized_quirks = list()
+	var/quirks_changed = FALSE
+	var/list/quirks = SSquirks.get_quirks()
 
 	for (var/quirk in preferences.all_quirks)
 		//NOVA EDIT ADDITION
-		var/list/quirks = SSquirks.get_quirks()
 		var/datum/quirk/quirk_datum = quirks[quirk]
+		if(isnull(quirk_datum))
+			quirks_changed = TRUE
+			continue
 		if(initial(quirk_datum.nova_stars_only) && !SSplayer_ranks.is_nova_star(preferences?.parent))
-			preferences.all_quirks -= quirk
+			quirks_changed = TRUE
+			continue
+		if(quirk in sanitized_quirks)
+			quirks_changed = TRUE
 			continue
 		//NOVA EDIT END
+		sanitized_quirks += quirk
 		selected_quirks += sanitize_css_class_name(quirk)
+
+	if(quirks_changed)
+		preferences.all_quirks = sanitized_quirks
 
 	return selected_quirks

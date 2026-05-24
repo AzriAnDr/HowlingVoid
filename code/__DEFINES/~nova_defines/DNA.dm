@@ -81,9 +81,11 @@
 
 #define TESTICLES_MIN_SIZE 0
 #define TESTICLES_MAX_SIZE 3
-#define BUTT_MIN_SIZE 1
+#define BUTT_MIN_SIZE 0
+#define BUTT_DEFAULT_SIZE 1
 #define BUTT_MAX_SIZE 2
-#define BELLY_MIN_SIZE 1
+#define BELLY_MIN_SIZE 0
+#define BELLY_DEFAULT_SIZE 1
 #define BELLY_MAX_SIZE 3
 
 #define SHEATH_NONE	SPRITE_ACCESSORY_NONE
@@ -151,10 +153,10 @@
 	"vagina_uses_skincolor" = TRUE,\
 	"breasts_uses_skintones" = TRUE,\
 	"breasts_uses_skincolor" = TRUE,\
-	"butt_size" = BUTT_MIN_SIZE,\
+	"butt_size" = BUTT_DEFAULT_SIZE,\
 	"butt_uses_skintones" = TRUE,\
 	"butt_uses_skincolor" = TRUE,\
-	"belly_size" = BELLY_MIN_SIZE,\
+	"belly_size" = BELLY_DEFAULT_SIZE,\
 	"belly_uses_skintones" = TRUE,\
 	"belly_uses_skincolor" = TRUE,\
 )

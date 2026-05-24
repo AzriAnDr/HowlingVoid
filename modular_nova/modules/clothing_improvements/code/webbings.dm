@@ -4,7 +4,7 @@
 	icon = 'modular_nova/master_files/icons/obj/clothing/accessories.dmi'
 	worn_icon = 'modular_nova/master_files/icons/mob/clothing/accessories.dmi'
 	icon_state = "webbing"
-	minimize_when_attached = FALSE
+	minimize_when_attached = TRUE
 	attachment_slot = NONE
 
 /datum/storage/pockets/webbing

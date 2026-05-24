@@ -1,7 +1,7 @@
 // Note: Everyone knows what an emag is, both IC and OOC, they even make toy lookalikes.
 /obj/item/card/emag
 	special_desc_requirement = EXAMINE_CHECK_SYNDICATE
-	special_desc = "An specially modified ID card used to break machinery and disable safeties. Notoriously used by Syndicate agents."
+	special_desc = "A specially modified ID card used to break machinery, disable safeties, and disrupt airlock electronics with a self-recharging override module. Notoriously used by Syndicate agents."
 
 // The 'closer inspection' extra desc for these goes in special_desc
 /obj/item/card/emagfake

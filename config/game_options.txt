@@ -83,7 +83,7 @@ ALERT_RED_UPTO There is an immediate serious threat to the station. Random searc
 ALERT_RED_DOWNTO The station's destruction has been averted. There is still however an immediate serious threat to the station. Random searches are allowed and advised.
 ALERT_DELTA Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
 
-## The total weight of station goals possible for a round (allows multiple goals)
+## The minimum station goal budget. Dynamic rounds scale above this by roundstart ready player count.
 STATION_GOAL_BUDGET 1
 
 ## If TRUE / 1, station is raised to blue alert at roundstart.

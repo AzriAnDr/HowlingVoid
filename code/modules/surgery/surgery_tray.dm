@@ -175,7 +175,7 @@
 		/obj/item/clothing/mask/surgical,
 		/obj/item/clothing/suit/toggle/labcoat/nova/surgical_gown, // NOVA EDIT ADDITION
 		/obj/item/hemostat,
-		/obj/item/razor/surgery,
+		/obj/item/storage/pill_bottle/painkiller,
 		/obj/item/retractor,
 		/obj/item/scalpel,
 		/obj/item/stack/medical/bone_gel,

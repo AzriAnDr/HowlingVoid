@@ -658,6 +658,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//NOVA EDIT ADDITION
 	for(var/key in augments)
 		var/datum/augment_item/aug = GLOB.augment_items[augments[key]]
+		if(isnull(aug))
+			continue
 		bal -= aug.cost
 	//NOVA EDIT END
 	return bal
@@ -692,12 +694,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return 0
 
 /datum/preferences/proc/validate_quirks()
+	sanitize_quirks()
 	var/datum/species/species_type = read_preference(/datum/preference/choiced/species)
 	var/list/quirks_removed
 	for(var/quirk_name in all_quirks)
 		var/quirk_path = SSquirks.quirks[quirk_name]
 		var/datum/quirk/quirk_prototype = SSquirks.quirk_prototypes[quirk_path]
-		if(!quirk_prototype.is_species_appropriate(species_type))
+		if(isnull(quirk_prototype) || !quirk_prototype.is_species_appropriate(species_type))
 			all_quirks -= quirk_name
 			LAZYADD(quirks_removed, quirk_name)
 	var/list/feedback

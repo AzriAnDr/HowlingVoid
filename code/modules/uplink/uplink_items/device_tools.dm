@@ -121,6 +121,7 @@
 			After hacking a certain number of airlocks, the device will require some time to recharge."
 	item = /obj/item/card/emag/doorjack
 	cost = 3
+	purchasable_from = NONE
 
 /datum/uplink_item/device_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
@@ -215,9 +216,9 @@
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
 	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
-			in electronic devices, subverts intended functions, and easily breaks security mechanisms. Cannot be used to open airlocks."
+			in electronic devices, subverts intended functions, easily breaks security mechanisms, and overrides airlock access codes with self-recharging charges."
 	item = /obj/item/card/emag
-	cost = 4
+	cost = 7
 
 /datum/uplink_item/device_tools/stimpack
 	name = "Stimpack"
