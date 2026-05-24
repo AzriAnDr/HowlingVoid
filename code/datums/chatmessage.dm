@@ -11,13 +11,11 @@
 /// Factor of how much height will account to exponential decay
 #define CHAT_MESSAGE_HEIGHT_DECAY 0.9
 /// Approximate height in pixels of an 'average' line, used for height decay
-#define CHAT_MESSAGE_APPROX_LHEIGHT 12
+#define CHAT_MESSAGE_APPROX_LHEIGHT 11
 /// Max width of chat message in pixels
-#define CHAT_MESSAGE_WIDTH 160
+#define CHAT_MESSAGE_WIDTH 112
 /// The dimensions of the chat message icons
 #define CHAT_MESSAGE_ICON_SIZE 9
-/// Font styling used for runechat text. TinyUnicode keeps Cyrillic readable in BYOND maptext.
-#define CHAT_MESSAGE_FONT_STYLE "font-family: \"TinyUnicode\"; font-size: 9pt; line-height: 1; -dm-text-outline: 1px black;"
 
 ///Base layer of chat elements
 #define CHAT_LAYER 1
@@ -185,11 +183,9 @@
 
 	// We dim italicized text to make it more distinguishable from regular text
 	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
-	var/list/display_classes = extra_classes.Copy()
-	display_classes -= "italics" // Italic TinyUnicode falls back to an unreadably small maptext font.
 
 	// Approximate text height
-	var/complete_text = MAPTEXT("<span style='[CHAT_MESSAGE_FONT_STYLE] color: [tgt_color]'><span class='center [display_classes.Join(" ")]'>[owner.apply_message_emphasis(text)]</span></span>")
+	var/complete_text = "<span style='color: [tgt_color]'><span class='center [extra_classes.Join(" ")]'>[owner.apply_message_emphasis(text)]</span></span>"
 
 	var/mheight
 	WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH), mheight)
@@ -278,7 +274,7 @@
 	message.maptext_width = CHAT_MESSAGE_WIDTH
 	message.maptext_height = mheight * 1.25 // We add extra because some characters are superscript, like actions
 	message.maptext_x = (CHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5
-	message.maptext = complete_text
+	message.maptext = MAPTEXT(complete_text)
 
 	animate_start = rough_time
 	animate_lifespan = lifespan
@@ -356,7 +352,6 @@
 #undef CHAT_MESSAGE_EXP_DECAY
 #undef CHAT_MESSAGE_HEIGHT_DECAY
 #undef CHAT_MESSAGE_ICON_SIZE
-#undef CHAT_MESSAGE_FONT_STYLE
 #undef CHAT_MESSAGE_LIFESPAN
 #undef CHAT_MESSAGE_SPAWN_TIME
 #undef CHAT_MESSAGE_WIDTH
