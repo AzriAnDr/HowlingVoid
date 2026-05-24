@@ -1,13 +1,13 @@
 /// Assoc list of mutation names to list of restricted species typepaths
 /// Add more entries here to restrict additional mutations from specific species
 GLOBAL_LIST_INIT(genetic_mutation_species_restrictions, list(
-	"Restorative metabolism" = list(
+	"Restorative Metabolism" = list(
 		/datum/species/jelly,
 		/datum/species/hemophage,
 		/datum/species/pod,
 		/datum/species/shadekin,
 	),
-	"Cold adaptation" = list(
+	"Cold Adaptation" = list(
 		/datum/species/jelly,
 	),
 ))
@@ -44,35 +44,32 @@ GLOBAL_LIST_INIT(genetic_mutation_choice, list(
 
 /datum/quirk_constant_data/genetic_mutation
 	associated_typepath = /datum/quirk/genetic_mutation
-	customization_options = list(/datum/preference/choiced/genetic_mutation)
 
 /datum/quirk/genetic_mutation/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/mutation_path = GLOB.genetic_mutation_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/genetic_mutation)]
-	applied_mutation = mutation_path
-	human_holder.dna.add_mutation(applied_mutation, MUTATION_SOURCE_MUTATOR, 0)
+	applied_mutation = pick_random_mutation(human_holder.dna.species.type)
+	if(isnull(applied_mutation))
+		stack_trace("Genetic Mutation could not find a valid mutation for [human_holder] with species [human_holder.dna.species.type].")
+		return
+
+	human_holder.dna.add_mutation(applied_mutation, MUTATION_SOURCE_MUTATOR)
 
 /datum/quirk/genetic_mutation/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.dna.remove_mutation(applied_mutation, MUTATION_SOURCE_MUTATOR)
 
-/datum/preference/choiced/genetic_mutation
-	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
-	savefile_key = "genetic_mutation"
-	savefile_identifier = PREFERENCE_CHARACTER
+/datum/quirk/genetic_mutation/proc/pick_random_mutation(datum/species/species_type)
+	var/list/valid_mutation_names = list()
 
-/datum/preference/choiced/genetic_mutation/init_possible_values()
-	return GLOB.genetic_mutation_choice
+	for(var/mutation_name in GLOB.genetic_mutation_choice)
+		if(is_mutation_restricted_for_species(mutation_name, species_type))
+			continue
+		valid_mutation_names += mutation_name
 
-/datum/preference/choiced/genetic_mutation/create_default_value()
-	return "Strength"
+	if(!length(valid_mutation_names))
+		return null
 
-/datum/preference/choiced/genetic_mutation/is_accessible(datum/preferences/preferences)
-	. = ..()
-	if (!.)
-		return FALSE
-
-	return "Genetic Mutation" in preferences.all_quirks
+	return GLOB.genetic_mutation_choice[pick(valid_mutation_names)]
 
 /// Helper proc to check if a mutation is restricted for a given species
 /// Returns TRUE if the mutation is restricted (not allowed), FALSE otherwise
@@ -86,20 +83,3 @@ GLOBAL_LIST_INIT(genetic_mutation_choice, list(
 			return TRUE
 
 	return FALSE
-
-/datum/preference/choiced/genetic_mutation/is_valid(value, datum/preferences/preferences)
-	// First check if the value is in the allowed choices
-	if(!(value in get_choices()))
-		return FALSE
-
-	var/datum/species/mob_species = preferences.read_preference(/datum/preference/choiced/species)
-
-	// Check if this mutation is restricted for the selected species
-	if(is_mutation_restricted_for_species(value, mob_species))
-		to_chat(preferences.parent, span_warning("[value] is not compatible with your current species."))
-		return FALSE
-
-	return TRUE
-
-/datum/preference/choiced/genetic_mutation/apply_to_human(mob/living/carbon/human/target, value)
-	return
