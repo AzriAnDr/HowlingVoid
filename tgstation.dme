@@ -9920,4 +9920,6 @@
 #include "code\modules\antagonists\tgmc_xenos\code\xeno_types\rouny.dm"
 #include "code\modules\antagonists\tgmc_xenos\code\xeno_types\sentinel.dm"
 #include "code\modules\antagonists\tgmc_xenos\code\xeno_types\spitter.dm"
+#include "modular_void\code\modules\deepspaceS\code\encrkey.dm"
+#include "modular_void\code\modules\deepspaceS\code\research.dm"
 // END_INCLUDE
