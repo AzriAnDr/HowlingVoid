@@ -3,15 +3,6 @@
 #define NIGHTSHIFT_COLOR_MODIFIER 0.15
 
 /obj/machinery/light
-	brightness = 7.5
-	bulb_colour = COLOR_OFF_WHITE
-	bulb_power = 0.9
-	nightshift_light_color = null // Let the dynamic night shift color code handle this.
-	bulb_low_power_colour = LIGHT_COLOR_BROWN
-	bulb_low_power_brightness_mul = 0.75
-	bulb_low_power_pow_min = 0.75
-	bulb_emergency_colour = LIGHT_COLOR_INTENSE_RED
-	bulb_major_emergency_brightness_mul = 0.9
 	var/maploaded = FALSE //So we don't have a lot of stress on startup.
 	var/turning_on = FALSE //More stress stuff.
 	var/constant_flickering = FALSE // Are we always flickering?

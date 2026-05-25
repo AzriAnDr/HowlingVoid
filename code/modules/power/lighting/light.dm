@@ -21,11 +21,11 @@
 	///Amount of power used
 	var/static_power_used = 0
 	///Luminosity when on, also used in power calculation
-	var/brightness = 8
+	var/brightness = 7.5
 	///Basically the alpha of the emitted light source
-	var/bulb_power = 1
+	var/bulb_power = 0.9
 	///Default colour of the light.
-	var/bulb_colour = LIGHT_COLOR_DEFAULT
+	var/bulb_colour = COLOR_OFF_WHITE
 	///LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/status = LIGHT_OK
 	///Should we flicker?
@@ -52,7 +52,7 @@
 	///Alpha of the nightshift light
 	var/nightshift_light_power = 0.45
 	///Basecolor of the nightshift light
-	var/nightshift_light_color = "#FFDDCC"
+	var/nightshift_light_color = null // Let the dynamic night shift color code handle this.
 	///If true, the light is in low power mode
 	var/low_power_mode = FALSE
 	///If true, this light cannot ever be in low power mode
@@ -60,17 +60,17 @@
 	///If true, overrides lights to use emergency lighting
 	var/major_emergency = FALSE
 	///Multiplier for this light's base brightness during a cascade
-	var/bulb_major_emergency_brightness_mul = 0.75
+	var/bulb_major_emergency_brightness_mul = 0.9
 	///Colour of the light when major emergency mode is on
-	var/bulb_emergency_colour = "#ff4e4e"
+	var/bulb_emergency_colour = LIGHT_COLOR_INTENSE_RED
 	///Multiplier for this light's base brightness in low power power mode
-	var/bulb_low_power_brightness_mul = 0.25
+	var/bulb_low_power_brightness_mul = 0.75
 	///Determines the colour of the light while it's in low power mode
-	var/bulb_low_power_colour = COLOR_VIVID_RED
+	var/bulb_low_power_colour = LIGHT_COLOR_BROWN
 	///The multiplier for determining the light's power in low power mode
 	var/bulb_low_power_pow_mul = 0.75
 	///The minimum value for the light's power in low power mode
-	var/bulb_low_power_pow_min = 0.5
+	var/bulb_low_power_pow_min = 0.75
 	///The Light range to use when working in fire alarm status
 	var/fire_brightness = 9
 	///The Light power to use when working in fire alarm status
