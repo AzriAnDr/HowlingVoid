@@ -117,6 +117,10 @@
 	icon = 'icons/organs/skrell_organ.dmi'
 	icon_state = "brain2"
 
+/obj/item/organ/brain/skrell/on_mob_insert(mob/living/carbon/brain_owner, special, movement_flags)
+	. = ..()
+	brain_owner.add_psionic(/datum/psionic/sensitive)
+
 /obj/item/organ/eyes/skrell
 	name = "amphibian eyes"
 	desc = "Large black orbs."
