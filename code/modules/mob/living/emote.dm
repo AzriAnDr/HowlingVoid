@@ -5,6 +5,105 @@
 	mob_type_allowed_typecache = /mob/living
 	mob_type_blacklist_typecache = list(/mob/living/brain)
 
+/datum/emote/living/proc/get_selected_scream_sound(mob/living/carbon/human/human_user)
+	var/datum/scream_type/selected_scream = human_user.selected_scream
+	if(isnull(selected_scream))
+		return
+	if(human_user.gender == FEMALE && LAZYLEN(selected_scream.female_screamsounds))
+		return pick(selected_scream.female_screamsounds)
+	if(LAZYLEN(selected_scream.male_screamsounds))
+		return pick(selected_scream.male_screamsounds)
+	if(LAZYLEN(selected_scream.female_screamsounds))
+		return pick(selected_scream.female_screamsounds)
+
+/datum/emote/living/proc/get_default_scream_sound(mob/living/carbon/human/human_user)
+	if(human_user.gender == FEMALE)
+		return pick(
+			'sound/mobs/humanoids/human/scream/femalescream_1.ogg',
+			'sound/mobs/humanoids/human/scream/femalescream_2.ogg',
+			'sound/mobs/humanoids/human/scream/femalescream_3.ogg',
+			'sound/mobs/humanoids/human/scream/femalescream_4.ogg',
+			'sound/mobs/humanoids/human/scream/femalescream_5.ogg',
+		)
+	if(prob(1))
+		return 'sound/mobs/humanoids/human/scream/wilhelm_scream.ogg'
+	return pick(
+		'sound/mobs/humanoids/human/scream/malescream_1.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_2.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_3.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_4.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_5.ogg',
+		'sound/mobs/humanoids/human/scream/malescream_6.ogg',
+	)
+
+/datum/emote/living/proc/get_selected_laugh_sound(mob/living/carbon/human/human_user)
+	var/datum/laugh_type/selected_laugh = human_user.selected_laugh
+	if(isnull(selected_laugh))
+		return
+	if(human_user.gender == FEMALE && LAZYLEN(selected_laugh.female_laughsounds))
+		return pick(selected_laugh.female_laughsounds)
+	if(LAZYLEN(selected_laugh.male_laughsounds))
+		return pick(selected_laugh.male_laughsounds)
+	if(LAZYLEN(selected_laugh.female_laughsounds))
+		return pick(selected_laugh.female_laughsounds)
+
+/datum/emote/living/proc/get_default_laugh_sound(mob/living/carbon/human/human_user)
+	if(human_user.gender == FEMALE)
+		return pick(
+			'sound/emotes/emotes/female/female_giggle_1.ogg',
+			'sound/emotes/emotes/female/female_giggle_2.ogg',
+		)
+	return pick(
+		'sound/mobs/humanoids/human/laugh/manlaugh1.ogg',
+		'sound/mobs/humanoids/human/laugh/manlaugh2.ogg',
+	)
+
+/datum/emote/living/proc/get_default_cough_sound(mob/living/carbon/human/human_user)
+	if(human_user.gender == FEMALE)
+		return pick(
+			'sound/mobs/humanoids/human/cough/female_cough1.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough2.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough3.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough4.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough5.ogg',
+			'sound/mobs/humanoids/human/cough/female_cough6.ogg',
+		)
+	return pick(
+		'sound/mobs/humanoids/human/cough/male_cough1.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough2.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough3.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough4.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough5.ogg',
+		'sound/mobs/humanoids/human/cough/male_cough6.ogg',
+	)
+
+/datum/emote/living/proc/get_default_cry_sound(mob/living/carbon/human/human_user)
+	if(human_user.gender == FEMALE)
+		return pick(
+			'sound/mobs/humanoids/human/cry/female_cry1.ogg',
+			'sound/mobs/humanoids/human/cry/female_cry2.ogg',
+		)
+	return pick(
+		'sound/mobs/humanoids/human/cry/male_cry1.ogg',
+		'sound/mobs/humanoids/human/cry/male_cry2.ogg',
+		'sound/mobs/humanoids/human/cry/male_cry3.ogg',
+	)
+
+/datum/emote/living/proc/get_default_sigh_sound(mob/living/carbon/human/human_user)
+	if(human_user.gender == FEMALE)
+		return SFX_FEMALE_SIGH
+	return SFX_MALE_SIGH
+
+/datum/emote/living/proc/get_default_sneeze_sound(mob/living/carbon/human/human_user)
+	if(human_user.gender == FEMALE)
+		return 'sound/mobs/humanoids/human/sneeze/female_sneeze1.ogg'
+	return 'sound/mobs/humanoids/human/sneeze/male_sneeze1.ogg'
+
+/datum/emote/living/proc/get_default_snore_sound(mob/living/carbon/human/human_user)
+	if(human_user.gender == FEMALE)
+		return SFX_SNORE_FEMALE
+	return SFX_SNORE_MALE
+
 /datum/emote/living/taunt
 	key = "taunt"
 	key_third_person = "taunts"
@@ -66,6 +165,17 @@
 	message = "chokes!"
 	message_mime = "chokes silently!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
+/datum/emote/living/choke/get_sound(mob/living/user)
+	if(!iscarbon(user))
+		return
+	return pick(
+		'sound/mobs/humanoids/human/gag_vomit/gag1.ogg',
+		'sound/mobs/humanoids/human/gag_vomit/gag2.ogg',
+		'sound/mobs/humanoids/human/gag_vomit/gag3.ogg',
+		'sound/mobs/humanoids/human/gag_vomit/gag4.ogg',
+		'sound/mobs/humanoids/human/gag_vomit/gag5.ogg',
+	)
 
 /datum/emote/living/cross
 	key = "cross"
@@ -201,6 +311,17 @@
 	message_mime = "gags silently."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
+/datum/emote/living/gag/get_sound(mob/living/user)
+	if(!iscarbon(user))
+		return
+	return pick(
+		'sound/mobs/humanoids/human/gag_vomit/gag1.ogg',
+		'sound/mobs/humanoids/human/gag_vomit/gag2.ogg',
+		'sound/mobs/humanoids/human/gag_vomit/gag3.ogg',
+		'sound/mobs/humanoids/human/gag_vomit/gag4.ogg',
+		'sound/mobs/humanoids/human/gag_vomit/gag5.ogg',
+	)
+
 /datum/emote/living/gasp
 	key = "gasp"
 	key_third_person = "gasps"
@@ -212,6 +333,12 @@
 /datum/emote/living/gasp/get_sound(mob/living/user)
 	if(HAS_MIND_TRAIT(user, TRAIT_MIMING))
 		return
+	if(isxenohybrid(user))
+		return pick(
+			'sound/mobs/non-humanoids/hiss/lowHiss2.ogg',
+			'sound/mobs/non-humanoids/hiss/lowHiss3.ogg',
+			'sound/mobs/non-humanoids/hiss/lowHiss4.ogg',
+		)
 	if(!ishuman(user))
 		return
 
@@ -242,6 +369,15 @@
 	message = "giggles."
 	message_mime = "giggles silently!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
+/datum/emote/living/giggle/get_sound(mob/living/user)
+	var/mob/living/carbon/human/human_user = user
+	if(!istype(human_user))
+		return
+	var/giggle_sound = get_selected_laugh_sound(human_user)
+	if(giggle_sound)
+		return giggle_sound
+	return get_default_laugh_sound(human_user)
 
 /datum/emote/living/glare
 	key = "glare"
@@ -315,10 +451,17 @@
 /datum/emote/living/laugh/can_run_emote(mob/living/user, status_check = TRUE , intentional, params)
 	return ..() && user.can_speak(allow_mimes = TRUE)
 
-/datum/emote/living/laugh/get_sound(mob/living/carbon/human/user)
-	if(!istype(user))
+/datum/emote/living/laugh/get_sound(mob/living/user)
+	var/mob/living/carbon/human/human_user = user
+	if(!istype(human_user))
 		return
-	return user.dna.species.get_laugh_sound(user)
+	var/laugh_sound = get_selected_laugh_sound(human_user)
+	if(laugh_sound)
+		return laugh_sound
+	laugh_sound = human_user.dna?.species?.get_laugh_sound(human_user)
+	if(laugh_sound)
+		return laugh_sound
+	return get_default_laugh_sound(human_user)
 
 /datum/emote/living/look
 	key = "look"
@@ -387,7 +530,12 @@
 /datum/emote/living/sneeze/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
-	return user.dna.species.get_sneeze_sound(user)
+	if(isvox(user))
+		return 'sound/emotes/emotes/voxsneeze.ogg'
+	var/sneeze_sound = user.dna?.species?.get_sneeze_sound(user)
+	if(sneeze_sound)
+		return sneeze_sound
+	return get_default_sneeze_sound(user)
 
 /datum/emote/living/cough
 	key = "cough"
@@ -403,7 +551,12 @@
 /datum/emote/living/cough/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
-	return user.dna.species.get_cough_sound(user)
+	if(isvox(user))
+		return 'sound/emotes/emotes/voxcough.ogg'
+	var/cough_sound = user.dna?.species?.get_cough_sound(user)
+	if(cough_sound)
+		return cough_sound
+	return get_default_cough_sound(user)
 
 /datum/emote/living/wheeze
 	key = "wheeze"
@@ -439,10 +592,37 @@
 		return "makes a loud and pained whimper."
 
 /datum/emote/living/scream/get_sound(mob/living/user)
-	if(!ishuman(user))
+	if(issilicon(user))
+		var/mob/living/silicon/silicon_user = user
+		var/datum/scream_type/selected_scream = silicon_user.selected_scream
+		if(!isnull(selected_scream))
+			if(silicon_user.gender == FEMALE && LAZYLEN(selected_scream.female_screamsounds))
+				return pick(selected_scream.female_screamsounds)
+			if(LAZYLEN(selected_scream.male_screamsounds))
+				return pick(selected_scream.male_screamsounds)
+			if(LAZYLEN(selected_scream.female_screamsounds))
+				return pick(selected_scream.female_screamsounds)
+		return 'sound/emotes/voice/scream_silicon.ogg'
+	if(ismonkey(user))
+		return 'sound/emotes/voice/scream_monkey.ogg'
+	if(isdrone(user))
+		return 'sound/emotes/voice/scream_silicon.ogg'
+	if(istype(user, /mob/living/basic/gorilla))
+		return 'sound/mobs/non-humanoids/gorilla/gorilla.ogg'
+	if(isalien(user))
+		return 'sound/mobs/non-humanoids/hiss/hiss6.ogg'
+	var/mob/living/carbon/human/human_user = user
+	if(!istype(human_user))
 		return
-	var/mob/living/carbon/human/humie = user
-	return humie.dna.species.get_scream_sound(user)
+	var/scream_sound = get_selected_scream_sound(human_user)
+	if(scream_sound)
+		return scream_sound
+	if(prob(1))
+		return 'sound/mobs/humanoids/human/scream/wilhelm_scream.ogg'
+	scream_sound = human_user.dna?.species?.get_scream_sound(human_user)
+	if(scream_sound)
+		return scream_sound
+	return get_default_scream_sound(human_user)
 
 /datum/emote/living/scowl
 	key = "scowl"
@@ -489,7 +669,10 @@
 /datum/emote/living/sigh/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
-	return user.dna.species.get_sigh_sound(user)
+	var/sigh_sound = user.dna?.species?.get_sigh_sound(user)
+	if(sigh_sound)
+		return sigh_sound
+	return get_default_sigh_sound(user)
 
 /datum/emote/living/sit
 	key = "sit"
@@ -536,7 +719,10 @@
 /datum/emote/living/snore/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
-	return user.dna.species.get_snore_sound(user)
+	var/snore_sound = user.dna?.species?.get_snore_sound(user)
+	if(snore_sound)
+		return snore_sound
+	return get_default_snore_sound(user)
 
 /datum/emote/living/stare
 	key = "stare"
@@ -664,6 +850,14 @@
 	message_AI = "symphathetically yawns."
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	cooldown = 5 SECONDS
+
+/datum/emote/living/yawn/get_sound(mob/living/user)
+	if(!iscarbon(user))
+		return
+	return pick(
+		'sound/emotes/emotes/yawn_m1.ogg',
+		'sound/emotes/emotes/yawn_m2.ogg',
+	)
 
 /datum/emote/living/yawn/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -1457,4 +1651,3 @@
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
 	sound = 'sound/mobs/humanoids/shadekin/sound_voice_mar.ogg' // Credit to vorestation
-
