@@ -58,3 +58,9 @@
 
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/chemist.dm
+/datum/outfit/job/chemist
+	messenger = /obj/item/storage/backpack/messenger/chem
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/chemist.dm

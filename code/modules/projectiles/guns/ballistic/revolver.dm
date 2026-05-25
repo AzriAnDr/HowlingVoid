@@ -432,3 +432,14 @@
 	desc = "A wild plantlife mutation that shoots hardened peas. Incredible."
 	fire_sound = 'sound/items/weapons/peashoot.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/peashooter
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/projectiles/guns/ballistic/revolver.dm
+/obj/item/gun/ballistic/revolver/c38
+	w_class = WEIGHT_CLASS_SMALL // concealed carry blickinator
+
+/obj/item/gun/ballistic/revolver/russian/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)
+	. = ..()
+	user.set_suicide(TRUE)
+	user.final_checkout(src)
+// END NOVA CORE MIGRATION: code/modules/projectiles/guns/ballistic/revolver.dm

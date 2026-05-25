@@ -339,3 +339,15 @@
 	required_reagents = list(/datum/reagent/toxin/spore = 1, /datum/reagent/consumable/eggwhite = 0.5)
 	required_temp = 350
 	optimal_temp = 420
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/food_and_drinks/recipes/food_mixtures.dm
+/datum/crafting_recipe/food
+	time = 0.5 SECONDS // Default crafting time is 30 deciseconds, food is crafted much more often and in large numbers.
+
+/obj/item/food/pizza/arnold // Account for our low iron diet, 6x AMMO_MATS_BASIC
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 16, /datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
+
+/obj/item/food/canned/tuna
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
+// END NOVA CORE MIGRATION: code/modules/food_and_drinks/recipes/food_mixtures.dm

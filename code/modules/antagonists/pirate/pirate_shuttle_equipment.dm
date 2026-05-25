@@ -487,3 +487,12 @@
 
 /datum/export/pirate/holochip/get_base_cost(obj/item/holochip/chip)
 	return chip.credits
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/antagonists/pirate/pirate_shuttle_equipment.dm
+/obj/machinery/computer/shuttle/pirate
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+// END NOVA CORE MIGRATION: code/modules/antagonists/pirate/pirate_shuttle_equipment.dm

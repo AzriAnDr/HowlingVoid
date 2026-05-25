@@ -553,3 +553,9 @@
 	alt_continuous = string_list(alt_continuous)
 	alt_simple = string_list(alt_simple)
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/items/weaponry/melee/misc.dm
+/obj/item/cane
+	worn_icon_state = "nothing"
+// END NOVA CORE MIGRATION: code/game/objects/items/weaponry/melee/misc.dm

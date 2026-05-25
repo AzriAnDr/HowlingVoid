@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const defaultSourcePath = 'modularhowling_void/modules/interaction_menu/code/item_interactions.dm';
+const defaultSourcePath = 'code/modules/interaction_menu/item_interactions.dm';
 const sourcePath = process.argv[2] ?? defaultSourcePath;
 const rewrittenDmPath = process.argv[3] ?? defaultSourcePath;
 const outputPath = process.argv[4] ?? 'config/interactions/item_interactions.master.json';

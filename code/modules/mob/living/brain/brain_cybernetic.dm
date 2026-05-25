@@ -66,3 +66,12 @@
 			to_chat(owner, span_warning("You feel [pick("disoriented", "confused", "dizzy")].")) //default alert text for emps
 			apply_organ_damage((10*emp_dmg_mult), emp_dmg_max) //implement cap
 			// NOVA EDIT ADDITION END
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mob/living/brain/brain_cybernetic.dm
+/obj/item/organ/brain/cybernetic
+	/// Variable multiplier for damage from EMPs. Note the base damage is 20.
+	var/emp_dmg_mult = 1
+	/// Threshold before the organ simply stops taking damage from EMPs. Defaults to 100 (out of 200)
+	var/emp_dmg_max = BRAIN_DAMAGE_SEVERE
+// END NOVA CORE MIGRATION: code/modules/mob/living/brain/brain_cybernetic.dm

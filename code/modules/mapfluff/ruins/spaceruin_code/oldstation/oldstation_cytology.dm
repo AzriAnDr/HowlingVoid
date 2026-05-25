@@ -27,3 +27,10 @@
 		// Supplementary for CELL_LINE_TABLE_GRAPE
 		/datum/reagent/consumable/liquidgibs = 5
 	)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mapfluff/ruins/spaceruin_code/oldstation/oldstation_cytology.dm
+// Beakers capacity 50u -> 60u
+/obj/item/reagent_containers/cup/beaker/oldstation
+	amount_per_transfer_from_this = 60
+// END NOVA CORE MIGRATION: code/modules/mapfluff/ruins/spaceruin_code/oldstation/oldstation_cytology.dm

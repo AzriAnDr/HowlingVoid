@@ -253,3 +253,9 @@
 	full_name = "View Pet Commands"
 	description = "Hold down to see all the commands you can give your pets!"
 	keybind_signal = COMSIG_KB_LIVING_VIEW_PET_COMMANDS
+
+
+// BEGIN NOVA CORE MIGRATION: code/datums/keybinding/mob.dm
+/datum/keybinding/mob/prevent_movement
+	hotkey_keys = list("Ctrl")
+// END NOVA CORE MIGRATION: code/datums/keybinding/mob.dm

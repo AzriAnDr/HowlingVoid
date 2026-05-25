@@ -102,3 +102,15 @@
 	head = null
 	mask = /obj/item/clothing/mask/gas/sechailer
 	internals_slot = ITEM_SLOT_SUITSTORE
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/head_of_security.dm
+/datum/outfit/job/hos
+	messenger = /obj/item/storage/backpack/messenger/sec
+
+/datum/outfit/job/hos/pre_equip(mob/living/carbon/human/human, visualsOnly)
+	. = ..()
+	backpack_contents += list(
+		/obj/item/melee/baton/security/stunsword/hos/loaded = 1,
+	)
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/head_of_security.dm

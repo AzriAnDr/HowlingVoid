@@ -107,3 +107,9 @@
 	success_sound = 'sound/items/handling/surgery/organ2.ogg'
 	required_bodytype = BODYTYPE_ROBOTIC
 	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/surgery/operations/operation_lipo.dm
+/datum/surgery_operation/limb/lipoplasty/mechanic
+	blocked_bodytype = BODYTYPE_SYNTHETIC
+// END NOVA CORE MIGRATION: code/modules/surgery/operations/operation_lipo.dm

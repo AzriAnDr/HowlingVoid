@@ -267,3 +267,9 @@
 #undef BRUTE_SURGERY
 #undef BURN_SURGERY
 #undef COMBO_SURGERY
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/surgery/operations/operation_healing.dm
+/datum/surgery_operation/basic/tend_wounds
+	blocked_bodytype = BODYTYPE_SYNTHETIC
+// END NOVA CORE MIGRATION: code/modules/surgery/operations/operation_healing.dm

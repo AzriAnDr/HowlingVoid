@@ -305,3 +305,16 @@
 	log_econ("[amount] [MONEY_NAME] were transferred from [payee]'s transaction to [linked_card.registered_account.account_holder]")
 	SSblackbox.record_feedback("amount", "credits_transferred", amount)
 	return TRUE
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/economy/holopay.dm
+// Disable the ID tracking procs
+/obj/structure/holopay/track(atom/movable/thing)
+	return
+
+/obj/structure/holopay/untrack(atom/movable/thing)
+	return
+
+/obj/structure/holopay/handle_move(atom/movable/source, atom/old_loc, dir, forced, list/old_locs)
+	return
+// END NOVA CORE MIGRATION: code/modules/economy/holopay.dm

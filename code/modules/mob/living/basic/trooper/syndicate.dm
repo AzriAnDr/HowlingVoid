@@ -252,3 +252,10 @@
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mob/living/basic/trooper/syndicate.dm
+// burst shots from 2 to 1
+/mob/living/basic/trooper/syndicate/ranged/shotgun
+	burst_shots = 1
+// END NOVA CORE MIGRATION: code/modules/mob/living/basic/trooper/syndicate.dm

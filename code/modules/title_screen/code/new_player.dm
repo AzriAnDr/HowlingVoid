@@ -277,7 +277,7 @@
 		winset(client, "status_bar", "is-visible=true")
 
 /mob/dead/new_player/proc/play_lobby_button_sound()
-	var/sound/button_sound = sound('modular_nova/master_files/sound/effects/save.ogg')
+	var/sound/button_sound = sound('sound/effects/save.ogg')
 	button_sound.volume = 25
 	SEND_SOUND(src, button_sound)
 

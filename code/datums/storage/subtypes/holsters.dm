@@ -29,7 +29,7 @@
 		/obj/item/ammo_box/magazine, // Just magazine, because the sec-belt can hold these aswell
 		/obj/item/ammo_box/speedloader,
 		/obj/item/gun/energy/recharge/kinetic_accelerator/variant/glock,
-		// additional functionality changes in modular_nova\modules\sec_haul\code\security_clothing\sec_clothing_overrides.dm
+		// additional functionality changes in code\modules\sec_haul\security_clothing\sec_clothing_overrides.dm
 		// e.g. one-gun limit, additional slots
 		// NOVA EDIT ADDITION END
 	))
@@ -92,7 +92,7 @@
 		/obj/item/gun/energy/recharge/kinetic_accelerator/variant/glock,
 		/obj/item/ammo_box/magazine, // covers all the old magazines (m9mm, m9mm_aps, m10mm, m45, m50)
 		// though realistically someone could consider just hand-adding every pistol magazine. including the nova-specific ones.
-		// additional functionality changes in modular_nova\modules\sec_haul\code\security_clothing\sec_clothing_overrides.dm
+		// additional functionality changes in code\modules\sec_haul\security_clothing\sec_clothing_overrides.dm
 		// NOVA EDIT ADDITION END
 	)
 

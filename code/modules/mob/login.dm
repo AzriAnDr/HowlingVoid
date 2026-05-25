@@ -160,3 +160,17 @@
 		return client.holder.auto_deadmin()
 	if(job)
 		return SSjob.handle_auto_deadmin_roles(client, job)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mob/login.dm
+/mob/Login()
+	. = ..()
+
+	if(!.)
+		return FALSE
+
+	if(SSplayer_ranks.initialized)
+		SSplayer_ranks.update_prefs_donator_status(client?.prefs)
+
+	return TRUE
+// END NOVA CORE MIGRATION: code/modules/mob/login.dm

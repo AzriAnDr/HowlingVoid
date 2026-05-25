@@ -889,3 +889,15 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	w_class = WEIGHT_CLASS_TINY
 	/// How quiet should the gun be when we're installed?
 	var/suppression = SUPPRESSED_QUIET
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/projectiles/guns/ballistic.dm
+/obj/item/gun/ballistic/eject_magazine(mob/user, display_message, obj/item/ammo_box/magazine/tac_load)
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD)
+
+/obj/item/gun/ballistic/insert_magazine(mob/user, obj/item/ammo_box/magazine/AM, display_message)
+	. = ..()
+	if(.)
+		SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD)
+// END NOVA CORE MIGRATION: code/modules/projectiles/guns/ballistic.dm

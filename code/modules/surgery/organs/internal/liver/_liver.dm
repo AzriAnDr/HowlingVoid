@@ -1,5 +1,7 @@
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
-#define LIVER_DEFAULT_TOX_RESISTANCE 1 //lower values lower how harmful toxins are to the liver
+#ifndef LIVER_DEFAULT_TOX_RESISTANCE
+#define LIVER_DEFAULT_TOX_RESISTANCE 1 // Lower values lower how harmful toxins are to the liver.
+#endif
 #define LIVER_FAILURE_STAGE_SECONDS 180 //amount of seconds before liver failure reaches a new stage // NOVA EDIT CHANGE - Original: 60
 
 /obj/item/organ/liver
@@ -309,12 +311,14 @@
 		organ_owner.adjust_tox_loss(1.5 * seconds_per_tick)
 
 /obj/item/organ/liver/snail
-	name = "snail liver"
-	desc = "A slimy liver, constantly secreting impressive volumes of lube. Usually cooked with olive oil and cilantro, and traditionally eaten under a white flag."
-	icon_state = "liver-bone" // Its greyscale, so works perfectly for coloring
-	color = "#96DB00"
+	name = "gastropod liver"
+	desc = "Due to snailfolk evolving in typically poisonous environments such as bogs, their liver has a higher tolerance for poisons compared to most."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "liver-snail"
+	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
+	toxTolerance = 5
 	/// Speed modifier for snails who have this organ. Positive numbers make them move slower, negative numbers make them move faster.
-	var/snail_speed_mod = 6
+	var/snail_speed_mod = 5
 
 /obj/item/organ/liver/snail/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()

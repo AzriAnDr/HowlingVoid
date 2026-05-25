@@ -465,3 +465,9 @@
 #undef ALERT_IV_CONNECTED
 
 #undef DEFAULT_IV_TRANSFER_RATE
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/machinery/iv_drip.dm
+/obj/machinery/iv_drip
+	interaction_flags_mouse_drop = NONE
+// END NOVA CORE MIGRATION: code/game/machinery/iv_drip.dm

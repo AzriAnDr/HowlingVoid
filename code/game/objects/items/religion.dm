@@ -424,3 +424,12 @@
 
 /obj/item/claymore/weak/ceremonial/make_stabby()
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -5)
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/items/religion.dm
+/obj/item/claymore/weak/weaker
+	desc = "This one is rus-.. no, painted to look rusty.. it's a display piece, still carries a fair edge though."
+	force = 18
+	armour_penetration = 7
+	block_chance = 10 // It's a display piece, not a riot shield.
+// END NOVA CORE MIGRATION: code/game/objects/items/religion.dm

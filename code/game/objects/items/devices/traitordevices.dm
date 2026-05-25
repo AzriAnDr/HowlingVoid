@@ -599,3 +599,17 @@ effective or pretty fucking useless.
 /obj/item/clothing/shoes/jackboots/dagger/examine_more(mob/user)
 	. = ..()
 	. += span_notice("Upon closer inspection, you notice a dagger embedded into the sole.")
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/items/devices/traitordevices.dm
+/obj/item/healthanalyzer/rad_laser
+	special_desc_requirement = EXAMINE_CHECK_SYNDICATE
+	special_desc = "This syndicate-modified health analyzer can emit delayed bursts of radiation to those it scans."
+
+/obj/item/jammer
+	name = "suspicious transmitter"
+	desc = "A suspicious device vaguely resembling a radio, but without a speaker or microphone."
+	special_desc_requirement = EXAMINE_CHECK_JOB
+	special_desc_jobs = list("Station Engineer", "Chief Engineer", "Cyborg", "AI")
+	special_desc = "This is a black market radio jammer. Used to disrupt nearby radio communication."
+// END NOVA CORE MIGRATION: code/game/objects/items/devices/traitordevices.dm

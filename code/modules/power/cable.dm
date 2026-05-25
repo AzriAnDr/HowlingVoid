@@ -898,3 +898,12 @@ GLOBAL_LIST(hub_radial_layer_list)
 
 /obj/structure/cable/multilayer/layer3
 		cable_layer =  CABLE_LAYER_3
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/power/cable.dm
+/obj/item/stack/cable_coil
+	/// How long it takes to apply cable to your own robotic limbs to heal their burns.
+	var/self_delay = 5 SECONDS
+	/// How long it takes to apply cable to someone else's robotic limbs to heal their burns.
+	var/other_delay = 1 SECONDS
+// END NOVA CORE MIGRATION: code/modules/power/cable.dm

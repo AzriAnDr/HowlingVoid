@@ -35,7 +35,7 @@
 	name = "Held Sombrero Style (Held, Right)"
 	json_config = 'code/datums/greyscale/json_configs/sombrero_base_righthand.json'
 
-/* NOVA EDIT START - Beret-lliant (moved to modular_nova/modules/berets/code/datums/config_types)
+/* NOVA EDIT START - Beret-lliant (migrated into core greyscale clothing config)
 /datum/greyscale_config/beret/worn
 	name = "Beret Worn"
 	name = "Beret (Worn)"
@@ -693,7 +693,7 @@ NOVA EDIT END */
 
 /datum/greyscale_config/digitigrade
 	name = "Digitigrade Clothes"
-	icon_file = 'modular_nova/master_files/icons/mob/clothing/digi_template.dmi' // NOVA EDIT CHANGE - ORIGINAL: icon_file = 'icons/mob/clothing/digi_template.dmi'
+	icon_file = 'icons/mob/clothing/digi_template_additions.dmi' // NOVA EDIT CHANGE - ORIGINAL: icon_file = 'icons/mob/clothing/digi_template.dmi'
 	json_config = 'code/datums/greyscale/json_configs/digitigrade.json'
 
 

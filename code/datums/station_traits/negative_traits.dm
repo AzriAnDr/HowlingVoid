@@ -781,3 +781,15 @@
 	trait_to_give = STATION_TRAIT_SPAWN_WEAKPOINTS
 
 #undef GLOW_NEBULA
+
+
+// BEGIN NOVA CORE MIGRATION: code/datums/station_traits/negative_traits.dm
+/datum/station_trait/nebula/hostile/
+	/// Radiation storms are disabled by default
+	var/storms_enabled
+
+/// Allows an admin to turn on/off the radiation storms.
+/datum/station_trait/nebula/hostile/proc/toggle_storms()
+	storms_enabled = !storms_enabled
+	message_admins("Radiation storms have been [storms_enabled ? "enabled" : "disabled"]!")
+// END NOVA CORE MIGRATION: code/datums/station_traits/negative_traits.dm

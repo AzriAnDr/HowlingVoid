@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const REPO_ROOT = process.cwd();
-const SEARCH_ROOTS = ['code', 'modular_nova', 'modularhowling_void'];
+const SEARCH_ROOTS = ['code'];
 const DEFAULT_OUTPUT = 'config/content/supply_packs.json';
 
 function normalizePath(filePath) {

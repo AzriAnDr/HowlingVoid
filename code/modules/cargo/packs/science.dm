@@ -121,3 +121,9 @@
 	contains = list(/obj/item/mod/core/standard = 3)
 	crate_name = "\improper MOD core crate"
 	crate_type = /obj/structure/closet/crate/nakamura
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/cargo/packs/science.dm
+/datum/supply_pack/science/raw_anomaly
+	order_flags = ORDER_COMPANY
+// END NOVA CORE MIGRATION: code/modules/cargo/packs/science.dm

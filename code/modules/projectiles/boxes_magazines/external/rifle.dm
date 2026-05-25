@@ -85,3 +85,10 @@
 	desc = parent_type::desc + " Flare casings launch a concentrated particle beam towards a target, lighting them up for everyone to see."
 	ammo_type = /obj/item/ammo_casing/c38/flare
 	ammo_band_color = COLOR_AMMO_HELLFIRE
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/projectiles/boxes_magazines/external/rifle.dm
+/obj/item/ammo_box/magazine/m38
+	w_class = WEIGHT_CLASS_SMALL
+	max_ammo = 30 // seriously why buff this from 15 to 28. why not just a round number. be fr
+// END NOVA CORE MIGRATION: code/modules/projectiles/boxes_magazines/external/rifle.dm

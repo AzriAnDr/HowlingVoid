@@ -405,3 +405,10 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 	do_sparks(5, TRUE, src)
 	return electrocute_mob(shocking, shock_source || get_cell() || get_area(src), src, siemens_coeff, TRUE)
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/objs.dm
+/obj
+	///the Nova Sector version of obj_flags, to prevent any potential future conflict
+	var/obj_flags_nova = null
+// END NOVA CORE MIGRATION: code/game/objects/objs.dm

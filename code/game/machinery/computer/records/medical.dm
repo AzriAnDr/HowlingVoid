@@ -167,3 +167,10 @@
 	target.trim = "Unknown"
 
 	return TRUE
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/machinery/computer/records/medical.dm
+/obj/machinery/computer/records/medical/Initialize(mapload)
+	req_one_access |= ACCESS_ROBOTICS
+	return ..()
+// END NOVA CORE MIGRATION: code/game/machinery/computer/records/medical.dm

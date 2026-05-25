@@ -202,3 +202,9 @@
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, GENETIC_MUTATION)
+
+
+// BEGIN NOVA CORE MIGRATION: code/datums/mutations/sight.dm
+/datum/mutation/thermal
+	locked = TRUE
+// END NOVA CORE MIGRATION: code/datums/mutations/sight.dm

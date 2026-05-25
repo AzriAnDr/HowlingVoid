@@ -78,3 +78,12 @@
 		report += "<b>But none of its eggs hatched!</b>"
 
 	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/antagonists/ashwalker/ashwalker.dm
+// ashtongue for ashwalkers
+/datum/language_holder/lizard/ash
+	understood_languages = list(/datum/language/ashtongue = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/ashtongue = list(LANGUAGE_ATOM))
+	selected_language = /datum/language/ashtongue
+// END NOVA CORE MIGRATION: code/modules/antagonists/ashwalker/ashwalker.dm

@@ -246,3 +246,10 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	dog_fashion = null
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/clothing/head/costume.dm
+/obj/item/clothing/head/costume/nursehat
+	icon = 'icons/obj/clothing/head/costume_additions.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume_additions.dmi'
+// END NOVA CORE MIGRATION: code/modules/clothing/head/costume.dm

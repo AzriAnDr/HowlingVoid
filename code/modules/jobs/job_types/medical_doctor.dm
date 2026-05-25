@@ -60,3 +60,9 @@
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
 	skillchips = list(/obj/item/skillchip/entrails_reader)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/medical_doctor.dm
+/datum/outfit/job/doctor
+	messenger = /obj/item/storage/backpack/messenger/med
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/medical_doctor.dm

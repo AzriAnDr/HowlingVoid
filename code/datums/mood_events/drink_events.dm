@@ -96,3 +96,11 @@
 	description = "Let your worries dissolve like sugar in tea."
 	mood_change = 4
 	timeout = 2.5 MINUTES
+
+
+// BEGIN NOVA CORE MIGRATION: code/datums/mood_events/drink_events.dm
+/datum/mood_event/race_drink
+	description = span_nicegreen("That drink was made for me!\n")
+	mood_change = 12
+	timeout = 9 MINUTES
+// END NOVA CORE MIGRATION: code/datums/mood_events/drink_events.dm

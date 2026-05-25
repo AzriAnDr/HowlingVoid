@@ -327,3 +327,18 @@
 	. = ..()
 	SET_PLANE_W_SCALAR(src, initial(plane), plane_offset)
 
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/atmospherics/gasmixtures/gas_types.dm
+/datum/gas/goblin
+	id = GAS_GOBLIN
+	specific_heat = 2
+	name = "G-081-N"
+	dangerous = TRUE
+	gas_overlay = "miasma_old"
+	moles_visible = MOLES_GAS_VISIBLE
+	fusion_power = 30
+	rarity = 1
+	base_value = 8
+	desc = "A strange byproduct of using tritium in a RB-MK2 reactor. Has interesting effects when inhaled."
+// END NOVA CORE MIGRATION: code/modules/atmospherics/gasmixtures/gas_types.dm

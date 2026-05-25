@@ -216,3 +216,10 @@
 
 	/// A ref of the area we're taking our ambient loop from.
 	var/area/ambience_tracked_area
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mob/mob_defines.dm
+/mob
+	// Admin player panel for this mob
+	var/datum/player_panel/mob_panel
+// END NOVA CORE MIGRATION: code/modules/mob/mob_defines.dm

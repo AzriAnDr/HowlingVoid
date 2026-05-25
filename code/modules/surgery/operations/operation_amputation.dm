@@ -114,3 +114,19 @@
 /datum/surgery_operation/limb/amputate/pegleg/all_required_strings()
 	. = ..()
 	. += "the limb must be wooden"
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/surgery/operations/operation_amputation.dm
+/datum/surgery_operation/limb/amputate/New()
+	implements += list(
+		/obj/item/machete = 1.25,
+	)
+	return ..()
+
+// doesn't work on robo limbs
+/datum/surgery_operation/limb/amputate/mechanic/New()
+	. = ..()
+	implements -= list(
+		/obj/item/machete,
+	)
+// END NOVA CORE MIGRATION: code/modules/surgery/operations/operation_amputation.dm

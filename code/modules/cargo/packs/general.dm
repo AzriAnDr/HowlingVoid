@@ -269,3 +269,9 @@
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/structure/reagent_dispensers/water_cooler/jugless = 1, /obj/item/reagent_containers/cooler_jug/punch = 1)
 	crate_name = "punch cooler crate"
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/cargo/packs/general.dm
+/datum/supply_pack/misc/bicycle
+	order_flags = ORDER_POD_ONLY
+// END NOVA CORE MIGRATION: code/modules/cargo/packs/general.dm

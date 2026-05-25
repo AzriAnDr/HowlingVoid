@@ -418,3 +418,10 @@
 		flashed.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
 
 #undef CONFUSION_STACK_MAX_MULTIPLIER
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/assembly/flash.dm
+/obj/item/assembly/flash/hypnotic
+	special_desc_requirement = EXAMINE_CHECK_SYNDICATE
+	special_desc = "A modified flash device, programmed to emit a sequence of subliminal flashes that can send a vulnerable target into a hypnotic trance."
+// END NOVA CORE MIGRATION: code/modules/assembly/flash.dm

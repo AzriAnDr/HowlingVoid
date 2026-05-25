@@ -1943,3 +1943,9 @@
 	var/old_state = surgery_state
 	. = ..()
 	update_surgical_state(old_state, surgery_state ^ old_state)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/surgery/bodyparts/_bodyparts.dm
+/obj/item/bodypart
+	disabling_threshold_percentage = 1 // COMBAT - ORIGINAL : var/disabling_threshold_percentage = 0
+// END NOVA CORE MIGRATION: code/modules/surgery/bodyparts/_bodyparts.dm

@@ -36,3 +36,9 @@
 		return FALSE
 
 	return TRUE
+
+// BEGIN NOVA CORE MIGRATION: code/modules/antagonists/heretic/knowledge/general_side.dm
+// Keep reroll target ritual cost aligned with core heretic behavior.
+/datum/heretic_knowledge/reroll_targets
+	cost = 0
+// END NOVA CORE MIGRATION: code/modules/antagonists/heretic/knowledge/general_side.dm

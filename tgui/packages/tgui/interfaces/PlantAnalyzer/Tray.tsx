@@ -86,8 +86,9 @@ export function PlantAnalyzerTrayStats(props) {
           {!!tray_data.storyteller_anomaly_title && (
             <NoticeBox
               mb={1}
-              info={!!tray_data.storyteller_anomaly_positive}
-              warning={!tray_data.storyteller_anomaly_positive}
+              {...(tray_data.storyteller_anomaly_positive
+                ? { info: true }
+                : { danger: true })}
             >
               <Box bold>
                 Detected botanical anomaly: {tray_data.storyteller_anomaly_title}

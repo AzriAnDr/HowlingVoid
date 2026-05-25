@@ -219,3 +219,10 @@
 	SIGNAL_HANDLER
 	photographed.set_output(target)
 	photo_taken.set_output(COMPONENT_SIGNAL)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/modular_computers/file_system/programs/maintenance/camera.dm
+// Makes camera app readily available to crew
+/datum/computer_file/program/maintenance/camera
+	program_flags = PROGRAM_ON_NTNET_STORE
+// END NOVA CORE MIGRATION: code/modules/modular_computers/file_system/programs/maintenance/camera.dm

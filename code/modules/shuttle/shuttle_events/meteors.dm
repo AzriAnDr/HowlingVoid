@@ -52,3 +52,12 @@
 	spawns_per_spawn = 3
 
 	hit_the_shuttle_chance = 2
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/shuttle/shuttle_events/meteors.dm
+/datum/shuttle_event/simple_spawner/meteor/dust
+	event_probability = 0
+
+/datum/shuttle_event/simple_spawner/meteor/safe
+	event_probability = 0
+// END NOVA CORE MIGRATION: code/modules/shuttle/shuttle_events/meteors.dm

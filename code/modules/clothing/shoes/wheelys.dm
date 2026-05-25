@@ -89,3 +89,11 @@
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	custom_premium_price = PAYCHECK_CREW * 1.6
 	custom_price = PAYCHECK_CREW * 1.6
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/clothing/shoes/wheelys.dm
+/obj/item/clothing/shoes/wheelys
+	worn_icon_digi = 'icons/mob/large-worn-icons/64x64/feet_digi.dmi'
+	worn_icon_vox = 'icons/mob/clothing/species/vox/feet_64.dmi'
+	worn_icon_teshari = 'icons/mob/clothing/species/teshari/feet_64.dmi'
+// END NOVA CORE MIGRATION: code/modules/clothing/shoes/wheelys.dm

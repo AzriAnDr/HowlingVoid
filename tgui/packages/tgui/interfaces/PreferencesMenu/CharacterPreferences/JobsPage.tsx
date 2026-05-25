@@ -374,10 +374,10 @@ function JobRow(props: JobRowProps) {
                 className="PreferencesMenu__Character__JobsDropdown"
                 width="100%"
                 displayText={selectedAltTitleText}
-                options={altTitleOptions}
+                options={altTitleOptions ?? []}
                 selected={selectedAltTitleText}
                 onSelected={(value) => {
-                  const selectedOption = altTitleOptions?.find(
+                  const selectedOption = (altTitleOptions ?? []).find(
                     (option) => option.value === value,
                   );
                   act('set_job_title', {

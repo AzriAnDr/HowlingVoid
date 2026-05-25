@@ -363,3 +363,10 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	improved_id.add_access(list(ACCESS_MAINT_TUNNELS, ACCESS_EXTERNAL_AIRLOCKS), mode = FORCE_ADD_ALL)
 	selected_atoms -= improved_id
 	return TRUE
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/antagonists/heretic/knowledge/starting_lore.dm
+/datum/heretic_knowledge/feast_of_owls
+	is_starting_knowledge = FALSE
+	abstract_type = /datum/heretic_knowledge/feast_of_owls
+// END NOVA CORE MIGRATION: code/modules/antagonists/heretic/knowledge/starting_lore.dm

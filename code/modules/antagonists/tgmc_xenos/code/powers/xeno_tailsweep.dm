@@ -137,7 +137,7 @@
 
 	sound = 'code/modules/antagonists/tgmc_xenos/sound/alien_tail_swipe.ogg' //The defender's tail sound isn't changed because its big and heavy, this isn't
 
-	impact_sound = 'modular_nova/master_files/sound/weapons/bloodyslice.ogg'
+	impact_sound = 'sound/weapons/bloodyslice.ogg'
 	impact_damage = 40
 	impact_sharpness = SHARP_EDGED
 

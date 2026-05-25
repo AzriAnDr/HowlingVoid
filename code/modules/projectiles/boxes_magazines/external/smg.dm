@@ -107,3 +107,11 @@
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = CALIBER_45
 	max_ammo = 50
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/projectiles/boxes_magazines/external/smg.dm
+/obj/item/ammo_box/magazine/smgm45/empty
+	name = "SMG magazine (.45)"
+	icon_state = "c20r45-0"
+	start_empty = TRUE
+// END NOVA CORE MIGRATION: code/modules/projectiles/boxes_magazines/external/smg.dm

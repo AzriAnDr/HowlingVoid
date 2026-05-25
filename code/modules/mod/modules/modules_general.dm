@@ -1027,3 +1027,19 @@
 	SIGNAL_HANDLER
 	drain_power(use_energy_cost)
 	do_sparks(5, TRUE, mod.wearer.loc)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mod/modules/modules_general.dm
+/obj/item/mod/module/storage/civilian
+	name = "MOD case civilian storage module"
+	complexity = 2
+	required_slots = list(ITEM_SLOT_BELT)
+	removable = FALSE
+	storage_type = /datum/storage/mod_storage/civilian
+
+/datum/storage/mod_storage/civilian
+	max_specific_storage = WEIGHT_CLASS_SMALL
+
+/obj/item/mod/module/status_readout
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
+// END NOVA CORE MIGRATION: code/modules/mod/modules/modules_general.dm

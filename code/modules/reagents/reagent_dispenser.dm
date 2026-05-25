@@ -695,3 +695,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 
 #undef REAGENT_SPILL_DIVISOR
 #undef COOLER_JUG_EJECT_TIME
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/reagents/reagent_dispenser.dm
+/**
+ * Directional Reagent Dispeners (Modular)
+ */
+
+// Potable Water Cooler
+
+/obj/structure/reagent_dispensers/water_cooler/directional/north
+	pixel_y = 16
+
+/obj/structure/reagent_dispensers/water_cooler/directional/east
+	pixel_x = 16
+
+/obj/structure/reagent_dispensers/water_cooler/directional/south
+	pixel_y = -16
+
+/obj/structure/reagent_dispensers/water_cooler/directional/west
+	pixel_x = -16
+// END NOVA CORE MIGRATION: code/modules/reagents/reagent_dispenser.dm

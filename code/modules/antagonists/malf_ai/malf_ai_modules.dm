@@ -1413,3 +1413,15 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 #undef MALF_AI_ROLL_TIME
 #undef MALF_AI_ROLL_DAMAGE
 #undef MALF_AI_ROLL_CRIT_CHANCE
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/antagonists/malf_ai/malf_ai_modules.dm
+/datum/action/innate/ai
+	/// Typecache of areas that should not be affected by AI abilities
+	var/static/protected_areas
+
+/datum/action/innate/ai/New()
+	. = ..()
+	if(!protected_areas)
+		protected_areas = typecacheof(GLOB.ghost_cafe_areas + typesof(/area/ruin/space/has_grav/port_tarkon) + typesof(/area/ruin/interdyne_planetary_base) + typesof(/area/ruin/space/has_grav/cargodise_freighter) + typesof(/area/centcom/interlink))
+// END NOVA CORE MIGRATION: code/modules/antagonists/malf_ai/malf_ai_modules.dm

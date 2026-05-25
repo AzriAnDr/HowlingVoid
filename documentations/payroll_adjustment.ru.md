@@ -123,7 +123,7 @@ Payroll Adjustment добавлено в стартовые программы:
 - `code/modules/modular_computers/computers/machinery/console_presets.dm` - стартовая программа ID console.
 - `code/modules/modular_computers/computers/item/role_tablet_presets.dm` - стартовые программы PDA ролей.
 - `code/modules/modular_computers/computers/item/disks/role_disks.dm` - command disks.
-- `modular_nova/modules/nanotrasen_rep/code/nanotrasen_consultant.dm` - Nanotrasen Consultant PDA.
+- `code/modules/nanotrasen_rep/nanotrasen_consultant.dm` - Nanotrasen Consultant PDA.
 
 ## Проверка
 

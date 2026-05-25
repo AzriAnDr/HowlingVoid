@@ -124,3 +124,9 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 /area/awaymission/backrooms/level_three
 	name = "Level 3"
 	icon_state = "away3"
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/area/areas/away_content.dm
+/area/awaymission
+	area_flags = NOTELEPORT
+// END NOVA CORE MIGRATION: code/game/area/areas/away_content.dm

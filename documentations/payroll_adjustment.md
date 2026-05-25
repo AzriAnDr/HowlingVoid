@@ -123,7 +123,7 @@ Passive money injection into cargo and station budgets is disabled. The station 
 - `code/modules/modular_computers/computers/machinery/console_presets.dm` - ID console starting program.
 - `code/modules/modular_computers/computers/item/role_tablet_presets.dm` - role PDA starting programs.
 - `code/modules/modular_computers/computers/item/disks/role_disks.dm` - command disks.
-- `modular_nova/modules/nanotrasen_rep/code/nanotrasen_consultant.dm` - Nanotrasen Consultant PDA.
+- `code/modules/nanotrasen_rep/nanotrasen_consultant.dm` - Nanotrasen Consultant PDA.
 
 ## Verification
 

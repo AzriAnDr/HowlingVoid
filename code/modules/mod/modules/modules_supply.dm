@@ -767,3 +767,26 @@
 	for(var/obj/object in range(1, src))
 		object.take_damage(damage, BRUTE, BOMB)
 	qdel(src)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mod/modules/modules_supply.dm
+/obj/item/mod/module/hydraulic/on_part_activation()
+	. = ..()
+	ADD_TRAIT(mod.wearer, TRAIT_TRASHMAN, MOD_TRAIT)
+
+/obj/item/mod/module/hydraulic/on_part_deactivation(deleting = FALSE)
+	. = ..()
+	REMOVE_TRAIT(mod.wearer, TRAIT_TRASHMAN, MOD_TRAIT)
+
+/obj/item/mod/module/clamp
+	required_slots = list(ITEM_SLOT_GLOVES, ITEM_SLOT_BACK|ITEM_SLOT_BELT)
+
+/obj/item/mod/module/clamp/loader
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
+
+/obj/item/mod/module/hydraulic
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
+
+/obj/item/mod/module/magnet
+	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
+// END NOVA CORE MIGRATION: code/modules/mod/modules/modules_supply.dm

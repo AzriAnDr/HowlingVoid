@@ -131,3 +131,12 @@
 	for(var/mob/living/basic/pet/dog/corgi/ian/staff_pet in GLOB.dead_mob_list)
 		. += list(/datum/reagent/medicine/strange_reagent = 20)
 		break
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/head_of_personnel.dm
+/datum/outfit/job/hop
+	backpack = /obj/item/storage/backpack/head_of_personnel
+	satchel = /obj/item/storage/backpack/satchel/head_of_personnel
+	duffelbag = /obj/item/storage/backpack/duffelbag/head_of_personnel
+	messenger = /obj/item/storage/backpack/messenger/head_of_personnel
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/head_of_personnel.dm

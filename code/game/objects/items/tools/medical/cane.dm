@@ -145,3 +145,9 @@
 
 	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/items/tools/medical/cane.dm
+/obj/item/cane
+	worn_icon_state = "nothing"
+// END NOVA CORE MIGRATION: code/game/objects/items/tools/medical/cane.dm

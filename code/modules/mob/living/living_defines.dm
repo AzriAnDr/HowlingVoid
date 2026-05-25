@@ -262,3 +262,15 @@
 
 	/// Lazy assoc list of currently applied fishing difficulty modifiers keyed to their source
 	var/list/fishing_difficulty_mods_by_source
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mob/living/living_defines.dm
+/mob/living
+	plane = GAME_PLANE // FOV adjustment
+	max_stamina = 162 // originally 120, update for stamina crit
+
+	var/blood_volume_normal = BLOOD_VOLUME_NORMAL
+	/// Player Panel Code
+	var/admin_frozen = FALSE
+	var/admin_sleeping = FALSE
+// END NOVA CORE MIGRATION: code/modules/mob/living/living_defines.dm

@@ -48,3 +48,9 @@
 	satchel = /obj/item/storage/backpack/satchel/gen
 	duffelbag = /obj/item/storage/backpack/duffelbag/genetics
 	messenger = /obj/item/storage/backpack/messenger/gen
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/geneticist.dm
+/datum/outfit/job/geneticist
+	messenger = /obj/item/storage/backpack/messenger/gen
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/geneticist.dm

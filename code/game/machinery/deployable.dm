@@ -223,3 +223,10 @@
 #undef METAL
 #undef WOOD
 #undef SAND
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/machinery/deployable.dm
+/obj/structure/barricade/sandbags/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/liquids_height, 20)
+// END NOVA CORE MIGRATION: code/game/machinery/deployable.dm

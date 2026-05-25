@@ -225,7 +225,7 @@
 	name = "Toggle Transparency"
 	desc = "Focus your body to become opaque, hiding your inner workings, or relax to regain your natural translucent sheen."
 	check_flags = AB_CHECK_CONSCIOUS
-	button_icon = 'modular_nova/master_files/icons/mob/actions/actions_nif.dmi'
+	button_icon = 'icons/mob/actions/actions_nif.dmi'
 	button_icon_state = "slime"
 	background_icon_state = "bg_alien"
 	/// Alpha value used when the slime is translucent (their natural state).
@@ -289,7 +289,7 @@
 /obj/item/organ/brain/xenoslime
 	name = "slime core"
 	desc = "The crystallized neural core of a slime hybrid. Dense with compressed memories and consciousness."
-	icon = 'modular_nova/master_files/icons/obj/surgery.dmi'
+	icon = 'icons/obj/surgery.dmi'
 	icon_state = "slime_core"
 	decay_factor = STANDARD_ORGAN_DECAY * 5  // Brain base is 0.5x STANDARD; 10x = 5x STANDARD
 

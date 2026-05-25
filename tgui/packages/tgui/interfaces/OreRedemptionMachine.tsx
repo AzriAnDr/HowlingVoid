@@ -237,8 +237,9 @@ function PointsSection(props) {
       {!!storytellerProcessingLabel && (
         <NoticeBox
           mt={1}
-          info={(storytellerProcessingModifier || 1) >= 1}
-          warning={(storytellerProcessingModifier || 1) < 1}
+          {...((storytellerProcessingModifier || 1) < 1
+            ? { danger: true }
+            : { info: true })}
         >
           {storytellerProcessingLabel}
           {!!storytellerProcessingRemaining &&

@@ -424,3 +424,27 @@
 	if(get_fuel() < max_fuel && nextrefueltick < world.time)
 		nextrefueltick = world.time + 10
 		reagents.add_reagent(/datum/reagent/fuel, 1)
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/items/tools/engineering/weldingtool.dm
+/obj/item/weldingtool
+	wound_bonus = parent_type::wound_bonus // Originally 10
+	exposed_wound_bonus = parent_type::exposed_wound_bonus // Originally 15
+	/// How long it takes to weld your own robotic limbs.
+	var/self_delay = 5 SECONDS
+	/// How long it takes to weld someone else's robotic limbs.
+	var/other_delay = 1 SECONDS
+
+/obj/item/weldingtool/Initialize(mapload)
+	. = ..()
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagents_change))
+
+/obj/item/weldingtool/set_welding(new_value)
+	. = ..()
+	on_reagents_change()
+
+/obj/item/weldingtool/proc/on_reagents_change(datum/reagents/source)
+	SIGNAL_HANDLER
+
+	SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD)
+// END NOVA CORE MIGRATION: code/game/objects/items/tools/engineering/weldingtool.dm

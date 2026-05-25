@@ -102,3 +102,13 @@
 	H.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 	ADD_TRAIT(H, TRAIT_CLOWN_ENJOYER, INNATE_TRAIT)
 	H.add_faction(FACTION_CLOWN)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/clown.dm
+/datum/job/clown
+	vox_outfit = /datum/outfit/vox/clown
+	job_flags = STATION_JOB_FLAGS | JOB_CANNOT_OPEN_SLOTS
+
+/datum/outfit/job/clown
+	messenger = /obj/item/storage/backpack/messenger/clown
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/clown.dm

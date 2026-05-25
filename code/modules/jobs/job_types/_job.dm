@@ -710,3 +710,12 @@
 		CRASH("[src.type] has no job icon state.")
 
 	return icon('icons/mob/huds/hud.dmi', icon_state)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/_job.dm
+/datum/job
+	/// The job's outfit that will be assigned for Vox
+	var/vox_outfit = null
+	/// The job's outfit that will be assigned for Akula
+	var/akula_outfit = null
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/_job.dm

@@ -246,3 +246,10 @@
 
 #undef FUNCTIONAL_WING_FORCE
 #undef FUNCTIONAL_WING_STABILIZATION
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/surgery/organs/external/wings/functional_wings.dm
+// No free fall softening for everyone - but functional wings get it
+/obj/item/organ/wings/functional/can_soften_fall()
+	return TRUE
+// END NOVA CORE MIGRATION: code/modules/surgery/organs/external/wings/functional_wings.dm

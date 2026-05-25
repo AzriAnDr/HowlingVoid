@@ -412,3 +412,21 @@
 	wound_path_to_generate = /datum/wound/pierce/bleed/critical
 
 	threshold_minimum = 100
+
+
+// BEGIN NOVA CORE MIGRATION: code/datums/wounds/pierce.dm
+//Reduce bleed rate by a factor of 2/3
+/datum/wound/pierce/bleed/moderate/New()
+	initial_flow = round(initial_flow * (2/3), 0.01)
+	return ..()
+
+//Reduce bleed rate by a factor of 3/4
+/datum/wound/pierce/bleed/severe/New()
+	initial_flow = round(initial_flow * (3/4), 0.01)
+	return ..()
+
+//Reduce bleed rate by a factor of 1/4
+/datum/wound/pierce/bleed/critical/New()
+	initial_flow = round(initial_flow * (1/4), 0.01)
+	return ..()
+// END NOVA CORE MIGRATION: code/datums/wounds/pierce.dm

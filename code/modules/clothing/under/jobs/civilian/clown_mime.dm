@@ -99,3 +99,17 @@
 	desc = "It makes you look HONKable!"
 	icon_state = "sexyclown"
 	inhand_icon_state = null
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/clothing/under/jobs/civilian/clown_mime.dm
+/obj/item/clothing/under/rank/civilian/clown/jester
+	greyscale_config_worn_digi = /datum/greyscale_config/jester_suit/worn/digi
+
+/obj/item/clothing/under/rank/civilian/clown/pink_clown_outfit
+	name = "pink clown outfit"
+	desc = "A three-tiered ruffle skirt, supported by pink suspenders."
+	icon = 'icons/obj/clothing/under/civilian_additions.dmi'
+	worn_icon = 'icons/mob/clothing/under/civilian_additions.dmi'
+	icon_state = "pink_clown_outfit"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+// END NOVA CORE MIGRATION: code/modules/clothing/under/jobs/civilian/clown_mime.dm

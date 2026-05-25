@@ -289,3 +289,10 @@
 	if(target.reagents)
 		target.reagents.add_reagent(/datum/reagent/consumable/frostoil, 30)
 	return TRUE
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/antagonists/changeling/powers/tiny_prick.dm
+// Transformation sting is not able to be purchased
+/datum/action/changeling/sting/transformation
+	dna_cost = CHANGELING_POWER_UNOBTAINABLE
+// END NOVA CORE MIGRATION: code/modules/antagonists/changeling/powers/tiny_prick.dm

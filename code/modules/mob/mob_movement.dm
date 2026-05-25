@@ -616,3 +616,34 @@
 	if(new_turf && (istype(new_turf, /turf/cordon/secret) || is_secret_level(new_turf.z)) && !client?.holder)
 		return
 	return ..()
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mob/mob_movement.dm
+/mob/living/carbon/verb/army_crawl()
+	set name = "Army Crawl"
+	set category = "IC"
+
+	var/mob/living/carbon/crawler = src
+
+	if(HAS_TRAIT(crawler, TRAIT_PRONE))
+		visible_message("[crawler] starts to get up")
+		if(!do_after(crawler, 3 SECONDS))
+			return
+		SEND_SIGNAL(crawler, COMSIG_MOVABLE_REMOVE_PRONE_STATE)
+		return
+
+	if(!crawler.can_army_crawl())
+		balloon_alert(crawler, "must be laying down!")
+		return
+
+	visible_message("[crawler] begins to lower themself further")
+	if(!do_after(crawler, 3 SECONDS, extra_checks = CALLBACK(crawler, PROC_REF(can_army_crawl))))
+		if(!crawler.resting)
+			balloon_alert(crawler, "must be laying down!")
+		return
+	crawler.AddComponent(/datum/component/prone_mob, block_hands = TRUE)
+
+/// Checks if the user is lying down (resting)
+/mob/living/carbon/proc/can_army_crawl()
+	return resting
+// END NOVA CORE MIGRATION: code/modules/mob/mob_movement.dm

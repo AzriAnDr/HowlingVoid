@@ -3,7 +3,7 @@
 ## 1. Project Overview
 
 - **HowlingVoid (HV, ХВ, ВП) — главный репозиторий.** Все изменения, поиск информации и работа с кодом выполняются в нём по умолчанию, если пользователь явно не указывает другой репозиторий. Когда в рабочем пространстве открыто несколько проектов, AI должен работать именно с HowlingVoid, а другие репозитории использовать только как справочные источники или если на это есть прямое указание пользователя.
-- This codebase is a BYOND SS13 fork in the **TG/NovaSector** family. HowlingVoid is downstream of NovaSector (`modular_nova/` содержит Nova Sector additions), а HowlingVoid-специфичные дополнения живут в `modularhowling_void/`.
+- This codebase is a BYOND SS13 fork in the **TG/NovaSector** family. HowlingVoid is downstream of NovaSector (`code/` содержит Nova Sector additions), а HowlingVoid-специфичные дополнения живут в `code/`.
 - **Концепция билда:** HowlingVoid — станционный билд на основе NovaSector. Основная геймплейная петля — классическая станционная SS13 с атмосферой, работой, антагонистами и исследованием. Ключевые механики NovaSector (экономика, кастомизация видов, расширенное снаряжение) унаследованы и расширяются.
 - Основной игровой код на DM лежит в `code/` (TG-style структура: `__DEFINES/`, `controllers/`, `datums/`, `modules/` и т. д.).
 - UIs реализованы через **tgui** в `tgui/` (TypeScript/React, сборка через Node / Juke / Bun).
@@ -12,8 +12,8 @@
 ## 2. Где писать код (важно)
 
 - **По умолчанию новый DM-код пишем прямо в `code/`**, в подходящий модуль/поддиректорию, следуя уже существующей структуре.
-- Папки `modularhowling_void/` и `modular_nova/` можно читать как источник примеров и существующего кода, но **не нужно автоматически помещать туда новые фичи** — прямые изменения в `code/` предпочтительны.
-- **Проверка оверрайдов в модульных папках:** перед изменением или расширением кода в `code/` AI **обязан** проверить, нет ли в `modular_nova/master_files/` или `modularhowling_void/master_files/` оверрайдов затрагиваемых процедур, типов или файлов. Если оверрайд найден, его нужно учесть: либо перенести логику в core и убрать оверрайд, либо убедиться, что изменение в core не конфликтует с оверрайдом. Игнорирование оверрайдов приводит к трудноотлавливаемым багам.
+- Папки `code/` и `code/` можно читать как источник примеров и существующего кода, но **не нужно автоматически помещать туда новые фичи** — прямые изменения в `code/` предпочтительны.
+- **Проверка оверрайдов в модульных папках:** перед изменением или расширением кода в `code/` AI **обязан** проверить, нет ли в `core files` или `core files` оверрайдов затрагиваемых процедур, типов или файлов. Если оверрайд найден, его нужно учесть: либо перенести логику в core и убрать оверрайд, либо убедиться, что изменение в core не конфликтует с оверрайдом. Игнорирование оверрайдов приводит к трудноотлавливаемым багам.
 - Если логика явно относится к уже существующему модулю (карго, медицина, органы и т. д.), дописываем туда же, где находится текущая реализация (например, в `code/modules/...`).
 - Для общих констант и макросов используем `code/__DEFINES/`.
 
@@ -36,13 +36,13 @@
   - Type paths like `/obj/item/...`, procs with `proc/` syntax, `..()` for supercalls.
   - Use existing macros and constants from `code/__DEFINES/` instead of new magic numbers.
 - For species, organs, body markings, and sprite accessories:
-  - Актуальные реализации смотрим в `code/modules/surgery`, `code/modules/mob`, `code/modules/client/preferences` и соседних файлах; модульные директории (`modular_nova/modules/`) можно использовать как примеры.
+  - Актуальные реализации смотрим в `code/modules/surgery`, `code/modules/mob`, `code/modules/client/preferences` и соседних файлах; модульные директории (`code/modules/`) можно использовать как примеры.
   - Body markings используют `/datum/body_marking` и обрабатываются логикой в `code/modules/surgery/bodyparts/_bodyparts.dm`.
   - Внешние органы/оверлеи используют `/datum/bodypart_overlay/mutant` и битфлаги слоёв в `code/__DEFINES/mobs.dm`.
 - When changing layering/appearance:
   - Use the existing layer constants (`BODY_FRONT_LAYER`, `ABOVE_BODY_FRONT_HEAD_LAYER`, `HEAD_LAYER`, `HAIR_LAYER`, `EXTERNAL_FRONT_*` bitflags) instead of raw numbers.
   - Respect existing helpers like `bitflag_to_layer()` and `mutant_bodyparts_layertext()`.
-- При добавлении кода, связанного с Nova-фичами (экономика, виды, снаряжение и т.д.), в первую очередь смотреть в `modular_nova/modules/` — там может уже быть реализация, которую нужно расширить.
+- При добавлении кода, связанного с Nova-фичами (экономика, виды, снаряжение и т.д.), в первую очередь смотреть в `code/modules/` — там может уже быть реализация, которую нужно расширить.
 
 ## 5. Maps, Assets, and Tools
 
@@ -162,7 +162,7 @@ tools\dmi\Resolve Icon Conflicts.bat
 
 - The guidance in this section applies to **all new child types**, not only circuit boards or black market content.
 - A new subtype is preferred when it adds **behaviour, lifecycle differences, or clear type identity**. If the change is mostly a bundle of var overrides or content data, prefer a datum, preset, config object, registry entry, or runtime setup proc.
-- Before extending an existing type family in `code/`, also check `modular_nova/master_files/` and `modularhowling_void/master_files/` for overrides that may already change initialization, related type vars, or startup behavior.
+- Before extending an existing type family in `code/`, also check `core files` and `core files` for overrides that may already change initialization, related type vars, or startup behavior.
 - Before adding a subtype, check whether the parent family or adjacent systems use `subtypesof()`, `typesof()`, broad `initial(...)` reads, startup caches, auto-generated assets, admin spawn menus, mapping helpers, design registries, or similar reflective startup logic. New child types are risky in those systems.
 - Avoid creating static bidirectional type references. If type `A` stores a typepath to `B`, and `B` stores a typepath back to `A`, that pair is considered unsafe unless there is a strong reason and the startup path has been reviewed carefully.
 - Sensitive families should keep static type metadata shallow. If a new variant in such a family only needs different data, configure it in `Initialize()`, a dedicated setup proc, or a preset datum instead of closing another typepath cycle in declarations.
@@ -178,9 +178,9 @@ tools\dmi\Resolve Icon Conflicts.bat
 - Делать небольшие, точечные изменения и уважать существующую структуру `code/` вместо принудительной модульности.
 - При добавлении фичи:
   - Найти, где уже реализован похожий функционал в `code/`, и расширить его тем же стилем.
-  - Проверить, нет ли уже похожей реализации в `modular_nova/modules/` или `modularhowling_void/modules/` — если есть, работать с ней или перенести в core.
+  - Проверить, нет ли уже похожей реализации в `code/modules/` или `code/modules/` — если есть, работать с ней или перенести в core.
   - Не создавать новые модульные слои без необходимости; предпочитать прямые изменения в core.
-- При сомнениях по архитектуре просматривать соседние файлы/подсистемы (`code/modules/`) и копировать принятые там паттерны; `modular_nova/modules/` также можно использовать как источник примеров.
+- При сомнениях по архитектуре просматривать соседние файлы/подсистемы (`code/modules/`) и копировать принятые там паттерны; `code/modules/` также можно использовать как источник примеров.
 - Не менять лицензии, юридические тексты и глобальные политики проекта.
 - **ВАЖНО: При создании новых .dm файлов ВСЕГДА добавлять их в `tgstation.dme` в алфавитном порядке в соответствующей секции.** BYOND требует явного указания всех файлов в .dme для компиляции.
 
@@ -188,7 +188,7 @@ tools\dmi\Resolve Icon Conflicts.bat
 
 Многие фичи в проекте управляются флагами конфигурации (`CONFIG_GET(flag/...)`). **Перед реализацией фичи, которая зависит от конфига, AI должен:**
 
-1. **Найти определение флага** — искать `/datum/config_entry/flag/имя_флага` в `code/controllers/configuration/entries/` или `modular_nova/master_files/code/controllers/configuration/entries/`.
+1. **Найти определение флага** — искать `/datum/config_entry/flag/имя_флага` в `code/controllers/configuration/entries/` или `code/controllers/configuration/entries/`.
 
 2. **Проверить, включён ли флаг** — конфигурационные файлы:
    - `config/config.txt`

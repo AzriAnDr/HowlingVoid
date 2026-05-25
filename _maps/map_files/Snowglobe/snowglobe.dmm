@@ -28097,7 +28097,7 @@
 /obj/structure/decorative{
 	icon_state = "projector";
 	pixel_y = -6;
-	icon = 'modular_nova/modules/wargame_projectors/icons/projectors_and_holograms.dmi';
+	icon = 'icons/wargame_projectors/projectors_and_holograms.dmi';
 	base_icon_state = "projector";
 	dir = 8;
 	pixel_x = 1;
@@ -28119,7 +28119,7 @@
 	pixel_y = 24;
 	base_icon_state = "planet";
 	icon_state = "planet";
-	icon = 'modular_nova/modules/wargame_projectors/icons/projectors_and_holograms.dmi';
+	icon = 'icons/wargame_projectors/projectors_and_holograms.dmi';
 	color = "#a6ffed";
 	desc = null;
 	name = "hologram"

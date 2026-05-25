@@ -109,3 +109,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/lavaland, 32)
 	icon_state = "direction_arrival"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/arrival, 32)
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/structures/signs/signs_maps.dm
+/obj/structure/sign/directions/cryo
+	name = "cryo sleepers sign"
+	desc = "A direction sign, pointing out which way the cryo sleepers are. Enjoy your nap!"
+	icon = 'icons/obj/sign.dmi'
+	icon_state = "direction_cryo"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/directions/cryo, 32)
+// END NOVA CORE MIGRATION: code/game/objects/structures/signs/signs_maps.dm

@@ -10,7 +10,7 @@
 | Website                      | Link                                                                                                                                   |
 | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | Шпаргалка по Git / GitHub    | [https://www.notion.so/Git-GitHub-61bc81766b2e4c7d9a346db3078ce833](https://www.notion.so/Git-GitHub-61bc81766b2e4c7d9a346db3078ce833) |
-| Гайд по зеркалированию       | [./modular_nova/mirroring_guide.md](./modular_nova/mirroring_guide.md)                                                                 |
+| Гайд по зеркалированию       | [./documentations/core_migration/legacy_modular_docs/mirroring_guide.md](./documentations/core_migration/legacy_modular_docs/mirroring_guide.md)                                                                 |
 | Код                          | [https://github.com/ALOHADAWN/HowlingVoid](https://github.com/ALOHADAWN/HowlingVoid)                                                   |
 | Вики                         | [https://wiki.novasector13.com](https://wiki.novasector13.com)                                                                         |
 | Codedocs                     | [https://NovaSector.github.io/NovaSector/](https://NovaSector.github.io/NovaSector/)                                                   |

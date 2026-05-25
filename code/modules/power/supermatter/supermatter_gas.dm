@@ -234,3 +234,12 @@ GLOBAL_LIST_INIT(sm_gas_behavior, init_sm_gas())
 	heat_modifier = 14
 	power_transmission = -0.5
 	heat_power_generation = 1
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/power/supermatter/supermatter_gas.dm
+/datum/sm_gas/goblin
+	gas_path = /datum/gas/goblin
+	heat_modifier = 4
+	power_transmission = 0.5
+	heat_power_generation = 4
+// END NOVA CORE MIGRATION: code/modules/power/supermatter/supermatter_gas.dm

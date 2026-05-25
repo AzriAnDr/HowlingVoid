@@ -80,3 +80,9 @@
 
 	box = /obj/item/storage/box/survival/security
 	implants = list(/obj/item/implant/mindshield)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/warden.dm
+/datum/outfit/job/warden
+	messenger = /obj/item/storage/backpack/messenger/sec
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/warden.dm
