@@ -122,3 +122,8 @@
 #define TECHWEB_NODE_TELECOMS "telecoms"
 #define TECHWEB_NODE_UNREGULATED_BLUESPACE "unregulated_bluespace"
 #define TECHWEB_NODE_XENOBIOLOGY "xenobiology"
+
+//howling-void addition:
+#define TECHWEB_NODE_DEEPSPACE "Syndie_tech"
+#define TECHWEB_NODE_DEEPSPACE_ENCRYPTION "Syndie_encryption"
+#define TECHWEB_NODE_DYNE "Dyne_tech"

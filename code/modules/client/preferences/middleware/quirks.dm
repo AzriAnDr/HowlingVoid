@@ -160,11 +160,12 @@
 
 	for (var/quirk in preferences.all_quirks)
 		//NOVA EDIT ADDITION
-		var/datum/quirk/quirk_datum = quirks[quirk]
+		var/quirk_datum = quirks[quirk]
 		if(isnull(quirk_datum))
 			quirks_changed = TRUE
 			continue
-		if(initial(quirk_datum.nova_stars_only) && !SSplayer_ranks.is_nova_star(preferences?.parent))
+		var/datum/quirk/typed_quirk = quirk_datum
+		if(initial(typed_quirk.nova_stars_only) && !SSplayer_ranks.is_nova_star(preferences?.parent))
 			quirks_changed = TRUE
 			continue
 		if(quirk in sanitized_quirks)

@@ -82,6 +82,8 @@ SUBSYSTEM_DEF(research)
 	new /datum/techweb/admin
 	new /datum/techweb/oldstation
 	new /datum/techweb/tarkon // NOVA EDIT ADDITION
+	new /datum/techweb/deepspace // Void edit
+	new /datum/techweb/dyne // Void edit
 	autosort_categories()
 	error_design = new
 	error_node = new

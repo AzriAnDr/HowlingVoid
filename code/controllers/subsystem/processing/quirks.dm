@@ -124,6 +124,70 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	if(badquirk)
 		applied_client.prefs.save_character()
 
+/// Resolves saved or imported quirk entries to the current canonical quirk name.
+/datum/controller/subsystem/processing/quirks/proc/resolve_quirk_name(raw_quirk, list/all_quirks = null)
+	if(isnull(raw_quirk))
+		return null
+
+	if(isnull(all_quirks))
+		all_quirks = get_quirks()
+
+	if(ispath(raw_quirk, /datum/quirk))
+		var/datum/quirk/quirk_path = raw_quirk
+		var/raw_path_name = initial(quirk_path.name)
+		return (raw_path_name in all_quirks) ? raw_path_name : null
+
+	var/quirk_name = "[raw_quirk]"
+	if(quirk_name in all_quirks)
+		return quirk_name
+
+	var/resolved_path = text2path(quirk_name)
+	if(ispath(resolved_path, /datum/quirk))
+		var/datum/quirk/resolved_quirk_path = resolved_path
+		var/resolved_path_name = initial(resolved_quirk_path.name)
+		return (resolved_path_name in all_quirks) ? resolved_path_name : null
+
+	var/safe_name = LOWER_TEXT(sanitize_css_class_name(quirk_name))
+	for(var/current_quirk_name in all_quirks)
+		if(LOWER_TEXT(sanitize_css_class_name(current_quirk_name)) == safe_name)
+			return current_quirk_name
+
+	return null
+
+/// Normalizes saved or imported quirk lists to canonical names.
+/datum/controller/subsystem/processing/quirks/proc/normalize_quirk_list(list/quirks)
+	if(!islist(quirks))
+		return list()
+
+	var/list/all_quirks = get_quirks()
+	var/list/normalized_quirks = list()
+	var/changed = FALSE
+
+	for(var/raw_entry in quirks)
+		var/resolved_name = resolve_quirk_name(raw_entry, all_quirks)
+
+		if(isnull(resolved_name) && !isnull(quirks[raw_entry]))
+			resolved_name = resolve_quirk_name(quirks[raw_entry], all_quirks)
+			if(!isnull(resolved_name))
+				changed = TRUE
+
+		if(isnull(resolved_name))
+			changed = TRUE
+			continue
+
+		if(resolved_name in normalized_quirks)
+			changed = TRUE
+			continue
+
+		normalized_quirks += resolved_name
+		if(resolved_name != raw_entry)
+			changed = TRUE
+
+	if(!changed && normalized_quirks.len == quirks.len)
+		return quirks
+
+	return normalized_quirks
+
 /*
  *Randomises the quirks for a specified mob
  */
@@ -198,6 +262,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /// If no changes need to be made, will return the same list.
 /// Deduplicates quirk names and makes no other expectations.
 /datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks, list/augments, datum/species/species_type = null) // NOVA EDIT CHANGE - AUGMENTS+ - ORIGINAL: /datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks) // Howling Void edit old:/datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks, list/augments)
+	quirks = normalize_quirk_list(quirks)
 	var/list/new_quirks = list()
 	var/list/positive_quirks = list()
 	var/list/seen_quirks = list()
