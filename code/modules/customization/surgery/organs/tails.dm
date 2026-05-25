@@ -12,12 +12,6 @@
 /datum/bodypart_overlay/mutant/tail/override_color(rgb_value)
 	return draw_color
 
-/datum/bodypart_overlay/mutant/tail/get_feature_key_for_overlay()
-	return (wagging ? "wagging" : "") + ..()
-
-/datum/bodypart_overlay/mutant/tail/get_base_icon_state()
-	return sprite_datum.icon_state
-
 /datum/bodypart_overlay/mutant/tail/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	var/mob/living/carbon/human/wearer = bodypart_owner.owner
 	if(!istype(wearer))

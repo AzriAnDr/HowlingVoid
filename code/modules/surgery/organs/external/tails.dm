@@ -152,6 +152,44 @@
 /datum/bodypart_overlay/mutant/tail/get_base_icon_state()
 	return "[wagging ? "wagging_" : ""][sprite_datum.icon_state]" //add the wagging tag if we be wagging
 
+/datum/bodypart_overlay/mutant/tail/proc/build_tail_icon_state(gender, feature_key_text, base_icon_state, image_layer, color_layer)
+	var/list/icon_state_builder = list()
+	icon_state_builder += sprite_datum.gender_specific ? gender : "m"
+	icon_state_builder += feature_key_text
+	icon_state_builder += base_icon_state
+	icon_state_builder += mutant_bodyparts_layertext(image_layer)
+
+	if(color_layer)
+		icon_state_builder += color_layer
+
+	return icon_state_builder.Join("_")
+
+/datum/bodypart_overlay/mutant/tail/build_icon_state(gender, image_layer, color_layer = null, feature_key_suffix = null)
+	if(!wagging)
+		return ..()
+
+	var/feature_key_text = get_feature_key_for_overlay()
+	if(feature_key_suffix)
+		feature_key_text += feature_key_suffix
+
+	var/list/icon_state_candidates = list(
+		build_tail_icon_state(gender, "wagging[feature_key_text]", sprite_datum.icon_state, image_layer, color_layer),
+		build_tail_icon_state(gender, feature_key_text, "wagging_[sprite_datum.icon_state]", image_layer, color_layer),
+		build_tail_icon_state(gender, feature_key_text, "[sprite_datum.icon_state]_wagging", image_layer, color_layer)
+	)
+
+	for(var/icon_state_candidate in icon_state_candidates)
+		if(icon_exists(sprite_datum.icon, icon_state_candidate))
+			LAZYADD(last_built_icon_states, icon_state_candidate)
+			return icon_state_candidate
+
+	var/normal_icon_state = build_tail_icon_state(gender, feature_key_text, sprite_datum.icon_state, image_layer, color_layer)
+	if(icon_exists(sprite_datum.icon, normal_icon_state))
+		LAZYADD(last_built_icon_states, normal_icon_state)
+		return normal_icon_state
+
+	return ..()
+
 /datum/bodypart_overlay/mutant/tail/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEJUMPSUIT)
 
@@ -266,6 +304,80 @@
 
 /datum/bodypart_overlay/mutant/tail_spines/get_base_icon_state()
 	return (!isnull(tail_spine_key) ? "[tail_spine_key]_" : "") + (wagging ? "wagging_" : "") + sprite_datum.icon_state // Select the wagging state if appropriate
+
+/datum/bodypart_overlay/mutant/tail_spines/proc/sync_layers_to_sprite()
+	if(!sprite_datum?.relevent_layers)
+		return
+
+	var/new_layers = NONE
+	for(var/relevant_layer in sprite_datum.relevent_layers)
+		switch(relevant_layer)
+			if(BODY_BEHIND_LAYER)
+				new_layers |= EXTERNAL_BEHIND
+			if(BODY_ADJ_LAYER)
+				new_layers |= EXTERNAL_ADJACENT
+			if(BODY_FRONT_LAYER)
+				new_layers |= EXTERNAL_FRONT
+			if(BODY_FRONT_UNDER_CLOTHES)
+				new_layers |= EXTERNAL_FRONT_UNDER_CLOTHES
+			if(ABOVE_BODY_FRONT_HEAD_LAYER)
+				new_layers |= EXTERNAL_FRONT_OVER
+			if(HEAD_LAYER)
+				new_layers |= EXTERNAL_FRONT_ABOVE_HAIR
+
+	if(new_layers)
+		layers = new_layers
+
+/datum/bodypart_overlay/mutant/tail_spines/set_appearance(accessory_type)
+	. = ..()
+	sync_layers_to_sprite()
+
+/datum/bodypart_overlay/mutant/tail_spines/set_appearance_from_name(accessory_name)
+	. = ..()
+	sync_layers_to_sprite()
+
+/datum/bodypart_overlay/mutant/tail_spines/set_appearance_from_dna(datum/dna/dna, accessory_name, feature_key)
+	. = ..()
+	if(.)
+		sync_layers_to_sprite()
+
+/datum/bodypart_overlay/mutant/tail_spines/proc/build_tail_spines_icon_state(gender, feature_key_text, base_icon_state, image_layer, color_layer)
+	var/list/icon_state_builder = list()
+	icon_state_builder += sprite_datum.gender_specific ? gender : "m"
+	icon_state_builder += feature_key_text
+	icon_state_builder += base_icon_state
+	icon_state_builder += mutant_bodyparts_layertext(image_layer)
+
+	if(color_layer)
+		icon_state_builder += color_layer
+
+	return icon_state_builder.Join("_")
+
+/datum/bodypart_overlay/mutant/tail_spines/build_icon_state(gender, image_layer, color_layer = null, feature_key_suffix = null)
+	if(!wagging)
+		return ..()
+
+	var/feature_key_text = get_feature_key_for_overlay()
+	if(feature_key_suffix)
+		feature_key_text += feature_key_suffix
+
+	var/default_wagging_icon_state = build_tail_spines_icon_state(gender, feature_key_text, get_base_icon_state(), image_layer, color_layer)
+	if(icon_exists(sprite_datum.icon, default_wagging_icon_state))
+		LAZYADD(last_built_icon_states, default_wagging_icon_state)
+		return default_wagging_icon_state
+
+	if(!isnull(tail_spine_key))
+		var/legacy_wagging_icon_state = build_tail_spines_icon_state(gender, feature_key_text, "[tail_spine_key]_wagging_[tail_spine_key]_[sprite_datum.icon_state]", image_layer, color_layer)
+		if(icon_exists(sprite_datum.icon, legacy_wagging_icon_state))
+			LAZYADD(last_built_icon_states, legacy_wagging_icon_state)
+			return legacy_wagging_icon_state
+
+	var/normal_icon_state = build_tail_spines_icon_state(gender, feature_key_text, (!isnull(tail_spine_key) ? "[tail_spine_key]_" : "") + sprite_datum.icon_state, image_layer, color_layer)
+	if(icon_exists(sprite_datum.icon, normal_icon_state))
+		LAZYADD(last_built_icon_states, normal_icon_state)
+		return normal_icon_state
+
+	return ..()
 
 /datum/bodypart_overlay/mutant/tail_spines/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEJUMPSUIT)
