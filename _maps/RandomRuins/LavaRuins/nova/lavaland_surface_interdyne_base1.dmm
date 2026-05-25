@@ -148,6 +148,17 @@
 	pixel_y = 4
 	},
 /obj/structure/table/reinforced/rglass,
+/obj/item/emergency_bed{
+	pixel_y = 9;
+	pixel_x = 3
+	},
+/obj/item/emergency_bed{
+	pixel_x = 1
+	},
+/obj/item/emergency_bed{
+	pixel_y = 6;
+	pixel_x = -2
+	},
 /turf/open/floor/iron/white,
 /area/ruin/interdyne_planetary_base/med)
 "br" = (
@@ -5448,25 +5459,6 @@
 	dir = 4
 	},
 /area/ruin/interdyne_planetary_base/serv/kitchen)
-"Ts" = (
-/obj/effect/turf_decal/siding/white,
-/obj/effect/turf_decal/siding/white{
-	dir = 1
-	},
-/obj/structure/table/reinforced/rglass,
-/obj/item/emergency_bed{
-	pixel_y = 6;
-	pixel_x = -2
-	},
-/obj/item/emergency_bed{
-	pixel_x = 1
-	},
-/obj/item/emergency_bed{
-	pixel_y = 9;
-	pixel_x = 3
-	},
-/turf/open/floor/iron/white,
-/area/ruin/interdyne_planetary_base/med)
 "Tt" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/effect/turf_decal/tile/dark_green/half{
@@ -7469,7 +7461,7 @@ JV
 ky
 sR
 kV
-Ts
+hd
 NL
 TX
 jh
