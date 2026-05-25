@@ -21,7 +21,7 @@
 	surplus = 0
 	progression_minimum = 15 MINUTES
 	limited_stock = 1
-	cost = 35
+	cost = 20
 	restricted = FALSE
 	purchasable_from = UPLINK_TRAITORS
 
