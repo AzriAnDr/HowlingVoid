@@ -4910,20 +4910,10 @@
 	},
 /area/ruin/space/has_grav/nova/des_two/halls)
 "va" = (
-/obj/structure/table/reinforced,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/item/storage/box/stockparts/basic{
-	pixel_y = 6
-	},
-/obj/item/storage/box/stockparts/basic{
-	pixel_x = 8
-	},
-/obj/item/storage/box/beakers{
-	pixel_x = -4;
-	pixel_y = -2
-	},
+/obj/machinery/rnd/server/deepspace,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/nova/des_two/research)
 "vb" = (
@@ -10043,7 +10033,7 @@
 /area/ruin/space/has_grav/nova/des_two/service/dorms/fitness)
 "QV" = (
 /obj/structure/frame/machine/secured,
-/obj/item/circuitboard/machine/protolathe/offstation,
+/obj/item/circuitboard/machine/protolathe/deepspace,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/nova/des_two/research)
 "QW" = (
@@ -11092,7 +11082,22 @@
 /area/ruin/space/has_grav/nova/des_two/service/diner)
 "Vo" = (
 /obj/structure/table,
-/obj/item/storage/box/skillchips/science,
+/obj/item/storage/box/skillchips/science{
+	pixel_y = 6;
+	pixel_x = -10
+	},
+/obj/item/storage/box/beakers{
+	pixel_x = -9;
+	pixel_y = -4
+	},
+/obj/item/storage/box/stockparts/basic{
+	pixel_x = 5;
+	pixel_y = -5
+	},
+/obj/item/storage/box/stockparts/basic{
+	pixel_y = 6;
+	pixel_x = 5
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/nova/des_two/research)
 "Vp" = (
@@ -13620,8 +13625,8 @@ kH
 Sj
 lz
 DW
-KX
 Vo
+KX
 KI
 SV
 gH
