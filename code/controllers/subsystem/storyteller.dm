@@ -811,55 +811,7 @@ SUBSYSTEM_DEF(storyteller)
 			snapshot.janitorial_supply_total++
 		CHECK_TICK
 
-	for(var/obj/effect/decal/cleanable/found_cleanable in world)
-		var/turf/location = get_turf(found_cleanable)
-		if(!location || !is_station_level(location.z))
-			continue
-		var/area/location_area = get_area(location)
-		if(!istype(location_area) || !(location_area.type in GLOB.the_station_areas))
-			continue
-		snapshot.general_cleanable_count++
-		if(istype(found_cleanable, /obj/effect/decal/cleanable/blood))
-			snapshot.blood_cleanable_count++
-		CHECK_TICK
-
-	for(var/turf/open/space/breach in world)
-		var/area/location_area = get_area(breach)
-		if(!istype(location_area) || !(location_area.type in GLOB.the_station_areas))
-			continue
-		snapshot.station_breach_tiles++
-		CHECK_TICK
-
-	for(var/turf/open/floor/floor in world)
-		if(!floor.broken || !is_station_level(floor.z))
-			continue
-		var/area/location_area = get_area(floor)
-		if(!istype(location_area) || !(location_area.type in GLOB.the_station_areas))
-			continue
-		snapshot.broken_floor_count++
-		CHECK_TICK
-
-	for(var/obj/structure/window/found_window in world)
-		var/turf/location = get_turf(found_window)
-		if(!location || !is_station_level(location.z))
-			continue
-		var/area/location_area = get_area(location)
-		if(!istype(location_area) || !(location_area.type in GLOB.the_station_areas))
-			continue
-		if(found_window.get_integrity() < found_window.max_integrity)
-			snapshot.damaged_window_count++
-		CHECK_TICK
-
-	for(var/obj/structure/grille/found_grille in world)
-		var/turf/location = get_turf(found_grille)
-		if(!location || !is_station_level(location.z))
-			continue
-		var/area/location_area = get_area(location)
-		if(!istype(location_area) || !(location_area.type in GLOB.the_station_areas))
-			continue
-		if(found_grille.get_integrity() < found_grille.max_integrity)
-			snapshot.damaged_grille_count++
-		CHECK_TICK
+	populate_station_structure_snapshot(snapshot)
 
 	snapshot.station_integrity = 1
 	if(GLOB.start_state)
@@ -867,6 +819,43 @@ SUBSYSTEM_DEF(storyteller)
 		live_state.count()
 		snapshot.station_integrity = clamp(GLOB.start_state.score(live_state), 0, 1)
 	apply_structure_baseline(snapshot)
+
+/datum/controller/subsystem/storyteller/proc/populate_station_structure_snapshot(datum/storyteller/state_snapshot/snapshot)
+	if(!istype(snapshot))
+		return
+
+	for(var/area_type in GLOB.the_station_areas)
+		var/area/station_area = GLOB.areas_by_type[area_type]
+		if(!station_area)
+			continue
+
+		for(var/list/zlevel_turfs as anything in station_area.get_zlevel_turf_lists())
+			for(var/turf/location as anything in zlevel_turfs)
+				if(!is_station_level(location.z))
+					continue
+
+				if(isspaceturf(location))
+					snapshot.station_breach_tiles++
+				else if(isfloorturf(location))
+					var/turf/open/floor/floor = location
+					if(floor.broken)
+						snapshot.broken_floor_count++
+
+				for(var/obj/found_object as anything in location.contents)
+					if(istype(found_object, /obj/effect/decal/cleanable))
+						snapshot.general_cleanable_count++
+						if(istype(found_object, /obj/effect/decal/cleanable/blood))
+							snapshot.blood_cleanable_count++
+					else if(istype(found_object, /obj/structure/window))
+						var/obj/structure/window/found_window = found_object
+						if(found_window.get_integrity() < found_window.max_integrity)
+							snapshot.damaged_window_count++
+					else if(istype(found_object, /obj/structure/grille))
+						var/obj/structure/grille/found_grille = found_object
+						if(found_grille.get_integrity() < found_grille.max_integrity)
+							snapshot.damaged_grille_count++
+
+				CHECK_TICK
 
 /datum/controller/subsystem/storyteller/proc/apply_structure_baseline(datum/storyteller/state_snapshot/snapshot)
 	if(!istype(snapshot))
