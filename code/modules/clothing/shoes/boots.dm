@@ -76,7 +76,7 @@
 
 /obj/item/clothing/shoes/jackboots/tall/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/squeak, list('modular_nova/master_files/sound/effects/footstep/highheel1.ogg' = 1, 'modular_nova/master_files/sound/effects/footstep/highheel2.ogg' = 1), 20)
+	AddComponent(/datum/component/squeak, list('sound/effects/footstep/highheel1.ogg' = 1, 'sound/effects/footstep/highheel2.ogg' = 1), 20)
 
 /obj/item/clothing/shoes/jackboots/floortile
 	name = "floortile camouflage jackboots"
@@ -220,3 +220,9 @@
 	bio = 90
 	fire = 70
 	acid = 50
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/clothing/shoes/boots.dm
+/obj/item/clothing/shoes/gunboots/dm
+	projectile_type = /obj/projectile/beam/laser
+// END NOVA CORE MIGRATION: code/modules/clothing/shoes/boots.dm

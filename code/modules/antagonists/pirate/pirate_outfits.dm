@@ -201,3 +201,19 @@
 	r_pocket = /obj/item/flashlight/lantern
 
 	skillchips = list(/obj/item/skillchip/big_pointer) //they don't have an id, so this is needed
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/antagonists/pirate/pirate_outfits.dm
+// Pirate outfit overrides
+
+/datum/outfit/pirate
+	back = /obj/item/storage/backpack/satchel/leather
+	backpack_contents = list(/obj/item/gun/ballistic/automatic/pistol/m1911, /obj/item/ammo_box/magazine/m45 = 3)
+
+
+/datum/outfit/pirate/irs
+	back = /obj/item/storage/backpack/satchel/leather
+
+/datum/outfit/pirate/medieval/warlord
+	backpack_contents = null
+// END NOVA CORE MIGRATION: code/modules/antagonists/pirate/pirate_outfits.dm

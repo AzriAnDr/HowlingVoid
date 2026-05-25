@@ -410,3 +410,10 @@
 
 /datum/movespeed_modifier/being_tased
 	multiplicative_slowdown = 2 // NOVA EDIT CHANGE - Original: multiplicative_slowdown = 4
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/projectiles/projectile/energy/stun.dm
+/obj/projectile/energy/electrode
+	stamina = 80
+	range = 5 // originally 7
+// END NOVA CORE MIGRATION: code/modules/projectiles/projectile/energy/stun.dm

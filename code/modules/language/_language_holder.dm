@@ -690,3 +690,17 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 /datum/language_holder/universal/New()
 	. = ..()
 	grant_all_languages(source = LANGUAGE_MIND)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/language/_language_holder.dm
+/// Kobors
+/datum/language_holder/kobold
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/draconic = list(LANGUAGE_ATOM),
+		/datum/language/kobold = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/kobold = list(LANGUAGE_ATOM),
+	)
+// END NOVA CORE MIGRATION: code/modules/language/_language_holder.dm

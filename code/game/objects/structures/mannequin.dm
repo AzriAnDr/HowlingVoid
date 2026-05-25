@@ -273,3 +273,10 @@ GLOBAL_LIST_INIT(strippable_mannequin_items, create_strippable_list(list(
 #undef MANNEQUIN_WOOD
 #undef MANNEQUIN_PLASTIC
 #undef MANNEQUIN_SKELETON
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/structures/mannequin.dm
+/obj/structure/mannequin
+	/// String for the bra we use.
+	var/bra_name
+// END NOVA CORE MIGRATION: code/game/objects/structures/mannequin.dm

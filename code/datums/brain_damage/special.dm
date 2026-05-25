@@ -726,3 +726,9 @@
 	while(!ismob(axe_loc) && !isarea(axe_loc) && !isnull(axe_loc))
 		axe_loc = axe_loc.loc
 	return axe_loc
+
+
+// BEGIN NOVA CORE MIGRATION: code/datums/brain_damage/special.dm
+/datum/brain_trauma/special/primal_instincts
+	random_gain = FALSE
+// END NOVA CORE MIGRATION: code/datums/brain_damage/special.dm

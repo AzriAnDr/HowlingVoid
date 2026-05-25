@@ -195,3 +195,11 @@
 /obj/structure/railing/corner/end/flip/wooden_fence
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "wooden_railing_corner_flipped"
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/structures/railings.dm
+/obj/structure/railing/singularity_pull(S, current_size)
+	..()
+	if(anchored && current_size >= STAGE_FIVE)
+		set_anchored(FALSE)
+// END NOVA CORE MIGRATION: code/game/objects/structures/railings.dm

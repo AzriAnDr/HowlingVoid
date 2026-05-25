@@ -108,3 +108,10 @@
 
 
 #undef SLEEP_BANK_MULTIPLIER
+
+
+// BEGIN NOVA CORE MIGRATION: code/datums/quirks/negative_quirks/all_nighter.dm
+// This was using the same icon as heavy sleeper. The moon makes more sense for this one
+/datum/quirk/all_nighter
+	icon = FA_ICON_CLOUD_MOON
+// END NOVA CORE MIGRATION: code/datums/quirks/negative_quirks/all_nighter.dm

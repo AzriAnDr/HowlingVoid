@@ -59,3 +59,9 @@
 
 	pda_slot = ITEM_SLOT_BELT
 	skillchips = list(/obj/item/skillchip/job/psychology)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/psychologist.dm
+/datum/outfit/job/psychologist
+	messenger = /obj/item/storage/backpack/messenger/med
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/psychologist.dm

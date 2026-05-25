@@ -34,3 +34,10 @@
 	category = LOG_CATEGORY_DEBUG_ASSET
 	config_flag = /datum/config_entry/flag/log_asset
 	master_category = /datum/log_category/debug
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/logging/categories/log_category_debug.dm
+/datum/log_category/debug_character_creator
+	category = LOG_CATEGORY_DEBUG_CHARACTER_CREATOR
+	master_category = /datum/log_category/debug
+// END NOVA CORE MIGRATION: code/modules/logging/categories/log_category_debug.dm

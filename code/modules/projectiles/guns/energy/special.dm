@@ -511,3 +511,10 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 /obj/item/gun/energy/photon/Initialize(mapload)
 	. = ..()
 	set_light_on(TRUE) // The gun quite literally shoots mini-suns.
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/projectiles/guns/energy/special.dm
+/obj/item/gun/energy/ionrifle/Initialize(mapload)
+	. = ..()
+	fire_delay = 1.2 SECONDS
+// END NOVA CORE MIGRATION: code/modules/projectiles/guns/energy/special.dm

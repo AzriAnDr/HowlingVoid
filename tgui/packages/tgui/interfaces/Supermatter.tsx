@@ -162,8 +162,9 @@ export const SupermatterContent = (props: SupermatterProps) => {
             {!!props.storytellerPowerLabel && (
               <Stack.Item>
                 <NoticeBox
-                  info={(props.storytellerPowerModifier || 1) >= 1}
-                  warning={(props.storytellerPowerModifier || 1) < 1}
+                  {...((props.storytellerPowerModifier || 1) < 1
+                    ? { danger: true }
+                    : { info: true })}
                 >
                   {props.storytellerPowerLabel}
                   {!!props.storytellerPowerRemaining &&

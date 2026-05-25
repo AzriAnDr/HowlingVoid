@@ -131,3 +131,9 @@
 	if(!user.mind)
 		return FALSE
 	return TRUE
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/mime.dm
+/datum/job/mime
+	vox_outfit = /datum/outfit/vox/mime
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/mime.dm

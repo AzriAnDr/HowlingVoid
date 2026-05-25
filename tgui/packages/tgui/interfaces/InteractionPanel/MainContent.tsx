@@ -243,7 +243,7 @@ export const MainContent = () => {
                   <Section
                     title={t('ui.interaction_panel.custom_subtle_title')}
                     buttons={(
-                      <Stack align="center" spacing={1}>
+                      <Stack align="center">
                         {!!savedDraft.length && (
                           <Stack.Item>
                             <Button

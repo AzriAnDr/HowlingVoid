@@ -13,7 +13,7 @@
 /datum/mutation/telekinesis/New(datum/mutation/copymut)
 	..()
 	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('modular_nova/master_files/icons/effects/tele_effects.dmi', "telekinesishead", -MUTATIONS_LAYER)) //NOVA EDIT CHANGE - ORIGINAL: visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER))
+		visual_indicators[type] = list(mutable_appearance('icons/effects/tele_effects.dmi', "telekinesishead", -MUTATIONS_LAYER)) //NOVA EDIT CHANGE - ORIGINAL: visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER))
 
 /datum/mutation/telekinesis/on_acquiring(mob/living/carbon/human/homan)
 	. = ..()

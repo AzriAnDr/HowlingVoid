@@ -360,3 +360,11 @@
 	name = "MOD Soul Core"
 	icon_file = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	json_config = 'code/datums/greyscale/json_configs/mod_core_soul.json'
+
+
+// BEGIN NOVA CORE MIGRATION: code/datums/greyscale/config_types/greyscale_configs/greyscale_items.dm
+/datum/greyscale_config/neuroware
+	name = "Neuroware Chip"
+	icon_file = 'icons/neuroware/neuroware.dmi'
+	json_config = 'code/datums/greyscale/json_configs/gags/items/neuroware.json'
+// END NOVA CORE MIGRATION: code/datums/greyscale/config_types/greyscale_configs/greyscale_items.dm

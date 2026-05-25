@@ -29,3 +29,10 @@
 
 /datum/bodypart_overlay/mutant/wings/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & slot_blocker)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/surgery/organs/external/wings/wings.dm
+// No free fall softening for everyone
+/obj/item/organ/wings/functional/can_soften_fall()
+	return FALSE
+// END NOVA CORE MIGRATION: code/modules/surgery/organs/external/wings/wings.dm

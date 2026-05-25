@@ -252,3 +252,18 @@
 	desc = "An armoured hood for exploring harsh environments."
 	icon_state = "explorer_syndicate"
 	armor_type = /datum/armor/hooded_explorer_syndicate
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mining/equipment/explorer_gear.dm
+/obj/item/clothing/suit/hooded/cloak/drake
+	worn_icon_digi = 'icons/mob/clothing/suits/armor_digi.dmi'
+
+/obj/item/clothing/suit/hooded/cloak/goliath
+	worn_icon_digi = 'icons/mob/clothing/suits/armor_digi.dmi'
+	cold_protection = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	
+/obj/item/clothing/head/hooded/cloakhood/goliath
+	cold_protection = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+// END NOVA CORE MIGRATION: code/modules/mining/equipment/explorer_gear.dm

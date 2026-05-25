@@ -195,3 +195,11 @@
 	var/obj/projectile/energy/fisher/melee/simulated_hit = new
 	simulated_hit.firer = throwingdatum?.get_thrower()
 	simulated_hit.on_hit(hit_atom)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/projectiles/guns/energy/recharge.dm
+// self-reloading weapons need their ammo hud updated whenever reload() is called
+/obj/item/gun/energy/recharge/reload()
+	. = ..()
+	SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD)
+// END NOVA CORE MIGRATION: code/modules/projectiles/guns/energy/recharge.dm

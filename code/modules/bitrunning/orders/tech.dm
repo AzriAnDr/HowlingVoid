@@ -64,3 +64,10 @@
 	purchase_path = /obj/item/disk/bitrunning/item/pkc_mods/premium
 	cost_per_order = 1600
 	desc = "This disk contains a program that lets you equip stronger trophies for the proto-kinetic crusher. Proto-kinetic crusher not included."
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/bitrunning/orders/tech.dm
+/datum/orderable_item/bepis/flashdark
+	purchase_path = /obj/item/flashlight/flashdark
+	cost_per_order = 750
+// END NOVA CORE MIGRATION: code/modules/bitrunning/orders/tech.dm

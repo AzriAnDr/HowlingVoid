@@ -34,8 +34,9 @@ export const Pandemic = (props) => {
           {!!storytellerReplicationLabel && (
             <Stack.Item>
               <NoticeBox
-                info={(storytellerReplicationSpeed || 1) >= 1}
-                warning={(storytellerReplicationSpeed || 1) < 1}
+                {...((storytellerReplicationSpeed || 1) < 1
+                  ? { danger: true }
+                  : { info: true })}
               >
                 {storytellerReplicationLabel}
                 {!!storytellerReplicationRemaining &&

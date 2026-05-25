@@ -447,3 +447,10 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 #undef NEXT_PAGE_ID
 #undef DEFAULT_CHECK_DELAY
+
+
+// BEGIN NOVA CORE MIGRATION: code/_onclick/hud/radial.dm
+// GUNPOINT
+/datum/radial_menu
+	var/icon_path = 'icons/hud/radial.dmi'
+// END NOVA CORE MIGRATION: code/_onclick/hud/radial.dm

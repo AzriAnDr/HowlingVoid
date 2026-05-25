@@ -156,3 +156,9 @@
 	cost = CARGO_CRATE_VALUE * 0.06125
 	unit_name = "candle"
 	export_types = list(/obj/item/flashlight/flare/candle)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/cargo/exports/tools.dm
+/datum/export/weldingtool/experimental
+	export_types = list(/obj/item/weldingtool/electric)
+// END NOVA CORE MIGRATION: code/modules/cargo/exports/tools.dm

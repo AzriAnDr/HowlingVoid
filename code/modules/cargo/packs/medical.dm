@@ -245,3 +245,11 @@
 		/obj/item/sensor_device,
 	)
 	crate_name = "handheld crew monitor crate"
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/cargo/packs/medical.dm
+// Makes strongarm not restricted to medical
+/datum/supply_pack/medical/arm_implants
+	access_view = FALSE
+	access = FALSE
+// END NOVA CORE MIGRATION: code/modules/cargo/packs/medical.dm

@@ -343,3 +343,10 @@
 	max_damage = LIMB_MAX_HP_ALIEN_LARVA
 	burn_modifier = LIMB_ALIEN_BURN_DAMAGE_MULTIPLIER
 	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/surgery/bodyparts/head.dm
+//Override to make heads normal sized, down from bulky.
+/obj/item/bodypart/head
+	w_class = WEIGHT_CLASS_NORMAL
+// END NOVA CORE MIGRATION: code/modules/surgery/bodyparts/head.dm

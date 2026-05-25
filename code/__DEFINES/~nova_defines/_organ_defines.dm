@@ -1,6 +1,8 @@
 #define ORGAN_SLOT_SCANNER "scanner"
 #define ORGAN_SLOT_BRAIN_NIF "nif"
 
+#define LIVER_DEFAULT_TOX_RESISTANCE 1 // Lower values lower how harmful toxins are to the liver.
+
 #define ORGAN_SLOT_PENIS "penis"
 #define ORGAN_SLOT_WOMB "womb"
 #define ORGAN_SLOT_VAGINA "vagina"

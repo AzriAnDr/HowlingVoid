@@ -206,3 +206,15 @@
 /// Catch-all department for undefined jobs.
 /datum/job_department/undefined
 	display_order = 10
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/departments/departments.dm
+/datum/job_department/central_command
+	department_name = DEPARTMENT_CENTRAL_COMMAND
+	department_bitflags = DEPARTMENT_BITFLAG_CENTRAL_COMMAND
+	department_head = /datum/job/captain
+	department_experience_type = EXP_TYPE_CENTRAL_COMMAND
+	display_order = 1
+	label_class = "command"
+	ui_color = "#86ff82"
+// END NOVA CORE MIGRATION: code/modules/jobs/departments/departments.dm

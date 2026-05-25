@@ -148,3 +148,10 @@
 
 /obj/machinery/atmospherics/pipe/update_layer()
 	layer = (HAS_TRAIT(src, TRAIT_UNDERFLOOR) ? BELOW_CATWALK_LAYER : initial(layer)) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.0001)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/atmospherics/machinery/pipes/pipes.dm
+// Disables pipe gas visuals (causes clientside lag/connection issues)
+/obj/machinery/atmospherics/pipe
+	has_gas_visuals = FALSE
+// END NOVA CORE MIGRATION: code/modules/atmospherics/machinery/pipes/pipes.dm

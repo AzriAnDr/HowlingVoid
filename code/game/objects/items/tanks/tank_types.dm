@@ -264,3 +264,15 @@
 	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/helium)
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.75
 	air_contents.gases[/datum/gas/helium][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * 0.25
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/items/tanks/tank_types.dm
+// this only exists to inherit the air contents of the tanks used to craft it
+/obj/item/tank/internals/emergency_oxygen/double/empty/crafted
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
+
+/obj/item/tank/internals/emergency_oxygen/double/empty/crafted/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
+	for(var/obj/item/tank/internals/emergency_oxygen/engi/long_boy in components)
+		assume_air(long_boy.return_air())
+// END NOVA CORE MIGRATION: code/game/objects/items/tanks/tank_types.dm

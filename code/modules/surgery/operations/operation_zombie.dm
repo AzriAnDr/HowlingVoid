@@ -73,3 +73,12 @@
 	for(var/chem in zombie_chems)
 		tool.reagents?.remove_reagent(chem, 1)
 		limb.owner.reagents?.remove_reagent(chem, 1)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/surgery/operations/operation_zombie.dm
+/datum/surgery_operation/limb/bionecrosis
+	required_bodytype = BODYTYPE_ORGANIC
+
+/datum/surgery_operation/limb/bionecrosis
+	required_bodytype = ~(BODYTYPE_ROBOTIC & BODYTYPE_SYNTHETIC)
+// END NOVA CORE MIGRATION: code/modules/surgery/operations/operation_zombie.dm

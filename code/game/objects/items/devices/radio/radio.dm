@@ -369,7 +369,7 @@
 		return
 
 	if(isliving(talking_movable))
-		/* NOVA EDIT REMOVAL START - ORIGINAL - We use our own radio sounds - see modular_nova/modules/radiosound/code/radio.dm - ORIGINAL:
+		/* NOVA EDIT REMOVAL START - ORIGINAL - We use our own radio sounds - see code/modules/radiosound/radio.dm - ORIGINAL:
 		var/mob/living/talking_living = talking_movable
 		var/volume_modifier = (talking_living.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
 		if(radio_noise && !HAS_TRAIT(talking_living, TRAIT_DEAF) && volume_modifier && signal.frequency != FREQ_COMMON && !LAZYACCESS(message_mods, MODE_SEQUENTIAL) && COOLDOWN_FINISHED(src, audio_cooldown))
@@ -797,3 +797,17 @@
 	make_silly()
 
 #undef FREQ_LISTENING
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/items/devices/radio/radio.dm
+// DS-2 & Interdyne silicon radios
+
+/obj/item/radio/borg/syndicate/ghost_role // ds2 and interdyne since they both use non-antag Interdyne freq
+	name = "\proper Suspicious Integrated Subspace Transceiver "
+	special_channels = RADIO_SPECIAL_SYNDIE
+	keyslot = /obj/item/encryptionkey/headset_syndicate/interdyne
+
+/obj/item/radio/borg/syndicate/ghost_role/Initialize(mapload)
+	. = ..()
+	set_frequency(FREQ_INTERDYNE)
+// END NOVA CORE MIGRATION: code/game/objects/items/devices/radio/radio.dm

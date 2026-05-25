@@ -340,3 +340,10 @@
 		var/datum/design/found_design = SSresearch.techweb_design_by_id(id)
 		if((found_design.build_type & LIMBGROWER) && !(RND_CATEGORY_HACKED in found_design.category))
 			imported_designs |= found_design.id
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/machinery/limbgrower.dm
+/obj/machinery/limbgrower/Initialize(mapload)
+	categories += list(SPECIES_SNAIL)
+	return ..()
+// END NOVA CORE MIGRATION: code/game/machinery/limbgrower.dm

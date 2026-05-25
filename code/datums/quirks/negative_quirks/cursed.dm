@@ -11,3 +11,10 @@
 
 /datum/quirk/cursed/add(client/client_source)
 	quirk_holder.AddComponent(/datum/component/omen/quirk)
+
+
+// BEGIN NOVA CORE MIGRATION: code/datums/quirks/negative_quirks/cursed.dm
+/datum/component/omen/quirk/RegisterWithParent()
+	. = ..()
+	UnregisterSignal(parent, COMSIG_LIVING_DEATH) // No death gibbing
+// END NOVA CORE MIGRATION: code/datums/quirks/negative_quirks/cursed.dm

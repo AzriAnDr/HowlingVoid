@@ -1436,3 +1436,10 @@
 		new_embed = new new_embed()
 
 	embed_data = new_embed
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/projectiles/projectile.dm
+/obj/projectile
+	/// If this should be able to hit the target even on direct firing when factions from ignore_faction = TRUE apply
+	var/ignore_direct_target = FALSE
+// END NOVA CORE MIGRATION: code/modules/projectiles/projectile.dm

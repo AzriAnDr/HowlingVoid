@@ -125,3 +125,12 @@
 
 /obj/item/paperplane/throw_at(atom/target, range, speed, mob/thrower, spin=FALSE, diagonals_first = FALSE, datum/callback/callback, gentle, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	return ..(target, range, speed, thrower, FALSE, diagonals_first, callback, quickstart = quickstart)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/paperwork/paperplane.dm
+// Better paper planes
+/obj/item/paperplane/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(delete_on_impact)
+		qdel(src)
+// END NOVA CORE MIGRATION: code/modules/paperwork/paperplane.dm

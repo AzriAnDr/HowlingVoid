@@ -69,8 +69,9 @@ export const ProcessingConsole = (props: any) => {
           {!!storytellerProcessingLabel && (
             <Stack.Item>
               <NoticeBox
-                info={(storytellerProcessingModifier || 1) >= 1}
-                warning={(storytellerProcessingModifier || 1) < 1}
+                {...((storytellerProcessingModifier || 1) < 1
+                  ? { danger: true }
+                  : { info: true })}
               >
                 {storytellerProcessingLabel}
                 {!!storytellerProcessingRemaining &&

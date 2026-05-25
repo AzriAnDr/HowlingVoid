@@ -42,7 +42,7 @@
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 
-/* NOVA EDIT CHANGE BEGIN - MOVED TO modular_nova/master_files/code/modules/power/tesla/coil.dm
+/* NOVA EDIT CHANGE BEGIN - MOVED TO code/modules/power/tesla/coil.dm
 /obj/machinery/power/energy_accumulator/tesla_coil/RefreshParts()
 	. = ..()
 	var/power_multiplier = 0
@@ -179,3 +179,16 @@
 	stored_energy -= joules
 	processed_energy = joules
 	return FALSE //Grounding rods don't release energy to the grid.
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/power/tesla/coil.dm
+/obj/machinery/power/energy_accumulator/tesla_coil/RefreshParts()
+	. = ..()
+	var/new_power_multiplier = 0.44
+	zap_cooldown = 10 SECONDS
+	for(var/datum/stock_part/capacitor/capacitor in component_parts)
+		new_power_multiplier += capacitor.tier * 0.12
+		zap_cooldown -= (capacitor.tier * 2 SECONDS)
+
+	input_power_multiplier = clamp(new_power_multiplier, 0.44, 0.92)
+// END NOVA CORE MIGRATION: code/modules/power/tesla/coil.dm

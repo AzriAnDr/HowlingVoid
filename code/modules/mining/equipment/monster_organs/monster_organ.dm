@@ -229,3 +229,12 @@
 	if (!istype(organ))
 		return
 	organ.on_triggered_internal()
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mining/equipment/monster_organs/monster_organ.dm
+/obj/item/organ/monster_core/try_apply(atom/target, mob/user)
+	if (istype(target, /obj/structure/lavaland/ash_walker))
+		target.attackby(src, user)
+		return
+	return ..()
+// END NOVA CORE MIGRATION: code/modules/mining/equipment/monster_organs/monster_organ.dm

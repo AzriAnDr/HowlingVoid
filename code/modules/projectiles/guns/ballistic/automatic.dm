@@ -535,3 +535,11 @@
 		light_overlay = "flight", \
 		overlay_x = 28, \
 		overlay_y = 12)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/projectiles/guns/ballistic/automatic.dm
+/obj/item/gun/ballistic/automatic/battle_rifle
+	max_shots_before_degradation = 30 // one clean mag before maintenance becomes an issue
+	shots_before_degradation = 30
+	degradation_probability = 5
+// END NOVA CORE MIGRATION: code/modules/projectiles/guns/ballistic/automatic.dm

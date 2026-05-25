@@ -28,3 +28,12 @@
 
 /datum/preference/numeric/max_chat_length/create_default_value()
 	return CHAT_MESSAGE_MAX_LENGTH
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/client/preferences/runechat.dm
+/datum/preference/toggle/enable_runechat_dead
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "chat_on_map_dead"
+	savefile_identifier = PREFERENCE_PLAYER
+	default_value = FALSE
+// END NOVA CORE MIGRATION: code/modules/client/preferences/runechat.dm

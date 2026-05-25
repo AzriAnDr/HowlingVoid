@@ -70,3 +70,9 @@
 
 /datum/outfit/job/scientist/consistent/try_giving_horrible_tie()
 	return
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/scientist.dm
+/datum/outfit/job/scientist
+	messenger = /obj/item/storage/backpack/messenger/science
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/scientist.dm

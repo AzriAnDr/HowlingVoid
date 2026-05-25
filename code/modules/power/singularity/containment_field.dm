@@ -166,3 +166,9 @@
 	playsound(src, 'sound/effects/gravhit.ogg', 50, TRUE)
 	considered_atom.throw_at(target, 200, 4)
 	addtimer(CALLBACK(src, PROC_REF(clear_shock)), 0.5 SECONDS)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/power/singularity/containment_field.dm
+/obj/machinery/field/containment/singularity_act()
+	return
+// END NOVA CORE MIGRATION: code/modules/power/singularity/containment_field.dm

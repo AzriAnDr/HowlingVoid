@@ -40,3 +40,22 @@
 	for(var/icon_file in essentials)
 		for(var/icon_state in essentials[icon_file])
 			insert_icon(icon_state, uni_icon(icon_file, icon_state))
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/asset_cache/assets/plumbing.dm
+/// add modular plumbing sprites to spritesheet so that they will show up in the plumbing RCD menu etc
+/datum/asset/spritesheet_batched/plumbing/create_spritesheets()
+	. = ..()
+	//load only what we need from the icon files,format is icon_file_name = list of icon_states we need from this file
+	var/list/essentials = list(
+		'icons/liquids/obj/structures/drains.dmi' = list(
+			"drain",
+			"active_input",
+			"active_output",
+		),
+	)
+
+	for(var/icon_file in essentials)
+		for(var/icon_state in essentials[icon_file])
+			insert_icon(icon_state, uni_icon(icon_file, icon_state))
+// END NOVA CORE MIGRATION: code/modules/asset_cache/assets/plumbing.dm

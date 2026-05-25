@@ -37,3 +37,9 @@
 
 /obj/effect/temp_visual/dir_setting/ash_shift/out
 	icon_state = "ash_shift"
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/antagonists/heretic/magic/ash_jaunt.dm
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
+	cooldown_time = 15 SECONDS
+// END NOVA CORE MIGRATION: code/modules/antagonists/heretic/magic/ash_jaunt.dm

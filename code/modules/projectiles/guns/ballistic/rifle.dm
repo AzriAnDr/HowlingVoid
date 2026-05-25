@@ -537,3 +537,9 @@
 	actions_types = list()
 	suppressor_x_offset = 3
 	suppressor_y_offset = 3
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/projectiles/guns/ballistic/rifle.dm
+/obj/item/gun/ballistic/rifle/sks
+	projectile_damage_multiplier = 0.8
+// END NOVA CORE MIGRATION: code/modules/projectiles/guns/ballistic/rifle.dm

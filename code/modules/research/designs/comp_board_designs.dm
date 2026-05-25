@@ -421,3 +421,10 @@
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/research/designs/comp_board_designs.dm
+/datum/design/board/med_data/New()
+	departmental_flags |= DEPARTMENT_BITFLAG_SCIENCE
+	return ..()
+// END NOVA CORE MIGRATION: code/modules/research/designs/comp_board_designs.dm

@@ -927,3 +927,9 @@
 	the_window.vis_contents += final_splatter
 	expire()
 	return TRUE
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/effects/decals/cleanable/blood.dm
+/obj/effect/decal/cleanable/blood/gibs/NeverShouldHaveComeHere(turf/here_turf)
+	return !islava(here_turf) && ..()
+// END NOVA CORE MIGRATION: code/game/objects/effects/decals/cleanable/blood.dm

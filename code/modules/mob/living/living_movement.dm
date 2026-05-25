@@ -169,3 +169,11 @@
 	if(stat > SOFT_CRIT)
 		return
 	return ..()
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mob/living/living_movement.dm
+/mob/living/CanAllowThrough(atom/movable/mover, border_dir)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_CAN_ALLOW_THROUGH, mover, border_dir) & COMPONENT_LIVING_PASSABLE)
+		return TRUE
+	return ..()
+// END NOVA CORE MIGRATION: code/modules/mob/living/living_movement.dm

@@ -513,3 +513,9 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 			lowest_departments += department
 
 	return (preference in lowest_departments) ? preference : lowest_departments[1]
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/security_officer.dm
+/datum/outfit/job/security
+	messenger = /obj/item/storage/backpack/messenger/sec
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/security_officer.dm

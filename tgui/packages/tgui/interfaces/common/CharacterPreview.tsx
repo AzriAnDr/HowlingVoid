@@ -11,7 +11,7 @@ export const CharacterPreview = (props: {
       width={width}
       height={props.height}
       params={{
-        id: props.id,
+        id: props.id ?? undefined,
         type: 'map',
       }}
     />

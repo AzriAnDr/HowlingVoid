@@ -173,3 +173,11 @@
 	if(isnewplayer(client.mob))
 		var/mob/dead/new_player/new_player = client.mob
 		new_player.update_menu_music_settings()
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/client/preferences/sounds.dm
+/datum/preference/toggle/sound_eating
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_eating"
+	savefile_identifier = PREFERENCE_PLAYER
+// END NOVA CORE MIGRATION: code/modules/client/preferences/sounds.dm

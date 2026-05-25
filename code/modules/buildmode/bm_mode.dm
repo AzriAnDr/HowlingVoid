@@ -95,3 +95,10 @@
 
 #undef AREASELECT_CORNERA
 #undef AREASELECT_CORNERB
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/buildmode/bm_mode.dm
+/datum/buildmode_mode
+	/// Separate icons due to modularity. Button icons use /tg/ by default.
+	var/button_icon = 'icons/hud/buildmode.dmi'
+// END NOVA CORE MIGRATION: code/modules/buildmode/bm_mode.dm

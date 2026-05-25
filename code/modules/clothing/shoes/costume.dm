@@ -146,3 +146,12 @@
 /obj/item/clothing/shoes/ducky_shoes/dropped(mob/living/user)
 	. = ..()
 	REMOVE_TRAIT(user, TRAIT_WADDLING, SHOES_TRAIT)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/clothing/shoes/costume.dm
+/obj/item/clothing/shoes/jester_shoes
+	greyscale_config_worn_digi = /datum/greyscale_config/jester_shoes/worn/digi
+
+/obj/item/clothing/shoes/glow
+	greyscale_config_worn_digi = /datum/greyscale_config/glow_shoes/worn/digi
+// END NOVA CORE MIGRATION: code/modules/clothing/shoes/costume.dm

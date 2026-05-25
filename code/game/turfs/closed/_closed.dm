@@ -19,3 +19,14 @@
 
 /turf/closed/examine_descriptor(mob/user)
 	return "wall"
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/turfs/closed/_closed.dm
+/turf/closed/indestructible/steel
+	icon = 'icons/aesthetics/walls/icons/wall.dmi'
+	icon_state = "wall-0"
+	base_icon_state = "wall"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith =  SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
+// END NOVA CORE MIGRATION: code/game/turfs/closed/_closed.dm

@@ -542,3 +542,12 @@
 	vars_and_tooltips_map = list(
 		"AMOUNT" = "will be replaced wuth number of orders.",
 	)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/cargo/orderconsole.dm
+/obj/machinery/computer/cargo
+	/// Flag that controls which supplies packs this console is allowed to order from.
+	var/console_flag = CARGO_CONSOLE_NT
+	///Flag to indicate that this console can bypass the express console block.
+	var/bypass_express_lock = FALSE
+// END NOVA CORE MIGRATION: code/modules/cargo/orderconsole.dm

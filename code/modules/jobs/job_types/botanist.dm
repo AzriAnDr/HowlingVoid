@@ -54,3 +54,9 @@
 	satchel = /obj/item/storage/backpack/satchel/hyd
 	duffelbag = /obj/item/storage/backpack/duffelbag/hydroponics
 	messenger = /obj/item/storage/backpack/messenger/hyd
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/botanist.dm
+/datum/outfit/job/botanist
+	messenger = /obj/item/storage/backpack/messenger/hyd
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/botanist.dm

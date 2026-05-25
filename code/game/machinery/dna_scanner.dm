@@ -189,3 +189,9 @@
 	for(var/datum/mutation/mut as anything in subtypesof(/datum/mutation))
 		var/datum/mutation/ref = GET_INITIALIZED_MUTATION(mut)
 		mutations += ref
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/machinery/dna_scanner.dm
+/obj/item/disk/data
+	max_mutations = 30
+// END NOVA CORE MIGRATION: code/game/machinery/dna_scanner.dm
