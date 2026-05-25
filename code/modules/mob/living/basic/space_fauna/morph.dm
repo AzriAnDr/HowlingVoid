@@ -51,7 +51,6 @@
 /mob/living/basic/morph/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	RegisterSignal(src, COMSIG_CLICK_SHIFT, PROC_REF(trigger_ability))
 	RegisterSignal(src, COMSIG_ACTION_DISGUISED_APPEARANCE, PROC_REF(on_disguise))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DISGUISED), PROC_REF(on_undisguise))
 
@@ -137,14 +136,6 @@
 
 	form_weakref = null
 	form_typepath = null
-
-/// Alias for the disguise ability to be used as a keybind.
-/mob/living/basic/morph/proc/trigger_ability(mob/living/basic/source, atom/target)
-	SIGNAL_HANDLER
-
-	// linters hate this if it's not async for some reason even though nothing blocks
-	INVOKE_ASYNC(disguise_ability, TYPE_PROC_REF(/datum/action/cooldown, InterceptClickOn), clicker = source, target = target)
-	return COMSIG_MOB_CANCEL_CLICKON
 
 /// Handles the logic for attacking anything.
 /mob/living/basic/morph/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)

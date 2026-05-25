@@ -67,7 +67,13 @@
 	vary = FALSE
 
 /datum/emote/living/carbon/human/screech/get_sound(mob/living/carbon/human/user)
-	return user.dna.species.get_scream_sound(user)
+	var/scream_sound = get_selected_scream_sound(user)
+	if(scream_sound)
+		return scream_sound
+	scream_sound = user.dna?.species?.get_scream_sound(user)
+	if(scream_sound)
+		return scream_sound
+	return get_default_scream_sound(user)
 
 /datum/emote/living/scream/get_sound_variants(mob/living/user)
 	return list(

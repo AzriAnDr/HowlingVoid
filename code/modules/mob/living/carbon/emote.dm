@@ -62,7 +62,10 @@
 /datum/emote/living/carbon/cry/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
-	return user.dna.species.get_cry_sound(user)
+	var/cry_sound = user.dna?.species?.get_cry_sound(user)
+	if(cry_sound)
+		return cry_sound
+	return get_default_cry_sound(user)
 
 /datum/emote/living/carbon/circle
 	key = "circle"

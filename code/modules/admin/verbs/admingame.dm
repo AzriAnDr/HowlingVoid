@@ -9,11 +9,11 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 		return
 
 	// NOVA EDIT ADDITION START
-	if (user.prefs.read_preference(/datum/preference/toggle/use_tgui_player_panel))
-		if(isnull(player.mob_panel))
-			player.create_player_panel()
-		player.mob_panel.ui_interact(user.mob)
-		return
+	if(isnull(player.mob_panel))
+		player.create_player_panel()
+	player.mob_panel.ui_interact(user.mob)
+	BLACKBOX_LOG_ADMIN_VERB("Player Panel")
+	return
 	// NOVA EDIT ADDITION END
 	var/body = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Options for [player.key]</title></head>"
 	body += "<body>Options panel for <b>[player]</b>"

@@ -79,16 +79,12 @@
 		blooper_pitch_range = BLOOPER_VARIANCE_RAND
 		blooper_speed = rand(BLOOPER_DEFAULT_MINSPEED, BLOOPER_DEFAULT_MAXSPEED)
 
-/// Sends speech from a living mob
-/mob/living/send_speech(message_raw, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language = null, list/message_mods = list(), forced = null, tts_message, list/tts_filter)
-	. = ..()
-
+/// Returns whether this mob should use vocal barks for its current voice settings.
+/mob/living/proc/should_play_bloopers()
 	var/voice_type_pref = client?.prefs.read_preference(/datum/preference/choiced/vocals/voice_type)
-	if(voice_type_pref != VOICE_TYPE_BARK)
-		if((!SStts.tts_enabled && voice_type_pref == VOICE_TYPE_TTS) && client?.prefs.read_preference(/datum/preference/toggle/fallback_to_blooper))
-			play_bloopers(message_raw, message_range, source, message_mods) // if and only if we are using tts and fallback is enabled, we can bloop
-		return
-	play_bloopers(message_raw, message_range, source, message_mods)
+	if(voice_type_pref == VOICE_TYPE_BARK)
+		return TRUE
+	return !SStts.tts_enabled && voice_type_pref == VOICE_TYPE_TTS && client?.prefs.read_preference(/datum/preference/toggle/fallback_to_blooper)
 
 /// Plays the blooper sound effect based on the message provided
 /mob/living/proc/play_bloopers(message_raw, message_range, obj/source, list/message_mods = list())

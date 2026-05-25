@@ -161,7 +161,11 @@
 		remove_organ_trait(TRAIT_AGEUSIA)
 
 /obj/item/organ/tongue/could_speak_language(datum/language/language_path)
-	return (language_path in languages_possible)
+	// HV Edit: Learned/spoken languages should be controlled by language holders.
+	// The tongue organ is only the physical speech organ; language-specific checks here
+	// break downstream species whenever a new native language is not duplicated in
+	// every compatible tongue's legacy possible-language list.
+	return TRUE
 
 /obj/item/organ/tongue/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutanttongue
