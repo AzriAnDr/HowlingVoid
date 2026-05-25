@@ -77,7 +77,7 @@
 	///Controls if the limb is disabled. TRUE means it is disabled (similar to being removed, but still present for the sake of targeted interactions).
 	var/bodypart_disabled = FALSE
 	///Handles limb disabling by damage. If LIMB_NO_DISABLE (-1), a limb can't be disabled via damage. If 1 (100%), it is disabled at max limb damage. Anything between is the percentage of damage against maximum limb damage needed to disable the limb.
-	var/disabling_threshold_percentage = LIMB_NO_DISABLE
+	var/disabling_threshold_percentage = 1 // COMBAT - ORIGINAL: LIMB_NO_DISABLE
 
 	// Damage variables
 	///A mutiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
@@ -1943,9 +1943,3 @@
 	var/old_state = surgery_state
 	. = ..()
 	update_surgical_state(old_state, surgery_state ^ old_state)
-
-
-// BEGIN NOVA CORE MIGRATION: code/modules/surgery/bodyparts/_bodyparts.dm
-/obj/item/bodypart
-	disabling_threshold_percentage = 1 // COMBAT - ORIGINAL : var/disabling_threshold_percentage = 0
-// END NOVA CORE MIGRATION: code/modules/surgery/bodyparts/_bodyparts.dm

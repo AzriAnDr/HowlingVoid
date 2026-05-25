@@ -416,15 +416,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 		var/mob/living/silicon/robot/borg = occupant
 		announce_rank = "[borg.designation] Cyborg"
 
+	announce_rank ||= occupant_rank || "Unknown"
+
 	var/obj/machinery/computer/cryopod/control_computer = control_computer_weakref?.resolve()
 	if(!control_computer)
 		control_computer_weakref = null
 	else
 		LAZYADD(control_computer.frozen_crew, list(list("name" = occupant_name, "job" = occupant_rank)))
 
-		// Make an announcement and log the person entering storage. If set to quiet, does not make an announcement.
-		if(!quiet)
+	// Make an announcement and log the person entering storage. If set to quiet, does not make an announcement.
+	if(!quiet)
+		if(control_computer)
 			control_computer.announce("CRYO_LEAVE", mob_occupant.real_name, announce_rank, occupant_job)
+		else
+			aas_config_announce(/datum/aas_config_entry/cryopod_announcement, list(
+				"PERSON" = mob_occupant.real_name,
+				"RANK" = announce_rank,
+			), null, list(RADIO_CHANNEL_COMMON), "Removing")
 
 	visible_message(span_notice("[src] hums and hisses as it moves [mob_occupant.real_name] into storage."))
 

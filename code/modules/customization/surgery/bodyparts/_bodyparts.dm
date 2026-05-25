@@ -1,5 +1,4 @@
 /obj/item/bodypart
-	disabling_threshold_percentage = 1 // Originally: disabling_threshold_percentage = LIMB_NO_DISABLE
 	/// The bodypart's currently applied style's name. Only necessary for bodyparts that come in multiple
 	/// variants, like prosthetics and cyborg bodyparts.
 	var/current_style = null

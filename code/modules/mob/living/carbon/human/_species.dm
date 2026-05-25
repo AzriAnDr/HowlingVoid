@@ -50,7 +50,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/facial_hair_alpha = 255
 
 	///Never, Optional, or Forced digi legs?
-	var/digitigrade_customization = DIGITIGRADE_NEVER
+	var/digitigrade_customization = DIGITIGRADE_OPTIONAL
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
 	///Reagent that your species bleeds, and what chemical can be used to recover lost blood depend on this
 	var/exotic_bloodtype
@@ -2284,4 +2284,3 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /datum/species/mammal
 	quirk_points_bonus = 4
-
