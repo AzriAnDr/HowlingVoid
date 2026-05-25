@@ -150,6 +150,8 @@ $RECYCLE.BIN/
 
 # Icon must end with two \r
 Icon
+!icons/aesthetics/decals/icon/
+!icons/aesthetics/decals/icon/**
 
 
 # Thumbnails

@@ -112,8 +112,9 @@
 /// Refreshes the visuals of the eyes
 /// If call_update is TRUE, we also will call update_body
 /obj/item/organ/eyes/proc/refresh(mob/living/carbon/eye_owner = owner, call_update = TRUE)
-	owner.update_sight()
-	owner.update_tint()
+	if(owner)
+		owner.update_sight()
+		owner.update_tint()
 
 	if(!ishuman(eye_owner))
 		return
