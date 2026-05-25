@@ -217,7 +217,7 @@ const ItemList = (props: SpellListProps) => {
                           position="absolute"
                           top="0"
                           left="0"
-                          icon="howling_void/code/modules/psionics/icons/spells.dmi"
+                          icon="modular_void/code/modules/psionics/icons/spells.dmi"
                           icon_state={iconState}
                           width={iconSize}
                           fallback={<Icon name="question-circle" size={3} />}
