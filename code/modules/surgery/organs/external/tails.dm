@@ -191,7 +191,13 @@
 	return ..()
 
 /datum/bodypart_overlay/mutant/tail/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
-	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEJUMPSUIT)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/mob/living/carbon/human/human_owner = bodypart_owner.owner
+	if(istype(human_owner?.wear_suit, /obj/item/clothing/suit/mod))
+		return TRUE
+	return !(bodypart_owner.owner?.obscured_slots & HIDEJUMPSUIT)
 
 /obj/item/organ/tail/cat
 	name = "tail"
@@ -380,7 +386,13 @@
 	return ..()
 
 /datum/bodypart_overlay/mutant/tail_spines/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
-	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEJUMPSUIT)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/mob/living/carbon/human/human_owner = bodypart_owner.owner
+	if(istype(human_owner?.wear_suit, /obj/item/clothing/suit/mod))
+		return TRUE
+	return !(bodypart_owner.owner?.obscured_slots & HIDEJUMPSUIT)
 
 /datum/bodypart_overlay/mutant/tail_spines/set_dye_color(new_color, obj/item/organ/organ)
 	dye_color = new_color //no update_body_parts() call, tail/set_dye_color will do it.
