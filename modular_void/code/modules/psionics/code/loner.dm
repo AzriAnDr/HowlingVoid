@@ -1,3 +1,4 @@
+/*
 /datum/antagonist/loner
 	name = "\improper Loner"
 	antagpanel_category = ANTAG_GROUP_SYNDICATE
@@ -48,3 +49,4 @@
 				You were trained by the syndicate as part of an experiment and must show the best results in completing the tasks assigned to you. \n\
 				Glory to the Syndicate!</B>")
 	owner.announce_objectives()
+*/
