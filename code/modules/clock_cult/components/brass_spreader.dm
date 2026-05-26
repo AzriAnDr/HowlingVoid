@@ -60,7 +60,7 @@
 			new /obj/effect/temp_visual/ratvar/floor(converted_turf)
 
 		else
-			converted_turf.ChangeTurf(/turf/closed/wall/mineral/bronze)
+			converted_turf.ChangeTurf(/turf/closed/wall/mineral/bronze, flags = CHANGETURF_INHERIT_MOUNTS)
 			new /obj/effect/temp_visual/ratvar/wall(converted_turf)
 
 		for(var/obj/object in converted_turf.contents)

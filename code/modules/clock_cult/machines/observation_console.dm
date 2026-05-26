@@ -1,9 +1,7 @@
 /obj/machinery/computer/camera_advanced/ratvar
 	name = "Ratvarian Observation Console"
 	desc = "Used by the servants of Ratvar to conduct operations on Nanotrasen property."
-	icon_screen = "ratvar1"
-	icon_keyboard = "ratvar_key1"
-	icon_state = "ratvarcomputer"
+	color = rgb(190, 135, 0)
 	resistance_flags = INDESTRUCTIBLE
 	lock_override = CAMERA_LOCK_STATION
 	circuit = /obj/item/circuitboard/computer/camera_console_ratvar
