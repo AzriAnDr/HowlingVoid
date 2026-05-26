@@ -16,11 +16,107 @@
 	allowed_cells = list(/obj/item/weaponcell/medical)
 	item_flags = null
 	gun_flags = TURRET_INCOMPATIBLE
+	/// Built-in fallback oxygen mode. Hidden while an oxygen medicell is installed.
+	var/obj/item/ammo_casing/energy/medical/default_oxygen_mode
 
 /obj/item/gun/energy/cell_loaded/medigun/Initialize(mapload)
 	. = ..()
+	if(istype(ammo_type[1], /obj/item/ammo_casing/energy/medical))
+		default_oxygen_mode = ammo_type[1]
+	update_default_oxygen_mode()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_VEYMED)
 	add_deep_lore()
+
+/obj/item/gun/energy/cell_loaded/medigun/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	var/previous_cell_count = length(installedcells)
+	. = ..()
+	if(length(installedcells) != previous_cell_count)
+		update_default_oxygen_mode()
+
+/obj/item/gun/energy/cell_loaded/medigun/click_alt(mob/user, modifiers)
+	if(!installedcells.len)
+		to_chat(user, span_warning("The [src] has no cells inside!"))
+		return CLICK_ACTION_BLOCKING
+
+	to_chat(user, span_notice("You remove a cell."))
+	var/obj/item/last_cell = installedcells[installedcells.len]
+
+	if(last_cell)
+		last_cell.forceMove(drop_location())
+		user.put_in_hands(last_cell)
+
+	installedcells -= last_cell
+
+	var/obj/item/ammo_casing/energy/removed_mode
+	if(length(ammo_type))
+		removed_mode = ammo_type[length(ammo_type)]
+		ammo_type.Cut(length(ammo_type), length(ammo_type) + 1)
+		qdel(removed_mode)
+
+	update_default_oxygen_mode()
+	select_fire(user)
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/gun/energy/cell_loaded/medigun/proc/update_default_oxygen_mode()
+	var/obj/item/ammo_casing/energy/selected_mode
+	if(select >= 1 && select <= length(ammo_type))
+		selected_mode = ammo_type[select]
+	var/changed_modes = FALSE
+
+	if(default_oxygen_mode && QDELETED(default_oxygen_mode))
+		default_oxygen_mode = null
+
+	if(has_oxygen_medicell())
+		if(default_oxygen_mode)
+			var/default_mode_index = ammo_type.Find(default_oxygen_mode)
+			if(default_mode_index)
+				ammo_type.Cut(default_mode_index, default_mode_index + 1)
+			QDEL_NULL(default_oxygen_mode)
+			changed_modes = TRUE
+	else if(!default_oxygen_mode || !(default_oxygen_mode in ammo_type))
+		if(!default_oxygen_mode)
+			default_oxygen_mode = new /obj/item/ammo_casing/energy/medical(src)
+		ammo_type.Insert(1, default_oxygen_mode)
+		changed_modes = TRUE
+
+	if(!length(ammo_type))
+		if(!default_oxygen_mode)
+			default_oxygen_mode = new /obj/item/ammo_casing/energy/medical(src)
+		ammo_type += default_oxygen_mode
+		changed_modes = TRUE
+
+	if(changed_modes || select < 1 || select > length(ammo_type))
+		if(selected_mode && !QDELETED(selected_mode))
+			var/selected_mode_index = ammo_type.Find(selected_mode)
+			if(selected_mode_index)
+				select = selected_mode_index
+			else
+				select = clamp(select, 1, length(ammo_type))
+		else
+			select = clamp(select, 1, length(ammo_type))
+		refresh_selected_fire_mode()
+
+/obj/item/gun/energy/cell_loaded/medigun/proc/has_oxygen_medicell()
+	for(var/obj/item/weaponcell/medical/installed_cell as anything in installedcells)
+		if(is_oxygen_medicell(installed_cell))
+			return TRUE
+	return FALSE
+
+/obj/item/gun/energy/cell_loaded/medigun/proc/is_oxygen_medicell(obj/item/weaponcell/medical/cell)
+	return cell.type == /obj/item/weaponcell/medical || istype(cell, /obj/item/weaponcell/medical/oxygen)
+
+/obj/item/gun/energy/cell_loaded/medigun/proc/refresh_selected_fire_mode()
+	if(!length(ammo_type))
+		return
+
+	select = clamp(select, 1, length(ammo_type))
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	fire_sound = shot.fire_sound
+	fire_delay = shot.delay
+	chambered = null
+	recharge_newshot(TRUE)
+	update_appearance()
+	SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD)
 
 // Standard medigun - this is what you will get from Cargo, most likely.
 /obj/item/gun/energy/cell_loaded/medigun/standard

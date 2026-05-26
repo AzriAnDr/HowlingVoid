@@ -21,6 +21,7 @@ export const BloodFilter = (props) => {
           <Stack.Item grow>
             <ChemFilterPane
               title={t('ui.blood_filter.whitelist')}
+              filterId="whitelist"
               list={whitelist}
               buttonColor="green"
             />

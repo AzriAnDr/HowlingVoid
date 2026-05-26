@@ -13,6 +13,7 @@ type Data = {
 
 type Props = {
   title: string;
+  filterId?: string;
   list: string[];
   buttonColor: CssColor;
 };
@@ -20,8 +21,8 @@ type Props = {
 export const ChemFilterPane = (props: Props) => {
   const { act, data } = useBackend();
   const { t } = usePreferencesLocalization(data);
-  const { title, list, buttonColor } = props;
-  const titleKey = title.toLowerCase();
+  const { title, filterId, list, buttonColor } = props;
+  const targetFilter = filterId || title.toLowerCase();
 
   return (
     <Section
@@ -34,12 +35,10 @@ export const ChemFilterPane = (props: Props) => {
           color={buttonColor}
           onClick={() =>
             act('add', {
-              which: titleKey,
+              which: targetFilter,
             })
           }
-        >
-          Add Reagent
-        </Button>
+        />
       }
     >
       {list.map((filter) => (
@@ -49,7 +48,7 @@ export const ChemFilterPane = (props: Props) => {
             icon="minus"
             onClick={() =>
               act('remove', {
-                which: titleKey,
+                which: targetFilter,
                 reagent: filter,
               })
             }
@@ -74,6 +73,7 @@ export const ChemFilter = (props) => {
           <Stack.Item grow>
             <ChemFilterPane
               title={t('ui.common.left')}
+              filterId="left"
               list={left}
               buttonColor="yellow"
             />
@@ -81,6 +81,7 @@ export const ChemFilter = (props) => {
           <Stack.Item grow>
             <ChemFilterPane
               title={t('ui.common.right')}
+              filterId="right"
               list={right}
               buttonColor="red"
             />
