@@ -10,6 +10,12 @@
 	if(clockwork)
 		set_light_color(LIGHT_COLOR_CLOCKWORK)
 		scrambledcodes = TRUE
+		set_connected_ai(null)
+		lawupdate = FALSE
+		if(!istype(laws, /datum/ai_laws/ratvar))
+			QDEL_NULL(laws)
+			laws = new /datum/ai_laws/ratvar()
+		laws.associate(src)
 		if(!internal_clock_slab)
 			internal_clock_slab = new /obj/item/clockwork/clockwork_slab(src)
 	else

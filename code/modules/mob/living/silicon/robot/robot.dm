@@ -549,6 +549,7 @@
 	if(robot_suit)
 		robot_suit.drop_all_parts(drop_to)
 		robot_suit.forceMove(drop_to)
+		robot_suit = null
 	else
 		new /obj/item/robot_suit(drop_to)
 		new /obj/item/bodypart/leg/left/robot(drop_to)
