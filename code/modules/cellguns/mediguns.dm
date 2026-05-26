@@ -238,14 +238,15 @@
 
 /obj/item/storage/briefcase/medicalgunset/cmo
 	name = "Vey-Medical CWM-479-CC cell-powered medigun case"
-	desc = "A briefcase that contains the experimental CWM-479-CC medigun, a basic set of three medigun cells, and an instruction manual."
+	desc = "A briefcase that contains the experimental CWM-479-CC medigun, a full set of tier III medigun cells, and an instruction manual."
 	icon_state = "case_cmo"
 
 /obj/item/storage/briefcase/medicalgunset/cmo/PopulateContents()
 	new /obj/item/gun/energy/cell_loaded/medigun/cmo(src)
-	new /obj/item/weaponcell/medical/brute(src)
-	new /obj/item/weaponcell/medical/burn(src)
-	new /obj/item/weaponcell/medical/toxin(src)
+	new /obj/item/weaponcell/medical/brute/tier_3(src)
+	new /obj/item/weaponcell/medical/burn/tier_3(src)
+	new /obj/item/weaponcell/medical/toxin/tier_3(src)
+	new /obj/item/weaponcell/medical/oxygen/tier_3(src)
 	new /obj/item/book/manual/wiki/mediguns(src)
 
 /*
