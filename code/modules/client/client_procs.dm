@@ -1141,20 +1141,27 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 			continue
 		panel_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
-	src.stat_panel.send_message("init_verbs", list(panel_tabs = panel_tabs, verblist = verblist))
+	src.stat_panel.send_message("init_verbs", list(
+		"panel_tabs" = panel_tabs,
+		"verblist" = verblist,
+		"favorites" = get_statpanel_favorites_payload(),
+	))
 
 /client/proc/send_statpanel_favorites()
 	if(IsAdminAdvancedProcCall())
 		return
 	if(!stat_panel)
 		return
+	stat_panel.send_message("update_favorites", get_statpanel_favorites_payload())
+
+/client/proc/get_statpanel_favorites_payload()
 	var/list/favorites = list()
 	if(prefs)
 		for(var/favorite in prefs.get_statpanel_favorites())
 			if(!istext(favorite))
 				continue
 			favorites += favorite
-	stat_panel.send_message("update_favorites", favorites)
+	return favorites
 
 /client/proc/check_panel_loaded()
 	if(stat_panel.is_ready())
@@ -1220,6 +1227,9 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	switch(type)
 		if("Update-Verbs")
 			init_verbs()
+			send_statpanel_favorites()
+			return
+		if("Update-Favorites")
 			send_statpanel_favorites()
 			return
 		if("Remove-Tabs")
