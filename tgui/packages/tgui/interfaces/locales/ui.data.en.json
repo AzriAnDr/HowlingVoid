@@ -1,4 +1,6 @@
 {
+    "ui.character.data.quirk_apathetic_name": "Apathetic",
+    "ui.character.data.quirk_apathetic_description": "You just don't care as much as other people. That's nice to have in a place like this, I guess.",
     "ui.character.data.language_galactic_common_name":  "Galactic Common",
     "ui.character.data.language_draconic_name":  "Draconic",
     "ui.character.data.language_moffic_name":  "Moffic",
