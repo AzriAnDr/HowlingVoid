@@ -36,6 +36,10 @@
 	. = ..()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/clock_cult/magic/scripture_tier_up.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
+/datum/antagonist/clock_cultist/admin_add(datum/mind/new_owner, mob/admin)
+	give_slab = ishuman(new_owner.current)
+	return ..()
+
 
 /datum/antagonist/clock_cultist/greet()
 	. = ..()

@@ -4,10 +4,7 @@ GLOBAL_DATUM(clock_ark, /obj/structure/destructible/clockwork/the_ark)
 	name = "\improper Ark of the Clockwork Justiciar"
 	desc = "A massive, hulking amalgamation of brass and machinery. An unstable bluespace anomaly churns inside it."
 	clockwork_desc = "The Ark can open a path for Ratvar. Once activated, it must be protected until the Justiciar arrives."
-	icon = 'icons/clock_cult/clockwork_effects_96.dmi'
-	icon_state = "clockwork_gateway_components"
-	pixel_x = -32
-	pixel_y = -32
+	icon_state = "prolonging_prism"
 	anchored = TRUE
 	density = TRUE
 	max_integrity = 1000
@@ -22,6 +19,7 @@ GLOBAL_DATUM(clock_ark, /obj/structure/destructible/clockwork/the_ark)
 	if(!GLOB.clock_ark)
 		GLOB.clock_ark = src
 	SSpoints_of_interest.make_point_of_interest(src)
+	update_appearance()
 
 /obj/structure/destructible/clockwork/the_ark/Destroy()
 	if(GLOB.clock_ark == src)
@@ -51,6 +49,30 @@ GLOBAL_DATUM(clock_ark, /obj/structure/destructible/clockwork/the_ark)
 		return
 	return ..()
 
+/obj/structure/destructible/clockwork/the_ark/update_icon_state()
+	. = ..()
+	switch(current_state)
+		if(ARK_STATE_BASE)
+			icon_state = "prolonging_prism"
+		if(ARK_STATE_CHARGING)
+			icon_state = "prolonging_prism_active"
+		if(ARK_STATE_ACTIVE, ARK_STATE_SUMMONING, ARK_STATE_FINAL)
+			icon_state = "prolonging_prism_active"
+
+/obj/structure/destructible/clockwork/the_ark/update_overlays()
+	. = ..()
+	var/mutable_appearance/ark_eye = mutable_appearance('icons/clock_cult/clockwork_objects.dmi', "lens_gem", layer = layer + 0.1)
+	ark_eye.pixel_y = 14
+	ark_eye.alpha = current_state >= ARK_STATE_CHARGING ? 220 : 140
+	. += ark_eye
+
+	if(current_state >= ARK_STATE_CHARGING)
+		var/mutable_appearance/gateway = mutable_appearance('icons/clock_cult/clockwork_effects.dmi', "spatial_gateway", layer = layer + 0.2)
+		gateway.pixel_x = -32
+		gateway.pixel_y = -32
+		gateway.alpha = current_state >= ARK_STATE_ACTIVE ? 230 : 150
+		. += gateway
+
 /obj/structure/destructible/clockwork/the_ark/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
 	if(current_state == ARK_STATE_FINAL)
 		return
@@ -66,7 +88,7 @@ GLOBAL_DATUM(clock_ark, /obj/structure/destructible/clockwork/the_ark)
 	charging_for += seconds_per_tick SECONDS
 	if(current_state < ARK_STATE_SUMMONING && charging_for >= (ARK_ASSAULT_PERIOD * 0.5))
 		current_state = ARK_STATE_SUMMONING
-		icon_state = "clockwork_gateway_closing"
+		update_appearance()
 		send_to_playing_players(span_warning("Reality strains around you as the ticking grows louder."))
 
 	if(charging_for >= ARK_ASSAULT_PERIOD)
@@ -83,7 +105,7 @@ GLOBAL_DATUM(clock_ark, /obj/structure/destructible/clockwork/the_ark)
 		return
 
 	current_state = ARK_STATE_CHARGING
-	icon_state = "clockwork_gateway_charging"
+	update_appearance()
 	SSshuttle.registerHostileEnvironment(src)
 	send_clock_message(null, span_bigbrass("The Ark's cogs grind to life. It will open in [DisplayTimeText(ARK_READY_PERIOD)]!"), msg_ghosts = FALSE)
 	sound_to_playing_players('sound/clock_cult/magic/scripture_tier_up.ogg', 75)
@@ -95,7 +117,7 @@ GLOBAL_DATUM(clock_ark, /obj/structure/destructible/clockwork/the_ark)
 		return
 
 	current_state = ARK_STATE_ACTIVE
-	icon_state = "clockwork_gateway_active"
+	update_appearance()
 	charging_for = 0
 	send_clock_message(null, span_bigbrass("The Ark is open. Defend it until Ratvar arrives!"), msg_ghosts = FALSE)
 	sound_to_playing_players('sound/clock_cult/machinery/ark_scream.ogg', 75)

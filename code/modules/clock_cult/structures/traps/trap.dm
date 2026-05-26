@@ -109,6 +109,8 @@
 	RegisterSignal(parent, COMSIG_CLOCKWORK_SIGNAL_RECEIVED, PROC_REF(trigger))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attack_hand))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
+	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(on_item_interaction))
 
 
 /// Adds an input device to our own `outputs` list, to be sent when it triggers
@@ -135,11 +137,23 @@
 	return
 
 /// Signal proc when the trap has PARENT_ATTACKBY called on it
-/datum/component/clockwork_trap/proc/on_attackby(datum/source, obj/item/attack_item, mob/user)
+/datum/component/clockwork_trap/proc/on_attackby(datum/source, obj/item/attack_item, mob/user, list/modifiers, list/attack_modifiers)
 	SIGNAL_HANDLER
 
+	if(handle_slab_link(attack_item, user))
+		return COMPONENT_NO_AFTERATTACK
+
+/// Signal proc when the trap has an item used on it.
+/datum/component/clockwork_trap/proc/on_item_interaction(datum/source, mob/living/user, obj/item/tool, list/modifiers)
+	SIGNAL_HANDLER
+
+	if(handle_slab_link(tool, user))
+		return ITEM_INTERACT_SUCCESS
+
+/// Handles connecting trap inputs and outputs with a clockwork slab.
+/datum/component/clockwork_trap/proc/handle_slab_link(obj/item/attack_item, mob/user)
 	if(!IS_CLOCK(user) || !istype(attack_item, /obj/item/clockwork/clockwork_slab))
-		return
+		return FALSE
 
 	var/obj/item/clockwork/clockwork_slab/slab = attack_item
 
@@ -149,19 +163,23 @@
 			to_chat(user, span_brass("You connect [slab.buffer.parent] to [parent]."))
 			add_output(slab.buffer)
 			slab.buffer = null
+			return TRUE
 
 		else
 			to_chat(user, span_brass("That device does not accept input."))
+			return TRUE
 
 	else
 
 		if(sends_input)
 			to_chat(user, span_brass("You prepare to connect [parent] with other devices."))
 			slab.buffer = src
+			return TRUE
 
 		else
 
 			to_chat(user, span_brass("That device does not output anything."))
+			return TRUE
 
 /// Sends a signal to activate to every outputting component in `outputs`
 /datum/component/clockwork_trap/proc/trigger_connected()
