@@ -275,7 +275,10 @@
 		chassis.repair_damage(h_boost)
 		repaired = TRUE
 	if(repaired)
-		if(!chassis.use_energy(energy_drain))
+		if(energy_drain && !chassis.use_energy(energy_drain))
+			chassis.cut_overlay(droid_overlay)
+			droid_overlay = new(src.icon, icon_state = "repair_droid")
+			chassis.add_overlay(droid_overlay)
 			active = FALSE
 			return PROCESS_KILL
 	else //no repair needed, we turn off

@@ -36,6 +36,7 @@
 	color = rgb(190, 135, 0)
 	detachable = FALSE
 	icon_state = "mecha_abooster_proj"
+	armor_type = /datum/armor/mecha_equipment_mixed_boost
 	armor_mod = /datum/armor/mecha_equipment_mixed_boost
 
 /datum/armor/mecha_equipment_mixed_boost
