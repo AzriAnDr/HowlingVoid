@@ -89,6 +89,8 @@ GLOBAL_LIST_INIT(clockwork_slabs, list())
 	if(!IS_CLOCK(user))
 		return
 
+	SEND_SIGNAL(user, COMSIG_CLOCKWORK_SLAB_USED, src)
+
 	//Grant quickbound spells
 	for(var/datum/action/innate/clockcult/quick_bind/script as anything in quick_bound_scriptures)
 		script?.Grant(user)

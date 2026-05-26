@@ -25,6 +25,7 @@
 
 /datum/antagonist/clock_cultist/Destroy()
 	QDEL_NULL(communicate)
+	QDEL_NULL(recall)
 	return ..()
 
 
@@ -69,6 +70,10 @@
 	var/mob/living/current = owner.current
 	current.add_faction(FACTION_CLOCK)
 	current.grant_language(/datum/language/ratvar, source = LANGUAGE_CULTIST)
+	if(QDELETED(communicate))
+		communicate = new
+	if(QDELETED(recall))
+		recall = new
 	communicate.Grant(current)
 	recall.Grant(current)
 	RegisterSignal(current, COMSIG_CLOCKWORK_SLAB_USED, PROC_REF(switch_recall_slab))
@@ -97,6 +102,7 @@
 /datum/antagonist/clock_cultist/proc/give_clockwork_slab(mob/living/carbon/human/give_to)
 	var/obj/item/clockwork/clockwork_slab/created_slab = new(give_to)
 	created_slab.cogs = max(created_slab.cogs, CLOCK_CULT_STARTING_COGS)
+	switch_recall_slab(give_to, created_slab)
 
 	var/list/slots = list(
 		LOCATION_BACKPACK,
