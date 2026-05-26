@@ -405,13 +405,13 @@ function SpeciesPageInner(props: SpeciesPageInnerProps) {
                   </Stack.Item>
 
                   <Stack.Item width="30%">
-                    <div className="PreferencesMenu__Character__PreviewFrame PreferencesMenu__Character__PreviewFrame--medium">
+                    <Box height="352px" width="272px" mx="auto">
                       <CharacterPreview
                         height="100%"
                         width="100%"
                         id={data.character_preview_view}
                       />
-                    </div>
+                    </Box>
                   </Stack.Item>
                 </Stack>
               </Box>
