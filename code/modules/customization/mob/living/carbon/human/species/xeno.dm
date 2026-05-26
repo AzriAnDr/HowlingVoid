@@ -171,6 +171,8 @@
 	mutant_organs = list()
 	// Disable plasma-safe liver behavior from base xeno-hybrid species.
 	mutantliver = /obj/item/organ/liver
+	/// Matches standard antagonist xenomorph plasma vessel healing on resin.
+	var/resin_heal_rate = /obj/item/organ/alien/plasmavessel::heal_rate
 	/// Species-granted pounce action tracked for cleanup.
 	var/tmp/list/species_pounce_action = list()
 	/// Species-granted free resin action tracked for cleanup.
@@ -255,6 +257,50 @@
 	if(synth)
 		qdel(synth)
 	species_speech_implant[H] = null
+
+/datum/species/xeno/spec_life(mob/living/carbon/human/H, seconds_per_tick)
+	. = ..()
+	if(!istype(H))
+		return
+
+	if(locate(/obj/structure/alien/weeds) in H.loc)
+		H.add_mood_event("area_beauty", /datum/mood_event/xenohybrid_resin)
+		var/need_mob_update = FALSE
+		need_mob_update += H.adjust_brute_loss(-resin_heal_rate * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += H.adjust_fire_loss(-resin_heal_rate * seconds_per_tick, updating_health = FALSE)
+		need_mob_update += H.adjust_oxy_loss(-resin_heal_rate * seconds_per_tick, updating_health = FALSE)
+		if(need_mob_update)
+			H.updatehealth()
+
+/datum/species/xeno/proc/xenohybrid_heat_burst(mob/living/carbon/human/victim)
+	if(!istype(victim))
+		return
+
+	victim.visible_message(
+		span_danger("[victim]'s overheated tissues rupture in a spray of acidic gore!"),
+		span_userdanger("Your overheated tissues rupture in a spray of acidic gore!"),
+	)
+	if(victim.stat < UNCONSCIOUS)
+		INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
+	victim.spawn_gibs()
+	victim.gib_animation()
+	victim.drop_all_held_items()
+	victim.set_fire_stacks(0)
+	victim.extinguish_mob()
+	victim.bodytemperature = BODYTEMP_NORMAL
+	victim.coretemperature = BODYTEMP_NORMAL
+
+/datum/species/xeno/proc/should_heat_burst(mob/living/carbon/human/victim)
+	if(!istype(victim))
+		return FALSE
+	return victim.on_fire || victim.bodytemperature > victim.get_body_temp_heat_damage_limit() || victim.coretemperature > victim.get_body_temp_heat_damage_limit() || victim.get_fire_loss() >= victim.maxHealth
+
+/mob/living/carbon/human/death(gibbed)
+	if(!gibbed && isxenohybrid(src))
+		var/datum/species/xeno/xeno_species = dna?.species
+		if(istype(xeno_species) && xeno_species.should_heat_burst(src))
+			xeno_species.xenohybrid_heat_burst(src)
+	return ..()
 
 /datum/species/xeno/proc/on_xenohybrid_item_attack(mob/living/carbon/human/source, mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	SIGNAL_HANDLER
@@ -493,4 +539,3 @@
 		/datum/language/xenocommon = list(LANGUAGE_ATOM),
 	)
 	selected_language = /datum/language/xenocommon
-
