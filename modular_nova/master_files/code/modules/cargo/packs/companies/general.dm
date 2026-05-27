@@ -46,6 +46,19 @@
 	contains = list(/obj/item/sign/flag/hc)
 	cost = CARGO_CRATE_VALUE * 0.2
 
+/datum/supply_pack/companies/general/hc_surplus/voskhod_autodoc_refill
+	contains = list(/obj/item/reagent_containers/cup/glass/waterbottle/large/protozine)
+	cost = CARGO_CRATE_VALUE
+
+/datum/supply_pack/companies/general/hc_surplus/voskhod_refit_kit
+	contains = list(/obj/item/crafting_conversion_kit/voskhod_refit)
+	cost = CARGO_CRATE_VALUE * 6
+	access = ACCESS_WEAPONS
+	access_view = ACCESS_WEAPONS
+	express_lock = TRUE
+	order_flags = ORDER_GOODY
+	discountable = SUPPLY_PACK_NOT_DISCOUNTABLE
+
 // Donk
 /datum/supply_pack/companies/general/donk
 	cost = CARGO_CRATE_VALUE * 0.25

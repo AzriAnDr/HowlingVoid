@@ -2,162 +2,121 @@
 	group = "★ Magazines and Ammo"
 	discountable = SUPPLY_PACK_NOT_DISCOUNTABLE
 
-// NT Mags -  These supplant the NT ones
+// Sol fed Mags -  These supplant the NT ones
 
-/datum/supply_pack/companies/mags_and_ammo/nt
+/datum/supply_pack/companies/mags_and_ammo/sol_fed
 	cost = CARGO_CRATE_VALUE * 0.25
 
-/datum/supply_pack/companies/mags_and_ammo/nt/dumdum38
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/dumdum38
 	name = ".38 DumDum Speedloader Single-Pack"
 	desc = "Contains one speedloader of .38 DumDum ammunition, good for embedding in soft targets."
 	contains = list(/obj/item/ammo_box/speedloader/c38/dumdum)
 	auto_name = FALSE
 
-/datum/supply_pack/companies/mags_and_ammo/nt/match38
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/match38
 	name = ".38 Match Grade Speedloader Single-Pack"
 	desc = "Contains one speedloader of match grade .38 ammunition, perfect for showing off trickshots."
 	contains = list(/obj/item/ammo_box/speedloader/c38/match)
 	auto_name = FALSE
 
-/datum/supply_pack/companies/mags_and_ammo/nt/rubber
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/rubber
 	name = ".38 Rubber Speedloader Single-Pack"
 	desc = "Contains one speedloader of bouncy rubber .38 ammunition, for when you want to bounce your shots off anything and everything."
 	cost = CARGO_CRATE_VALUE * 0.2
 	auto_name = FALSE
 	contains = list(/obj/item/ammo_box/speedloader/c38/match/bouncy)
 
-/datum/supply_pack/companies/mags_and_ammo/nt/dumdum38br
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/dumdum38br
 	name = ".38 DumDum Magazine Single-Pack"
 	desc = "Contains one magazine of .38 DumDum ammunition, good for embedding in soft targets."
 	auto_name = FALSE
 	contains = list(/obj/item/ammo_box/magazine/m38/dumdum)
 
-/datum/supply_pack/companies/mags_and_ammo/nt/match38br
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/match38br
 	name = ".38 Match Grade Magazine Single-Pack"
 	desc = "Contains one magazine of match grade .38 ammunition, perfect for showing off trickshots."
 	auto_name = FALSE
 	contains = list(/obj/item/ammo_box/magazine/m38/match)
 
-/datum/supply_pack/companies/mags_and_ammo/nt/m38rubber
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/m38rubber
 	name = ".38 Rubber Magazine Single-Pack"
 	desc = "Contains one magazine of bouncy rubber .38 ammunition, for when you want to bounce your shots off anything and everything."
 	cost = CARGO_CRATE_VALUE * 0.2
 	auto_name = FALSE
 	contains = list(/obj/item/ammo_box/magazine/m38/match/bouncy)
 
-// Sol Fed Mags
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/scar
+	contains = list(/obj/item/ammo_box/magazine/scar)
+	cost = CARGO_CRATE_VALUE * 0.5
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
-/datum/supply_pack/companies/mags_and_ammo
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/m16
+	contains = list(/obj/item/ammo_box/magazine/m16)
+	cost = CARGO_CRATE_VALUE * 0.5
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/m16vintage
+	contains = list(/obj/item/ammo_box/magazine/m16/vintage)
 	cost = CARGO_CRATE_VALUE * 0.25
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
-/datum/supply_pack/companies/mags_and_ammo/c35_mag
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/m16patriot
+	contains = list(/obj/item/ammo_box/magazine/m16/patriot)
+	cost = CARGO_CRATE_VALUE * 1.5
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/c35_mag
 	contains = list(/obj/item/ammo_box/magazine/c35sol_pistol/starts_empty)
 
-/datum/supply_pack/companies/mags_and_ammo/c35_extended
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/c35_extended
 	contains = list(/obj/item/ammo_box/magazine/c35sol_pistol/stendo/starts_empty)
 
-/datum/supply_pack/companies/mags_and_ammo/c585_mag
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/c585_mag
 	contains = list(/obj/item/ammo_box/magazine/c585trappiste_pistol/spawns_empty)
 
-/datum/supply_pack/companies/mags_and_ammo/sol_rifle_short
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/sol_rifle_short
 	contains = list(/obj/item/ammo_box/magazine/c40sol_rifle/starts_empty)
 
-/datum/supply_pack/companies/mags_and_ammo/br38
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/br38
 	contains = list(/obj/item/ammo_box/magazine/m38/empty)
 
-/datum/supply_pack/companies/mags_and_ammo/kineticballs
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/kineticballs
 	contains = list(/obj/item/ammo_box/magazine/kineticballs/starts_empty)
 
-/datum/supply_pack/companies/mags_and_ammo/kineticballsbig
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/kineticballsbig
 	contains = list(/obj/item/ammo_box/magazine/kineticballsbig/starts_empty)
 
-/datum/supply_pack/companies/mags_and_ammo/sol_rifle_standard
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/sol_rifle_standard
 	contains = list(/obj/item/ammo_box/magazine/c40sol_rifle/standard/starts_empty)
 	cost = CARGO_CRATE_VALUE * 0.5
 
-/datum/supply_pack/companies/mags_and_ammo/sol_grenade_standard
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/sol_grenade_standard
 	contains = list(/obj/item/ammo_box/magazine/c980_grenade/starts_empty)
 	cost = CARGO_CRATE_VALUE
 
-/datum/supply_pack/companies/mags_and_ammo/sol_grenade_drum
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/sol_grenade_drum
 	contains = list(/obj/item/ammo_box/magazine/c980_grenade/drum/starts_empty)
 	cost = CARGO_CRATE_VALUE * 0.75
 	access_view = ACCESS_WEAPONS
 	express_lock = TRUE
 	order_flags = ORDER_GOODY
 
-/datum/supply_pack/companies/mags_and_ammo/jager_shotgun_regular
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/jager_shotgun_regular
 	contains = list(/obj/item/ammo_box/magazine/jager/empty)
 	access_view = ACCESS_WEAPONS
 	express_lock = TRUE
 	order_flags = ORDER_GOODY
 
-/datum/supply_pack/companies/mags_and_ammo/jager_shotgun_Large
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/jager_shotgun_Large
 	contains = list(/obj/item/ammo_box/magazine/jager/large/empty)
 	cost = CARGO_CRATE_VALUE * 0.75
 	access_view = ACCESS_WEAPONS
 	express_lock = TRUE
 	order_flags = ORDER_GOODY
 
-/datum/supply_pack/companies/mags_and_ammo/akm
-	contains = list(/obj/item/ammo_box/magazine/akm)
-	cost = CARGO_CRATE_VALUE * 0.4
-
-/datum/supply_pack/companies/mags_and_ammo/akmricochet
-	contains = list(/obj/item/ammo_box/magazine/akm/ricochet)
-	cost = CARGO_CRATE_VALUE * 0.4
-
-/datum/supply_pack/companies/mags_and_ammo/akmfire
-	contains = list(/obj/item/ammo_box/magazine/akm/fire)
-	cost = CARGO_CRATE_VALUE * 0.4
-
-/datum/supply_pack/companies/mags_and_ammo/akmap
-	contains = list(/obj/item/ammo_box/magazine/akm/ap)
-	cost = CARGO_CRATE_VALUE * 0.4
-
-/datum/supply_pack/companies/mags_and_ammo/akmemp
-	contains = list(/obj/item/ammo_box/magazine/akm/emp)
-	cost = CARGO_CRATE_VALUE * 0.4
-
-/datum/supply_pack/companies/mags_and_ammo/akmrubber
-	contains = list(/obj/item/ammo_box/magazine/akm/rubber)
-	cost = CARGO_CRATE_VALUE * 0.4
-
-/datum/supply_pack/companies/mags_and_ammo/akmbanana
-	contains = list(/obj/item/ammo_box/magazine/akm/banana)
-	cost = CARGO_CRATE_VALUE * 0.4
-
-/datum/supply_pack/companies/mags_and_ammo/akmcivvie
-	contains = list(/obj/item/ammo_box/magazine/akm/civvie)
-	cost = CARGO_CRATE_VALUE * 0.25
-
-/datum/supply_pack/companies/mags_and_ammo/bison
-	contains = list(/obj/item/ammo_box/magazine/bison)
-	cost = CARGO_CRATE_VALUE * 0.35
-
-/datum/supply_pack/companies/mags_and_ammo/mp5
+/datum/supply_pack/companies/mags_and_ammo/sol_fed/mp5
 	contains = list(/obj/item/ammo_box/magazine/mp5)
 	cost = CARGO_CRATE_VALUE * 0.3
-
-/datum/supply_pack/companies/mags_and_ammo/m16
-	contains = list(/obj/item/ammo_box/magazine/m16)
-	cost = CARGO_CRATE_VALUE * 0.5
-	order_flags = ORDER_GOODY | ORDER_CONTRABAND
-
-/datum/supply_pack/companies/mags_and_ammo/m16vintage
-	contains = list(/obj/item/ammo_box/magazine/m16/vintage)
-	cost = CARGO_CRATE_VALUE * 0.25
-	order_flags = ORDER_GOODY | ORDER_CONTRABAND
-
-/datum/supply_pack/companies/mags_and_ammo/m16patriot
-	contains = list(/obj/item/ammo_box/magazine/m16/patriot)
-	cost = CARGO_CRATE_VALUE * 1.5
-	order_flags = ORDER_GOODY | ORDER_CONTRABAND
-
-/datum/supply_pack/companies/mags_and_ammo/scar
-	contains = list(/obj/item/ammo_box/magazine/scar)
-	cost = CARGO_CRATE_VALUE * 0.5
-	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
 // HC Mags
 
@@ -189,6 +148,42 @@
 /datum/supply_pack/companies/mags_and_ammo/hc_surplus/amr_magazine
 	contains = list(/obj/item/ammo_box/magazine/wylom)
 	cost = CARGO_CRATE_VALUE * 0.75
+
+/datum/supply_pack/companies/mags_and_ammo/hc_surplus/bison
+	contains = list(/obj/item/ammo_box/magazine/bison)
+	cost = CARGO_CRATE_VALUE * 0.35
+
+/datum/supply_pack/companies/mags_and_ammo/hc_surplus/akm
+	contains = list(/obj/item/ammo_box/magazine/akm)
+	cost = CARGO_CRATE_VALUE * 0.4
+
+/datum/supply_pack/companies/mags_and_ammo/hc_surplus/akmricochet
+	contains = list(/obj/item/ammo_box/magazine/akm/ricochet)
+	cost = CARGO_CRATE_VALUE * 0.4
+
+/datum/supply_pack/companies/mags_and_ammo/hc_surplus/akmfire
+	contains = list(/obj/item/ammo_box/magazine/akm/fire)
+	cost = CARGO_CRATE_VALUE * 0.4
+
+/datum/supply_pack/companies/mags_and_ammo/hc_surplus/akmap
+	contains = list(/obj/item/ammo_box/magazine/akm/ap)
+	cost = CARGO_CRATE_VALUE * 0.4
+
+/datum/supply_pack/companies/mags_and_ammo/hc_surplus/akmemp
+	contains = list(/obj/item/ammo_box/magazine/akm/emp)
+	cost = CARGO_CRATE_VALUE * 0.4
+
+/datum/supply_pack/companies/mags_and_ammo/hc_surplus/akmrubber
+	contains = list(/obj/item/ammo_box/magazine/akm/rubber)
+	cost = CARGO_CRATE_VALUE * 0.4
+
+/datum/supply_pack/companies/mags_and_ammo/hc_surplus/akmbanana
+	contains = list(/obj/item/ammo_box/magazine/akm/banana)
+	cost = CARGO_CRATE_VALUE * 0.4
+
+/datum/supply_pack/companies/mags_and_ammo/hc_surplus/akmcivvie
+	contains = list(/obj/item/ammo_box/magazine/akm/civvie)
+	cost = CARGO_CRATE_VALUE * 0.25
 
 // Vitezstv★ Boxes of non-shotgun ammo
 
