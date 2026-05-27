@@ -3,6 +3,91 @@
 	var/area_temperature = T0C
 	var/area_min_temperature = T0C - 15
 	var/list/heat_sources = list()
+	var/datum/weather/affected_weather = null
+
+/atom/movable/screen/fullscreen/temperature_cold
+	icon = 'icons/event/zvents/fullscreen/fullscreen_effects.dmi'
+	icon_state = "cold"
+	blend_mode = BLEND_ADD
+	show_when_dead = TRUE
+
+/atom/movable/screen/fullscreen/temperature_warm
+	icon = 'icons/event/zvents/fullscreen/fullscreen_effects.dmi'
+	icon_state = "warm"
+	blend_mode = BLEND_ADD
+	show_when_dead = TRUE
+
+/area/hypothermia/Initialize(mapload)
+	. = ..()
+	area_temperature = area_min_temperature
+	START_PROCESSING(SSobj, src)
+
+/area/hypothermia/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/area/hypothermia/proc/get_affected_weather()
+	if(!length(SSweather.processing))
+		return null
+	for(var/datum/weather/active_weather in SSweather.processing)
+		if(src in active_weather.impacted_areas)
+			return active_weather
+
+/area/hypothermia/proc/get_volume()
+	return areasize * 3
+
+/area/hypothermia/proc/adjust_temperature_scaled(delta_temp, target_temperature)
+	if(area_temperature >= target_temperature)
+		return
+	area_temperature = min(target_temperature, area_temperature + delta_temp)
+	update_visual()
+
+/area/hypothermia/proc/decrease_temperature_scaled(delta_temp, target_temperature)
+	if(area_temperature <= target_temperature)
+		return
+	area_temperature = max(target_temperature, area_temperature - delta_temp)
+	update_visual()
+
+/area/hypothermia/proc/set_temperature(new_temperature)
+	if(new_temperature == area_temperature)
+		return
+	area_temperature = clamp(new_temperature, area_min_temperature, T20C + 100)
+	update_visual()
+
+/area/hypothermia/proc/update_visual()
+	for(var/mob/living/living_mob in contents)
+		update_mob_visual(living_mob)
+
+/area/hypothermia/proc/update_mob_visual(mob/living/living_mob)
+	if(!living_mob.client || !living_mob.hud_used)
+		return
+	var/atom/movable/screen/current_cold = living_mob.screens["temperature_cold"]
+	var/atom/movable/screen/current_warm = living_mob.screens["temperature_warm"]
+	if(area_temperature <= T0C)
+		if(!current_cold)
+			living_mob.clear_fullscreen("temperature_warm", animated = 1 SECONDS)
+			living_mob.overlay_fullscreen("temperature_cold", /atom/movable/screen/fullscreen/temperature_cold)
+	else if(area_temperature > T0C)
+		if(!current_warm)
+			living_mob.clear_fullscreen("temperature_cold", animated = 1 SECONDS)
+			living_mob.overlay_fullscreen("temperature_warm", /atom/movable/screen/fullscreen/temperature_warm)
+	else
+		if(current_cold || current_warm)
+			living_mob.clear_fullscreen("temperature_cold", animated = 1 SECONDS)
+			living_mob.clear_fullscreen("temperature_warm")
+
+/area/hypothermia/Entered(atom/movable/arrived, area/old_area)
+	. = ..()
+	if(iscarbon(arrived))
+		update_mob_visual(arrived)
+		var/mob/living/carbon/carbon_mob = arrived
+		if(!carbon_mob.GetComponent(/datum/component/hypothermia))
+			carbon_mob.AddComponent(/datum/component/hypothermia)
+
+/area/hypothermia/process(seconds_per_tick)
+	if(area_temperature <= area_min_temperature)
+		return
+	decrease_temperature_scaled(0.5 * seconds_per_tick, area_min_temperature)
 
 /area/hypothermia/outdoor
 	outdoors = TRUE
