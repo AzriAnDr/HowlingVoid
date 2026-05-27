@@ -64,7 +64,11 @@
 	overlay_cache = new_overlay_cache
 
 /datum/weather/snow_storm/snow_blizzard/can_get_alert(mob/player)
-	return TRUE
+	var/turf/mob_turf = get_turf(player)
+	if(isnull(mob_turf))
+		return FALSE
+
+	return istype(mob_turf.loc, /area/hypothermia)
 
 /datum/weather/snow_storm/snow_blizzard/process(seconds_per_tick)
 	for(var/area/hypothermia/HA in impacted_areas)
@@ -106,14 +110,14 @@
 
 /datum/weather/snow_storm/snow_blizzard/endgame/start()
 	. = ..()
-	to_chat(world, span_bolddanger("The blizzard intensifies to a deadly degree! nothing will save you from the cold!"))
+	send_alert(span_bolddanger("The blizzard intensifies to a deadly degree! nothing will save you from the cold!"))
 
 /datum/weather/snow_storm/snow_blizzard/endgame/process(seconds_per_tick)
 	. = ..()
 	if(COOLDOWN_FINISHED(src, cooling_cooldown))
 		for(var/mob/living/carbon/human/crew in GLOB.alive_player_list)
 			if(!is_station_level(crew.z))
-				return
+				continue
 			var/datum/component/hypothermia/comp = crew.GetComponent(__IMPLIED_TYPE__)
 			var/to_adjust = lerp(0.01, 1, clamp(storm_time / 15 MINUTES, 0.01, 1))
 			if(storm_time >= dead_time)

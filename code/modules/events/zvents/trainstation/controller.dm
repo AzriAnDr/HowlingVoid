@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(train_controller)
 	VAR_PRIVATE/moving = FALSE
 	VAR_PRIVATE/datum/looping_sound/global_sound/train_sound_loop/soundloop
 
-	var/mode_active = TRUE
+	var/mode_active = FALSE
 
 	var/list/running_events
 
@@ -60,18 +60,25 @@ SUBSYSTEM_DEF(train_controller)
 		return FALSE
 	if(!SSmapping.current_map.trainstation)
 		return FALSE
-	return FALSE
+	return TRUE
 
 /**
  * Loading and inititialization
  */
 
 /datum/controller/subsystem/train_controller/Initialize()
+	if(!check_trainstation())
+		mode_active = FALSE
+		return SS_INIT_NO_NEED
+
 	var/list/map_traits = SSmapping.current_map.traits[1]
 	if(!map_traits || !islist(map_traits))
-		return
+		mode_active = FALSE
+		return SS_INIT_NO_NEED
+
 	var/is_trainstation = map_traits[ZTRAIT_TRAINSTATION] || FALSE
 	if(!is_trainstation)
+		mode_active = FALSE
 		return SS_INIT_NO_NEED
 
 	mode_active = TRUE
@@ -82,6 +89,7 @@ SUBSYSTEM_DEF(train_controller)
 	load_stations()
 	add_startup_message("Trainstation: loading game map...")
 	load_map()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/train_controller/proc/load_stations()
 	for(var/path in subtypesof(/datum/train_station))
