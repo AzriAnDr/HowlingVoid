@@ -122,7 +122,7 @@
 	cost = CARGO_CRATE_VALUE * 6
 	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
-/datum/supply_pack/companies/energy/hc_surplus/zaibas_a
+/datum/supply_pack/companies/energy/hc_surplus/zaibas_sniper
 	contains = list(/obj/item/gun/ballistic/rifle/pulse_sniper)
 	cost = CARGO_CRATE_VALUE * 7
 	order_flags = ORDER_GOODY | ORDER_CONTRABAND
