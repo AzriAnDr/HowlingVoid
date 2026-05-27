@@ -45,8 +45,8 @@ const CLOTHING_SIDEBAR_ROWS = 13.4; // NOVA EDIT CHANGE - ORIGINAL:  9
 const CLOTHING_SELECTION_CELL_SIZE = 48;
 const CLOTHING_SELECTION_WIDTH = 5.4;
 const CLOTHING_SELECTION_MULTIPLIER = 5.2;
+const HIDDEN_FEATURE_IDS = new Set(['allow_genitals_toggle']);
 const GENITAL_FEATURE_IDS = new Set([
-  'allow_genitals_toggle',
   'feature_anus',
   'feature_belly',
   'belly_size',
@@ -153,6 +153,10 @@ function isGenitalFeature(featureId: string) {
     GENITAL_FEATURE_IDS.has(featureId) ||
     GENITAL_FEATURE_PREFIXES.some((prefix) => featureId.startsWith(prefix))
   );
+}
+
+function isHiddenFeature(featureId: string) {
+  return HIDDEN_FEATURE_IDS.has(featureId);
 }
 
 function isNonHumanFeature(featureId: string) {
@@ -655,17 +659,20 @@ export function MainPage(props: MainPageProps) {
   const generalAppearancePreferences = Object.fromEntries(
     Object.entries(contextualPreferences).filter(
       ([featureId]) =>
+        !isHiddenFeature(featureId) &&
         !isGenitalFeature(featureId) && !isNonHumanFeature(featureId),
     ),
   );
   const nonHumanAppearancePreferences = Object.fromEntries(
-    Object.entries(contextualPreferences).filter(([featureId]) =>
-      isNonHumanFeature(featureId),
+    Object.entries(contextualPreferences).filter(
+      ([featureId]) =>
+        !isHiddenFeature(featureId) && isNonHumanFeature(featureId),
     ),
   );
   const genitalAppearancePreferences = Object.fromEntries(
-    Object.entries(contextualPreferences).filter(([featureId]) =>
-      isGenitalFeature(featureId),
+    Object.entries(contextualPreferences).filter(
+      ([featureId]) =>
+        !isHiddenFeature(featureId) && isGenitalFeature(featureId),
     ),
   );
 
@@ -692,17 +699,20 @@ export function MainPage(props: MainPageProps) {
   const generalAppearanceRandomizations = Object.fromEntries(
     Object.entries(contextualRandomizations).filter(
       ([featureId]) =>
+        !isHiddenFeature(featureId) &&
         !isGenitalFeature(featureId) && !isNonHumanFeature(featureId),
     ),
   );
   const nonHumanAppearanceRandomizations = Object.fromEntries(
-    Object.entries(contextualRandomizations).filter(([featureId]) =>
-      isNonHumanFeature(featureId),
+    Object.entries(contextualRandomizations).filter(
+      ([featureId]) =>
+        !isHiddenFeature(featureId) && isNonHumanFeature(featureId),
     ),
   );
   const genitalAppearanceRandomizations = Object.fromEntries(
-    Object.entries(contextualRandomizations).filter(([featureId]) =>
-      isGenitalFeature(featureId),
+    Object.entries(contextualRandomizations).filter(
+      ([featureId]) =>
+        !isHiddenFeature(featureId) && isGenitalFeature(featureId),
     ),
   );
 
@@ -753,10 +763,7 @@ export function MainPage(props: MainPageProps) {
           )}
           {!!Object.keys(genitalAppearancePreferences).length && (
             <Stack.Item>
-              <Collapsible
-                open
-                title={t('ui.character.sexual_characteristics')}
-              >
+              <Collapsible open title={t('ui.character.sexual_characteristics')}>
                 <PreferenceList
                   randomizations={genitalAppearanceRandomizations}
                   preferences={genitalAppearancePreferences}

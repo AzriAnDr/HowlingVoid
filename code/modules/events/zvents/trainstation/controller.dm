@@ -1,7 +1,3 @@
-/datum/map_config
-	// Является ли эта карта - поездом
-	var/trainstation = FALSE
-
 SUBSYSTEM_DEF(train_controller)
 	name = "Train Controller"
 	wait = 1 SECONDS

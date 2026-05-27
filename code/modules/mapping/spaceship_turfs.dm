@@ -13,7 +13,7 @@
 /turf/closed/wall/mineral/titanium/spaceship/nodiagonal
 	icon = MAP_SWITCH('icons/mapping/unique/spaceships/shipwalls.dmi', 'icons/mapping/unique/spaceships/ship_misc.dmi')
 	icon_state = MAP_SWITCH("ship_walls-0", "map-shuttle_nd")
-	smoothing_flags = SMOOTH_BITMASK
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_CARDINALS
 
 /turf/closed/wall/mineral/titanium/spaceship/overspace
 	icon = MAP_SWITCH('icons/mapping/unique/spaceships/shipwalls.dmi', 'icons/mapping/unique/spaceships/ship_misc.dmi')

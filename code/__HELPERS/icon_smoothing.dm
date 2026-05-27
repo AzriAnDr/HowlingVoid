@@ -211,10 +211,16 @@ xxx xxx xxx
 		} while(FALSE)
 
 	#define SMOOTH_AGAINST(thing, direction, direction_flag, their_groups) \
-		for(var/target in canSmoothWith) { \
-			if(canSmoothWith[target] & their_groups[target] && \
+		if(islist(canSmoothWith) && islist(their_groups)) { \
+			for(var/target in canSmoothWith) { \
+				var/matching_groups = LAZYACCESS(their_groups, target); \
+				if(!(canSmoothWith[target] & matching_groups)) { \
+					continue; \
+				} \
+				if( \
 				(!(thing.smoothing_flags & SMOOTH_PROC_FILTER) || thing.smoothing_allowed(src, REVERSE_DIR(direction), reverse_junction(direction_flag)))) { \
-				JUNCTION_FOUND(thing, direction, direction_flag); \
+					JUNCTION_FOUND(thing, direction, direction_flag); \
+				} \
 			} \
 		}
 

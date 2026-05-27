@@ -15,8 +15,6 @@
 	},
 	"traits": [
 		{
-			"Mining": false,
-			"Linkage": null,
 			"Gravity": true,
 			"No Parallax": true,
 			"Trainstation": true

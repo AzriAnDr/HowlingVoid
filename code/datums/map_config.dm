@@ -30,6 +30,8 @@
 
 	/// Boolean that tells us if this is a planetary station. (like IceBoxStation)
 	var/planetary = FALSE
+	/// Enables the trainstation controller and map-loaded train content for this map.
+	var/trainstation = FALSE
 	/// How many z's to generate around a planetary station
 	var/wilderness_levels = 0
 	/// Directory to the wilderness area we can spawn in
@@ -226,6 +228,9 @@
 
 	if ("planetary" in json)
 		planetary = json["planetary"]
+
+	if ("trainstation" in json)
+		trainstation = json["trainstation"]
 
 	// NOVA EDIT ADDITION START - Planetary maps with space access.
 	if ("allow_space_when_planetary" in json)

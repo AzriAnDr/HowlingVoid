@@ -15,7 +15,9 @@
 	in_order = TRUE
 	each_once = FALSE
 
-/datum/looping_sound/global_sound/New(start_immediately = FALSE)
+/datum/looping_sound/global_sound/New(start_immediately = FALSE, list/sound_list)
+	if(sound_list)
+		sounds_to_play = sound_list
 	if(sounds_to_play)
 		mid_sounds = list()
 		for(var/sound_path in sounds_to_play)

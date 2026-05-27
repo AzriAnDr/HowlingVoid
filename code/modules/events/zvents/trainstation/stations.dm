@@ -95,8 +95,7 @@
 		create_ambience()
 
 /datum/train_station/proc/create_ambience()
-	station_loop_soound = new(start_immediately = FALSE)
-	station_loop_soound.create_from_list(ambience_sounds)
+	station_loop_soound = new(start_immediately = FALSE, sound_list = ambience_sounds)
 
 /datum/train_station/proc/connect_stations()
 	for(var/i in 1 to length(possible_next))

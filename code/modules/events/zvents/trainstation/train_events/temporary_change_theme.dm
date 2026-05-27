@@ -58,8 +58,7 @@
 
 /datum/round_event/train_event/temporary_change_theme/war/setup()
 	. = ..()
-	war_sounds = new(start_immediately = FALSE)
-	war_sounds.create_from_list(list('sound/event/zvents/war_sounds.ogg' = 50 SECONDS))
+	war_sounds = new(start_immediately = FALSE, sound_list = list('sound/event/zvents/war_sounds.ogg' = 50 SECONDS))
 
 /datum/round_event/train_event/temporary_change_theme/war/start()
 	. = ..()
@@ -93,8 +92,7 @@
 
 /datum/round_event/train_event/temporary_change_theme/they/setup()
 	. = ..()
-	their_sound = new(start_immediately = FALSE)
-	their_sound.create_from_list(list('sound/event/zvents/weird_noise.ogg' = 34 SECONDS))
+	their_sound = new(start_immediately = FALSE, sound_list = list('sound/event/zvents/weird_noise.ogg' = 34 SECONDS))
 
 /datum/round_event/train_event/temporary_change_theme/they/start()
 	. = ..()
