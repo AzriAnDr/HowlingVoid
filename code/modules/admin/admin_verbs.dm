@@ -493,10 +493,13 @@ ADMIN_VERB(toggle_ai_interact, R_ADMIN, "Toggle Admin AI Interact", "Allows you 
 	log_admin("[key_name(user)] has [doesnt_have_silicon_access ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(user)] has [doesnt_have_silicon_access ? "activated" : "deactivated"] their AI interaction")
 
-ADMIN_VERB(admin_shoo_ghosts, R_BAN, "Admin Shoo Ghost", "Shoo ghosts from anywhere, including admin ghosts.", ADMIN_CATEGORY_MAIN)
+ADMIN_VERB(admin_shoo_ghosts, R_ADMIN, "Admin Shoo Ghost", "Shoo ghosts from anywhere, including admin ghosts.", ADMIN_CATEGORY_MAIN)
 	var/mob/shooer = user.mob
 	if(isnull(shooer))
 		to_chat(user, span_warning("You need a body to shoo ghosts."))
+		return
+	if(isnewplayer(shooer))
+		to_chat(user, span_warning("You cannot shoo ghosts while you are in the lobby. Join or observe first."))
 		return
 	if(isobserver(shooer))
 		to_chat(user, span_warning("You cannot shoo ghosts while you are a ghost."))

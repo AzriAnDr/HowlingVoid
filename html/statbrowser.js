@@ -37,6 +37,14 @@ var menu = document.getElementById("menu");
 var statcontentdiv = document.getElementById("statcontent");
 var storedimages = [];
 var split_admin_tabs = false;
+var tab_prefs = {
+  order: [],
+  hidden: [],
+  colors: {},
+  structured: null,
+  max_buttons_per_row: {},
+};
+var tab_search = {};
 var favorites = [];
 var favorites_request_pending = false;
 var contextVerb = null;
@@ -71,6 +79,134 @@ function show_context_menu(x, y, command) {
 
 document.addEventListener("click", hide_context_menu);
 
+function normalize_tab_name(name) {
+  if (!name) {
+    return "";
+  }
+  if (name.indexOf(".") != -1) {
+    var splitName = name.split(".");
+    if (split_admin_tabs && splitName[0] === "Admin") {
+      return splitName[1];
+    }
+    return splitName[0];
+  }
+  return name;
+}
+
+function normalize_tab_list(tabList) {
+  var normalized = [];
+  if (!Array.isArray(tabList)) {
+    return normalized;
+  }
+  for (var i = 0; i < tabList.length; i++) {
+    var tabName = normalize_tab_name(tabList[i]);
+    if (tabName && !normalized.includes(tabName)) {
+      normalized.push(tabName);
+    }
+  }
+  return normalized;
+}
+
+function is_core_tab(name) {
+  return name === "Status" || name === "Favorites" || name === "Settings";
+}
+
+function is_tab_hidden(name) {
+  if (!name || is_core_tab(name)) {
+    return false;
+  }
+  return Array.isArray(tab_prefs.hidden) && tab_prefs.hidden.includes(name);
+}
+
+function get_tab_order(name) {
+  if (Array.isArray(tab_prefs.order)) {
+    var index = tab_prefs.order.indexOf(name);
+    if (index != -1) {
+      return index + 1;
+    }
+  }
+  var defaults = {
+    Status: 10,
+    Favorites: 20,
+    Admin: 30,
+    Server: 40,
+    Debug: 50,
+    Mapping: 60,
+    Mentor: 70,
+    OOC: 80,
+    IC: 90,
+    MC: 100,
+    Tickets: 110,
+    SDQL2: 120,
+    Settings: 1000,
+  };
+  if (defaults.hasOwnProperty(name)) {
+    return defaults[name];
+  }
+  return 500 + name.toUpperCase().charCodeAt(0);
+}
+
+function apply_tab_color(button, name) {
+  if (!button) {
+    return;
+  }
+  var color = tab_prefs.colors && tab_prefs.colors[name];
+  if (typeof color == "string" && color.trim().length) {
+    button.style.setProperty("--tab-active-bg", color.trim());
+  } else {
+    button.style.removeProperty("--tab-active-bg");
+  }
+}
+
+function is_tab_grouped(name) {
+  if (!Array.isArray(tab_prefs.structured)) {
+    return true;
+  }
+  return tab_prefs.structured.includes(name);
+}
+
+function get_tab_button_limit(name) {
+  var raw =
+    tab_prefs.max_buttons_per_row && tab_prefs.max_buttons_per_row[name];
+  var limit = parseInt(raw, 10);
+  if (isNaN(limit) || limit < 1 || limit > 20) {
+    return null;
+  }
+  return limit;
+}
+
+function apply_grid_item_layout(item, tabName) {
+  var limit = get_tab_button_limit(tabName);
+  if (!limit) {
+    item.style.removeProperty("width");
+    item.style.removeProperty("flex-basis");
+    return;
+  }
+  var width = 100 / limit + "%";
+  item.style.width = width;
+  item.style.flexBasis = width;
+}
+
+function send_tab_prefs_to_byond() {
+  Byond.sendMessage("Update-Tab-Preferences", {
+    order: Array.isArray(tab_prefs.order) ? tab_prefs.order.slice() : [],
+    hidden: Array.isArray(tab_prefs.hidden) ? tab_prefs.hidden.slice() : [],
+    colors: tab_prefs.colors || {},
+    structured: Array.isArray(tab_prefs.structured)
+      ? tab_prefs.structured.slice()
+      : [],
+    max_buttons_per_row: tab_prefs.max_buttons_per_row || {},
+  });
+}
+
+function apply_menu_order_and_colors() {
+  for (var i = 0; i < menu.children.length; i++) {
+    var id = menu.children[i].id;
+    menu.children[i].style.order = get_tab_order(id);
+    apply_tab_color(menu.children[i], id);
+  }
+}
+
 function make_context_menu(command) {
   return function (e) {
     e.preventDefault();
@@ -88,6 +224,8 @@ function add_favorite(command) {
   Byond.sendMessage("Add-Favorite", { command: command });
   if (current_tab == "Favorites") {
     draw_favorites();
+  } else if (verb_tabs.includes(current_tab)) {
+    draw_verbs(current_tab);
   }
 }
 
@@ -102,6 +240,8 @@ function remove_favorite(command) {
   Byond.sendMessage("Remove-Favorite", { command: command });
   if (current_tab == "Favorites") {
     draw_favorites();
+  } else if (verb_tabs.includes(current_tab)) {
+    draw_verbs(current_tab);
   }
 }
 
@@ -132,6 +272,8 @@ function update_favorites(payload) {
   favorites = normalize_favorites(payload);
   if (current_tab == "Favorites") {
     draw_favorites();
+  } else if (verb_tabs.includes(current_tab)) {
+    draw_verbs(current_tab);
   }
 }
 
@@ -145,6 +287,7 @@ function request_favorites() {
 
 function draw_favorites() {
   statcontentdiv.textContent = "";
+  draw_content_header("Favorites", "Favorites");
   if (!favorites.length) {
     var empty = document.createElement("div");
     empty.className = "favorites-empty";
@@ -154,15 +297,24 @@ function draw_favorites() {
     statcontentdiv.appendChild(empty);
     return;
   }
+  var filterText = tab_search["Favorites"] || "";
   var table = document.createElement("div");
   table.className = "grid-container favorites-grid";
+  var shownFavorites = 0;
   for (var i = 0; i < favorites.length; i++) {
     var command = favorites[i];
+    if (
+      filterText &&
+      command.toLowerCase().indexOf(filterText.toLowerCase()) == -1
+    ) {
+      continue;
+    }
     var a = document.createElement("a");
     a.href = "#";
     a.onclick = make_verb_onclick(command.replace(/\s/g, "-"));
     a.oncontextmenu = make_context_menu(command);
     a.className = "grid-item";
+    apply_grid_item_layout(a, "Favorites");
     a.draggable = true;
     a.setAttribute("data-fav", command);
     a.ondragstart = make_fav_dragstart(command);
@@ -174,7 +326,20 @@ function draw_favorites() {
     t.textContent = command;
     t.className = "grid-item-text";
     a.appendChild(t);
+    var favoriteToggle = document.createElement("span");
+    favoriteToggle.className = "grid-favorite-toggle is-favorite";
+    favoriteToggle.title = "Remove from Favorites";
+    favoriteToggle.onclick = make_favorite_toggle(command);
+    a.appendChild(favoriteToggle);
     table.appendChild(a);
+    shownFavorites++;
+  }
+  if (!shownFavorites) {
+    var emptyFilter = document.createElement("div");
+    emptyFilter.className = "favorites-empty";
+    emptyFilter.textContent = "No favorites match the current filter.";
+    statcontentdiv.appendChild(emptyFilter);
+    return;
   }
   document.getElementById("statcontent").appendChild(table);
 }
@@ -260,12 +425,12 @@ function run_after_focus(callback) {
 }
 
 function createStatusTab(name) {
-  if (name.indexOf(".") != -1) {
-    var splitName = name.split(".");
-    if (split_admin_tabs && splitName[0] === "Admin") name = splitName[1];
-    else name = splitName[0];
-  }
+  name = normalize_tab_name(name);
   if (document.getElementById(name) || name.trim() == "") {
+    return;
+  }
+  if (is_tab_hidden(name)) {
+    SendTabToByond(name);
     return;
   }
   if (!verb_tabs.includes(name) && !permanent_tabs.includes(name)) {
@@ -280,13 +445,18 @@ function createStatusTab(name) {
   button.id = name;
   button.textContent = name;
   button.className = "button";
-  //ORDERING ALPHABETICALLY
-  button.style.order =
-    { Status: 1, Favorites: 2, MC: 3, Tickets: 4 }[name] ||
-    name.charCodeAt(0);
-  //END ORDERING
+  button.style.order = get_tab_order(name);
+  apply_tab_color(button, name);
   menu.appendChild(button);
   SendTabToByond(name);
+}
+
+function hideStatusTab(name) {
+  var tab = document.getElementById(name);
+  if (!tab) {
+    return;
+  }
+  menu.removeChild(tab);
 }
 
 function removeStatusTab(name) {
@@ -331,10 +501,11 @@ function removePermanentTab(name) {
 }
 
 function checkStatusTab() {
-  for (var i = 0; i < menu.children.length; i++) {
+  for (var i = menu.children.length - 1; i >= 0; i--) {
     if (
-      !verb_tabs.includes(menu.children[i].id) &&
-      !permanent_tabs.includes(menu.children[i].id)
+      is_tab_hidden(menu.children[i].id) ||
+      (!verb_tabs.includes(menu.children[i].id) &&
+        !permanent_tabs.includes(menu.children[i].id))
     ) {
       menu.removeChild(menu.children[i]);
     }
@@ -358,12 +529,7 @@ function check_verbs() {
 }
 
 function verbs_cat_check(cat) {
-  var tabCat = cat;
-  if (cat.indexOf(".") != -1) {
-    var splitName = cat.split(".");
-    if (split_admin_tabs && splitName[0] === "Admin") tabCat = splitName[1];
-    else tabCat = splitName[0];
-  }
+  var tabCat = normalize_tab_name(cat);
   var verbs_in_cat = 0;
   var verbcat = "";
   if (!verb_tabs.includes(tabCat)) {
@@ -372,12 +538,7 @@ function verbs_cat_check(cat) {
   }
   for (var v = 0; v < verbs.length; v++) {
     var part = verbs[v];
-    verbcat = part[0];
-    if (verbcat.indexOf(".") != -1) {
-      var splitName = verbcat.split(".");
-      if (split_admin_tabs && splitName[0] === "Admin") verbcat = splitName[1];
-      else verbcat = splitName[0];
-    }
+    verbcat = normalize_tab_name(part[0]);
     if (verbcat != tabCat || verbcat.trim() == "") {
       continue;
     } else {
@@ -449,12 +610,14 @@ function tab_change(tab) {
   } else if (tab == "Tickets") {
     draw_tickets();
     draw_interviews();
+  } else if (tab == "Settings") {
+    draw_statpanel_settings();
   } else if (tab == "SDQL2") {
     draw_sdql2();
   } else if (tab == turfname) {
     draw_listedturf();
   } else {
-    statcontentdiv.textContext = "Loading...";
+    statcontentdiv.textContent = "Loading...";
   }
   Byond.winset(Byond.windowId, {
     "is-visible": true,
@@ -862,32 +1025,99 @@ function make_verb_onclick(command) {
   };
 }
 
+function make_favorite_toggle(command) {
+  return function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (favorites.includes(command)) {
+      remove_favorite(command);
+    } else {
+      add_favorite(command);
+    }
+  };
+}
+
+function draw_content_header(title, filterTab) {
+  var header = document.createElement("div");
+  header.className = "statpanel-heading";
+
+  var titleNode = document.createElement("h3");
+  titleNode.className = "statpanel-heading-title";
+  titleNode.textContent = title;
+  header.appendChild(titleNode);
+
+  if (filterTab) {
+    var filter = document.createElement("input");
+    filter.id = "statpanel-filter";
+    filter.className = "statpanel-filter";
+    filter.type = "text";
+    filter.placeholder = "Filter...";
+    filter.value = tab_search[filterTab] || "";
+    filter.oninput = function () {
+      tab_search[filterTab] = filter.value;
+      if (filterTab == "Favorites") {
+        draw_favorites();
+      } else {
+        draw_verbs(filterTab);
+      }
+      var newFilter = document.getElementById("statpanel-filter");
+      if (newFilter) {
+        newFilter.focus();
+        newFilter.value = tab_search[filterTab] || "";
+      }
+    };
+    header.appendChild(filter);
+  }
+
+  statcontentdiv.appendChild(header);
+}
+
+function matches_verb_filter(part, filterText) {
+  if (!filterText) {
+    return true;
+  }
+  var needle = filterText.toLowerCase();
+  for (var i = 0; i < part.length; i++) {
+    if (
+      typeof part[i] == "string" &&
+      part[i].toLowerCase().indexOf(needle) != -1
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function draw_verbs(cat) {
   statcontentdiv.textContent = "";
+  draw_content_header(cat, cat);
   var table = document.createElement("div");
   var additions = {}; // additional sub-categories to be rendered
   table.className = "grid-container";
   sortVerbs();
-  if (split_admin_tabs && cat.lastIndexOf(".") != -1) {
-    var splitName = cat.split(".");
-    if (splitName[0] === "Admin") cat = splitName[1];
-  }
+  cat = normalize_tab_name(cat);
+  var grouped = is_tab_grouped(cat);
+  var filterText = tab_search[cat] || "";
   verbs.reverse(); // sort verbs backwards before we draw
   for (var i = 0; i < verbs.length; ++i) {
     var part = verbs[i];
-    var name = part[0];
-    if (split_admin_tabs && name.lastIndexOf(".") != -1) {
-      var splitName = name.split(".");
-      if (splitName[0] === "Admin") name = splitName[1];
-    }
+    var rawName = part[0] || "";
+    var name = normalize_tab_name(rawName);
     var command = part[1];
 
     if (
       command &&
+      matches_verb_filter(part, filterText) &&
       name.lastIndexOf(cat, 0) != -1 &&
       (name.length == cat.length || name.charAt(cat.length) == ".")
     ) {
-      var subCat = name.lastIndexOf(".") != -1 ? name.split(".")[1] : null;
+      var rawSplit = rawName.split(".");
+      var subCat =
+        grouped &&
+        rawSplit.length > 1 &&
+        !(split_admin_tabs && rawSplit[0] === "Admin")
+          ? rawSplit[1]
+          : null;
       if (subCat && !additions[subCat]) {
         var newTable = document.createElement("div");
         newTable.className = "grid-container";
@@ -899,10 +1129,20 @@ function draw_verbs(cat) {
       a.onclick = make_verb_onclick(command.replace(/\s/g, "-"));
       a.oncontextmenu = make_context_menu(command);
       a.className = "grid-item";
+      apply_grid_item_layout(a, cat);
       var t = document.createElement("span");
       t.textContent = command;
       t.className = "grid-item-text";
       a.appendChild(t);
+      var favoriteToggle = document.createElement("span");
+      favoriteToggle.className = favorites.includes(command)
+        ? "grid-favorite-toggle is-favorite"
+        : "grid-favorite-toggle";
+      favoriteToggle.title = favorites.includes(command)
+        ? "Remove from Favorites"
+        : "Add to Favorites";
+      favoriteToggle.onclick = make_favorite_toggle(command);
+      a.appendChild(favoriteToggle);
       (subCat ? additions[subCat] : table).appendChild(a);
     }
   }
@@ -921,6 +1161,258 @@ function draw_verbs(cat) {
       content.appendChild(additions[cat]);
     }
   }
+}
+
+function collect_known_tabs() {
+  var known = [];
+  function addKnown(name) {
+    name = normalize_tab_name(name);
+    if (name && !known.includes(name)) {
+      known.push(name);
+    }
+  }
+
+  addKnown("Status");
+  addKnown("Favorites");
+  addKnown("Settings");
+  for (var i = 0; i < verb_tabs.length; i++) {
+    addKnown(verb_tabs[i]);
+  }
+  for (var j = 0; j < permanent_tabs.length; j++) {
+    addKnown(permanent_tabs[j]);
+  }
+  if (Array.isArray(tab_prefs.order)) {
+    for (var k = 0; k < tab_prefs.order.length; k++) {
+      addKnown(tab_prefs.order[k]);
+    }
+  }
+  if (Array.isArray(tab_prefs.hidden)) {
+    for (var h = 0; h < tab_prefs.hidden.length; h++) {
+      addKnown(tab_prefs.hidden[h]);
+    }
+  }
+  if (tab_prefs.colors) {
+    for (var colorTab in tab_prefs.colors) {
+      if (tab_prefs.colors.hasOwnProperty(colorTab)) {
+        addKnown(colorTab);
+      }
+    }
+  }
+  known.sort(function (a, b) {
+    return get_tab_order(a) - get_tab_order(b);
+  });
+  return known;
+}
+
+function ensure_tab_order(known) {
+  if (!Array.isArray(tab_prefs.order)) {
+    tab_prefs.order = [];
+  }
+  for (var i = 0; i < known.length; i++) {
+    if (!tab_prefs.order.includes(known[i])) {
+      tab_prefs.order.push(known[i]);
+    }
+  }
+}
+
+function move_tab_order(tabName, direction) {
+  var known = collect_known_tabs();
+  ensure_tab_order(known);
+  var index = tab_prefs.order.indexOf(tabName);
+  var nextIndex = index + direction;
+  if (index < 0 || nextIndex < 0 || nextIndex >= tab_prefs.order.length) {
+    return;
+  }
+  var swap = tab_prefs.order[nextIndex];
+  tab_prefs.order[nextIndex] = tab_prefs.order[index];
+  tab_prefs.order[index] = swap;
+  apply_menu_order_and_colors();
+  send_tab_prefs_to_byond();
+  draw_statpanel_settings();
+}
+
+function set_tab_visibility(tabName, visible) {
+  if (is_core_tab(tabName)) {
+    return;
+  }
+  if (!Array.isArray(tab_prefs.hidden)) {
+    tab_prefs.hidden = [];
+  }
+  var index = tab_prefs.hidden.indexOf(tabName);
+  if (visible) {
+    if (index != -1) {
+      tab_prefs.hidden.splice(index, 1);
+    }
+    createStatusTab(tabName);
+  } else {
+    if (index == -1) {
+      tab_prefs.hidden.push(tabName);
+    }
+    hideStatusTab(tabName);
+    if (current_tab === tabName) {
+      tab_change("Status");
+    }
+  }
+  send_tab_prefs_to_byond();
+  draw_statpanel_settings();
+}
+
+function set_tab_grouping(tabName, grouped) {
+  if (!Array.isArray(tab_prefs.structured)) {
+    tab_prefs.structured = collect_known_tabs();
+  }
+  var index = tab_prefs.structured.indexOf(tabName);
+  if (grouped && index == -1) {
+    tab_prefs.structured.push(tabName);
+  } else if (!grouped && index != -1) {
+    tab_prefs.structured.splice(index, 1);
+  }
+  send_tab_prefs_to_byond();
+  if (current_tab === tabName) {
+    draw_verbs(tabName);
+  }
+  draw_statpanel_settings();
+}
+
+function set_tab_button_limit(tabName, value) {
+  if (!tab_prefs.max_buttons_per_row) {
+    tab_prefs.max_buttons_per_row = {};
+  }
+  var limit = parseInt(value, 10);
+  if (isNaN(limit) || limit < 1) {
+    delete tab_prefs.max_buttons_per_row[tabName];
+  } else {
+    tab_prefs.max_buttons_per_row[tabName] = Math.min(limit, 20);
+  }
+  send_tab_prefs_to_byond();
+  if (current_tab === tabName) {
+    draw_verbs(tabName);
+  }
+  draw_statpanel_settings();
+}
+
+function draw_statpanel_settings() {
+  statcontentdiv.textContent = "";
+  draw_content_header("Statpanel", null);
+
+  var actions = document.createElement("div");
+  actions.className = "statpanel-actions";
+  var fixButton = document.createElement("button");
+  fixButton.className = "statpanel-fix-button";
+  fixButton.textContent = "Fix Stat Panel";
+  fixButton.onclick = function () {
+    run_after_focus(function () {
+      Byond.command("Fix-Stat-Panel");
+    });
+  };
+  actions.appendChild(fixButton);
+  statcontentdiv.appendChild(actions);
+
+  var note = document.createElement("div");
+  note.className = "statpanel-settings-note";
+  note.textContent = "Configure visible tabs, order, and per-tab colors.";
+  statcontentdiv.appendChild(note);
+
+  var rows = document.createElement("div");
+  rows.className = "statpanel-settings";
+  var known = collect_known_tabs();
+  ensure_tab_order(known);
+
+  for (var i = 0; i < known.length; i++) {
+    (function (tabName) {
+      var row = document.createElement("div");
+      row.className = "statpanel-settings-row";
+      if (is_tab_hidden(tabName)) {
+        row.className += " is-hidden";
+      }
+
+      var visible = document.createElement("button");
+      visible.className = "statpanel-tab-visibility";
+      visible.textContent = tabName;
+      visible.title = is_core_tab(tabName)
+        ? "This tab is always visible."
+        : "Toggle tab visibility.";
+      visible.disabled = is_core_tab(tabName);
+      visible.onclick = function () {
+        set_tab_visibility(tabName, is_tab_hidden(tabName));
+      };
+      row.appendChild(visible);
+
+      var grouped = document.createElement("button");
+      grouped.className = is_tab_grouped(tabName)
+        ? "statpanel-toggle is-active"
+        : "statpanel-toggle";
+      grouped.textContent = "Grouped";
+      grouped.onclick = function () {
+        set_tab_grouping(tabName, !is_tab_grouped(tabName));
+      };
+      row.appendChild(grouped);
+
+      var maxButtons = document.createElement("input");
+      maxButtons.className = "statpanel-max-buttons";
+      maxButtons.type = "text";
+      maxButtons.placeholder = "auto";
+      maxButtons.value = get_tab_button_limit(tabName) || "";
+      maxButtons.title = "Maximum buttons per row. Blank means automatic.";
+      maxButtons.onchange = function () {
+        set_tab_button_limit(tabName, maxButtons.value);
+      };
+      row.appendChild(maxButtons);
+
+      var up = document.createElement("button");
+      up.className = "statpanel-order";
+      up.textContent = "^";
+      up.title = "Move tab left.";
+      up.onclick = function () {
+        move_tab_order(tabName, -1);
+      };
+      row.appendChild(up);
+
+      var down = document.createElement("button");
+      down.className = "statpanel-order";
+      down.textContent = "v";
+      down.title = "Move tab right.";
+      down.onclick = function () {
+        move_tab_order(tabName, 1);
+      };
+      row.appendChild(down);
+
+      var color = document.createElement("input");
+      color.className = "statpanel-color";
+      color.type = "color";
+      var current = tab_prefs.colors && tab_prefs.colors[tabName];
+      color.value =
+        typeof current == "string" && current.trim().length
+          ? current.trim()
+          : "#313131";
+      color.onchange = function () {
+        if (!tab_prefs.colors) {
+          tab_prefs.colors = {};
+        }
+        tab_prefs.colors[tabName] = color.value;
+        apply_tab_color(document.getElementById(tabName), tabName);
+        send_tab_prefs_to_byond();
+      };
+      row.appendChild(color);
+
+      var clear = document.createElement("button");
+      clear.className = "statpanel-clear-color";
+      clear.textContent = "x";
+      clear.title = "Clear tab color.";
+      clear.onclick = function () {
+        if (tab_prefs.colors) {
+          delete tab_prefs.colors[tabName];
+        }
+        apply_tab_color(document.getElementById(tabName), tabName);
+        send_tab_prefs_to_byond();
+        draw_statpanel_settings();
+      };
+      row.appendChild(clear);
+
+      rows.appendChild(row);
+    })(known[i]);
+  }
+  statcontentdiv.appendChild(rows);
 }
 
 function set_theme(which) {
@@ -977,12 +1469,7 @@ function add_verb_list(payload) {
   for (var i = 0; i < to_add.length; i++) {
     var part = to_add[i];
     if (!part[0]) continue;
-    var category = part[0];
-    if (category.indexOf(".") != -1) {
-      var splitName = category.split(".");
-      if (split_admin_tabs && splitName[0] === "Admin") category = splitName[1];
-      else category = splitName[0];
-    }
+    var category = normalize_tab_name(part[0]);
     if (findVerbindex(part[1], verbs)) continue;
     if (verb_tabs.includes(category)) {
       verbs.push(part);
@@ -1001,6 +1488,7 @@ document.addEventListener("mouseup", restoreFocus);
 document.addEventListener("keyup", restoreFocus);
 
 addPermanentTab("Favorites");
+addPermanentTab("Settings");
 
 if (!current_tab) {
   addPermanentTab("Status");
@@ -1028,7 +1516,27 @@ Byond.subscribeTo("remove_verb_list", function (v) {
 Byond.subscribeTo("init_verbs", function (payload) {
   wipe_verbs(); // remove all verb categories so we can replace them
   checkStatusTab(); // remove all status tabs
-  verb_tabs = payload.panel_tabs;
+  if (payload && payload.tab_prefs) {
+    tab_prefs.order = Array.isArray(payload.tab_prefs.order)
+      ? payload.tab_prefs.order.slice()
+      : [];
+    tab_prefs.hidden = Array.isArray(payload.tab_prefs.hidden)
+      ? payload.tab_prefs.hidden.slice()
+      : [];
+    tab_prefs.colors =
+      payload.tab_prefs.colors && typeof payload.tab_prefs.colors == "object"
+        ? payload.tab_prefs.colors
+        : {};
+    tab_prefs.structured = Array.isArray(payload.tab_prefs.structured)
+      ? payload.tab_prefs.structured.slice()
+      : null;
+    tab_prefs.max_buttons_per_row =
+      payload.tab_prefs.max_buttons_per_row &&
+      typeof payload.tab_prefs.max_buttons_per_row == "object"
+        ? payload.tab_prefs.max_buttons_per_row
+        : {};
+  }
+  verb_tabs = normalize_tab_list(payload.panel_tabs);
   verb_tabs.sort(); // sort it
   var do_update = false;
   var cat = "";
@@ -1049,6 +1557,7 @@ Byond.subscribeTo("init_verbs", function (payload) {
   if (payload.favorites) {
     update_favorites(payload.favorites);
   }
+  apply_menu_order_and_colors();
   SendTabsToByond();
 });
 
@@ -1133,6 +1642,7 @@ Byond.subscribeTo("update_split_admin_tabs", function (status) {
       removeStatusTab("Fun");
       removeStatusTab("Game");
     }
+    split_admin_tabs = status;
     update_verbs();
   }
   split_admin_tabs = status;

@@ -281,6 +281,88 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		cleaned_statpanel_favorites += cleaned
 	set_statpanel_favorites(unique_list(cleaned_statpanel_favorites))
 
+	//statpanel tab preferences
+	statpanel_tab_order = savefile.get_entry("statpanel_tab_order", statpanel_tab_order)
+	statpanel_tab_hidden = savefile.get_entry("statpanel_tab_hidden", statpanel_tab_hidden)
+	statpanel_tab_colors = savefile.get_entry("statpanel_tab_colors", statpanel_tab_colors)
+	statpanel_tab_structured = savefile.get_entry("statpanel_tab_structured", statpanel_tab_structured)
+	statpanel_tab_structured_initialized = savefile.get_entry("statpanel_tab_structured_initialized", statpanel_tab_structured_initialized)
+	statpanel_tab_max_buttons_per_row = savefile.get_entry("statpanel_tab_max_buttons_per_row", statpanel_tab_max_buttons_per_row)
+
+	if(!islist(statpanel_tab_order))
+		statpanel_tab_order = list()
+	if(!islist(statpanel_tab_hidden))
+		statpanel_tab_hidden = list()
+	if(!islist(statpanel_tab_colors))
+		statpanel_tab_colors = list()
+	if(!islist(statpanel_tab_structured))
+		statpanel_tab_structured = list()
+	if(!islist(statpanel_tab_max_buttons_per_row))
+		statpanel_tab_max_buttons_per_row = list()
+	statpanel_tab_structured_initialized = !!statpanel_tab_structured_initialized
+
+	var/list/clean_statpanel_order = list()
+	for(var/tab_name in statpanel_tab_order)
+		if(!istext(tab_name))
+			continue
+		var/cleaned_tab = sanitize_text(trim(tab_name, 64), "")
+		if(length(cleaned_tab))
+			clean_statpanel_order += cleaned_tab
+	statpanel_tab_order = unique_list(clean_statpanel_order)
+
+	var/list/clean_statpanel_hidden = list()
+	for(var/hidden_tab in statpanel_tab_hidden)
+		if(!istext(hidden_tab))
+			continue
+		var/cleaned_hidden = sanitize_text(trim(hidden_tab, 64), "")
+		if(length(cleaned_hidden))
+			clean_statpanel_hidden += cleaned_hidden
+	statpanel_tab_hidden = unique_list(clean_statpanel_hidden)
+
+	var/list/clean_statpanel_colors = list()
+	for(var/color_tab in statpanel_tab_colors)
+		if(!istext(color_tab))
+			continue
+		var/color_value = statpanel_tab_colors[color_tab]
+		if(!istext(color_value))
+			continue
+		var/cleaned_color_tab = sanitize_text(trim(color_tab, 64), "")
+		var/cleaned_color_value = sanitize_text(trim(color_value, 32), "")
+		if(length(cleaned_color_tab) && length(cleaned_color_value))
+			clean_statpanel_colors[cleaned_color_tab] = cleaned_color_value
+	statpanel_tab_colors = clean_statpanel_colors
+
+	var/list/clean_statpanel_structured = list()
+	for(var/grouped_tab in statpanel_tab_structured)
+		if(!istext(grouped_tab))
+			continue
+		var/cleaned_grouped = sanitize_text(trim(grouped_tab, 64), "")
+		if(length(cleaned_grouped))
+			clean_statpanel_structured += cleaned_grouped
+	statpanel_tab_structured = unique_list(clean_statpanel_structured)
+	if(!statpanel_tab_structured_initialized && length(statpanel_tab_structured))
+		statpanel_tab_structured_initialized = TRUE
+
+	var/list/clean_statpanel_max_buttons = list()
+	for(var/limited_tab in statpanel_tab_max_buttons_per_row)
+		if(!istext(limited_tab))
+			continue
+		var/cleaned_limited_tab = sanitize_text(trim(limited_tab, 64), "")
+		if(!length(cleaned_limited_tab))
+			continue
+		var/raw_button_limit = statpanel_tab_max_buttons_per_row[limited_tab]
+		var/button_limit
+		if(isnum(raw_button_limit))
+			button_limit = raw_button_limit
+		else if(istext(raw_button_limit))
+			button_limit = text2num(raw_button_limit)
+		if(!isnum(button_limit))
+			continue
+		button_limit = sanitize_integer(button_limit, 1, 20, 0)
+		if(button_limit)
+			clean_statpanel_max_buttons[cleaned_limited_tab] = button_limit
+	statpanel_tab_max_buttons_per_row = clean_statpanel_max_buttons
+
 	// Custom hotkeys
 	key_bindings = savefile.get_entry("key_bindings")
 
@@ -301,6 +383,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
+	statpanel_tab_order = SANITIZE_LIST(statpanel_tab_order)
+	statpanel_tab_hidden = SANITIZE_LIST(statpanel_tab_hidden)
+	statpanel_tab_colors = SANITIZE_LIST(statpanel_tab_colors)
+	statpanel_tab_structured = SANITIZE_LIST(statpanel_tab_structured)
+	statpanel_tab_max_buttons_per_row = SANITIZE_LIST(statpanel_tab_max_buttons_per_row)
 
 	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 
@@ -356,6 +443,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	savefile.set_entry("hearted_until", (hearted_until > world.realtime ? hearted_until : null))
 	savefile.set_entry("favorite_outfits", favorite_outfits)
 	savefile.set_entry("statpanel_favorites", get_statpanel_favorites())
+	savefile.set_entry("statpanel_tab_order", statpanel_tab_order)
+	savefile.set_entry("statpanel_tab_hidden", statpanel_tab_hidden)
+	savefile.set_entry("statpanel_tab_colors", statpanel_tab_colors)
+	savefile.set_entry("statpanel_tab_structured", statpanel_tab_structured)
+	savefile.set_entry("statpanel_tab_structured_initialized", statpanel_tab_structured_initialized)
+	savefile.set_entry("statpanel_tab_max_buttons_per_row", statpanel_tab_max_buttons_per_row)
 	savefile.save()
 	return TRUE
 
