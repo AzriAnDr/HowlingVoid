@@ -175,7 +175,7 @@
 		coat.slowdown = 0
 		coat.set_armor(/datum/armor/none)
 		user.equip_to_slot_or_del(coat, ITEM_SLOT_NECK)
-	user.faction |= ROLE_SYNDICATE
+	user.add_faction(ROLE_SYNDICATE)
 	user.update_icons()
 
 /datum/outfit/train_raider/shotgun

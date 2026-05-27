@@ -40,7 +40,7 @@
 	var/closest
 	var/closest_dist = INFINITY
 	for(var/mob/living/basic/M in view(range, source))
-		if(M == source || !M.faction.Find(faction))
+		if(M == source || !M.has_faction(faction))
 			continue
 		var/dist = get_dist(source, M)
 		if(dist < closest_dist)

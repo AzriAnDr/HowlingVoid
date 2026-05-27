@@ -977,12 +977,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	save_data["food_preferences"] = food_preferences
 
 /datum/preferences/proc/update_markings(list/markings)
-	if (islist(markings))
-		for (var/marking in markings)
-			for (var/title in markings[marking])
-				if (!islist(markings[marking][title]))
-					markings[marking][title] = list(sanitize_hexcolor(markings[marking][title]), FALSE)
-	return markings
+	return sanitize_marking_map(markings, null, null)
 
 /datum/preferences/proc/load_augments(list/augments_prefs)
 	var/list/augments_sanitized = list()

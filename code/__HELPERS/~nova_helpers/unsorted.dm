@@ -47,6 +47,99 @@
 	center_turf.luminosity = old_luminosity
 	return .
 
+/// Returns TRUE if the supplied area allows player-side shoo ghost privacy.
+/proc/is_shoo_ghost_area(area/checked_area)
+	if(isnull(checked_area))
+		return FALSE
+	return is_ghost_cafe_area(checked_area) || istype(checked_area, /area/misc/hilbertshotel)
+
+/// Returns TRUE if this mob is currently shooing ghosts from a valid location.
+/proc/is_shoo_ghost_active(mob/shooer)
+	if(isnull(shooer) || !shooer.auto_shoo_ghosts)
+		return FALSE
+	return shooer.auto_shoo_admin_override || is_shoo_ghost_area(get_area(shooer))
+
+/// Returns TRUE if this mob's shoo ghost settings block this client.
+/proc/shoo_ghost_blocks_client(mob/shooer, client/ghost_client)
+	if(!is_shoo_ghost_active(shooer))
+		return FALSE
+	return shooer.auto_shoo_include_admins || !ghost_client?.holder
+
+/// Sends a generic shoo ghost denial notice to an observer.
+/proc/notify_shoo_ghost_block(mob/shooer, mob/dead/observer/ghost)
+	var/shoo_name = shooer.real_name ? shooer.real_name : shooer.name
+	to_chat(ghost, span_notice("[shoo_name] has shoo ghosts enabled."))
+
+/**
+ * Checks if a LOOC message should be blocked from a sender to a hearer based on shoo ghost settings.
+ * Returns TRUE if the message should be blocked, FALSE otherwise.
+ */
+/proc/is_looc_blocked_by_shoo_ghost(mob/sender, mob/hearer, client/sender_client, client/hearer_client)
+	if(isnull(sender) || isnull(hearer))
+		return FALSE
+
+	if(isnull(sender_client))
+		sender_client = sender.client
+	if(isnull(hearer_client))
+		hearer_client = hearer.client
+
+	if(isobserver(sender))
+		if(shoo_ghost_blocks_client(hearer, sender_client))
+			return TRUE
+
+		for(var/mob/nearby in range(LOOC_RANGE, hearer))
+			if(nearby == hearer)
+				continue
+			if(shoo_ghost_blocks_client(nearby, sender_client))
+				return TRUE
+
+	if(isobserver(hearer))
+		if(shoo_ghost_blocks_client(sender, hearer_client))
+			return TRUE
+
+		for(var/mob/nearby in range(LOOC_RANGE, sender))
+			if(nearby == sender)
+				continue
+			if(shoo_ghost_blocks_client(nearby, hearer_client))
+				return TRUE
+
+	return FALSE
+
+/// Checks if remote LOOC should be blocked from admins by admin shoo ghost.
+/proc/is_remote_looc_blocked_by_shoo_ghost(mob/sender)
+	if(isnull(sender))
+		return FALSE
+
+	if(is_shoo_ghost_active(sender) && sender.auto_shoo_include_admins)
+		return TRUE
+
+	for(var/mob/nearby in range(LOOC_RANGE, sender))
+		if(nearby == sender)
+			continue
+		if(is_shoo_ghost_active(nearby) && nearby.auto_shoo_include_admins)
+			return TRUE
+
+	return FALSE
+
+/**
+ * Checks if speech or emotes should be blocked from a speaker to an observer by shoo ghost settings.
+ * Returns TRUE if the message should be blocked, FALSE otherwise.
+ */
+/proc/is_say_blocked_by_shoo_ghost(mob/speaker, mob/dead/observer/ghost)
+	if(isnull(speaker) || isnull(ghost) || !isobserver(ghost))
+		return FALSE
+
+	if(shoo_ghost_blocks_client(speaker, ghost.client))
+		return TRUE
+
+	for(var/mob/nearby in range(LOOC_RANGE, speaker))
+		if(nearby == speaker)
+			continue
+		if(shoo_ghost_blocks_client(nearby, ghost.client))
+			return TRUE
+
+	return FALSE
+
 ///This will check if SSaccessories.sprite_accessories[mutant_part]?[part_name] is associated with sprite accessory with factual TRUE.
 /proc/is_factual_sprite_accessory(mutant_part, part_name)
 	if(!mutant_part || !part_name)

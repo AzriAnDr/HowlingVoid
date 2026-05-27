@@ -1,0 +1,3060 @@
+{
+  "/datum/interaction/howling_extra/anal_fuck": {
+    "message": [
+      "занимается анальным сексом с %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/anal_knotfuck": {
+    "message": [
+      "проникает в %TARGET% узлом."
+    ]
+  },
+  "/datum/interaction/howling_extra/armpit_fuck": {
+    "message": [
+      "трахает подмышку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/armpit_smother": {
+    "message": [
+      "прижимает подмышкой %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/bellyfuck": {
+    "message": [
+      "трётся о живот %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/bite_lip": {
+    "message": [
+      "прикусывает губу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/body_caress": {
+    "message": [
+      "ласкает тело %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/body_kiss": {
+    "message": [
+      "целует тело %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/body_lick": {
+    "message": [
+      "лижет тело %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/body_massage": {
+    "message": [
+      "массирует тело %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/body_stroke": {
+    "message": [
+      "поглаживает тело %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/boobjob": {
+    "message": [
+      "стимулирует %TARGET% грудью."
+    ]
+  },
+  "/datum/interaction/howling_extra/boop_snout": {
+    "message": [
+      "ткет в нос %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/breast_fuck": {
+    "message": [
+      "стимулирует себя грудью %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/breast_smother": {
+    "message": [
+      "прижимает сиськами %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/breastfeed": {
+    "message": [
+      "кормит грудью %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/breathe_into_mouth": {
+    "message": [
+      "дышит в рот %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/breathe_on_armpits": {
+    "message": [
+      "дышит на подмышки %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/breathe_on_chest": {
+    "message": [
+      "дышит на торс %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/breathe_on_ears": {
+    "message": [
+      "дышит на уши %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/breathe_on_lips": {
+    "message": [
+      "дышит на губы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/breathe_on_neck": {
+    "message": [
+      "дышит на шею %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/breathe_on_nipples": {
+    "message": [
+      "дышит на соски %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/breathe_on_thighs": {
+    "message": [
+      "дышит на бёдра %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/brush_fingertips": {
+    "message": [
+      "касается кончиков пальцев %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/brush_lashes": {
+    "message": [
+      "проводит по ресницам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/bury_face_in_ass": {
+    "message": [
+      "уткнуться лицом в попу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/caress_armpits": {
+    "message": [
+      "ласкает подмышки %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/caress_ass": {
+    "message": [
+      "ласкает попу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/caress_asshole": {
+    "message": [
+      "ласкает анус %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/caress_balls": {
+    "message": [
+      "ласкает мошонку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/caress_breasts": {
+    "message": [
+      "ласкает сиськи %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/caress_cock": {
+    "message": [
+      "ласкает член %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/caress_ears": {
+    "message": [
+      "ласкает уши %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/caress_feet": {
+    "message": [
+      "ласкает ступни %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/caress_pussy": {
+    "message": [
+      "ласкает вагину %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/caress_snout": {
+    "message": [
+      "ласкает морду %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/caress_wings": {
+    "message": [
+      "ласкает крылья %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/cheek_kiss": {
+    "message": [
+      "поцеловает в щёку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/chest_caress": {
+    "message": [
+      "ласкает торс %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/chest_kiss": {
+    "message": [
+      "целует торс %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/chest_lick": {
+    "message": [
+      "лижет торс %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/chest_massage": {
+    "message": [
+      "массирует торс %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/chest_stroke": {
+    "message": [
+      "поглаживает торс %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/circle_clit": {
+    "message": [
+      "обводит клитор %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/clothesplosion": {
+    "message": [
+      "эффектно вырывается из одежды."
+    ]
+  },
+  "/datum/interaction/howling_extra/cradle_balls": {
+    "message": [
+      "осторожно держать мошонку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/cup_breasts": {
+    "message": [
+      "обхватывает сиськи ладонями %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/cup_snout": {
+    "message": [
+      "обхватывает морду ладонью %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/double_dildo_scissor": {
+    "message": [
+      "ножницы с двойным дилдо %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/double_dildo_scissor_ride": {
+    "message": [
+      "двигаться в ножницах на двойном дилдо %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/double_foot_fuck": {
+    "message": [
+      "трётся между ступней %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/double_footjob": {
+    "message": [
+      "стимулирует двумя ступнями %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/ear_lick": {
+    "message": [
+      "лижет ухо %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/facefuck_penis": {
+    "message": [
+      "прижимает член к лицу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/facefuck_vagina": {
+    "message": [
+      "сесть киской на лицо %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/feed_fingers_to_mouth": {
+    "message": [
+      "подводит пальцы к губам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/finger_ass": {
+    "message": [
+      "ласкает анус пальцами %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/finger_ass_self": {
+    "message": [
+      "ласкает свой анус пальцами."
+    ]
+  },
+  "/datum/interaction/howling_extra/finger_pussy": {
+    "message": [
+      "ласкает пальцами %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/finger_pussy_self": {
+    "message": [
+      "ласкает себя пальцами."
+    ]
+  },
+  "/datum/interaction/howling_extra/flick_nipples": {
+    "message": [
+      "щёлкает по соскам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/foot_fuck": {
+    "message": [
+      "трётся о ступню %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/footjob": {
+    "message": [
+      "стимулирует ступнёй %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/frotting": {
+    "message": [
+      "фроттинг %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/fuck": {
+    "message": [
+      "половой акт %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/full_body_tease": {
+    "message": [
+      "дразнит всё тело %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/grind_against_ass": {
+    "message": [
+      "трётся о ягодицы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/grind_against_pussy": {
+    "message": [
+      "трётся о вагину %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/grind_face": {
+    "message": [
+      "трётся о лицо %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/grind_mouth": {
+    "message": [
+      "трётся о рот %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/grind_on_cock": {
+    "message": [
+      "трётся о член %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/groin_caress": {
+    "message": [
+      "ласкает пах %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/groin_kiss": {
+    "message": [
+      "целует пах %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/groin_lick": {
+    "message": [
+      "лижет пах %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/groin_massage": {
+    "message": [
+      "массирует пах %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/groin_stroke": {
+    "message": [
+      "поглаживает пах %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/groin_tease": {
+    "message": [
+      "дразнит пах %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/grope_ass": {
+    "message": [
+      "лапает попу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/grope_breasts": {
+    "message": [
+      "лапает грудь %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/grope_breasts_self": {
+    "message": [
+      "ласкает свою грудь."
+    ]
+  },
+  "/datum/interaction/howling_extra/guide_hand_to_body": {
+    "message": [
+      "направит руку по телу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/guide_hand_to_chest": {
+    "message": [
+      "направит руку к груди %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/guide_hand_to_groin": {
+    "message": [
+      "направит руку к паху %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/guide_hand_to_neck": {
+    "message": [
+      "направит руку к шее %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/guide_wrist": {
+    "message": [
+      "вести за запястье %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/hand_caress": {
+    "message": [
+      "ласкает руки %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/handjob": {
+    "message": [
+      "подрочит рукой %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/hold_ankle": {
+    "message": [
+      "держит за лодыжку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/hold_arms_up": {
+    "message": [
+      "подняет руки партнёра."
+    ]
+  },
+  "/datum/interaction/howling_extra/hold_ass_open": {
+    "message": [
+      "удерживает ягодицы разведёнными %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/hold_at_groin": {
+    "message": [
+      "держит руку близко у паха %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/hold_close": {
+    "message": [
+      "держит %TARGET% рядом."
+    ]
+  },
+  "/datum/interaction/howling_extra/hold_feet": {
+    "message": [
+      "держит за ступни %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/hold_hands": {
+    "message": [
+      "держит за руки %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/hold_hips": {
+    "message": [
+      "держит за бёдра %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/hold_horns": {
+    "message": [
+      "взяться за рога %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/hold_jaw": {
+    "message": [
+      "держит %TARGET% за челюсть."
+    ]
+  },
+  "/datum/interaction/howling_extra/hold_neck": {
+    "message": [
+      "держит %TARGET% за шею."
+    ]
+  },
+  "/datum/interaction/howling_extra/hold_pussy_open": {
+    "message": [
+      "удерживает вагину открытой %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/hook_tongue": {
+    "message": [
+      "подцепляет язык %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/inner_thigh_tease": {
+    "message": [
+      "дразнит внутреннюю сторону бёдер %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/jack_off_self": {
+    "message": [
+      "подрочит себе."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss": {
+    "message": [
+      "целует %TARGET%."
+    ],
+    "target_messages": [
+      "Губы %USER% прижимаются к твоим.",
+      "Язык %USER% касается твоего рта."
+    ],
+    "user_messages": [
+      "Губы %TARGET% тёпло прижимаются к твоим.",
+      "Ты чувствуешь дыхание %TARGET% на своих губах."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_ankle": {
+    "message": [
+      "целует лодыжку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_antennae": {
+    "message": [
+      "целует усики %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_armpits": {
+    "message": [
+      "целует подмышки %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_asscheeks": {
+    "message": [
+      "целует ягодицы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_asshole": {
+    "message": [
+      "целует анус %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_balls": {
+    "message": [
+      "целует мошонку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_breasts": {
+    "message": [
+      "целует сиськи %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_cock": {
+    "message": [
+      "целует член %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_corner_of_eye": {
+    "message": [
+      "целует уголок глаза %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_earlobes": {
+    "message": [
+      "целует мочки ушей %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_ears": {
+    "message": [
+      "целует уши %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_eyelids": {
+    "message": [
+      "целует веки %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_feet": {
+    "message": [
+      "целует ступни %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_fluff": {
+    "message": [
+      "целует пух %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_frills": {
+    "message": [
+      "целует гребни %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_hand": {
+    "message": [
+      "целует руку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_horns": {
+    "message": [
+      "целует рога %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_knuckles": {
+    "message": [
+      "целует костяшки %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_navel": {
+    "message": [
+      "целует пупок %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_nipples": {
+    "message": [
+      "целует соски %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_nose": {
+    "message": [
+      "целует нос %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_palm": {
+    "message": [
+      "целует ладонь %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_paw_pads": {
+    "message": [
+      "целует подушечки лап %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_pussy": {
+    "message": [
+      "целует вагину %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_snout": {
+    "message": [
+      "целует морду %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_synth_antenna": {
+    "message": [
+      "целует синт-антенну %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_teeth": {
+    "message": [
+      "целует зубы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_thighs": {
+    "message": [
+      "целует бёдра %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_throat": {
+    "message": [
+      "целует горло %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_toes": {
+    "message": [
+      "целует пальцы ног %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_wings": {
+    "message": [
+      "целует крылья %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/kiss_wrist": {
+    "message": [
+      "целует запястье %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/knead_ass": {
+    "message": [
+      "разминает попу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/knead_feet": {
+    "message": [
+      "разминает ступни %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/knotfuck": {
+    "message": [
+      "проникновение с узлом %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/knotride_anus": {
+    "message": [
+      "оседлает узел анусом %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/knotride_vagina": {
+    "message": [
+      "оседлает узел вагиной %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lap_antennae": {
+    "message": [
+      "ласкает языком усики %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lap_armpits": {
+    "message": [
+      "ласкает подмышки языком %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lap_ears": {
+    "message": [
+      "ласкает уши языком %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lap_frills": {
+    "message": [
+      "ласкает языком гребни %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lap_nipples": {
+    "message": [
+      "ласкает соски языком %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_armpit": {
+    "message": [
+      "лижет подмышку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_ass": {
+    "message": [
+      "лижет анус %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_asscheeks": {
+    "message": [
+      "лижет ягодицы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_balls": {
+    "message": [
+      "лижет мошонку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_breasts": {
+    "message": [
+      "лижет сиськи %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_cock": {
+    "message": [
+      "лижет член %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_corner_of_eye": {
+    "message": [
+      "лижет уголок глаза %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_feet": {
+    "message": [
+      "лижет ступни %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_fingers": {
+    "message": [
+      "лижет пальцы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_horns": {
+    "message": [
+      "лижет рога %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_inner_thighs": {
+    "message": [
+      "лижет внутреннюю сторону бёдер %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_lashes": {
+    "message": [
+      "лижет ресницы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_lips": {
+    "message": [
+      "лижет губы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_lips_of_snout": {
+    "message": [
+      "лижет губы морды %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_navel": {
+    "message": [
+      "лижет пупок %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_nipples": {
+    "message": [
+      "лижет соски %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_nose": {
+    "message": [
+      "лижет нос %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_palm": {
+    "message": [
+      "лижет ладонь %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_paw_pads": {
+    "message": [
+      "лижет подушечки лап %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_pussy": {
+    "message": [
+      "лижет вагину %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_pussy_self": {
+    "message": [
+      "ласкает себя языком."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_snout": {
+    "message": [
+      "лижет морду %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_sweat": {
+    "message": [
+      "слизает пот %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_tail_self": {
+    "message": [
+      "лижет свой хвост."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_teeth": {
+    "message": [
+      "лижет зубы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_thighs": {
+    "message": [
+      "лижет бёдра %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_tip": {
+    "message": [
+      "лижет головку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_toes": {
+    "message": [
+      "лижет пальцы ног %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lick_wrist": {
+    "message": [
+      "лижет запястье %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lift_hand": {
+    "message": [
+      "подняет руку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lip_kiss": {
+    "message": [
+      "поцеловает в губы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lip_nibble": {
+    "message": [
+      "покусывает губы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/lips_to_neck": {
+    "message": [
+      "прижимает губы к шее %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/listen_heartbeat": {
+    "message": [
+      "прижимается к %TARGET% и слушает сердцебиение."
+    ]
+  },
+  "/datum/interaction/howling_extra/massage_ankle": {
+    "message": [
+      "массирует лодыжку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/massage_ass": {
+    "message": [
+      "массирует попу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/massage_asshole": {
+    "message": [
+      "массирует анус %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/massage_balls": {
+    "message": [
+      "массирует мошонку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/massage_breasts": {
+    "message": [
+      "массирует сиськи %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/massage_cock": {
+    "message": [
+      "массирует член %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/massage_fingers": {
+    "message": [
+      "массирует пальцы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/massage_palm": {
+    "message": [
+      "массирует ладонь %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/massage_pussy": {
+    "message": [
+      "массирует вагину %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/massage_shoulders": {
+    "message": [
+      "массирует плечи %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/massage_toes": {
+    "message": [
+      "массирует пальцы ног %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/mount_anus": {
+    "message": [
+      "оседлает анусом %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/mount_face": {
+    "message": [
+      "оседлает лицо %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/mount_vagina": {
+    "message": [
+      "оседлает вагиной %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/mouth_sides": {
+    "message": [
+      "касается боков губами %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/mouth_to_chest": {
+    "message": [
+      "касается торса губами %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/mouth_to_fingers": {
+    "message": [
+      "берёт пальцы в рот %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/neck_caress": {
+    "message": [
+      "ласкает шею %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/neck_kiss": {
+    "message": [
+      "поцеловает шею %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/neck_lick": {
+    "message": [
+      "лижет шею %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/neck_massage": {
+    "message": [
+      "массирует шею %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/neck_nibble": {
+    "message": [
+      "покусывает шею %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/neck_stroke": {
+    "message": [
+      "поглаживает шею %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/nibble_armpits": {
+    "message": [
+      "покусывает подмышки %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/nibble_ears": {
+    "message": [
+      "покусывает уши %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/nibble_snout": {
+    "message": [
+      "покусывает морду %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/nipple_knotfuck": {
+    "message": [
+      "стимуляция соска узлом %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/nipplefuck": {
+    "message": [
+      "стимулирует между сисек %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/nuts_to_face": {
+    "message": [
+      "прижимает мошонку к лицу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/nuzzle_armpits": {
+    "message": [
+      "уткнуться в подмышки %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/nuzzle_belly": {
+    "message": [
+      "уткнуться в живот %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/nuzzle_fluff": {
+    "message": [
+      "уткнуться в пух %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/nuzzle_snout": {
+    "message": [
+      "трётся о морду %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/nuzzle_thighs": {
+    "message": [
+      "уткнуться в бёдра %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/nuzzle_wings": {
+    "message": [
+      "уткнуться в крылья %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/oral_knotfuck": {
+    "message": [
+      "проникет узлом в рот %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/palm_chest": {
+    "message": [
+      "проводит ладонями по торсу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/palm_chest_bare": {
+    "message": [
+      "кладёт ладони на торс %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/palm_groin": {
+    "message": [
+      "накрывает пах ладонью %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/palm_shoulders": {
+    "message": [
+      "кладёт ладони на плечи %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/part_lips": {
+    "message": [
+      "раздвигает губы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/part_pussy_lips": {
+    "message": [
+      "раздвигает половые губы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/paw_pad_massage": {
+    "message": [
+      "массирует подушечки лап %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/perform_oral": {
+    "message": [
+      "оральные ласки %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/pet_fluff": {
+    "message": [
+      "гладит пух %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/pin_neck": {
+    "message": [
+      "прижимает %TARGET% за шею."
+    ]
+  },
+  "/datum/interaction/howling_extra/pin_to_body": {
+    "message": [
+      "прижимается к телу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/pin_wrist": {
+    "message": [
+      "прижимает запястье %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/pinch_ass": {
+    "message": [
+      "ущипет попу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/pinch_nipples": {
+    "message": [
+      "пощипывает соски %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/pitjob": {
+    "message": [
+      "дрочит подмышкой %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/preen_wings": {
+    "message": [
+      "приводит крылья в порядок %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/press_close": {
+    "message": [
+      "прижимается телом к %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/press_cock_to_body": {
+    "message": [
+      "прижимает член к телу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/press_face_to_ass": {
+    "message": [
+      "прижимает лицо к попе %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/press_face_to_breasts": {
+    "message": [
+      "прижимается лицом к сиськам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/press_feet": {
+    "message": [
+      "прижимается к ступням %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/press_fingers_to_pussy": {
+    "message": [
+      "прижимает пальцы к вагине %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/press_head_between_thighs": {
+    "message": [
+      "прижимает голову между бёдер %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/press_lips_to_nipples": {
+    "message": [
+      "прижимает губы к соскам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/press_palm": {
+    "message": [
+      "прижимает ладонь %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/press_paw_pads": {
+    "message": [
+      "надавливает на подушечки лап %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/press_tongue_to_ass": {
+    "message": [
+      "прижимает язык к анусу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/pull_closer_by_ass": {
+    "message": [
+      "притяет за попу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/pull_nipples": {
+    "message": [
+      "тянет за соски %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/pussy_grind": {
+    "message": [
+      "трение вагинами %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/raise_arm": {
+    "message": [
+      "подняет руку вверх %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rim_asshole": {
+    "message": [
+      "ласкает анус языком %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/roll_nipples": {
+    "message": [
+      "перекатывает соски %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_against": {
+    "message": [
+      "трётся о %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_arch": {
+    "message": [
+      "трёт свод стопы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_armpits": {
+    "message": [
+      "трёт подмышки %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_ass": {
+    "message": [
+      "трёт попу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_asshole": {
+    "message": [
+      "трёт анус %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_balls": {
+    "message": [
+      "трёт мошонку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_breasts": {
+    "message": [
+      "трёт сиськи %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_chest": {
+    "message": [
+      "трётся о торс %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_clit": {
+    "message": [
+      "трёт клитор %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_ears": {
+    "message": [
+      "трёт уши %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_feet": {
+    "message": [
+      "растирает ступни %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_groin": {
+    "message": [
+      "трётся о пах %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_nipples": {
+    "message": [
+      "трёт соски %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_paw_pads": {
+    "message": [
+      "трёт подушечки лап %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_sides": {
+    "message": [
+      "трёт бока %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_thighs": {
+    "message": [
+      "трёт бёдра %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_tip": {
+    "message": [
+      "трёт головку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/rub_wrist": {
+    "message": [
+      "трёт запястье %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/scissor_ride": {
+    "message": [
+      "движение в ножницах %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/scritch_fluff": {
+    "message": [
+      "почесает пух %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/scritch_frills": {
+    "message": [
+      "почесает гребни %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/selfsuck": {
+    "message": [
+      "ласкает себя ртом."
+    ]
+  },
+  "/datum/interaction/howling_extra/slap_ass": {
+    "message": [
+      "шлёпает по ягодицам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/smack_nuts": {
+    "message": [
+      "шлёпает мошонкой %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/spit_into_mouth": {
+    "message": [
+      "плюет в рот %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/spit_on_tongue": {
+    "message": [
+      "плюет на язык %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/spread_anus": {
+    "message": [
+      "раздвигает ягодицы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/spread_asscheeks": {
+    "message": [
+      "раздвигает ягодицы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/spread_thighs": {
+    "message": [
+      "раздвигает бёдра %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/squeeze_ass": {
+    "message": [
+      "сжимает попу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/squeeze_balls": {
+    "message": [
+      "сжимает мошонку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/squeeze_hand": {
+    "message": [
+      "сжимает руку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/squeeze_thighs": {
+    "message": [
+      "сжимает бёдра %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/stroke_antennae": {
+    "message": [
+      "поглаживает усики %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/stroke_arms": {
+    "message": [
+      "поглаживает руки %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/stroke_cock": {
+    "message": [
+      "поглаживает член %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/stroke_ears": {
+    "message": [
+      "поглаживает уши %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/stroke_forearms": {
+    "message": [
+      "поглаживает предплечья %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/stroke_frills": {
+    "message": [
+      "поглаживает гребни %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/stroke_synth_antenna": {
+    "message": [
+      "поглаживает синт-антенну %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/stroke_wings": {
+    "message": [
+      "поглаживает крылья %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/suck_balls": {
+    "message": [
+      "посасывает мошонку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/suck_clit": {
+    "message": [
+      "посасывает клитор %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/suck_cock": {
+    "message": [
+      "посасывает член %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/suck_earlobes": {
+    "message": [
+      "посасывает мочки ушей %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/suck_lip": {
+    "message": [
+      "посасывает губу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/suck_nipples": {
+    "message": [
+      "посасывает соски %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/suck_nipples_self": {
+    "message": [
+      "посасывает свои соски."
+    ]
+  },
+  "/datum/interaction/howling_extra/suck_paw_pads": {
+    "message": [
+      "посасывает подушечки лап %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/suck_tip": {
+    "message": [
+      "посасывает головку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/suck_toes": {
+    "message": [
+      "посасывает пальцы ног %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/suck_tongue": {
+    "message": [
+      "посасывает язык %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/suckle_nipples": {
+    "message": [
+      "посасывает соски %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_base_massage": {
+    "message": [
+      "массирует основание хвоста %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_belly_self": {
+    "message": [
+      "дразнит живот своим хвостом."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_breasts_self": {
+    "message": [
+      "проводит хвостом по своей груди."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_brush_face": {
+    "message": [
+      "хвостом: коснуться лица %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_brush_snout": {
+    "message": [
+      "хвостом: коснуться морды %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_brush_wings": {
+    "message": [
+      "хвостом: коснуться крыльев %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_caress_ass": {
+    "message": [
+      "хвостом: ласкать ягодицы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_caress_hands": {
+    "message": [
+      "ласкает хвост %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_circle_clit": {
+    "message": [
+      "хвостом: обводить клитор %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_coil_leg": {
+    "message": [
+      "хвостом: обвить ногу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_coil_tail": {
+    "message": [
+      "хвостом: переплести хвосты %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_face_self": {
+    "message": [
+      "проводит хвостом по своему лицу."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_flick_nipples": {
+    "message": [
+      "хвостом: щёлкнуть по соскам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_hold_hands": {
+    "message": [
+      "держит хвост %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_hook_chin": {
+    "message": [
+      "хвостом: приподнять подбородок %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_jerk_cock": {
+    "message": [
+      "хвостом: стимуляция члена %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_jerk_cock_self": {
+    "message": [
+      "стимулирует себя хвостом."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_lick": {
+    "message": [
+      "лижет хвостом %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_massage": {
+    "message": [
+      "массирует хвост %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_neck_self": {
+    "message": [
+      "обвивает хвостом свою шею."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_nipples_self": {
+    "message": [
+      "дразнит соски своим хвостом."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_penetrate_ass": {
+    "message": [
+      "хвостом: проникнуть в анус %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_penetrate_ass_self": {
+    "message": [
+      "вводит свой хвост в анус."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_penetrate_pussy": {
+    "message": [
+      "хвостом: проникнуть в вагину %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_penetrate_pussy_self": {
+    "message": [
+      "вводит свой хвост в вагину."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_pin_hands": {
+    "message": [
+      "хвостом: зафиксировать руки %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_press_into_mouth": {
+    "message": [
+      "хвостом: в рот %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_rub_pussy": {
+    "message": [
+      "хвостом: тереться о вагину %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_rub_pussy_self": {
+    "message": [
+      "трётся хвостом о свою вагину."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_slap_ass": {
+    "message": [
+      "хвостом: шлёпнуть по ягодицам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_slide_between_breasts": {
+    "message": [
+      "хвостом: между сисек %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_slide_between_breasts_self": {
+    "message": [
+      "проводит хвостом между своей грудью."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_slide_between_cheeks": {
+    "message": [
+      "хвостом: между ягодиц %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_slide_between_cheeks_self": {
+    "message": [
+      "проводит хвостом между своими ягодицами."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_snout_self": {
+    "message": [
+      "проводит хвостом по своей морде."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_stroke_antennae": {
+    "message": [
+      "хвостом: гладить усики %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_stroke_armpits": {
+    "message": [
+      "хвостом: гладить подмышки %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_stroke_hands": {
+    "message": [
+      "поглаживает хвост %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_stroke_inner_thighs": {
+    "message": [
+      "хвостом: гладить внутреннюю сторону бёдер %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_stroke_synth_antenna": {
+    "message": [
+      "хвостом: гладить синт-антенну %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_tease": {
+    "message": [
+      "дразнит хвостом %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_tease_belly": {
+    "message": [
+      "хвостом: дразнить живот %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_tease_breasts": {
+    "message": [
+      "хвостом: дразнить сиськи %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_tease_frills": {
+    "message": [
+      "хвостом: дразнить гребни %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_tease_horns": {
+    "message": [
+      "хвостом: дразнить рога %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_tease_lips": {
+    "message": [
+      "хвостом: дразнить губы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_thighs_self": {
+    "message": [
+      "проводит хвостом по своим бёдрам."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_trace_ears": {
+    "message": [
+      "хвостом: провести по ушам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_trace_neck": {
+    "message": [
+      "хвостом: провести по шее %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_waist_self": {
+    "message": [
+      "обвивает хвостом свою талию."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_wrap_torso": {
+    "message": [
+      "хвостом: обвить торс %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tail_wrap_waist": {
+    "message": [
+      "хвостом: обвить талию %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tease_asshole": {
+    "message": [
+      "дразнит анус %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tease_balls": {
+    "message": [
+      "дразнит мошонку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tease_cock": {
+    "message": [
+      "дразнит член %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tease_nipples": {
+    "message": [
+      "дразнит соски %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tease_pussy": {
+    "message": [
+      "дразнит вагину %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/telekinesis/grope_ass": {
+    "message": [
+      "ласкает попу телекинезом %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/telekinesis/grope_balls": {
+    "message": [
+      "дразнит яйца телекинезом %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/telekinesis/grope_breasts": {
+    "message": [
+      "ласкает грудь телекинезом %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/telekinesis/grope_thighs": {
+    "message": [
+      "ласкает бёдра телекинезом %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/telekinesis/pull_tail": {
+    "message": [
+      "тянет хвост телекинезом %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/telekinesis/stroke_cock": {
+    "message": [
+      "ласкает член телекинезом %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/telekinesis/tease_pussy": {
+    "message": [
+      "дразнит киску телекинезом %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tentacle_ass": {
+    "message": [
+      "щупальца: анус %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tentacle_cock": {
+    "message": [
+      "щупальца: член %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tentacle_cock_and_ass": {
+    "message": [
+      "щупальца: член и анус %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tentacle_double": {
+    "message": [
+      "щупальца: двойное %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tentacle_pussy": {
+    "message": [
+      "щупальца: вагина %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/thigh_caress": {
+    "message": [
+      "ласкает бёдра %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/thigh_smother_penis": {
+    "message": [
+      "прижимает бёдрами и членом %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/thigh_smother_vagina": {
+    "message": [
+      "садится на лицо %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/thigh_stroke": {
+    "message": [
+      "поглаживает бёдра %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/thighfuck": {
+    "message": [
+      "трётся о бёдра %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/thighjob": {
+    "message": [
+      "стимулирует бёдрами %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/throatfuck": {
+    "message": [
+      "глубокий оральный секс %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/thumb_asshole": {
+    "message": [
+      "надавливает большим пальцем на анус %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/thumb_lip": {
+    "message": [
+      "проводит пальцем по губе %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/thumb_slit": {
+    "message": [
+      "проводит по уретре %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/thumb_teeth": {
+    "message": [
+      "проводит пальцем по зубам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/thumb_throat": {
+    "message": [
+      "проводит пальцем по горлу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/thumb_under_eye": {
+    "message": [
+      "касается пальцем под глазом %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tickle_armpits": {
+    "message": [
+      "щекочет подмышки %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tongue_kiss": {
+    "message": [
+      "целует %TARGET% с языком."
+    ]
+  },
+  "/datum/interaction/howling_extra/tongue_tease": {
+    "message": [
+      "дразнит языком %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_antennae": {
+    "message": [
+      "проводит по усикам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_collarbone": {
+    "message": [
+      "проводит по ключице %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_ear_edges": {
+    "message": [
+      "проводит по краям ушей %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_groin": {
+    "message": [
+      "проводит по паху %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_horns": {
+    "message": [
+      "проводит по рогам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_inner_thighs": {
+    "message": [
+      "проводит по внутренней стороне бёдер %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_knuckles": {
+    "message": [
+      "проводит по костяшкам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_navel": {
+    "message": [
+      "проводит вокруг пупка %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_paw_pads": {
+    "message": [
+      "проводит по подушечкам лап %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_ribs": {
+    "message": [
+      "проводит по рёбрам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_sides": {
+    "message": [
+      "проводит по бокам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_snout": {
+    "message": [
+      "проводит по морде %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_soles": {
+    "message": [
+      "проводит по подошвам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_sternum": {
+    "message": [
+      "проводит по грудине %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_synth_antenna": {
+    "message": [
+      "проводит по синт-антенне %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_teeth": {
+    "message": [
+      "проводит по зубам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_throat": {
+    "message": [
+      "проводит по горлу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_under_eyes": {
+    "message": [
+      "проводит под глазами %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trace_underbreast": {
+    "message": [
+      "проводит под сиськами %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trail_fingers": {
+    "message": [
+      "проводит пальцами по телу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/trail_fingers_arms": {
+    "message": [
+      "проводит пальцами по рукам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tribadism": {
+    "message": [
+      "ножницы %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/tug_ears": {
+    "message": [
+      "тянет за уши %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/twist_nipples": {
+    "message": [
+      "покручивает соски %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/vaginal_foot_grind": {
+    "message": [
+      "трётся вагиной о ступню %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/vaginal_footjob": {
+    "message": [
+      "ласкает вагину ступнёй %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/weigh_balls": {
+    "message": [
+      "взвесит в ладони %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_extra/wrap_yourself_tail": {
+    "message": [
+      "обвивает себя хвостом."
+    ]
+  },
+  "/datum/interaction/howling_item/candle/butt": {
+    "message": [
+      "капает воском из %ITEM% на попу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/candle/chest": {
+    "message": [
+      "капает воском из %ITEM% на грудь %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/candle/thighs": {
+    "message": [
+      "капает воском из %ITEM% на бёдра %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/clamps/attach": {
+    "message": [
+      "закрепляет %ITEM% на сосках %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/clamps/kiss": {
+    "message": [
+      "целует зажатые соски %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/clamps/tug": {
+    "message": [
+      "тянет за %ITEM% на сосках %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/condom/apply": {
+    "message": [
+      "раскатает презерватив по члену %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/condom/lips": {
+    "message": [
+      "дразнит член презервативом %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/custom_dildo/mouth": {
+    "message": [
+      "подает настраиваемое %ITEM% ко рту %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/custom_dildo/size_pussy": {
+    "message": [
+      "оценить, сколько примет киска %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/custom_dildo/stretch_ass": {
+    "message": [
+      "растягивает анус настраиваемым %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/custom_dildo/stretch_pussy": {
+    "message": [
+      "растягивает киску настраиваемым %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/dildo/ass": {
+    "message": [
+      "вводит %ITEM% в анус %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/dildo/clit": {
+    "message": [
+      "трёт %ITEM% по клитору %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/dildo/lips": {
+    "message": [
+      "прижимает %ITEM% к губам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/dildo/mouth": {
+    "message": [
+      "подает %ITEM% ко рту %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/dildo/pussy": {
+    "message": [
+      "вводит %ITEM% в киску %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/dildo/tease_ass": {
+    "message": [
+      "дразнит анус %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/dildo/tease_pussy": {
+    "message": [
+      "дразнит киску %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/dildo/thighs": {
+    "message": [
+      "трёт %ITEM% между бёдер %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/double_dildo/ass": {
+    "message": [
+      "посадит %ITEM% в анус %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/double_dildo/mouth": {
+    "message": [
+      "подает %ITEM% ко рту %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/double_dildo/pussy": {
+    "message": [
+      "посадит %ITEM% в киску %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/double_dildo/thighs": {
+    "message": [
+      "проводит %ITEM% между бёдер %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/egg/clit": {
+    "message": [
+      "водит %ITEM% по клитору %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/egg/insert_ass": {
+    "message": [
+      "вводит %ITEM% в анус %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/egg/insert_pussy": {
+    "message": [
+      "вводит %ITEM% в киску %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/egg/lips": {
+    "message": [
+      "вибрирует %ITEM% у губ %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/egg/nipples": {
+    "message": [
+      "прижимает %ITEM% к соскам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/feather/armpits": {
+    "message": [
+      "дразнит подмышки %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/feather/body": {
+    "message": [
+      "проводит %ITEM% по телу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/feather/chest": {
+    "message": [
+      "проводит %ITEM% по груди %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/feather/ears": {
+    "message": [
+      "проводит %ITEM% по ушам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/feather/feet": {
+    "message": [
+      "проводит %ITEM% по ступням %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/feather/groin": {
+    "message": [
+      "дразнит пах %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/feather/hands": {
+    "message": [
+      "проводит %ITEM% по рукам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/feather/neck": {
+    "message": [
+      "проводит %ITEM% по шее %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/feather/pussy": {
+    "message": [
+      "дразнит киску %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/feather/snout": {
+    "message": [
+      "проводит %ITEM% по морде %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/feather/tail": {
+    "message": [
+      "проводит %ITEM% по хвосту %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/feather/thighs": {
+    "message": [
+      "проводит %ITEM% между бёдер %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/fleshlight/balls": {
+    "message": [
+      "трёт %ITEM% под яйцами %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/fleshlight/stroke_cock": {
+    "message": [
+      "дрочит %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/fleshlight/tease_tip": {
+    "message": [
+      "дразнит головку %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/fleshlight/work_cock": {
+    "message": [
+      "берёт член во %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/plug/grind_ass": {
+    "message": [
+      "трёт %ITEM% между ягодиц %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/plug/insert_ass": {
+    "message": [
+      "вводит %ITEM% в анус %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/plug/insert_pussy": {
+    "message": [
+      "вводит %ITEM% в киску %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/plug/lips": {
+    "message": [
+      "прижимает %ITEM% к губам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/plug/press_pussy": {
+    "message": [
+      "прижимает %ITEM% к киске %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/plug/tease_ass": {
+    "message": [
+      "дразнит анус %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/ring/balls": {
+    "message": [
+      "вибрирует %ITEM% под яйцами %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/ring/clit": {
+    "message": [
+      "прижимает %ITEM% к клитору %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/ring/cock": {
+    "message": [
+      "проводит %ITEM% по члену %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/ring/tip": {
+    "message": [
+      "вибрирует %ITEM% по головке %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/shocker/ass": {
+    "message": [
+      "прижимает %ITEM% к анусу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/shocker/cock": {
+    "message": [
+      "ударит %ITEM% по члену %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/shocker/nipples": {
+    "message": [
+      "прижимает %ITEM% к соскам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/shocker/pussy": {
+    "message": [
+      "прижимает %ITEM% к киске %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/signal_egg/insert_ass": {
+    "message": [
+      "вводит удалённое %ITEM% в анус %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/signal_egg/insert_pussy": {
+    "message": [
+      "вводит удалённое %ITEM% в киску %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/signal_egg/nipples": {
+    "message": [
+      "закрепляет удалённое %ITEM% на сосках %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/signal_egg/penis": {
+    "message": [
+      "закрепляет удалённое %ITEM% на члене %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/signal_egg/press_lips": {
+    "message": [
+      "прижимает удалённое %ITEM% к губам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/spanking_pad/ass": {
+    "message": [
+      "шлёпает по попе %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/spanking_pad/thighs": {
+    "message": [
+      "шлёпает по бёдрам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/strapon/fuck_ass": {
+    "message": [
+      "вводит %ITEM% в анус %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/strapon/fuck_pussy": {
+    "message": [
+      "вводит %ITEM% в киску %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/strapon/grind_ass": {
+    "message": [
+      "трёт %ITEM% о попу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/strapon/grind_pussy": {
+    "message": [
+      "трёт %ITEM% о киску %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/strapon/lips": {
+    "message": [
+      "прижимает %ITEM% к губам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/strapon/mouth": {
+    "message": [
+      "подает %ITEM% ко рту %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/armpits": {
+    "message": [
+      "прижимает %ITEM% к подмышкам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/ass": {
+    "message": [
+      "прижимает %ITEM% к попе %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/balls": {
+    "message": [
+      "проводит %ITEM% по яйцам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/body": {
+    "message": [
+      "проводит %ITEM% по телу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/chest": {
+    "message": [
+      "прижимает %ITEM% к торсу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/clit": {
+    "message": [
+      "водит %ITEM% по клитору %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/cock": {
+    "message": [
+      "проводит %ITEM% по члену %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/ears": {
+    "message": [
+      "поднести %ITEM% к ушам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/grind_clit": {
+    "message": [
+      "трёт %ITEM% по клитору %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/groin": {
+    "message": [
+      "прижимает %ITEM% к паху %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/hands": {
+    "message": [
+      "вибрирует по рукам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/lips": {
+    "message": [
+      "прижимает %ITEM% к губам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/nipples": {
+    "message": [
+      "дразнит соски %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/pin_nipples": {
+    "message": [
+      "плотно прижать %ITEM% к соскам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/snout": {
+    "message": [
+      "прижимает %ITEM% к морде %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/tail": {
+    "message": [
+      "проводит %ITEM% по хвосту %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/vibrator/tongue": {
+    "message": [
+      "дразнит язык %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/wand/armpits": {
+    "message": [
+      "проводит палочкой по подмышкам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/wand/ass": {
+    "message": [
+      "проводит палочкой по попе %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/wand/body": {
+    "message": [
+      "проводит палочкой по телу %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/wand/breasts": {
+    "message": [
+      "водит палочкой по сиськам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/wand/clit": {
+    "message": [
+      "прижимает %ITEM% к клитору %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/wand/cock": {
+    "message": [
+      "проводит палочкой по члену %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/wand/ears": {
+    "message": [
+      "прижимает %ITEM% к ушам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/wand/groin": {
+    "message": [
+      "проводит палочкой по паху %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/wand/hands": {
+    "message": [
+      "проводит палочкой по рукам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/wand/lips": {
+    "message": [
+      "прижимает %ITEM% к губам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/wand/nipples": {
+    "message": [
+      "прижимает %ITEM% к соскам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/wand/pussy": {
+    "message": [
+      "проводит %ITEM% по киске %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/wand/snout": {
+    "message": [
+      "проводит %ITEM% по морде %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/wand/tail": {
+    "message": [
+      "проводит %ITEM% по хвосту %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/wand/tongue": {
+    "message": [
+      "проводит %ITEM% по языку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/whip/ass": {
+    "message": [
+      "щёлкет хлыстом по попе %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/whip/chest": {
+    "message": [
+      "проводит хлыстом по груди %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item/whip/thighs": {
+    "message": [
+      "хлещет по бёдрам %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/clamps/lick": {
+    "message": [
+      "лижет зажатые соски %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/clamps/tug": {
+    "message": [
+      "тянет за уже надетые %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/clamps/twist": {
+    "message": [
+      "прокрутит надетые %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/condom/mouth": {
+    "message": [
+      "посасывает член в презервативе %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/condom/stroke": {
+    "message": [
+      "ласкает член в презервативе %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/condom/tip": {
+    "message": [
+      "трёт покрытую головку %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/dildo/grind": {
+    "message": [
+      "трётся о вставленное %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/dildo/pull": {
+    "message": [
+      "подразнит вставленным %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/dildo/rock": {
+    "message": [
+      "покачает вставленное %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/double_dildo/grind": {
+    "message": [
+      "трётся о %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/double_dildo/pull": {
+    "message": [
+      "подтягивает %ITEM% к краю %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/double_dildo/rock": {
+    "message": [
+      "покачивает %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/egg/grind": {
+    "message": [
+      "трётся об вставленное %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/egg/pull": {
+    "message": [
+      "дразнит %ITEM% у входа %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/egg/pulse": {
+    "message": [
+      "пульсирует вставленным %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/plug/kiss": {
+    "message": [
+      "целует вокруг пробки %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/plug/pull": {
+    "message": [
+      "частично вытянуть %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/plug/rock": {
+    "message": [
+      "покачивает %ITEM% внутри %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/ring/balls": {
+    "message": [
+      "обхватывает член с %ITEM% и яйца %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/ring/stroke": {
+    "message": [
+      "ласкает член с %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/ring/tip": {
+    "message": [
+      "проводит головку через %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/signal_egg/pulse": {
+    "message": [
+      "поддерживает удалённое %ITEM% активным %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_inserted/signal_egg/trigger": {
+    "message": [
+      "активирует удалённое %ITEM% %TARGET%."
+    ]
+  },
+  "/datum/interaction/howling_item_self/buttplug/adjust_ass": {
+    "message": [
+      "подразнит %ITEM% у входа."
+    ]
+  },
+  "/datum/interaction/howling_item_self/buttplug/hold_ass": {
+    "message": [
+      "удерживает %ITEM% на месте."
+    ]
+  },
+  "/datum/interaction/howling_item_self/buttplug/insert_ass": {
+    "message": [
+      "аккуратно вводит %ITEM%."
+    ]
+  },
+  "/datum/interaction/howling_item_self/buttplug/rock_ass": {
+    "message": [
+      "покачивает %ITEM% у входа."
+    ]
+  },
+  "/datum/interaction/howling_item_self/candle/butt": {
+    "message": [
+      "капает воском из %ITEM% на свои ягодицы."
+    ]
+  },
+  "/datum/interaction/howling_item_self/candle/chest": {
+    "message": [
+      "капает воском из %ITEM% на свой торс."
+    ]
+  },
+  "/datum/interaction/howling_item_self/candle/thighs": {
+    "message": [
+      "капает воском из %ITEM% на свои бёдра."
+    ]
+  },
+  "/datum/interaction/howling_item_self/clamps/attach": {
+    "message": [
+      "закрепляет %ITEM% на себе."
+    ]
+  },
+  "/datum/interaction/howling_item_self/custom_dildo/ass": {
+    "message": [
+      "растягивает анус %ITEM%."
+    ]
+  },
+  "/datum/interaction/howling_item_self/custom_dildo/pussy": {
+    "message": [
+      "растягивает себя %ITEM%."
+    ]
+  },
+  "/datum/interaction/howling_item_self/dildo/ass": {
+    "message": [
+      "вводит %ITEM% в свой анус."
+    ]
+  },
+  "/datum/interaction/howling_item_self/dildo/pussy": {
+    "message": [
+      "вводит %ITEM% в свою киску."
+    ]
+  },
+  "/datum/interaction/howling_item_self/double_dildo/ass": {
+    "message": [
+      "вводит %ITEM% в свой анус."
+    ]
+  },
+  "/datum/interaction/howling_item_self/double_dildo/pussy": {
+    "message": [
+      "вводит %ITEM% в себя."
+    ]
+  },
+  "/datum/interaction/howling_item_self/egg/adjust_ass": {
+    "message": [
+      "подразнит %ITEM% у ануса."
+    ]
+  },
+  "/datum/interaction/howling_item_self/egg/adjust_pussy": {
+    "message": [
+      "подразнит %ITEM% у входа."
+    ]
+  },
+  "/datum/interaction/howling_item_self/egg/hold_ass": {
+    "message": [
+      "удерживает %ITEM% у ануса."
+    ]
+  },
+  "/datum/interaction/howling_item_self/egg/hold_pussy": {
+    "message": [
+      "удерживает %ITEM% у клитора."
+    ]
+  },
+  "/datum/interaction/howling_item_self/egg/insert_ass": {
+    "message": [
+      "вводит %ITEM% в свой анус."
+    ]
+  },
+  "/datum/interaction/howling_item_self/egg/insert_pussy": {
+    "message": [
+      "вводит %ITEM% в свою киску."
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/armpits": {
+    "message": [
+      "подразнит подмышки %ITEM%."
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/body": {
+    "message": [
+      "проводит %ITEM% по своему телу."
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/ears": {
+    "message": [
+      "проводит %ITEM% по своим ушам."
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/groin": {
+    "message": [
+      "подразнит пах %ITEM%."
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/lips": {
+    "message": [
+      "проводит %ITEM% по своим губам."
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/neck": {
+    "message": [
+      "проводит %ITEM% по своей шее."
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/pussy": {
+    "message": [
+      "дразнит себя %ITEM%."
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/tail": {
+    "message": [
+      "проводит %ITEM% по своему хвосту."
+    ]
+  },
+  "/datum/interaction/howling_item_self/feather/thighs": {
+    "message": [
+      "проводит %ITEM% между бёдрами."
+    ]
+  },
+  "/datum/interaction/howling_item_self/fleshlight/cock": {
+    "message": [
+      "насаживает %ITEM% на свой член."
+    ]
+  },
+  "/datum/interaction/howling_item_self/ring/cock": {
+    "message": [
+      "надевает %ITEM% на свой член."
+    ]
+  },
+  "/datum/interaction/howling_item_self/shocker/ass": {
+    "message": [
+      "прижимает %ITEM% к анусу."
+    ]
+  },
+  "/datum/interaction/howling_item_self/shocker/cock": {
+    "message": [
+      "прижимает %ITEM% к члену."
+    ]
+  },
+  "/datum/interaction/howling_item_self/shocker/nipples": {
+    "message": [
+      "прижимает %ITEM% к своим соскам."
+    ]
+  },
+  "/datum/interaction/howling_item_self/shocker/pussy": {
+    "message": [
+      "прижимает %ITEM% к киске."
+    ]
+  },
+  "/datum/interaction/howling_item_self/signal_egg/insert_ass": {
+    "message": [
+      "вводит %ITEM% в свой анус."
+    ]
+  },
+  "/datum/interaction/howling_item_self/signal_egg/insert_pussy": {
+    "message": [
+      "вводит %ITEM% в свою киску."
+    ]
+  },
+  "/datum/interaction/howling_item_self/spanking_pad/ass": {
+    "message": [
+      "шлёпает себя по анусу."
+    ]
+  },
+  "/datum/interaction/howling_item_self/spanking_pad/thighs": {
+    "message": [
+      "шлёпает себя по бёдрам."
+    ]
+  },
+  "/datum/interaction/howling_item_self/strapon/fuck_ass": {
+    "message": [
+      "вводит %ITEM% в свой анус."
+    ]
+  },
+  "/datum/interaction/howling_item_self/strapon/fuck_pussy": {
+    "message": [
+      "вводит %ITEM% в себя."
+    ]
+  },
+  "/datum/interaction/howling_item_self/strapon/grind_ass": {
+    "message": [
+      "трётся %ITEM% об анус."
+    ]
+  },
+  "/datum/interaction/howling_item_self/strapon/grind_pussy": {
+    "message": [
+      "трётся %ITEM% о себя."
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/armpits": {
+    "message": [
+      "прижимает %ITEM% к подмышкам."
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/ass": {
+    "message": [
+      "прижимает %ITEM% к анусу."
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/body": {
+    "message": [
+      "проводит %ITEM% по своему телу."
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/clit": {
+    "message": [
+      "обводит %ITEM% клитор."
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/cock": {
+    "message": [
+      "проводит %ITEM% по члену."
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/ears": {
+    "message": [
+      "поднести %ITEM% к ушам."
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/groin": {
+    "message": [
+      "прижимает %ITEM% к паху."
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/lips": {
+    "message": [
+      "прижимает %ITEM% к губам."
+    ]
+  },
+  "/datum/interaction/howling_item_self/vibrator/nipples": {
+    "message": [
+      "ласкает свои соски %ITEM%."
+    ]
+  },
+  "/datum/interaction/howling_item_self/wand/body": {
+    "message": [
+      "проводит %ITEM% по своему телу."
+    ]
+  },
+  "/datum/interaction/howling_item_self/wand/breasts": {
+    "message": [
+      "проводит %ITEM% по сиськам."
+    ]
+  },
+  "/datum/interaction/howling_item_self/wand/cock": {
+    "message": [
+      "ласкает член %ITEM%."
+    ]
+  },
+  "/datum/interaction/howling_item_self/wand/ears": {
+    "message": [
+      "прижимает %ITEM% к ушам."
+    ]
+  },
+  "/datum/interaction/howling_item_self/wand/groin": {
+    "message": [
+      "проводит %ITEM% по паху."
+    ]
+  },
+  "/datum/interaction/howling_item_self/wand/lips": {
+    "message": [
+      "проводит %ITEM% по своим губам."
+    ]
+  },
+  "/datum/interaction/howling_item_self/wand/pussy": {
+    "message": [
+      "проводит %ITEM% по киске."
+    ]
+  },
+  "/datum/interaction/howling_item_self/whip/ass": {
+    "message": [
+      "хлещет себя по анусу."
+    ]
+  },
+  "/datum/interaction/howling_item_self/whip/chest": {
+    "message": [
+      "проводит %ITEM% по торсу."
+    ]
+  },
+  "/datum/interaction/howling_item_self/whip/thighs": {
+    "message": [
+      "хлещет себя по бёдрам."
+    ]
+  },
+  "/datum/interaction/howling_item_self_inserted/double_dildo/grind": {
+    "message": [
+      "трётся о %ITEM% внутри себя."
+    ]
+  },
+  "/datum/interaction/howling_item_self_inserted/double_dildo/pull": {
+    "message": [
+      "подтягивает %ITEM% к своему краю."
+    ]
+  },
+  "/datum/interaction/howling_item_self_inserted/double_dildo/rock": {
+    "message": [
+      "покачивает %ITEM% внутри себя."
+    ]
+  }
+}

@@ -1103,7 +1103,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		state = HUNGER_STATE_HUNGRY // Can't get enough
 		return
 
-	fullness = round(hungry.get_fullness(only_consumable = TRUE), 0.05)
+	// Use actual nutrition instead of stomach contents so the bar moves when nutrition metabolizes.
+	fullness = round(hungry.nutrition, 0.05)
 	switch(fullness)
 		if(1 + NUTRITION_LEVEL_FULL to INFINITY)
 			state = HUNGER_STATE_FULL
@@ -1120,26 +1121,32 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	update_hunger_bar()
 	return ..()
 
+/// Whether the hunger bar should be hidden entirely.
+/atom/movable/screen/hunger/proc/should_hide_hunger()
+	var/mob/living/hungry = hud?.mymob
+	if(!istype(hungry))
+		return TRUE
+	return HAS_TRAIT(hungry, TRAIT_NOHUNGER) || !hungry.get_organ_slot(ORGAN_SLOT_STOMACH)
+
 /// Updates the hunger bar's appearance.
 /// If `instant` is TRUE, the bar will update immediately rather than animating.
 /atom/movable/screen/hunger/proc/update_hunger_bar(instant = FALSE)
 	var/old_state = state
 	var/old_fullness = fullness
 	update_hunger_state()
-	if(old_state != state || old_fullness != fullness)
-		// Fades out if we ARE "fine" AND if our stomach has no food digesting
-		var/mob/living/hungry = hud?.mymob
-		if(alpha == 255 && (state == HUNGER_STATE_FINE && abs(fullness - hungry.nutrition) < 1))
+	if(should_hide_hunger())
+		if(alpha != 0)
 			if(instant)
 				alpha = 0
 			else
-				animate(src, alpha = 0, time = 1 SECONDS)
-		// Fades in if we WERE "fine" OR if our stomach has food digesting
-		else if(alpha == 0 && (state != HUNGER_STATE_FINE || abs(fullness - hungry.nutrition) >= 1))
-			if(instant)
-				alpha = 255
-			else
-				animate(src, alpha = 255, time = 1 SECONDS)
+				animate(src, alpha = 0, time = 0.5 SECONDS)
+			remove_filter("hunger_outline")
+		return
+	if(alpha != 255)
+		if(instant)
+			alpha = 255
+		else
+			animate(src, alpha = 255, time = 1 SECONDS)
 
 	if(old_state != state)
 		// Update filter around the bar

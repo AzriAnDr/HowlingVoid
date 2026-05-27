@@ -11,7 +11,8 @@
 
 	for(var/key in markings)
 		. += limb_id == BODYPART_ID_DIGITIGRADE ? "[BODYPART_ID_DIGITIGRADE]_[body_zone]" : body_zone
-		. += "-[key]_[markings[key][MARKING_INDEX_COLOR]]_[markings[key][MARKING_INDEX_EMISSIVE]]"
+		var/list/entry = sanitize_body_marking_entry(key, markings[key])
+		. += "-[key]_[entry[MARKING_INDEX_COLOR]]_[entry[MARKING_INDEX_EMISSIVE]]_[entry[MARKING_INDEX_LAYER]]"
 
 	return .
 

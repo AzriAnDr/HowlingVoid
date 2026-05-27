@@ -56,6 +56,7 @@
     "ui.character.limbs_body_parts":  "Body Parts",
     "ui.character.limbs_character_preview":  "Character Preview",
     "ui.character.limbs_emissive_tooltip":  "Toggle emissive.",
+    "ui.character.limbs_marking_layer_tooltip":  "Change marking layer.",
     "ui.character.limbs_implant_label":  "Implant",
     "ui.character.limbs_implant_slot":  "Implant slot",
     "ui.character.limbs_internal_implants":  "Internal Implants",

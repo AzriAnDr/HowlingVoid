@@ -965,6 +965,7 @@ NOVA EDIT REMOVAL END */
 	if(QDELETED(src))
 		// Bro just like, don't ok
 		return FALSE
+	var/was_standing = body_position == STANDING_UP
 	if(excess_healing)
 		adjust_oxy_loss(-excess_healing, updating_health = FALSE)
 		adjust_tox_loss(-excess_healing, updating_health = FALSE, forced = TRUE) //slime friendly
@@ -979,7 +980,7 @@ NOVA EDIT REMOVAL END */
 		set_stat(UNCONSCIOUS) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
 		if(full_heal_flags & HEAL_ADMIN)
-			get_up(TRUE)
+			restore_admin_heal_standing(was_standing)
 		update_sight()
 		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		reload_fullscreen()
@@ -990,10 +991,19 @@ NOVA EDIT REMOVAL END */
 
 	else if(full_heal_flags & HEAL_ADMIN)
 		updatehealth()
-		get_up(TRUE)
+		restore_admin_heal_standing(was_standing)
 
 	// The signal is called after everything else so components can properly check the updated values
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal_flags)
+
+/// Keeps admin heals from briefly flooring mobs that were already standing before the heal.
+/mob/living/proc/restore_admin_heal_standing(was_standing)
+	if(was_standing && !resting && (!buckled || buckled.buckle_lying == NO_BUCKLE_LYING))
+		set_body_position(STANDING_UP)
+		set_lying_angle(0)
+		return
+
+	get_up(TRUE)
 
 /**
  * Heals up the mob up to [heal_to] of the main damage types.

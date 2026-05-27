@@ -111,7 +111,7 @@
 /obj/effect/mob_spawn/ghost_role/flesh_spider/allow_spawn(mob/user, silent)
 	. = ..()
 
-/obj/effect/mob_spawn/ghost_role/flesh_spider/create_from_ghost(mob/dead/observer/user, use_loadout)
+/obj/effect/mob_spawn/ghost_role/flesh_spider/special(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
 	icon_state = "flesh_pod_open"
 	for(var/turf/blood_turf in view(src, 2))
@@ -188,6 +188,5 @@
 			mob_in_turf.add_blood_DNA(list("Non-human DNA" = random_human_blood_type()))
 			playsound(mob_in_turf, 'sound/effects/splat.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE)
 	return ..()
-
 
 

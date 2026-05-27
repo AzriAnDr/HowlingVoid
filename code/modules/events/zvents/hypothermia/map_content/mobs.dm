@@ -317,7 +317,7 @@
 		return
 	var/list/nearby_mutants = list()
 	for(var/mob/living/basic/arctic_mutant/mutant in oview(5, pawn))
-		if(mutant != controller.pawn && mutant.faction == pawn.faction)
+		if(mutant != controller.pawn && mutant.get_faction() == pawn.get_faction())
 			nearby_mutants += mutant
 	if(length(nearby_mutants) < 3)
 		var/mob/living/closest_ally
@@ -326,7 +326,7 @@
 			if(mutant.client)
 				closest_ally = mutant
 				break
-			if(mutant != controller.pawn && mutant.faction == pawn.faction)
+			if(mutant != controller.pawn && mutant.get_faction() == pawn.get_faction())
 				var/dist = get_dist(controller.pawn, mutant)
 				if(dist < closest_dist)
 					closest_dist = dist

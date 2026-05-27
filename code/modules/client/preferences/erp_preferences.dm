@@ -65,6 +65,9 @@
 /datum/preference/toggle/erp/sounds
 	savefile_key = "erp_sounds_pref"
 
+/datum/preference/toggle/erp/hide_interactions_from_ghosts
+	savefile_key = "erp_hide_interactions_from_ghosts_pref"
+
 /datum/preference/toggle/erp/sex_toy
 	savefile_key = "sextoy_pref"
 

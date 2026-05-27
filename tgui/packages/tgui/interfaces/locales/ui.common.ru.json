@@ -3445,6 +3445,8 @@
 	"ui.interaction_panel.disabled": "Выключено",
 	"ui.interaction_panel.preference.erp_pref.name": "ERP взаимодействия",
 	"ui.interaction_panel.preference.erp_pref.description": "Разрешает ERP-взаимодействия и показывает другим игрокам, что вы открыты к ним.",
+	"ui.interaction_panel.preference.erp_hide_interactions_from_ghosts_pref.name": "Скрывать интеракты от призраков",
+	"ui.interaction_panel.preference.erp_hide_interactions_from_ghosts_pref.description": "Призраки не будут видеть интеракты, которые вы прожимаете в панели.",
 	"ui.interaction_panel.preference.erp_sounds_pref.name": "ERP звуки",
 	"ui.interaction_panel.preference.erp_sounds_pref.description": "Слышать звуки ERP-взаимодействий и стимулов.",
 	"ui.interaction_panel.preference.autoemote_pref.name": "Авто-эмоут",

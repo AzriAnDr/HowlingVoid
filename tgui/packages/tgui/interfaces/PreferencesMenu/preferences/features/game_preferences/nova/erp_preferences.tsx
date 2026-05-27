@@ -23,6 +23,13 @@ export const erp_sounds_pref: FeatureToggle = {
   component: CheckboxInput,
 };
 
+export const erp_hide_interactions_from_ghosts_pref: FeatureToggle = {
+  name: 'Hide interactions from ghosts',
+  category: 'ERP',
+  description: 'Prevents ghosts from seeing interaction panel actions you perform.',
+  component: CheckboxInput,
+};
+
 export const subtler_sound: FeatureToggle = {
   name: 'Toggle Subtler Sound',
   category: 'SOUND',

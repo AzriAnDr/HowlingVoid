@@ -284,25 +284,16 @@
 			var/list/allowed_markings = GLOB.body_markings_per_limb[zone]
 			var/list/sanitized_zone_markings = list()
 			for(var/marking_name in zone_markings)
-				var/matched_marking = marking_name
+				var/matched_marking = get_marking_base_name(marking_name)
 				if(!(matched_marking in allowed_markings))
 					matched_marking = find_closest_text_match(allowed_markings, marking_name)
 				if(!matched_marking)
 					continue
 
 				var/marking_data = zone_markings[marking_name]
-				var/marking_color = null
-				var/marking_emissive = FALSE
-				if(islist(marking_data))
-					marking_color = sanitize_hexcolor(marking_data[1])
-					marking_emissive = !!sanitize_integer(marking_data[2])
-				else
-					marking_color = sanitize_hexcolor(marking_data)
-
-				if(!marking_color)
-					marking_color = "#ffffff"
-
-				sanitized_zone_markings[matched_marking] = list(marking_color, marking_emissive)
+				var/list/sanitized_entry = sanitize_body_marking_entry(marking_name, marking_data, length(sanitized_zone_markings) + MARKING_LAYER_MIN)
+				var/key = compose_marking_key(matched_marking, sanitized_entry[MARKING_INDEX_LAYER], get_marking_sequence(marking_name), sanitized_zone_markings)
+				sanitized_zone_markings[key] = sanitized_entry
 
 			if(length(sanitized_zone_markings))
 				sanitized_markings[zone] = sanitized_zone_markings
