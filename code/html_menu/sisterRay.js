@@ -50,6 +50,7 @@
   );
   let fadeToken = 0;
   let captionIndex = 0;
+  let actionLocked = false;
 
   const CAPTIONS_RU = [
     'сигнал выцветает, но камни продолжают расти',
@@ -556,7 +557,13 @@
   }
 
   function handleAction(action) {
-    if (!action) return;
+    if (!action || actionLocked) return;
+
+    actionLocked = true;
+    tset(() => {
+      actionLocked = false;
+    }, 700);
+
     playTick();
     frameCut('hard');
 
@@ -594,7 +601,14 @@
         item.style.setProperty('--sr-hover-y', `${y}%`);
       });
 
-      on(item, 'click', () => handleAction(actionOf(item)));
+      on(item, 'click', (event) => {
+        const target = event?.target;
+        if (target?.closest?.('a[href]')) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        handleAction(actionOf(item));
+      });
     });
 
     setActive(activeIndex);
