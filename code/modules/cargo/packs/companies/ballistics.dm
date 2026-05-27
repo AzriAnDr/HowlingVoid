@@ -11,76 +11,9 @@
 /datum/supply_pack/companies/ballistics/nt
 	console_flag = CARGO_CONSOLE_NT | CARGO_CONSOLE_PDA // This is mostly for flavor, as NT ghost companies had been given a lot of absurdly powerful unique stuff and can still access to the station to get these.
 
-/datum/supply_pack/companies/ballistics/nt/mars_single
-	name = "Colt Detective Special"
-	desc = "The HoS took your gun and your badge? No problem! Just pay the absurd taxation fee and you too can be reunited with the lethal power of a .38!"
-	cost = CARGO_CRATE_VALUE * 2.5
-	auto_name = FALSE
-	access = FALSE
-	access_view = FALSE
-	express_lock = FALSE
-	order_flags = ORDER_COMPANY
-	contains = list(/obj/item/gun/ballistic/revolver/c38/detective)
-
-/datum/supply_pack/companies/ballistics/nt/double_barrel
-	name = "Double-Barreled Shotgun"
-	desc = "Lost your beloved bunny to a demonic invasion? Clown broke in and stole your beloved gun? No worries! Get a new gun as long as you can pay the absurd fees."
-	cost = CARGO_CRATE_VALUE * 2
-	auto_name = FALSE
-	access = FALSE
-	access_view = FALSE
-	express_lock = FALSE
-	order_flags = ORDER_COMPANY
-	contains = list(/obj/item/gun/ballistic/shotgun/doublebarrel)
-
-/datum/supply_pack/companies/ballistics/nt/shotgun_automatic
-	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat)
-
-/datum/supply_pack/companies/ballistics/nt/c38_super_kit
-	name = "NT/E \"Laevateinn\" Revolver Conversion Kit"
-	desc = "A set of parts for converting a .38 revolver into Nanotrasen's latest foray into magnetically-accelerated sidearms. Includes a speedloader expansion toolset."
-	cost = CARGO_CRATE_VALUE * 1.5 // 300 cr at time of writing, 800 cr total
-	contains = list(
-		/obj/item/crafting_conversion_kit/c38_super,
-		/obj/item/crafting_conversion_kit/c38_speedloader_plus,
-	)
-	auto_name = FALSE
-	access = FALSE
-	access_view = FALSE
-	express_lock = FALSE
-	order_flags = ORDER_COMPANY
-
-/datum/supply_pack/companies/ballistics/nt/akmcivvie
-	contains = list(/obj/item/gun/ballistic/automatic/akm/civvie)
-	cost = CARGO_CRATE_VALUE * 7.5
-
-/datum/supply_pack/companies/ballistics/nt/akm
-	contains = list(/obj/item/gun/ballistic/automatic/akm)
-	cost = CARGO_CRATE_VALUE * 8.5
-	order_flags = ORDER_GOODY | ORDER_CONTRABAND
-
-/datum/supply_pack/companies/ballistics/nt/akmnri
-	contains = list(/obj/item/gun/ballistic/automatic/akm/nri)
-	cost = CARGO_CRATE_VALUE * 10
-	order_flags = ORDER_GOODY | ORDER_CONTRABAND
-
-/datum/supply_pack/companies/ballistics/nt/akmmodern
-	contains = list(/obj/item/gun/ballistic/automatic/akm/modern)
-	cost = CARGO_CRATE_VALUE * 12.5
-	order_flags = ORDER_GOODY | ORDER_CONTRABAND
-
-/datum/supply_pack/companies/ballistics/nt/bison
-	contains = list(/obj/item/gun/ballistic/automatic/bison)
-	cost = CARGO_CRATE_VALUE * 6
-
-/datum/supply_pack/companies/ballistics/nt/bisonnri
-	contains = list(/obj/item/gun/ballistic/automatic/bison/nri)
-	cost = CARGO_CRATE_VALUE * 6
-	order_flags = ORDER_GOODY | ORDER_CONTRABAND
-
 // Sol Fed Weapons
 /datum/supply_pack/companies/ballistics/sol_fed
+	console_flag = CARGO_CONSOLE_NT | CARGO_CONSOLE_PDA
 
 /datum/supply_pack/companies/ballistics/sol_fed/sidearm
 	cost = CARGO_CRATE_VALUE * 2
@@ -91,6 +24,7 @@
 
 /datum/supply_pack/companies/ballistics/sol_fed/sidearm/eland
 	contains = list(/obj/item/gun/ballistic/revolver/sol)
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
 /datum/supply_pack/companies/ballistics/sol_fed/sidearm/wespe
 	contains = list(/obj/item/gun/ballistic/automatic/pistol/sol)
@@ -106,6 +40,18 @@
 /datum/supply_pack/companies/ballistics/sol_fed/sidearm/takbok
 	contains = list(/obj/item/gun/ballistic/revolver/takbok)
 	cost = CARGO_CRATE_VALUE * 3
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
+/datum/supply_pack/companies/ballistics/sol_fed/mars_single
+	name = "Colt Detective Special"
+	desc = "The HoS took your gun and your badge? No problem! Just pay the absurd taxation fee and you too can be reunited with the lethal power of a .38!"
+	cost = CARGO_CRATE_VALUE * 2.5
+	auto_name = FALSE
+	access = FALSE
+	access_view = FALSE
+	express_lock = FALSE
+	order_flags = ORDER_COMPANY
+	contains = list(/obj/item/gun/ballistic/revolver/c38/detective)
 
 /datum/supply_pack/companies/ballistics/sol_fed/longarm
 	cost = CARGO_CRATE_VALUE * 3
@@ -151,6 +97,7 @@
 /datum/supply_pack/companies/ballistics/sol_fed/longarm/bogseo
 	contains = list(/obj/item/gun/ballistic/automatic/xhihao_smg)
 	cost = CARGO_CRATE_VALUE * 5
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
 /datum/supply_pack/companies/ballistics/sol_fed/longarm/jager
 	contains = list(/obj/item/gun/ballistic/shotgun/katyusha/jager)
@@ -190,6 +137,11 @@
 /datum/supply_pack/companies/ballistics/sol_fed/longarm/mp5
 	contains = list(/obj/item/gun/ballistic/automatic/mp5)
 	cost = CARGO_CRATE_VALUE * 6.25
+
+/datum/supply_pack/companies/ballistics/sol_fed/longarm/shotgun_automatic
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/item/gun/ballistic/shotgun/automatic/combat)
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
 // HC Surplus
 
@@ -233,6 +185,29 @@
 	cost = CARGO_CRATE_VALUE * 8
 	order_flags = ORDER_GOODY | ORDER_CONTRABAND
 
+/datum/supply_pack/companies/ballistics/hc_surplus/bison
+	contains = list(/obj/item/gun/ballistic/automatic/bison)
+	cost = CARGO_CRATE_VALUE * 6
+
+/datum/supply_pack/companies/ballistics/hc_surplus/akmcivvie
+	contains = list(/obj/item/gun/ballistic/automatic/akm/civvie)
+	cost = CARGO_CRATE_VALUE * 7.5
+
+/datum/supply_pack/companies/ballistics/hc_surplus/akm
+	contains = list(/obj/item/gun/ballistic/automatic/akm)
+	cost = CARGO_CRATE_VALUE * 8.5
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
+/datum/supply_pack/companies/ballistics/hc_surplus/akmnri
+	contains = list(/obj/item/gun/ballistic/automatic/akm/nri)
+	cost = CARGO_CRATE_VALUE * 10
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
+/datum/supply_pack/companies/ballistics/hc_surplus/akmmodern
+	contains = list(/obj/item/gun/ballistic/automatic/akm/modern)
+	cost = CARGO_CRATE_VALUE * 12.5
+	order_flags = ORDER_GOODY | ORDER_CONTRABAND
+
 // Donk
 
 /datum/supply_pack/companies/ballistics/donk
@@ -273,3 +248,30 @@
 /datum/supply_pack/companies/ballistics/blacksteel/longbow
 	contains = list(/obj/item/gun/ballistic/bow/longbow)
 	cost = CARGO_CRATE_VALUE * 1.5
+
+//Vitezstvi
+
+/datum/supply_pack/companies/ballistics/vitezstvi/double_barrel
+	name = "Double-Barreled Shotgun"
+	desc = "Lost your beloved bunny to a demonic invasion? Clown broke in and stole your beloved gun? No worries! Get a new gun as long as you can pay the absurd fees."
+	cost = CARGO_CRATE_VALUE * 2
+	auto_name = FALSE
+	access = FALSE
+	access_view = FALSE
+	express_lock = FALSE
+	order_flags = ORDER_COMPANY
+	contains = list(/obj/item/gun/ballistic/shotgun/doublebarrel)
+
+/datum/supply_pack/companies/ballistics/vitezstvi/c38_super_kit
+	name = "NT/E \"Laevateinn\" Revolver Conversion Kit"
+	desc = "A set of parts for converting a .38 revolver into Nanotrasen's latest foray into magnetically-accelerated sidearms. Includes a speedloader expansion toolset."
+	cost = CARGO_CRATE_VALUE * 1.5 // 300 cr at time of writing, 800 cr total
+	contains = list(
+		/obj/item/crafting_conversion_kit/c38_super,
+		/obj/item/crafting_conversion_kit/c38_speedloader_plus,
+	)
+	auto_name = FALSE
+	access = FALSE
+	access_view = FALSE
+	express_lock = FALSE
+	order_flags = ORDER_COMPANY

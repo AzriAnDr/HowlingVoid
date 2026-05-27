@@ -522,7 +522,7 @@
 
 /obj/item/gun/ballistic/automatic/mp5
 	name = "\improper SG-5"
-	desc = "A compact submachine gun of the pilots and tank crew of the Old Empire. After its collapse, the weapon's blueprints were taken by mercenaries from InteQ."
+	desc = "A compact submachine gun of the pilots and tank crew of the Old Empire."
 	icon = 'icons/obj/weapons/guns/surplus/gunsgalore_guns40x32.dmi'
 	icon_state = "mp5"
 	lefthand_file = 'icons/obj/weapons/guns/surplus/gunsgalore_lefthand.dmi'
@@ -612,18 +612,6 @@
 	caliber = ".385"
 	max_ammo = 50
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
-
-/// NRI Bizon
-/obj/item/gun/ballistic/automatic/bison/nri
-	name = "\improper NRI Bizon"
-	desc = "A compact submachine gun of the pilots and tank crew of the Old Empire. After its collapse, the weapon's blueprints were taken by Military Forces of NRI."
-	icon = 'icons/obj/weapons/guns/surplus/gunsgalore_guns.dmi'
-	icon_state = "bison"
-	inhand_icon_state = "bison"
-	worn_icon_state = "nri_smg"
-
-/obj/item/gun/ballistic/automatic/bison/nri/give_manufacturer_examine()
-	AddElement(/datum/element/manufacturer_examine, CARGO_COMPANY_NRI_SURPLUS)
 
 /obj/item/gun/ballistic/automatic/p90
 	name = "\improper FN P-09"
