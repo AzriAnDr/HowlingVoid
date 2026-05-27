@@ -46,6 +46,10 @@
 /datum/log_category/signal
 	category = LOG_CATEGORY_SIGNAL
 
+/datum/log_category/storyteller
+	category = LOG_CATEGORY_STORYTELLER
+	entry_flags = ENTRY_USE_DATA_W_READABLE
+
 /datum/log_category/dynamic
 	category = LOG_CATEGORY_DYNAMIC
 

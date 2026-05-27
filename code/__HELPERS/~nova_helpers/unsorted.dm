@@ -65,6 +65,22 @@
 		return FALSE
 	return shooer.auto_shoo_include_admins || !ghost_client?.holder
 
+/// Returns TRUE if the target is inside an active admin shoo ghost radius.
+/proc/is_admin_shoo_ghost_protected(mob/target)
+	if(isnull(target))
+		return FALSE
+	var/turf/target_turf = get_turf(target)
+	if(isnull(target_turf))
+		return FALSE
+
+	for(var/mob/shooer in range(GHOST_MAX_VIEW_RANGE_MEMBER, target_turf))
+		if(!shooer.auto_shoo_admin_override || !shooer.auto_shoo_include_admins)
+			continue
+		if(is_shoo_ghost_active(shooer))
+			return TRUE
+
+	return FALSE
+
 /// Sends a generic shoo ghost denial notice to an observer.
 /proc/notify_shoo_ghost_block(mob/shooer, mob/dead/observer/ghost)
 	var/shoo_name = shooer.real_name ? shooer.real_name : shooer.name

@@ -29,7 +29,7 @@ a:hover {
 h3 {
   margin: 0 -0.5em 0.5em;
   padding: 1em 0.66em 0.5em;
-  border-bottom: 0.1667em solid;
+  border-bottom: 0.1667em solid #0668b8;
 }
 
 img {
@@ -68,7 +68,7 @@ img {
 }
 
 #menu.tabs-classic .button.active {
-  background-color: #0668b8;
+  background-color: var(--tab-active-bg, #0668b8);
   color: white;
 }
 
@@ -94,7 +94,7 @@ img {
 
 .button.active {
   cursor: default;
-  background-color: #dfdfdf;
+  background-color: var(--tab-active-bg, #dfdfdf);
   color: black;
   border-bottom-color: #000000;
 }
@@ -138,6 +138,7 @@ img {
 
 .grid-item {
   display: inline-flex;
+  align-items: stretch;
   position: relative;
   user-select: none;
   -ms-user-select: none; /* Remove after Byond 516 */
@@ -156,11 +157,13 @@ img {
 
 .grid-item-text {
   display: inline-block;
+  flex: 1;
+  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   pointer-events: none;
-  width: 100%;
+  width: auto;
   padding: 0.33em 0.5em;
   border-radius: 0.25em;
 }
@@ -176,34 +179,26 @@ img {
   background-color: #dfdfdf;
 }
 
-.favorites-grid .grid-item {
-  width: 50%;
-  color: #204d15;
+.grid-favorite-toggle {
+  flex: 0 0 0.42em;
+  align-self: center;
+  height: 1.45em;
+  margin: 0.18em 0.32em 0.18em 0.08em;
+  border-radius: 0.16em;
+  background: #376f9f;
+  cursor: pointer;
+}
+
+.grid-favorite-toggle:hover {
+  background: #4d91cb;
+}
+
+.grid-favorite-toggle.is-favorite {
+  background: #0b9f52;
 }
 
 .favorites-grid {
   margin: -0.25em;
-}
-
-.favorites-grid .grid-item-text {
-  border: 1px solid rgba(58, 115, 45, 0.22);
-  background-color: rgba(65, 144, 48, 0.16);
-  color: #204d15;
-}
-
-.favorites-grid .grid-item:hover,
-.favorites-grid .grid-item:active {
-  color: #204d15;
-}
-
-.favorites-grid .grid-item:hover .grid-item-text {
-  overflow: hidden;
-  white-space: nowrap;
-  background-color: rgba(65, 144, 48, 0.24);
-}
-
-.favorites-grid .grid-item:active .grid-item-text {
-  background-color: rgba(65, 144, 48, 0.3);
 }
 
 .favorites-grid .grid-item.dragging {
@@ -211,17 +206,16 @@ img {
 }
 
 .favorites-grid .grid-item.drop-target .grid-item-text {
-  border-color: rgba(112, 191, 91, 0.7);
-  box-shadow: inset 0 0 0 1px rgba(112, 191, 91, 0.45);
+  box-shadow: inset 0 0 0 1px rgba(77, 145, 203, 0.7);
 }
 
 .favorites-empty {
   margin: 0.1em;
   padding: 0.5em 0.66em;
-  border: 1px dashed #a7c79b;
+  border: 1px dashed #2778be;
   border-radius: 0.25em;
-  background-color: #f7fbf4;
-  color: #335126;
+  background-color: #f6f9fc;
+  color: #24425f;
   line-height: 1.4;
 }
 
@@ -240,6 +234,136 @@ img {
 
 .context-menu-item:hover {
   background-color: #ececec;
+}
+
+.statpanel-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  margin: 0 -0.5em 0.5em;
+  padding: 0.75em 0.5em 0.4em;
+  border-bottom: 0.1667em solid #0668b8;
+}
+
+.statpanel-heading-title {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.statpanel-filter {
+  width: 14em;
+  min-width: 8em;
+  padding: 0.15em 0.35em;
+  border: 1px solid #2778be;
+  background: #ffffff;
+  color: #111111;
+  font-style: italic;
+}
+
+.statpanel-actions {
+  margin: 0 0 0.6em;
+}
+
+.statpanel-fix-button {
+  min-height: 1.85em;
+  padding: 0.25em 0.55em;
+  border: 0;
+  border-radius: 0.25em;
+  background: #246fb2;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.statpanel-fix-button:hover {
+  background: #2f80c9;
+}
+
+.statpanel-settings-note {
+  margin: 0.25em 0 0.75em;
+  padding: 0.35em 0.5em;
+  background: repeating-linear-gradient(
+    -45deg,
+    #b18b3f,
+    #b18b3f 10px,
+    #967430 10px,
+    #967430 20px
+  );
+  color: #ffffff;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.statpanel-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+}
+
+.statpanel-settings-row {
+  display: grid;
+  grid-template-columns: minmax(7em, 1fr) auto 3.5em 2em 2em 3.7em 2em;
+  align-items: center;
+  gap: 0.35em;
+}
+
+.statpanel-settings-row button,
+.statpanel-settings-row input {
+  min-height: 1.75em;
+}
+
+.statpanel-tab-visibility {
+  text-align: left;
+  border: 0;
+  background: transparent;
+  color: #008a1f;
+  cursor: pointer;
+}
+
+.statpanel-tab-visibility:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.statpanel-settings-row.is-hidden .statpanel-tab-visibility {
+  color: #8a8a8a;
+}
+
+.statpanel-toggle,
+.statpanel-order,
+.statpanel-clear-color {
+  border: 0;
+  border-radius: 0.25em;
+  background: #246fb2;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.statpanel-toggle {
+  background: #555555;
+}
+
+.statpanel-toggle.is-active {
+  background: #0b9f52;
+}
+
+.statpanel-max-buttons {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.statpanel-color {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.statpanel-clear-color {
+  background: #17426c;
 }
 
 @media only screen and (min-width: 300px) {
@@ -304,7 +428,7 @@ body.dark {
 }
 
 .dark #menu.tabs-classic .button.active {
-  background-color: #20b142;
+  background-color: var(--tab-active-bg, #20b142);
 }
 
 .dark .button {
@@ -316,7 +440,7 @@ body.dark {
 }
 
 .dark .button.active {
-  background-color: #313131;
+  background-color: var(--tab-active-bg, #313131);
   color: #d4dfec;
   border-bottom-color: #d4dfec;
 }
@@ -338,36 +462,26 @@ body.dark {
   background-color: #313131;
 }
 
-.dark .favorites-grid .grid-item,
-.dark .favorites-grid .grid-item:hover,
-.dark .favorites-grid .grid-item:active {
-  color: #c8e2bb;
+.dark .grid-favorite-toggle {
+  background: #477ead;
 }
 
-.dark .favorites-grid .grid-item-text {
-  border-color: rgba(92, 148, 72, 0.3);
-  background: rgba(70, 128, 55, 0.22);
-  color: #d9efcf;
-  box-shadow: none;
+.dark .grid-favorite-toggle:hover {
+  background: #62a7e0;
 }
 
-.dark .favorites-grid .grid-item:hover .grid-item-text {
-  background: rgba(80, 145, 63, 0.3);
-}
-
-.dark .favorites-grid .grid-item:active .grid-item-text {
-  background: rgba(80, 145, 63, 0.38);
+.dark .grid-favorite-toggle.is-favorite {
+  background: #02a84f;
 }
 
 .dark .favorites-grid .grid-item.drop-target .grid-item-text {
-  border-color: rgba(180, 233, 141, 0.7);
-  box-shadow: inset 0 0 0 1px rgba(180, 233, 141, 0.35);
+  box-shadow: inset 0 0 0 1px rgba(98, 167, 224, 0.6);
 }
 
 .dark .favorites-empty {
-  background-color: #182015;
-  border-color: #35542c;
-  color: #d4e7c9;
+  background-color: #12191f;
+  border-color: #315f89;
+  color: #b2c4dd;
 }
 
 .dark .context-menu {
@@ -378,4 +492,26 @@ body.dark {
 
 .dark .context-menu-item:hover {
   background-color: #252525;
+}
+
+.dark .statpanel-filter {
+  background: #111111;
+  color: #d4dfec;
+  border-color: #3d8ed0;
+}
+
+.dark .statpanel-toggle {
+  background: #3a3a3a;
+}
+
+.dark .statpanel-toggle.is-active {
+  background: #02a84f;
+}
+
+.dark .statpanel-order {
+  background: #1f6cae;
+}
+
+.dark .statpanel-clear-color {
+  background: #132f4c;
 }

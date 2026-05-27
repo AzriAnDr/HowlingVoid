@@ -306,21 +306,28 @@ SUBSYSTEM_DEF(storyteller)
 	record_decision("[key_name(user)] cleared the storyteller profile override.")
 	return TRUE
 
-/datum/controller/subsystem/storyteller/proc/pick_profile_type(player_count)
-	var/list/profile_weights = list(
+/datum/controller/subsystem/storyteller/proc/get_profile_weights_for_population(player_count)
+	RETURN_TYPE(/list)
+	return list(
 		/datum/storyteller/profile/passive = max(10, 60 - max(player_count, 0)),
 		/datum/storyteller/profile = 45,
 		/datum/storyteller/profile/aggressive = max(5, min(90, 5 + max(player_count - 10, 0) * 2)),
 	)
-	return pick_weight(profile_weights)
+
+/datum/controller/subsystem/storyteller/proc/pick_profile_type(player_count)
+	return pick_weight(get_profile_weights_for_population(player_count))
 
 /datum/controller/subsystem/storyteller/proc/select_profile_for_population(player_count)
 	if(profile_selected)
 		return
-	var/chosen_profile_type = pick_profile_type(player_count)
+	var/list/profile_weights = get_profile_weights_for_population(player_count)
+	var/chosen_profile_type = pick_weight(profile_weights)
 	apply_profile_type(chosen_profile_type)
 	profile_selected = TRUE
-	record_decision("Selected storyteller profile [profile.name] for population [player_count].")
+	record_decision("Selected storyteller profile [profile.name] for population [player_count].", build_storyteller_trace_data(list(
+		"population" = player_count,
+		"profileWeights" = profile_weights.Copy(),
+	)))
 
 /datum/controller/subsystem/storyteller/proc/should_run_roundstart_prep_phase()
 	return is_enabled() && round_mode == STORYTELLER_ROUND_MODE_DYNAMIC && SSticker.current_state == GAME_STATE_SETTING_UP && !SSticker.HasRoundStarted()
@@ -380,9 +387,10 @@ SUBSYSTEM_DEF(storyteller)
 		"departmentCoverage" = department_coverage,
 	)
 
-/datum/controller/subsystem/storyteller/proc/pick_profile_type_for_roster(list/roster_data)
+/datum/controller/subsystem/storyteller/proc/get_profile_weights_for_roster(list/roster_data)
+	RETURN_TYPE(/list)
 	if(!islist(roster_data))
-		return pick_profile_type(0)
+		return get_profile_weights_for_population(0)
 
 	var/ready_count = roster_data["readyCount"] || 0
 	var/key_job_intents = roster_data["keyJobIntentCount"] || 0
@@ -395,22 +403,27 @@ SUBSYSTEM_DEF(storyteller)
 		if((department_intents[department_id] || 0) > 0)
 			anchor_support++
 
-	var/list/profile_weights = list(
+	return list(
 		/datum/storyteller/profile/passive = max(15, 70 - (ready_count * 2)) + max(0, 5 - key_job_intents) * 12 + max(0, 4 - department_coverage) * 10,
 		/datum/storyteller/profile = 45 + ready_count + (department_coverage * 5),
 		/datum/storyteller/profile/aggressive = max(5, (ready_count * 2) - 10) + (key_job_intents * 9) + (department_coverage * 6) + (anchor_support * 4) + (command_intents > 0 ? 6 : 0),
 	)
 
-	return pick_weight(profile_weights)
+/datum/controller/subsystem/storyteller/proc/pick_profile_type_for_roster(list/roster_data)
+	return pick_weight(get_profile_weights_for_roster(roster_data))
 
 /datum/controller/subsystem/storyteller/proc/select_profile_for_roster(list/roster_data)
 	if(profile_selected)
 		return
 	var/ready_count = islist(roster_data) ? (roster_data["readyCount"] || 0) : 0
-	var/chosen_profile_type = pick_profile_type_for_roster(roster_data)
+	var/list/profile_weights = get_profile_weights_for_roster(roster_data)
+	var/chosen_profile_type = pick_weight(profile_weights)
 	apply_profile_type(chosen_profile_type)
 	profile_selected = TRUE
-	record_decision("Selected storyteller profile [profile.name] from a frozen lobby roster of [ready_count] ready players.")
+	record_decision("Selected storyteller profile [profile.name] from a frozen lobby roster of [ready_count] ready players.", build_storyteller_trace_data(list(
+		"roster" = get_storyteller_roster_trace_data(roster_data),
+		"profileWeights" = profile_weights.Copy(),
+	)))
 
 /datum/controller/subsystem/storyteller/proc/calculate_initial_content_stage_for_roster(list/roster_data)
 	var/stage = 1
@@ -445,7 +458,11 @@ SUBSYSTEM_DEF(storyteller)
 	var/initial_phase = calculate_initial_content_stage_for_roster(roster_data)
 	current_phase_max = initial_phase
 	automatic_phase_floor = initial_phase
-	record_decision("Locked storyteller starting content stage to [current_phase_max] from a frozen lobby roster of [ready_count] ready players.")
+	record_decision("Locked storyteller starting content stage to [current_phase_max] from a frozen lobby roster of [ready_count] ready players.", build_storyteller_trace_data(list(
+		"roster" = get_storyteller_roster_trace_data(roster_data),
+		"initialPhase" = initial_phase,
+		"profileRiseMultiplier" = profile?.escalation_rise_multiplier || 1,
+	)))
 
 /datum/controller/subsystem/storyteller/proc/begin_roundstart_prep_phase()
 	if(prep_phase_active)
@@ -465,7 +482,10 @@ SUBSYSTEM_DEF(storyteller)
 	if(!manual_phase_override)
 		select_initial_content_stage_for_roster(roster_data)
 
-	record_decision("Started storyteller setup preparation for [DisplayTimeText(STORYTELLER_DEFAULT_SETUP_PREP_DURATION, round_seconds_to = 1)].")
+	record_decision("Started storyteller setup preparation for [DisplayTimeText(STORYTELLER_DEFAULT_SETUP_PREP_DURATION, round_seconds_to = 1)].", build_storyteller_trace_data(list(
+		"roster" = get_storyteller_roster_trace_data(roster_data),
+		"prepDurationDs" = STORYTELLER_DEFAULT_SETUP_PREP_DURATION,
+	)))
 	to_chat(world, span_notice("The storyteller is finalizing the dynamic round setup. Character editing, observation, and round-entry changes are locked for [DisplayTimeText(STORYTELLER_DEFAULT_SETUP_PREP_DURATION, round_seconds_to = 1)]."))
 
 /datum/controller/subsystem/storyteller/proc/finish_roundstart_prep_phase()
@@ -986,10 +1006,14 @@ SUBSYSTEM_DEF(storyteller)
 		stage_drop++
 	return stage_drop
 
-/datum/controller/subsystem/storyteller/proc/calculate_content_stage()
-	var/stage = 1
+/datum/controller/subsystem/storyteller/proc/get_content_stage_analysis()
+	RETURN_TYPE(/list)
+	var/list/analysis = list(
+		"stage" = 1,
+		"phaseCap" = phase_cap,
+	)
 	if(phase_cap <= 1)
-		return stage
+		return analysis
 
 	var/elapsed = get_round_elapsed()
 	var/population = max(current_snapshot?.alive_crew || 0, current_snapshot?.active_population || 0)
@@ -1003,6 +1027,7 @@ SUBSYSTEM_DEF(storyteller)
 	var/effective_population = round(population * rise_multiplier)
 	var/effective_stability = round(stability_margin * rise_multiplier)
 	var/effective_security = round(security_readiness * rise_multiplier)
+	var/stage = 1
 
 	if(phase_cap >= 2 && (effective_elapsed >= 25 MINUTES || effective_population >= 18 || effective_stability >= 35 || (active_antags >= 2 && effective_security >= 35)))
 		stage = 2
@@ -1015,20 +1040,68 @@ SUBSYSTEM_DEF(storyteller)
 	stage = max(1, stage - distress_stage_drop)
 	var/floor_stage = max(1, automatic_phase_floor - distress_stage_drop)
 	stage = max(stage, floor_stage)
-	return clamp(stage, 1, phase_cap)
+
+	analysis |= list(
+		"stage" = clamp(stage, 1, phase_cap),
+		"elapsedDs" = elapsed,
+		"population" = population,
+		"control" = control,
+		"danger" = danger,
+		"activeAntags" = active_antags,
+		"securityReadiness" = security_readiness,
+		"stabilityMargin" = stability_margin,
+		"riseMultiplier" = rise_multiplier,
+		"effectiveElapsedDs" = effective_elapsed,
+		"effectivePopulation" = effective_population,
+		"effectiveStability" = effective_stability,
+		"effectiveSecurity" = effective_security,
+		"distressStageDrop" = distress_stage_drop,
+		"floorStage" = floor_stage,
+		"stage2Triggers" = list(
+			"time" = effective_elapsed >= 25 MINUTES,
+			"population" = effective_population >= 18,
+			"stability" = effective_stability >= 35,
+			"securityVsAntags" = active_antags >= 2 && effective_security >= 35,
+		),
+		"stage3Triggers" = list(
+			"time" = effective_elapsed >= 50 MINUTES,
+			"population" = effective_population >= 32,
+			"stability" = effective_stability >= 55,
+			"securityVsAntags" = active_antags >= 4 && effective_security >= 55,
+		),
+		"stage4Triggers" = list(
+			"time" = effective_elapsed >= 75 MINUTES,
+			"population" = effective_population >= 45,
+			"stability" = effective_stability >= 72,
+			"securityVsAntags" = active_antags >= 6 && effective_security >= 70,
+		),
+	)
+	return analysis
+
+/datum/controller/subsystem/storyteller/proc/calculate_content_stage()
+	return get_content_stage_analysis()["stage"]
 
 /datum/controller/subsystem/storyteller/proc/update_content_stage()
 	if(manual_phase_override)
 		return
-	var/new_phase = calculate_content_stage()
+	var/list/stage_analysis = get_content_stage_analysis()
+	var/new_phase = stage_analysis["stage"] || current_phase_max
 	if(new_phase == current_phase_max)
 		return
 	var/previous_phase = current_phase_max
 	current_phase_max = new_phase
 	if(current_phase_max > previous_phase)
-		record_decision("Storyteller content stage advanced to [current_phase_max].")
+		record_decision("Storyteller content stage advanced to [current_phase_max].", build_storyteller_trace_data(list(
+			"previousPhase" = previous_phase,
+			"newPhase" = current_phase_max,
+			"stageAnalysis" = stage_analysis,
+		)))
 	else
-		record_decision("Storyteller content stage fell back to [current_phase_max].")
+		record_decision("Storyteller content stage fell back to [current_phase_max].", build_storyteller_trace_data(list(
+			"previousPhase" = previous_phase,
+			"newPhase" = current_phase_max,
+			"stageAnalysis" = stage_analysis,
+		)))
 
 /datum/controller/subsystem/storyteller/proc/is_channel_ready(action_polarity)
 	if(has_pending_storyteller_scheduled_action(action_polarity))
@@ -1334,7 +1407,11 @@ SUBSYSTEM_DEF(storyteller)
 	var/delay = STORYTELLER_DEFAULT_ACTION_QUEUE_DELAY
 	if(!schedule_action_entry(action, context_data, delay, STORYTELLER_QUEUE_SOURCE_STORYTELLER, TRUE, null))
 		return FALSE
-	record_decision("Queued storyteller action [action.name] to trigger in [DisplayTimeText(delay, round_seconds_to = 1)].")
+	record_decision("Queued storyteller action [action.name] to trigger in [DisplayTimeText(delay, round_seconds_to = 1)].", build_storyteller_trace_data(list(
+		"queuedAction" = get_storyteller_action_trace_data(action),
+		"queueDelayDs" = delay,
+		"queueSource" = STORYTELLER_QUEUE_SOURCE_STORYTELLER,
+	), current_snapshot, context_data))
 	return TRUE
 
 /datum/controller/subsystem/storyteller/proc/queue_action_with_delay(action_id, delay, mob/user)
@@ -1345,7 +1422,11 @@ SUBSYSTEM_DEF(storyteller)
 	var/list/context_data = build_forced_context_data(action, user)
 	if(!schedule_action_entry(action, context_data, normalized_delay, STORYTELLER_QUEUE_SOURCE_ADMIN, FALSE, user))
 		return FALSE
-	record_decision("[key_name(user)] queued storyteller action [action.name] to trigger in [DisplayTimeText(normalized_delay, round_seconds_to = 1)].")
+	record_decision("[key_name(user)] queued storyteller action [action.name] to trigger in [DisplayTimeText(normalized_delay, round_seconds_to = 1)].", build_storyteller_trace_data(list(
+		"queuedAction" = get_storyteller_action_trace_data(action),
+		"queueDelayDs" = normalized_delay,
+		"queueSource" = STORYTELLER_QUEUE_SOURCE_ADMIN,
+	), current_snapshot, context_data))
 	return TRUE
 
 /datum/controller/subsystem/storyteller/proc/remove_scheduled_action(queue_id, mob/user)
@@ -1458,7 +1539,20 @@ SUBSYSTEM_DEF(storyteller)
 	else
 		success = action.execute(src, current_snapshot, context_data)
 	if(!success)
-		record_decision("Queued storyteller action [action.name] failed to trigger.")
+		record_decision("Queued storyteller action [action.name] failed to trigger.", build_storyteller_trace_data(list(
+			"queuedAction" = get_storyteller_action_trace_data(action),
+			"queueEntry" = list(
+				"id" = entry["queueId"],
+				"context" = entry["context"],
+				"polarity" = entry["polarity"],
+				"family" = entry["family"],
+				"source" = entry["source"],
+				"sourceName" = entry["sourceName"],
+				"scheduledAt" = entry["scheduledAt"],
+				"executeAt" = entry["executeAt"],
+				"delay" = entry["delay"],
+			),
+		), current_snapshot, context_data))
 	return success
 
 /datum/controller/subsystem/storyteller/proc/process_scheduled_action_queue()
@@ -1534,7 +1628,210 @@ SUBSYSTEM_DEF(storyteller)
 		if(event_control.type == event_control_type)
 			return event_control
 
-/datum/controller/subsystem/storyteller/proc/record_decision(message)
+/datum/controller/subsystem/storyteller/proc/get_storyteller_snapshot_trace_data(datum/storyteller/state_snapshot/snapshot = current_snapshot)
+	RETURN_TYPE(/list)
+	if(!istype(snapshot))
+		return list()
+
+	return list(
+		"activePopulation" = snapshot.active_population,
+		"aliveCrew" = snapshot.alive_crew,
+		"recentDeaths" = snapshot.recent_deaths,
+		"recentExplosions" = snapshot.recent_explosions,
+		"activeAlarms" = snapshot.active_alarms,
+		"controlScore" = snapshot.control_score,
+		"dangerScore" = snapshot.danger_score,
+		"livingAntagCount" = snapshot.living_antag_count,
+		"stationIntegrity" = round(snapshot.station_integrity * 100, 0.1),
+		"breachTiles" = snapshot.station_breach_tiles,
+		"brokenFloors" = snapshot.broken_floor_count,
+		"damagedWindows" = snapshot.damaged_window_count,
+		"damagedGrilles" = snapshot.damaged_grille_count,
+		"cargoBudget" = snapshot.cargo_budget,
+		"materialGainRecent" = snapshot.material_gain_recent,
+		"oreSiloMaterials" = snapshot.ore_silo_material_total,
+		"looseMaterials" = snapshot.loose_material_total,
+		"criticalCrewCount" = snapshot.critical_crew_count,
+		"securityStaffCount" = snapshot.security_staff_count,
+		"engineeringStaffCount" = snapshot.engineer_count + snapshot.atmos_count,
+		"medicalStaffCount" = snapshot.medical_staff_count,
+	)
+
+/datum/controller/subsystem/storyteller/proc/get_storyteller_roster_trace_data(list/roster_data)
+	RETURN_TYPE(/list)
+	if(!islist(roster_data))
+		return list()
+
+	var/list/department_intents = roster_data["departmentIntents"]
+	var/list/job_intents = roster_data["jobIntents"]
+
+	return list(
+		"readyCount" = roster_data["readyCount"] || 0,
+		"keyJobIntentCount" = roster_data["keyJobIntentCount"] || 0,
+		"departmentCoverage" = roster_data["departmentCoverage"] || 0,
+		"departmentIntents" = department_intents ? department_intents.Copy() : list(),
+		"jobIntents" = job_intents ? job_intents.Copy() : list(),
+	)
+
+/datum/controller/subsystem/storyteller/proc/get_storyteller_context_trace_data(list/context_data)
+	RETURN_TYPE(/list)
+	if(!islist(context_data))
+		return list()
+
+	var/list/data = list(
+		"selectionContext" = context_data["selection_context"],
+		"forced" = !!context_data["force"],
+		"scheduled" = !!context_data["scheduled"],
+	)
+
+	var/datum/storyteller/need_report/report = context_data["need_report"]
+	if(istype(report))
+		data["needReport"] = list(
+			"id" = report.id,
+			"title" = report.title,
+			"departmentId" = report.department_id,
+			"severity" = report.severity,
+			"priority" = report.priority,
+			"summary" = report.summary,
+		)
+
+	var/mob/living/carbon/human/latejoiner = context_data["latejoiner"]
+	if(istype(latejoiner))
+		data["latejoinTarget"] = key_name(latejoiner)
+
+	var/mob/admin_user = context_data["admin_user"]
+	if(admin_user)
+		data["adminUser"] = key_name(admin_user)
+
+	return data
+
+/datum/controller/subsystem/storyteller/proc/get_storyteller_action_trace_data(datum/storyteller/action/action, effective_weight = null)
+	RETURN_TYPE(/list)
+	if(!istype(action))
+		return list()
+
+	var/list/data = list(
+		"id" = action.id,
+		"name" = action.name,
+		"context" = action.context,
+		"polarity" = action.polarity,
+		"family" = action.family,
+		"stage" = action.stage,
+		"cost" = action.cost,
+		"baseWeight" = action.weight,
+		"effectiveWeight" = isnull(effective_weight) ? action.get_effective_weight(src) : effective_weight,
+		"allowInExtended" = action.allow_in_extended,
+		"isAntagAction" = action.is_antag_action(),
+	)
+	if(istype(action, /datum/storyteller/action/dynamic_base))
+		var/datum/storyteller/action/dynamic_base/dynamic_action = action
+		data["dynamicRulesetType"] = "[dynamic_action.dynamic_ruleset_type]"
+	return data
+
+/datum/controller/subsystem/storyteller/proc/get_storyteller_weight_map_trace_data(list/weighted_actions)
+	RETURN_TYPE(/list)
+	var/list/data = list()
+	if(!islist(weighted_actions))
+		return data
+
+	for(var/datum/storyteller/action/action as anything in weighted_actions)
+		if(!istype(action))
+			continue
+		data += list(list(
+			"id" = action.id,
+			"name" = action.name,
+			"context" = action.context,
+			"polarity" = action.polarity,
+			"family" = action.family,
+			"stage" = action.stage,
+			"cost" = action.cost,
+			"weight" = weighted_actions[action],
+		))
+	return data
+
+/datum/controller/subsystem/storyteller/proc/get_storyteller_blocked_reason_trace_data(action_context, action_polarity, list/context_data)
+	RETURN_TYPE(/list)
+	var/list/blocked_reason_counts = list()
+	if(!catalog || !current_snapshot)
+		return blocked_reason_counts
+
+	for(var/datum/storyteller/action/action as anything in catalog.get_actions_for_context(action_context, action_polarity))
+		if(is_action_admin_suppressed(action.id))
+			blocked_reason_counts["Admin suppressed"] = (blocked_reason_counts["Admin suppressed"] || 0) + 1
+			continue
+
+		var/list/availability = action.get_availability(src, current_snapshot, context_data)
+		var/effective_weight = action.get_effective_weight(src)
+		if(availability["available"] && effective_weight > 0)
+			continue
+
+		var/reason = availability["reason"]
+		if(!reason && effective_weight <= 0)
+			reason = "Zero effective weight"
+		if(!reason)
+			reason = "Unavailable"
+		blocked_reason_counts[reason] = (blocked_reason_counts[reason] || 0) + 1
+
+	return blocked_reason_counts
+
+/datum/controller/subsystem/storyteller/proc/build_storyteller_trace_data(list/extra_data, datum/storyteller/state_snapshot/snapshot = current_snapshot, list/context_data = null)
+	RETURN_TYPE(/list)
+	var/list/data = list(
+		"roundMode" = round_mode,
+		"profile" = profile?.name,
+		"profileType" = "[profile_type]",
+		"phase" = current_phase_max,
+		"phaseCap" = phase_cap,
+		"automaticPhaseFloor" = automatic_phase_floor,
+		"manualPhaseOverride" = manual_phase_override,
+		"manualProfileOverride" = manual_profile_override,
+		"threatBudget" = threat_budget,
+		"aidBudget" = aid_budget,
+		"roundElapsedDs" = get_round_elapsed(),
+		"positiveLockRemainingDs" = max(positive_fatigue_locked_until - world.time, 0),
+		"negativeLockRemainingDs" = max(negative_fatigue_locked_until - world.time, 0),
+		"positiveWindowRemainingDs" = max(positive_channel_ready_at - world.time, 0),
+		"negativeWindowRemainingDs" = max(negative_channel_ready_at - world.time, 0),
+		"latejoinLockRemainingDs" = max(latejoin_roundstart_locked_until - world.time, 0),
+		"securityReadiness" = get_security_readiness_score(snapshot),
+		"distressStageDrop" = get_distress_stage_drop(snapshot),
+		"snapshot" = get_storyteller_snapshot_trace_data(snapshot),
+	)
+
+	var/list/context_trace = get_storyteller_context_trace_data(context_data)
+	if(length(context_trace))
+		data["context"] = context_trace
+
+	if(islist(extra_data))
+		data |= extra_data
+
+	return data
+
+/datum/controller/subsystem/storyteller/proc/build_dynamic_ruleset_trace_data(datum/dynamic_ruleset/ruleset, population_size, candidate_count, list/context_data, list/selected_minds = null)
+	RETURN_TYPE(/list)
+	var/list/data = build_storyteller_trace_data(list(), current_snapshot, context_data)
+	if(!istype(ruleset))
+		return data
+
+	data["ruleset"] = list(
+		"name" = ruleset.name,
+		"configTag" = ruleset.config_tag,
+		"prefFlag" = ruleset.pref_flag,
+		"jobbanFlag" = ruleset.jobban_flag,
+		"minimumPopulation" = islist(ruleset.min_pop) ? resolve_dynamic_tier_value(ruleset.min_pop, SSdynamic.current_tier?.tier) : ruleset.min_pop,
+		"candidateCount" = candidate_count,
+		"populationSize" = population_size,
+		"selectedMinds" = format_selected_minds(selected_minds),
+		"logData" = ruleset.log_data,
+	)
+	return data
+
+/datum/controller/subsystem/storyteller/proc/log_storyteller_trace(message, list/data)
+	if(!message)
+		return
+	log_storyteller(message, data)
+
+/datum/controller/subsystem/storyteller/proc/record_decision(message, list/data = null)
 	if(!message)
 		return
 	decision_history += list(list(
@@ -1543,11 +1840,12 @@ SUBSYSTEM_DEF(storyteller)
 	))
 	while(length(decision_history) > STORYTELLER_DECISION_HISTORY_MAX)
 		decision_history.Cut(1, 2)
+	log_storyteller_trace(message, data)
 	log_game("Storyteller: [message]")
 	if(CONFIG_GET(flag/storyteller_debug_logging))
 		message_admins("Storyteller: [message]")
 
-/datum/controller/subsystem/storyteller/proc/record_action_execution(datum/storyteller/action/action, details, spend_budget = TRUE)
+/datum/controller/subsystem/storyteller/proc/record_action_execution(datum/storyteller/action/action, details, spend_budget = TRUE, list/extra_data = null)
 	if(!istype(action))
 		return
 
@@ -1585,7 +1883,16 @@ SUBSYSTEM_DEF(storyteller)
 				message += "; next negative window in [DisplayTimeText(max(negative_channel_ready_at - world.time, 0), round_seconds_to = 1)]"
 			if(STORYTELLER_POLARITY_POSITIVE)
 				message += "; next positive window in [DisplayTimeText(max(positive_channel_ready_at - world.time, 0), round_seconds_to = 1)]"
-	record_decision(message)
+
+	var/list/log_data = build_storyteller_trace_data(list(
+		"action" = get_storyteller_action_trace_data(action),
+		"reservedCost" = reserved_cost,
+		"spendBudget" = spend_budget,
+		"details" = details,
+	), current_snapshot)
+	if(islist(extra_data))
+		log_data |= extra_data
+	record_decision(message, log_data)
 
 /datum/controller/subsystem/storyteller/proc/format_selected_minds(list/selected_minds)
 	if(!length(selected_minds))
@@ -1655,6 +1962,16 @@ SUBSYSTEM_DEF(storyteller)
 	var/heavy_midround_spawn = SSdynamic.rulesets_to_spawn["heavy_midround"]
 	var/latejoin_spawn = SSdynamic.rulesets_to_spawn["latejoin"]
 
+	record_decision("Selected storyteller dynamic tier [SSdynamic.current_tier.tier] for [roundstart_population] roundstart candidates.", build_storyteller_trace_data(list(
+		"roundstartPopulation" = roundstart_population,
+		"selectedTier" = SSdynamic.current_tier.tier,
+		"tierWeights" = tier_weighted.Copy(),
+		"roundstartRulesetCount" = roundstart_spawn,
+		"lightMidroundRulesetCount" = light_midround_spawn,
+		"heavyMidroundRulesetCount" = heavy_midround_spawn,
+		"latejoinRulesetCount" = latejoin_spawn,
+	)))
+
 	log_dynamic("Selected tier: [SSdynamic.current_tier.tier]")
 	log_dynamic("- Roundstart population: [roundstart_population]")
 	log_dynamic("- Roundstart ruleset count: [roundstart_spawn]")
@@ -1705,18 +2022,41 @@ SUBSYSTEM_DEF(storyteller)
 		return
 
 	var/list/weighted_actions = list()
+	var/list/blocked_reason_counts = list()
 	for(var/datum/storyteller/action/action as anything in catalog.get_actions_for_context(action_context, action_polarity))
 		if(is_action_admin_suppressed(action.id))
+			blocked_reason_counts["Admin suppressed"] = (blocked_reason_counts["Admin suppressed"] || 0) + 1
 			continue
 		var/list/availability = action.get_availability(src, current_snapshot, context_data)
 		var/effective_weight = action.get_effective_weight(src)
 		if(!availability["available"] || effective_weight <= 0)
+			var/reason = availability["reason"]
+			if(!reason && effective_weight <= 0)
+				reason = "Zero effective weight"
+			if(!reason)
+				reason = "Unavailable"
+			blocked_reason_counts[reason] = (blocked_reason_counts[reason] || 0) + 1
 			continue
 		weighted_actions[action] = effective_weight
 
 	if(!length(weighted_actions))
+		log_storyteller_trace("No eligible storyteller actions were available for [action_polarity] [action_context] selection.", build_storyteller_trace_data(list(
+			"actionContext" = action_context,
+			"actionPolarity" = action_polarity,
+			"eligibleActions" = list(),
+			"blockedReasonCounts" = blocked_reason_counts,
+		), current_snapshot, context_data))
 		return
-	return pick_weight(weighted_actions)
+
+	var/datum/storyteller/action/picked_action = pick_weight(weighted_actions)
+	log_storyteller_trace("Selected storyteller action [picked_action?.name || "unknown"] for [action_polarity] [action_context].", build_storyteller_trace_data(list(
+		"actionContext" = action_context,
+		"actionPolarity" = action_polarity,
+		"eligibleActions" = get_storyteller_weight_map_trace_data(weighted_actions),
+		"blockedReasonCounts" = blocked_reason_counts,
+		"selectedAction" = get_storyteller_action_trace_data(picked_action, weighted_actions[picked_action]),
+	), current_snapshot, context_data))
+	return picked_action
 
 /datum/controller/subsystem/storyteller/proc/get_negative_candidate_pool()
 	RETURN_TYPE(/list)
@@ -1831,7 +2171,7 @@ SUBSYSTEM_DEF(storyteller)
 
 	for(var/datum/dynamic_ruleset/roundstart/forced_ruleset in SSdynamic.queued_rulesets)
 		if(!forced_ruleset.prepare_execution(num_real_players, antag_candidates))
-			record_decision("Queued roundstart [forced_ruleset.config_tag] preparation failed: [forced_ruleset.log_data || "unknown reason"]")
+			record_decision("Queued roundstart [forced_ruleset.config_tag] preparation failed: [forced_ruleset.log_data || "unknown reason"]", build_dynamic_ruleset_trace_data(forced_ruleset, num_real_players, length(antag_candidates), context_data, forced_ruleset.selected_minds))
 			SSdynamic.unqueue_ruleset(forced_ruleset)
 			qdel(forced_ruleset)
 			continue
@@ -1876,7 +2216,11 @@ SUBSYSTEM_DEF(storyteller)
 			"ruleset" = prepared_ruleset,
 		))
 		to_prepare--
-		record_decision("Prepared roundstart storyteller action [picked_action.name].")
+		record_decision("Prepared roundstart storyteller action [picked_action.name].", build_storyteller_trace_data(list(
+			"roundstartCandidateCount" = num_real_players,
+			"eligibleActions" = get_storyteller_weight_map_trace_data(weighted_actions),
+			"selectedAction" = get_storyteller_action_trace_data(picked_action, weighted_actions[picked_action]),
+		), current_snapshot, context_data))
 
 	SSjob.reset_occupations()
 
@@ -2072,12 +2416,27 @@ SUBSYSTEM_DEF(storyteller)
 	RETURN_TYPE(/list)
 	var/list/candidate_pool = get_midround_candidate_pool(STORYTELLER_POLARITY_POSITIVE)
 	if(!islist(candidate_pool))
+		log_storyteller_trace("No eligible storyteller actions were available for positive midround selection.", build_storyteller_trace_data(list(
+			"actionContext" = STORYTELLER_CONTEXT_MIDROUND,
+			"actionPolarity" = STORYTELLER_POLARITY_POSITIVE,
+		)))
 		return null
 	var/list/weighted_actions = candidate_pool["weighted_actions"]
 	var/list/context_data = candidate_pool["context_data"]
 	var/datum/storyteller/action/fallback_action = pick_weight(weighted_actions)
 	if(!istype(fallback_action))
+		log_storyteller_trace("Positive storyteller midround selection failed to pick a weighted action.", build_storyteller_trace_data(list(
+			"actionContext" = STORYTELLER_CONTEXT_MIDROUND,
+			"actionPolarity" = STORYTELLER_POLARITY_POSITIVE,
+			"eligibleActions" = get_storyteller_weight_map_trace_data(weighted_actions),
+		), current_snapshot, context_data))
 		return null
+	log_storyteller_trace("Selected storyteller action [fallback_action.name] for positive midround.", build_storyteller_trace_data(list(
+		"actionContext" = STORYTELLER_CONTEXT_MIDROUND,
+		"actionPolarity" = STORYTELLER_POLARITY_POSITIVE,
+		"eligibleActions" = get_storyteller_weight_map_trace_data(weighted_actions),
+		"selectedAction" = get_storyteller_action_trace_data(fallback_action, weighted_actions[fallback_action]),
+	), current_snapshot, context_data))
 	return list(
 		"action" = fallback_action,
 		"context_data" = context_data,
