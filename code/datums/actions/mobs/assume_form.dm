@@ -8,7 +8,15 @@
 	overlay_icon_state = "bg_alien_border"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
+	click_to_activate = TRUE
 	cooldown_time = 1.5 SECONDS
+
+	/// Original appearance to restore after dropping the disguise.
+	var/mutable_appearance/original_appearance
+	/// Basic mobs use these vars to rebuild their icon_state. Keep them in sync with the disguise.
+	var/original_icon_living
+	/// Basic mobs use these vars to rebuild their icon_state. Keep them in sync with the disguise.
+	var/original_icon_dead
 
 	/// Stuff that we can not disguise as.
 	var/static/list/blacklist_typecache = typecacheof(list(
@@ -26,6 +34,12 @@
 /datum/action/cooldown/mob_cooldown/assume_form/Remove(mob/remove_from)
 	reset_appearances()
 	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
+	return ..()
+
+/datum/action/cooldown/mob_cooldown/assume_form/InterceptClickOn(mob/living/clicker, params, atom/target)
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, SHIFT_CLICK))
+		return FALSE
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/assume_form/Activate(atom/target_atom)
@@ -55,12 +69,27 @@
 
 /// Assumes the appearance of a desired movable and applies it to our mob. Target is the movable in question.
 /datum/action/cooldown/mob_cooldown/assume_form/proc/assume_appearances(atom/movable/target_atom)
+	var/mob/living/basic/basic_owner
+	if(!HAS_TRAIT(owner, TRAIT_DISGUISED))
+		original_appearance = new /mutable_appearance(owner.appearance)
+		if(istype(owner, /mob/living/basic))
+			basic_owner = owner
+			original_icon_living = basic_owner.icon_living
+			original_icon_dead = basic_owner.icon_dead
+
 	owner.appearance = target_atom.appearance
-	owner.copy_overlays(target_atom)
+	if(length(target_atom.overlays))
+		owner.copy_overlays(target_atom, cut_old = TRUE)
+	else
+		owner.cut_overlays()
 	owner.alpha = max(target_atom.alpha, 150) //fucking chameleons
 	owner.transform = initial(target_atom.transform)
 	owner.pixel_x = target_atom.base_pixel_x
 	owner.pixel_y = target_atom.base_pixel_y
+	if(istype(owner, /mob/living/basic))
+		basic_owner = owner
+		basic_owner.icon_living = target_atom.icon_state
+		basic_owner.icon_dead = target_atom.icon_state
 
 	// important: do this at the very end because we might have SIGNAL_ADDTRAIT for this on the mob that's dependent on the above logic
 	SEND_SIGNAL(owner, COMSIG_ACTION_DISGUISED_APPEARANCE, target_atom)
@@ -75,14 +104,27 @@
 
 	owner.animate_movement = SLIDE_STEPS
 	owner.maptext = null
-	owner.alpha = initial(owner.alpha)
-	owner.color = initial(owner.color)
 	owner.desc = initial(owner.desc)
 
 	owner.name = initial(owner.name)
-	owner.icon = initial(owner.icon)
-	owner.icon_state = initial(owner.icon_state)
-	owner.cut_overlays()
+	if(original_appearance)
+		owner.appearance = original_appearance
+		original_appearance = null
+	else
+		owner.alpha = initial(owner.alpha)
+		owner.color = initial(owner.color)
+		owner.icon = initial(owner.icon)
+		owner.icon_state = initial(owner.icon_state)
+		owner.cut_overlays()
+
+	if(istype(owner, /mob/living/basic))
+		var/mob/living/basic/basic_owner = owner
+		if(!isnull(original_icon_living))
+			basic_owner.icon_living = original_icon_living
+		if(!isnull(original_icon_dead))
+			basic_owner.icon_dead = original_icon_dead
+		original_icon_living = null
+		original_icon_dead = null
 
 	// important: do this very end because we might have SIGNAL_REMOVETRAIT for this on the mob that's dependent on the above logic
 	REMOVE_TRAIT(owner, TRAIT_DISGUISED, ACTION_TRAIT)

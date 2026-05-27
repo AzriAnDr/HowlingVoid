@@ -38,6 +38,7 @@ var statcontentdiv = document.getElementById("statcontent");
 var storedimages = [];
 var split_admin_tabs = false;
 var favorites = [];
+var favorites_request_pending = false;
 var contextVerb = null;
 var contextMenu = document.createElement("div");
 contextMenu.className = "context-menu";
@@ -104,12 +105,52 @@ function remove_favorite(command) {
   }
 }
 
+function normalize_favorites(payload) {
+  var normalized = [];
+  if (Array.isArray(payload)) {
+    for (var i = 0; i < payload.length; i++) {
+      if (typeof payload[i] == "string" && payload[i].length) {
+        normalized.push(payload[i]);
+      }
+    }
+  } else if (payload && typeof payload == "object") {
+    for (var key in payload) {
+      if (
+        Object.prototype.hasOwnProperty.call(payload, key) &&
+        typeof payload[key] == "string" &&
+        payload[key].length
+      ) {
+        normalized.push(payload[key]);
+      }
+    }
+  }
+  return normalized;
+}
+
+function update_favorites(payload) {
+  favorites_request_pending = false;
+  favorites = normalize_favorites(payload);
+  if (current_tab == "Favorites") {
+    draw_favorites();
+  }
+}
+
+function request_favorites() {
+  if (favorites_request_pending) {
+    return;
+  }
+  favorites_request_pending = true;
+  Byond.sendMessage("Update-Favorites");
+}
+
 function draw_favorites() {
   statcontentdiv.textContent = "";
   if (!favorites.length) {
     var empty = document.createElement("div");
     empty.className = "favorites-empty";
-    empty.textContent = "No favorites yet. Right-click a verb to add it here, then drag to reorder.";
+    empty.textContent = favorites_request_pending
+      ? "Loading favorites..."
+      : "No favorites yet. Right-click a verb to add it here, then drag to reorder.";
     statcontentdiv.appendChild(empty);
     return;
   }
@@ -397,6 +438,7 @@ function tab_change(tab) {
   if (tab == "Status") {
     draw_status();
   } else if (tab == "Favorites") {
+    request_favorites();
     draw_favorites();
   } else if (tab == "MC") {
     draw_mc();
@@ -969,16 +1011,7 @@ window.onload = function () {
   Byond.sendMessage("Update-Verbs");
 };
 
-Byond.subscribeTo("update_favorites", function (payload) {
-  if (Array.isArray(payload)) {
-    favorites = payload.slice();
-  } else {
-    favorites = [];
-  }
-  if (current_tab == "Favorites") {
-    draw_favorites();
-  }
-});
+Byond.subscribeTo("update_favorites", update_favorites);
 
 Byond.subscribeTo("remove_verb_list", function (v) {
   var to_remove = v;
@@ -1012,6 +1045,9 @@ Byond.subscribeTo("init_verbs", function (payload) {
     if (do_update) {
       draw_verbs(current_tab);
     }
+  }
+  if (payload.favorites) {
+    update_favorites(payload.favorites);
   }
   SendTabsToByond();
 });

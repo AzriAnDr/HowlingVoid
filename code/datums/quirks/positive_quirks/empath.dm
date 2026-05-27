@@ -13,3 +13,9 @@
 
 /datum/quirk/empath/remove(client/client_source)
 	quirk_holder.RemoveComponentSource(REF(src), /datum/component/empathy)
+
+
+// BEGIN NOVA CORE MIGRATION: code/datums/quirks/positive_quirks/empath.dm
+/datum/quirk/empath
+	value = 6 // Quirk Rebalance - Original: value = 8
+// END NOVA CORE MIGRATION: code/datums/quirks/positive_quirks/empath.dm

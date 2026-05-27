@@ -134,3 +134,12 @@
 
 #undef BANANA_SHOES_RECHARGE_RATE
 #undef BANANA_SHOES_MAX_CHARGE
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/clothing/shoes/clown.dm
+// NO CLOWN CYTOLOGY
+/obj/item/clothing/shoes/clown_shoes/Initialize(mapload)
+	. = ..()
+
+	RemoveElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
+// END NOVA CORE MIGRATION: code/modules/clothing/shoes/clown.dm

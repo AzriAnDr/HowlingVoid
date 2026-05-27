@@ -10,3 +10,10 @@
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
 	newtonian_force = 0.5
 	muzzle_flash_color = LIGHT_COLOR_CYAN
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/projectiles/ammunition/energy/_energy.dm
+/obj/item/ammo_casing/energy
+	/// This is the color that shows up when selecting an ammo type. Disabled by default
+	var/select_color
+// END NOVA CORE MIGRATION: code/modules/projectiles/ammunition/energy/_energy.dm

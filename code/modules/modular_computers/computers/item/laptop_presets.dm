@@ -9,3 +9,9 @@
 	starting_programs = list(
 		/datum/computer_file/program/mafia,
 	)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/modular_computers/computers/item/laptop_presets.dm
+/obj/item/modular_computer/laptop/preset/civilian/closed
+	start_open = FALSE
+// END NOVA CORE MIGRATION: code/modules/modular_computers/computers/item/laptop_presets.dm

@@ -73,3 +73,9 @@
 	messenger = /obj/item/storage/backpack/messenger/coroner
 
 	skillchips = list(/obj/item/skillchip/entrails_reader)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/coroner.dm
+/datum/outfit/job/coroner
+	messenger = /obj/item/storage/backpack/messenger/coroner
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/coroner.dm

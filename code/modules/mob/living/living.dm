@@ -663,7 +663,7 @@
 
 // MOB PROCS //END
 
-/* NOVA EDIT REMOVAL BEGIN - Handled in [modular_nova/master_files/code/modules/sleep/code/mob/living/living.dm]
+/* NOVA EDIT REMOVAL BEGIN - Handled in [code/modules/sleep/code/mob/living/living.dm]
 /mob/living/proc/mob_sleep()
 	set name = "Sleep"
 	set category = "IC"
@@ -965,6 +965,7 @@ NOVA EDIT REMOVAL END */
 	if(QDELETED(src))
 		// Bro just like, don't ok
 		return FALSE
+	var/was_standing = body_position == STANDING_UP
 	if(excess_healing)
 		adjust_oxy_loss(-excess_healing, updating_health = FALSE)
 		adjust_tox_loss(-excess_healing, updating_health = FALSE, forced = TRUE) //slime friendly
@@ -979,7 +980,7 @@ NOVA EDIT REMOVAL END */
 		set_stat(UNCONSCIOUS) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
 		if(full_heal_flags & HEAL_ADMIN)
-			get_up(TRUE)
+			restore_admin_heal_standing(was_standing)
 		update_sight()
 		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		reload_fullscreen()
@@ -990,10 +991,19 @@ NOVA EDIT REMOVAL END */
 
 	else if(full_heal_flags & HEAL_ADMIN)
 		updatehealth()
-		get_up(TRUE)
+		restore_admin_heal_standing(was_standing)
 
 	// The signal is called after everything else so components can properly check the updated values
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal_flags)
+
+/// Keeps admin heals from briefly flooring mobs that were already standing before the heal.
+/mob/living/proc/restore_admin_heal_standing(was_standing)
+	if(was_standing && !resting && (!buckled || buckled.buckle_lying == NO_BUCKLE_LYING))
+		set_body_position(STANDING_UP)
+		set_lying_angle(0)
+		return
+
+	get_up(TRUE)
 
 /**
  * Heals up the mob up to [heal_to] of the main damage types.
@@ -3186,3 +3196,50 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)
 		return
 	INVOKE_ASYNC(src, PROC_REF(emote), "scream")
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mob/living/living.dm
+/mob/living
+	/// When was the last time this mob was alerted to a height difference in turfs that necessitates climbing out?
+	COOLDOWN_DECLARE(last_height_alert)
+
+/mob/living/set_pull_offsets(mob/living/pull_target, grab_state, animate)
+	. = ..()
+	SEND_SIGNAL(pull_target, COMSIG_LIVING_SET_PULL_OFFSET)
+
+/mob/living/reset_pull_offsets(mob/living/pull_target, override, animate)
+	. = ..()
+	SEND_SIGNAL(pull_target, COMSIG_LIVING_RESET_PULL_OFFSETS)
+
+/mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
+	if(HAS_TRAIT(src, TRAIT_HEAVYSET))
+		return
+
+/// Toggle admin frozen
+/mob/living/proc/toggle_admin_freeze(client/admin)
+	admin_frozen = !admin_frozen
+
+	if(admin_frozen)
+		SetStun(INFINITY, ignore_canstun = TRUE)
+	else
+		SetStun(0, ignore_canstun = TRUE)
+
+	if(client && admin)
+		to_chat(src, span_userdanger("An admin has [!admin_frozen ? "un" : ""]frozen you."))
+		log_admin("[key_name(admin)] toggled admin-freeze on [key_name(src)].")
+		message_admins("[key_name_admin(admin)] toggled admin-freeze on [key_name_admin(src)].")
+
+/// Toggle admin sleeping
+/mob/living/proc/toggle_admin_sleep(client/admin)
+	admin_sleeping = !admin_sleeping
+
+	if(admin_sleeping)
+		SetSleeping(INFINITY)
+	else
+		SetSleeping(0)
+
+	if(client && admin)
+		to_chat(src, span_userdanger("An admin has [!admin_sleeping ? "un": ""]slept you."))
+		log_admin("[key_name(admin)] toggled admin-sleep on [key_name(src)].")
+		message_admins("[key_name_admin(admin)] toggled admin-sleep on [key_name_admin(src)].")
+// END NOVA CORE MIGRATION: code/modules/mob/living/living.dm

@@ -108,3 +108,26 @@
 /obj/item/clothing/neck/mod/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mod/mod_clothes.dm
+// MODsuit-related overrides for our digitigrade sprites and such
+/obj/item/clothing/head/mod
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
+	worn_icon_better_vox = 'icons/better_vox/clothing/mod.dmi'
+
+/obj/item/clothing/suit/mod
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+	worn_icon_better_vox = 'icons/better_vox/clothing/mod.dmi'
+
+/obj/item/clothing/gloves/mod
+	supports_variations_flags = NONE
+	worn_icon_better_vox = 'icons/better_vox/clothing/mod.dmi'
+
+/obj/item/clothing/shoes/mod
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+	worn_icon_better_vox = 'icons/better_vox/clothing/mod.dmi'
+
+/obj/item/mod/control
+	worn_icon_better_vox = 'icons/better_vox/clothing/mod_modules.dmi'
+// END NOVA CORE MIGRATION: code/modules/mod/mod_clothes.dm

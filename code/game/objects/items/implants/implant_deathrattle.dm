@@ -158,5 +158,17 @@
 	imp_type = /obj/item/implant/deathrattle/lavaland
 
 #undef DEATHRATTLE_AREA_NOLIST
-//#undef DEATHRATTLE_AREA_BLACKLIST // NOVA EDIT REMOVAL - Used in modular_nova/master_files/code/game/objects/items/implants/implant_deathrattle.dm
+//#undef DEATHRATTLE_AREA_BLACKLIST // NOVA EDIT REMOVAL - Used in code/game/objects/items/implants/implant_deathrattle.dm
 #undef DEATHRATTLE_AREA_WHITELIST
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/items/implants/implant_deathrattle.dm
+/// A deathrattle group subtype - originally only rigged for those who die in the Lavaland or Icemoon Wastes.
+/// For a more forgiving experience, blacklists station areas for deathrattling. Triggers in every other area.
+/datum/deathrattle_group/lavaland
+	area_list_mode = DEATHRATTLE_AREA_BLACKLIST
+	area_list = list(
+		/area/station,
+		/area/ruin/space/has_grav/nova/des_two,
+	)
+// END NOVA CORE MIGRATION: code/game/objects/items/implants/implant_deathrattle.dm

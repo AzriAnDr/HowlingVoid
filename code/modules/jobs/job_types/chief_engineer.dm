@@ -96,3 +96,9 @@
 	mask = /obj/item/clothing/mask/breath
 	shoes = /obj/item/clothing/shoes/magboots/advance
 	internals_slot = ITEM_SLOT_SUITSTORE
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/chief_engineer.dm
+/datum/outfit/job/ce
+	messenger = /obj/item/storage/backpack/messenger/eng
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/chief_engineer.dm

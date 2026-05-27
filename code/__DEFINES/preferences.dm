@@ -116,6 +116,19 @@
 /// This preference is account specific.
 #define PREFERENCE_PLAYER "player"
 
+/// Placeholder to check against the SAVE_DATA_EMPTY and SAVE_DATA_OBSOLETE values.
+/// _Any_ generated save data version will be zero or a positive integer, so it's only necessary to check against this value for anything negative (error states).
+#define SAVE_DATA_NO_ERROR 0
+/// Typically signifies an empty list, where the savefile is not loaded or the character is new. Will just trigger a regeneration.
+#define SAVE_DATA_EMPTY -1
+/// The save data is below the accepted minimum and should be reset.
+#define SAVE_DATA_OBSOLETE -2
+
+/// Preferences that aren't names, but change the name changes set by PREFERENCE_PRIORITY_NAMES.
+#define PREFERENCE_PRIORITY_NAME_MODIFICATIONS 10
+/// For choiced preferences, this key will be used to set display names in constant data.
+#define CHOICED_PREFERENCE_DISPLAY_NAMES "display_names"
+
 // Values for /datum/preferences/current_tab
 /// Open the character preference window
 #define PREFERENCE_TAB_CHARACTER_PREFERENCES 0

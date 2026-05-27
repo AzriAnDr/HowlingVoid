@@ -1001,3 +1001,13 @@
 /// Logic for adding reskin components goes here. Override for atom-specific reskin setups.
 /atom/proc/setup_reskins()
 	return
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/atom/_atom.dm
+// Construction skill
+/atom/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
+	if(ismob(crafter))
+		var/mob/crafting_mob = crafter
+		crafting_mob.mind?.adjust_experience(/datum/skill/construction, 3)
+// END NOVA CORE MIGRATION: code/game/atom/_atom.dm

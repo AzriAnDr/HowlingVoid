@@ -50,7 +50,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/facial_hair_alpha = 255
 
 	///Never, Optional, or Forced digi legs?
-	var/digitigrade_customization = DIGITIGRADE_NEVER
+	var/digitigrade_customization = DIGITIGRADE_OPTIONAL
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
 	///Reagent that your species bleeds, and what chemical can be used to recover lost blood depend on this
 	var/exotic_bloodtype
@@ -306,7 +306,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(!new_organ)
 			if(existing_organ && (old_organ_type == existing_organ.type || replace_current))
 				//existing_organ.Remove(organ_holder) // NOVA EDIT REMOVAL
-				// NOVA EDIT ADDITION START - Remove so it can be reinserted + handled in modular_nova\modules\customization\modules\mob\living\carbon\human\species.dm
+				// NOVA EDIT ADDITION START - Remove so it can be reinserted + handled in code\modules\customization\mob\living\carbon\human\species.dm
 				// We basically just want to keep from removing it from mutant_bodyparts
 				var/existing_organ_feature_key = existing_organ.bodypart_overlay?.feature_key
 				if(existing_organ_feature_key && organ_holder.dna.mutant_bodyparts[existing_organ_feature_key])
@@ -2284,4 +2284,3 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /datum/species/mammal
 	quirk_points_bonus = 4
-

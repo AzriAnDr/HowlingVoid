@@ -46,3 +46,10 @@
 	if(backfired)
 		backfired = FALSE
 		. += " Counterfeit paperwork was detected in this shipment. A fine has been taken from your budget as a result."
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/cargo/exports/stamped_paperwork.dm
+/datum/export/paperwork
+	cost = CARGO_CRATE_VALUE * 4
+	k_elasticity = 0
+// END NOVA CORE MIGRATION: code/modules/cargo/exports/stamped_paperwork.dm

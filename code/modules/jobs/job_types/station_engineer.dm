@@ -78,3 +78,9 @@
 	head = null
 	mask = /obj/item/clothing/mask/breath
 	internals_slot = ITEM_SLOT_SUITSTORE
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/station_engineer.dm
+/datum/outfit/job/engineer
+	messenger = /obj/item/storage/backpack/messenger/eng
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/station_engineer.dm

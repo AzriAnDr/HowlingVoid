@@ -363,3 +363,9 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	name = "burnt stone surrounding tile"
 	icon_state = "burnt_surrounding_tile1"
 	tile_key = "burnt_surrounding_tile"
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mapfluff/ruins/objects_and_mobs/necropolis_gate.dm
+/obj/effect/decal/necropolis_gate_decal/NeverShouldHaveComeHere(turf/here_turf)
+	return !islava(here_turf) && ..()
+// END NOVA CORE MIGRATION: code/modules/mapfluff/ruins/objects_and_mobs/necropolis_gate.dm

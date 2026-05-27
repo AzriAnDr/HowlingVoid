@@ -137,3 +137,9 @@
 	name = "WT-550 gun locker"
 	desc = "A locker that holds WT-550 rifles."
 	case_type = "wt550"
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/structures/guncase.dm
+/obj/structure/guncase
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
+// END NOVA CORE MIGRATION: code/game/objects/structures/guncase.dm

@@ -93,7 +93,7 @@
 
 //Give cyborgs hotkey clicks without breaking existing uses of hotkey clicks
 // for non-doors/apcs
-/mob/living/silicon/robot/CtrlShiftClickOn(atom/target) // Procs overriden in modular_nova/modules/Silicon_QoL
+/mob/living/silicon/robot/CtrlShiftClickOn(atom/target) // Procs overridden by migrated Silicon QoL code.
 	target.BorgCtrlShiftClick(src)
 
 /mob/living/silicon/robot/ShiftClickOn(atom/target)
@@ -206,7 +206,7 @@
  * * user The mob holding the right click
  * * modifiers The list of the custom click modifiers
  */
-/*	//NOVA EDIT - MOVED TO modular_nova/master_files/code/_onclick/cyborg.dm
+/*	//NOVA EDIT - MOVED TO code/_onclick/cyborg.dm
 /atom/proc/attack_robot(mob/user, modifiers)
 	if (SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ROBOT, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
@@ -226,3 +226,16 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	return attack_ai_secondary(user, modifiers)
+
+
+// BEGIN NOVA CORE MIGRATION: code/_onclick/cyborg.dm
+// Lets cyborgs drag pulled objects
+/atom/proc/attack_robot(mob/user, modifiers)
+	if (SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ROBOT, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return
+	if((isturf(src) || istype(src, /obj/structure/table) || istype(src, /obj/machinery/conveyor)) && get_dist(user, src) <= 1)
+		user.Move_Pulled(src)
+		return
+	attack_ai(user)
+	return
+// END NOVA CORE MIGRATION: code/_onclick/cyborg.dm

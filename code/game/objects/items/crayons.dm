@@ -1142,3 +1142,21 @@
 
 #undef INFINITE_CHARGES
 #undef DRAW_TIME
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/items/crayons.dm
+//Removing the questionable stuff modularly.
+
+/obj/item/toy/crayon/Initialize(mapload)
+	. = ..()
+
+	graffiti -= list(
+		"prolizard", 
+		"antilizard",
+	)
+	
+	graffiti_large_h -= list(
+		"furrypride", 
+		"yiffhell",
+	)
+// END NOVA CORE MIGRATION: code/game/objects/items/crayons.dm

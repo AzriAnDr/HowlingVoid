@@ -365,11 +365,38 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	var/mob/living/carbon/carbon_source = source
-	if (carbon_source.can_breathe_internals() && istype(item, /obj/item/tank))
-		if(carbon_source.internal != item)
-			return list("enable_internals")
-		else
-			return list("disable_internals")
+	if(!istype(item, /obj/item/tank))
+		return
+
+	if(carbon_source.internal == item)
+		return list("disable_internals")
+
+	if(can_strippable_internals_connect(item, carbon_source))
+		return list("enable_internals")
+
+/proc/can_strippable_internals_connect(obj/item/tank/tank, mob/living/carbon/carbon_source)
+	if(!istype(tank) || !istype(carbon_source))
+		return FALSE
+
+	var/mob/living/carbon/human/human_source = carbon_source
+	if(!istype(human_source))
+		return carbon_source.can_breathe_internals()
+
+	if(human_source.can_breathe_tube() || human_source.can_breathe_helmet())
+		return TRUE
+
+	var/obj/item/clothing/mask = human_source.wear_mask
+	return istype(mask) && ((mask.visor_flags & MASKINTERNALS) || (mask.clothing_flags & MASKINTERNALS))
+
+/proc/open_strippable_internals(obj/item/tank/tank, mob/living/carbon/carbon_source)
+	if(!can_strippable_internals_connect(tank, carbon_source))
+		return FALSE
+
+	var/mob/living/carbon/human/human_source = carbon_source
+	if(istype(human_source))
+		return human_source.toggle_internals(tank)
+
+	return carbon_source.try_open_internals(tank)
 
 /proc/strippable_alternate_action_internals(obj/item/item, atom/source, mob/user)
 	var/obj/item/tank/tank = item
@@ -380,34 +407,38 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	if (!istype(carbon_source))
 		return
 
-	if (!carbon_source.can_breathe_internals())
+	if (carbon_source.internal != tank && !can_strippable_internals_connect(tank, carbon_source))
 		return
 
 	carbon_source.visible_message(
-		span_danger("[user] tries to [(carbon_source.internal != item) ? "open" : "close"] the valve on [source]'s [item.name]."),
-		span_userdanger("[user] tries to [(carbon_source.internal != item) ? "open" : "close"] the valve on your [item.name]."),
+		span_danger("[user] tries to [(carbon_source.internal != tank) ? "open" : "close"] the valve on [source]'s [tank.name]."),
+		span_userdanger("[user] tries to [(carbon_source.internal != tank) ? "open" : "close"] the valve on your [tank.name]."),
 		ignored_mobs = user,
 	)
 
-	to_chat(user, span_notice("You try to [(carbon_source.internal != item) ? "open" : "close"] the valve on [source]'s [item.name]..."))
+	to_chat(user, span_notice("You try to [(carbon_source.internal != tank) ? "open" : "close"] the valve on [source]'s [tank.name]..."))
 
 	if(!do_after(user, INTERNALS_TOGGLE_DELAY, carbon_source))
 		return
 
-	if (carbon_source.internal == item)
-		carbon_source.close_internals()
-	// This isn't meant to be FALSE, it correlates to the item's name.
-	else if (!QDELETED(item))
-		if(!carbon_source.try_open_internals(item))
+	var/opened_internals = FALSE
+	if (carbon_source.internal == tank)
+		if(!carbon_source.close_internals())
 			return
+	else if (!QDELETED(tank) && tank.loc == carbon_source)
+		if(!open_strippable_internals(tank, carbon_source))
+			return
+		opened_internals = carbon_source.internal == tank
+	else
+		return
 
 	carbon_source.visible_message(
-		span_danger("[user] [isnull(carbon_source.internal) ? "closes": "opens"] the valve on [source]'s [item.name]."),
-		span_userdanger("[user] [isnull(carbon_source.internal) ? "closes": "opens"] the valve on your [item.name]."),
+		span_danger("[user] [opened_internals ? "opens" : "closes"] the valve on [source]'s [tank.name]."),
+		span_userdanger("[user] [opened_internals ? "opens" : "closes"] the valve on your [tank.name]."),
 		ignored_mobs = user,
 	)
 
-	to_chat(user, span_notice("You [isnull(carbon_source.internal) ? "close" : "open"] the valve on [source]'s [item.name]."))
+	to_chat(user, span_notice("You [opened_internals ? "open" : "close"] the valve on [source]'s [tank.name]."))
 
 #undef INTERNALS_TOGGLE_DELAY
 #undef POCKET_EQUIP_DELAY

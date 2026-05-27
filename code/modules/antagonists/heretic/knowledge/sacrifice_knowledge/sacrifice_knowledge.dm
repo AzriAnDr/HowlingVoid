@@ -241,7 +241,7 @@
 		else if(is_clock_cultist)
 			for(var/datum/mind/clock_mind as anything in get_antag_minds(/datum/antagonist/clock_cultist))
 				if(clock_mind.current && clock_mind.current != sacrifice)
-					SEND_SOUND(clock_mind.current, 'modular_nova/modules/clock_cult/sound/magic/scripture_tier_up.ogg')
+					SEND_SOUND(clock_mind.current, 'sound/clock_cult/magic/scripture_tier_up.ogg')
 					to_chat(clock_mind.current, span_brass("A vile heretic has sacrificed one of Ratvar's servants. Let the engine remember this insult."))
 		return
 	else

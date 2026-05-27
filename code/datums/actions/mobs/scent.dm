@@ -1,6 +1,6 @@
 /obj/item/hand_item/scent_focus
 	name = "scent focus"
-	icon = 'modular_nova/modules/organs/icons/cyber_tongue.dmi'
+	icon = 'icons/organs/cyber_tongue.dmi'
 	icon_state = "cybertongue"
 	inhand_icon_state = "nothing"
 	flags_1 = NONE
@@ -37,7 +37,7 @@
 /datum/action/cooldown/scent_scan
 	name = "Keen Scent"
 	desc = "Your sense of smell lets you pick up traces and scents in the surrounding area."
-	button_icon = 'modular_nova/modules/organs/icons/cyber_tongue.dmi'
+	button_icon = 'icons/organs/cyber_tongue.dmi'
 	button_icon_state = "cybertongue"
 	cooldown_time = 6 SECONDS
 	check_flags = AB_CHECK_CONSCIOUS

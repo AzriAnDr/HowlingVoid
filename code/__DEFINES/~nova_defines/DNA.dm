@@ -42,6 +42,13 @@
 // Defines for markings indexes
 #define MARKING_INDEX_COLOR 1
 #define MARKING_INDEX_EMISSIVE 2
+#define MARKING_INDEX_LAYER 3
+
+#define MARKING_LAYER_MIN 1
+#define MARKING_LAYER_MAX 40
+#define MARKING_LAYER_STEP 1.0
+#define MARKING_KEY_LAYER_DELIM "||"
+#define MARKING_KEY_SEQUENCE_DELIM "::"
 
 //The color list that is passed to color matrixed things when a person is husked
 #define HUSK_COLOR_LIST list(list(0.64, 0.64, 0.64, 0), list(0.64, 0.64, 0.64, 0), list(0.64, 0.64, 0.64, 0), list(0, 0, 0, 1))
@@ -63,7 +70,7 @@
 //Defines for an accessory to be randomed
 #define ACC_RANDOM		"random"
 
-#define MAXIMUM_MARKINGS_PER_LIMB 3
+#define MAXIMUM_MARKINGS_PER_LIMB 5
 
 #define BODY_SIZE_NORMAL 1.00
 #define BODY_SIZE_MAX 1.5

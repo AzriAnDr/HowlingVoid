@@ -493,6 +493,33 @@ ADMIN_VERB(toggle_ai_interact, R_ADMIN, "Toggle Admin AI Interact", "Allows you 
 	log_admin("[key_name(user)] has [doesnt_have_silicon_access ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(user)] has [doesnt_have_silicon_access ? "activated" : "deactivated"] their AI interaction")
 
+ADMIN_VERB(admin_shoo_ghosts, R_BAN, "Admin Shoo Ghost", "Shoo ghosts from anywhere, including admin ghosts.", ADMIN_CATEGORY_MAIN)
+	var/mob/shooer = user.mob
+	if(isnull(shooer))
+		to_chat(user, span_warning("You need a body to shoo ghosts."))
+		return
+	if(isobserver(shooer))
+		to_chat(user, span_warning("You cannot shoo ghosts while you are a ghost."))
+		return
+
+	var/is_active = shooer.auto_shoo_ghosts && shooer.auto_shoo_admin_override && shooer.auto_shoo_include_admins
+	if(is_active)
+		shooer.clear_shoo_settings()
+		to_chat(user, span_notice("You stop shooing away ghosts (admin mode)."))
+		message_admins("[key_name_admin(user)] disabled Admin Shoo Ghosts. ([AREACOORD(shooer)])")
+		log_admin("[key_name(user)] disabled Admin Shoo Ghosts at [AREACOORD(shooer)].")
+		BLACKBOX_LOG_ADMIN_VERB("Admin Shoo Ghosts")
+		return
+
+	shooer.auto_shoo_admin_override = TRUE
+	shooer.auto_shoo_include_admins = TRUE
+	shooer.auto_shoo_ghosts = TRUE
+	to_chat(user, span_notice("You will now automatically shoo nearby ghosts (admin override)."))
+	message_admins("[key_name_admin(user)] enabled Admin Shoo Ghosts. ([AREACOORD(shooer)])")
+	log_admin("[key_name(user)] enabled Admin Shoo Ghosts at [AREACOORD(shooer)].")
+	shooer.shoo_ghosts_tick()
+	BLACKBOX_LOG_ADMIN_VERB("Admin Shoo Ghosts")
+
 ADMIN_VERB(debug_statpanel, R_DEBUG, "Debug Stat Panel", "Toggles local debug of the stat panel", ADMIN_CATEGORY_DEBUG)
 	user.stat_panel.send_message("create_debug")
 

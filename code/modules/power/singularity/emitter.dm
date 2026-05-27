@@ -690,3 +690,9 @@
 	consumable = FALSE
 	laser_color = COLOR_SYNDIE_RED //magnetic is already grey
 	fire_rate_mod = 2
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/power/singularity/emitter.dm
+/obj/item/emitter_disk/stamina
+	desc = "This disk can be used on an emitter with an open panel to make it shoot lasers which will exhaust living creatures. The disk will be consumed in the process."
+// END NOVA CORE MIGRATION: code/modules/power/singularity/emitter.dm

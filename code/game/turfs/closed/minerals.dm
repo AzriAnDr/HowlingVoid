@@ -4,7 +4,7 @@
 
 /turf/closed/mineral //wall piece
 	name = "rock"
-	icon = MAP_SWITCH('modular_nova/modules/liquids/icons/turf/smoothrocks.dmi', 'icons/turf/mining.dmi') // NOVA EDIT CHANGE - ORIGINAL: icon = MAP_SWITCH('icons/turf/smoothrocks.dmi', 'icons/turf/mining.dmi')
+	icon = MAP_SWITCH('icons/liquids/turf/smoothrocks.dmi', 'icons/turf/mining.dmi') // NOVA EDIT CHANGE - ORIGINAL: icon = MAP_SWITCH('icons/turf/smoothrocks.dmi', 'icons/turf/mining.dmi')
 	icon_state = "rock"
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MINERAL_WALLS
 	canSmoothWith = SMOOTH_GROUP_MINERAL_WALLS
@@ -958,3 +958,11 @@
 	return FALSE
 
 #undef MINING_MESSAGE_COOLDOWN
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/turfs/closed/minerals.dm
+// Seting color var is kinda depricated now
+/turf/closed/mineral/Initialize(mapload)
+	add_atom_colour("#677", FIXED_COLOUR_PRIORITY)
+	return ..()
+// END NOVA CORE MIGRATION: code/game/turfs/closed/minerals.dm

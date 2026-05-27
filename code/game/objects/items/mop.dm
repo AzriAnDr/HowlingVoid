@@ -113,3 +113,10 @@
 /obj/item/mop/advanced/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/items/mop.dm
+/obj/item/mop/tribal
+	desc = "The ancient god-warrior Jaenator used this strange weapon to slay the terrible filth haunting his people."
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
+// END NOVA CORE MIGRATION: code/game/objects/items/mop.dm

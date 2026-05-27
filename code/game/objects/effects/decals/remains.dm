@@ -81,3 +81,9 @@
 /obj/effect/decal/cleanable/blood/gibs/robot_debris/old
 	name = "dusty robot debris"
 	desc = "Looks like nobody has touched this in a while."
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/effects/decals/remains.dm
+/obj/effect/decal/remains/NeverShouldHaveComeHere(turf/here_turf)
+	return !islava(here_turf) && ..()
+// END NOVA CORE MIGRATION: code/game/objects/effects/decals/remains.dm

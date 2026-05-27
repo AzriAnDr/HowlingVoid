@@ -203,7 +203,7 @@
       time.
   MrSunabouzu:
   - rscadd: Snowglobe Station, a new icemoon station
-  - config: adds new areas to station_areas in modular_nova
+  - config: adds new areas to station_areas in former_nova_module_tree
   - config: adds snowglobe to maps.txt
   - config: adds snowglobe to automapper blacklist
   RatFromTheJungle:

@@ -1141,20 +1141,27 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 			continue
 		panel_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
-	src.stat_panel.send_message("init_verbs", list(panel_tabs = panel_tabs, verblist = verblist))
+	src.stat_panel.send_message("init_verbs", list(
+		"panel_tabs" = panel_tabs,
+		"verblist" = verblist,
+		"favorites" = get_statpanel_favorites_payload(),
+	))
 
 /client/proc/send_statpanel_favorites()
 	if(IsAdminAdvancedProcCall())
 		return
 	if(!stat_panel)
 		return
+	stat_panel.send_message("update_favorites", get_statpanel_favorites_payload())
+
+/client/proc/get_statpanel_favorites_payload()
 	var/list/favorites = list()
 	if(prefs)
 		for(var/favorite in prefs.get_statpanel_favorites())
 			if(!istext(favorite))
 				continue
 			favorites += favorite
-	stat_panel.send_message("update_favorites", favorites)
+	return favorites
 
 /client/proc/check_panel_loaded()
 	if(stat_panel.is_ready())
@@ -1220,6 +1227,9 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	switch(type)
 		if("Update-Verbs")
 			init_verbs()
+			send_statpanel_favorites()
+			return
+		if("Update-Favorites")
 			send_statpanel_favorites()
 			return
 		if("Remove-Tabs")
@@ -1387,3 +1397,72 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 #undef LIMITER_SIZE
 #undef MINUTE_COUNT
 #undef SECOND_COUNT
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/client/client_procs.dm
+
+////  Toggles Selected quirks on selected mobs
+/client/proc/toggle_quirk(mob/living/carbon/human/selected_mob)
+	if (!istype(selected_mob))
+		to_chat(usr, "This can only be used on /mob/living/carbon/human.")
+		return
+
+	var/list/options = list("Clear"="Clear")
+	for(var/quirk_variable in subtypesof(/datum/quirk))
+		var/datum/quirk/applicable_quirk = quirk_variable
+		var/qname = initial(applicable_quirk.name)
+		options[selected_mob.has_quirk(applicable_quirk) ? "[qname] (Remove)" : "[qname] (Add)"] = applicable_quirk
+
+	var/result = tgui_input_list(usr, "Choose quirk to add/remove", "Mob Quirks", options)
+
+	if(QDELETED(selected_mob))
+		to_chat(usr, "Mob doesn't exist anymore")
+		return
+
+	if(result)
+		if(result == "Clear")
+			for(var/datum/quirk/selected_quirk in selected_mob.quirks)
+				selected_mob.remove_quirk(selected_quirk.type)
+		else
+			var/toggle_quirk = options[result]
+			if(selected_mob.has_quirk(toggle_quirk))
+				selected_mob.remove_quirk(toggle_quirk)
+			else
+				selected_mob.add_quirk(toggle_quirk,TRUE)
+
+////  "Teaches" Martial arts to the selected mob
+/client/proc/teach_martial_art(mob/living/carbon/selected_mob)
+	if (!istype(selected_mob))
+		to_chat(usr, "This can only be used on /mob/living/carbon.")
+		return
+
+	var/list/artpaths = subtypesof(/datum/martial_art)
+	var/list/artnames = list()
+	for(var/martial_art_skill in artpaths)
+		var/datum/martial_art/martial_skill = martial_art_skill
+		artnames[initial(martial_skill.name)] = martial_skill
+	var/result = tgui_input_list(usr, "Choose the martial art to teach", "JUDO CHOP", artnames)
+	if(isnull(result))
+		return
+
+	if(QDELETED(selected_mob))
+		to_chat(usr, "Mob doesn't exist anymore")
+		return
+	if(result)
+		var/chosenart = artnames[result]
+		var/datum/martial_art/martial_skill = new chosenart
+		martial_skill.teach(selected_mob)
+		log_admin("[key_name(usr)] has taught [martial_skill] to [key_name(selected_mob)].")
+		message_admins(span_notice("[key_name_admin(usr)] has taught [martial_skill] to [key_name_admin(selected_mob)]."))
+
+////  Sets species of the selected client
+/client/proc/set_species(mob/living/carbon/human/selected_mob)
+	if (istype(selected_mob))
+		var/result = tgui_input_list(usr, "Choose a new species","Species", GLOB.species_list)
+		if(QDELETED(selected_mob))
+			to_chat(usr, "Mob doesn't exist anymore")
+			return
+		if(result)
+			admin_ticket_log("[key_name_admin(usr)] has modified the bodyparts of [selected_mob] to [result]")
+			selected_mob.set_species(GLOB.species_list[result])
+// END NOVA CORE MIGRATION: code/modules/client/client_procs.dm

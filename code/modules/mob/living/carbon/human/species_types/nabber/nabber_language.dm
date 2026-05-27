@@ -60,8 +60,11 @@
 	ADD_TRAIT(target, TRAIT_SPEAKS_CLEARLY, REF(src))
 	if(isnabber(target))
 		target.grant_language(/datum/language/common, language_flags = SPOKEN_LANGUAGE, source = LANGUAGE_ATOM)
+	if(isxenohybrid(target))
+		target.remove_blocked_language(GLOB.all_languages - /datum/language/xenocommon, language_flags = SPOKEN_LANGUAGE, source = REF(src))
+		target.grant_language(/datum/language/common, language_flags = SPOKEN_LANGUAGE, source = LANGUAGE_ATOM)
 
-/obj/item/implant/gas_sol_speaker/proc/remove_speech_synth(mob/living/target)
+/obj/item/implant/gas_sol_speaker/proc/remove_speech_synth(mob/living/target, broken = FALSE)
 	if(!can_support_speech(target) || QDELING(target))
 		return
 
@@ -70,6 +73,12 @@
 		target.remove_language(/datum/language/common, language_flags = SPOKEN_LANGUAGE)
 		if(target.has_status_effect(/datum/status_effect/speech/stutter/nabber))
 			target.remove_status_effect(/datum/status_effect/speech/stutter/nabber)
+	if(isxenohybrid(target))
+		if(broken)
+			target.add_blocked_language(GLOB.all_languages - /datum/language/xenocommon, language_flags = SPOKEN_LANGUAGE, source = REF(src))
+			target.get_language_holder()?.selected_language = /datum/language/xenocommon
+		else
+			target.remove_blocked_language(GLOB.all_languages - /datum/language/xenocommon, language_flags = SPOKEN_LANGUAGE, source = REF(src))
 
 /obj/item/implant/gas_sol_speaker/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
@@ -92,7 +101,7 @@
 		if (1)
 			emp_damage += 1
 			if(imp_in && can_support_speech(imp_in))
-				remove_speech_synth(imp_in)
+				remove_speech_synth(imp_in, broken = TRUE)
 				to_chat(imp_in, span_hear("You hear something inside of you zap silently."))
 		if (2)
 			if (imp_in)

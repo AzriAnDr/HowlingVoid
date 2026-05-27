@@ -92,3 +92,9 @@
 	rnd_name = "Hydraulics Purge (Blood Filtration)"
 	required_bodytype = BODYTYPE_ROBOTIC
 	operation_flags = parent_type::operation_flags | OPERATION_MECHANIC
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/surgery/operations/operation_filter.dm
+/datum/surgery_operation/limb/filter_blood/mechanic
+	blocked_bodytype = BODYTYPE_SYNTHETIC
+// END NOVA CORE MIGRATION: code/modules/surgery/operations/operation_filter.dm

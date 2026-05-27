@@ -1001,3 +1001,12 @@ GLOBAL_VAR_INIT(cops_arrived, FALSE)
 #undef EMERGENCY_RESPONSE_EMT
 #undef EMERGENCY_RESPONSE_EMAG
 //NOVA EDIT END
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/machinery/computer/communications.dm
+/// Are we the AI?
+/obj/machinery/computer/communications/proc/authenticated_as_ai_or_captain(mob/user)
+	if (isAI(user))
+		return TRUE
+	return ACCESS_CAPTAIN in authorize_access
+// END NOVA CORE MIGRATION: code/game/machinery/computer/communications.dm

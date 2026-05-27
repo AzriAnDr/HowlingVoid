@@ -577,11 +577,11 @@
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
 	var/silent_blown = FALSE
 	var/list/kiss_sounds = list(
-		'modular_nova/modules/modular_items/lewd_items/sounds/kiss1.ogg',
-		'modular_nova/modules/modular_items/lewd_items/sounds/kiss2.ogg',
-		'modular_nova/modules/modular_items/lewd_items/sounds/kiss3.ogg',
-		'modular_nova/modules/modular_items/lewd_items/sounds/kiss4.ogg',
-		'modular_nova/modules/modular_items/lewd_items/sounds/kiss5.ogg',
+		'sound/modular_items/lewd_items/sounds/kiss1.ogg',
+		'sound/modular_items/lewd_items/sounds/kiss2.ogg',
+		'sound/modular_items/lewd_items/sounds/kiss3.ogg',
+		'sound/modular_items/lewd_items/sounds/kiss4.ogg',
+		'sound/modular_items/lewd_items/sounds/kiss5.ogg',
 	)
 
 /obj/projectile/kiss/Initialize(mapload)
@@ -749,3 +749,11 @@
 	to_chat(firer, span_green("You deliver a chef's kiss over [target], declaring it perfect."))
 	target.visible_message(span_notice("[firer] delivers a chef's kiss over [target]."), ignored_mobs = firer)
 	target.reagents.add_reagent(/datum/reagent/love, clamp(amount_nutriment / 4, 1, 10)) // clamped to about half of the most dense food I think we have (super bite burger)
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/items/hand_items.dm
+/obj/projectile/kiss/Initialize(mapload)
+	. = ..()
+	qdel(GetComponent(/datum/component/parriable_projectile))
+	AddComponent(/datum/component/parriable_projectile, parry_trait = TRAIT_CAN_HOLD_ITEMS) // Original: AddComponent(/datum/component/parriable_projectile) // allows kiss parry to be done without a mining exclusive. It wont accept null as a trait, dont try.
+// END NOVA CORE MIGRATION: code/game/objects/items/hand_items.dm

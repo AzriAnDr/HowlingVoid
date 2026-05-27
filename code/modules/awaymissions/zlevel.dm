@@ -117,3 +117,11 @@ GLOBAL_LIST_INIT(potentialConfigRandomZlevels, generate_map_list_from_directory(
 			continue
 		config_maps += (directory + map_file)
 	return config_maps
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/awaymissions/zlevel.dm
+/obj/effect/landmark/awaystart/maintsroom
+	name = "maintsroom"
+	id = AWAYSTART_MAINTSROOM
+	delay = FALSE
+// END NOVA CORE MIGRATION: code/modules/awaymissions/zlevel.dm

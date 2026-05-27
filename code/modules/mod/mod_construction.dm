@@ -311,3 +311,11 @@
 #undef BOOTS_STEP
 #undef WRENCHED_ASSEMBLY_STEP
 #undef SCREWED_ASSEMBLY_STEP
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mod/mod_construction.dm
+/obj/item/mod/construction/plating/tarkon
+	theme = /datum/mod_theme/tarkon
+	icon = 'icons/obj/clothing/modsuit/mod_construction_additions.dmi'
+	icon_state = "tarkon-plating"
+// END NOVA CORE MIGRATION: code/modules/mod/mod_construction.dm

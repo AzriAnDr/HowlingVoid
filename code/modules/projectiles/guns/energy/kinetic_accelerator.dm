@@ -706,3 +706,10 @@
 
 	var/new_color = tgui_color_picker(user, "", "Choose Color", bolt_color)
 	bolt_color = new_color || bolt_color
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/projectiles/guns/energy/kinetic_accelerator.dm
+/obj/item/gun/energy/recharge/kinetic_accelerator/cyborg
+	icon_state = "kineticgun"
+	max_mod_capacity = 100 // Balance due to fauna changes and no level perks applying
+// END NOVA CORE MIGRATION: code/modules/projectiles/guns/energy/kinetic_accelerator.dm

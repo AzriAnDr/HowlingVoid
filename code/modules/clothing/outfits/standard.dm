@@ -474,3 +474,12 @@
 	W.registered_name = H.real_name
 	W.update_label()
 	W.update_icon()
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/clothing/outfits/standard.dm
+// Standard outfit overrides
+
+/datum/outfit/tournament/gangster
+	r_pocket = null
+	r_hand = /obj/item/ammo_box/c10mm
+// END NOVA CORE MIGRATION: code/modules/clothing/outfits/standard.dm

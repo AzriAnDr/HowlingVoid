@@ -268,3 +268,11 @@
 		return
 	if(SPT_PROB(3, seconds_per_tick))
 		to_chat(wearer, span_danger("You feel [src] digging into your eyes, burning [eyes.p_them()] up!"))
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/antagonists/cult/cult_armor.dm
+// Adds HIDETAIL
+/obj/item/clothing/suit/hooded/cultrobes/hardened/Initialize(mapload)
+	flags_inv |= HIDETAIL
+	return ..()
+// END NOVA CORE MIGRATION: code/modules/antagonists/cult/cult_armor.dm

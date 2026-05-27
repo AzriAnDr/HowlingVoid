@@ -65,3 +65,9 @@
 	back = /obj/item/mod/control/pre_equipped/atmospheric
 	mask = /obj/item/clothing/mask/gas/atmos
 	internals_slot = ITEM_SLOT_SUITSTORE
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/atmospheric_technician.dm
+/datum/outfit/job/atmos
+	messenger = /obj/item/storage/backpack/messenger/eng
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/atmospheric_technician.dm

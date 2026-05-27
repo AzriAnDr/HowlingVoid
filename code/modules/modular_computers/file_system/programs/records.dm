@@ -73,3 +73,10 @@
 	data["records"] = GetRecordsReadable()
 	data["mode"] = mode
 	return data
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/modular_computers/file_system/programs/records.dm
+/datum/computer_file/program/records/medical/New()
+	LAZYOR(download_access, ACCESS_ROBOTICS)
+	return ..()
+// END NOVA CORE MIGRATION: code/modules/modular_computers/file_system/programs/records.dm

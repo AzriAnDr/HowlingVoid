@@ -9,7 +9,7 @@
 	],
 	"sound_use": 1,
 	"sound_possible": [
-		"modular_nova/modules/modular_items/lewd_items/sounds/hug.ogg"
+		"sound/modular_items/lewd_items/sounds/hug.ogg"
 	],
 	"sound_range": 3,
 	"interaction_requires": [

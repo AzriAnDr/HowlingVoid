@@ -35,6 +35,8 @@
 	remove_from_dead_mob_list()
 	remove_from_alive_mob_list()
 	remove_from_mob_suicide_list()
+	if(auto_shoo_ghosts || shoo_ghost_stealthed || shoo_stealthed_mobs)
+		clear_shoo_settings()
 	focus = null
 	if(length(progressbars))
 		stack_trace("[src] destroyed with elements in its progressbars list")
@@ -1023,6 +1025,66 @@
 		ghost.send_revival_notification(message, sound, source, flashwindow)
 		return ghost
 
+/// Clears all shoo ghost state and restores orbit visibility for mobs affected by it.
+/mob/proc/clear_shoo_settings()
+	auto_shoo_ghosts = FALSE
+	auto_shoo_admin_override = FALSE
+	auto_shoo_include_admins = FALSE
+	if(shoo_stealthed_mobs)
+		for(var/mob/stealthed_mob as anything in shoo_stealthed_mobs)
+			if(!QDELETED(stealthed_mob))
+				stealthed_mob.shoo_ghost_stealthed = FALSE
+	shoo_stealthed_mobs = null
+	shoo_ghost_stealthed = FALSE
+
+/// Teleports nearby blocked ghosts away and refreshes orbit stealth while shoo ghosts is active.
+/mob/proc/shoo_ghosts_tick()
+	if(!auto_shoo_ghosts || QDELETED(src))
+		return
+
+	if(!auto_shoo_admin_override && !is_shoo_ghost_area(get_area(src)))
+		clear_shoo_settings()
+		to_chat(src, span_warning("You can only shoo ghosts in the Ghost Cafe or Hilbert's Hotel. Auto-shoo disabled."))
+		return
+
+	var/obj/effect/landmark/observer_start/observer_start = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
+	if(isnull(observer_start))
+		clear_shoo_settings()
+		to_chat(src, span_warning("No observer start landmark found. Auto-shoo disabled."))
+		return
+
+	var/turf/observer_turf = get_turf(observer_start)
+	if(isnull(observer_turf))
+		clear_shoo_settings()
+		to_chat(src, span_warning("No observer start turf found. Auto-shoo disabled."))
+		return
+
+	for(var/mob/dead/observer/ghost in range(GHOST_MAX_VIEW_RANGE_MEMBER, src))
+		if(ghost == src)
+			continue
+		if(!shoo_ghost_blocks_client(src, ghost.client))
+			continue
+		ghost.forceMove(observer_turf)
+		if(ghost.client?.holder)
+			to_chat(ghost, span_warning("[src] shoos you away."))
+		else
+			to_chat(ghost, span_warning("You've been shooed away."))
+
+	var/list/new_stealthed = list()
+	shoo_ghost_stealthed = TRUE
+	for(var/mob/living/nearby_living in range(1, src))
+		if(nearby_living == src)
+			continue
+		nearby_living.shoo_ghost_stealthed = TRUE
+		new_stealthed += nearby_living
+
+	if(shoo_stealthed_mobs)
+		for(var/mob/old_stealthed as anything in shoo_stealthed_mobs)
+			if(!QDELETED(old_stealthed) && !(old_stealthed in new_stealthed))
+				old_stealthed.shoo_ghost_stealthed = FALSE
+	shoo_stealthed_mobs = new_stealthed
+	addtimer(CALLBACK(src, PROC_REF(shoo_ghosts_tick)), 1, TIMER_UNIQUE|TIMER_OVERRIDE)
+
 /**
  * Checks to see if the mob can cast normal magic spells.
  *
@@ -1749,3 +1811,21 @@
  */
 /mob/proc/get_access() as /list
 	return list()
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mob/mob.dm
+/// Player Panel Proc calling for new player panel creation
+/mob/proc/create_player_panel()
+	if(mob_panel)
+		QDEL_NULL(mob_panel)
+
+	mob_panel = new(src)
+
+/mob/Initialize()
+	. = ..()
+	create_player_panel()
+
+/mob/Destroy()
+	QDEL_NULL(mob_panel)
+	return ..()
+// END NOVA CORE MIGRATION: code/modules/mob/mob.dm

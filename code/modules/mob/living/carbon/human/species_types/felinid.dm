@@ -7,9 +7,7 @@
 	mutanttongue = /obj/item/organ/tongue/cat
 	mutantears = /obj/item/organ/ears // NOVA EDIT CHANGE - these mutantpart vars annoyingly confict with our own mutant_bodyparts system and should never be used for visual organs - ORIGINAL /obj/item/organ/ears/cat
 	mutanteyes = /obj/item/organ/eyes/felinid
-	mutant_organs = list(
-		/obj/item/organ/tail/cat = "Cat",
-	)
+	mutant_organs = list() // NOVA EDIT CHANGE - visual organs are handled by mutant_bodyparts preferences.
 	inherent_traits = list(
 		TRAIT_CATLIKE_GRACE,
 		TRAIT_HATED_BY_DOGS,

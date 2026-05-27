@@ -494,3 +494,10 @@
 	if(prob(60/severity))
 		to_chat(owner, span_warning("Your breathing tube suddenly closes!"))
 		owner.losebreath += 2
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/surgery/organs/internal/cyberimp/augments_internal.dm
+/obj/item/organ/cyberimp
+	/// If TRUE, this augment cannot be confiscated at roundstart for roles like prisoner, etc.
+	var/cannot_confiscate
+// END NOVA CORE MIGRATION: code/modules/surgery/organs/internal/cyberimp/augments_internal.dm

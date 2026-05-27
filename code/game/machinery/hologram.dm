@@ -935,3 +935,21 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 #undef CAN_HEAR_RECORD_MODE
 #undef HOLOGRAM_POWER_USAGE
 #undef HOLOPAD_PASSIVE_POWER_USAGE
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/machinery/hologram.dm
+GLOBAL_LIST_EMPTY(hologram_impersonators)
+
+/obj/machinery/holopad/set_holo(mob/living/user, obj/effect/overlay/holo_pad_hologram/holo)
+	if(holo.Impersonation)
+		GLOB.hologram_impersonators[user] = holo
+		holo.become_hearing_sensitive() // Well, we need to show up on "get_hearers_in_view()"
+	. = ..()
+
+/obj/machinery/holopad/clear_holo(mob/living/user)
+	var/obj/effect/overlay/holo_pad_hologram/hologram = GLOB.hologram_impersonators[user]
+	if(hologram)
+		hologram.lose_hearing_sensitivity()
+		GLOB.hologram_impersonators -= user
+	. = ..()
+// END NOVA CORE MIGRATION: code/game/machinery/hologram.dm

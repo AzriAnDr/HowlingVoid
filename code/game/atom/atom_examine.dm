@@ -212,3 +212,36 @@
  */
 /atom/proc/get_visible_name(add_id_name = TRUE, force_real_name = FALSE)
 	return name
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/atom/atom_examine.dm
+/mob/living/basic/drone
+	examine_thats = "This is"
+
+/obj/item/examine_title(mob/user, thats = FALSE)
+	. = ..()
+	if(thats || !HAS_TRAIT_FROM(src, TRAIT_WAS_RENAMED, "Loadout"))
+		return
+	return "<a href='byond://?src=[REF(user)];loadout_examine=[REF(src)]'>[.]</a>"
+
+// Species examine
+/mob/living/carbon/human/examine_title(mob/user, thats = FALSE)
+	. = ..()
+	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
+
+	var/species_visible
+	var/species_name_string
+	if(skipface || get_visible_name() == "Unknown")
+		species_visible = FALSE
+	else
+		species_visible = TRUE
+
+	if(!species_visible)
+		species_name_string = ""
+	else if (!dna.species.lore_protected && dna.features["custom_species"])
+		species_name_string = ", [prefix_a_or_an(dna.features["custom_species"])] <EM>[dna.features["custom_species"]]</EM>"
+	else
+		species_name_string = ", [prefix_a_or_an(dna.species.name)] <EM>[dna.species.name]</EM>"
+
+	. += species_name_string
+// END NOVA CORE MIGRATION: code/game/atom/atom_examine.dm

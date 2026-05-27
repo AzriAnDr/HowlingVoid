@@ -1173,3 +1173,9 @@ Striking a noncultist, however, will tear their flesh."}
 		..()
 
 #undef SHUTTLE_CURSE_OMFG_TIMESPAN
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/antagonists/cult/cult_items.dm
+/obj/item/clothing/suit/hooded/cultrobes
+	worn_icon_digi = 'icons/mob/clothing/suits/armor_digi.dmi'
+// END NOVA CORE MIGRATION: code/modules/antagonists/cult/cult_items.dm

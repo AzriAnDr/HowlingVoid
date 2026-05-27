@@ -291,6 +291,7 @@ Works together with spawning an observer, noted above.
 	var/mob/living/former_mob = ghost.mind?.current
 	if(isliving(former_mob))
 		recordable_time = former_mob.timeofdeath
+	former_mob?.clear_shoo_settings()
 
 	ghost.persistent_client?.time_of_death = recordable_time
 	SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZED)
@@ -518,6 +519,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/mob/source_mob = src  //Source mob
 	var/turf/destination_turf = get_turf(destination_mob) //Turf of the destination mob
 
+	if(shoo_ghost_blocks_client(destination_mob, client))
+		notify_shoo_ghost_block(destination_mob, src)
+		return
+
 	if(isturf(destination_turf))
 		if(!can_view_room_atom(destination_mob))
 			return
@@ -601,6 +606,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!can_view_room_atom(chosen_target))
 		return
 
+	if(shoo_ghost_blocks_client(chosen_target, client))
+		notify_shoo_ghost_block(chosen_target, src)
+		return
+
 	do_observe(chosen_target)
 
 /mob/dead/observer/verb/tray_view()
@@ -677,6 +686,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	if(!can_view_room_atom(target))
 		return
+
+	if(ismob(target))
+		var/mob/target_mob = target
+		if(shoo_ghost_blocks_client(target_mob, client))
+			notify_shoo_ghost_block(target_mob, src)
+			return
 
 	var/list/icon_dimensions = get_icon_dimensions(target.icon)
 	var/orbitsize = (icon_dimensions["width"] + icon_dimensions["height"]) * 0.5
@@ -849,6 +864,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!can_view_room_atom(target))
 		return
 
+	if(ismob(target))
+		var/mob/target_mob = target
+		if(shoo_ghost_blocks_client(target_mob, client))
+			notify_shoo_ghost_block(target_mob, src)
+			return
+
 	ManualFollow(target)
 	target.attack_ghost(usr)
 
@@ -957,6 +978,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	if(!can_view_room_atom(mob_eye))
+		return
+
+	if(shoo_ghost_blocks_client(mob_eye, client))
+		notify_shoo_ghost_block(mob_eye, src)
 		return
 
 	//Istype so we filter out points of interest that are not mobs

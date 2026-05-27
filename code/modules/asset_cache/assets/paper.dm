@@ -3,19 +3,19 @@
 	assets = list(
 
 		// NOVA EDIT ADDITION: START - Donator stamp icons
-		"stamp-cat_blue" = 'modular_nova/master_files/icons/stamp_icons/cat_blue.png',
-		"stamp-paw_blue" = 'modular_nova/master_files/icons/stamp_icons/paw_blue.png',
-		"stamp-cat_red" = 'modular_nova/master_files/icons/stamp_icons/cat_red.png',
-		"stamp-paw_red" = 'modular_nova/master_files/icons/stamp_icons/paw_red.png',
-		"stamp-cat_orange" = 'modular_nova/master_files/icons/stamp_icons/cat_orange.png',
-		"stamp-paw_orange" = 'modular_nova/master_files/icons/stamp_icons/paw_orange.png',
-		"stamp-cat_green" = 'modular_nova/master_files/icons/stamp_icons/cat_green.png',
-		"stamp-paw_green" = 'modular_nova/master_files/icons/stamp_icons/paw_green.png',
+		"stamp-cat_blue" = 'icons/stamp_icons/cat_blue.png',
+		"stamp-paw_blue" = 'icons/stamp_icons/paw_blue.png',
+		"stamp-cat_red" = 'icons/stamp_icons/cat_red.png',
+		"stamp-paw_red" = 'icons/stamp_icons/paw_red.png',
+		"stamp-cat_orange" = 'icons/stamp_icons/cat_orange.png',
+		"stamp-paw_orange" = 'icons/stamp_icons/paw_orange.png',
+		"stamp-cat_green" = 'icons/stamp_icons/cat_green.png',
+		"stamp-paw_green" = 'icons/stamp_icons/paw_green.png',
 		// Other stamp icons
-		"stamp-nri" = 'modular_nova/master_files/icons/stamp_icons/large_stamp-nri.png',
-		"stamp-solfed" = 'modular_nova/master_files/icons/stamp_icons/large_stamp-solfed.png',
-		"stamp-tarkon" = 'modular_nova/master_files/icons/stamp_icons/large_stamp-tarkon.png',
-		"stamp-warden" = 'modular_nova/master_files/icons/stamp_icons/large_stamp-warden.png',
+		"stamp-nri" = 'icons/stamp_icons/large_stamp-nri.png',
+		"stamp-solfed" = 'icons/stamp_icons/large_stamp-solfed.png',
+		"stamp-tarkon" = 'icons/stamp_icons/large_stamp-tarkon.png',
+		"stamp-warden" = 'icons/stamp_icons/large_stamp-warden.png',
 		// NOVA EDIT ADDITION: END
 		"stamp-clown" = 'icons/stamp_icons/large_stamp-clown.png',
 		"stamp-deny" = 'icons/stamp_icons/large_stamp-deny.png',

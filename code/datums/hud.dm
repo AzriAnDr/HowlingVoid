@@ -463,3 +463,9 @@ GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 
 /mob/dead/new_player/add_click_catcher()
 	return
+
+
+// BEGIN NOVA CORE MIGRATION: code/datums/hud.dm
+/datum/atom_hud/data/human/permit
+	hud_icons = list(PERMIT_HUD)
+// END NOVA CORE MIGRATION: code/datums/hud.dm

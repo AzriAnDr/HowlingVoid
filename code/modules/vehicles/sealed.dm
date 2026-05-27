@@ -176,3 +176,15 @@
 	for (var/mob/passenger as anything in occupants)
 		if(!isAI(passenger))
 			passenger.Bump(supermatter)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/vehicles/sealed.dm
+/obj/vehicle/sealed/mob_try_enter(mob/rider)
+	if(!istype(rider))
+		return FALSE
+	if(HAS_TRAIT(rider, TRAIT_OVERSIZED))
+		to_chat(rider, span_warning("You are far too big for this!"))
+		return FALSE
+
+	return ..()
+// END NOVA CORE MIGRATION: code/modules/vehicles/sealed.dm

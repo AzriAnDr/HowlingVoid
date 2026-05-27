@@ -67,3 +67,15 @@
 
 /datum/job/cyborg/get_lobby_icon()
 	return icon('icons/mob/huds/hud.dmi', "hudcyborg")
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/cyborg.dm
+/mob/living/silicon/robot/proc/latejoin_find_parent_ai(target_z_level = 3)
+	if(connected_ai)
+		return
+	var/mob/living/silicon/ai/AI = select_active_ai_with_fewest_borgs(target_z_level)
+	if(AI)
+		set_connected_ai(AI)
+	lawsync()
+	show_laws()
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/cyborg.dm

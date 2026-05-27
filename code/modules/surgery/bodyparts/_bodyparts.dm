@@ -77,7 +77,7 @@
 	///Controls if the limb is disabled. TRUE means it is disabled (similar to being removed, but still present for the sake of targeted interactions).
 	var/bodypart_disabled = FALSE
 	///Handles limb disabling by damage. If LIMB_NO_DISABLE (-1), a limb can't be disabled via damage. If 1 (100%), it is disabled at max limb damage. Anything between is the percentage of damage against maximum limb damage needed to disable the limb.
-	var/disabling_threshold_percentage = LIMB_NO_DISABLE
+	var/disabling_threshold_percentage = 1 // COMBAT - ORIGINAL: LIMB_NO_DISABLE
 
 	// Damage variables
 	///A mutiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
@@ -1429,8 +1429,12 @@
 		override_color = "#888888"
 	// We need to check that the owner exists(could be a placed bodypart) and that it's not a chainsawhand and that they're a human with usable DNA.
 	if(!(bodypart_flags & BODYPART_PSEUDOPART) && (!(bodyshape & BODYSHAPE_TAUR))) // taur legs never ever render
+		var/marking_count = 0
 		for(var/key in markings) // Cycle through all of our currently selected markings.
-			var/datum/body_marking/body_marking = GLOB.body_markings[key]
+			marking_count++
+			var/list/entry = sanitize_body_marking_entry(key, markings[key], marking_count, owner?.dna?.features, owner?.dna?.species)
+			var/marking_name = get_marking_base_name(key)
+			var/datum/body_marking/body_marking = GLOB.body_markings[marking_name]
 			if (!body_marking) // Edge case prevention.
 				continue
 
@@ -1442,21 +1446,31 @@
 
 			var/mutable_appearance/accessory_overlay
 			var/mutable_appearance/emissive
-			accessory_overlay = mutable_appearance(body_marking.icon, "[body_marking.icon_state]_[render_limb_string][gender_modifier]", -BODYPARTS_LAYER)
+			var/layer_offset = -BODYPARTS_LAYER
+			if(body_marking.above_hair)
+				layer_offset = -HAIR_LAYER + 0.1
+			layer_offset += (entry[MARKING_INDEX_LAYER] - MARKING_LAYER_MIN) * MARKING_LAYER_STEP
+			accessory_overlay = mutable_appearance(body_marking.icon, "[body_marking.icon_state]_[render_limb_string][gender_modifier]", layer_offset)
 			accessory_overlay.alpha = markings_alpha
-			if(markings[key][2])
+			if(entry[MARKING_INDEX_EMISSIVE])
 				emissive = emissive_appearance_copy(accessory_overlay, offset_spokesman)
 			if(override_color)
 				accessory_overlay.color = override_color
 			else
-				accessory_overlay.color = markings[key][1]
+				accessory_overlay.color = entry[MARKING_INDEX_COLOR]
+			if(emissive)
+				emissive.layer = layer_offset
 			. += accessory_overlay
 			if (emissive)
 				. += emissive
 
 		if(aux_zone)
+			var/aux_marking_count = 0
 			for(var/key in aux_zone_markings)
-				var/datum/body_marking/body_marking = GLOB.body_markings[key]
+				aux_marking_count++
+				var/list/entry = sanitize_body_marking_entry(key, aux_zone_markings[key], aux_marking_count, owner?.dna?.features, owner?.dna?.species)
+				var/marking_name = get_marking_base_name(key)
+				var/datum/body_marking/body_marking = GLOB.body_markings[marking_name]
 				if (!body_marking) // Edge case prevention.
 					continue
 
@@ -1464,14 +1478,17 @@
 
 				var/mutable_appearance/emissive
 				var/mutable_appearance/accessory_overlay
-				accessory_overlay = mutable_appearance(body_marking.icon, "[body_marking.icon_state]_[render_limb_string]", -aux_layer)
+				var/layer_offset = -aux_layer + ((entry[MARKING_INDEX_LAYER] - MARKING_LAYER_MIN) * MARKING_LAYER_STEP)
+				accessory_overlay = mutable_appearance(body_marking.icon, "[body_marking.icon_state]_[render_limb_string]", layer_offset)
 				accessory_overlay.alpha = markings_alpha
-				if (aux_zone_markings[key][2])
+				if (entry[MARKING_INDEX_EMISSIVE])
 					emissive = emissive_appearance_copy(accessory_overlay, offset_spokesman)
 				if(override_color)
 					accessory_overlay.color = override_color
 				else
-					accessory_overlay.color = aux_zone_markings[key][1]
+					accessory_overlay.color = entry[MARKING_INDEX_COLOR]
+				if(emissive)
+					emissive.layer = layer_offset
 				. += accessory_overlay
 				if (emissive)
 					. += emissive

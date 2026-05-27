@@ -392,6 +392,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/list/in_view = get_hearers_in_view(message_range + whisper_range, source)
 	var/list/listening = get_hearers_in_range(message_range + whisper_range, source)
 
+	for(var/atom/movable/listening_movable as anything in listening)
+		if(!isobserver(listening_movable))
+			continue
+		var/mob/dead/observer/ghost_listener = listening_movable
+		if(is_say_blocked_by_shoo_ghost(src, ghost_listener))
+			listening -= ghost_listener
+
 	// Pre-process listeners to account for line-of-sight
 	for(var/atom/movable/listening_movable as anything in listening)
 		if(!(listening_movable in in_view) && !HAS_TRAIT(listening_movable, TRAIT_XRAY_HEARING))
@@ -408,6 +415,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				continue //Remove if underlying cause (likely byond issue) is fixed. See TG PR #49004.
 			if(player_mob.stat != DEAD) //not dead, not important
 				continue
+			if(isobserver(player_mob))
+				var/mob/dead/observer/ghost_listener = player_mob
+				if(is_say_blocked_by_shoo_ghost(src, ghost_listener))
+					continue
 			if(player_mob.z != z || get_dist(player_mob, src) > 7) //they're out of range of normal hearing
 				if(is_speaker_whispering)
 					if(!(get_chat_toggles(player_mob.client) & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
@@ -453,6 +464,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		var/voice_to_use = get_tts_voice(filter, special_filter)
 		if (!CONFIG_GET(flag/tts_no_whisper) || (CONFIG_GET(flag/tts_no_whisper) && !message_mods[WHISPER_MODE]))
 			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice_to_use, filter.Join(","), listened, message_range = message_range, pitch = pitch, special_filters = special_filter.Join("|"))
+
+	// NOVA EDIT ADDITION BEGIN - BLOOPER
+	if(should_play_bloopers())
+		play_bloopers(message_raw, message_range, source, message_mods)
+	// NOVA EDIT ADDITION END
 
 	var/image/say_popup = image('icons/mob/effects/talk.dmi', src, "[bubble_type][talk_icon_state]", FLY_LAYER)
 	SET_PLANE_EXPLICIT(say_popup, ABOVE_GAME_PLANE, src)

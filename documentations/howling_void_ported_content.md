@@ -1,25 +1,25 @@
 # Карта перенесённого контента Howling Void
 
-Этот документ показывает, что было вынесено из `modularhowling_void/` и где это теперь искать и править.
+Этот документ показывает, что было вынесено из `former_howling_void_module_tree/` и где это теперь искать и править.
 
 ## Общее правило
 
-Не добавляйте новый код обратно в `modularhowling_void/`. Новые изменения Howling Void должны жить в подходящем core- или Nova-файле:
+Не добавляйте новый код обратно в `former_howling_void_module_tree/`. Новые изменения Howling Void должны жить в подходящем core- или Nova-файле:
 
 - TG-style системы кладём в `code/`.
-- Nova-кастомизацию и Nova-owned системы оставляем в `modular_nova/`.
+- Nova-кастомизацию и Nova-owned системы оставляем в `former_nova_module_tree/`.
 - Иконки кладём в `icons/` или в уже существующую Nova-папку иконок для этой системы.
 - Звуки кладём в `sound/`.
 - Каждый новый `.dm` файл должен быть добавлен в `tgstation.dme`.
 
-Перед изменением перенесённой системы сначала ищите существующий тип в `code/` и `modular_nova/`. Большая часть старых модульных файлов была влита в уже существующие файлы типов.
+Перед изменением перенесённой системы сначала ищите существующий тип в `code/` и `former_nova_module_tree/`. Большая часть старых модульных файлов была влита в уже существующие файлы типов.
 
 ## Экономика
 
 Старые источники:
 
-- `modularhowling_void/code/economy/job_pay_rebalance.dm`
-- `modularhowling_void/code/economy/vending_price_rebalance.dm`
+- `former_howling_void_module_tree/code/economy/job_pay_rebalance.dm`
+- `former_howling_void_module_tree/code/economy/vending_price_rebalance.dm`
 
 Новые места:
 
@@ -32,7 +32,7 @@
 
 Старый источник:
 
-- `modularhowling_void/modules/modular_species/`
+- `former_howling_void_module_tree/modules/modular_species/`
 
 Новые места:
 
@@ -43,23 +43,23 @@
 - clothing-иконки Nabber: `icons/mob/clothing/species/nabber/`
 - item-иконки Nabber: `icons/obj/species/nabber/`
 - звуки Nabber: `sound/mobs/humanoids/nabber/`
-- GAGS fallback-конфиги Nabber: `modular_nova/modules/GAGS/json_configs/nabber_fallbacks/`
-- иконка aquatic organs: `modular_nova/modules/organs/icons/aquatic_organs.dmi`
-- Shadekin-иконки и органы: `modular_nova/modules/shadekin/`, `modular_nova/modules/bodyparts/` и существующие customization-файлы.
+- GAGS fallback-конфиги Nabber: `former_nova_module_tree/modules/GAGS/json_configs/nabber_fallbacks/`
+- иконка aquatic organs: `icons/organs/aquatic_organs.dmi`
+- Shadekin-иконки и органы: `former_nova_module_tree/modules/shadekin/`, `former_nova_module_tree/modules/bodyparts/` и существующие customization-файлы.
 
-Plural-файлы видов вроде `aquatics.dm`, `dullahans.dm` и `vulpkanins.dm` не оставлялись отдельными файлами. Их содержимое влито в соответствующие существующие species-файлы в `code/` или `modular_nova/`.
+Plural-файлы видов вроде `aquatics.dm`, `dullahans.dm` и `vulpkanins.dm` не оставлялись отдельными файлами. Их содержимое влито в соответствующие существующие species-файлы в `code/` или `former_nova_module_tree/`.
 
 ## Карго рядом с экономикой
 
 Старые источники:
 
-- `modularhowling_void/modules/cargo/supply_packs/`
+- `former_howling_void_module_tree/modules/cargo/supply_packs/`
 - armory/surplus cargo packs из старого ported content
 
 Новые места:
 
-- company cargo packs: `modular_nova/master_files/code/modules/cargo/packs/companies/`
-- surplus weapon crate entries: `modular_nova/modules/modular_weapons/code/cargo_crates/armory_guns.dm`
+- company cargo packs: `former_nova_module_tree/master_files/code/modules/cargo/packs/companies/`
+- surplus weapon crate entries: `code/modules/modular_weapons/cargo_crates/armory_guns.dm`
 
 Используйте существующие company pack-файлы вместо создания нового cargo-модуля.
 
@@ -81,7 +81,7 @@ Plural-файлы видов вроде `aquatics.dm`, `dullahans.dm` и `vulpka
 
 Старый источник:
 
-- `modularhowling_void/code/visual_fx/ported/`
+- `former_howling_void_module_tree/code/visual_fx/ported/`
 
 Новые места:
 
@@ -95,11 +95,11 @@ Plural-файлы видов вроде `aquatics.dm`, `dullahans.dm` и `vulpka
 
 Старый источник:
 
-- `modularhowling_void/modules/snouts/`
+- `former_howling_void_module_tree/modules/snouts/`
 
 Новые места:
 
-- snout accessory datums: `modular_nova/modules/customization/modules/mob/dead/new_player/sprite_accessories/snout.dm`
+- snout accessory datums: `code/modules/customization/mob/dead/new_player/sprite_accessories/snout.dm`
 - связанные define’ы: `code/__DEFINES/~nova_defines/DNA.dm`
 - DMI states морд влиты в существующие customization icon-файлы.
 
@@ -109,8 +109,8 @@ Plural-файлы видов вроде `aquatics.dm`, `dullahans.dm` и `vulpka
 
 Старые источники:
 
-- `modularhowling_void/modules/posters/`
-- `modularhowling_void/modules/ported_content/poster_contest/posters/`
+- `former_howling_void_module_tree/modules/posters/`
+- `former_howling_void_module_tree/modules/ported_content/poster_contest/posters/`
 
 Новые места:
 
@@ -125,14 +125,14 @@ Plural-файлы видов вроде `aquatics.dm`, `dullahans.dm` и `vulpka
 
 Старые источники:
 
-- `modularhowling_void/modules/police_modsuit/`
+- `former_howling_void_module_tree/modules/police_modsuit/`
 - MOD suit content из старого ported content
 
 Новые места:
 
 - policing MOD suit: `code/modules/mod/mod_theme_policing.dm`
 - frontline MOD suit: `code/modules/mod/mod_theme_frontline.dm`
-- customization entries MOD suits: `modular_nova/modules/customization/modules/mob/living/carbon/human/MOD_sprite_accessories/mod_themes.dm`
+- customization entries MOD suits: `code/modules/customization/mob/living/carbon/human/MOD_sprite_accessories/mod_themes.dm`
 - MOD suit icons: `icons/obj/clothing/modsuit/policing/` и `icons/obj/clothing/modsuit/frontline/`
 - звуки policing MOD suit: `sound/items/modsuit/policing/`
 
@@ -142,7 +142,7 @@ Plural-файлы видов вроде `aquatics.dm`, `dullahans.dm` и `vulpka
 
 Старый источник:
 
-- `modularhowling_void/modules/mapping/`
+- `former_howling_void_module_tree/modules/mapping/`
 
 Новое место:
 
@@ -154,11 +154,11 @@ Plural-файлы видов вроде `aquatics.dm`, `dullahans.dm` и `vulpka
 
 Старый источник:
 
-- `modularhowling_void/modules/items/storages/`
+- `former_howling_void_module_tree/modules/items/storages/`
 
 Новое место:
 
-- storage item definitions: `modular_nova/modules/modular_items/code/bags.dm`
+- storage item definitions: `code/modules/modular_items/bags.dm`
 
 Для небольших семейств предметов используйте существующие Nova modular item-файлы вместо восстановления отдельного storage-модуля.
 
@@ -166,12 +166,12 @@ Plural-файлы видов вроде `aquatics.dm`, `dullahans.dm` и `vulpka
 
 Старый источник:
 
-- `modularhowling_void/modules/interaction_menu/code/`
+- `former_howling_void_module_tree/modules/interaction_menu/code/`
 
 Новые места:
 
-- `modular_nova/modules/interaction_menu/code/additional_interactions.dm`
-- `modular_nova/modules/interaction_menu/code/item_interactions.dm`
+- `code/modules/interaction_menu/additional_interactions.dm`
+- `code/modules/interaction_menu/item_interactions.dm`
 
 Будущие interaction additions группируйте по смыслу: общие mob interactions отдельно, item-driven interactions отдельно.
 
@@ -179,12 +179,12 @@ Plural-файлы видов вроде `aquatics.dm`, `dullahans.dm` и `vulpka
 
 Старый источник:
 
-- `modularhowling_void/modules/clothing/`
+- `former_howling_void_module_tree/modules/clothing/`
 
 Новые места:
 
 - код обуви: `code/modules/clothing/shoes/boots.dm`
-- skirts and dresses: `modular_nova/master_files/code/modules/clothing/under/skirts_dresses.dm`
+- skirts and dresses: `code/modules/clothing/under/skirts_dresses.dm`
 - loadout и item additions влиты в существующие clothing/loadout-файлы.
 - иконки обуви: `icons/mob/clothing/feet.dmi`, `icons/obj/clothing/shoes.dmi` и Nova digi-footwear icons.
 - иконки skirts and dresses: существующие Nova skirt/dress DMI-файлы.
@@ -209,7 +209,7 @@ Plural-файлы видов вроде `aquatics.dm`, `dullahans.dm` и `vulpka
 
 Перед тем как считать порт завершённым:
 
-1. Найдите старые `modularhowling_void` пути в `tgstation.dme`, `code/`, `modular_nova/`, `_maps/` и config-файлах.
+1. Найдите старые `former_howling_void_module_tree` пути в `tgstation.dme`, `code/`, `former_nova_module_tree/`, `_maps/` и config-файлах.
 2. Убедитесь, что каждый новый `.dm` файл добавлен в `tgstation.dme`.
 3. Проверьте, что все referenced `.dmi`, `.ogg` и `.wav` файлы существуют.
 4. Data-only rebalance держите читаемыми таблицами, если разброс значений по файлам усложнит поддержку.

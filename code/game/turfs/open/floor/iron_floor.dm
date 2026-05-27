@@ -535,3 +535,9 @@
 	base_icon_state = "sepia"
 	desc = "Well, the flow of time is normal on these tiles, weird."
 	floor_tile = /obj/item/stack/tile/iron/sepia
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/turfs/open/floor/iron_floor.dm
+/turf/open/floor/iron/lavaland_atmos
+	initial_gas_mix = "LAVALAND_ATMOS"
+// END NOVA CORE MIGRATION: code/game/turfs/open/floor/iron_floor.dm

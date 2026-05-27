@@ -1246,3 +1246,14 @@
 ///Pre-core activated one for admin spawning.
 /obj/item/flashlight/lamp/space_bubble/preactivated
 	installed_pyro_core = TRUE
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/items/devices/flashlight.dm
+/obj/item/flashlight/flare/candle
+	/// Pollutant type for scented candles
+	var/scented_type
+
+/obj/item/flashlight/emp
+	special_desc_requirement = EXAMINE_CHECK_SYNDICATE
+	special_desc = "This flashlight is equipped with a miniature EMP generator."
+// END NOVA CORE MIGRATION: code/game/objects/items/devices/flashlight.dm

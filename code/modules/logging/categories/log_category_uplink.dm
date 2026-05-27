@@ -26,3 +26,11 @@
 	category = LOG_CATEGORY_UPLINK_SPY
 	config_flag = /datum/config_entry/flag/log_uplink
 	master_category = /datum/log_category/uplink
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/logging/categories/log_category_uplink.dm
+/datum/log_category/uplink_borer
+	category = LOG_CATEGORY_UPLINK_BORER
+	config_flag = /datum/config_entry/flag/log_uplink
+	master_category = /datum/log_category/uplink
+// END NOVA CORE MIGRATION: code/modules/logging/categories/log_category_uplink.dm

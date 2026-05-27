@@ -346,3 +346,12 @@
 
 /obj/item/razor/surgery/get_surgery_tool_overlay(tray_extended)
 	return "razor"
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/items/cosmetics.dm
+/obj/item/lipstick
+	icon =  'icons/salon/items.dmi'
+
+/obj/item/lipstick/syndie
+	icon =  'icons/obj/cosmetic.dmi' // We do not have an icon for this, use TG's instead of our override
+// END NOVA CORE MIGRATION: code/game/objects/items/cosmetics.dm

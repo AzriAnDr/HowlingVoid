@@ -175,3 +175,10 @@
 /datum/mood_event/completely_organic
 	description = "I'm completely organic, this is miserable!!"
 	mood_change = -8
+
+
+// BEGIN NOVA CORE MIGRATION: code/datums/mood_events/needs_events.dm
+/datum/mood_event/breakfast
+	mood_change = 6
+	timeout = 30 MINUTES
+// END NOVA CORE MIGRATION: code/datums/mood_events/needs_events.dm

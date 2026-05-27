@@ -396,3 +396,10 @@
 
 /datum/blood_type/random_chemical/type_key()
 	return reagent_type
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mob/living/blood_types.dm
+// Workaround to allow oil to replenish blood in synthetic humanoids
+/datum/blood_type/oil
+	restoration_chem = /datum/reagent/fuel/oil
+// END NOVA CORE MIGRATION: code/modules/mob/living/blood_types.dm

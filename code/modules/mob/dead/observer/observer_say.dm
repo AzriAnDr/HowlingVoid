@@ -61,6 +61,10 @@
 /mob/dead/observer/Hear(atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	var/atom/movable/to_follow = speaker
+	if(ismob(speaker))
+		var/mob/speaker_mob = speaker
+		if(is_say_blocked_by_shoo_ghost(speaker_mob, src))
+			return FALSE
 	if(radio_freq)
 		var/atom/movable/virtualspeaker/V = speaker
 

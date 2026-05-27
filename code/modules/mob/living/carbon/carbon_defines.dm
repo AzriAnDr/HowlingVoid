@@ -131,3 +131,10 @@
 	var/obscured_slots = NONE
 	/// Covered hide flags (hideflags that can be seen, BUT can't be interacted with)
 	var/covered_slots = NONE
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mob/living/carbon/carbon_defines.dm
+/mob/living/carbon
+/// Cooldown for the next smell
+	var/next_smell = 0
+// END NOVA CORE MIGRATION: code/modules/mob/living/carbon/carbon_defines.dm

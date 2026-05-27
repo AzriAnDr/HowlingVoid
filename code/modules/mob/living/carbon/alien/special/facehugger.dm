@@ -286,6 +286,8 @@
 		return FALSE
 	if(M.stat == DEAD)
 		return FALSE
+	if(HAS_TRAIT(M, TRAIT_XENO_IMMUNE))
+		return FALSE
 	if(M.get_organ_by_type(/obj/item/organ/alien/hivenode))
 		return FALSE
 	var/mob/living/carbon/C = M

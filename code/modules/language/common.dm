@@ -12,7 +12,7 @@
 	additional_syllable_low = 0
 	additional_syllable_high = 0
 
-	icon_state = "galcom"
+	icon_state = "solcommon"
 	// Default namelist is the human namelist, and common is the human language, so might as well.
 	// Feel free to remove this at some point because common can generate some pretty cool names.
 	always_use_default_namelist = TRUE

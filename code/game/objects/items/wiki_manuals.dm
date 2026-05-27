@@ -247,3 +247,15 @@
 
 #undef BOOK_WINDOW_BROWSE_SIZE
 #undef WIKI_PAGE_IFRAME
+
+
+// BEGIN NOVA CORE MIGRATION: code/game/objects/items/wiki_manuals.dm
+/obj/item/book/manual/wiki/security_space_law
+	name = "Corporate Regulations"
+	desc = "A set of Nanotrasen regulations for keeping law, order, and procedure followed within their space stations."
+	starting_title = "Corporate Regulations"
+	page_link = "Corporate_Regulations"
+
+/datum/objective_item/steal/traitor/space_law
+	name = "a book on corporate regulations"
+// END NOVA CORE MIGRATION: code/game/objects/items/wiki_manuals.dm

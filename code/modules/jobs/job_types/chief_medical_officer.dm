@@ -94,3 +94,9 @@
 	mask = /obj/item/clothing/mask/breath/medical
 	r_pocket = /obj/item/flashlight/pen/paramedic
 	internals_slot = ITEM_SLOT_SUITSTORE
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/chief_medical_officer.dm
+/datum/outfit/job/cmo
+	messenger = /obj/item/storage/backpack/messenger/med
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/chief_medical_officer.dm

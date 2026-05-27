@@ -406,7 +406,7 @@ const FunTab = (props) => {
               icon="oil-well"
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              content="Tap Ore Vents"
+              content={t('ui.secrets.tap_ore_vents')}
               onClick={() => act('ore_vents')}
             />
           </Stack.Item>
@@ -626,25 +626,25 @@ const FunForYouTab = (props) => {
 const TAB2NAME = [
   {
     titleKey: 'ui.secrets.tab_debugging',
-    blurbKey: 'ui.secrets.blurb_debugging',
+    blurbKey: 'ui.secrets.debugging_blurb',
     gauge: 5,
     component: DebuggingTab,
   },
   {
     titleKey: 'ui.secrets.tab_helpful',
-    blurbKey: 'ui.secrets.blurb_helpful',
+    blurbKey: 'ui.secrets.helpful_blurb',
     gauge: 25,
     component: HelpfulTab,
   },
   {
     titleKey: 'ui.secrets.tab_fun',
-    blurbKey: 'ui.secrets.blurb_fun',
+    blurbKey: 'ui.secrets.fun_blurb',
     gauge: 75,
     component: FunTab,
   },
   {
     titleKey: 'ui.secrets.tab_fun_for_you',
-    blurbKey: 'ui.secrets.blurb_fun_for_you',
+    blurbKey: 'ui.secrets.only_fun_for_you_blurb',
     gauge: 95,
     component: FunForYouTab,
   },
@@ -760,7 +760,7 @@ export const Secrets = (props) => {
             <Section
               fill={false}
               title={
-                `${t(TAB2NAME[tabIndex - 1].titleKey)} ${t('ui.common.or')}: ${t(TAB2NAME[tabIndex - 1].blurbKey)}`
+                `${t(TAB2NAME[tabIndex - 1].titleKey)}: ${t(TAB2NAME[tabIndex - 1].blurbKey)}`
               }
             >
               <TabComponent />

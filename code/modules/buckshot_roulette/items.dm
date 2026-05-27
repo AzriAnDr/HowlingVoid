@@ -114,7 +114,7 @@
 	name = "Magnifying glass"
 	desc = "A Magnifying glass."
 	use_desc = "Lets you inspect the shell currently chambered in the shotgun."
-	icon = 'modular_nova/modules/primitive_production/icons/prim_fun.dmi'
+	icon = 'icons/primitive_production/prim_fun.dmi'
 	icon_state = "magnifying_glass"
 
 /obj/item/buckshot_game/glass/use_on_shotgun(obj/item/gun/ballistic/shotgun/buckshot_game/gun, mob/living/carbon/human/player)

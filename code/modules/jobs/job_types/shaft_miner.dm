@@ -117,3 +117,9 @@
 		var/obj/item/flashlight/seclite/flashlight = new()
 		var/datum/component/seclite_attachable/light_component = accelerator.GetComponent(/datum/component/seclite_attachable)
 		light_component.add_light(flashlight)
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/jobs/job_types/shaft_miner.dm
+/datum/outfit/job/miner
+	messenger = /obj/item/storage/backpack/messenger/explorer
+// END NOVA CORE MIGRATION: code/modules/jobs/job_types/shaft_miner.dm

@@ -834,3 +834,18 @@
 
 #undef BLOOD_DRIP_RATE_MOD
 #undef DRUNK_POWER_TO_BLOOD_ALCOHOL
+
+
+// BEGIN NOVA CORE MIGRATION: code/modules/mob/living/blood.dm
+// This is the additional code to handle blood originating from monkeys, to make it so
+// there's a way to track if blood was extracted from a monkey or not.
+/mob/living/carbon/get_blood_data()
+	. = ..()
+	.[MONKEY_ORIGINS] = ismonkey(src)
+
+
+/datum/reagent/blood/on_merge(list/mix_data)
+	. = ..()
+	if(data && mix_data)
+		data[MONKEY_ORIGINS] = data[MONKEY_ORIGINS] || mix_data[MONKEY_ORIGINS]
+// END NOVA CORE MIGRATION: code/modules/mob/living/blood.dm
