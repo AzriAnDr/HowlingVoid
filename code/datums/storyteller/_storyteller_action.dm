@@ -242,7 +242,7 @@
 	if(!istype(ruleset))
 		return null
 	if(!ruleset.prepare_execution(population_size, antag_candidates))
-		owner.record_decision("Roundstart [name] preparation failed: [ruleset.log_data || "unknown reason"]")
+		owner.record_decision("Roundstart [name] preparation failed: [ruleset.log_data || "unknown reason"]", owner.build_dynamic_ruleset_trace_data(ruleset, population_size, length(antag_candidates), list("selection_context" = STORYTELLER_CONTEXT_ROUNDSTART), ruleset.selected_minds))
 		qdel(ruleset)
 		return null
 	return ruleset
@@ -252,7 +252,7 @@
 		return FALSE
 	ruleset.execute()
 	owner.track_dynamic_ruleset(ruleset)
-	owner.record_action_execution(src, "Roundstart minds: [owner.format_selected_minds(ruleset.selected_minds)]", spend_budget = FALSE)
+	owner.record_action_execution(src, "Roundstart minds: [owner.format_selected_minds(ruleset.selected_minds)]", spend_budget = FALSE, extra_data = owner.build_dynamic_ruleset_trace_data(ruleset, length(ruleset.selected_minds), length(ruleset.selected_minds), list("selection_context" = STORYTELLER_CONTEXT_ROUNDSTART), ruleset.selected_minds))
 	return TRUE
 
 /datum/storyteller/action/dynamic_roundstart/force_execute(datum/controller/subsystem/storyteller/owner, datum/storyteller/state_snapshot/snapshot, list/context_data)
@@ -411,14 +411,14 @@
 
 	var/player_count = get_active_player_count(afk_check = TRUE)
 	if(!running.prepare_execution(player_count, list(latejoiner)))
-		owner.record_decision("Latejoin [name] failed: [running.log_data || "unknown reason"]")
+		owner.record_decision("Latejoin [name] failed: [running.log_data || "unknown reason"]", owner.build_dynamic_ruleset_trace_data(running, player_count, 1, context_data, running.selected_minds))
 		qdel(running)
 		return FALSE
 
 	running.execute()
 	owner.track_dynamic_ruleset(running)
 	owner.note_latejoin_hostile_trigger()
-	owner.record_action_execution(src, "Latejoin target: [key_name(latejoiner)]")
+	owner.record_action_execution(src, "Latejoin target: [key_name(latejoiner)]", extra_data = owner.build_dynamic_ruleset_trace_data(running, player_count, 1, context_data, running.selected_minds))
 	return TRUE
 
 /datum/storyteller/action/dynamic_latejoin/force_execute(datum/controller/subsystem/storyteller/owner, datum/storyteller/state_snapshot/snapshot, list/context_data)
@@ -488,20 +488,24 @@
 	var/player_count = get_active_player_count(afk_check = TRUE)
 	var/list/candidates = running.collect_candidates()
 	if(!running.prepare_execution(player_count, candidates))
-		owner.record_decision("Midround [name] failed: [running.log_data || "unknown reason"]")
+		owner.record_decision("Midround [name] failed: [running.log_data || "unknown reason"]", owner.build_dynamic_ruleset_trace_data(running, player_count, length(candidates), context_data, running.selected_minds))
 		qdel(running)
 		return FALSE
 
 	running.execute()
 	owner.track_dynamic_ruleset(running)
-	owner.record_action_execution(src, "Midround minds: [owner.format_selected_minds(running.selected_minds)]")
+	owner.record_action_execution(src, "Midround minds: [owner.format_selected_minds(running.selected_minds)]", extra_data = owner.build_dynamic_ruleset_trace_data(running, player_count, length(candidates), context_data, running.selected_minds))
 	return TRUE
 
 /datum/storyteller/action/dynamic_midround/force_execute(datum/controller/subsystem/storyteller/owner, datum/storyteller/state_snapshot/snapshot, list/context_data)
 	var/mob/admin = context_data["admin_user"]
 	if(!SSdynamic.force_run_midround(dynamic_ruleset_type, alert_admins_on_fail = TRUE, admin = admin, bypass_preference_checks = !!context_data["force"]))
 		return FALSE
-	owner.record_action_execution(src, "Forced midround execution", spend_budget = FALSE)
+	owner.record_action_execution(src, "Forced midround execution", spend_budget = FALSE, extra_data = owner.build_storyteller_trace_data(list(
+		"action" = owner.get_storyteller_action_trace_data(src),
+		"dynamicRulesetType" = "[dynamic_ruleset_type]",
+		"forced" = TRUE,
+	), snapshot, context_data))
 	return TRUE
 
 /datum/storyteller/action/dynamic_midround/from_living_traitor
@@ -771,7 +775,9 @@
 	if(!owner.get_event_control(event_control_type))
 		return FALSE
 	force_event_async(event_control_type, "the storyteller")
-	owner.record_action_execution(src)
+	owner.record_action_execution(src, extra_data = owner.build_storyteller_trace_data(list(
+		"eventControlType" = "[event_control_type]",
+	), snapshot, context_data))
 	return TRUE
 
 /datum/storyteller/action/random_event/stray_cargo
@@ -1679,10 +1685,12 @@
 
 /datum/storyteller/action/negative/timed_modifier/engineering_power_instability/get_modifier_description(datum/controller/subsystem/storyteller/owner, datum/storyteller/state_snapshot/snapshot, list/context_data, modifier_multiplier, duration)
 	var/loss_percent = round((1 - modifier_multiplier) * 100)
-	return "The crystal has drifted into an unstable harmonic band. Grid output is [loss_percent]% below baseline and internal wear is accumulating faster than normal."
+	var/waste_percent = round((clamp(1 + ((1 - modifier_multiplier) * 0.7), 1, 1.35) - 1) * 100)
+	return "The crystal has drifted into an unstable harmonic band. Grid output is [loss_percent]% below baseline, waste output is elevated by [waste_percent]%, and internal wear is accumulating faster than normal."
 
 /datum/storyteller/action/negative/timed_modifier/engineering_power_instability/get_dispatch_message(datum/controller/subsystem/storyteller/owner, datum/storyteller/state_snapshot/snapshot, list/context_data, modifier_multiplier, duration)
-	return "Engine telemetry has entered an unstable band. Supermatter efficiency is reduced to [round(modifier_multiplier, 0.01)]x and crystal wear is rising for [DisplayTimeText(duration, round_seconds_to = 1)]."
+	var/waste_multiplier = round(clamp(1 + ((1 - modifier_multiplier) * 0.7), 1, 1.35), 0.01)
+	return "Engine telemetry has entered an unstable band. Supermatter efficiency is reduced to [round(modifier_multiplier, 0.01)]x, waste output is elevated to [waste_multiplier]x, and crystal wear is rising for [DisplayTimeText(duration, round_seconds_to = 1)]."
 
 /datum/storyteller/action/negative/timed_modifier/engineering_power_instability/get_effective_weight(datum/controller/subsystem/storyteller/owner)
 	var/base_weight = ..()

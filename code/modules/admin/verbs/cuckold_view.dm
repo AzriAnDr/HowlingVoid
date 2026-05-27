@@ -9,6 +9,9 @@ ADMIN_VERB(view_cuckold, R_ADMIN, "Cuckold View", "Lets you see around another p
 	var/mob/choice = tgui_input_list(user, "Choose a client to see", "Client Selection", GLOB.player_list)
 	if(!choice?.client)
 		return
+	if(is_admin_shoo_ghost_protected(choice))
+		to_chat(user, span_warning("[choice] is protected by Admin Shoo Ghost."))
+		return
 
 	var/client/choice_client = choice.client
 	var/popup_name = "adminview[choice_client.ckey]"
@@ -71,6 +74,12 @@ ADMIN_VERB(view_cuckold, R_ADMIN, "Cuckold View", "Lets you see around another p
 		return
 
 	var/atom/focus = cuckold_view_target || mob
+	if(ismob(focus))
+		var/mob/focus_mob = focus
+		if(is_admin_shoo_ghost_protected(focus_mob))
+			cuckold_view_screen.vis_contents = null
+			return
+
 	var/turf/focus_turf = get_turf(focus)
 	if(!focus_turf)
 		return
@@ -94,6 +103,8 @@ ADMIN_VERB(view_cuckold, R_ADMIN, "Cuckold View", "Lets you see around another p
 	if(!cuckold_view_screen || !length(cuckold_view_screen.viewers_to_huds))
 		return
 	if(!source || !speech_args)
+		return
+	if(is_admin_shoo_ghost_protected(source))
 		return
 
 	var/raw_message = speech_args[SPEECH_MESSAGE]

@@ -1141,10 +1141,29 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 			continue
 		panel_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
+	var/list/structured_tabs = list()
+	if(prefs && prefs.statpanel_tab_structured_initialized && islist(prefs.statpanel_tab_structured))
+		structured_tabs = prefs.statpanel_tab_structured
+	else
+		structured_tabs = list("Status", "Favorites", "Settings")
+		for(var/tab_name in panel_tabs)
+			if(istext(tab_name) && length(tab_name))
+				structured_tabs |= tab_name
+		if(holder)
+			structured_tabs |= list("MC", "Tickets", "SDQL2")
+		structured_tabs = unique_list(structured_tabs)
+	var/list/tab_prefs = list(
+		"order" = (prefs && islist(prefs.statpanel_tab_order)) ? prefs.statpanel_tab_order : list(),
+		"hidden" = (prefs && islist(prefs.statpanel_tab_hidden)) ? prefs.statpanel_tab_hidden : list(),
+		"colors" = (prefs && islist(prefs.statpanel_tab_colors)) ? prefs.statpanel_tab_colors : list(),
+		"structured" = structured_tabs,
+		"max_buttons_per_row" = (prefs && islist(prefs.statpanel_tab_max_buttons_per_row)) ? prefs.statpanel_tab_max_buttons_per_row : list(),
+	)
 	src.stat_panel.send_message("init_verbs", list(
 		"panel_tabs" = panel_tabs,
 		"verblist" = verblist,
 		"favorites" = get_statpanel_favorites_payload(),
+		"tab_prefs" = tab_prefs,
 	))
 
 /client/proc/send_statpanel_favorites()
@@ -1292,6 +1311,89 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 			prefs.set_statpanel_favorites(validated)
 			prefs.save_preferences()
 			send_statpanel_favorites()
+			return
+		if("Update-Tab-Preferences")
+			if(!prefs || !islist(payload))
+				return
+			var/list/order = payload["order"]
+			var/list/hidden = payload["hidden"]
+			var/list/colors = payload["colors"]
+			var/list/structured = payload["structured"]
+			var/list/max_buttons_per_row = payload["max_buttons_per_row"]
+
+			if(!islist(order))
+				order = list()
+			if(!islist(hidden))
+				hidden = list()
+			if(!islist(colors))
+				colors = list()
+			if(!islist(structured))
+				structured = list()
+			if(!islist(max_buttons_per_row))
+				max_buttons_per_row = list()
+
+			var/list/clean_order = list()
+			for(var/tab_name in order)
+				if(!istext(tab_name))
+					continue
+				var/cleaned_tab = sanitize_text(trim(tab_name, 64), "")
+				if(length(cleaned_tab))
+					clean_order += cleaned_tab
+			prefs.statpanel_tab_order = unique_list(clean_order)
+
+			var/list/clean_hidden = list()
+			for(var/hidden_tab in hidden)
+				if(!istext(hidden_tab))
+					continue
+				var/cleaned_hidden = sanitize_text(trim(hidden_tab, 64), "")
+				if(length(cleaned_hidden))
+					clean_hidden += cleaned_hidden
+			prefs.statpanel_tab_hidden = unique_list(clean_hidden)
+
+			var/list/clean_colors = list()
+			for(var/color_tab in colors)
+				if(!istext(color_tab))
+					continue
+				var/color_value = colors[color_tab]
+				if(!istext(color_value))
+					continue
+				var/cleaned_color_tab = sanitize_text(trim(color_tab, 64), "")
+				var/cleaned_color_value = sanitize_text(trim(color_value, 32), "")
+				if(length(cleaned_color_tab) && length(cleaned_color_value))
+					clean_colors[cleaned_color_tab] = cleaned_color_value
+			prefs.statpanel_tab_colors = clean_colors
+
+			var/list/clean_structured = list()
+			for(var/grouped_tab in structured)
+				if(!istext(grouped_tab))
+					continue
+				var/cleaned_grouped = sanitize_text(trim(grouped_tab, 64), "")
+				if(length(cleaned_grouped))
+					clean_structured += cleaned_grouped
+			prefs.statpanel_tab_structured = unique_list(clean_structured)
+			prefs.statpanel_tab_structured_initialized = TRUE
+
+			var/list/clean_max_buttons = list()
+			for(var/limited_tab in max_buttons_per_row)
+				if(!istext(limited_tab))
+					continue
+				var/cleaned_limited_tab = sanitize_text(trim(limited_tab, 64), "")
+				if(!length(cleaned_limited_tab))
+					continue
+				var/raw_button_limit = max_buttons_per_row[limited_tab]
+				var/button_limit
+				if(isnum(raw_button_limit))
+					button_limit = raw_button_limit
+				else if(istext(raw_button_limit))
+					button_limit = text2num(raw_button_limit)
+				if(!isnum(button_limit))
+					continue
+				button_limit = sanitize_integer(button_limit, 1, 20, 0)
+				if(button_limit)
+					clean_max_buttons[cleaned_limited_tab] = button_limit
+			prefs.statpanel_tab_max_buttons_per_row = clean_max_buttons
+
+			prefs.save_preferences()
 			return
 
 /// Checks if this client has met the days requirement passed in, or if

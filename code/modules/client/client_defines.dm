@@ -14,6 +14,18 @@
 /datum/preferences
 	///Statpanel verbs marked as favorites by this player
 	var/list/statpanel_favorites = list()
+	///Display order for custom statpanel tabs.
+	var/list/statpanel_tab_order = list()
+	///Statpanel tabs hidden by this player.
+	var/list/statpanel_tab_hidden = list()
+	///Active-tab colors by statpanel tab name.
+	var/list/statpanel_tab_colors = list()
+	///Statpanel tabs that should render grouped verb sections.
+	var/list/statpanel_tab_structured = list()
+	///Whether grouped tab settings were explicitly saved.
+	var/statpanel_tab_structured_initialized = FALSE
+	///Maximum button count per row by statpanel tab name.
+	var/list/statpanel_tab_max_buttons_per_row = list()
 
 /client
 

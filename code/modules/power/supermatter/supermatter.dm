@@ -478,6 +478,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	data["gas_temperature"] = absorbed_gasmix.temperature
 	data["gas_total_moles"] = absorbed_gasmix.total_moles()
 	data["storytellerPowerModifier"] = get_storyteller_engineering_modifier()
+	data["storytellerWasteModifier"] = get_storyteller_engineering_waste_modifier()
 	data["storytellerPowerRemaining"] = SSstoryteller?.get_modifier_remaining(STORYTELLER_MOD_ENGINEERING_POWER) || 0
 	data["storytellerPowerLabel"] = SSstoryteller?.get_modifier_label(STORYTELLER_MOD_ENGINEERING_POWER)
 	data["storytellerPowerDescription"] = SSstoryteller?.get_modifier_description(STORYTELLER_MOD_ENGINEERING_POWER)
@@ -795,9 +796,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return
 	/// Tell people the heat output in energy. More informative than telling them the heat multiplier.
 	var/additive_waste_multiplier = list()
+	var/storyteller_waste_modifier = get_storyteller_engineering_waste_modifier()
 	additive_waste_multiplier[SM_WASTE_BASE] = 1
 	additive_waste_multiplier[SM_WASTE_GAS] = gas_heat_modifier
 	additive_waste_multiplier[SM_WASTE_SOOTHED] = -0.2 * psy_coeff
+	if(storyteller_waste_modifier != 1)
+		additive_waste_multiplier["Storyteller Harmonic Waste"] = storyteller_waste_modifier - 1
 
 	for (var/waste_type in additive_waste_multiplier)
 		waste_multiplier += additive_waste_multiplier[waste_type]
@@ -880,6 +884,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(!SSstoryteller)
 		return 1
 	return clamp(SSstoryteller.get_modifier_value(STORYTELLER_MOD_ENGINEERING_POWER, 1), 0.25, 2)
+
+/obj/machinery/power/supermatter_crystal/proc/get_storyteller_engineering_waste_modifier()
+	var/storyteller_power_modifier = get_storyteller_engineering_modifier()
+	if(storyteller_power_modifier >= 1)
+		return 1
+	return round(clamp(1 + ((1 - storyteller_power_modifier) * 0.7), 1, 1.35), 0.01)
 
 /**
  * Sets the delam of our sm.
