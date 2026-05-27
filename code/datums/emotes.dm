@@ -148,6 +148,10 @@
 		for(var/mob/viewer as anything in viewers(user))
 			if(isnull(viewer.client))
 				continue
+			if(isobserver(viewer))
+				var/mob/dead/observer/ghost_viewer = viewer
+				if(is_say_blocked_by_shoo_ghost(user, ghost_viewer))
+					continue
 			if(!is_important && viewer != user && (!is_visual || !is_audible))
 				if(is_audible && HAS_TRAIT(viewer, TRAIT_DEAF))
 					continue
@@ -257,6 +261,10 @@
 		for(var/mob/ghost as anything in GLOB.dead_mob_list - viewers(get_turf(user)))
 			if(isnull(ghost.client) || isnewplayer(ghost))
 				continue
+			if(isobserver(ghost))
+				var/mob/dead/observer/ghost_viewer = ghost
+				if(is_say_blocked_by_shoo_ghost(user, ghost_viewer))
+					continue
 			if(!(get_chat_toggles(ghost.client) & CHAT_GHOSTSIGHT))
 				continue
 			// NOVA EDIT ADDITION START - Pref checked emotes

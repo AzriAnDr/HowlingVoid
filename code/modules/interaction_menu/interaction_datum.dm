@@ -16,10 +16,16 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 	var/distance_allowed = FALSE
 	/// A list of possible messages displayed loaded by the JSON.
 	var/list/message = list()
+	/// Localized variants of [message], keyed by panel language.
+	var/list/localized_messages = list()
 	/// A list of possible messages displayed directly to the USER.
 	var/list/user_messages = list()
+	/// Localized variants of [user_messages], keyed by panel language.
+	var/list/localized_user_messages = list()
 	/// A list of possible messages displayed directly to the TARGET.
 	var/list/target_messages = list()
+	/// Localized variants of [target_messages], keyed by panel language.
+	var/list/localized_target_messages = list()
 	/// What category this interaction will fall under in the menu.
 	var/category = INTERACTION_CAT_HIDE
 	/// Optional localization key for the interaction category in the UI.
@@ -174,6 +180,173 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 		return "[type]"
 	return "name:[name]"
 
+/datum/interaction/proc/load_localized_message_list(language, field, value)
+	if(!length(language))
+		return
+	var/list/localized_list = sanitize_islist(value, list())
+	if(!length(localized_list))
+		return
+	switch(field)
+		if("message")
+			localized_messages[language] = localized_list
+		if("user_messages")
+			localized_user_messages[language] = localized_list
+		if("target_messages")
+			localized_target_messages[language] = localized_list
+
+/datum/interaction/proc/load_localization_data(language, list/localization)
+	if(!islist(localization))
+		return
+	load_localized_message_list(language, "message", localization["message"])
+	load_localized_message_list(language, "user_messages", localization["user_messages"])
+	load_localized_message_list(language, "target_messages", localization["target_messages"])
+
+/datum/interaction/proc/get_message_options_for_language(list/default_messages, list/localized_options, language)
+	if(length(language) && islist(localized_options))
+		var/list/language_options = localized_options[language]
+		if(length(language_options))
+			return language_options
+	return default_messages
+
+/datum/interaction/proc/get_message_option_for_language(list/default_messages, list/localized_options, language, message_index)
+	var/list/language_options = get_message_options_for_language(default_messages, localized_options, language)
+	if(!length(language_options))
+		return null
+	if(message_index && message_index <= length(language_options))
+		return language_options[message_index]
+	return pick(language_options)
+
+/datum/interaction/proc/get_message_language(mob/reader)
+	return get_panel_language_value(reader, "interaction")
+
+/proc/hides_interaction_messages_from_ghosts(mob/source)
+	return !!source?.client?.prefs?.read_preference(/datum/preference/toggle/erp/hide_interactions_from_ghosts)
+
+/datum/interaction/proc/format_interaction_message(message_text, mob/living/carbon/human/user, mob/living/carbon/human/target, obj/item/display_item)
+	message_text = replacetext(replacetext(message_text, "%TARGET%", "[target]"), "%USER%", "[user]")
+	message_text = replacetext(replacetext(message_text, "%TARGET_PRONOUN_THEIR%", target.p_their()), "%TARGET_PRONOUN_THEIRS%", target.p_theirs())
+	message_text = replacetext(replacetext(message_text, "%USER_PRONOUN_THEIR%", user.p_their()), "%USER_PRONOUN_THEIRS%", user.p_theirs())
+	message_text = replacetext(replacetext(message_text, "%TARGET_PRONOUN_THEM%", target.p_them()), "%USER_PRONOUN_THEM%", user.p_them())
+	message_text = replacetext(replacetext(message_text, "%TARGET_PRONOUN_THEY%", target.p_they()), "%USER_PRONOUN_THEY%", user.p_they())
+	return replacetext(message_text, "%ITEM%", display_item ? "[display_item.name]" : "item")
+
+/datum/interaction/proc/format_visible_interaction_message(language, message_index, mob/living/carbon/human/user, mob/living/carbon/human/target, obj/item/display_item)
+	var/msg = get_message_option_for_language(message, localized_messages, language, message_index)
+	if(!msg)
+		return null
+	// manual_emote and the lewd visible message both prepend the acting mob separately.
+	msg = trim(replacetext(replacetext(msg, "%TARGET%", "[target]"), "%USER%", ""), INTERACTION_MAX_CHAR)
+	return format_interaction_message(msg, user, target, display_item)
+
+/datum/interaction/proc/get_visible_interaction_language_groups(mob/living/carbon/human/user, list/ignored_mobs)
+	var/list/language_groups = list()
+	var/list/hearers = mob_only_listeners(get_hearers_in_view(DEFAULT_MESSAGE_RANGE, user))
+	if(hides_interaction_messages_from_ghosts(user))
+		for(var/mob/hearing_mob as anything in hearers)
+			if(isobserver(hearing_mob))
+				ignored_mobs += hearing_mob
+	hearers -= ignored_mobs
+	for(var/mob/hearing_mob as anything in hearers)
+		if(!hearing_mob?.client)
+			continue
+		var/language = get_message_language(hearing_mob)
+		if(!language_groups[language])
+			language_groups[language] = list()
+		language_groups[language] += hearing_mob
+	return list("groups" = language_groups, "hearers" = hearers)
+
+/datum/interaction/proc/build_ignored_mobs_except_language_group(list/base_ignored_mobs, list/hearers, list/language_group)
+	var/list/group_ignored_mobs = base_ignored_mobs.Copy()
+	for(var/mob/hearing_mob as anything in hearers)
+		if(!(hearing_mob in language_group))
+			group_ignored_mobs += hearing_mob
+	return group_ignored_mobs
+
+/datum/interaction/proc/show_localized_manual_emote_ghosts(message_index, mob/living/carbon/human/user, mob/living/carbon/human/target, obj/item/display_item)
+	if(hides_interaction_messages_from_ghosts(user))
+		return
+	var/origin_turf = get_turf(user)
+	for(var/mob/ghost as anything in GLOB.dead_mob_list)
+		if(!ghost.client || isnewplayer(ghost))
+			continue
+		if(!(get_chat_toggles(ghost.client) & CHAT_GHOSTSIGHT) || (ghost in viewers(origin_turf, null)))
+			continue
+		var/ghost_msg = format_visible_interaction_message(get_message_language(ghost), message_index, user, target, display_item)
+		if(!ghost_msg)
+			continue
+		ghost.show_message("[FOLLOW_LINK(ghost, user)] <b>[user]</b> [ghost_msg]")
+
+/datum/interaction/proc/show_localized_visible_interaction_message(message_index, mob/living/carbon/human/user, mob/living/carbon/human/target, obj/item/display_item, list/ignored_mobs)
+	var/list/base_ignored_mobs = islist(ignored_mobs) ? ignored_mobs.Copy() : list()
+	var/list/language_payload = get_visible_interaction_language_groups(user, base_ignored_mobs)
+	var/list/language_groups = language_payload["groups"]
+	var/list/hearers = language_payload["hearers"]
+
+	if(!lewd)
+		var/log_msg = format_visible_interaction_message(get_message_language(user), message_index, user, target, display_item)
+		if(log_msg && user.client)
+			user.log_message(log_msg, LOG_EMOTE)
+
+	for(var/language in language_groups)
+		var/list/language_group = language_groups[language]
+		var/msg = format_visible_interaction_message(language, message_index, user, target, display_item)
+		if(!msg)
+			continue
+		var/list/group_ignored_mobs = build_ignored_mobs_except_language_group(base_ignored_mobs, hearers, language_group)
+		if(lewd)
+			user.visible_message(span_purple("[user] [msg]"), ignored_mobs = group_ignored_mobs)
+		else
+			user.visible_message(msg, ignored_mobs = group_ignored_mobs, visible_message_flags = EMOTE_MESSAGE)
+
+	if(!lewd)
+		show_localized_manual_emote_ghosts(message_index, user, target, display_item)
+
+/datum/interaction/proc/show_localized_subtler_interaction_message(message_index, mob/living/carbon/human/user, mob/living/carbon/human/target, obj/item/display_item)
+	if(user.stat != CONSCIOUS)
+		to_chat(user, span_warning("You can't emote at this time."))
+		return FALSE
+	if(SSdbcore.IsConnected() && is_banned_from(user, "emote"))
+		to_chat(user, span_warning("You cannot send subtle emotes (banned)."))
+		return FALSE
+	if(user.client?.prefs.muted & MUTE_IC)
+		to_chat(user, span_warning("You cannot send IC messages (muted)."))
+		return FALSE
+
+	var/log_msg = format_visible_interaction_message(get_message_language(user), message_index, user, target, display_item)
+	if(!log_msg)
+		return FALSE
+	user.log_message(log_msg, LOG_SUBTLER)
+
+	var/list/receivers = get_hearers_in_view(1, user) - GLOB.dead_mob_list
+
+	var/obj/effect/overlay/holo_pad_hologram/hologram = GLOB.hologram_impersonators[user]
+	if(hologram)
+		receivers |= get_hearers_in_view(1, hologram)
+
+	for(var/obj/effect/overlay/holo_pad_hologram/iterating_hologram in receivers)
+		if(iterating_hologram?.Impersonation?.client)
+			receivers |= iterating_hologram.Impersonation
+	for(var/obj/item/dullahan_relay/dullahan in receivers)
+		receivers -= dullahan
+		receivers += dullahan.owner
+
+	for(var/mob/receiver in receivers)
+		if(!receiver?.client)
+			continue
+		if(!receiver.client?.prefs?.read_preference(/datum/preference/toggle/erp))
+			continue
+		var/receiver_msg = format_visible_interaction_message(get_message_language(receiver), message_index, user, target, display_item)
+		if(!receiver_msg)
+			continue
+		var/space = should_have_space_before_emote(html_decode(receiver_msg)[1]) ? " " : ""
+		var/subtler_message = span_subtler("<b>[user]</b>[space]<i>[user.apply_message_emphasis(receiver_msg)]</i>")
+		receiver.show_message(subtler_message, alt_msg = subtler_message)
+		if(!isobserver(receiver))
+			var/datum/preferences/prefs = receiver.client?.prefs
+			if(prefs && prefs.read_preference(/datum/preference/toggle/subtler_sound))
+				receiver.playsound_local(get_turf(receiver), 'sound/effects/achievement/glockenspiel_ping.ogg', 50)
+	return TRUE
+
 /proc/interaction_json_to_typepath(value, expected_parent)
 	if(ispath(value))
 		if(ispath(value, expected_parent))
@@ -308,44 +481,36 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 	if(!islist(message) && istext(message))
 		message_admins("Deprecated message handling for '[html_encode(name)]'. Correct format is a list with one entry. This message will only show once.")
 		message = list(message)
-	var/msg = pick(message)
-	// We replace %USER% with nothing because manual_emote already prepends it.
-	msg = trim(replacetext(replacetext(msg, "%TARGET%", "[target]"), "%USER%", ""), INTERACTION_MAX_CHAR)
-	msg = replacetext(replacetext(msg, "%TARGET_PRONOUN_THEIR%", target.p_their()), "%TARGET_PRONOUN_THEIRS%", target.p_theirs())
-	msg = replacetext(replacetext(msg, "%USER_PRONOUN_THEIR%", user.p_their()), "%USER_PRONOUN_THEIRS%", user.p_theirs())
-	msg = replacetext(replacetext(msg, "%TARGET_PRONOUN_THEM%", target.p_them()), "%USER_PRONOUN_THEM%", user.p_them())
-	msg = replacetext(replacetext(msg, "%TARGET_PRONOUN_THEY%", target.p_they()), "%USER_PRONOUN_THEY%", user.p_they())
-	msg = replacetext(msg, "%ITEM%", display_item ? "[display_item.name]" : "item")
+	if(!length(message))
+		message_admins("Interaction had an empty message list. '[html_encode(name)]'")
+		return
+	var/message_index = rand(1, length(message))
 
 	if(lewd)
+		var/msg = format_visible_interaction_message(get_message_language(user), message_index, user, target, display_item)
+		if(!msg)
+			return
 		if(use_subtler)
-			user.emote("subtler", type_override = /datum/emote/living/subtler::emote_type | EMOTE_LEWD, message = msg, intentional = TRUE)
+			show_localized_subtler_interaction_message(message_index, user, target, display_item)
 		else
 			var/list/ignoring_mobs = list()
 			for(var/mob/not_interested in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, user))
 				if(!not_interested.client?.prefs?.read_preference(/datum/preference/toggle/erp))
 					ignoring_mobs += not_interested
-			user.visible_message(span_purple("[user] [msg]"), ignored_mobs = ignoring_mobs)
+			show_localized_visible_interaction_message(message_index, user, target, display_item, ignoring_mobs)
 			user.log_message(msg, LOG_EMOTE)
 	else
-		user.manual_emote(msg)
+		if(user.stat == CONSCIOUS)
+			show_localized_visible_interaction_message(message_index, user, target, display_item)
 
 	if(user_messages.len)
-		var/user_msg = pick(user_messages)
-		user_msg = replacetext(replacetext(user_msg, "%TARGET%", "[target]"), "%USER%", "[user]")
-		user_msg = replacetext(replacetext(user_msg, "%TARGET_PRONOUN_THEIR%", target.p_their()), "%TARGET_PRONOUN_THEIRS%", target.p_theirs())
-		user_msg = replacetext(replacetext(user_msg, "%USER_PRONOUN_THEIR%", user.p_their()), "%USER_PRONOUN_THEIRS%", user.p_theirs())
-		user_msg = replacetext(replacetext(user_msg, "%TARGET_PRONOUN_THEM%", target.p_them()), "%USER_PRONOUN_THEM%", user.p_them())
-		user_msg = replacetext(replacetext(user_msg, "%TARGET_PRONOUN_THEY%", target.p_they()), "%USER_PRONOUN_THEY%", user.p_they())
+		var/list/user_message_options = get_message_options_for_language(user_messages, localized_user_messages, get_message_language(user))
+		var/user_msg = format_interaction_message(pick(user_message_options), user, target, display_item)
 		to_chat(user, user_msg)
 
 	if(target_messages.len)
-		var/target_msg = pick(target_messages)
-		target_msg = replacetext(replacetext(target_msg, "%TARGET%", "[target]"), "%USER%", "[user]")
-		target_msg = replacetext(replacetext(target_msg, "%TARGET_PRONOUN_THEIR%", target.p_their()), "%TARGET_PRONOUN_THEIRS%", target.p_theirs())
-		target_msg = replacetext(replacetext(target_msg, "%USER_PRONOUN_THEIR%", user.p_their()), "%USER_PRONOUN_THEIRS%", user.p_theirs())
-		target_msg = replacetext(replacetext(target_msg, "%TARGET_PRONOUN_THEM%", target.p_them()), "%USER_PRONOUN_THEM%", user.p_them())
-		target_msg = replacetext(replacetext(target_msg, "%TARGET_PRONOUN_THEY%", target.p_they()), "%USER_PRONOUN_THEY%", user.p_they())
+		var/list/target_message_options = get_message_options_for_language(target_messages, localized_target_messages, get_message_language(target))
+		var/target_msg = format_interaction_message(pick(target_message_options), user, target, display_item)
 		to_chat(target, target_msg)
 
 	if(sound_use)
@@ -458,6 +623,8 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 		distance_allowed = sanitize_integer(json["distance_allowed"], 0, 1, 0)
 	if("message" in json)
 		message = sanitize_islist(json["message"], list("json error"))
+	if("message_ru" in json)
+		load_localized_message_list("russian", "message", json["message_ru"])
 	if("category" in json)
 		category = sanitize_text(json["category"])
 	if("category_translation_key" in json)
@@ -479,6 +646,8 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 
 	if("user_messages" in json)
 		user_messages = sanitize_islist(json["user_messages"], list())
+	if("user_messages_ru" in json)
+		load_localized_message_list("russian", "user_messages", json["user_messages_ru"])
 	if("user_required_parts" in json)
 		user_required_parts = sanitize_islist(json["user_required_parts"], list())
 	if("user_required_any_parts" in json)
@@ -495,6 +664,8 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 		user_pain = load_effect_value(json["user_pain"])
 	if("target_messages" in json)
 		target_messages = sanitize_islist(json["target_messages"], list())
+	if("target_messages_ru" in json)
+		load_localized_message_list("russian", "target_messages", json["target_messages_ru"])
 	if("target_required_parts" in json)
 		target_required_parts = sanitize_islist(json["target_required_parts"], list())
 	if("target_required_any_parts" in json)
@@ -606,6 +777,20 @@ GLOBAL_LIST_EMPTY_TYPED(interaction_instances, /datum/interaction)
 		GLOB.interaction_instances[interaction.get_interaction_id()] = interaction
 	for(var/directory in get_interaction_json_directories())
 		populate_interaction_jsons(directory)
+	apply_interaction_localization_file("russian", "config/interaction_localization/russian.json")
+
+/proc/apply_interaction_localization_file(language, path)
+	if(!length(language) || !fexists(path))
+		return
+	var/file = file(path)
+	var/list/localizations = json_load(file)
+	if(!islist(localizations))
+		return
+	for(var/interaction_id in localizations)
+		var/datum/interaction/interaction = GLOB.interaction_instances[interaction_id]
+		if(!interaction)
+			continue
+		interaction.load_localization_data(language, localizations[interaction_id])
 
 /proc/get_interaction_json_directories()
 	var/list/directories = list(INTERACTION_JSON_FOLDER)

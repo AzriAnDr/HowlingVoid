@@ -118,6 +118,7 @@ export type Marking = {
   color: string;
   marking_id: string;
   emissive: boolean;
+  layer: number;
 };
 
 export type AugmentItem = {

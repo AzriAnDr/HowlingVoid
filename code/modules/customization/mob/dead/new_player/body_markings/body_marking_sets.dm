@@ -189,6 +189,10 @@
 	name = "Bee"
 	body_marking_list = list("Bee")
 
+/datum/body_marking_set/body_gloss
+	name = "Body Gloss"
+	body_marking_list = list("Body Gloss")
+
 /datum/body_marking_set/gradient
 	name = "Gradient"
 	body_marking_list = list("Gradient")
@@ -212,6 +216,38 @@
 /datum/body_marking_set/chitin
 	name = "Chitin"
 	body_marking_list = list("Chitin")
+
+/datum/body_marking_set/synth_joints
+	name = "Synth Joints"
+	body_marking_list = list("Synth Joints")
+
+/datum/body_marking_set/hj_abs
+	name = "Abs"
+	body_marking_list = list("Abs", "Abs 2", "Abs 3")
+
+/datum/body_marking_set/hj_bee_alt
+	name = "Bee Alt"
+	body_marking_list = list("Bee Alt", "Bee Alt 2", "Bee Alt 3")
+
+/datum/body_marking_set/hj_chemlight
+	name = "Chemlight"
+	body_marking_list = list("Chemlight", "Chemlight 2", "Chemlight 3")
+
+/datum/body_marking_set/hj_deoxys
+	name = "Deoxys"
+	body_marking_list = list("Deoxys", "Deoxys 2", "Deoxys 3")
+
+/datum/body_marking_set/hj_eastern_dragon
+	name = "Eastern Dragon"
+	body_marking_list = list("Eastern Dragon", "Eastern Dragon 2")
+
+/datum/body_marking_set/hj_pigeon
+	name = "Pigeon"
+	body_marking_list = list("Pigeon", "Pigeon 2")
+
+/datum/body_marking_set/hj_shrike
+	name = "Shrike"
+	body_marking_list = list("Shrike", "Shrike 2")
 
 //AKULA MARKINGS
 /datum/body_marking_set/akula

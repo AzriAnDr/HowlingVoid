@@ -827,10 +827,14 @@
 	if(marking_reset == "Yes")
 		for(var/zone in alterer.dna.body_markings)
 			for(var/key in alterer.dna.body_markings[zone])
-				var/datum/body_marking/iterated_marking = GLOB.body_markings[key]
+				var/datum/body_marking/iterated_marking = GLOB.body_markings[get_marking_base_name(key)]
+				if(!iterated_marking)
+					continue
 				if(iterated_marking.always_color_customizable)
 					continue
-				alterer.dna.body_markings[zone][key] = iterated_marking.get_default_color(alterer.dna.features, alterer.dna.species)
+				var/list/entry = sanitize_body_marking_entry(key, alterer.dna.body_markings[zone][key])
+				entry[MARKING_INDEX_COLOR] = iterated_marking.get_default_color(alterer.dna.features, alterer.dna.species)
+				alterer.dna.body_markings[zone][key] = entry
 
 	if(mutant_part_reset == "Yes")
 		alterer.mutant_renderkey = "" //Just in case

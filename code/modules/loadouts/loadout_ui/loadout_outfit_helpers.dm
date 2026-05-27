@@ -9,8 +9,8 @@
 	user.equip_outfit_and_loadout(new /datum/outfit(), user.client.prefs)
 
 /obj/item/storage/box/loadout_job_gear
-	name = "job equipment box"
-	desc = "A box containing job equipment moved aside by your loadout choices."
+	name = "spare equipment box"
+	desc = "A box containing spare equipment that could not fit in its intended place."
 	illustration = "writing"
 	storage_type = /datum/storage/box/loadout_job_gear
 
@@ -63,13 +63,11 @@
 	var/list/loadout_datums = loadout_list_to_datums(loadout_list)
 	var/list/granted_loadout_datums = list()
 	var/obj/item/storage/briefcase/empty/briefcase
-	var/obj/item/storage/briefcase/empty/loadout_overflow_case
-	var/loadout_overflow_case_needs_equipping = FALSE
+	var/obj/item/storage/box/loadout_job_gear/spare_equipment_box
 	var/obj/item/storage/box/erp/erpbox
 	var/erp_enabled = !CONFIG_GET(flag/disable_erp_preferences)
 	if(override_preference == LOADOUT_OVERRIDE_CASE && !visuals_only)
 		briefcase = new(loc)
-		loadout_overflow_case = briefcase
 		for(var/datum/loadout_item/item as anything in loadout_datums)
 			var/list/item_details = loadout_list?[item.item_path] || list()
 			if(!item.is_equippable(src, item_details))
@@ -136,11 +134,9 @@
 				continue
 			if(visuals_only)
 				continue
-			if(isnull(loadout_overflow_case))
-				loadout_overflow_case = new(drop_location())
-				loadout_overflow_case.name = "[preference_source.read_preference(/datum/preference/name/real_name)]'s travel suitcase"
-				loadout_overflow_case_needs_equipping = TRUE
-			equipped = new item.item_path(loadout_overflow_case)
+			if(isnull(spare_equipment_box))
+				spare_equipment_box = new(drop_location())
+			equipped = new item.item_path(spare_equipment_box)
 
 		update |= item.on_equip_item(
 			equipped_item = equipped,
@@ -150,9 +146,7 @@
 			visuals_only = visuals_only,
 		)
 
-	equip_loadout_job_gear_box(replaced_job_gear, equipping_job)
-	if(loadout_overflow_case_needs_equipping)
-		equip_loadout_overflow_case(loadout_overflow_case)
+	spare_equipment_box = equip_spare_equipment_box(spare_equipment_box, replaced_job_gear)
 
 	if(preference_source?.read_preference(/datum/preference/toggle/green_pin))
 		var/obj/item/clothing/under/uniform = w_uniform
@@ -161,8 +155,8 @@
 	if (!isnull(erpbox))
 		if (!isnull(briefcase))
 			erpbox.forceMove(briefcase)
-		else if(!isnull(loadout_overflow_case) && !QDELETED(loadout_overflow_case))
-			erpbox.forceMove(loadout_overflow_case)
+		else if(!isnull(spare_equipment_box) && !QDELETED(spare_equipment_box))
+			erpbox.forceMove(spare_equipment_box)
 		else
 			erpbox.equip_to_best_slot(src)
 
@@ -237,13 +231,9 @@
 	if(!length(outfit.backpack_contents))
 		outfit.backpack_contents = null
 
-/mob/living/carbon/human/proc/equip_loadout_job_gear_box(list/replaced_job_gear, datum/job/equipping_job)
-	if(!length(replaced_job_gear))
-		return
-
-	var/obj/item/storage/box/loadout_job_gear/job_gear_box = new(drop_location())
-	if(equipping_job)
-		job_gear_box.name = "[equipping_job.title] equipment box"
+/mob/living/carbon/human/proc/equip_spare_equipment_box(obj/item/storage/box/loadout_job_gear/spare_equipment_box, list/replaced_job_gear)
+	if(length(replaced_job_gear) && (isnull(spare_equipment_box) || QDELETED(spare_equipment_box)))
+		spare_equipment_box = new(drop_location())
 
 	for(var/item_path in replaced_job_gear)
 		if(!ispath(item_path, /obj/item))
@@ -252,36 +242,27 @@
 		if(!isnum(amount_to_create))
 			amount_to_create = 1
 		for(var/i in 1 to amount_to_create)
-			SSwardrobe.provide_type(item_path, job_gear_box)
+			SSwardrobe.provide_type(item_path, spare_equipment_box)
 
-	if(!length(job_gear_box.contents))
-		qdel(job_gear_box)
-		return
+	if(isnull(spare_equipment_box) || QDELETED(spare_equipment_box))
+		return null
 
-	if(equip_to_storage(job_gear_box, ITEM_SLOT_BACK, indirect_action = TRUE))
-		return
+	if(!length(spare_equipment_box.contents))
+		qdel(spare_equipment_box)
+		return null
 
-	put_in_hands_no_sleep(job_gear_box)
+	if(equip_to_storage(spare_equipment_box, ITEM_SLOT_BACK, indirect_action = TRUE))
+		return spare_equipment_box
 
-/mob/living/carbon/human/proc/equip_loadout_overflow_case(obj/item/storage/briefcase/empty/briefcase)
-	if(isnull(briefcase) || QDELETED(briefcase))
-		return
-
-	if(!length(briefcase.contents))
-		qdel(briefcase)
-		return
-
-	if(equip_to_storage(briefcase, ITEM_SLOT_BACK, indirect_action = TRUE))
-		return
-
-	if(put_in_hands_no_sleep(briefcase))
-		return
+	if(put_in_hands_no_sleep(spare_equipment_box))
+		return spare_equipment_box
 
 	if(back)
-		briefcase.forceMove(back)
-		return
+		spare_equipment_box.forceMove(back)
+		return spare_equipment_box
 
-	briefcase.forceMove(drop_location())
+	spare_equipment_box.forceMove(drop_location())
+	return spare_equipment_box
 
 // cyborgs can wear hats from loadout
 /*

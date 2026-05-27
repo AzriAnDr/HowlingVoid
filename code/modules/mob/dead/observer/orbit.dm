@@ -36,6 +36,13 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			var/mob/dead/observer/user = usr
 			if(!user.can_view_room_atom(poi))
 				return TRUE
+			if(ismob(poi))
+				var/mob/mob_poi = poi
+				if(mob_poi.shoo_ghost_stealthed && !user.client?.holder)
+					return TRUE
+				if(shoo_ghost_blocks_client(mob_poi, user.client))
+					to_chat(user, span_notice("Someone has shoo ghosts enabled here."))
+					return TRUE
 			user.ManualFollow(poi)
 			user.reset_perspective(null)
 			user.orbiting_ref = ref
@@ -86,6 +93,9 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		if (is_admin)
 			serialized["ckey"] = mob_poi.ckey
 
+		if(mob_poi.shoo_ghost_stealthed && !is_admin)
+			continue
+
 		if(mob_poi.GetComponent(/datum/component/deadchat_control))
 			deadchat_controlled += list(serialized)
 
@@ -107,6 +117,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 		serialized["client"] = !!mob_poi.client
 		serialized["name"] = mob_poi.real_name
+		serialized["auto_shoo_ghosts"] = is_shoo_ghost_active(mob_poi)
 
 		if(isliving(mob_poi))
 			serialized += get_living_data(mob_poi)

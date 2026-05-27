@@ -3445,6 +3445,8 @@
     "ui.interaction_panel.disabled": "Disabled",
     "ui.interaction_panel.preference.erp_pref.name": "ERP Interactions",
     "ui.interaction_panel.preference.erp_pref.description": "Allows ERP interactions and lets other players know you are open to them.",
+    "ui.interaction_panel.preference.erp_hide_interactions_from_ghosts_pref.name": "Hide Interactions From Ghosts",
+    "ui.interaction_panel.preference.erp_hide_interactions_from_ghosts_pref.description": "Prevents ghosts from seeing interaction panel actions you perform.",
     "ui.interaction_panel.preference.erp_sounds_pref.name": "ERP Sounds",
     "ui.interaction_panel.preference.erp_sounds_pref.description": "Hear sounds from ERP interactions and stimuli.",
     "ui.interaction_panel.preference.autoemote_pref.name": "Auto Emote",

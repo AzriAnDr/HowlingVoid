@@ -167,6 +167,16 @@
 
 	///The list of people observing this mob.
 	var/list/observers = null
+	/// Whether this mob automatically teleports nearby ghosts away.
+	var/auto_shoo_ghosts = FALSE
+	/// Whether shoo ghosts can work outside its normal areas.
+	var/auto_shoo_admin_override = FALSE
+	/// Whether shoo ghosts also affects admin ghosts.
+	var/auto_shoo_include_admins = FALSE
+	/// Whether this mob is hidden from non-admin ghost orbit menus by shoo ghosts.
+	var/shoo_ghost_stealthed = FALSE
+	/// Mobs whose orbit visibility was hidden by this mob's shoo ghosts effect.
+	var/list/shoo_stealthed_mobs
 
 	///List of progress bars this mob is currently seeing for actions
 	var/list/progressbars = null //for stacking do_after bars

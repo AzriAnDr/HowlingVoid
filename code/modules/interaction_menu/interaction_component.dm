@@ -382,6 +382,7 @@
 	var/datum/preference/choiced/erp_status_v/pref_erp_status_v = GLOB.preference_entries[/datum/preference/choiced/erp_status_v]
 	var/list/specs = list(
 		list("id" = "erp_pref", "name" = "ERP Interaction", "description" = "Allows ERP interactions and lets other players know you are open to them.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp),
+		list("id" = "erp_hide_interactions_from_ghosts_pref", "name" = "Hide Interactions From Ghosts", "description" = "Prevents ghosts from seeing interaction panel actions you perform.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp/hide_interactions_from_ghosts),
 		list("id" = "erp_sounds_pref", "name" = "ERP Sounds", "description" = "Hear sounds from ERP interactions and stimuli.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp/sounds),
 		list("id" = "autoemote_pref", "name" = "Auto Emote", "description" = "Automatically emote from the arousal system.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp/autoemote),
 		list("id" = "autocum_pref", "name" = "Autocum", "description" = "Automatically climax when the arousal system decides you should.", "type" = "toggle", "category" = "ERP", "path" = /datum/preference/toggle/erp/autocum),
@@ -432,6 +433,8 @@
 			return /datum/preference/toggle/master_erp_preferences
 		if("erp_pref")
 			return /datum/preference/toggle/erp
+		if("erp_hide_interactions_from_ghosts_pref")
+			return /datum/preference/toggle/erp/hide_interactions_from_ghosts
 		if("erp_sounds_pref")
 			return /datum/preference/toggle/erp/sounds
 		if("subtler_sound")
@@ -475,6 +478,118 @@
 		if("erp_sexuality_pref")
 			return /datum/preference/choiced/erp_sexuality
 	return null
+
+/datum/component/interactable/proc/use_russian_interaction_text(mob/reader)
+	return uses_panel_language(reader, "interaction")
+
+/datum/component/interactable/proc/russian_lewd_slot(slot_index, form = "accusative")
+	switch(slot_index)
+		if(ORGAN_SLOT_VAGINA)
+			switch(form)
+				if("genitive")
+					return "киски"
+				if("placement")
+					return "киску"
+				if("possessive")
+					return "твоей киски"
+				if("possessive_placement")
+					return "твою киску"
+				else
+					return "киску"
+		if(ORGAN_SLOT_ANUS)
+			switch(form)
+				if("genitive")
+					return "ануса"
+				if("placement")
+					return "анус"
+				if("possessive")
+					return "твоего ануса"
+				if("possessive_placement")
+					return "твой анус"
+				else
+					return "анус"
+		if(ORGAN_SLOT_PENIS)
+			switch(form)
+				if("genitive")
+					return "члена"
+				if("placement")
+					return "член"
+				if("possessive")
+					return "твоего члена"
+				if("possessive_placement")
+					return "твой член"
+				else
+					return "член"
+		if(ORGAN_SLOT_NIPPLES)
+			switch(form)
+				if("genitive")
+					return "сосков"
+				if("placement")
+					return "соскам"
+				if("possessive")
+					return "твоих сосков"
+				if("possessive_placement")
+					return "твоим соскам"
+				else
+					return "соски"
+	return "[slot_index]"
+
+/datum/component/interactable/proc/russian_lewd_slot_preposition(slot_index, removing = FALSE)
+	if(removing)
+		return slot_index in list(ORGAN_SLOT_VAGINA, ORGAN_SLOT_ANUS) ? "из" : "с"
+	if(slot_index == ORGAN_SLOT_NIPPLES)
+		return "к"
+	if(slot_index == ORGAN_SLOT_PENIS)
+		return "на"
+	return "в"
+
+/datum/component/interactable/proc/show_localized_interaction_visible_message(
+	mob/living/carbon/human/source,
+	english_message,
+	russian_message,
+	english_self_message,
+	russian_self_message,
+	english_blind_message,
+	russian_blind_message,
+	vision_distance = SAMETILE_MESSAGE_RANGE,
+	list/ignored_mobs
+)
+	var/list/base_ignored_mobs = islist(ignored_mobs) ? ignored_mobs.Copy() : list()
+	base_ignored_mobs += source
+
+	var/list/hearers = mob_only_listeners(get_hearers_in_view(vision_distance, source))
+	if(hides_interaction_messages_from_ghosts(source))
+		for(var/mob/hearing_mob as anything in hearers)
+			if(isobserver(hearing_mob))
+				base_ignored_mobs += hearing_mob
+	hearers -= base_ignored_mobs
+
+	var/list/language_groups = list()
+	for(var/mob/hearing_mob as anything in hearers)
+		if(!hearing_mob?.client)
+			continue
+		var/language = get_panel_language_value(hearing_mob, "interaction")
+		if(!language_groups[language])
+			language_groups[language] = list()
+		language_groups[language] += hearing_mob
+
+	for(var/language in language_groups)
+		var/list/language_group = language_groups[language]
+		var/list/group_ignored_mobs = base_ignored_mobs.Copy()
+		for(var/mob/hearing_mob as anything in hearers)
+			if(!(hearing_mob in language_group))
+				group_ignored_mobs += hearing_mob
+		source.visible_message(
+			language == "russian" ? russian_message : english_message,
+			blind_message = language == "russian" ? russian_blind_message : english_blind_message,
+			vision_distance = vision_distance,
+			ignored_mobs = group_ignored_mobs,
+		)
+
+	if(use_russian_interaction_text(source))
+		source.show_message(russian_self_message, MSG_VISUAL, russian_blind_message, MSG_AUDIBLE)
+	else
+		source.show_message(english_self_message, MSG_VISUAL, english_blind_message, MSG_AUDIBLE)
 
 /datum/component/interactable/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -614,19 +729,28 @@
 			return FALSE
 		var/obj/item/clothing/sextoy/new_item = source.get_active_held_item()
 		var/obj/item/clothing/sextoy/existing_item = target.vars[item_index]
+		var/source_uses_russian = use_russian_interaction_text(source)
 
 		if(!existing_item && !new_item)
-			source.show_message(span_warning("No item to insert or remove!"))
+			source.show_message(span_warning(source_uses_russian ? "Нет предмета, который можно вставить или снять!" : "No item to insert or remove!"))
 			return
 
 		if(!existing_item && !istype(new_item))
-			source.show_message(span_warning("The item you're holding is not a toy!"))
+			source.show_message(span_warning(source_uses_russian ? "Предмет в вашей руке не является игрушкой!" : "The item you're holding is not a toy!"))
 			return
 
 		if(can_lewd_strip(source, target, item_index) && is_toy_compatible(new_item, item_index))
 			var/internal = (item_index in list(ORGAN_SLOT_VAGINA, ORGAN_SLOT_ANUS))
 			var/insert_or_attach = internal ? "insert" : "attach"
 			var/into_or_onto = internal ? "into" : "onto"
+			var/remove_preposition_ru = russian_lewd_slot_preposition(item_index, TRUE)
+			var/place_preposition_ru = russian_lewd_slot_preposition(item_index)
+			var/slot_placement_ru = russian_lewd_slot(item_index, "placement")
+			var/slot_genitive_ru = russian_lewd_slot(item_index, "genitive")
+			var/slot_possessive_ru = russian_lewd_slot(item_index, "possessive")
+			var/slot_possessive_placement_ru = russian_lewd_slot(item_index, "possessive_placement")
+			var/insert_or_attach_ru = internal ? "вставить" : "закрепить"
+			var/inserts_or_attaches_ru = internal ? "вставляет" : "закрепляет"
 
 			// Do not show visible_messages to people without erp prefs
 			var/list/ignoring_mobs = list()
@@ -634,11 +758,32 @@
 				if(!not_interested.client?.prefs?.read_preference(/datum/preference/toggle/erp))
 					ignoring_mobs += not_interested
 			if(existing_item)
-				source.visible_message(span_purple("[source.name] starts trying to remove something from [target.name]'s [item_index]."), span_purple("You start to remove [existing_item.name] from [target.name]'s [item_index]."), span_purple("You hear someone trying to remove something from someone nearby."), vision_distance = SAMETILE_MESSAGE_RANGE, ignored_mobs = ignoring_mobs + list(target))
+				show_localized_interaction_visible_message(
+					source,
+					span_purple("[source.name] starts trying to remove something from [target.name]'s [item_index]."),
+					span_purple("[source.name] пытается снять что-то [remove_preposition_ru] [slot_genitive_ru] [target.name]."),
+					span_purple("You start to remove [existing_item.name] from [target.name]'s [item_index]."),
+					span_purple("Вы начинаете снимать [existing_item.name] [remove_preposition_ru] [slot_genitive_ru] [target.name]."),
+					span_purple("You hear someone trying to remove something from someone nearby."),
+					span_purple("Вы слышите, как кто-то рядом пытается снять с кого-то игрушку."),
+					ignored_mobs = ignoring_mobs + list(target),
+				)
 			else if (new_item)
-				source.visible_message(span_purple("[source.name] starts trying to [insert_or_attach] the [new_item.name] [into_or_onto] [target.name]'s [item_index]."), span_purple("You start to [insert_or_attach] the [new_item.name] [into_or_onto] [target.name]'s [item_index]."), span_purple("You hear someone trying to [insert_or_attach] something [into_or_onto] someone nearby."), vision_distance = SAMETILE_MESSAGE_RANGE, ignored_mobs = ignoring_mobs + list(target))
+				show_localized_interaction_visible_message(
+					source,
+					span_purple("[source.name] starts trying to [insert_or_attach] the [new_item.name] [into_or_onto] [target.name]'s [item_index]."),
+					span_purple("[source.name] пытается [insert_or_attach_ru] [new_item.name] [place_preposition_ru] [slot_placement_ru] [target.name]."),
+					span_purple("You start to [insert_or_attach] the [new_item.name] [into_or_onto] [target.name]'s [item_index]."),
+					span_purple("Вы начинаете [insert_or_attach_ru] [new_item.name] [place_preposition_ru] [slot_placement_ru] [target.name]."),
+					span_purple("You hear someone trying to [insert_or_attach] something [into_or_onto] someone nearby."),
+					span_purple("Вы слышите, как кто-то рядом пытается [insert_or_attach_ru] игрушку."),
+					ignored_mobs = ignoring_mobs + list(target),
+				)
 			if (source != target)
-				target.show_message(span_warning("[source.name] is trying to [existing_item ? "remove the [existing_item.name] [internal ? "in" : "on"]" : new_item ? "is trying to [insert_or_attach] the [new_item.name] [into_or_onto]" : span_alert("What the fuck, impossible condition? interaction_component.dm!")] your [item_index]!"))
+				if(use_russian_interaction_text(target))
+					target.show_message(span_warning(existing_item ? "[source.name] пытается снять [existing_item.name] [remove_preposition_ru] [slot_possessive_ru]!" : "[source.name] пытается [insert_or_attach_ru] [new_item.name] [place_preposition_ru] [slot_possessive_placement_ru]!"))
+				else
+					target.show_message(span_warning("[source.name] is trying to [existing_item ? "remove the [existing_item.name] [internal ? "in" : "on"]" : "insert or attach the [new_item.name] [into_or_onto]"] your [item_index]!"))
 			if(do_after(
 				source,
 				5 SECONDS,
@@ -647,18 +792,36 @@
 				) && can_lewd_strip(source, target, item_index))
 
 				if(existing_item)
-					source.visible_message(span_purple("[source.name] removes [existing_item.name] from [target.name]'s [item_index]."), span_purple("You remove [existing_item.name] from [target.name]'s [item_index]."), span_purple("You hear someone remove something from someone nearby."), vision_distance = SAMETILE_MESSAGE_RANGE, ignored_mobs = ignoring_mobs)
+					show_localized_interaction_visible_message(
+						source,
+						span_purple("[source.name] removes [existing_item.name] from [target.name]'s [item_index]."),
+						span_purple("[source.name] снимает [existing_item.name] [remove_preposition_ru] [slot_genitive_ru] [target.name]."),
+						span_purple("You remove [existing_item.name] from [target.name]'s [item_index]."),
+						span_purple("Вы снимаете [existing_item.name] [remove_preposition_ru] [slot_genitive_ru] [target.name]."),
+						span_purple("You hear someone remove something from someone nearby."),
+						span_purple("Вы слышите, как кто-то рядом снимает с кого-то игрушку."),
+						ignored_mobs = ignoring_mobs,
+					)
 					target.dropItemToGround(existing_item, force = TRUE) // Force is true, cause nodrop shouldn't affect lewd items.
 					target.vars[item_index] = null
 				else if (new_item)
-					source.visible_message(span_purple("[source.name] [internal ? "inserts" : "attaches"] the [new_item.name] [into_or_onto] [target.name]'s [item_index]."), span_purple("You [insert_or_attach] the [new_item.name] [into_or_onto] [target.name]'s [item_index]."), span_purple("You hear someone [insert_or_attach] something [into_or_onto] someone nearby."), vision_distance = SAMETILE_MESSAGE_RANGE, ignored_mobs = ignoring_mobs)
+					show_localized_interaction_visible_message(
+						source,
+						span_purple("[source.name] [internal ? "inserts" : "attaches"] the [new_item.name] [into_or_onto] [target.name]'s [item_index]."),
+						span_purple("[source.name] [inserts_or_attaches_ru] [new_item.name] [place_preposition_ru] [slot_placement_ru] [target.name]."),
+						span_purple("You [insert_or_attach] the [new_item.name] [into_or_onto] [target.name]'s [item_index]."),
+						span_purple("Вы [inserts_or_attaches_ru] [new_item.name] [place_preposition_ru] [slot_placement_ru] [target.name]."),
+						span_purple("You hear someone [insert_or_attach] something [into_or_onto] someone nearby."),
+						span_purple("Вы слышите, как кто-то рядом [inserts_or_attaches_ru] игрушку."),
+						ignored_mobs = ignoring_mobs,
+					)
 					target.vars[item_index] = new_item
 					new_item.forceMove(target)
 					new_item.lewd_equipped(target, item_index)
 				target.update_inv_lewd()
 
 		else
-			source.show_message(span_warning("Failed to adjust [target.name]'s toys!"))
+			source.show_message(span_warning(source_uses_russian ? "Не удалось изменить игрушки [target.name]!" : "Failed to adjust [target.name]'s toys!"))
 
 		return TRUE
 

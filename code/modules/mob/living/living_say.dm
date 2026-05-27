@@ -392,6 +392,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/list/in_view = get_hearers_in_view(message_range + whisper_range, source)
 	var/list/listening = get_hearers_in_range(message_range + whisper_range, source)
 
+	for(var/atom/movable/listening_movable as anything in listening)
+		if(!isobserver(listening_movable))
+			continue
+		var/mob/dead/observer/ghost_listener = listening_movable
+		if(is_say_blocked_by_shoo_ghost(src, ghost_listener))
+			listening -= ghost_listener
+
 	// Pre-process listeners to account for line-of-sight
 	for(var/atom/movable/listening_movable as anything in listening)
 		if(!(listening_movable in in_view) && !HAS_TRAIT(listening_movable, TRAIT_XRAY_HEARING))
@@ -408,6 +415,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				continue //Remove if underlying cause (likely byond issue) is fixed. See TG PR #49004.
 			if(player_mob.stat != DEAD) //not dead, not important
 				continue
+			if(isobserver(player_mob))
+				var/mob/dead/observer/ghost_listener = player_mob
+				if(is_say_blocked_by_shoo_ghost(src, ghost_listener))
+					continue
 			if(player_mob.z != z || get_dist(player_mob, src) > 7) //they're out of range of normal hearing
 				if(is_speaker_whispering)
 					if(!(get_chat_toggles(player_mob.client) & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off

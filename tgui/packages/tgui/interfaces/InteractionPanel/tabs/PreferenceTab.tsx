@@ -64,6 +64,7 @@ const PREFERENCE_GROUPS: PreferenceGroupDefinition[] = [
     preferenceIds: [
       'master_erp_pref',
       'erp_pref',
+      'erp_hide_interactions_from_ghosts_pref',
       'erp_sounds_pref',
       'sextoy_sounds_pref',
     ],

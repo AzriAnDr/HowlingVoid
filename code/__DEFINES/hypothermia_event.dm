@@ -53,4 +53,6 @@ GLOBAL_LIST_INIT(hear_sources, list())
 	playsound_local(src, sound, volume)
 
 
+#undef MAJOR_ANNOUNCEMENT_TEXT
 #undef CHAT_ALERT_COLORED_SPAN
+#undef CHAT_ALERT_DEFAULT_SPAN

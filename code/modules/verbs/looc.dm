@@ -73,6 +73,9 @@
 			continue
 
 		var/is_holder = hearing_client.holder
+		if(is_looc_blocked_by_shoo_ghost(mob, hearing, src, hearing_client))
+			continue
+
 		if (is_holder)
 			admin_seen[hearing_client] = TRUE
 			// dont continue here, still need to show runechat
@@ -91,8 +94,10 @@
 
 		to_chat(hearing_client, span_looc(span_prefix("LOOC[wall_pierce ? " (WALL PIERCE)" : ""]:</span> <EM>[src.mob.name]:</EM> <span class='message'>[msg]")), avoid_highlighting = (hearing_client == src))
 
+	var/block_remote_looc = is_remote_looc_blocked_by_shoo_ghost(mob)
+
 	for(var/client/cli_client as anything in GLOB.admins)
 		if (admin_seen[cli_client])
 			to_chat(cli_client, span_looc("[ADMIN_FLW(usr)] <span class='prefix'>LOOC[wall_pierce ? " (WALL PIERCE)" : ""]:</span> <EM>[src.key]/[src.mob.name]:</EM> <span class='message'>[msg]</span>"), avoid_highlighting = (cli_client == src))
-		else if (cli_client.prefs.read_preference(/datum/preference/toggle/admin/see_looc))
+		else if (cli_client.prefs.read_preference(/datum/preference/toggle/admin/see_looc) && !block_remote_looc)
 			to_chat(cli_client, span_rlooc("[ADMIN_FLW(usr)] <span class='prefix'>(R)LOOC[wall_pierce ? " (WALL PIERCE)" : ""]:</span> <EM>[src.key]/[src.mob.name]:</EM> <span class='message'>[msg]</span>"), avoid_highlighting = (cli_client == src))

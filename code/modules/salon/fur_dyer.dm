@@ -114,7 +114,9 @@
 	visible_message(span_notice("[user] starts to masterfully paint [target_human]!"))
 
 	if(do_after(user, 20 SECONDS, target_human))
-		current_markings[selected_marking_area][selected_marking_id] = selected_color
+		var/list/entry = sanitize_body_marking_entry(selected_marking_id, current_markings[selected_marking_area][selected_marking_id])
+		entry[MARKING_INDEX_COLOR] = selected_color
+		current_markings[selected_marking_area][selected_marking_id] = entry
 
 		target_human.dna.body_markings = current_markings.Copy()
 
@@ -125,4 +127,3 @@
 		visible_message(span_notice("[user] finishes painting [target_human]!"))
 
 		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE)
-

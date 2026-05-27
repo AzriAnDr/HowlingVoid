@@ -3464,6 +3464,7 @@
 #include "code\modules\admin\smites\berforate.dm"
 #include "code\modules\admin\smites\bloodless.dm"
 #include "code\modules\admin\smites\boneless.dm"
+#include "code\modules\admin\smites\bonk.dm"
 #include "code\modules\admin\smites\brain_damage.dm"
 #include "code\modules\admin\smites\bsa.dm"
 #include "code\modules\admin\smites\cluwndice.dm"

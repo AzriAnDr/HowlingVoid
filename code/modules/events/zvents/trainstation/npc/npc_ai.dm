@@ -171,7 +171,7 @@
 		saver.ai_controller.queue_behavior(/datum/ai_behavior/observed_aggression, attacker)
 
 /datum/ai_planning_subtree/call_for_help/proc/is_ally(mob/living/target, mob/living/pawn, list/faction_to_check, list/trusted_check)
-	var/list/target_factions = target.faction
+	var/list/target_factions = target.get_faction()
 	if(trusted_check && faction_check(target_factions, trusted_check))
 		return TRUE
 	var/has_good = faction_check(target_factions, faction_to_check)

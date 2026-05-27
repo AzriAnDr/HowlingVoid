@@ -11,10 +11,11 @@
 		"set_internal_implant_aug" = PROC_REF(set_internal_implant_aug),
 		"set_preset" = PROC_REF(set_preset),
 		"change_emissive" = PROC_REF(change_emissive_marking),
+		"change_marking_layer" = PROC_REF(change_marking_layer),
 	)
 
 /datum/preference_middleware/limbs_and_markings/apply_to_human(mob/living/carbon/human/target, datum/preferences/preferences, visuals_only = FALSE)
-	target.dna.body_markings = LAZYCOPY(preferences.body_markings)
+	target.dna.body_markings = sanitize_marking_map(preferences.body_markings, target.dna?.features, target.dna?.species)
 
 	var/list/visited_body_zones = list()
 	for(var/key, augment_path in preferences.augments)
@@ -185,7 +186,7 @@
 	var/list/marking_choices = list()
 	for(var/slot in GLOB.body_markings_per_limb)
 		var/list/slot_choices = list()
-		for(var/marking_name in GLOB.body_markings_per_limb[slot])
+		for(var/marking_name in sort_list(GLOB.body_markings_per_limb[slot]))
 			var/datum/body_marking/marking = GLOB.body_markings[marking_name]
 			slot_choices += list(list(
 				"name"                = marking_name,
@@ -197,7 +198,7 @@
 /// Builds unfiltered marking presets — TSX filters by species/mismatched parts
 /datum/preference_middleware/limbs_and_markings/proc/build_marking_presets()
 	var/list/presets = list()
-	for(var/preset_name in GLOB.body_marking_sets)
+	for(var/preset_name in sort_list(assoc_to_keys(GLOB.body_marking_sets)))
 		var/datum/body_marking_set/marking_set = GLOB.body_marking_sets[preset_name]
 		presets += list(list(
 			"name"                = preset_name,
@@ -347,17 +348,38 @@
 		if(!length(slot_markings))
 			continue
 		var/list/fixed = list()
+		var/list/sanitized_markings = list()
 		var/marking_count = 0
-		for(var/marking in slot_markings)
+		for(var/marking_key in slot_markings)
 			marking_count++
+			var/base_name = get_marking_base_name(marking_key)
+			if(!GLOB.body_markings[base_name])
+				continue
+			var/list/entry = sanitize_body_marking_entry(marking_key, slot_markings[marking_key], marking_count)
+			var/key = compose_marking_key(base_name, entry[MARKING_INDEX_LAYER], get_marking_sequence(marking_key), sanitized_markings)
+			sanitized_markings[key] = entry
 			fixed += list(list(
-				"name"       = marking,
-				"color"      = sanitize_hexcolor(slot_markings[marking][1]),
+				"name"       = base_name,
+				"color"      = entry[MARKING_INDEX_COLOR],
 				"marking_id" = "[slot]_[marking_count]",
-				"emissive"   = slot_markings[marking][2],
+				"emissive"   = entry[MARKING_INDEX_EMISSIVE],
+				"layer"      = entry[MARKING_INDEX_LAYER],
 			))
+		preferences.body_markings[slot] = sanitized_markings
 		result[slot] = fixed
 	return result
+
+/datum/preference_middleware/limbs_and_markings/proc/get_next_marking_layer(list/markings)
+	if(!islist(markings) || !length(markings))
+		return MARKING_LAYER_MIN
+
+	var/highest_layer = MARKING_LAYER_MIN - 1
+	var/marking_count = 0
+	for(var/marking_key in markings)
+		marking_count++
+		var/list/entry = sanitize_body_marking_entry(marking_key, markings[marking_key], marking_count)
+		highest_layer = max(highest_layer, entry[MARKING_INDEX_LAYER])
+	return min(highest_layer + 1, MARKING_LAYER_MAX)
 
 /datum/preference_middleware/limbs_and_markings/proc/add_marking(list/params, mob/user)
 	var/bodypart_slot = params["bodypart_slot"]
@@ -367,6 +389,8 @@
 		return
 	var/marking_name = pick(GLOB.body_markings_per_limb[bodypart_slot])
 	var/datum/body_marking/marking = GLOB.body_markings[marking_name]
+	if(!marking)
+		return
 	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
 	var/list/mutant_colors = preferences.read_preference(/datum/preference/tri_color/mutant_colors)
 	var/list/features = list(
@@ -376,7 +400,9 @@
 		FEATURE_SKIN_COLOR         = skintone2hex(preferences.read_preference(/datum/preference/choiced/skin_tone)),
 	)
 	var/datum/species/current_species = GLOB.species_prototypes[species_type]
-	preferences.body_markings[bodypart_slot] += list("[marking_name]" = list(marking.get_default_color(features, current_species), FALSE))
+	var/layer = get_next_marking_layer(preferences.body_markings[bodypart_slot])
+	var/key = compose_marking_key(marking_name, layer, null, preferences.body_markings[bodypart_slot])
+	preferences.body_markings[bodypart_slot][key] = list(marking.get_default_color(features, current_species), FALSE, layer)
 	preferences.character_preview_view.update_body()
 	return TRUE
 
@@ -385,14 +411,18 @@
 	var/marking_id = params["marking_id"]
 	var/marking_name = params["marking_name"]
 	var/list/markings = preferences.body_markings[bodypart_slot]
+	if(!islist(markings) || !GLOB.body_markings[marking_name])
+		return
 	var/list/new_markings = list()
 	var/marking_count = 0
 	for(var/entry, marking_data in markings)
 		marking_count++
+		var/base_name = get_marking_base_name(entry)
+		var/list/sanitized_entry = sanitize_body_marking_entry(entry, marking_data, marking_count)
 		if(marking_id == "[bodypart_slot]_[marking_count]")
-			new_markings[marking_name] = marking_data
-		else
-			new_markings[entry] = markings[entry]
+			base_name = marking_name
+		var/key = compose_marking_key(base_name, sanitized_entry[MARKING_INDEX_LAYER], get_marking_sequence(entry), new_markings)
+		new_markings[key] = sanitized_entry
 	preferences.body_markings[bodypart_slot] = new_markings
 	preferences.character_preview_view.update_body()
 	return TRUE
@@ -401,6 +431,8 @@
 	var/bodypart_slot = params["bodypart_slot"]
 	var/marking_id = params["marking_id"]
 	var/list/markings = preferences.body_markings[bodypart_slot]
+	if(!islist(markings))
+		return
 	var/list/new_markings = list()
 	var/marking_count = 0
 	var/target_entry
@@ -408,11 +440,13 @@
 		marking_count++
 		if(marking_id == "[bodypart_slot]_[marking_count]")
 			target_entry = entry
-		new_markings[entry] = marking_data
-	var/new_color = tgui_color_picker(usr, "Select new color", null, preferences.body_markings[bodypart_slot][target_entry][1])
+		new_markings[entry] = sanitize_body_marking_entry(entry, marking_data, marking_count)
+	if(!target_entry)
+		return
+	var/new_color = tgui_color_picker(user, "Select new color", null, new_markings[target_entry][MARKING_INDEX_COLOR])
 	if(!new_color)
 		return TRUE
-	new_markings[target_entry][1] = new_color
+	new_markings[target_entry][MARKING_INDEX_COLOR] = sanitize_hexcolor(new_color)
 	preferences.body_markings[bodypart_slot] = new_markings
 	preferences.character_preview_view.update_body()
 	return TRUE
@@ -422,6 +456,8 @@
 	var/marking_id = params["marking_id"]
 	var/emissive = !params["emissive"]
 	var/list/markings = preferences.body_markings[bodypart_slot]
+	if(!islist(markings))
+		return
 	var/list/new_markings = list()
 	var/marking_count = 0
 	var/target_entry
@@ -429,8 +465,32 @@
 		marking_count++
 		if(marking_id == "[bodypart_slot]_[marking_count]")
 			target_entry = entry
-		new_markings[entry] = marking_data
-	new_markings[target_entry][2] = sanitize_integer(emissive)
+		new_markings[entry] = sanitize_body_marking_entry(entry, marking_data, marking_count)
+	if(!target_entry)
+		return
+	new_markings[target_entry][MARKING_INDEX_EMISSIVE] = sanitize_integer(emissive)
+	preferences.body_markings[bodypart_slot] = new_markings
+	preferences.character_preview_view.update_body()
+	return TRUE
+
+/datum/preference_middleware/limbs_and_markings/proc/change_marking_layer(list/params, mob/user)
+	var/bodypart_slot = params["bodypart_slot"]
+	var/marking_id = params["marking_id"]
+	var/new_layer = sanitize_marking_layer(params["layer"])
+	var/list/markings = preferences.body_markings[bodypart_slot]
+	if(!islist(markings))
+		return
+
+	var/list/new_markings = list()
+	var/marking_count = 0
+	for(var/entry, marking_data in markings)
+		marking_count++
+		var/base_name = get_marking_base_name(entry)
+		var/list/sanitized_entry = sanitize_body_marking_entry(entry, marking_data, marking_count)
+		if(marking_id == "[bodypart_slot]_[marking_count]")
+			sanitized_entry[MARKING_INDEX_LAYER] = new_layer
+		var/key = compose_marking_key(base_name, sanitized_entry[MARKING_INDEX_LAYER], get_marking_sequence(entry), new_markings)
+		new_markings[key] = sanitized_entry
 	preferences.body_markings[bodypart_slot] = new_markings
 	preferences.character_preview_view.update_body()
 	return TRUE
@@ -439,6 +499,8 @@
 	var/bodypart_slot = params["bodypart_slot"]
 	var/marking_id = params["marking_id"]
 	var/list/markings = preferences.body_markings[bodypart_slot]
+	if(!islist(markings))
+		return
 	var/list/new_markings = list()
 	var/marking_count = 0
 	for(var/entry, marking_data in markings)

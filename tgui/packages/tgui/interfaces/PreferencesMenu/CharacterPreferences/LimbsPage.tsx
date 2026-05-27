@@ -11,6 +11,7 @@ import {
   Modal,
   Section,
   Stack,
+  Tooltip,
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
@@ -244,6 +245,10 @@ const buildInternalImplantData = (
   });
 
 // Markings
+const markingLayerOptions = Array.from(
+  { length: 40 },
+  (_, index) => `L${index + 1}`,
+);
 
 const Markings = (props: {
   body_zone: string;
@@ -278,6 +283,31 @@ const Markings = (props: {
                     })
                   }
                 />
+              </Stack.Item>
+              <Stack.Item>
+                <Tooltip
+                  content={t('ui.character.limbs_marking_layer_tooltip')}
+                  position="bottom"
+                >
+                  <Dropdown
+                    width="60px"
+                    options={markingLayerOptions}
+                    selected={`L${marking.layer || 1}`}
+                    displayText={`L${marking.layer || 1}`}
+                    onSelected={(value) => {
+                      const layerValue =
+                        typeof value === 'number'
+                          ? value
+                          : parseInt(String(value).replace(/^L/i, ''), 10) ||
+                            1;
+                      act('change_marking_layer', {
+                        bodypart_slot: body_zone,
+                        marking_id: marking.marking_id,
+                        layer: layerValue,
+                      });
+                    }}
+                  />
+                </Tooltip>
               </Stack.Item>
               <Stack.Item>
                 <Button
