@@ -30,6 +30,8 @@
 #define PERSONALITY_TRAIT "personality_trait"
 /// (B)admins only.
 #define ADMIN_TRAIT "admin"
+/// Temporary source used to keep standing mobs upright during admin heals.
+#define ADMIN_HEAL_TRAIT "admin_heal"
 /// Traits that were granted via modify_traits in vv or the mass_modify_traits verb
 #define TRAIT_ADMIN_GRANTED "adminabuse"
 /// Any traits given through a smite.

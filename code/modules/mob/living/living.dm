@@ -965,7 +965,11 @@ NOVA EDIT REMOVAL END */
 	if(QDELETED(src))
 		// Bro just like, don't ok
 		return FALSE
-	var/was_standing = body_position == STANDING_UP
+	var/admin_heal = full_heal_flags & HEAL_ADMIN
+	var/was_dead = stat == DEAD
+	var/restore_standing = admin_heal && !was_dead && body_position == STANDING_UP && !resting && (!buckled || buckled.buckle_lying == NO_BUCKLE_LYING)
+	if(restore_standing)
+		ADD_TRAIT(src, TRAIT_FORCED_STANDING, ADMIN_HEAL_TRAIT)
 	if(excess_healing)
 		adjust_oxy_loss(-excess_healing, updating_health = FALSE)
 		adjust_tox_loss(-excess_healing, updating_health = FALSE, forced = TRUE) //slime friendly
@@ -975,12 +979,12 @@ NOVA EDIT REMOVAL END */
 	if(full_heal_flags)
 		fully_heal(full_heal_flags)
 
-	if(stat == DEAD && can_be_revived() || (full_heal_flags & HEAL_ADMIN)) //in some cases you can't revive (e.g. no brain) //NOVA EDIT ADDITION - DNR TRAIT - Added: " || (full_heal_flags & HEAL_ADMIN)"
+	if(was_dead && (can_be_revived() || admin_heal)) //in some cases you can't revive (e.g. no brain) //NOVA EDIT ADDITION - DNR TRAIT - Added admin heal bypass
 		set_suicide(FALSE)
 		set_stat(UNCONSCIOUS) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
-		if(full_heal_flags & HEAL_ADMIN)
-			restore_admin_heal_standing(was_standing)
+		if(admin_heal)
+			restore_admin_heal_standing(restore_standing)
 		update_sight()
 		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		reload_fullscreen()
@@ -989,16 +993,20 @@ NOVA EDIT REMOVAL END */
 			INVOKE_ASYNC(src, PROC_REF(emote), "gasp")
 			log_combat(src, src, "revived")
 
-	else if(full_heal_flags & HEAL_ADMIN)
+	else if(admin_heal)
+		set_suicide(FALSE)
 		updatehealth()
-		restore_admin_heal_standing(was_standing)
+		restore_admin_heal_standing(restore_standing)
+
+	if(restore_standing)
+		REMOVE_TRAIT(src, TRAIT_FORCED_STANDING, ADMIN_HEAL_TRAIT)
 
 	// The signal is called after everything else so components can properly check the updated values
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal_flags)
 
 /// Keeps admin heals from briefly flooring mobs that were already standing before the heal.
-/mob/living/proc/restore_admin_heal_standing(was_standing)
-	if(was_standing && !resting && (!buckled || buckled.buckle_lying == NO_BUCKLE_LYING))
+/mob/living/proc/restore_admin_heal_standing(restore_standing)
+	if(restore_standing)
 		set_body_position(STANDING_UP)
 		set_lying_angle(0)
 		return
