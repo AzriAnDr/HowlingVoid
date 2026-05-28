@@ -15,6 +15,7 @@
 	return !CONFIG_GET(flag/disable_erp_preferences) && should_show_on_page(preferences?.current_window)
 
 /datum/preference/toggle/allow_genitals/is_accessible(datum/preferences/preferences)
+	. = ..()
 	return FALSE
 
 /datum/preference/choiced/genital
@@ -39,6 +40,8 @@
 	return TRUE
 
 /datum/preference/choiced/genital/is_accessible(datum/preferences/preferences)
+	if(!..(preferences))
+		return FALSE
 	return genital_preferences_enabled(preferences)
 
 /**
@@ -70,6 +73,8 @@
 	var/genital_pref_type
 
 /datum/preference/toggle/genital_skin_tone/is_accessible(datum/preferences/preferences)
+	if(!..(preferences))
+		return FALSE
 	if(!genital_preferences_enabled(preferences))
 		return FALSE
 	var/part_name = preferences.read_preference(genital_pref_type)
@@ -84,6 +89,8 @@
 	var/genital_pref_type
 
 /datum/preference/toggle/genital_skin_color/is_accessible(datum/preferences/preferences)
+	if(!..(preferences))
+		return FALSE
 	if(!genital_preferences_enabled(preferences))
 		return FALSE
 	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
@@ -112,6 +119,8 @@
 	var/skin_color_type
 
 /datum/preference/tri_color/genital/is_accessible(datum/preferences/preferences)
+	if(!..(preferences))
+		return FALSE
 	if(!genital_preferences_enabled(preferences))
 		return FALSE
 	var/part_enabled = is_factual_sprite_accessory(relevant_mutant_bodypart, preferences.read_preference(type_to_check))
@@ -131,6 +140,8 @@
 	var/skin_color_type
 
 /datum/preference/tri_bool/genital/is_accessible(datum/preferences/preferences)
+	if(!..(preferences))
+		return FALSE
 	if(!genital_preferences_enabled(preferences))
 		return FALSE
 	var/part_enabled = is_factual_sprite_accessory(relevant_mutant_bodypart, preferences.read_preference(type_to_check))
@@ -178,6 +189,8 @@
 	maximum = PENIS_MAX_LENGTH
 
 /datum/preference/numeric/penis_length/is_accessible(datum/preferences/preferences)
+	if(!..(preferences))
+		return FALSE
 	var/genitals_allowed = genital_preferences_enabled(preferences)
 	var/part_enabled = is_factual_sprite_accessory(relevant_mutant_bodypart, preferences.read_preference(/datum/preference/choiced/genital/penis))
 	return genitals_allowed && part_enabled
@@ -197,6 +210,8 @@
 	maximum = PENIS_MAX_GIRTH
 
 /datum/preference/numeric/penis_girth/is_accessible(datum/preferences/preferences)
+	if(!..(preferences))
+		return FALSE
 	var/genitals_allowed = genital_preferences_enabled(preferences)
 	var/part_enabled = is_factual_sprite_accessory(relevant_mutant_bodypart, preferences.read_preference(/datum/preference/choiced/genital/penis))
 	return genitals_allowed && part_enabled
@@ -245,6 +260,8 @@
 	target.dna.features["penis_taur_mode"] = value
 
 /datum/preference/toggle/penis_taur_mode/is_accessible(datum/preferences/preferences)
+	if(!..(preferences))
+		return FALSE
 	var/genitals_allowed = genital_preferences_enabled(preferences)
 	var/part_enabled = is_factual_sprite_accessory(relevant_mutant_bodypart, preferences.read_preference(/datum/preference/choiced/genital/penis))
 	return genitals_allowed && part_enabled
@@ -256,6 +273,8 @@
 	relevant_mutant_bodypart = ORGAN_SLOT_PENIS
 
 /datum/preference/choiced/penis_sheath/is_accessible(datum/preferences/preferences)
+	if(!..(preferences))
+		return FALSE
 	var/genitals_allowed = genital_preferences_enabled(preferences)
 	var/part_enabled = is_factual_sprite_accessory(relevant_mutant_bodypart, preferences.read_preference(/datum/preference/choiced/genital/penis))
 	return genitals_allowed && part_enabled
@@ -316,6 +335,8 @@
 	maximum = TESTICLES_MAX_SIZE
 
 /datum/preference/numeric/balls_size/is_accessible(datum/preferences/preferences)
+	if(!..(preferences))
+		return FALSE
 	var/genitals_allowed = genital_preferences_enabled(preferences)
 	var/part_enabled = is_factual_sprite_accessory(relevant_mutant_bodypart, preferences.read_preference(/datum/preference/choiced/genital/testicles))
 	return genitals_allowed && part_enabled
@@ -361,6 +382,8 @@
 	maximum = BUTT_MAX_SIZE
 
 /datum/preference/numeric/butt_size/is_accessible(datum/preferences/preferences)
+	if(!..(preferences))
+		return FALSE
 	var/genitals_allowed = genital_preferences_enabled(preferences)
 	var/part_enabled = is_factual_sprite_accessory(relevant_mutant_bodypart, preferences.read_preference(/datum/preference/choiced/genital/butt))
 	return genitals_allowed && part_enabled
@@ -477,6 +500,8 @@
 	target.dna.features["breasts_lactation"] = value
 
 /datum/preference/toggle/breasts_lactation/is_accessible(datum/preferences/preferences)
+	if(!..(preferences))
+		return FALSE
 	var/genitals_allowed = genital_preferences_enabled(preferences)
 	var/part_enabled = is_factual_sprite_accessory(relevant_mutant_bodypart, preferences.read_preference(/datum/preference/choiced/genital/breasts))
 	return genitals_allowed && part_enabled
@@ -500,6 +525,8 @@
 	)
 
 /datum/preference/choiced/breasts_size/is_accessible(datum/preferences/preferences)
+	if(!..(preferences))
+		return FALSE
 	var/genitals_allowed = genital_preferences_enabled(preferences)
 	var/part_enabled = is_factual_sprite_accessory(relevant_mutant_bodypart, preferences.read_preference(/datum/preference/choiced/genital/breasts))
 	return genitals_allowed && part_enabled
@@ -541,6 +568,8 @@
 	return BELLY_DEFAULT_SIZE
 
 /datum/preference/numeric/belly_size/is_accessible(datum/preferences/preferences)
+	if(!..(preferences))
+		return FALSE
 	var/genitals_allowed = genital_preferences_enabled(preferences)
 	var/part_enabled = is_factual_sprite_accessory(relevant_mutant_bodypart, preferences.read_preference(/datum/preference/choiced/genital/belly))
 	return genitals_allowed && part_enabled

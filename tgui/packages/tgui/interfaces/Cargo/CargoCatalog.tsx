@@ -88,7 +88,11 @@ export function CargoCatalog(props: Props) {
         <Stack.Divider />
         <Stack.Item grow={express ? 2 : 3}>
           <Section fill scrollable>
-            <CatalogList packs={packs} openContents={setShowContents} />
+            <CatalogList
+              express={express}
+              packs={packs}
+              openContents={setShowContents}
+            />
           </Section>
         </Stack.Item>
       </Stack>
@@ -113,7 +117,6 @@ function CatalogTabs(props: CatalogTabsProps & Props) {
     searchText,
     setActiveSupplyName,
     setSearchText,
-    express,
   } = props;
   const { self_paid } = data;
 
@@ -169,24 +172,23 @@ function CatalogTabs(props: CatalogTabsProps & Props) {
         </Tabs>
       </Stack.Item>
       <Stack.Item>
-        {!express && (
-          <Button
-            fluid
-            color={self_paid ? 'caution' : 'transparent'}
-            icon={self_paid ? 'check-square-o' : 'square-o'}
-            onClick={() => act('toggleprivate')}
-            tooltip={t('ui.cargo.use_your_own_funds')}
-            tooltipPosition="top"
-          >
-            {t('ui.cargo.buy_privately')}
-          </Button>
-        )}
+        <Button
+          fluid
+          color={self_paid ? 'caution' : 'transparent'}
+          icon={self_paid ? 'check-square-o' : 'square-o'}
+          onClick={() => act('toggleprivate')}
+          tooltip={t('ui.cargo.use_your_own_funds')}
+          tooltipPosition="top"
+        >
+          {t('ui.cargo.buy_privately')}
+        </Button>
       </Stack.Item>
     </Stack>
   );
 }
 
 type CatalogListProps = {
+  express?: boolean;
   packs: SupplyCategory['packs'];
   openContents: Dispatch<SetStateAction<string>>;
 };
@@ -194,8 +196,15 @@ type CatalogListProps = {
 function CatalogList(props: CatalogListProps) {
   const { act, data } = useBackend<CargoData>();
   const { t } = usePreferencesLocalization(data);
-  const { cart = [], max_order, self_paid, app_cost, displayed_currency_name } = data;
-  const { packs = [], openContents } = props;
+  const {
+    cart = [],
+    max_order,
+    self_paid,
+    app_cost,
+    displayed_currency_name,
+    private_price_multiplier = 1.1,
+  } = data;
+  const { express, packs = [], openContents } = props;
 
   return (
     <>
@@ -210,7 +219,7 @@ function CatalogList(props: CatalogListProps) {
           color = 'bad';
         }
 
-        const privateBuy = (self_paid && !pack.goody) || app_cost;
+        const privateBuy = (self_paid && (!pack.goody || express)) || app_cost;
         const tooltipIcon = (content: string, icon: string, color: string) => (
           <Stack.Item>
             <Tooltip content={content}>
@@ -275,7 +284,7 @@ function CatalogList(props: CatalogListProps) {
                   </Stack.Item>
                   {!!privateBuy && (
                     <Stack.Item>
-                      {formatMoney(Math.round(pack.cost * 1.1))}{displayed_currency_name}
+                      {formatMoney(Math.round(pack.cost * private_price_multiplier))}{displayed_currency_name}
                     </Stack.Item>
                   )}
                 </Stack>

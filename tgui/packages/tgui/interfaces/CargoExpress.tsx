@@ -13,11 +13,14 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { CargoCatalog } from './Cargo/CargoCatalog';
+import type { CargoData } from './Cargo/types';
 import { usePreferencesLocalization } from './localization';
 
-type Data = {
+type Data = CargoData & {
   locked: BooleanLike;
   points: number;
+  budgetName: string;
+  budgetLinked: BooleanLike;
   using_beacon: BooleanLike;
   beaconzone: string;
   beaconName: string;
@@ -67,6 +70,8 @@ function CargoExpressContent(props) {
   const {
     hasBeacon,
     points,
+    budgetName,
+    self_paid,
     using_beacon,
     beaconzone,
     beaconName,
@@ -81,8 +86,10 @@ function CargoExpressContent(props) {
           title={t('ui.cargo_express.title')}
           buttons={
             <Box inline bold verticalAlign={'middle'}>
+              {budgetName}
+              {': '}
               <AnimatedNumber value={Math.round(points)} />
-              {' credits'}
+              {self_paid ? ' private credits' : ' credits'}
             </Box>
           }
         >

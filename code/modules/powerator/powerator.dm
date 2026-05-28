@@ -85,10 +85,13 @@
 	var/credits_account = ACCOUNT_ENG
 	/// Percent of tax we deduct from people using the powerator, allowing easy adjustment for VV admins.
 	var/tax = 20
+	/// A bound ID or department card to receive payouts.
+	var/obj/item/card/id/bound_card
 
 /obj/machinery/powerator/Initialize(mapload)
 	. = ..()
 	attached_cable = locate() in get_turf(src)
+	register_context()
 	START_PROCESSING(SSobj, src)
 
 /obj/machinery/powerator/Destroy()
@@ -96,8 +99,30 @@
 	if(attached_cable)
 		UnregisterSignal(attached_cable, COMSIG_QDELETING)
 		attached_cable = null
+	bound_card = null
 
 	return ..()
+
+/obj/machinery/powerator/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(!held_item)
+		context[SCREENTIP_CONTEXT_LMB] = "Adjust power draw"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/card/id))
+		var/obj/item/card/id/id_card = held_item
+		context[SCREENTIP_CONTEXT_RMB] = (bound_card == id_card) ? "Unlink card" : "Link card"
+		return CONTEXTUAL_SCREENTIP_SET
+	switch(held_item.tool_behaviour)
+		if(TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unanchor" : "Anchor"
+			return CONTEXTUAL_SCREENTIP_SET
+		if(TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+			return CONTEXTUAL_SCREENTIP_SET
+		if(TOOL_CROWBAR)
+			if(panel_open)
+				context[SCREENTIP_CONTEXT_LMB] = "Dismantle machine"
+				return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/powerator/examine(mob/user)
 	. = ..()
@@ -126,6 +151,14 @@
 	. += span_notice("This machine has made [credits_made] credits from selling power so far.")
 	. += span_notice("This machine makes 1 credit every two seconds per [display_power(divide_ratio, FALSE)] sent outward.")
 	. += span_notice("This machine is taxed [tax]% credits by the SolFed Power Ministry.")
+	. += span_notice("Right-click with an ID or departmental card to link or unlink it.")
+	var/datum/bank_account/display_account = get_credit_account()
+	if(bound_card && display_account)
+		. += span_notice("Linked card: [bound_card] ([display_account.account_holder])")
+	else if(display_account)
+		. += span_notice("Payout account: [display_account.account_holder]")
+	else
+		. += span_warning("Payout account: unavailable.")
 
 /obj/machinery/powerator/RefreshParts()
 	. = ..()
@@ -175,7 +208,9 @@
 
 	attached_cable.add_delayedload(power_to_energy(current_power))
 
-	var/datum/bank_account/primary_account = SSeconomy.get_dep_account(credits_account)
+	var/datum/bank_account/primary_account = get_credit_account()
+	if(isnull(primary_account))
+		return
 	var/money_ratio = round(current_power * (1/divide_ratio) * ((100-tax) / 100))
 	primary_account.adjust_money(money_ratio)
 	credits_made += money_ratio 
@@ -185,6 +220,24 @@
 	current_power = tgui_input_number(user, "How much power (in Watts) would you like to draw? Max: [display_power(max_power, FALSE)]", "Power Draw", current_power, max_power, 0)
 	if(isnull(current_power))
 		return
+
+/obj/machinery/powerator/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return .
+	if(!istype(tool, /obj/item/card/id))
+		return NONE
+	var/obj/item/card/id/id_card = tool
+	if(isnull(id_card.registered_account))
+		balloon_alert(user, "no account on card!")
+		return ITEM_INTERACT_BLOCKING
+	if(bound_card == id_card)
+		bound_card = null
+		balloon_alert(user, "card unlinked")
+		return ITEM_INTERACT_SUCCESS
+	bound_card = id_card
+	balloon_alert(user, "card linked")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/powerator/screwdriver_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
@@ -234,6 +287,14 @@
 
 	UnregisterSignal(attached_cable, COMSIG_QDELETING)
 	attached_cable = null
+
+/// Returns the account that should receive powerator payouts.
+/obj/machinery/powerator/proc/get_credit_account()
+	if(bound_card && !QDELETED(bound_card) && bound_card.registered_account)
+		return bound_card.registered_account
+	if(bound_card)
+		bound_card = null
+	return SSeconomy.get_dep_account(credits_account)
 
 /obj/item/circuitboard/machine/powerator/syndicate
 	name = "\improper Syndicate Powerator"

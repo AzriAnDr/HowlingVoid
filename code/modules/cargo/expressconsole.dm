@@ -1,4 +1,5 @@
 #define EXPRESS_EMAG_DISCOUNT 0.72
+#define EXPRESS_PERSONAL_MARKUP 1.3
 #define BEACON_PRINT_COOLDOWN 10 SECONDS
 
 /obj/machinery/computer/cargo/express
@@ -17,6 +18,10 @@
 	var/list/meme_pack_data
 	/// The linked supplypod beacon
 	var/obj/item/supplypod_beacon/beacon
+	/// The budget account manually linked by swiping the matching budget card.
+	var/datum/bank_account/department/bound_budget_account
+	/// If TRUE, department purchases require a manually linked budget card.
+	var/require_budget_card = TRUE
 	/// Where we droppin boys
 	var/area/landingzone = /area/station/cargo/storage
 	var/pod_type = /obj/structure/closet/supplypod
@@ -44,9 +49,26 @@
 /obj/machinery/computer/cargo/express/Destroy()
 	if(beacon)
 		beacon.unlink_console()
+	bound_budget_account = null
 	return ..()
 
 /obj/machinery/computer/cargo/express/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(require_budget_card && istype(tool, /obj/item/card/id/departmental_budget/car))
+		var/obj/item/card/id/departmental_budget/budget_card = tool
+		var/datum/bank_account/department/cargo_budget = SSeconomy.get_dep_account(cargo_account)
+		if(isnull(cargo_budget) || budget_card.registered_account != cargo_budget)
+			balloon_alert(user, "wrong budget card!")
+			return ITEM_INTERACT_BLOCKING
+
+		if(bound_budget_account == cargo_budget)
+			bound_budget_account = null
+			balloon_alert(user, "budget unlinked")
+		else
+			bound_budget_account = cargo_budget
+			balloon_alert(user, "budget linked")
+		SStgui.update_uis(src)
+		return ITEM_INTERACT_SUCCESS
+
 	if (tool.GetID() && allowed(user))
 		locked = !locked
 		to_chat(user, span_notice("You [locked ? "lock" : "unlock"] the interface."))
@@ -104,26 +126,56 @@
 				"packs" = get_packs_data(pack.group, express = TRUE), // will you show me?
 			) // i'd be right happy to
 
+/obj/machinery/computer/cargo/express/proc/get_budget_account()
+	if(!require_budget_card)
+		return SSeconomy.get_dep_account(cargo_account)
+	if(QDELETED(bound_budget_account))
+		bound_budget_account = null
+	return bound_budget_account
+
+/obj/machinery/computer/cargo/express/proc/get_user_id(mob/user)
+	if(!isliving(user))
+		return null
+	var/mob/living/living_user = user
+	return living_user.get_idcard(TRUE)
+
+/obj/machinery/computer/cargo/express/proc/get_express_pack_cost(datum/supply_pack/pack, personal_purchase = FALSE)
+	. = pack.get_cost() * get_discount()
+	if(personal_purchase)
+		. *= EXPRESS_PERSONAL_MARKUP
+	return round(.)
+
 /obj/machinery/computer/cargo/express/ui_data(mob/user)
 	var/canBeacon = beacon && (isturf(beacon.loc) || ismob(beacon.loc))//is the beacon in a valid location?
 	var/list/data = list()
-	var/datum/bank_account/account = SSeconomy.get_dep_account(cargo_account)
-	if(account)
-		data["points"] = account.account_balance
+	var/datum/bank_account/budget_account = get_budget_account()
+	var/obj/item/card/id/id_card = get_user_id(user)
+	var/datum/bank_account/display_account = self_paid ? id_card?.registered_account : budget_account
+	data["points"] = display_account?.account_balance || 0
+	data["budgetName"] = display_account?.account_holder || (self_paid ? "No ID detected" : "No budget linked")
+	data["budgetLinked"] = !isnull(budget_account)
 	data["locked"] = locked//swipe an ID to unlock
 	data["siliconUser"] = HAS_SILICON_ACCESS(user)
 	data["beaconzone"] = beacon ? get_area(beacon) : ""//where is the beacon located? outputs in the tgui
 	data["using_beacon"] = using_beacon //is the mode set to deliver to the beacon or the cargobay?
 	data["canBeacon"] = !using_beacon || canBeacon //is the mode set to beacon delivery, and is the beacon in a valid location?
-	data["canBuyBeacon"] = COOLDOWN_FINISHED(src, beacon_print_cooldown) && account.account_balance >= BEACON_COST
+	data["canBuyBeacon"] = !self_paid && COOLDOWN_FINISHED(src, beacon_print_cooldown) && !isnull(budget_account) && budget_account.account_balance >= BEACON_COST
 	data["beaconError"] = using_beacon && !canBeacon ? "(BEACON ERROR)" : ""//changes button text to include an error alert if necessary
 	data["hasBeacon"] = beacon != null//is there a linked beacon?
 	data["beaconName"] = beacon ? beacon.name : "No Beacon Found"
 	data["printMsg"] = COOLDOWN_FINISHED(src, beacon_print_cooldown) ? "Print Beacon for [BEACON_COST] [MONEY_NAME]" : "Print Beacon for [BEACON_COST] [MONEY_NAME] ([COOLDOWN_TIMELEFT(src, beacon_print_cooldown)])" //buttontext for printing beacons
+	data["self_paid"] = self_paid
+	data["private_price_multiplier"] = EXPRESS_PERSONAL_MARKUP
+	data["displayed_currency_name"] = " [MONEY_SYMBOL]"
+	data["displayed_currency_full_name"] = " [MONEY_NAME]"
+	data["max_order"] = CARGO_MAX_ORDER
+	data["cart"] = list()
 	data["supplies"] = list()
 	message = "Sales are near-instantaneous - please choose carefully."
 	if(SSshuttle.supply_blocked)
 		message = blockade_warning
+	if(!self_paid && require_budget_card && isnull(budget_account))
+		message = "Cargo budget not linked. Swipe a Cargo Budget card to enable department purchases."
 	if(using_beacon && !beacon)
 		message = "BEACON ERROR: BEACON MISSING"//beacon was destroyed
 	else if (using_beacon && !canBeacon)
@@ -156,7 +208,7 @@
 			if (beacon)
 				beacon.update_status(SP_READY) //turns on the beacon's ready light
 		if("printBeacon")
-			var/datum/bank_account/account = SSeconomy.get_dep_account(cargo_account)
+			var/datum/bank_account/account = get_budget_account()
 			if(isnull(account) || !account.adjust_money(-BEACON_COST))
 				return
 
@@ -166,6 +218,9 @@
 			new_beacon.link_console(src, user) //rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
 			printed_beacons++ //printed_beacons starts at 0, so the first one out will be called beacon # 1
 			beacon.name = "Supply Pod Beacon #[printed_beacons]"
+		if("toggleprivate")
+			self_paid = !self_paid
+			return TRUE
 
 		if("add")//Generate Supply Order first
 			if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_EXPRESSPOD_CONSOLE))
@@ -197,9 +252,30 @@
 				rank = "Silicon"
 			var/reason = ""
 			var/datum/supply_order/order = new(pack, name, rank, ckey, reason)
-			var/datum/bank_account/account = SSeconomy.get_dep_account(cargo_account)
-			if (isnull(account) && order.pack.get_cost() > 0)
-				return
+			var/datum/bank_account/account
+			if(self_paid)
+				var/obj/item/card/id/id_card = get_user_id(user)
+				if(!istype(id_card))
+					say("No ID card detected.")
+					return
+				if(IS_DEPARTMENTAL_CARD(id_card))
+					say("The [src] rejects [id_card].")
+					return
+				account = id_card.registered_account
+				if(!istype(account))
+					say("Invalid bank account.")
+					return
+
+				var/bypass = istype(id_card, /obj/item/card/id/advanced/chameleon)
+				if(corporate_economy_lacks_supply_pack_access(pack, id_card.GetAccess(), bypass))
+					say("[id_card] lacks the requisite access for this purchase.")
+					return
+				order.paying_account = account
+			else
+				account = get_budget_account()
+				if (isnull(account))
+					say("No cargo budget card linked.")
+					return
 
 			if (obj_flags & EMAGGED)
 				landingzone = GLOB.areas_by_type[pick(GLOB.the_station_areas)]
@@ -216,13 +292,14 @@
 					return
 
 			if (obj_flags & EMAGGED)
-				if (account.account_balance < order.pack.get_cost() * -get_discount())
+				var/emag_order_cost = get_express_pack_cost(order.pack, self_paid)
+				if (account.account_balance < emag_order_cost)
 					return
 
 				TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 10 SECONDS)
 				order.generateRequisition(get_turf(src))
 				for(var/i in 1 to MAX_EMAG_ROCKETS)
-					if (!account.adjust_money(order.pack.get_cost() * -get_discount()))
+					if (!account.adjust_money(-emag_order_cost, "Cargo Express: [order.pack.name]"))
 						break
 
 					var/turf/landing_turf = pick(empty_turfs)
@@ -242,8 +319,11 @@
 			else
 				landing_turf = pick(empty_turfs)
 
-			if (!account.adjust_money(-order.pack.get_cost() * get_discount()))
+			var/order_cost = get_express_pack_cost(order.pack, self_paid)
+			if (!account.adjust_money(-order_cost, "Cargo Express: [order.pack.name]"))
 				return
+			if(self_paid)
+				account.bank_card_talk("Cargo express order #[order.id] ([order.pack.name]) processed. [order_cost] [MONEY_NAME] have been charged to your bank account.")
 
 			TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 5 SECONDS)
 			if(pack.special_pod)
@@ -255,6 +335,7 @@
 			return TRUE
 
 #undef EXPRESS_EMAG_DISCOUNT
+#undef EXPRESS_PERSONAL_MARKUP
 #undef BEACON_PRINT_COOLDOWN
 
 
@@ -273,6 +354,7 @@
 	cargo_account = ACCOUNT_CIV /// Change this later to something else, as this is meant to prevent runtiming
 	contraband = TRUE
 	bypass_express_lock = TRUE
+	require_budget_card = FALSE
 	console_flag = CARGO_CONSOLE_PDA
 
 	pod_type = /obj/structure/closet/supplypod/bluespacepod

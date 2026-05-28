@@ -76,7 +76,7 @@
 	return !uniform_compatible || !suit_compatible || !shoes_compatible
 
 /obj/item/bodypart/leg/left/digitigrade
-	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
+	icon_greyscale = BODYPART_ICON_MAMMAL
 	limb_id = BODYPART_ID_DIGITIGRADE
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
 	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
@@ -87,7 +87,7 @@
 	limb_id = owner?.is_digitigrade_squished() ? SPECIES_LIZARD : BODYPART_ID_DIGITIGRADE
 
 /obj/item/bodypart/leg/right/digitigrade
-	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
+	icon_greyscale = BODYPART_ICON_MAMMAL
 	limb_id = BODYPART_ID_DIGITIGRADE
 	bodyshape = BODYSHAPE_HUMANOID | BODYSHAPE_DIGITIGRADE
 	footprint_sprite = FOOTPRINT_SPRITE_CLAWS

@@ -20,7 +20,7 @@
 	digitigrade_type = /obj/item/bodypart/leg/right/digitigrade/lizard
 
 /obj/item/bodypart/leg/left/digitigrade/lizard
-	icon_greyscale = BODYPART_ICON_LIZARD
+	icon_greyscale = BODYPART_ICON_MAMMAL
 
 /obj/item/bodypart/leg/right/digitigrade/lizard
-	icon_greyscale = BODYPART_ICON_LIZARD
+	icon_greyscale = BODYPART_ICON_MAMMAL

@@ -365,7 +365,7 @@
 			var/datum/stock_part/stock_part_datum = GLOB.stock_part_datums[component]
 			if(isnull(stock_part_datum))
 				CRASH("[component] didn't have a matching stock part datum")
-			component = stock_part_datum.physical_object_type
+			component = stock_part_datum
 
 		for(var/_ in 1 to amount)
 			replacement_parts += component
