@@ -17,6 +17,7 @@ export type CargoData = {
   max_order: number;
   message: string;
   points: number;
+  private_price_multiplier?: number;
   requests: Request[];
   requestonly: BooleanLike;
   self_paid: BooleanLike;

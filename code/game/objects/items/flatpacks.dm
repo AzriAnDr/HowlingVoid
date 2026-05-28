@@ -95,11 +95,14 @@
 	if(contents.len > 1)
 		if(!length(leaving_circuit.replacement_parts))
 			leaving_circuit.replacement_parts = leaving_circuit.flatten_component_list()
+	if(length(leaving_circuit.replacement_parts))
+		normalize_replacement_parts(leaving_circuit)
+	if(contents.len > 1)
 		for(var/obj/item/flatpack_component in src)
 			if(flatpack_component == leaving_circuit)
 				continue
 			for(var/i in 1 to leaving_circuit.replacement_parts.len)
-				var/obj/item/machine_component = leaving_circuit.replacement_parts[i]
+				var/machine_component = leaving_circuit.replacement_parts[i]
 				if(!ispath(machine_component, /obj/item))
 					continue
 				if(flatpack_component.type == machine_component)
@@ -110,6 +113,21 @@
 	var/obj/machinery/new_machine = new leaving_circuit.build_path(loc, board = leaving_circuit)
 	new_machine.on_construction(user)
 	return new_machine
+
+/// Converts old flatpack stock-part typepaths into the datum form machinery RefreshParts() expects.
+/obj/item/flatpack/proc/normalize_replacement_parts(obj/item/circuitboard/machine/leaving_circuit)
+	PRIVATE_PROC(TRUE)
+
+	for(var/i in 1 to length(leaving_circuit.replacement_parts))
+		var/replacement_part = leaving_circuit.replacement_parts[i]
+		if(!ispath(replacement_part, /obj/item))
+			continue
+		if(leaving_circuit.req_components && (replacement_part in leaving_circuit.req_components))
+			continue
+
+		var/datum/stock_part/stock_part_datum = GLOB.stock_part_datums_per_object[replacement_part]
+		if(!isnull(stock_part_datum))
+			leaving_circuit.replacement_parts[i] = stock_part_datum
 
 /obj/item/flatpack/proc/deploy_computer_flatpack(obj/item/circuitboard/computer/leaving_circuit, mob/living/user)
 	board = null
