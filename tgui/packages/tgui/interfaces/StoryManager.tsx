@@ -12,8 +12,8 @@ import { Window } from '../layouts';
 import { usePreferencesLocalization } from './localization';
 
 type StoryManagerData = {
-  current_stories: Story[];
-  archived_stories: Story[];
+  current_stories?: Story[] | null;
+  archived_stories?: Story[] | null;
   current_date: string;
 };
 
@@ -30,6 +30,8 @@ export const StoryManager = (props) => {
   const { data, act } = useBackend<StoryManagerData>();
   const { t } = usePreferencesLocalization(data);
   const { current_stories, archived_stories, current_date } = data;
+  const currentStories = current_stories || [];
+  const archivedStories = archived_stories || [];
 
   const [title, setTitle] = useLocalState('title', '');
   const [text, setText] = useLocalState('text', '');
@@ -90,7 +92,7 @@ export const StoryManager = (props) => {
           </Button>
         </Section>
         <Collapsible title={t('ui.story_manager.current_stories')}>
-          {current_stories.map((story) => (
+          {currentStories.map((story) => (
             <Collapsible
               bold
               key={story.id}
@@ -124,7 +126,7 @@ export const StoryManager = (props) => {
           ))}
         </Collapsible>
         <Collapsible title={t('ui.story_manager.archived_stories')}>
-          {archived_stories.map((story) => (
+          {archivedStories.map((story) => (
             <Collapsible
               bold
               key={story.id}

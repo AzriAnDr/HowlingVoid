@@ -308,6 +308,7 @@
 		/datum/job/engineering_guard = /obj/item/organ/cyberimp/arm/toolkit/flash,
 		/datum/job/telecomms_specialist = /obj/item/organ/ears/cybernetic/xray,
 		/datum/job/bridge_assistant = /obj/item/organ/cyberimp/arm/toolkit/paperwork,
+		/datum/job/veteran_advisor = /obj/item/organ/cyberimp/eyes/hud/security,
 		// NOVA EDIT ADDITION END
 	)
 

@@ -17,12 +17,12 @@ import { usePreferencesLocalization } from './localization';
 import { UserDetails } from './Vending';
 
 type Data = {
-  accountName: string;
-  requests: Request[];
-  applicants: Applicant[];
-  bountyValue: number;
-  bountyText: string;
-  user: User;
+  accountName?: string;
+  requests?: Request[] | null;
+  applicants?: Applicant[] | null;
+  bountyValue?: number | null;
+  bountyText?: string | null;
+  user?: User | null;
 };
 
 type Request = {
@@ -57,13 +57,15 @@ export const BountyBoardContent = (props) => {
   const { act, data } = useBackend<Data>();
   const { t } = usePreferencesLocalization(data);
   const {
-    accountName,
-    requests = [],
-    applicants = [],
+    requests,
+    applicants,
     bountyValue,
-    bountyText,
     user,
   } = data;
+  const displayedRequests = requests || [];
+  const displayedApplicants = applicants || [];
+  const displayedBountyValue = bountyValue ?? 1;
+  const displayedUser = user || { name: 'Unknown' };
   const color = 'rgba(13, 13, 213, 0.7)';
   const backColor = 'rgba(50, 50, 170, 0.5)';
   return (
@@ -82,7 +84,7 @@ export const BountyBoardContent = (props) => {
       </Section>
       <Flex mb={1}>
         <Flex.Item grow={1} basis={0}>
-          {requests?.map((request) => (
+          {displayedRequests.map((request) => (
             <Collapsible key={request.name} title={request.owner} width="300px">
               <Section key={request.name} width="300px">
                 <Stack align="baseline">
@@ -97,7 +99,7 @@ export const BountyBoardContent = (props) => {
                       fluid
                       icon="pen-fancy"
                       content={t('ui.bounty_board.apply')}
-                      disabled={request.owner === user.name}
+                      disabled={request.owner === displayedUser.name}
                       onClick={() =>
                         act('apply', {
                           request: request.acc_number,
@@ -121,7 +123,7 @@ export const BountyBoardContent = (props) => {
                   <i>&quot;{request.description}&quot;</i>
                 </BlockQuote>
                 <Section title={t('ui.bounty_board.request_applicants')}>
-                  {applicants?.map(
+                  {displayedApplicants.map(
                     (applicant) =>
                       applicant.request_id === request.acc_number && (
                         <Flex key={applicant.request_id}>
@@ -177,7 +179,7 @@ export const BountyBoardContent = (props) => {
                   unit="cr"
                   minValue={1}
                   maxValue={1000}
-                  value={bountyValue}
+                  value={displayedBountyValue}
                   step={1}
                   width="80px"
                   onChange={(value) =>
@@ -189,7 +191,7 @@ export const BountyBoardContent = (props) => {
                 <Button
                   icon="print"
                   content={t('ui.bounty_board.submit_bounty')}
-                  disabled={user.name === 'Unknown'}
+                  disabled={displayedUser.name === 'Unknown'}
                   onClick={() => act('createBounty')}
                 />
               </Box>

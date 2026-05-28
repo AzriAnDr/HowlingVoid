@@ -4,11 +4,12 @@
 		Lay back in your wheelchair and say \"I told you\" to the HoS when all of the station collapses."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	faction = FACTION_STATION
-	total_positions = 0
-	spawn_positions = 0
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = SUPERVISOR_HOS
-	minimal_player_age = 7
-	exp_requirements = 6000 //100 HOURS! We want really hard boiled people
+	minimal_player_age = 0
+	exp_requirements = 0
+	required_character_age = 45
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_SECURITY
 	exp_granted_type = EXP_TYPE_CREW
@@ -34,7 +35,7 @@
 	)
 	rpg_title = "Royal Advisor"
 	allow_bureaucratic_error = FALSE
-	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS | JOB_ANTAG_PROTECTED
+	job_flags = STATION_JOB_FLAGS | JOB_ANTAG_PROTECTED
 
 /datum/job/veteran_advisor/get_default_roundstart_spawn_point()
 	for(var/obj/effect/landmark/start/spawn_point as anything in GLOB.start_landmarks_list)

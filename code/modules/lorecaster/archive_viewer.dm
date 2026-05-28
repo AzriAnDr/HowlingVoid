@@ -28,11 +28,14 @@
 
 /datum/computer_file/program/news_archive/proc/generate_stories()
 	RETURN_TYPE(/list)
-	if(!fexists(ARCHIVE_FILE))
-		return
-
 	var/list/compiled_stories = list()
+	if(!fexists(ARCHIVE_FILE))
+		return compiled_stories
+
 	var/list/uncompiled_stories = json_load(ARCHIVE_FILE)
+	if(!islist(uncompiled_stories))
+		return compiled_stories
+
 	var/list/date_list = list()
 
 	for(var/story in uncompiled_stories)

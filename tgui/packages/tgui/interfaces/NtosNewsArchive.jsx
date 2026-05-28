@@ -7,6 +7,7 @@ import { NtosWindow } from '../layouts';
 export const NtosNewsArchive = (props) => {
   const { data } = useBackend();
   const { stories } = data;
+  const storyList = stories || [];
 
   return (
     <NtosWindow width={600} height={800}>
@@ -14,7 +15,7 @@ export const NtosNewsArchive = (props) => {
         <Section textAlign="center">
           Archives from the Nanotrasen News Network!
         </Section>
-        {stories.map((story) => (
+        {storyList.map((story) => (
           <Collapsible
             bold
             key={story.title}

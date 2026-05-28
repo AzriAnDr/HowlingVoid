@@ -22,11 +22,14 @@ ADMIN_VERB(lorecaster_story_manager, R_ADMIN, "Lorecaster Stories", "Open the Lo
 /// Return a list of generated stories in a dict from a passed in file location
 /datum/story_manager_interface/proc/generate_stories(file, return_id_dict = FALSE)
 	RETURN_TYPE(/list)
-	if(!fexists(file))
-		return
-
 	var/list/compiled_stories = list()
+	if(!fexists(file))
+		return compiled_stories
+
 	var/list/uncompiled_stories = json_load(file)
+	if(!islist(uncompiled_stories))
+		return compiled_stories
+
 	var/list/date_list = list()
 
 	for(var/story in uncompiled_stories)
@@ -163,4 +166,3 @@ ADMIN_VERB(lorecaster_story_manager, R_ADMIN, "Lorecaster Stories", "Open the Lo
 			current_stories = generate_stories(NEWS_FILE)
 			archived_stories = generate_stories(ARCHIVE_FILE)
 			ui.send_full_update()
-

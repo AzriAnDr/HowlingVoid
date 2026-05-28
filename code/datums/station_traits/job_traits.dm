@@ -104,7 +104,7 @@
 /datum/station_trait/job/bridge_assistant
 	name = "Bridge Assistant"
 	button_desc = "Sign up to become the Bridge Assistant and watch over the Bridge."
-	weight = 2
+	weight = 0
 	report_message = "We have installed a Bridge Assistant on your station."
 	show_in_report = TRUE
 	job_to_add = /datum/job/bridge_assistant
@@ -157,7 +157,7 @@
 /datum/station_trait/job/veteran_advisor
 	name = "Veteran Advisor"
 	button_desc = "Sign up to become a DISABLED but hard boiled Veteran Advisor of Nanotrasen Security Force. Advise HoS and Captain, train Officers, all while fighting your PTSD."
-	weight = 2
+	weight = 0
 	report_message = "Veteran Security Advisor has been assigned to your station to help with Security matters."
 	show_in_report = TRUE
 	job_to_add = /datum/job/veteran_advisor
