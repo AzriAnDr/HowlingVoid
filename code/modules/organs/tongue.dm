@@ -24,12 +24,45 @@
 	if(say)
 		tongue.say_mod = say
 
+/mob/living/proc/toggle_autoaccent()
+	set name = "Toggle Auto-Accent"
+	set desc = "Toggle automatic accents for your species"
+	set category = "IC"
+
+	if(HAS_TRAIT(src, TRAIT_NO_ACCENT))
+		REMOVE_TRAIT(src, TRAIT_NO_ACCENT, "ooc_verb")
+		to_chat(src.client, "Auto-accent is now on")
+	else
+		ADD_TRAIT(src, TRAIT_NO_ACCENT, "ooc_verb")
+		to_chat(src.client, "Auto-accent is now off")
+
 /obj/item/organ/tongue/dog
 	name = "long tongue"
 	desc = "A long and wet tongue. It seems to jump when it's called good, oddly enough."
 	say_mod = "woofs"
 	icon_state = "tongue"
 	modifies_speech = TRUE
+	languages_native = list(/datum/language/canilunzt)
+
+/proc/text_mult(text, count)
+	. = list()
+	while(count--)
+		. += text
+	return jointext(., "")
+
+/proc/pick_cat_rawr(match)
+	return match[1] + text_mult(lowertext(match[1]), rand(2, 4))
+
+/proc/pick_dog_rawr(match)
+	return match[1] + text_mult(lowertext(match[1]), rand(1, 3))
+
+/obj/item/organ/tongue/dog/modify_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(!message || message[1] == "*")
+		return
+
+	var/static/regex/dog_rawrs = new(@"[рРrR]+", "g")
+	speech_args[SPEECH_MESSAGE] = dog_rawrs.Replace(message, GLOBAL_PROC_REF(pick_dog_rawr))
 
 /obj/item/organ/tongue/dog/on_mob_insert(mob/living/carbon/signer, special = FALSE, movement_flags = DELETE_IF_REPLACED)
 	. = ..()
@@ -41,6 +74,18 @@
 	speaker.verb_exclaim = initial(verb_exclaim)
 	speaker.verb_whisper = initial(verb_whisper)
 	speaker.verb_yell = initial(verb_yell)
+
+/obj/item/organ/tongue/cat
+	modifies_speech = TRUE
+	languages_native = list(/datum/language/nekomimetic, /datum/language/yangyu, /datum/language/primitive_catgirl)
+
+/obj/item/organ/tongue/cat/modify_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(!message || message[1] == "*")
+		return
+
+	var/static/regex/cat_rawrs = new(@"[рРrR]+", "g")
+	speech_args[SPEECH_MESSAGE] = cat_rawrs.Replace(message, GLOBAL_PROC_REF(pick_cat_rawr))
 
 /obj/item/organ/tongue/cat/on_mob_insert(mob/living/carbon/signer, special = FALSE, movement_flags = DELETE_IF_REPLACED)
 	. = ..()

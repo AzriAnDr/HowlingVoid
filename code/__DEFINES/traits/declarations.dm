@@ -1663,6 +1663,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mob can't be inflicted with the split personality trauma.
 #define TRAIT_NO_SPLIT_PERSONALITY "no_split_personality"
 
+/// Mob has disabled automatic tongue accents.
+#define TRAIT_NO_ACCENT "no_auto_accent"
+
 /// Mob is shapeshifted, e.g. via a polymorph belt.
 #define TRAIT_SHAPESHIFTED "shapeshifted"
 

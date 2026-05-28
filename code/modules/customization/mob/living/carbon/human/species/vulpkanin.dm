@@ -9,7 +9,7 @@
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 
-	mutanttongue = /obj/item/organ/tongue/vulpkanin
+	mutanttongue = /obj/item/organ/tongue/dog
 	species_language_holder = /datum/language_holder/vulpkanin
 	payday_modifier = 1.0
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
@@ -256,4 +256,3 @@
 	)
 
 	return to_add
-

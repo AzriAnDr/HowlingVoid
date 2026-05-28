@@ -99,6 +99,8 @@
 /obj/item/organ/tongue/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
+	if(SEND_SIGNAL(source, COMSIG_TRY_MODIFY_SPEECH) & PREVENT_MODIFY_SPEECH)
+		return
 	if(should_modify_speech(source, speech_args))
 		modify_speech(source, speech_args)
 
@@ -107,6 +109,8 @@
 		return FALSE // Don't modify speech
 	if(HAS_TRAIT(source, TRAIT_SIGN_LANG)) // No modifiers for signers - I hate this but I simply cannot get these to combine into one statement
 		return FALSE // Don't modify speech
+	if(HAS_TRAIT(source, TRAIT_NO_ACCENT))
+		return FALSE
 	return TRUE
 
 /obj/item/organ/tongue/proc/modify_speech(datum/source, list/speech_args)
@@ -134,6 +138,7 @@
 
 	if(modifies_speech)
 		RegisterSignal(receiver, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+		receiver.verbs += /mob/living/proc/toggle_autoaccent
 	receiver.voice_filter = voice_filter
 	/* This could be slightly simpler, by making the removal of the
 	* NO_TONGUE_TRAIT conditional on the tongue's `sense_of_taste`, but
@@ -147,6 +152,7 @@
 
 	temp_say_mod = ""
 	UnregisterSignal(organ_owner, COMSIG_MOB_SAY)
+	organ_owner.verbs -= /mob/living/proc/toggle_autoaccent
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(organ_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 	organ_owner.voice_filter = initial(organ_owner.voice_filter)
@@ -185,33 +191,57 @@
 	liked_foodtypes = GORE | MEAT | SEAFOOD | NUTS | BUGS
 	disliked_foodtypes = GRAIN | DAIRY | CLOTH | GROSS
 	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.9,aresample=%SAMPLE_RATE%,atempo=1/0.9,aformat=channel_layouts=mono,volume=0.2 [p0]; [out2] asetrate=%SAMPLE_RATE%*1.1,aresample=%SAMPLE_RATE%,atempo=1/1.1,aformat=channel_layouts=mono,volume=0.2[p2]; [p0][0][p2] amix=inputs=3"}
-	var/static/list/speech_replacements = list(
-		new /regex("s+", "g") = "sss",
-		new /regex("S+", "g") = "SSS",
-		new /regex(@"(\w)x", "g") = "$1kss",
-		//new /regex(@"(\w)X", "g") = "$1KSSS", // NOVA EDIT REMOVAL
-		new /regex(@"\bx([\-|r|R]|\b)", "g") = "ecks$1",
-		new /regex(@"\bX([\-|r|R]|\b)", "g") = "ECKS$1",
-	)
-	// NOVA EDIT ADDITION START - Russian version - yes copy pasted from above because static lists are great.
-	var/static/list/russian_speech_replacements = list(
-		new /regex("s+", "g") = "sss",
-		new /regex("S+", "g") = "SSS",
-		new /regex(@"(\w)x", "g") = "$1kss",
-		new /regex(@"\bx([\-|r|R]|\b)", "g") = "ecks$1",
-		new /regex(@"\bX([\-|r|R]|\b)", "g") = "ECKS$1",
-		new /regex("с+", "g") = "ссс",
-		new /regex("С+", "g") = "ССС",
-		"з" = "с",
-		"З" = "С",
-		"ж" = "ш",
-		"Ж" = "Ш",
-	)
-	// NOVA EDIT ADDITION END
 
-/obj/item/organ/tongue/lizard/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/speechmod, replacements = CONFIG_GET(flag/russian_text_formation) ? russian_speech_replacements : speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech))) // NOVA EDIT CHANGE - ORIGINAL: AddComponent(/datum/component/speechmod, replacements = speech_replacements, should_modify_speech = CALLBACK(src, PROC_REF(should_modify_speech)))
+/proc/pick_lizard_latin_s_hiss(match)
+	var/matched_text = match[1]
+	var/first_letter = copytext_char(matched_text, 1, 2) == "S" ? "S" : "s"
+	return first_letter + text_mult("s", max(1, length_char(matched_text) - 1 + rand(1, 3)))
+
+/proc/pick_lizard_russian_s_hiss(match)
+	var/matched_text = match[1]
+	var/first_letter = copytext_char(matched_text, 1, 2) == "С" ? "С" : "с"
+	return first_letter + text_mult("с", max(1, length_char(matched_text) - 1 + rand(1, 3)))
+
+/proc/pick_lizard_russian_z_hiss(match)
+	var/matched_text = match[1]
+	var/first_letter = copytext_char(matched_text, 1, 2) == "З" ? "С" : "с"
+	return first_letter + text_mult("с", max(1, length_char(matched_text) - 1 + rand(1, 3)))
+
+/proc/pick_lizard_russian_zh_hiss(match)
+	var/matched_text = match[1]
+	var/first_letter = copytext_char(matched_text, 1, 2) == "Ж" ? "Ш" : "ш"
+	return first_letter + text_mult("ш", max(1, length_char(matched_text) - 1 + rand(1, 2)))
+
+/proc/pick_lizard_russian_sh_hiss(match)
+	var/matched_text = match[1]
+	var/first_letter = copytext_char(matched_text, 1, 2) == "Ш" ? "Ш" : "ш"
+	return first_letter + text_mult("ш", max(1, length_char(matched_text) - 1 + rand(1, 3)))
+
+/obj/item/organ/tongue/lizard/modify_speech(datum/source, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(!message || message[1] == "*")
+		return
+
+	var/static/regex/latin_s = new(@"[sS]+", "g")
+	var/static/regex/letter_x = new(@"(\w)x", "g")
+	var/static/regex/leading_x = new(@"\bx([\-|r|R]|\b)", "g")
+	var/static/regex/leading_capital_x = new(@"\bX([\-|r|R]|\b)", "g")
+	message = latin_s.Replace(message, GLOBAL_PROC_REF(pick_lizard_latin_s_hiss))
+	message = replacetextEx(message, letter_x, "$1kss")
+	message = replacetextEx(message, leading_x, "ecks$1")
+	message = replacetextEx(message, leading_capital_x, "ECKS$1")
+
+	if(CONFIG_GET(flag/russian_text_formation))
+		var/static/regex/russian_s = new(@"[сС]+", "g")
+		var/static/regex/russian_z = new(@"[зЗ]+", "g")
+		var/static/regex/russian_sh = new(@"[шШ]+", "g")
+		var/static/regex/russian_zh = new(@"[жЖ]+", "g")
+		message = russian_s.Replace(message, GLOBAL_PROC_REF(pick_lizard_russian_s_hiss))
+		message = russian_z.Replace(message, GLOBAL_PROC_REF(pick_lizard_russian_z_hiss))
+		message = russian_sh.Replace(message, GLOBAL_PROC_REF(pick_lizard_russian_sh_hiss))
+		message = russian_zh.Replace(message, GLOBAL_PROC_REF(pick_lizard_russian_zh_hiss))
+
+	speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/organ/tongue/lizard/silver
 	name = "silver tongue"
