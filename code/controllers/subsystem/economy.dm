@@ -254,30 +254,11 @@ SUBSYSTEM_DEF(economy)
 	))
 
 /**
- * Iterates over the machines list for vending machines, resets their regular and premium product prices (Not contraband), and sends a message to the newscaster network.
+ * Publishes a new vending price generation. Vending machines refresh lazily on use.
  */
 /datum/controller/subsystem/economy/proc/update_vending_prices()
-	var/list/obj/machinery/vending/prices_to_update = list()
-	// Assoc list of "z level" -> if it's on the station
-	// Hack, is station z level is too expensive to do for each machine, I hate this place
-	var/list/station_z_status = list()
-	for(var/obj/machinery/vending/vending_lad as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/vending))
-		if(istype(vending_lad, /obj/machinery/vending/custom))
-			continue
-		var/vending_level = vending_lad.z
-		var/station_status = station_z_status["[vending_level]"]
-		if(station_status == null)
-			station_status = is_station_level(vending_level)
-			station_z_status["[vending_level]"] = station_status
-		if(!station_status)
-			continue
-		prices_to_update += vending_lad
-	for(var/i in 1 to length(prices_to_update))
-		var/obj/machinery/vending/vending = prices_to_update[i]
-		vending.reset_prices(vending.product_records, vending.coin_records + vending.hidden_records)
-	// NOVA EDIT ADDITION START - Soft station price index
 	last_vending_price_index = get_effective_price_index()
-	// NOVA EDIT ADDITION END
+	vending_price_generation++
 
 /**
  * Reassign vending prices from the current effective price index, as provided by SSeconomy.
@@ -288,7 +269,7 @@ SUBSYSTEM_DEF(economy)
  * * premiumlist - the list of premium product datums in the vendor to refresh their prices.
  */
 /obj/machinery/vending/proc/reset_prices(list/recordlist, list/premiumlist)
-	var/effective_price_index = SSeconomy.get_effective_price_index()
+	var/effective_price_index = SSeconomy.last_vending_price_index
 	default_price = round(initial(default_price) * effective_price_index)
 	extra_price = round(initial(extra_price) * effective_price_index)
 

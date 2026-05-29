@@ -28,9 +28,27 @@
 	if(custom_price <= 0)
 		return custom_price
 
-	var/adjusted_price = max(round(custom_price * SSeconomy.get_effective_price_index()), 1)
+	var/adjusted_price = max(round(custom_price * SSeconomy.last_vending_price_index), 1)
 	return max(adjusted_price + get_vending_brand_jitter(product_path, adjusted_price), 1)
 // NOVA EDIT ADDITION END
+
+/obj/machinery/vending/proc/uses_dynamic_vending_prices()
+	if(istype(src, /obj/machinery/vending/custom))
+		return FALSE
+	if(all_products_free)
+		return FALSE
+	return onstation
+
+/obj/machinery/vending/proc/refresh_prices_if_needed(force = FALSE)
+	if(!uses_dynamic_vending_prices())
+		vending_price_generation = SSeconomy.vending_price_generation
+		return FALSE
+	if(!force && vending_price_generation == SSeconomy.vending_price_generation)
+		return FALSE
+
+	reset_prices(product_records, coin_records + hidden_records)
+	vending_price_generation = SSeconomy.vending_price_generation
+	return TRUE
 
 /**
  * Build the inventory of the vending machine from its product and record lists
@@ -82,7 +100,7 @@
 /obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE, premium = FALSE)
 	PRIVATE_PROC(TRUE)
 
-	var/effective_price_index = SSeconomy.get_effective_price_index()
+	var/effective_price_index = SSeconomy.last_vending_price_index
 	default_price = round(initial(default_price) * effective_price_index)
 	extra_price = round(initial(extra_price) * effective_price_index)
 
@@ -125,6 +143,7 @@
 	build_inventory(products, product_records, product_categories, start_empty)
 	build_inventory(contraband, hidden_records, list(list("name" = "Contraband", "icon" = "mask", "products" = contraband)), start_empty, premium = TRUE)
 	build_inventory(premium, coin_records, list(list("name" = "Premium", "icon" = "coins", "products" = premium)), start_empty, premium = TRUE)
+	vending_price_generation = SSeconomy.vending_price_generation
 
 //Better would be to make constructable child
 /obj/machinery/vending/RefreshParts()
@@ -155,6 +174,7 @@
  * * canister - the vending canister we are refilling from
  */
 /obj/machinery/vending/proc/restock(obj/item/vending_refill/canister)
+	refresh_prices_if_needed()
 	. = 0
 
 	//to initialize product category & cargo ordered canisters for the 1st time
@@ -207,6 +227,7 @@
 	PROTECTED_PROC(TRUE)
 
 	. = TRUE
+	refresh_prices_if_needed()
 	var/datum/data/vending_product/item_record = locate(params["ref"])
 	var/list/record_to_check = product_records + coin_records
 	if(extended_inventory)

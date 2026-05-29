@@ -18,6 +18,7 @@ import { usePreferencesLocalization } from './localization';
 type StockItem = {
   amount: number;
   free: boolean;
+  price?: number;
 };
 
 type ProductRecord = {
@@ -55,7 +56,7 @@ type VendingData = {
   coin_records: ProductRecord[];
   hidden_records: ProductRecord[];
   user: UserData;
-  stock: Record<string, StockItem>[];
+  stock: Record<string, StockItem>;
   extended_inventory: boolean;
   access: boolean;
   categories: Record<string, Category>;
@@ -246,7 +247,7 @@ const ProductDisplay = (props: {
 
 type ProductProps = {
   product: ProductRecord;
-  productStock: StockItem;
+  productStock?: StockItem;
   fluid: boolean;
 };
 
@@ -255,18 +256,20 @@ type ProductProps = {
  */
 const Product = (props: ProductProps) => {
   const { act, data } = useBackend<VendingData>();
-  const { product, productStock, fluid } = props;
+  const { product, fluid } = props;
+  const productStock = props.productStock || { amount: 0, free: false };
   const { department, jobDiscount, all_products_free, user } = data;
 
   const colorable = !!product.colorable;
-  const free = all_products_free || productStock.free || product.price === 0;
+  const currentPrice = productStock?.price ?? product.price;
+  const free = all_products_free || productStock.free || currentPrice === 0;
   const discount = !product.premium && department === user?.department;
   const remaining = productStock.amount;
-  const redPrice = Math.round(product.price * jobDiscount);
+  const redPrice = Math.round(currentPrice * jobDiscount);
   const disabled =
     remaining === 0 ||
     (!all_products_free && !user) ||
-    (!free && (discount ? redPrice : product.price) > user?.cash);
+    (!free && (discount ? redPrice : currentPrice) > user?.cash);
 
   const baseProps = {
     base64: product.image,
@@ -292,7 +295,7 @@ const Product = (props: ProductProps) => {
   const priceProps = {
     discount: discount,
     free: free,
-    product: product,
+    price: currentPrice,
     redPrice: redPrice,
   };
 
@@ -383,7 +386,7 @@ const ProductColorSelect = (props: ProductColorSelectProps) => {
 type ProductPriceProps = {
   discount: boolean;
   free: boolean;
-  product: ProductRecord;
+  price: number;
   redPrice: number;
 };
 
@@ -391,8 +394,8 @@ type ProductPriceProps = {
 const ProductPrice = (props: ProductPriceProps) => {
   const { data } = useBackend<VendingData>();
   const { displayed_currency_name } = data;
-  const { discount, free, product, redPrice } = props;
-  let standardPrice = `${product.price}`;
+  const { discount, free, price, redPrice } = props;
+  let standardPrice = `${price}`;
   if (free) {
     standardPrice = 'FREE';
   } else if (discount) {

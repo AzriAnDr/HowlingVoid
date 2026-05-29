@@ -154,6 +154,8 @@
 	var/displayed_currency_icon = "coins"
 	///String of the used currency to display in the vendor UI
 	var/displayed_currency_name = MONEY_SYMBOL
+	/// Economy vending price generation currently applied to this machine.
+	var/vending_price_generation = 0
 	///Whether our age check is currently functional
 	var/age_restrictions = TRUE
 	/// How many credits does this vending machine have? 20% of all sales go to this pool, and are given freely when the machine is restocked, or successfully tilted. Lost on deconstruction.

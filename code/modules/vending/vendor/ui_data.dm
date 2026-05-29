@@ -11,6 +11,7 @@
 		if(icon_deny)
 			flick(icon_deny, src)
 		return
+	refresh_prices_if_needed()
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -67,6 +68,8 @@
 	return out_records
 
 /obj/machinery/vending/ui_static_data(mob/user)
+	refresh_prices_if_needed()
+
 	var/list/data = list()
 	if(ad_list.len)
 		data["ad"] = ad_list[rand(1, ad_list.len)]
@@ -100,6 +103,8 @@
 	return passed_id.registered_account.account_balance
 
 /obj/machinery/vending/ui_data(mob/user)
+	refresh_prices_if_needed()
+
 	. = list()
 
 	var/obj/item/card/id/card_used
@@ -126,7 +131,8 @@
 	for (var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
 		.["stock"][SANITIZED_PATH(product_record.product_path)] = list(
 			amount = product_record.amount,
-			free = length(product_record.returned_products)
+			free = length(product_record.returned_products),
+			price = product_record.price,
 		)
 
 	if(prob(10) && ad_list.len)
@@ -138,6 +144,7 @@
 	. = ..()
 	if(.)
 		return
+	refresh_prices_if_needed()
 
 	switch(action)
 		if("vend")
