@@ -36,6 +36,7 @@
 	name = "Black Market Trader"
 	uniform = /obj/item/clothing/under/rank/cargo/tech
 	shoes = /obj/item/clothing/shoes/laceup
+	ears = /obj/item/radio/headset/chameleon/blackmarket
 	id = /obj/item/card/id/advanced/chameleon/elite/black/blackmarket
 	l_pocket = /obj/item/shuttle_remote/bmd
 
@@ -634,6 +635,17 @@
 	return
 
 //ITEMS//
+/obj/item/radio/headset/chameleon/blackmarket
+	name = "old radio headset"
+	desc = "A worn-out looking headset. It seems to pick up a lot of frequencies."
+	icon_state = "syndie_headset"
+	worn_icon_state = "syndie_headset"
+
+/obj/item/radio/headset/chameleon/blackmarket/Initialize(mapload)
+	. = ..()
+	make_syndie()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+
 /obj/item/radio/headset/cybersun
 	keyslot = new /obj/item/encryptionkey/headset_syndicate/cybersun
 

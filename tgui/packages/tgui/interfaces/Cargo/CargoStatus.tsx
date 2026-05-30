@@ -120,7 +120,7 @@ export function CargoStatus(props) {
                     })
                   }
                 >
-                  {delivery.name} ({formatDeciseconds(delivery.remaining)})
+                  {delivery.name} - {delivery.areaName} ({formatDeciseconds(delivery.remaining)})
                 </Button>
               ))}
             </Stack>

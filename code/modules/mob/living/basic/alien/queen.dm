@@ -1,8 +1,8 @@
 /mob/living/basic/alien/queen
 	name = "alien queen"
-	icon_state = "alienq"
-	icon_living = "alienq"
-	icon_dead = "alienq_dead"
+	icon_state = "alienqueen"
+	icon_living = "alienqueen"
+	icon_dead = "alienqueen_dead"
 	health = 250
 	maxHealth = 250
 	melee_damage_lower = 15
@@ -23,10 +23,10 @@
 
 /mob/living/basic/alien/queen/large
 	name = "alien empress"
-	icon = 'icons/mob/nonhuman-player/alienqueen.dmi'
-	icon_state = "alienq"
-	icon_living = "alienq"
-	icon_dead = "alienq_dead"
+	icon = 'icons/mob/big_xenos.dmi'
+	icon_state = "alienqueen"
+	icon_living = "alienqueen"
+	icon_dead = "alienqueen_dead"
 	health_doll_icon = "alienq"
 	bubble_icon = "alienroyal"
 	maxHealth = 400
@@ -37,4 +37,3 @@
 	)
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
-

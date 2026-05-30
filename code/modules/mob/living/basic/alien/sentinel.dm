@@ -1,8 +1,8 @@
 /mob/living/basic/alien/sentinel
 	name = "alien sentinel"
-	icon_state = "aliens"
-	icon_living = "aliens"
-	icon_dead = "aliens_dead"
+	icon_state = "alienspitter"
+	icon_living = "alienspitter"
+	icon_dead = "alienspitter_dead"
 	health = 150
 	maxHealth = 150
 	melee_damage_lower = 15
