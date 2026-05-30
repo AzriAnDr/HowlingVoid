@@ -262,6 +262,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EASILY_WOUNDED "easy_limb_wound"
 #define TRAIT_HARDLY_WOUNDED "hard_limb_wound"
 #define TRAIT_NEVER_WOUNDED "never_wounded"
+/// Mob cannot receive bone or joint wounds, such as fractures and dislocations.
+#define TRAIT_NO_BONE_WOUNDS "no_bone_wounds"
 /// Mobs with this trait do not apply a damage cap to their potential considered wounding damage, resulting in extremely high wounding effects.
 #define TRAIT_BLOODY_MESS "bloody_mess"
 /// Species with this trait have 50% extra chance of bleeding from piercing and slashing wounds

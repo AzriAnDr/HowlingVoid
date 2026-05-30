@@ -105,6 +105,9 @@
 	if (!ignore_cannot_bleed && ((required_limb_biostate & BIO_BLOODED) && !limb.can_bleed()))
 		return FALSE
 
+	if (limb.owner && HAS_TRAIT(limb.owner, TRAIT_NO_BONE_WOUNDS) && (required_limb_biostate & (BIO_BONE|BIO_JOINTED)))
+		return FALSE
+
 	if (!biostate_valid(limb.biological_state))
 		return FALSE
 

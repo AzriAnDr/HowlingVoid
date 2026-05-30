@@ -101,7 +101,7 @@
 /area/ruin/space/has_grav/nova/blackmarket)
 "fu" = (
 /obj/structure/cable,
-/obj/machinery/power/micro_reactor,
+/obj/machinery/power/micro_reactor/on,
 /turf/open/floor/iron/submarine_perf/airless,
 /area/ruin/space/has_grav/nova/blackmarket)
 "fB" = (
@@ -1009,14 +1009,6 @@
 /obj/structure/table/wood,
 /obj/machinery/button/door/indestructible/blackmarket_trader{
 	pixel_y = 2
-	},
-/obj/item/crowbar{
-	pixel_y = 11;
-	pixel_x = -7
-	},
-/obj/item/crowbar{
-	pixel_y = 8;
-	pixel_x = -5
 	},
 /turf/open/floor/iron/smooth_large,
 /area/ruin/space/has_grav/nova/blackmarket)

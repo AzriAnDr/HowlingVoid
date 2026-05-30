@@ -60,6 +60,12 @@
 	. = ..()
 	soundloop = new(src, active)
 	connect_to_network()
+	if(active)
+		START_PROCESSING(SSmachines, src)
+		set_light_power(3)
+		set_light_range(2)
+		set_light_on(TRUE)
+		update_appearance()
 
 /obj/machinery/power/micro_reactor/Destroy()
 	QDEL_NULL(soundloop)
@@ -127,6 +133,11 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += "It is[!active?"n't":""] running."
+
+/obj/machinery/power/micro_reactor/on
+	active = TRUE
+	icon_state = "reactor0_1"
+	light_on = TRUE
 
 /obj/machinery/power/micro_reactor/bapgm
 	name = "B.A.P.G.M."

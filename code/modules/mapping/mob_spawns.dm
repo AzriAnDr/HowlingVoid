@@ -37,6 +37,7 @@
 	uniform = /obj/item/clothing/under/rank/cargo/tech
 	shoes = /obj/item/clothing/shoes/laceup
 	ears = /obj/item/radio/headset/chameleon/blackmarket
+	back = /obj/item/storage/backpack
 	id = /obj/item/card/id/advanced/chameleon/elite/black/blackmarket
 	l_pocket = /obj/item/shuttle_remote/bmd
 
