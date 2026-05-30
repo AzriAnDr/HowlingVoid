@@ -12,6 +12,7 @@
  */
 
 #define BODYPART_ICON_XENOSLIME 'icons/mob/human/species/slime_parts_greyscale.dmi'
+#define XENOSLIME_BLEED_MOD 1.5
 
 // ============================================================
 // BODYPART TYPES — 6 regular + 2 digitigrade
@@ -69,6 +70,7 @@
 		TRAIT_MUTANT_COLORS,
 		TRAIT_TOXINLOVER,
 		TRAIT_NOBREATH,
+		TRAIT_NO_BONE_WOUNDS,
 	)
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD =  /obj/item/bodypart/head/jelly/slime/roundstart/xenoslime,
@@ -107,6 +109,7 @@
 	if(ishuman(new_jellyperson))
 		var/mob/living/carbon/human/H = new_jellyperson
 		H.physiology.pressure_mod *= 3
+		H.physiology.bleed_mod *= XENOSLIME_BLEED_MOD
 	// Grant the ES13-style transparency toggle
 	if(can_toggle_transparency && ishuman(new_jellyperson))
 		toggle_transparency = new
@@ -123,6 +126,7 @@
 	if(ishuman(former_jellyperson))
 		var/mob/living/carbon/human/H = former_jellyperson
 		H.physiology.pressure_mod /= 3  // Revert pressure vulnerability
+		H.physiology.bleed_mod /= XENOSLIME_BLEED_MOD
 
 	return ..()
 
@@ -151,6 +155,13 @@
 		SPECIES_PERK_NAME = "Squishy Form",
 		SPECIES_PERK_DESC = "Being made of slime, you have the ability to alter your physical form to be whatever you choose! \
 			You may grow ears, change your hair, and even become a taur-like if you so choose, at the press of a button and the snap of a finger!",
+	))
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+		SPECIES_PERK_ICON = "bone",
+		SPECIES_PERK_NAME = "Gelatinous Anatomy",
+		SPECIES_PERK_DESC = "Your flexible body cannot suffer fractures, dislocations, or other bone and joint wounds, \
+			but open wounds leak jelly 50% faster.",
 	))
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
@@ -381,3 +392,4 @@
 	return ..()
 
 #undef BODYPART_ICON_XENOSLIME
+#undef XENOSLIME_BLEED_MOD

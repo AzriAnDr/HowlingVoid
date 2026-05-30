@@ -1,10 +1,10 @@
 /mob/living/basic/alien
 	name = "alien hunter"
 	desc = "Hiss!"
-	icon = 'icons/mob/nonhuman-player/alien.dmi'
-	icon_state = "alienh"
-	icon_living = "alienh"
-	icon_dead = "alienh_dead"
+	icon = 'icons/mob/big_xenos.dmi'
+	icon_state = "aliendrone"
+	icon_living = "aliendrone"
+	icon_dead = "aliendrone_dead"
 	icon_gib = "syndicate_gib"
 	gender = FEMALE
 	status_flags = CANPUSH
@@ -41,10 +41,13 @@
 	gold_core_spawnable = NO_SPAWN
 	death_sound = 'sound/mobs/non-humanoids/hiss/hiss6.ogg'
 	death_message = "lets out a waning guttural screech, green blood bubbling from its maw..."
+	pixel_x = -16
+	base_pixel_x = -16
 
 	habitable_atmos = null
 	unsuitable_atmos_damage = FALSE
 	unsuitable_heat_damage = 20
+	minimum_survivable_temperature = 0
 
 	ai_controller = /datum/ai_controller/basic_controller/alien
 	default_blood_volume = BLOOD_VOLUME_NORMAL

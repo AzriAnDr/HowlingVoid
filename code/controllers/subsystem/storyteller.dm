@@ -785,13 +785,15 @@ SUBSYSTEM_DEF(storyteller)
 	if(!istype(snapshot))
 		return
 
-	var/total_materials = 0
+	var/recent_tracked_material_total = 0
 	var/obj/machinery/ore_silo/silo = GLOB.ore_silo_default
 	if(silo?.materials)
 		snapshot.ore_silo_material_total = round(silo.materials.total_amount() / SHEET_MATERIAL_AMOUNT)
 		for(var/datum/material/material as anything in silo.materials.materials)
-			snapshot.ore_silo_materials[material.name] = round(silo.materials.get_material_amount(material) / SHEET_MATERIAL_AMOUNT)
-		total_materials += snapshot.ore_silo_material_total
+			var/material_amount = round(silo.materials.get_material_amount(material) / SHEET_MATERIAL_AMOUNT)
+			snapshot.ore_silo_materials[material.name] = material_amount
+			if(!is_storyteller_material_gain_excluded(material))
+				recent_tracked_material_total += material_amount
 
 	for(var/obj/item/stack/found_stack in world)
 		var/turf/location = get_turf(found_stack)
@@ -799,11 +801,12 @@ SUBSYSTEM_DEF(storyteller)
 			continue
 		snapshot.loose_material_total += found_stack.amount
 		snapshot.loose_materials[found_stack.name] = (snapshot.loose_materials[found_stack.name] || 0) + found_stack.amount
+		if(!is_storyteller_material_stack_gain_excluded(found_stack))
+			recent_tracked_material_total += found_stack.amount
 		CHECK_TICK
 
-	total_materials += snapshot.loose_material_total
-	snapshot.material_gain_recent = last_material_total ? (total_materials - last_material_total) : 0
-	last_material_total = total_materials
+	snapshot.material_gain_recent = last_material_total ? (recent_tracked_material_total - last_material_total) : 0
+	last_material_total = recent_tracked_material_total
 
 	for(var/obj/item/found_item in world)
 		var/turf/location = get_turf(found_item)
@@ -813,7 +816,7 @@ SUBSYSTEM_DEF(storyteller)
 		if(!istype(location_area))
 			continue
 
-		if(istype(found_item, /obj/item/food))
+		if(is_storyteller_countable_food_item(found_item) && is_storyteller_countable_food_storage(found_item.loc))
 			if(istype(location_area, /area/station/service/kitchen) || istype(location_area, /area/station/service/kitchen/coldroom))
 				snapshot.kitchen_food_total++
 			else if(istype(location_area, /area/station/service/bar) || istype(location_area, /area/station/service/cafeteria))
@@ -2750,6 +2753,40 @@ SUBSYSTEM_DEF(storyteller)
 		return
 	minor_announce(message, title, sound_override = sound_override, color_override = color_override)
 
+/datum/controller/subsystem/storyteller/proc/get_storyteller_drop_area_name(turf/target)
+	if(!isturf(target))
+		return "an unknown area"
+	var/area/target_area = get_area(target)
+	return target_area?.name || "an unknown area"
+
+/datum/controller/subsystem/storyteller/proc/append_storyteller_landing_zone(message, turf/target)
+	if(!message)
+		return "Landing zone: [get_storyteller_drop_area_name(target)]."
+	return "[message] Landing zone: [get_storyteller_drop_area_name(target)]."
+
+/datum/controller/subsystem/storyteller/proc/is_storyteller_material_gain_excluded(datum/material/material)
+	if(!istype(material))
+		return FALSE
+	return istype(material, /datum/material/iron) || istype(material, /datum/material/glass)
+
+/datum/controller/subsystem/storyteller/proc/is_storyteller_material_stack_gain_excluded(obj/item/stack/found_stack)
+	if(!istype(found_stack))
+		return FALSE
+	var/material_type = found_stack.material_type
+	return ispath(material_type, /datum/material/iron) || ispath(material_type, /datum/material/glass)
+
+/datum/controller/subsystem/storyteller/proc/is_storyteller_countable_food_item(obj/item/found_item)
+	if(!istype(found_item))
+		return FALSE
+	if(istype(found_item, /obj/item/reagent_containers/cup/bowl))
+		return found_item.reagents?.total_volume > 0
+	return !!IS_EDIBLE(found_item)
+
+/datum/controller/subsystem/storyteller/proc/is_storyteller_countable_food_storage(atom/storage_loc)
+	if(isturf(storage_loc))
+		return TRUE
+	return istype(storage_loc, /obj/machinery/smartfridge/food)
+
 /datum/controller/subsystem/storyteller/proc/announce_storyteller_alert(message, title = "Storyteller Alert", sound_override = ANNOUNCER_METEORS, color_override = "yellow")
 	if(!message)
 		return
@@ -2890,6 +2927,7 @@ SUBSYSTEM_DEF(storyteller)
 		return
 	prune_pending_pod_deliveries()
 	var/area/target_area = get_area(target)
+	var/area_name = target_area?.name || "Unknown Area"
 	pending_pod_deliveries += list(list(
 		"id" = REF(landingzone),
 		"landingZone" = WEAKREF(landingzone),
@@ -2898,11 +2936,11 @@ SUBSYSTEM_DEF(storyteller)
 		"deliveryName" = delivery_name || "Storyteller Relief Pod",
 		"deliverySummary" = delivery_summary,
 		"arrivalAt" = world.time + max(0, eta),
-		"areaName" = target_area?.name || "Unknown Area",
+		"areaName" = area_name,
 	))
 	var/static/mutable_appearance/storyteller_pod_target = mutable_appearance('icons/obj/supplypods_32x32.dmi', "LZ")
 	var/pod_name = delivery_name || "Storyteller Relief Pod"
-	notify_ghosts("[pod_name] is inbound.", source = get_turf(landingzone), header = "Relief Inbound", alert_overlay = storyteller_pod_target)
+	notify_ghosts("[pod_name] is inbound to [area_name].", source = get_turf(landingzone), header = "Relief Inbound", alert_overlay = storyteller_pod_target)
 
 /datum/controller/subsystem/storyteller/proc/find_pending_pod_delivery(delivery_id)
 	RETURN_TYPE(/list)
