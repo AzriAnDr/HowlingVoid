@@ -39,7 +39,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	for(var/organ_path in current_species.mutant_organs)
 		var/obj/item/organ/current_organ = get_organ_by_type(organ_path)
 		if(current_organ)
-			current_organ.Remove(src, special = TRUE) //Please don't somehow kill our dummy
+			current_organ.Remove(src, special = TRUE, movement_flags = KEEP_IN_MUTANT_BODYPARTS) //Please don't somehow kill our dummy
 			SSwardrobe.recycle_object(current_organ)
 
 //Instead of just deleting our equipment, we save what we can and reinsert it into SSwardrobe's store
@@ -82,6 +82,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/dummy/proc/wipe_state()
 	delete_equipment()
+	refresh_obscured()
 	update_lips(null, null, null, update = FALSE)
 	cut_overlays(TRUE)
 

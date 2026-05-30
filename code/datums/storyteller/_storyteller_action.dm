@@ -1860,27 +1860,38 @@
 	)
 	if(!islist(pod_delivery))
 		return FALSE
-	owner.announce_storyteller_notice(get_dispatch_message(owner, report), dispatch_title, dispatch_sound, dispatch_color)
+	owner.announce_storyteller_notice(owner.append_storyteller_landing_zone(get_dispatch_message(owner, report), target), dispatch_title, dispatch_sound, dispatch_color)
 	owner.record_action_execution(src, "Scheduled adaptive relief pod for [report.title]")
 	return TRUE
 
 /datum/storyteller/action/positive/department_supply_pod
 	parent_type = /datum/storyteller/action/positive/adaptive_pod
 	id = "aid_department_supply_pod"
-	name = "Adaptive Department Relief Pod"
+	name = "Engineering Relief Pod"
 	family = "aid_department"
 	cost = 12
 	weight = 9
-	supported_need_ids = list(STORYTELLER_NEED_FOOD_SHORTAGE, STORYTELLER_NEED_ENGINEERING_REPAIRS)
+	supported_need_ids = list(STORYTELLER_NEED_ENGINEERING_REPAIRS)
+
+/datum/storyteller/action/positive/food_relief_pod
+	parent_type = /datum/storyteller/action/positive/adaptive_pod
+	id = "aid_food_relief_pod"
+	name = "Food Relief Pod"
+	family = "aid_kitchen"
+	cost = 12
+	weight = 9
+	supported_need_ids = list(STORYTELLER_NEED_FOOD_SHORTAGE)
+	dispatch_title = "Service Relief Dispatch"
+	dispatch_sound = 'sound/announcer/notice/notice2.ogg'
+
+/datum/storyteller/action/positive/food_relief_pod/get_dispatch_message(datum/controller/subsystem/storyteller/owner, datum/storyteller/need_report/report)
+	return "Emergency ration reserves have been rerouted to the service wing."
 
 /datum/storyteller/action/positive/department_supply_pod/get_dispatch_message(datum/controller/subsystem/storyteller/owner, datum/storyteller/need_report/report)
 	if(!istype(report))
 		return ..()
-	switch(report.id)
-		if(STORYTELLER_NEED_FOOD_SHORTAGE)
-			return "Emergency ration reserves have been rerouted to the service wing."
-		if(STORYTELLER_NEED_ENGINEERING_REPAIRS)
-			return "A rapid-repair pod has been cleared for Engineering."
+	if(report.id == STORYTELLER_NEED_ENGINEERING_REPAIRS)
+		return "A rapid-repair pod has been cleared for Engineering."
 	return ..()
 
 /datum/storyteller/action/positive/mining_relief_pod
@@ -1999,7 +2010,7 @@
 	if(!islist(pod_delivery))
 		return FALSE
 	owner.announce_storyteller_notice(
-		"A morale package has been cleared for common-area delivery. Productivity enhancement is encouraged.",
+		owner.append_storyteller_landing_zone("A morale package has been cleared for common-area delivery. Productivity enhancement is encouraged.", target),
 		"Morale Dispatch",
 		'sound/announcer/notice/notice2.ogg',
 		"green",

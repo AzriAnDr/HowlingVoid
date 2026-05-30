@@ -33,6 +33,8 @@
 		if(SSaccessories.sprite_accessories[key])
 			var/datum/sprite_accessory/accessory = SSaccessories.sprite_accessories[key][mutant_part.name]
 			if(!accessory?.factual)
+				dna.features[key] = SPRITE_ACCESSORY_NONE
 				bodyparts_to_add -= key
 				continue
+			dna.features[key] = mutant_part.name
 	dna.mutant_bodyparts = bodyparts_to_add.Copy()

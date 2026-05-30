@@ -238,18 +238,19 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		src.last_message_count = 0
 		return FALSE
 
+#define CHARACTER_IMPORT_UPLOAD_LIMIT_BYTES (5 * 1024 * 1024)
+
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
 /client/AllowUpload(filename, filelength)
-	var/client_max_file_size = CONFIG_GET(number/upload_limit)
-	if (holder)
-		var/admin_max_file_size = CONFIG_GET(number/upload_limit_admin)
-		if(filelength > admin_max_file_size)
-			to_chat(src, span_warning("Error: AllowUpload(): File Upload too large. Upload Limit: [admin_max_file_size/1024]KiB."))
-			return FALSE
-	else if(filelength > client_max_file_size)
-		to_chat(src, span_warning("Error: AllowUpload(): File Upload too large. Upload Limit: [client_max_file_size/1024]KiB."))
+	var/max_file_size = holder ? CONFIG_GET(number/upload_limit_admin) : CONFIG_GET(number/upload_limit)
+	if(endswith(lowertext("[filename]"), ".json"))
+		max_file_size = CHARACTER_IMPORT_UPLOAD_LIMIT_BYTES
+	if(filelength > max_file_size)
+		to_chat(src, span_warning("Error: AllowUpload(): File Upload too large. Upload Limit: [max_file_size/1024]KiB."))
 		return FALSE
 	return TRUE
+
+#undef CHARACTER_IMPORT_UPLOAD_LIMIT_BYTES
 
 
 	///////////

@@ -1,5 +1,6 @@
 /mob/living/basic/alien/maid
 	name = "lusty xenomorph maid"
+	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	combat_mode = FALSE
@@ -11,6 +12,9 @@
 	icon_state = "maid"
 	icon_living = "maid"
 	icon_dead = "maid_dead"
+	pixel_x = 0
+	base_pixel_x = 0
+	minimum_survivable_temperature = 0
 
 /mob/living/basic/alien/maid/Initialize(mapload)
 	. = ..()
