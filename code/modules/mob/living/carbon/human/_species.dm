@@ -337,14 +337,18 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/health_pct = 1
 		var/remove_existing = !isnull(existing_organ) && !(existing_organ.zone in excluded_zones) && !(existing_organ.organ_flags & ORGAN_UNREMOVABLE)
 		if(remove_existing)
+			var/organ_movement_flags = NONE
+			var/existing_organ_feature_key = existing_organ.bodypart_overlay?.feature_key
+			if(existing_organ_feature_key && organ_holder.dna.mutant_bodyparts[existing_organ_feature_key])
+				organ_movement_flags |= KEEP_IN_MUTANT_BODYPARTS
 			health_pct = (existing_organ.maxHealth - existing_organ.damage) / existing_organ.maxHealth
 			if(slot == ORGAN_SLOT_BRAIN)
 				var/obj/item/organ/brain/existing_brain = existing_organ
 				existing_brain.before_organ_replacement(new_organ)
-				existing_brain.Remove(organ_holder, special = TRUE, movement_flags = NO_ID_TRANSFER)
+				existing_brain.Remove(organ_holder, special = TRUE, movement_flags = organ_movement_flags | NO_ID_TRANSFER)
 			else
 				existing_organ.before_organ_replacement(new_organ)
-				existing_organ.Remove(organ_holder, special = TRUE)
+				existing_organ.Remove(organ_holder, special = TRUE, movement_flags = organ_movement_flags)
 
 			QDEL_NULL(existing_organ)
 		if(isnull(existing_organ) && should_have && !(new_organ.zone in excluded_zones) && organ_holder.get_bodypart(deprecise_zone(new_organ.zone)) && (replace_missing || remove_existing))

@@ -342,6 +342,7 @@
 #include "trash_food.dm"
 #include "trauma_granting.dm"
 #include "turf_icons.dm"
+#include "underwear_rendering.dm"
 #include "unequip_defib.dm"
 #include "unit_test.dm"
 #include "verify_config_tags.dm"

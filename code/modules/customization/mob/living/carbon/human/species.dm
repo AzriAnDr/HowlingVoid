@@ -198,6 +198,24 @@ GLOBAL_LIST_EMPTY(customizable_races)
 			var/obj/item/organ/accessory_organ_type = mutant_accessory.organ_type
 			var/obj/item/organ/current_organ = organ_holder.get_organ_by_type(accessory_organ_type)
 
+			organ_holder.dna.mutant_bodyparts[key] = mutant_bodypart
+			organ_holder.dna.features[key] = mutant_bodypart.name
+
+			if(!should_visual_organ_apply_to(accessory_organ_type, organ_holder))
+				if(current_organ && !(current_organ.organ_flags & ORGAN_UNREMOVABLE))
+					current_organ.Remove(organ_holder, special = TRUE)
+					qdel(current_organ)
+				continue
+
+			if(current_organ && !replace_current)
+				current_organ.sprite_accessory_flags = mutant_accessory.flags_for_organ
+				current_organ.relevant_layers = mutant_accessory.relevent_layers
+				if(robot_organs)
+					current_organ.organ_flags |= ORGAN_ROBOTIC
+				current_organ.build_from_dna(organ_holder.dna, key)
+				current_organ.bodypart_overlay?.set_appearance_from_dna(organ_holder.dna, feature_key = key)
+				continue
+
 			if(!current_organ || replace_current)
 				var/organ_slot = accessory_organ_type::slot
 				var/obj/item/organ/current_organ_in_slot = organ_holder.get_organ_slot(organ_slot)
@@ -224,8 +242,10 @@ GLOBAL_LIST_EMPTY(customizable_races)
 					current_organ.before_organ_replacement(replacement)
 
 				replacement.build_from_dna(organ_holder.dna, key)
+				replacement.bodypart_overlay?.set_appearance_from_dna(organ_holder.dna, feature_key = key)
 				// organ.Insert will qdel any current organs in that slot, so we don't need to
-				replacement.Insert(organ_holder, special = TRUE, movement_flags = DELETE_IF_REPLACED)
+				replacement.Insert(organ_holder, special = TRUE, movement_flags = DELETE_IF_REPLACED | KEEP_IN_MUTANT_BODYPARTS)
+				replacement.bodypart_overlay?.set_appearance_from_dna(organ_holder.dna, feature_key = key)
 
 /datum/species/proc/spec_revival(mob/living/carbon/human/H)
 	return

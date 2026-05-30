@@ -140,6 +140,8 @@
 
 	// Set up the dummy for its photoshoot
 	apply_prefs_to(mannequin, TRUE, visuals_only = TRUE)
+	// The reusable preview dummy can keep visual organs between renders; force them back in sync with the final DNA.
+	mannequin.dna.species.regenerate_organs(mannequin, mannequin.dna.species, replace_current = TRUE, visual_only = TRUE)
 
 	switch(preview_pref)
 		if(PREVIEW_PREF_JOB)

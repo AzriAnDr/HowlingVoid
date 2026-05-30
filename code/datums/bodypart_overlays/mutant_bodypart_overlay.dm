@@ -34,6 +34,10 @@
 		stack_trace("adding a [parent.type] to a [receiver.type] when it shouldn't be!")
 
 	if(imprint_on_next_insertion) //We only want this set *once*
+		if(set_appearance_from_dna(receiver.dna))
+			imprint_on_next_insertion = FALSE
+			return
+
 		var/feature_name = receiver.dna.features[feature_key] || receiver.dna.species.mutant_organs[parent.type]
 		if (isnull(feature_name))
 		/* // NOVA EDIT REMOVAL START - Customization
