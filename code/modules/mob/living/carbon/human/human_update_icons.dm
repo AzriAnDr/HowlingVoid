@@ -1345,7 +1345,7 @@ mutant_styles: The mutant style - taur bodytype, STYLE_TESHARI, etc. // NOVA EDI
 		return
 	// Underwear, Undershirts & Socks
 	var/list/standing = list()
-	if(underwear && underwear != "Nude" && !underwear_hidden()) // NOVA EDIT CHANGE - ORIGINAL: if(underwear)
+	if(underwear && underwear != "Nude" && !underwear_render_hidden(UNDERWEAR_HIDE_UNDIES)) // NOVA EDIT CHANGE - ORIGINAL: if(underwear)
 		var/datum/sprite_accessory/underwear/undie_accessory = SSaccessories.underwear_list[underwear]
 		var/mutable_appearance/underwear_overlay
 		if(undie_accessory)
@@ -1365,7 +1365,7 @@ mutant_styles: The mutant style - taur bodytype, STYLE_TESHARI, etc. // NOVA EDI
 			standing += underwear_overlay
 
 	// NOVA EDIT ADDITION START
-	if(bra && bra != "Nude" && !bra_hidden())
+	if(bra && bra != "Nude" && !underwear_render_hidden(UNDERWEAR_HIDE_BRA))
 		var/datum/sprite_accessory/bra/bra_accessory = SSaccessories.bra_list[bra]
 		if(bra_accessory)
 			var/mutable_appearance/bra_overlay
@@ -1375,7 +1375,7 @@ mutant_styles: The mutant style - taur bodytype, STYLE_TESHARI, etc. // NOVA EDI
 				bra_overlay.color = bra_color
 			standing += bra_overlay
 	// NOVA EDIT ADDITION END
-	if(undershirt && undershirt != "Nude" && !undershirt_hidden()) // NOVA EDIT CHANGE - ORIGINAL: if(undershirt))
+	if(undershirt && undershirt != "Nude" && !underwear_render_hidden(UNDERWEAR_HIDE_SHIRT)) // NOVA EDIT CHANGE - ORIGINAL: if(undershirt))
 		var/datum/sprite_accessory/undershirt/undie_accessory = SSaccessories.undershirt_list[undershirt]
 		if(undie_accessory)
 			var/mutable_appearance/working_shirt
@@ -1396,7 +1396,7 @@ mutant_styles: The mutant style - taur bodytype, STYLE_TESHARI, etc. // NOVA EDI
 			standing += mutable_appearance(undie_accessory.icon, undie_accessory.icon_state, -BODY_LAYER)
 	*/ // NOVA EDIT REMOVAL END
 	// NOVA EDIT ADDITION START - Nova socks
-	if(socks && socks != "Nude" && num_legs >= 2 && !socks_hidden())
+	if(socks && socks != "Nude" && num_legs >= 2 && !underwear_render_hidden(UNDERWEAR_HIDE_SOCKS))
 		var/datum/mutant_bodypart/taur_body = dna.mutant_bodyparts[FEATURE_TAUR]
 		if(isnull(taur_body) || taur_body.name == SPRITE_ACCESSORY_NONE)
 			var/datum/sprite_accessory/socks/undie_accessory = SSaccessories.socks_list[socks]

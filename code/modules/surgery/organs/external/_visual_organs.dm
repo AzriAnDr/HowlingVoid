@@ -63,15 +63,16 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	if(isnull(feature_key))
 		return TRUE
 
-	if(target.dna.features[feature_key] != SPRITE_ACCESSORY_NONE)
-		return TRUE
-	// NOVA EDIT ADDITION START
+	// Customization stores current visual-organ choices in mutant_bodyparts. Prefer it over
+	// legacy DNA features so stale feature values cannot force disabled or wrong organs.
 	var/datum/mutant_bodypart/mutant_part = target.dna.mutant_bodyparts[feature_key]
-	if(isnull(mutant_part))
-		return FALSE
-	else if(mutant_part.name != SPRITE_ACCESSORY_NONE)
+	if(!isnull(mutant_part))
+		return mutant_part.name != SPRITE_ACCESSORY_NONE
+
+	var/feature_value = target.dna.features[feature_key]
+	if(!isnull(feature_value) && feature_value != SPRITE_ACCESSORY_NONE)
 		return TRUE
-	// NOVA EDIT ADDITION END
+
 	return FALSE
 
 ///Update our features after something changed our appearance

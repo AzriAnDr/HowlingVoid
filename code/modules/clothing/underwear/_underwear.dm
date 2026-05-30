@@ -21,6 +21,14 @@
 	. = ..()
 	setDir(SOUTH)
 
+/mob/living/carbon/human/proc/underwear_render_hidden(underwear_hide_flag)
+	if(underwear_visibility & underwear_hide_flag)
+		return TRUE
+	for(var/obj/item/item in list(w_uniform, wear_suit))
+		if(istype(item) && (item.flags_inv & HIDEUNDERWEAR))
+			return TRUE
+	return FALSE
+
 /mob/living/carbon/human/proc/undershirt_hidden()
 	if(underwear_visibility & UNDERWEAR_HIDE_SHIRT)
 		return TRUE
