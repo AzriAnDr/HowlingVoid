@@ -134,14 +134,14 @@ HOWLING VOID EDIT ENDS*/
 	/// Personal death counter for Tajaran Nine Lives.
 	var/tajaran_nine_lives_death_count = 0
 
-/datum/species/tajaran/proc/on_tajaran_bullet_hit(mob/living/carbon/human/tajaran, obj/projectile/hit_projectile)
+/datum/species/tajaran/proc/on_tajaran_projectile_hit(mob/living/carbon/human/tajaran, obj/projectile/hit_projectile)
 	SIGNAL_HANDLER
 
 	if(prob(25) && tajaran.stat == CONSCIOUS)
-		tajaran.visible_message(span_danger("[tajaran.get_visible_name()] dodges the bullet!"))
+		tajaran.visible_message(span_danger("[tajaran.get_visible_name()] dodges [hit_projectile]!"))
 		play_tajaran_dodge_fx(tajaran)
 		playsound(tajaran.loc, "sound/items/weapons/effects/ric[rand(1, 5)]", 25, TRUE, -1)
-		return PROJECTILE_INTERRUPT_HIT
+		return COMPONENT_BULLET_PIERCED
 
 /datum/species/tajaran/on_species_gain(mob/living/carbon/human/H, datum/species/old_species, pref_load, regenerate_icons, replace_missing)
 	. = ..()
@@ -155,7 +155,7 @@ HOWLING VOID EDIT ENDS*/
 	H.physiology.cold_mod *= 0.81
 
 	RegisterSignal(H, COMSIG_LIVING_DEATH, PROC_REF(on_tajaran_death))
-	RegisterSignal(H, COMSIG_PROJECTILE_PREHIT, PROC_REF(on_tajaran_bullet_hit))
+	RegisterSignal(H, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(on_tajaran_projectile_hit))
 	RegisterSignal(H, COMSIG_LIVING_DODGE_MELEE, PROC_REF(tajaran_dodge_melee))
 
 	if(!H.quirks)
@@ -203,7 +203,7 @@ HOWLING VOID EDIT ENDS*/
 
 	H.physiology.cold_mod /= 0.81
 	H.physiology.heat_mod /= 1.25
-	UnregisterSignal(H, list(COMSIG_LIVING_DEATH, COMSIG_PROJECTILE_PREHIT, COMSIG_LIVING_DODGE_MELEE))
+	UnregisterSignal(H, list(COMSIG_LIVING_DEATH, COMSIG_ATOM_PRE_BULLET_ACT, COMSIG_LIVING_DODGE_MELEE))
 
 	var/obj/item/organ/ears/ears = H.get_organ_slot(ORGAN_SLOT_EARS)
 	if(ears)
@@ -362,4 +362,3 @@ HOWLING VOID EDIT ENDS*/
 	)
 
 	return to_add
-

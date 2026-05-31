@@ -444,6 +444,19 @@
 		return FALSE
 
 	var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
+	if(stat == CONSCIOUS && SEND_SIGNAL(src, COMSIG_LIVING_DODGE_MELEE, src) & COMPONENT_DODGE_SUCCEEDED)
+		playsound(loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
+		visible_message(
+			span_danger("[user]'s [user.attack_verb_simple] misses [src]!"),
+			span_danger("You avoid [user]'s [user.attack_verb_simple]!"),
+			span_hear("You hear a swoosh!"),
+			COMBAT_MESSAGE_RANGE,
+			user,
+		)
+		to_chat(user, span_warning("Your [user.attack_verb_simple] misses [src]!"))
+		log_combat(user, src, "attempted to attack")
+		return FALSE
+
 	if(check_block(user, damage, "[user]'s [user.attack_verb_simple]", UNARMED_ATTACK, user.armour_penetration, user.melee_damage_type))
 		return FALSE
 
