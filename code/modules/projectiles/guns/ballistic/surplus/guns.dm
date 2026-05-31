@@ -102,6 +102,7 @@
 	desc = "a banana-shaped double-stack magazine able to hold 30 rounds of 5.6mm ammo. Contains less-than-lethal rubber ammunition."
 	icon_state = "akm_rubber"
 	ammo_type = /obj/item/ammo_casing/realistic/a762x39/civilian/rubber
+	caliber = "a762x39civ"
 
 /obj/item/ammo_box/magazine/akm/banana
 	name = "KAR extended magazine"
