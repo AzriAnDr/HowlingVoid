@@ -53,7 +53,10 @@
 		add_lazy_fishing(fish_source_type)
 	// You can release chrabs and lavaloops and likes in lava, or be an absolute scumbag and drop other fish there too.
 	ADD_TRAIT(src, TRAIT_CATCH_AND_RELEASE, INNATE_TRAIT)
-	refresh_light()
+	if(!SSlighting.initialized)
+		RegisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(apply_mapped_light))
+	else
+		refresh_light()
 	if(!smoothing_flags)
 		update_appearance()
 	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_inited))
@@ -61,11 +64,20 @@
 
 /turf/open/lava/Destroy()
 	checked_atoms = null
+	UnregisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
 	for(var/mob/living/leaving_mob in contents)
 		leaving_mob.RemoveElement(/datum/element/perma_fire_overlay)
 		REMOVE_TRAIT(leaving_mob, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
 	return ..()
+
+/turf/open/lava/proc/apply_mapped_light(datum/source)
+	SIGNAL_HANDLER
+
+	if(source)
+		UnregisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+
+	refresh_light()
 
 ///We lazily add the immerse element when something is spawned or crosses this turf and not before.
 /turf/open/lava/proc/on_atom_inited(datum/source, atom/movable/movable)

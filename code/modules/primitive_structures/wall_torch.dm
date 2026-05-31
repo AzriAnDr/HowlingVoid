@@ -23,7 +23,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_torch, 28)
 /obj/structure/wall_torch/Initialize(mapload)
 	. = ..()
 	if(mounted_torch && spawns_lit)
-		light_it_up()
+		if(!SSlighting.initialized)
+			RegisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(apply_mapped_light))
+		else
+			apply_mapped_light()
 
 	update_appearance(UPDATE_NAME | UPDATE_DESC | UPDATE_ICON_STATE)
 	if(mapload)
@@ -31,6 +34,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_torch, 28)
 
 
 /obj/structure/wall_torch/Destroy()
+	UnregisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	drop_torch() // So it drops on the floor when destroyed.
 	return ..()
 
@@ -82,9 +86,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/wall_torch, 28)
 /// Sets the torch's icon to burning and sets the light up
 /obj/structure/wall_torch/proc/light_it_up()
 	burning = TRUE
-	set_light(4)
+	set_light(4, 1, light_color, l_on = TRUE)
 	update_icon_state()
 	update_appearance(UPDATE_ICON)
+
+
+/// Applies map-loaded lighting after SSlighting is ready.
+/obj/structure/wall_torch/proc/apply_mapped_light(datum/source)
+	SIGNAL_HANDLER
+
+	if(source)
+		UnregisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+
+	light_it_up()
 
 
 /obj/structure/wall_torch/extinguish()

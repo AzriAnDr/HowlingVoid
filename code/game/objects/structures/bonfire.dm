@@ -36,6 +36,7 @@
 	burning_loop = new(src)
 
 /obj/structure/bonfire/Destroy()
+	UnregisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(burning_loop)
 	. = ..()
@@ -111,10 +112,26 @@
 	burning_loop.start()
 	icon_state = burn_icon
 	burning = TRUE
-	set_light(6)
+	apply_burning_light()
 	bonfire_burn()
 	particles = new /particles/bonfire()
 	START_PROCESSING(SSobj, src)
+
+/obj/structure/bonfire/proc/apply_burning_light()
+	if(!SSlighting.initialized)
+		RegisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(apply_mapped_light))
+		return
+
+	set_light(6, 1, light_color, l_on = TRUE)
+
+/obj/structure/bonfire/proc/apply_mapped_light(datum/source)
+	SIGNAL_HANDLER
+
+	if(source)
+		UnregisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+
+	if(burning)
+		set_light(6, 1, light_color, l_on = TRUE)
 
 /obj/structure/bonfire/fire_act(exposed_temperature, exposed_volume)
 	start_burning()
