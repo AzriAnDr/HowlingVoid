@@ -1,5 +1,11 @@
 import { sortBy } from 'es-toolkit';
-import { ColorBox, ProgressBar, Section, Stack } from 'tgui-core/components';
+import {
+  Button,
+  ColorBox,
+  ProgressBar,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 import { round } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
@@ -8,7 +14,7 @@ import { usePreferencesLocalization } from './localization';
 
 export const Restock = (props) => {
   return (
-    <Window width={575} height={560}>
+    <Window width={860} height={560}>
       <Window.Content scrollable>
         <RestockTracker />
       </Window.Content>
@@ -17,7 +23,7 @@ export const Restock = (props) => {
 };
 
 export const RestockTracker = (props) => {
-  const { data } = useBackend();
+  const { act, data } = useBackend();
   const { t } = usePreferencesLocalization(data);
   const vending_list = sortBy(data.vending_list ?? [], [
     (vend) => vend.percentage,
@@ -26,31 +32,52 @@ export const RestockTracker = (props) => {
     <Section fill title={t('ui.restock_tracker.vendor_stocking_status')}>
       <Stack vertical>
         <Stack fill horizontal>
-          <Stack.Item bold width="35%">
+          <Stack.Item bold width="18%">
             Vending Name
           </Stack.Item>
-          <Stack.Item bold width="25%">
+          <Stack.Item bold width="15%">
             Location
           </Stack.Item>
-          <Stack.Item bold width="20%">
+          <Stack.Item bold width="24%">
+            Needed
+          </Stack.Item>
+          <Stack.Item bold width="12%">
             Stock %
           </Stack.Item>
-          <Stack.Item bold width="20%">
-            Credits stored
+          <Stack.Item bold width="8%">
+            Cash inside
+          </Stack.Item>
+          <Stack.Item bold width="15%">
+            Task
+          </Stack.Item>
+          <Stack.Item bold width="8%">
+            Order
           </Stack.Item>
         </Stack>
-        <hr />
-        {vending_list?.map((vend) => (
+        {vending_list.length === 0 && <RestockTrackerFull />}
+        {vending_list.map((vend) => (
           <Stack key={vend.id} fill horizontal>
-            <Stack.Item wrap width="35%" height="100%">
+            <Stack.Item wrap width="18%" height="100%">
               {vend.name}
             </Stack.Item>
-            <Stack.Item wrap width="25%" height="100%">
+            <Stack.Item wrap width="15%" height="100%">
               {vend.location}
+            </Stack.Item>
+            <Stack.Item wrap width="24%" height="100%">
+              {vend.missing_total > 0 ? (
+                <>
+                  {(vend.missing_products ?? [])
+                    .map((product) => `${product.missing}x ${product.name}`)
+                    .join(', ')}
+                  {vend.missing_extra > 0 && `, +${vend.missing_extra} more`}
+                </>
+              ) : (
+                'No refill needed'
+              )}
             </Stack.Item>
             <Stack.Item
               wrap
-              width="20%"
+              width="12%"
               textAlign={
                 vend.percentage > 75
                   ? 'left'
@@ -74,25 +101,74 @@ export const RestockTracker = (props) => {
             </Stack.Item>
             <Stack.Item
               wrap
-              width="20%"
+              width="8%"
               color={vend.credits > 50 ? 'good' : 'bad'}
             >
               <ColorBox color={vend.credits > 50 ? 'good' : 'bad'} mr={'5%'} />
               {vend.credits}
             </Stack.Item>
+            <Stack.Item wrap width="15%">
+              {vend.missing_total <= 0 ? (
+                '-'
+              ) : vend.claimed_by_you ? (
+                <>
+                  <Button color="good" disabled>
+                    {vend.claimed_by} +{vend.reward}
+                  </Button>{' '}
+                  {vend.time_left}
+                </>
+              ) : vend.claimed_by ? (
+                <>
+                  <Button disabled>{vend.claimed_by}</Button>{' '}
+                  {vend.time_left}
+                </>
+              ) : (
+                <>
+                  <Button
+                    disabled={!vend.claimable}
+                    icon="hand"
+                    onClick={() =>
+                      act('claim_task', {
+                        vendor: vend.vendor,
+                      })
+                    }
+                  >
+                    +{vend.reward}
+                  </Button>{' '}
+                  Fine {vend.penalty}
+                </>
+              )}
+            </Stack.Item>
+            <Stack.Item wrap width="8%">
+              {vend.order_pending ? (
+                <Button disabled>#{vend.order_id}</Button>
+              ) : vend.order_sent ? (
+                <Button disabled>Ordered</Button>
+              ) : (
+                <Button
+                  disabled={!vend.orderable || vend.missing_total <= 0}
+                  icon="cart-shopping"
+                  onClick={() =>
+                    act('order_restock', {
+                      vendor: vend.vendor,
+                    })
+                  }
+                >
+                  Order
+                </Button>
+              )}
+            </Stack.Item>
           </Stack>
         ))}
-        {vending_list.length === 0 && <RestockTrackerFull />}
       </Stack>
     </Section>
   );
 };
 
 export const RestockTrackerFull = (props) => {
-  const { data } = useBackend();
   return (
-    <Section bold textAlign="center">
+    <Stack.Item bold textAlign="center" mt={2}>
       All vending machines stocked!
-    </Section>
+    </Stack.Item>
   );
 };

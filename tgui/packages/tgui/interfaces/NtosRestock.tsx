@@ -3,7 +3,7 @@ import { RestockTracker } from './RestockTracker';
 
 export const NtosRestock = (props) => {
   return (
-    <NtosWindow width={575} height={560}>
+    <NtosWindow width={860} height={560}>
       <NtosWindow.Content scrollable>
         <RestockTracker />
       </NtosWindow.Content>

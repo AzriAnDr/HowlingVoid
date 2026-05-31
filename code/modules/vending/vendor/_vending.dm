@@ -156,6 +156,24 @@
 	var/displayed_currency_name = MONEY_SYMBOL
 	/// Economy vending price generation currently applied to this machine.
 	var/vending_price_generation = 0
+	/// Bank account that accepted the current NT Restock Tracker task for this machine.
+	var/datum/bank_account/restock_task_claimant
+	/// Display name cached for the current NT Restock Tracker task claimant.
+	var/restock_task_claimant_name
+	/// Credits promised for completing the current NT Restock Tracker task.
+	var/restock_task_reward = 0
+	/// Missing legal stock count when the current NT Restock Tracker task was accepted.
+	var/restock_task_missing_at_claim = 0
+	/// Fine applied if the current NT Restock Tracker task expires.
+	var/restock_task_penalty = 0
+	/// World time when the current NT Restock Tracker task expires.
+	var/restock_task_due_time = 0
+	/// Timer id for the current NT Restock Tracker task expiration.
+	var/restock_task_timer_id
+	/// Cargo order id for the current requested restock pack.
+	var/restock_supply_order_id = 0
+	/// Whether the current NT Restock Tracker task already submitted a restock order.
+	var/restock_supply_ordered = FALSE
 	///Whether our age check is currently functional
 	var/age_restrictions = TRUE
 	/// How many credits does this vending machine have? 20% of all sales go to this pool, and are given freely when the machine is restocked, or successfully tilted. Lost on deconstruction.

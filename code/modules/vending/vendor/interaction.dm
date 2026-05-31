@@ -167,6 +167,7 @@
 	var/obj/item/holochip/payday = new(src, credits_contained)
 	try_put_in_hand(payday, user)
 	credits_contained = 0
+	complete_restock_task(user)
 
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer)
 	if(!istype(replacer) || !component_parts || !refill_canister)
