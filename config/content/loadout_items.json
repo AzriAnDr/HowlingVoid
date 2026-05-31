@@ -393,69 +393,69 @@
     "name": "Tie - Bow Collar",
     "item_path": "/obj/item/clothing/neck/tie/bunnytie"
   },
-  "/datum/loadout_item/pocket_items/plush/bee": {
-    "id": "/datum/loadout_item/pocket_items/plush/bee",
-    "template_type": "/datum/loadout_item/pocket_items/plush",
+  "/datum/loadout_item/toys/plush/bee": {
+    "id": "/datum/loadout_item/toys/plush/bee",
+    "template_type": "/datum/loadout_item/toys/plush",
     "name": "Plush (Bee)",
     "item_path": "/obj/item/toy/plush/beeplushie"
   },
-  "/datum/loadout_item/pocket_items/plush/carp": {
-    "id": "/datum/loadout_item/pocket_items/plush/carp",
-    "template_type": "/datum/loadout_item/pocket_items/plush",
+  "/datum/loadout_item/toys/plush/carp": {
+    "id": "/datum/loadout_item/toys/plush/carp",
+    "template_type": "/datum/loadout_item/toys/plush",
     "name": "Plush (Carp)",
     "item_path": "/obj/item/toy/plush/carpplushie"
   },
-  "/datum/loadout_item/pocket_items/plush/lizard_greyscale": {
-    "id": "/datum/loadout_item/pocket_items/plush/lizard_greyscale",
-    "template_type": "/datum/loadout_item/pocket_items/plush",
+  "/datum/loadout_item/toys/plush/lizard_greyscale": {
+    "id": "/datum/loadout_item/toys/plush/lizard_greyscale",
+    "template_type": "/datum/loadout_item/toys/plush",
     "name": "Plush (Lizard, Colorable)",
     "item_path": "/obj/item/toy/plush/lizard_plushie/greyscale"
   },
-  "/datum/loadout_item/pocket_items/plush/moth": {
-    "id": "/datum/loadout_item/pocket_items/plush/moth",
-    "template_type": "/datum/loadout_item/pocket_items/plush",
+  "/datum/loadout_item/toys/plush/moth": {
+    "id": "/datum/loadout_item/toys/plush/moth",
+    "template_type": "/datum/loadout_item/toys/plush",
     "name": "Plush (Moth)",
     "item_path": "/obj/item/toy/plush/moth"
   },
-  "/datum/loadout_item/pocket_items/plush/nukie": {
-    "id": "/datum/loadout_item/pocket_items/plush/nukie",
-    "template_type": "/datum/loadout_item/pocket_items/plush",
+  "/datum/loadout_item/toys/plush/nukie": {
+    "id": "/datum/loadout_item/toys/plush/nukie",
+    "template_type": "/datum/loadout_item/toys/plush",
     "name": "Plush (Nukie)",
     "item_path": "/obj/item/toy/plush/nukeplushie"
   },
-  "/datum/loadout_item/pocket_items/plush/peacekeeper": {
-    "id": "/datum/loadout_item/pocket_items/plush/peacekeeper",
-    "template_type": "/datum/loadout_item/pocket_items/plush",
+  "/datum/loadout_item/toys/plush/peacekeeper": {
+    "id": "/datum/loadout_item/toys/plush/peacekeeper",
+    "template_type": "/datum/loadout_item/toys/plush",
     "name": "Plush (Peacekeeper)",
     "item_path": "/obj/item/toy/plush/pkplush"
   },
-  "/datum/loadout_item/pocket_items/plush/plasmaman": {
-    "id": "/datum/loadout_item/pocket_items/plush/plasmaman",
-    "template_type": "/datum/loadout_item/pocket_items/plush",
+  "/datum/loadout_item/toys/plush/plasmaman": {
+    "id": "/datum/loadout_item/toys/plush/plasmaman",
+    "template_type": "/datum/loadout_item/toys/plush",
     "name": "Plush (Plasmaman)",
     "item_path": "/obj/item/toy/plush/plasmamanplushie"
   },
-  "/datum/loadout_item/pocket_items/plush/human": {
-    "id": "/datum/loadout_item/pocket_items/plush/human",
-    "template_type": "/datum/loadout_item/pocket_items/plush",
+  "/datum/loadout_item/toys/plush/human": {
+    "id": "/datum/loadout_item/toys/plush/human",
+    "template_type": "/datum/loadout_item/toys/plush",
     "name": "Plush (human)",
     "item_path": "/obj/item/toy/plush/human"
   },
-  "/datum/loadout_item/pocket_items/plush/rouny": {
-    "id": "/datum/loadout_item/pocket_items/plush/rouny",
-    "template_type": "/datum/loadout_item/pocket_items/plush",
+  "/datum/loadout_item/toys/plush/rouny": {
+    "id": "/datum/loadout_item/toys/plush/rouny",
+    "template_type": "/datum/loadout_item/toys/plush",
     "name": "Plush (Rouny)",
     "item_path": "/obj/item/toy/plush/rouny"
   },
-  "/datum/loadout_item/pocket_items/plush/snake": {
-    "id": "/datum/loadout_item/pocket_items/plush/snake",
-    "template_type": "/datum/loadout_item/pocket_items/plush",
+  "/datum/loadout_item/toys/plush/snake": {
+    "id": "/datum/loadout_item/toys/plush/snake",
+    "template_type": "/datum/loadout_item/toys/plush",
     "name": "Plush (Snake)",
     "item_path": "/obj/item/toy/plush/snakeplushie"
   },
-  "/datum/loadout_item/pocket_items/plush/horse": {
-    "id": "/datum/loadout_item/pocket_items/plush/horse",
-    "template_type": "/datum/loadout_item/pocket_items/plush",
+  "/datum/loadout_item/toys/plush/horse": {
+    "id": "/datum/loadout_item/toys/plush/horse",
+    "template_type": "/datum/loadout_item/toys/plush",
     "name": "Plush (Horse)",
     "item_path": "/obj/item/toy/plush/horse"
   },

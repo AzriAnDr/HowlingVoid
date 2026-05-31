@@ -37,19 +37,6 @@
 
 	return ..()
 
-// NOVA EDIT REMOVAL START - Data-only pocket entries were migrated into the loadout manifest.
-/datum/loadout_item/pocket_items/plush
-	group = "Plushies"
-	abstract_type = /datum/loadout_item/pocket_items/plush
-	loadout_flags = LOADOUT_FLAG_ALLOW_NAMING
-
-/datum/loadout_item/pocket_items/plush/lizard_random
-	name = "Plush (Lizard, Random)"
-	loadout_flags = parent_type::loadout_flags | LOADOUT_FLAG_BLOCK_GREYSCALING
-	ui_icon = 'icons/obj/fluff/previews.dmi'
-	ui_icon_state = "plushie_lizard_random"
-	item_path = /obj/item/toy/plush/lizard_plushie
-
 /datum/loadout_item/pocket_items/dice
 	group = "Dice"
 	abstract_type = /datum/loadout_item/pocket_items/dice
