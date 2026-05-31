@@ -269,7 +269,7 @@
 	desc = "Turtleneck sweater commonly worn by trained Officers, attached with pants."
 	icon_state = "secturtleneck"
 	can_adjust = TRUE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION | CLOTHING_BIG_LEGS_MASK
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_BIG_LEGS_MASK
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/rank/security/nova/turtleneck/blue
