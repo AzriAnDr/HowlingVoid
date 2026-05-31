@@ -57,6 +57,7 @@
 
 	var/last_shoot_result = ""
 	var/shotingself = FALSE
+	var/shot_in_progress = FALSE
 
 /obj/item/gun/ballistic/shotgun/buckshot_game/Initialize(mapload, datum/buckshoot_roulette_party/party)
 	. = ..()
@@ -79,19 +80,19 @@
 		return ..()
 	if(!party.game_started)
 		return ..()
-	if((party.current_turn_player != user) && user.GetComponent(/datum/component/buckshoot_roulette_participant))
+	if(party.current_turn_player != user)
 		to_chat(user, span_warning("It is not your turn!"))
-		return
+		return FALSE
 	return ..()
 
 /obj/item/gun/ballistic/shotgun/buckshot_game/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(shotingself)
+	if(shotingself || shot_in_progress)
 		return TRUE
 	INVOKE_ASYNC(src, PROC_REF(try_fire_gun), target, user, modifiers)
 	return TRUE
 
 /obj/item/gun/ballistic/shotgun/buckshot_game/pre_attack_secondary(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(shotingself)
+	if(shotingself || shot_in_progress)
 		return TRUE
 	INVOKE_ASYNC(src, PROC_REF(try_fire_gun), target, user, modifiers)
 	return TRUE
@@ -118,18 +119,21 @@
 /obj/item/gun/ballistic/shotgun/buckshot_game/try_fire_gun(atom/target, mob/living/user, params)
 	if(!party_ref)
 		return ..()
-	if(shotingself)
+	if(shotingself || shot_in_progress)
 		return
 	var/datum/buckshoot_roulette_party/party = party_ref.resolve()
 	if(!party)
 		return ..()
+	if(party.game_started && party.current_turn_player != user)
+		to_chat(user, span_warning("It is not your turn!"))
+		return
 	if(!ishuman(target))
 		return
 	var/mob/living/living_target = target
 	if(!can_target_player(living_target, user, party))
 		return
 	if(target == user && !shotingself)
-		INVOKE_ASYNC(src, PROC_REF(attempt_shotself), user)
+		attempt_shotself(user)
 		return
 	return ..()
 
@@ -151,9 +155,14 @@
 /obj/item/gun/ballistic/shotgun/buckshot_game/fire_gun(atom/target, mob/living/user, flag, params)
 	if(!isliving(target))
 		return
+	if(shot_in_progress)
+		return
 	var/mob/living/living_target = target
 	var/datum/buckshoot_roulette_party/party = party_ref.resolve()
 	if(!party)
+		return
+	if(party.game_started && party.current_turn_player != user)
+		to_chat(user, span_warning("It is not your turn!"))
 		return
 	var/datum/component/gun_safety/safety_comp = GetComponent(/datum/component/gun_safety)
 	if(safety_comp && safety_comp.safety_currently_on)
@@ -167,6 +176,7 @@
 			user.balloon_alert(user, "ready to fire!")
 			return
 
+	shot_in_progress = TRUE
 	if(istype(chambered, /obj/item/ammo_casing/shotgun/buckshoot/live))
 		last_shoot_result = "live"
 	else if(istype(chambered, /obj/item/ammo_casing/shotgun/buckshoot/blank))
@@ -177,11 +187,14 @@
 	if(living_target == user && shotingself)
 		shotingself = FALSE
 
+	. = ..()
+	if(!.)
+		shot_in_progress = FALSE
+		return
 	addtimer(CALLBACK(party, TYPE_PROC_REF(/datum/buckshoot_roulette_party, after_player_shoot), user, living_target, last_shoot_result), 1 SECONDS)
-	..()
 
 /obj/item/gun/ballistic/shotgun/buckshot_game/attack_self(mob/living/user)
-	if(shotingself)
+	if(shotingself || shot_in_progress)
 		return TRUE
 	INVOKE_ASYNC(src, PROC_REF(try_fire_gun), user, user, list())
 	return TRUE

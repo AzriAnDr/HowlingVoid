@@ -416,6 +416,7 @@
 	var/datum/component/buckshoot_roulette_participant/participant = player.GetComponent(/datum/component/buckshoot_roulette_participant)
 	var/obj/item/gun/ballistic/shotgun/buckshot_game/shotgun = get_shotgun()
 	shotgun.rack(player)
+	shotgun.shot_in_progress = FALSE
 	if(!participant)
 		return
 	if(shot_result == SHOOT_RESULT_BLANK)
@@ -434,6 +435,8 @@
 	var/datum/component/buckshoot_roulette_participant/target_participant = target_player.GetComponent(/datum/component/buckshoot_roulette_participant)
 	if(!target_participant)
 		return
+	if(target_player.stat != DEAD)
+		target_player.death(FALSE)
 	return_shotgun_to_table()
 	current_turn_player = null
 
