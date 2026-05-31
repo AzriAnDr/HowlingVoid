@@ -4,6 +4,7 @@
 	icon = 'icons/jungle/jungleflora.dmi'
 	icon_state = "stick"
 	gender = PLURAL
+	light_system = OVERLAY_LIGHT
 	light_range = 15
 	light_power = 0.5
 	max_integrity = 50
@@ -16,15 +17,20 @@
 	base_icon = "[initial(icon_state)][rand(1,variants)]"
 	icon_state = base_icon
 	if(random_light)
-		light_color = pick(random_light)
+		set_light_color(pick(random_light))
+	apply_mapped_light()
 	update_appearance()
+
+/obj/structure/flora/biolumi/proc/apply_mapped_light()
+	set_light_range(light_range)
+	set_light_power(light_power)
+	set_light_on(TRUE)
 
 /obj/structure/flora/biolumi/update_overlays()
 	. = ..()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	SSvis_overlays.add_vis_overlay(src, icon, "[base_icon]_light", 0, ABOVE_LIGHTING_PLANE)
+	var/obj/effect/overlay/vis/overlay = SSvis_overlays.add_vis_overlay(src, icon, "[base_icon]_light", 0, ABOVE_LIGHTING_PLANE, null, 255, NONE, TRUE)
 	if(light_color)
-		var/obj/effect/overlay/vis/overlay = managed_vis_overlays[1]
 		overlay.color = light_color
 
 /obj/structure/flora/biolumi/mine
