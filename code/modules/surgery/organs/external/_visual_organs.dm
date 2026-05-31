@@ -124,10 +124,14 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
 
 /datum/bodypart_overlay/mutant/horns
-	layers = EXTERNAL_ADJACENT
+	layers = EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
 	feature_key = FEATURE_HORNS
+	color_source = ORGAN_COLOR_OVERRIDE
 	dyable = TRUE
 	draw_on_husks = HUSK_OVERLAY_NORMAL
+
+/datum/bodypart_overlay/mutant/horns/override_color(rgb_value)
+	return draw_color
 
 /datum/bodypart_overlay/mutant/horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
