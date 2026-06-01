@@ -391,6 +391,8 @@
     "ui.character.data.quirk_voracious_description": "Nothing gets between you and your food. You eat faster, can binge on junk food, and wearing extra weight suits you fine.",
     "ui.character.data.quirk_spacer_name": "Spacer",
     "ui.character.data.quirk_spacer_description": "You were born in space and your body adapted to it. Zero and artificial gravity feel natural to you, and you're more resistant to space, but spending too long on a planet makes you sick.",
+    "ui.character.data.quirk_spiritual_name": "Spiritual",
+    "ui.character.data.quirk_spiritual_description": "You hold a spiritual belief, whether in God, nature or the arcane rules of the universe. You gain comfort from the presence of holy people, and believe that your prayers are more special than others. Being in the chapel makes you happy.",
     "ui.character.data.quirk_empath_name": "Empath",
     "ui.character.data.quirk_empath_description": "Whether from instinct or careful study of body language, one quick look is enough for you to understand how someone feels.",
     "ui.character.data.quirk_geneticmutation_name": "Genetic Mutation",
