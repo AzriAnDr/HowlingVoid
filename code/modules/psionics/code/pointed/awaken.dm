@@ -41,7 +41,7 @@
 	if(is_psionic)
 		victim.remove_psionic()
 		victim.add_psionic(/datum/psionic/harmonious)
-		victim.psi_sensivity.psi_point = 7
+		victim.psi_sensivity.psi_point = 8
 	else
 		victim.add_psionic(/datum/psionic/sensitive)
 

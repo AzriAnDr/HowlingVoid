@@ -1,5 +1,6 @@
 #define SENSITIVE_PSIONIC "Sensitive Psionic"
 #define HARMONIOUS_PSIONIC "Harmonious Psionic"
+#define NASCENT_PSIONIC "Nascent Psionic"
 
 /mob/living
 	var/datum/psionic/psi_sensivity
@@ -165,22 +166,31 @@
 		return
 	mana_level = clamp(mana_level + amount, 0, max_mana)
 
+/datum/psionic/nascent
+	max_mana = 25
+	psionic_level = 1
+	psionic_level_string = NASCENT_PSIONIC
+	license = FALSE
+	psi_point = 4
+
 /datum/psionic/sensitive
-	max_mana = 35
+	mana_level = 20
+	max_mana = 45
 	psionic_level = 1
 	psionic_level_string = SENSITIVE_PSIONIC
 	license = TRUE
-	psi_point = 7
+	psi_point = 8
 
 /datum/psionic/sensitive/no_license
 	license = FALSE
 
 /datum/psionic/harmonious
-	max_mana = 100
+	mana_level = 35
+	max_mana = 120
 	psionic_level = 2
 	psionic_level_string = HARMONIOUS_PSIONIC
 	license = FALSE
-	psi_point = 10
+	psi_point = 12
 
 /datum/psionic/proc/is_suppressed()
 	if(HAS_TRAIT(psi_owner, TRAIT_PSIONIC_EXHAUSTION))
@@ -261,3 +271,4 @@
 
 #undef SENSITIVE_PSIONIC
 #undef HARMONIOUS_PSIONIC
+#undef NASCENT_PSIONIC

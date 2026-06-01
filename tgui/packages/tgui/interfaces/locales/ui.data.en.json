@@ -269,6 +269,8 @@
     "ui.character.data.quirk_PsionicDampener_description": "Your mind is abnormally resistant to psionic intrusion. Telepathic communication fails to reach you.",
     "ui.character.data.quirk_PsionicHolding_name": "Psionic Holding",
     "ui.character.data.quirk_PsionicHolding_description": "You find holding items with your hands inconvenient and use your mind powers to do so instead.",
+    "ui.character.data.quirk_psionicsensitivity_name": "Psionic Sensitivity",
+    "ui.character.data.quirk_psionicsensitivity_description": "Your Zona Bovinae is active enough to manifest a few weak psionic abilities.",
     "ui.character.data.quirk_RationTicketReceiver_name": "Ration Ticket Receiver",
     "ui.character.data.quirk_RationTicketReceiver_description": "Because of your circumstances, you enrolled in the ration ticket program. It halves your paychecks in exchange for ration tickets that can be redeemed at cargo consoles for food and other goods.",
     "ui.character.data.quirk_Rigger_name": "Rigger",

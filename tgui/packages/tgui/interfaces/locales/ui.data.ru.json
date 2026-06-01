@@ -267,6 +267,8 @@
 	"ui.character.data.quirk_PsionicDampener_description": "Ваш разум аномально устойчив к псионическому вторжению. Телепатические сообщения до вас не доходят.",
 	"ui.character.data.quirk_PsionicHolding_name": "Псионический хват",
 	"ui.character.data.quirk_PsionicHolding_description": "Вам кажется крайне неудобным держать предметы руками, поэтому вы предпочитаете пользоваться для этого силой разума.",
+	"ui.character.data.quirk_psionicsensitivity_name": "Псионическая чувствительность",
+	"ui.character.data.quirk_psionicsensitivity_description": "Ваша Зона Бовинай достаточно активна, чтобы проявлять несколько слабых псионических способностей.",
 	"ui.character.data.quirk_RationTicketReceiver_name": "Получатель талонов",
 	"ui.character.data.quirk_RationTicketReceiver_description": "Из-за жизненных обстоятельств вы вступили в программу продуктовых талонов. Она урезает зарплату вдвое, но выдаёт талоны, которые можно обменивать в грузовом консольном терминале на еду и другие товары.",
 	"ui.character.data.quirk_Rigger_name": "Риггер",

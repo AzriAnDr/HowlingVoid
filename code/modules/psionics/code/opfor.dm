@@ -13,6 +13,7 @@
 	name = "Psionic Tier 2"
 	description = "A set of useful and dangerous psionic abilities."
 	admin_note = "Gives the owner the psionics of the 2 tier. The 2 tier psionic is dangerous and available only to antagonists."
+	psionic_type = /datum/psionic/harmonious
 
 /datum/uplink_item/bundles_tc/psionic
 	name = "Psionic Awaken"

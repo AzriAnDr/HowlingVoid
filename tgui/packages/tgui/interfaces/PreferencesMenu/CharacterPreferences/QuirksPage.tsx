@@ -119,6 +119,13 @@ function translateQuirkField(
         ? ''
         : fallback;
 
+  if (fallback && looksLikeRawQuirkKey(fallback)) {
+    const localizedFallback = localizeDataLabelById(fallback);
+    if (localizedFallback !== fallback) {
+      return localizedFallback;
+    }
+  }
+
   for (const candidate of getQuirkLocalizationCandidates(
     quirkKey,
     quirkName,
