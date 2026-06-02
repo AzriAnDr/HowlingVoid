@@ -264,7 +264,7 @@
 	icon = 'icons/map_icons/clothing/shoes.dmi'
 	greyscale_colors = "#2D2D30"
 	icon_state = "/obj/item/clothing/shoes/jackboots/knee/recolorable"
-	post_init_icon_state = "knee_boots"
+	post_init_icon_state = "kneeboots"
 	greyscale_config = /datum/greyscale_config/knee_boots
 	greyscale_config_worn = /datum/greyscale_config/knee_boots/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -503,5 +503,4 @@
 	icon_state = "/obj/item/clothing/shoes/fancy_heels/darkgrey"
 	greyscale_colors = "#46464d"
 	flags_1 = null
-
 
