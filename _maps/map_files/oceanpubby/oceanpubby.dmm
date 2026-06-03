@@ -15775,15 +15775,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
-"bsX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
-/turf/open/floor/iron/herringbone,
-/area/station/cargo/storage)
 "bsY" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -43578,6 +43569,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical)
 "oXc" = (
@@ -45258,12 +45252,6 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/office)
 "qgf" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 8
 	},
@@ -54682,6 +54670,9 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "wvk" = (
@@ -56346,12 +56337,6 @@
 	cycle_id = "cargo-maint-passthrough"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/supply/general,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 8
-	},
 /turf/open/floor/iron/large,
 /area/station/cargo/storage)
 "xur" = (
@@ -102378,7 +102363,7 @@ sQc
 aha
 tko
 bGI
-bsX
+qAJ
 fYY
 cxg
 oSZ
@@ -102635,7 +102620,7 @@ jUX
 tko
 tko
 jiR
-bsX
+qAJ
 fYY
 lLS
 aJS
@@ -102892,7 +102877,7 @@ ktQ
 hnx
 aYo
 jiR
-bsX
+qAJ
 fYY
 aYo
 pOy
