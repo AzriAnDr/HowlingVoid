@@ -196,7 +196,7 @@
 
 /obj/item/camera/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	// Always skip on storage and tables
-	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
 		return NONE
 
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
