@@ -219,8 +219,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		pack_cost = spawning_order.pack.get_cost()
 		if(spawning_order.paying_account && spawning_order.charge_on_purchase) // NOVA EDIT CHANGE - ORIGINAL: if(spawning_order.paying_account)
 			paying_for_this = spawning_order.paying_account
-			if(spawning_order.pack.order_flags & ORDER_GOODY)
-				LAZYADD(goodies_by_buyer[spawning_order.paying_account], spawning_order)
 			var/receiver_message = "Cargo order #[spawning_order.id] has shipped."
 			if(spawning_order.charge_on_purchase)
 				receiver_message += " [price] [MONEY_NAME] have been charged to your bank account"
@@ -232,6 +230,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			SSeconomy.record_department_income(ACCOUNT_CAR, "cargo_handling_fees", cargo_handling_fee)
 		value += pack_cost
 		SSeconomy.record_import_cost("cargo_imports", pack_cost, ACCOUNT_CAR)
+
+		if(spawning_order.pack.order_flags & ORDER_GOODY)
+			var/datum/bank_account/goody_buyer = paying_for_this || spawning_order.paying_account || SSeconomy.get_dep_account(ACCOUNT_CAR)
+			LAZYADD(goodies_by_buyer[goody_buyer], spawning_order)
 
 		if(!(spawning_order.pack.order_flags & ORDER_GOODY) && !(spawning_order?.paying_account in forced_briefcases)) //we handle goody crates below // NOVA EDIT CHANGE - ORIGINAL : if(!(spawning_order.pack.order_flags & ORDER_GOODY)) //we handle goody crates below
 			var/obj/structure/closet/crate = spawning_order.generate(pick_n_take(empty_turfs))
