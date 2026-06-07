@@ -228,6 +228,10 @@
 	mask_type = null
 	var/random_funny_internals = TRUE
 
+/obj/item/storage/box/survival/hug/create_storage(max_slots, max_specific_storage, max_total_storage, list/canhold, list/canthold, storage_type)
+	. = ..()
+	icon_state = initial(icon_state)
+
 /obj/item/storage/box/survival/hug/PopulateContents()
 	if(!random_funny_internals)
 		return ..()
