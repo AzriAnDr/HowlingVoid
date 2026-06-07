@@ -17,7 +17,7 @@
 			"Nearstation Ocean Ruins": true,
 			"Ocean Ruins": true,
 			"Ocean Station": true,
-			"Baseturf": "/turf/open/misc/ocean"
+			"Baseturf": "/turf/open/misc/asteroid"
 		}
 	],
 	"job_changes": {

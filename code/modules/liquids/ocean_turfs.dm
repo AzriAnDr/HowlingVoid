@@ -1,3 +1,20 @@
+/turf/open/proc/should_add_mapload_ocean_liquids()
+	if(!SSmapping.level_trait(z, ZTRAIT_OCEAN_STATION))
+		return FALSE
+	if(liquids || istype(src, /turf/open/water))
+		return FALSE
+
+	var/area/turf_area = loc
+	return turf_area.uses_ocean_liquids()
+
+/turf/open/Initialize(mapload)
+	. = ..()
+	if(!mapload || !should_add_mapload_ocean_liquids())
+		return
+
+	var/obj/effect/abstract/liquid_turf/immutable/new_immutable = SSliquids.get_immutable(/obj/effect/abstract/liquid_turf/immutable/ocean, src)
+	new_immutable.add_turf(src)
+
 /turf/open/openspace/ocean
 	name = "ocean"
 	planetary_atmos = TRUE

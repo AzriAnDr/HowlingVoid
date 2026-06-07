@@ -14,6 +14,15 @@
 	flags_1 = NONE
 	default_gravity = STANDARD_GRAVITY
 
+/area/proc/uses_ocean_liquids()
+	return FALSE
+
+/area/ocean/uses_ocean_liquids()
+	return TRUE
+
+/area/station/asteroid/uses_ocean_liquids()
+	return name == "Ocean"
+
 /area/ocean/generated
 	icon_state = "cordon"
 	map_generator = /datum/map_generator/cave_generator/ocean
@@ -60,6 +69,9 @@
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_STANDARD_STATION
 	default_gravity = STANDARD_GRAVITY
+
+/area/station/solars/ocean/uses_ocean_liquids()
+	return TRUE
 
 /area/station/solars/ocean/aisat
 	name = "\improper AI Satellite Solars"
