@@ -213,6 +213,7 @@ const AdventureStatus = (props) => {
 const ORION_STATUS_START = (props) => {
   const { data, act } = useBackend();
   const { gamename } = data;
+  const { t } = usePreferencesLocalization(data);
   return (
     <Section fill>
       <Stack vertical textAlign="center" fill>
@@ -368,6 +369,7 @@ const ORION_STATUS_INSTRUCTIONS = (props) => {
 
 const ORION_STATUS_NORMAL = (props) => {
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const {
     settlers,
     settlermoods,
@@ -431,6 +433,7 @@ const ORION_STATUS_NORMAL = (props) => {
 
 const ORION_STATUS_GAMEOVER = (props) => {
   const { data, act } = useBackend();
+  const { t } = usePreferencesLocalization(data);
   const { reason } = data;
   return (
     <Section fill>
