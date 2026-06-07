@@ -589,6 +589,16 @@
 
 		ai_controller?.set_blackboard_key(blackboard_key, ability)
 
+/// Removes actions that were granted while the given species type was being gained.
+/mob/proc/remove_actions_from_species(species_type)
+	if(!length(actions))
+		return
+
+	for(var/datum/action/action as anything in actions.Copy())
+		if(action.species_action_source != species_type)
+			continue
+		action.Remove(src)
+
 /// Returns true if the mob is on a rusty tile, really low level just because we call it in a bunch of unrelated places
 /mob/proc/is_touching_rust(check_flying = FALSE)
 	if (check_flying && (movement_type & MOVETYPES_NOT_TOUCHING_GROUND))

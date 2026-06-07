@@ -63,6 +63,8 @@
 	var/cached_multiplicative_actions_slowdown
 	/// List of action hud items the user has
 	var/list/datum/action/actions
+	/// Species currently running on_species_gain() for this mob. Actions granted while set are cleaned up on species change.
+	var/tmp/current_species_action_source
 	///Cursor icon used when holding shift over things
 	var/examine_cursor_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
 

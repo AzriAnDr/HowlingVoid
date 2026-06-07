@@ -60,6 +60,8 @@
 	var/action_disabled = FALSE
 	/// Can this action be shared with our rider?
 	var/can_be_shared = TRUE
+	/// Species type that granted this action during species gain. Used to clean up race abilities during species changes.
+	var/species_action_source
 
 /datum/action/New(Target)
 	link_to(Target)
@@ -100,6 +102,8 @@
 		return // We already have it
 	var/mob/previous_owner = owner
 	owner = grant_to
+	if(grant_to.current_species_action_source)
+		species_action_source = grant_to.current_species_action_source
 	if(!isnull(previous_owner))
 		Remove(previous_owner)
 	SEND_SIGNAL(src, COMSIG_ACTION_GRANTED, owner)
