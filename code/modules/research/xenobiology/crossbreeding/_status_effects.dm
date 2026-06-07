@@ -821,6 +821,29 @@
 	colour = SLIME_TYPE_GREEN
 	var/datum/dna/originalDNA
 	var/originalname
+	var/original_gender
+	var/original_physique
+	var/original_hairstyle
+	var/original_facial_hairstyle
+	var/original_hair_color
+	var/original_facial_hair_color
+	var/original_eye_color_left
+	var/original_eye_color_right
+	var/original_eye_color_heterochromatic
+	var/original_skin_tone
+	var/original_underwear
+	var/original_underwear_color
+	var/original_undershirt
+	var/original_undershirt_color
+	var/original_socks
+	var/original_socks_color
+	var/original_bra
+	var/original_bra_color
+	var/sound/original_blooper
+	var/original_blooper_id
+	var/original_blooper_pitch
+	var/original_blooper_pitch_range
+	var/original_blooper_speed
 
 /datum/status_effect/stabilized/green/on_apply()
 	to_chat(owner, span_warning("You feel different..."))
@@ -828,6 +851,29 @@
 		var/mob/living/carbon/human/H = owner
 		originalDNA = new H.dna.type
 		originalname = H.real_name
+		original_gender = H.gender
+		original_physique = H.physique
+		original_hairstyle = H.hairstyle
+		original_facial_hairstyle = H.facial_hairstyle
+		original_hair_color = H.hair_color
+		original_facial_hair_color = H.facial_hair_color
+		original_eye_color_left = H.eye_color_left
+		original_eye_color_right = H.eye_color_right
+		original_eye_color_heterochromatic = H.eye_color_heterochromatic
+		original_skin_tone = H.skin_tone
+		original_underwear = H.underwear
+		original_underwear_color = H.underwear_color
+		original_undershirt = H.undershirt
+		original_undershirt_color = H.undershirt_color
+		original_socks = H.socks
+		original_socks_color = H.socks_color
+		original_bra = H.bra
+		original_bra_color = H.bra_color
+		original_blooper = H.blooper
+		original_blooper_id = H.blooper_id
+		original_blooper_pitch = H.blooper_pitch
+		original_blooper_pitch_range = H.blooper_pitch_range
+		original_blooper_speed = H.blooper_speed
 		H.dna.copy_dna(originalDNA, COPY_DNA_SE|COPY_DNA_SPECIES)
 		randomize_human(H)
 	return ..()
@@ -841,11 +887,36 @@
 
 /datum/status_effect/stabilized/green/on_remove()
 	to_chat(owner, span_notice("You feel more like yourself."))
-	if(ishuman(owner))
+	if(ishuman(owner) && originalDNA)
 		var/mob/living/carbon/human/human = owner
+		human.visual_only_organs = TRUE
 		originalDNA.copy_dna(human.dna, COPY_DNA_SE|COPY_DNA_SPECIES|COPY_DNA_MUTATIONS)
+		human.visual_only_organs = FALSE
 		human.real_name = originalname
-		human.updateappearance(mutcolor_update=1)
+		human.gender = original_gender
+		human.physique = original_physique
+		human.set_hairstyle(original_hairstyle, update = FALSE)
+		human.set_facial_hairstyle(original_facial_hairstyle, update = FALSE)
+		human.set_haircolor(original_hair_color, update = FALSE)
+		human.set_facial_haircolor(original_facial_hair_color, update = FALSE)
+		human.set_eye_color(original_eye_color_left, original_eye_color_right)
+		human.eye_color_heterochromatic = original_eye_color_heterochromatic
+		human.skin_tone = original_skin_tone
+		human.underwear = original_underwear
+		human.underwear_color = original_underwear_color
+		human.undershirt = original_undershirt
+		human.undershirt_color = original_undershirt_color
+		human.socks = original_socks
+		human.socks_color = original_socks_color
+		human.bra = original_bra
+		human.bra_color = original_bra_color
+		human.blooper = original_blooper
+		human.blooper_id = original_blooper_id
+		human.blooper_pitch = original_blooper_pitch
+		human.blooper_pitch_range = original_blooper_pitch_range
+		human.blooper_speed = original_blooper_speed
+		human.name = human.get_visible_name()
+		human.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	originalDNA = null
 
 /datum/status_effect/brokenpeace
