@@ -240,6 +240,7 @@
 
 	test_mob.equipOutfit(/datum/outfit/job/assistant/consistent)
 	TEST_ASSERT(!test_mob.is_location_accessible(BODY_ZONE_CHEST), "Chest should be inaccessible when wearing a jumpsuit")
+	TEST_ASSERT(!test_mob.is_location_accessible(BODY_ZONE_CHEST, IGNORED_OPERATION_CLOTHING_SLOTS), "Chest should be inaccessible for surgery when wearing a jumpsuit")
 
 	var/obj/item/clothing/under/jumpsuit = test_mob.get_item_by_slot(ITEM_SLOT_ICLOTHING)
 	jumpsuit.adjust_to_alt()
@@ -259,6 +260,10 @@
 	test_mob.equip_to_slot_or_del(socks, ITEM_SLOT_SOCKS)
 	TEST_ASSERT(!test_mob.is_location_accessible(BODY_ZONE_PRECISE_L_FOOT), "Feet should be inaccessible when wearing socks")
 	TEST_ASSERT(test_mob.is_location_accessible(BODY_ZONE_PRECISE_L_FOOT, IGNORED_OPERATION_CLOTHING_SLOTS), "Feet should be accessible for surgery when wearing socks")
+
+	var/obj/item/clothing/glasses/regular/glasses = allocate(/obj/item/clothing/glasses/regular)
+	test_mob.equip_to_slot_or_del(glasses, ITEM_SLOT_EYES)
+	TEST_ASSERT(!test_mob.is_location_accessible(BODY_ZONE_PRECISE_EYES, IGNORED_OPERATION_CLOTHING_SLOTS), "Eyes should be inaccessible for surgery when wearing glasses")
 
 /// Tests surgeries which just modify basic surgical states
 /datum/unit_test/state_surgeries

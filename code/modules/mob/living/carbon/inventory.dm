@@ -431,18 +431,20 @@
 	return covered_flags
 
 /mob/living/carbon/is_location_accessible(location, exluded_equipment_slots = NONE)
+	var/checked_equipment_slots = ~standard_slot_flags_from_equipment_slot_flags(exluded_equipment_slots)
 	switch(location)
 		// Snowflake checks for these precise zones
 		if(BODY_ZONE_PRECISE_EYES)
-			if(is_eyes_covered(~exluded_equipment_slots) || (obscured_slots & (HIDEEYES|HIDEFACE)))
+			if(is_eyes_covered(checked_equipment_slots) || (obscured_slots & (HIDEEYES|HIDEFACE)))
 				return FALSE
 		if(BODY_ZONE_PRECISE_MOUTH)
-			if(is_mouth_covered(~exluded_equipment_slots) || (obscured_slots & HIDEFACE))
+			if(is_mouth_covered(checked_equipment_slots) || (obscured_slots & HIDEFACE))
 				return FALSE
 
 	var/covered_flags = NONE
 	for(var/obj/item/worn_item in get_equipped_items(INCLUDE_ABSTRACT))
-		if(worn_item.slot_flags & exluded_equipment_slots)
+		var/equipped_slot = get_slot_by_item(worn_item)
+		if(equipped_slot ? slot_matches_equipment_slot_flags(equipped_slot, exluded_equipment_slots) : slot_matches_equipment_slot_flags(worn_item.slot_flags, exluded_equipment_slots))
 			continue
 		covered_flags |= worn_item.body_parts_covered
 
@@ -457,6 +459,25 @@
 	// checking for ((CHEST|GROIN) & (GROIN|LEGS)) == (CHEST|GROIN) would also be incorrect,
 	// as it would imply your chest is accessible from lacking groin coverage
 	return !(location in cover_flags2body_zones(covered_flags))
+
+/// Checks whether a specific worn slot is included in a slot flag mask.
+/proc/slot_matches_equipment_slot_flags(slot, slot_flags)
+	if(!slot || !slot_flags)
+		return FALSE
+
+	if(slot & ITEM_SLOT_EXTRA)
+		return (slot_flags & ITEM_SLOT_EXTRA) && ((slot & ~ITEM_SLOT_EXTRA) & (slot_flags & ~ITEM_SLOT_EXTRA))
+
+	var/standard_slot_flags = standard_slot_flags_from_equipment_slot_flags(slot_flags)
+	return slot & standard_slot_flags
+
+/// Removes extra-slot marker and subslot bits from an equipment slot mask.
+/proc/standard_slot_flags_from_equipment_slot_flags(slot_flags)
+	if(slot_flags & ITEM_SLOT_EXTRA)
+		// Extra slots reuse low bits, so strip their subslot bits before comparing standard slots.
+		slot_flags &= ~(ITEM_SLOT_EXTRA | (ITEM_SLOT_UNDERWEAR & ~ITEM_SLOT_EXTRA) | (ITEM_SLOT_SOCKS & ~ITEM_SLOT_EXTRA) | (ITEM_SLOT_SHIRT & ~ITEM_SLOT_EXTRA) | (ITEM_SLOT_BRA & ~ITEM_SLOT_EXTRA) | (ITEM_SLOT_WRISTS & ~ITEM_SLOT_EXTRA))
+
+	return slot_flags
 
 /// Attempts to equip the given item in a conspicious place.
 /// This is used when, for instance, a character spawning with an item
