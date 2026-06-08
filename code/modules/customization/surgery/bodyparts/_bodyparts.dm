@@ -14,6 +14,11 @@
 		var/list/entry = sanitize_body_marking_entry(key, markings[key])
 		. += "-[key]_[entry[MARKING_INDEX_COLOR]]_[entry[MARKING_INDEX_EMISSIVE]]_[entry[MARKING_INDEX_LAYER]]"
 
+	for(var/key in aux_zone_markings)
+		. += aux_zone
+		var/list/entry = sanitize_body_marking_entry(key, aux_zone_markings[key])
+		. += "-[key]_[entry[MARKING_INDEX_COLOR]]_[entry[MARKING_INDEX_EMISSIVE]]_[entry[MARKING_INDEX_LAYER]]"
+
 	return .
 
 /**

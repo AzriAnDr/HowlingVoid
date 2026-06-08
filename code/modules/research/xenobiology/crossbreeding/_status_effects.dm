@@ -820,6 +820,10 @@
 	id = "stabilizedgreen"
 	colour = SLIME_TYPE_GREEN
 	var/datum/dna/originalDNA
+	var/list/original_features
+	var/list/original_mutant_bodyparts
+	var/list/original_visual_mutant_organs
+	var/list/original_body_markings
 	var/originalname
 	var/original_gender
 	var/original_physique
@@ -850,6 +854,10 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		originalDNA = new H.dna.type
+		original_features = H.dna.features.Copy()
+		original_mutant_bodyparts = copy_mutant_bodyparts(H.dna.mutant_bodyparts)
+		original_visual_mutant_organs = copy_visual_mutant_organs(H)
+		original_body_markings = copy_body_markings(H.dna.body_markings)
 		originalname = H.real_name
 		original_gender = H.gender
 		original_physique = H.physique
@@ -876,6 +884,8 @@
 		original_blooper_speed = H.blooper_speed
 		H.dna.copy_dna(originalDNA, COPY_DNA_SE|COPY_DNA_SPECIES)
 		randomize_human(H)
+		rebuild_visual_bodyparts(H)
+		rebuild_visual_mutant_organs(H)
 	return ..()
 
 // Only occasionally give examiners a warning.
@@ -885,13 +895,134 @@
 
 	return null
 
+/datum/status_effect/stabilized/green/proc/copy_mutant_bodyparts(list/source_bodyparts)
+	var/list/copied_bodyparts = list()
+	for(var/key in source_bodyparts)
+		var/datum/mutant_bodypart/source_part = source_bodyparts[key]
+		if(!istype(source_part))
+			copied_bodyparts[key] = source_part
+			continue
+
+		var/list/source_colors = source_part.get_colors()
+		var/list/source_emissives = source_part.get_emissive_tri_bool_list()
+		copied_bodyparts[key] = build_mutant_part(normalize_mutant_part_name(source_part.name), islist(source_colors) ? source_colors.Copy() : source_colors, source_emissives?.Copy())
+	return copied_bodyparts
+
+/datum/status_effect/stabilized/green/proc/normalize_mutant_part_name(mutant_part_name)
+	var/datum/sprite_accessory/sprite_accessory = mutant_part_name
+	if(istype(sprite_accessory))
+		return sprite_accessory.name
+	return mutant_part_name
+
+/datum/status_effect/stabilized/green/proc/copy_visual_mutant_organs(mob/living/carbon/human/human)
+	var/list/copied_organs = list()
+	for(var/obj/item/organ/current_organ as anything in human.organs)
+		if(!(current_organ.organ_flags & ORGAN_EXTERNAL))
+			continue
+		if(!current_organ.mutantpart_key || !current_organ.bodypart_overlay?.sprite_datum)
+			continue
+
+		var/datum/bodypart_overlay/mutant/bodypart_overlay = current_organ.bodypart_overlay
+		var/datum/sprite_accessory/sprite_accessory = bodypart_overlay.sprite_datum
+		var/organ_colors = bodypart_overlay.draw_color
+		if(isnull(organ_colors))
+			var/datum/mutant_bodypart/current_part = human.dna.mutant_bodyparts[current_organ.mutantpart_key]
+			organ_colors = current_part?.get_colors()
+		var/list/organ_emissives = bodypart_overlay.emissive_eligibility_by_color_index
+		var/list/copied_colors = islist(organ_colors) ? organ_colors : null
+		copied_organs[current_organ.mutantpart_key] = build_mutant_part(sprite_accessory.name, copied_colors?.Copy() || organ_colors, organ_emissives?.Copy())
+	return copied_organs
+
+/datum/status_effect/stabilized/green/proc/copy_body_markings(list/source_markings)
+	var/list/copied_markings = list()
+	for(var/zone in source_markings)
+		var/list/source_zone_markings = source_markings[zone]
+		if(!islist(source_zone_markings))
+			copied_markings[zone] = source_zone_markings
+			continue
+
+		var/list/copied_zone_markings = list()
+		for(var/marking_key in source_zone_markings)
+			var/list/source_marking = source_zone_markings[marking_key]
+			copied_zone_markings[marking_key] = islist(source_marking) ? source_marking.Copy() : source_marking
+		copied_markings[zone] = copied_zone_markings
+	return copied_markings
+
+/datum/status_effect/stabilized/green/proc/rebuild_visual_mutant_organs(mob/living/carbon/human/human)
+	for(var/obj/item/organ/current_organ as anything in human.organs.Copy())
+		if(!(current_organ.organ_flags & ORGAN_EXTERNAL))
+			continue
+		if(current_organ.organ_flags & ORGAN_UNREMOVABLE)
+			continue
+		if(!current_organ.mutantpart_key)
+			continue
+		current_organ.Remove(human, special = TRUE, movement_flags = KEEP_IN_MUTANT_BODYPARTS)
+		qdel(current_organ)
+
+	var/old_visual_only_organs = human.visual_only_organs
+	human.visual_only_organs = TRUE
+	human.dna.species.regenerate_organs(human, human.dna.species, replace_current = TRUE, visual_only = TRUE)
+	human.visual_only_organs = old_visual_only_organs
+	sync_visual_mutant_organs_from_dna(human)
+	human.update_body(is_creating = TRUE)
+
+/datum/status_effect/stabilized/green/proc/sync_visual_mutant_organs_from_dna(mob/living/carbon/human/human)
+	for(var/obj/item/organ/current_organ as anything in human.organs)
+		if(!(current_organ.organ_flags & ORGAN_EXTERNAL))
+			continue
+		if(!current_organ.mutantpart_key || !current_organ.bodypart_overlay)
+			continue
+		var/datum/mutant_bodypart/mutant_part = human.dna.mutant_bodyparts[current_organ.mutantpart_key]
+		if(!mutant_part)
+			continue
+		current_organ.bodypart_overlay.set_appearance_from_dna(human.dna, normalize_mutant_part_name(mutant_part.name), current_organ.mutantpart_key)
+
+/datum/status_effect/stabilized/green/proc/rebuild_visual_bodyparts(mob/living/carbon/human/human)
+	var/datum/species/species = human.dna.species
+
+	var/list/correct_bodyparts = species.bodypart_overrides.Copy()
+	var/ignore_digi = FALSE
+	if(issynthetic(human))
+		var/datum/mutant_bodypart/chassis = human.dna.mutant_bodyparts[FEATURE_SYNTH_CHASSIS]
+		var/list/chassis_accessories = SSaccessories.sprite_accessories[FEATURE_SYNTH_CHASSIS]
+		var/datum/sprite_accessory/synth_chassis/chassis_accessory = chassis_accessories?[chassis?.name]
+		if(chassis_accessory && !chassis_accessory.is_digi_compatible)
+			ignore_digi = TRUE
+
+	if(!ignore_digi && ((species.digitigrade_customization == DIGITIGRADE_FORCED) || (species.digitigrade_customization == DIGITIGRADE_OPTIONAL && human.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)))
+		var/obj/item/bodypart/leg/right/right_leg = species.bodypart_overrides[BODY_ZONE_R_LEG]
+		var/obj/item/bodypart/leg/left/left_leg = species.bodypart_overrides[BODY_ZONE_L_LEG]
+		if(right_leg)
+			correct_bodyparts[BODY_ZONE_R_LEG] = initial(right_leg.digitigrade_type)
+		if(left_leg)
+			correct_bodyparts[BODY_ZONE_L_LEG] = initial(left_leg.digitigrade_type)
+
+	for(var/obj/item/bodypart/old_part as anything in human.get_bodyparts())
+		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))
+			continue
+
+		var/new_part_path = correct_bodyparts[old_part.body_zone]
+		if(!new_part_path || old_part.type == new_part_path)
+			continue
+
+		var/obj/item/bodypart/new_part = new new_part_path()
+		new_part.replace_limb(human)
+		new_part.update_limb(is_creating = TRUE)
+		new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
+		qdel(old_part)
+
 /datum/status_effect/stabilized/green/on_remove()
 	to_chat(owner, span_notice("You feel more like yourself."))
 	if(ishuman(owner) && originalDNA)
 		var/mob/living/carbon/human/human = owner
-		human.visual_only_organs = TRUE
 		originalDNA.copy_dna(human.dna, COPY_DNA_SE|COPY_DNA_SPECIES|COPY_DNA_MUTATIONS)
-		human.visual_only_organs = FALSE
+		human.dna.features = original_features.Copy()
+		human.dna.mutant_bodyparts = copy_mutant_bodyparts(original_mutant_bodyparts)
+		for(var/key in original_visual_mutant_organs)
+			var/list/visual_organ = list()
+			visual_organ[key] = original_visual_mutant_organs[key]
+			human.dna.mutant_bodyparts[key] = copy_mutant_bodyparts(visual_organ)[key]
+		human.dna.body_markings = copy_body_markings(original_body_markings)
 		human.real_name = originalname
 		human.gender = original_gender
 		human.physique = original_physique
@@ -916,8 +1047,16 @@
 		human.blooper_pitch_range = original_blooper_pitch_range
 		human.blooper_speed = original_blooper_speed
 		human.name = human.get_visible_name()
-		human.updateappearance(mutcolor_update = TRUE, mutations_overlay_update = TRUE)
+		human.apply_customizable_dna_features_to_species()
+		human.dna.update_dna_identity()
+		rebuild_visual_bodyparts(human)
+		rebuild_visual_mutant_organs(human)
+		human.update_mutations_overlay()
 	originalDNA = null
+	original_features = null
+	original_mutant_bodyparts = null
+	original_visual_mutant_organs = null
+	original_body_markings = null
 
 /datum/status_effect/brokenpeace
 	id = "brokenpeace"
