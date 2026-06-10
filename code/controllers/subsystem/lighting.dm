@@ -21,11 +21,6 @@ SUBSYSTEM_DEF(lighting)
 
 
 /datum/controller/subsystem/lighting/Initialize()
-	sources_queue = list()
-	corners_queue = list()
-	objects_queue = list()
-	current_sources = list()
-
 	if(!initialized)
 		create_all_lighting_objects()
 		initialized = TRUE

@@ -271,23 +271,13 @@
 /obj/structure/alien/weeds/node/Initialize(mapload)
 	. = ..()
 
-	if(!SSlighting.initialized)
-		RegisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(apply_mapped_light))
-	else
-		apply_mapped_light()
+	//give it light
+	set_light(lon_range)
 
 	//we are the parent node
 	parent_node = src
 
 	return INITIALIZE_HINT_LATELOAD
-
-/obj/structure/alien/weeds/node/proc/apply_mapped_light(datum/source)
-	SIGNAL_HANDLER
-
-	if(source)
-		UnregisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE)
-
-	set_light(lon_range, light_power, light_color, l_on = TRUE)
 
 // we do this in LateInitialize() because weeds on the same loc may not be done initializing yet (as in create_and_destroy)
 /obj/structure/alien/weeds/node/LateInitialize()
@@ -303,7 +293,6 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/alien/weeds/node/Destroy()
-	UnregisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
