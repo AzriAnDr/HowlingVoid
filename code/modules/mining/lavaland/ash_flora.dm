@@ -25,6 +25,23 @@
 	. = ..()
 	base_icon_state = "[base_icon_state][rand(1, number_of_variants)]"
 	icon_state = base_icon_state
+	if(!light_range || !light_power)
+		return .
+	if(!SSlighting.initialized)
+		RegisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(apply_mapped_light))
+	else
+		apply_mapped_light()
+
+/obj/structure/flora/ash/Destroy()
+	UnregisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	return ..()
+
+/obj/structure/flora/ash/proc/apply_mapped_light(datum/source)
+	SIGNAL_HANDLER
+
+	if(source)
+		UnregisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	set_light(light_range, light_power, light_color, l_on = TRUE)
 
 /obj/structure/flora/ash/get_potential_products()
 	return list(/obj/item/food/grown/ash_flora/shavings = 1)
