@@ -9,6 +9,7 @@
 	winner_method = VOTE_WINNER_METHOD_SIMPLE
 	contains_vote_in_name = TRUE
 	default_message = "Choose how the storyteller should pace the next round."
+	announce_start = FALSE
 
 /datum/vote/storyteller_mode/is_config_enabled()
 	return SSstoryteller.is_enabled()
@@ -32,4 +33,5 @@
 	var/selected_mode = STORYTELLER_ROUND_MODE_DYNAMIC
 	if(winning_option == "Extended")
 		selected_mode = STORYTELLER_ROUND_MODE_EXTENDED
+	selected_mode = SSstoryteller.get_alternating_round_mode(selected_mode)
 	SSstoryteller.set_round_mode(selected_mode)

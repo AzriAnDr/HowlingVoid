@@ -64,6 +64,11 @@
 		preferences.ui_interact(usr)
 		return
 
+	if(href_list["storyteller_vote"])
+		play_lobby_button_sound()
+		SSvote.open_storyteller_vote_panel(usr)
+		return
+
 	if(href_list["toggle_ready"])
 		if(SSticker && SSticker.current_state > GAME_STATE_PREGAME)
 			to_chat(src, span_notice("It's too late for that, the round is already starting!"))

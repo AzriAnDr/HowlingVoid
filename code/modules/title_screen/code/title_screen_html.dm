@@ -137,6 +137,7 @@ GLOBAL_LIST_EMPTY(startup_messages)
 	items += {"<li class=\"menu-item\" data-action=\"character-setup\"><a class=\"menu-link\" href='byond://?src=[text_ref(src)];character_setup=1'><span class=\"menu-label\">SETUP CHARACTER</span></a></li>"}
 	items += {"<li class=\"menu-item\" data-action=\"game-options\"><a class=\"menu-link\" href='byond://?src=[text_ref(src)];game_options=1'><span class=\"menu-label\">GAME OPTIONS</span></a></li>"}
 	items += {"<li class=\"menu-item\" data-action=\"be-antagonist\"><a id=\"be_antag\" class=\"menu-link\" href='byond://?src=[text_ref(src)];toggle_antag=1'><span class=\"menu-label\">[current_antag_text]</span></a></li>"}
+	items += {"<li class=\"menu-item\" data-action=\"storyteller-vote\"><a class=\"menu-link\" href='byond://?src=[text_ref(src)];storyteller_vote=1'><span class=\"menu-label\">STORYTELLER VOTE</span></a></li>"}
 
 	if(!is_guest_key(src.key))
 		items += {"<li class=\"menu-item\" data-action=\"polls\"><a class=\"menu-link\" href='byond://?src=[text_ref(src)];display_polls=1'><span class=\"menu-label\">POLLS</span></a></li>"}

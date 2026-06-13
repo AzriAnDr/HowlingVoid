@@ -31,6 +31,7 @@ import {
   translateFamilyName as storytellerTranslateFamilyName,
   translateNeedSummary as storytellerTranslateNeedSummary,
   translateNeedTitle as storytellerTranslateNeedTitle,
+  translateActionDescription as storytellerTranslateActionDescription,
   translateProfileName as storytellerTranslateProfileName,
   translateReason as storytellerTranslateReason,
   translateTooltip as storytellerTranslateTooltip,
@@ -97,6 +98,9 @@ type ModifierEntry = {
 type ActionEntry = {
   id: string;
   name: string;
+  type?: string;
+  category?: string;
+  description?: string;
   context: string;
   polarity?: string;
   chancePercent?: number;
@@ -261,6 +265,12 @@ const translateProfileName = (
 const translateFamilyName = (language: PanelLanguage, family: string) =>
   storytellerTranslateFamilyName(language, family);
 
+const translateActionDescription = (
+  language: PanelLanguage,
+  actionId: string,
+  fallback?: string,
+) => storytellerTranslateActionDescription(language, actionId, fallback);
+
 const translateReason = (language: PanelLanguage, reason?: string) => {
   return storytellerTranslateReason(language, reason);
 };
@@ -408,6 +418,11 @@ const ActionCard = (props: {
       : entry.polarity === 'negative'
         ? 'average'
         : undefined;
+  const actionDescription = translateActionDescription(
+    language,
+    entry.id,
+    entry.description,
+  );
   return (
     <Box
       key={entry.id}
@@ -423,7 +438,15 @@ const ActionCard = (props: {
     >
       <Stack align="center">
         <Stack.Item grow>
-          <Box bold>{entry.name}</Box>
+          {actionDescription ? (
+            <Tooltip content={actionDescription}>
+              <Box bold inline>
+                {entry.name}
+              </Box>
+            </Tooltip>
+          ) : (
+            <Box bold>{entry.name}</Box>
+          )}
           <Box color="label">
             {formatMode(entry.polarity, language)} |{' '}
             {formatMode(entry.context, language)} | {t(language, 'chance')}{' '}
@@ -834,14 +857,12 @@ export const StorytellerPanel = () => {
   const phaseOptions =
     data.phaseCap > 1
       ? Array.from({ length: data.phaseCap }, (_, index) => ({
-          displayText:
-            language === 'russian' ? `Этап ${index + 1}` : `Stage ${index + 1}`,
+          displayText: `${t(language, 'stage')} ${index + 1}`,
           value: String(index + 1),
         }))
       : [
           {
-            displayText:
-              language === 'russian' ? 'Только 1-й этап' : 'Stage 1 only',
+            displayText: `${t(language, 'stage')} 1`,
             value: '1',
           },
         ];
@@ -865,6 +886,12 @@ export const StorytellerPanel = () => {
       const search = actionSearch.toLowerCase();
       return (
         entry.name.toLowerCase().includes(search) ||
+        (entry.id || '').toLowerCase().includes(search) ||
+        (entry.type || '').toLowerCase().includes(search) ||
+        (entry.category || '').toLowerCase().includes(search) ||
+        translateActionDescription(language, entry.id, entry.description)
+          .toLowerCase()
+          .includes(search) ||
         entry.context.toLowerCase().includes(search) ||
         (entry.polarity || '').toLowerCase().includes(search)
       );
@@ -885,6 +912,12 @@ export const StorytellerPanel = () => {
     const search = listSearch.toLowerCase();
     return (
       entry.name.toLowerCase().includes(search) ||
+      (entry.id || '').toLowerCase().includes(search) ||
+      (entry.type || '').toLowerCase().includes(search) ||
+      (entry.category || '').toLowerCase().includes(search) ||
+      translateActionDescription(language, entry.id, entry.description)
+        .toLowerCase()
+        .includes(search) ||
       entry.context.toLowerCase().includes(search) ||
       (entry.polarity || '').toLowerCase().includes(search) ||
       (entry.family || '').toLowerCase().includes(search) ||

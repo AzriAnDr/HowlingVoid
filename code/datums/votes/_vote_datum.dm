@@ -23,6 +23,8 @@
 	var/winner_method = VOTE_WINNER_METHOD_SIMPLE
 	/// Should we show details about the number of votes submitted for each option?
 	var/display_statistics = TRUE
+	/// Should the vote subsystem announce this vote starting in chat?
+	var/announce_start = TRUE
 
 	// Internal values used when tracking ongoing votes.
 	// Don't mess with these, change the above values / override procs for subtypes.

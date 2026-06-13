@@ -67,6 +67,8 @@ SUBSYSTEM_DEF(storyteller)
 	var/mode_vote_started = FALSE
 	var/mode_vote_finalized = FALSE
 	var/manual_round_mode_override = FALSE
+	var/round_mode_history_recorded = FALSE
+	var/list/round_mode_history = list()
 	var/round_cadence_initialized = FALSE
 	var/profile_selected = FALSE
 	var/round_started_at = 0
@@ -87,6 +89,7 @@ SUBSYSTEM_DEF(storyteller)
 
 /datum/controller/subsystem/storyteller/Initialize()
 	load_config()
+	load_round_mode_history()
 	reset_profile_selection()
 	catalog = new(storyteller_config)
 	initialize_need_analyzers()
@@ -185,6 +188,9 @@ SUBSYSTEM_DEF(storyteller)
 		new_mode = STORYTELLER_ROUND_MODE_DYNAMIC
 	round_mode = new_mode
 	mode_vote_finalized = TRUE
+	if(!round_mode_history_recorded)
+		record_round_mode_history(round_mode)
+		round_mode_history_recorded = TRUE
 	if(announce)
 		record_decision("Selected storyteller round mode: [capitalize(round_mode)].")
 
@@ -464,12 +470,109 @@ SUBSYSTEM_DEF(storyteller)
 		"profileRiseMultiplier" = profile?.escalation_rise_multiplier || 1,
 	)))
 
+/datum/controller/subsystem/storyteller/proc/get_profile_name_for_type(profile_path)
+	switch(profile_path)
+		if(/datum/storyteller/profile/passive)
+			return "Patient Custodian"
+		if(/datum/storyteller/profile/aggressive)
+			return "Aggressive Escalation"
+	return "Balanced Drama"
+
+/datum/controller/subsystem/storyteller/proc/get_profile_chance_ui_data(list/roster_data)
+	RETURN_TYPE(/list)
+	var/list/weights = get_profile_weights_for_roster(roster_data)
+	var/total_weight = 0
+	for(var/profile_path in weights)
+		total_weight += max(0, weights[profile_path])
+
+	var/list/entries = list()
+	for(var/profile_path in weights)
+		var/weight = max(0, weights[profile_path])
+		entries += list(list(
+			"id" = "[profile_path]",
+			"name" = get_profile_name_for_type(profile_path),
+			"weight" = weight,
+			"chancePercent" = total_weight > 0 ? round((weight / total_weight) * 100, 0.1) : 0,
+		))
+	return entries
+
+/datum/controller/subsystem/storyteller/proc/get_stage_chance_ui_data(list/roster_data)
+	RETURN_TYPE(/list)
+	var/predicted_stage = calculate_initial_content_stage_for_roster(roster_data)
+	var/list/entries = list()
+	for(var/stage in 1 to max(1, phase_cap))
+		entries += list(list(
+			"id" = stage,
+			"name" = "Stage [stage]",
+			"chancePercent" = stage == predicted_stage ? 100 : 0,
+			"predicted" = stage == predicted_stage,
+		))
+	return entries
+
+/datum/controller/subsystem/storyteller/proc/get_ready_player_mode_vote_ui_data()
+	RETURN_TYPE(/list)
+	var/list/entries = list()
+	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
+		if(QDELETED(player) || player.ready != PLAYER_READY_TO_PLAY || !player.client?.prefs)
+			continue
+
+		var/datum/job/intended_job = player.client.prefs.get_highest_priority_job()
+		entries += list(list(
+			"ckey" = player.ckey || player.client.ckey,
+			"name" = player.client.prefs.read_preference(/datum/preference/name/real_name),
+			"job" = intended_job?.title || "No preferred job",
+		))
+	return entries
+
+/datum/controller/subsystem/storyteller/proc/get_mode_vote_ui_data(mob/user)
+	RETURN_TYPE(/list)
+	var/list/roster_data = build_pregame_roster_data()
+	var/list/alternation_data = get_mode_alternation_ui_data()
+	var/list/data = list(
+		"enabled" = is_enabled(),
+		"roundMode" = round_mode,
+		"modeFinalized" = mode_vote_finalized,
+		"selectedMode" = mode_vote_finalized ? round_mode : null,
+		"interfaceLanguage" = get_panel_language_value(user, "storyteller"),
+		"menuChapter" = user?.client?.prefs?.read_preference(/datum/preference/choiced/menu_chapter),
+		"alternation" = alternation_data,
+		"modes" = list(
+			list(
+				"id" = STORYTELLER_ROUND_MODE_DYNAMIC,
+				"name" = "Dynamic",
+				"summary" = "The storyteller actively paces roundstart, midround, and latejoin pressure with a short setup preparation phase.",
+			),
+			list(
+				"id" = STORYTELLER_ROUND_MODE_EXTENDED,
+				"name" = "Extended",
+				"summary" = "A calmer station round. Storyteller aid and background pacing remain available, but natural hostile pressure is suppressed.",
+			),
+		),
+		"storytellerSummary" = "The storyteller reads crew readiness, department coverage, station danger, and resource pressure to pick a profile, starting stage, and later round events.",
+	)
+
+	if(user?.client?.holder)
+		data["profileName"] = profile?.name || "Unknown"
+		data["phase"] = current_phase_max
+		data["phaseCap"] = phase_cap
+		data["admin"] = list(
+			"playerCount" = alternation_data["playerCount"],
+			"readyCount" = roster_data["readyCount"] || 0,
+			"readyPlayers" = get_ready_player_mode_vote_ui_data(),
+			"profileChances" = get_profile_chance_ui_data(roster_data),
+			"stageChances" = get_stage_chance_ui_data(roster_data),
+		)
+	return data
+
 /datum/controller/subsystem/storyteller/proc/begin_roundstart_prep_phase()
 	if(prep_phase_active)
 		return
 	if(!mode_vote_finalized)
 		record_decision("Storyteller mode vote did not finalize before preparation; using [capitalize(round_mode)] mode.")
 		mode_vote_finalized = TRUE
+		if(!round_mode_history_recorded)
+			record_round_mode_history(round_mode)
+			round_mode_history_recorded = TRUE
 
 	prep_phase_active = TRUE
 	prep_phase_started_at = world.time
@@ -533,6 +636,93 @@ SUBSYSTEM_DEF(storyteller)
 
 	storyteller_config = json_decode(result["content"]) || list()
 
+/datum/controller/subsystem/storyteller/proc/load_round_mode_history()
+	round_mode_history = list()
+	if(!fexists(STORYTELLER_MODE_HISTORY_FILE))
+		return
+
+	var/list/raw_history = json_decode(file2text(STORYTELLER_MODE_HISTORY_FILE))
+	if(!islist(raw_history))
+		return
+
+	for(var/history_entry in raw_history)
+		if(history_entry in list(STORYTELLER_ROUND_MODE_DYNAMIC, STORYTELLER_ROUND_MODE_EXTENDED))
+			round_mode_history += history_entry
+
+	while(length(round_mode_history) > 2)
+		round_mode_history.Cut(1, 2)
+
+/datum/controller/subsystem/storyteller/proc/save_round_mode_history()
+	var/json_file = file(STORYTELLER_MODE_HISTORY_FILE)
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(round_mode_history))
+
+/datum/controller/subsystem/storyteller/proc/record_round_mode_history(selected_mode)
+	if(!(selected_mode in list(STORYTELLER_ROUND_MODE_DYNAMIC, STORYTELLER_ROUND_MODE_EXTENDED)))
+		return
+
+	round_mode_history += selected_mode
+	while(length(round_mode_history) > 2)
+		round_mode_history.Cut(1, 2)
+
+	save_round_mode_history()
+
+/datum/controller/subsystem/storyteller/proc/get_pregame_player_count()
+	var/player_count = 0
+	for(var/client/player_client as anything in GLOB.clients)
+		if(!player_client?.mob || is_guest_key(player_client.key))
+			continue
+		player_count++
+	return player_count
+
+/datum/controller/subsystem/storyteller/proc/get_alternating_round_mode(voted_mode)
+	if(!(voted_mode in list(STORYTELLER_ROUND_MODE_DYNAMIC, STORYTELLER_ROUND_MODE_EXTENDED)))
+		return STORYTELLER_ROUND_MODE_DYNAMIC
+
+	if(length(round_mode_history) < 2)
+		return voted_mode
+
+	var/previous_mode = round_mode_history[length(round_mode_history)]
+	var/before_previous_mode = round_mode_history[length(round_mode_history) - 1]
+	if(previous_mode != before_previous_mode)
+		return voted_mode
+
+	var/player_count = get_pregame_player_count()
+	if(previous_mode == STORYTELLER_ROUND_MODE_EXTENDED && player_count >= STORYTELLER_MODE_ALTERNATION_LOW_POP_THRESHOLD)
+		record_decision("Forced Dynamic storyteller mode because the previous two rounds were Extended.")
+		return STORYTELLER_ROUND_MODE_DYNAMIC
+
+	if(previous_mode == STORYTELLER_ROUND_MODE_DYNAMIC && player_count <= STORYTELLER_MODE_ALTERNATION_HIGH_POP_THRESHOLD)
+		record_decision("Forced Extended storyteller mode because the previous two rounds were Dynamic.")
+		return STORYTELLER_ROUND_MODE_EXTENDED
+
+	return voted_mode
+
+/datum/controller/subsystem/storyteller/proc/get_mode_alternation_ui_data()
+	var/player_count = get_pregame_player_count()
+	var/forced_mode
+	var/reason
+
+	if(length(round_mode_history) >= 2)
+		var/previous_mode = round_mode_history[length(round_mode_history)]
+		var/before_previous_mode = round_mode_history[length(round_mode_history) - 1]
+		if(previous_mode == before_previous_mode)
+			if(previous_mode == STORYTELLER_ROUND_MODE_EXTENDED && player_count >= STORYTELLER_MODE_ALTERNATION_LOW_POP_THRESHOLD)
+				forced_mode = STORYTELLER_ROUND_MODE_DYNAMIC
+				reason = "The previous two rounds were Extended."
+			else if(previous_mode == STORYTELLER_ROUND_MODE_DYNAMIC && player_count <= STORYTELLER_MODE_ALTERNATION_HIGH_POP_THRESHOLD)
+				forced_mode = STORYTELLER_ROUND_MODE_EXTENDED
+				reason = "The previous two rounds were Dynamic."
+
+	return list(
+		"playerCount" = player_count,
+		"history" = round_mode_history.Copy(),
+		"forcedMode" = forced_mode,
+		"reason" = reason,
+		"lowPopThreshold" = STORYTELLER_MODE_ALTERNATION_LOW_POP_THRESHOLD,
+		"highPopThreshold" = STORYTELLER_MODE_ALTERNATION_HIGH_POP_THRESHOLD,
+	)
+
 /datum/controller/subsystem/storyteller/proc/on_mob_death(datum/source, mob/living/dead_mob, gibbed)
 	SIGNAL_HANDLER
 	if(!istype(dead_mob) || !dead_mob.mind?.assigned_role || isobserver(dead_mob) || isnewplayer(dead_mob))
@@ -561,6 +751,7 @@ SUBSYSTEM_DEF(storyteller)
 	mode_vote_started = FALSE
 	mode_vote_finalized = FALSE
 	manual_round_mode_override = FALSE
+	round_mode_history_recorded = FALSE
 	reset_round_state_tracking()
 	reset_profile_selection()
 	process_pregame_mode_vote()
@@ -2147,6 +2338,9 @@ SUBSYSTEM_DEF(storyteller)
 	if(!mode_vote_finalized)
 		record_decision("Storyteller mode vote did not finalize before setup; using [capitalize(round_mode)] mode.")
 		mode_vote_finalized = TRUE
+		if(!round_mode_history_recorded)
+			record_round_mode_history(round_mode)
+			round_mode_history_recorded = TRUE
 
 	refresh_snapshot(TRUE)
 	update_scores()
@@ -2887,6 +3081,9 @@ SUBSYSTEM_DEF(storyteller)
 
 /datum/controller/subsystem/storyteller/proc/get_storyteller_pod_transit_delay()
 	return rand(1 MINUTES, 3 MINUTES)
+
+/datum/controller/subsystem/storyteller/proc/get_storyteller_contract_pod_transit_delay()
+	return rand(20 SECONDS, 40 SECONDS)
 
 /datum/controller/subsystem/storyteller/proc/load_storyteller_pod_contents(obj/structure/closet/supplypod/pod, list/contents)
 	if(!istype(pod) || !islist(contents))
@@ -3840,6 +4037,9 @@ SUBSYSTEM_DEF(storyteller)
 		data["allActions"] += list(list(
 			"id" = action.id,
 			"name" = action.name,
+			"type" = "[action.type]",
+			"category" = action.get_ui_category(),
+			"description" = action.get_ui_description(),
 			"context" = action.context,
 			"polarity" = action.polarity,
 			"isAntag" = action.is_antag_action(),
