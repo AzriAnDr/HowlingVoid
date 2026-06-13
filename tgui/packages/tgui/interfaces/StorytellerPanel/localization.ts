@@ -724,6 +724,133 @@ export const translateProfileName = (
   return translated === profileId ? fallback : translated;
 };
 
+const ACTION_DESCRIPTION_TEXT: Record<PanelLanguage, Record<string, string>> = {
+  english: {},
+  russian: {
+    aid_department_supply_pod:
+      'Старый relief-под: отправляет инженерный набор, когда сторителлер видит проблему с ремонтом станции.',
+    aid_food_relief_pod:
+      'Старый relief-под: отправляет еду и кухонные запасы при нехватке пищи.',
+    aid_mining_relief_pod:
+      'Старый relief-под: отправляет материалы или шахтёрскую помощь при дефиците ресурсов.',
+    aid_medical_response_pod:
+      'Старый relief-под: отправляет медицинские припасы при всплеске ранений и нагрузки на медотсек.',
+    aid_security_response_pod:
+      'Старый relief-под: отправляет набор поддержки СБ при высокой угрозе безопасности.',
+    aid_science_supply_pod:
+      'Старый relief-под: отправляет научные компоненты, если исследовательский отдел проседает.',
+    aid_janitorial_cleanup_pod:
+      'Старый relief-под: отправляет уборочные средства при сильной загрязнённости станции.',
+    aid_morale_pod:
+      'Старый relief-под: отправляет ящик с едой и напитками в общественную зону для поддержки экипажа.',
+    aid_cargo_budget_grant:
+      'Прямой грант карго, если бюджет отдела стал слишком низким для нормальной логистики.',
+
+    station_emergency_maintenance_contract:
+      'Контрактный под в лобби карго. Запрашивает инженерные предметы и материалы; при отправке начисляет деньги карго.',
+    station_void_echo_front:
+      'Локальный PvE-сайт в техах: слабые необычные сущности. После зачистки карго получает кредиты и departmental reward crate.',
+    station_atmospheric_recall_drill:
+      'Контрактный под для инженерии/атмоса: запрашивает инструменты проверки атмосферы и аварийного реагирования.',
+    station_nanotrasen_efficiency_audit:
+      'Бюджетное социальное событие: командованию выдаётся грант на координацию быстрых задач отделов.',
+    station_bluespace_static_season:
+      'Мягкое негативное событие: loose-предметы могут перемещаться по станции из-за блюспейс-помех.',
+    station_stationwide_supply_recall:
+      'Экономическое давление: карго получает небольшой бюджетный штраф из-за отзыва партии расходников.',
+    station_auxiliary_power_rationing:
+      'Временный дебафф инженерии: часть энергетических процессов становится менее эффективной.',
+    station_civil_defense_broadcast:
+      'Положительное командное событие: грант за организацию гражданской проверки безопасности.',
+    station_maintenance_pressure_sweep:
+      'PvE-сайт в техах: слабые hostile lifeforms и награда после зачистки.',
+    station_rare_materials_window:
+      'Временный бонус карго/шахты: повышает эффективность обработки добычи и логистики.',
+    station_station_insurance_inspection:
+      'Контрактный под для командования: запрашивает камеры, плёнку и paperwork для инспекции отделов.',
+    station_comms_relay_misroute:
+      'Контрактный под для инженерии: запрашивает радио и мультитул для проверки телекоммов.',
+    station_cargo_crate_stowaways:
+      'PvE-сайт в карго: мелкие hostile stowaways, награда после зачистки.',
+    station_warehouse_spoilage_bloom:
+      'PvE-сайт в карго/складе: органическая порча и образцы для награды.',
+    station_medbay_containment_patient:
+      'PvE-сайт в медотсеке: нестабильный пациент/биоугроза, награда медотделу после зачистки.',
+    station_paramedic_distress_beacon:
+      'Контрактный под для медиков: запрашивает rescue supplies и paperwork для спасательной задачи.',
+    station_xenobiology_specimen_escape:
+      'PvE-сайт в науке: слабый сбежавший образец, награда отделу после зачистки.',
+    station_research_containment_drift:
+      'PvE-сайт в науке: аномальный дрейф с малым числом мобов и наградой после стабилизации/зачистки.',
+    station_hydroponics_pollination_surge:
+      'PvE-сайт сервиса: hostile weeds в гидропонике, награда ботанике/сервису после зачистки.',
+    station_kitchen_pest_nest:
+      'PvE-сайт сервиса: вредители у кухни, награда после зачистки.',
+    station_chapel_restless_shrine:
+      'PvE-сайт сервиса/церкви: restless shrine с малыми угрозами и наградой после зачистки.',
+    station_library_forbidden_manuscript:
+      'Лёгкий PvE/социальный сайт библиотеки: опасная книга, малые угрозы и paperwork-награда.',
+    station_brig_evidence_leak:
+      'PvE-сайт СБ: evidence storage hazards, награда для охраны после зачистки.',
+    station_armory_lockdown_fault:
+      'Контрактный под для СБ: запрашивает диагностические предметы для проверки арсенала.',
+    station_engineering_coolant_leak:
+      'Контрактный под для инженерии: запрашивает аварийные инструменты для coolant leak и уборки риска.',
+    station_supermatter_calibration_bonus:
+      'Временный инженерный бонус: повышает эффективность энергетики при наличии инженерного персонала.',
+    station_disposals_backflow:
+      'PvE-сайт сервиса/коридоров: мусор и вредители из disposals, награда после зачистки.',
+    station_morgue_misfile:
+      'Контрактный под для медиков: запрашивает bodybags и paperwork для ревизии морга.',
+    station_telecomms_signal_parasite:
+      'PvE-сайт инженерии: signal parasite у телекоммов, награда после зачистки.',
+    station_mining_claim_jumper:
+      'PvE-сайт карго/шахты: claim-jumper beacon и hostile presence, bounty после зачистки.',
+    station_botanical_spore_courier:
+      'Контрактный под сервиса: запрашивает семена, plant analyzer и питательные вещества.',
+    station_robotics_calibration_swarm:
+      'PvE-сайт науки/робототехники: сбойные миниботы, награда деталями после зачистки.',
+    station_department_trade_mandate:
+      'Контрактный под командования: запрашивает requisition paperwork для межотдельного обмена.',
+    station_cross_training_voucher:
+      'Контрактный под командования: paperwork для временной помощи сотрудника другому отделу.',
+    station_peer_review_request:
+      'Контрактный под науки: запрашивает сканеры и paperwork для проверки образца другого отдела.',
+    station_safety_buddy_system:
+      'Контрактный под командования: запрашивает рации, фонари и paperwork для парной задачи экипажа.',
+    station_station_charity_drive:
+      'Контрактный под сервиса: запрашивает стартовый набор для charity drive и распределения помощи.',
+    station_emergency_blood_drive:
+      'Контрактный под медиков: запрашивает кровь, шприцы и анализатор для blood drive.',
+    station_cargo_priority_manifest:
+      'Контрактный под карго: запрашивает requisition paperwork для приоритетных заказов отделов.',
+    station_command_confidence_check:
+      'Бюджетное командное событие: грант за объявление станции одного рабочего приоритета.',
+    station_departmental_debate_broadcast:
+      'Контрактный под командования: paperwork для голосования экипажа по распределению помощи.',
+    station_lost_intern_assignment:
+      'Контрактный под гражданского направления: набор для сопровождения потерявшегося стажёра.',
+    station_salvage_cache_ping:
+      'Контрактный под карго: запрашивает salvage materials и инструменты для recovery-задачи.',
+    station_centcom_snack_drop:
+      'Контрактный под сервиса: запрашивает еду для организованной раздачи через кухню.',
+    station_experimental_medigel_trial:
+      'Контрактный под медиков: запрашивает medigel trial kit и медицинскую отчётность.',
+    station_prototype_part_shipment:
+      'Контрактный под науки: запрашивает advanced stock parts для сканирования и установки.',
+    station_mining_scanner_alignment:
+      'Временный бонус карго/шахты: улучшает mining scanner alignment и обработку добычи.',
+    station_public_works_grant:
+      'Контрактный под инженерии: запрашивает материалы для ремонта света, уборки и благоустройства.',
+  },
+};
+
+export const translateActionDescription = (
+  language: PanelLanguage,
+  actionId: string,
+  fallback = '',
+) => ACTION_DESCRIPTION_TEXT[language]?.[actionId] || fallback || '';
+
 export const translateReason = (language: PanelLanguage, reason?: string) => {
   if (!reason || language !== 'russian') {
     return reason;
@@ -740,6 +867,8 @@ export const translateReason = (language: PanelLanguage, reason?: string) => {
       'Заблокировано текущим режимом сторителлера',
     'Blocked by storyteller phase': 'Заблокировано текущим уровнем эскалации',
     'Requires a matching storyteller need': 'Нужна подходящая проблема станции',
+    'Required department is not staffed':
+      'В нужном отделе нет доступных сотрудников',
     'Need does not match this action':
       'Для этого события нужна другая проблема',
     'Family cooldown active': 'Это семейство событий ещё на кулдауне',
@@ -792,6 +921,16 @@ export const translateReason = (language: PanelLanguage, reason?: string) => {
   };
   if (exact[reason]) {
     return exact[reason];
+  }
+  if (
+    reason.startsWith('Requires at least ') &&
+    reason.endsWith(' active crew')
+  ) {
+    const requiredCrew = reason
+      .replace('Requires at least ', '')
+      .replace(' active crew', '')
+      .trim();
+    return `Требуется минимум ${requiredCrew} активных членов экипажа`;
   }
   if (reason === 'Already queued in the storyteller schedule') {
     return 'Событие уже стоит в очереди сторителлера и ждёт своего времени';

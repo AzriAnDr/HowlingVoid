@@ -113,6 +113,239 @@
 	delays = list(POD_TRANSIT = 20, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/obj/structure/closet/supplypod/storyteller_contract
+	name = "contract pickup pod"
+	desc = "A Nanotrasen contract pickup pod. Deliver the requested items to its landing point, then dispatch it for Cargo payment."
+	style = /datum/pod_style/box
+	bluespace = TRUE
+	explosionSize = list(0, 0, 0, 0)
+	delays = list(POD_TRANSIT = 30 SECONDS, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
+	reversing = TRUE
+	stay_after_drop = TRUE
+	specialised = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	reverse_option_list = list(
+		"Mobs" = FALSE,
+		"Objects" = FALSE,
+		"Unanchored" = FALSE,
+		"Anchored" = FALSE,
+		"Underfloor" = FALSE,
+		"Wallmounted" = FALSE,
+		"Floors" = FALSE,
+		"Walls" = FALSE,
+		"Mecha" = FALSE,
+	)
+	var/contract_title = "Station Contract"
+	var/contract_summary = "Deliver the requested items before the pickup window closes."
+	var/contract_department_id = ACCOUNT_CAR
+	var/list/contract_requirements = list()
+	var/reward_credits = 0
+	var/expires_at = 0
+	var/contract_complete = FALSE
+	var/contract_departing = FALSE
+	var/contract_result_announced = FALSE
+
+/obj/structure/closet/supplypod/storyteller_contract/Destroy()
+	SStgui.close_uis(src)
+	contract_requirements = null
+	return ..()
+
+/obj/structure/closet/supplypod/storyteller_contract/proc/setup_contract(title, summary, department_id, list/requirements, reward, duration)
+	contract_title = title || initial(contract_title)
+	contract_summary = summary || initial(contract_summary)
+	contract_department_id = department_id || ACCOUNT_CAR
+	contract_requirements = islist(requirements) ? requirements.Copy() : list()
+	reward_credits = max(0, round(reward))
+	expires_at = world.time + max(1 MINUTES, duration)
+	name = "[contract_title] pickup pod"
+	desc = "[initial(desc)] The pickup window closes in [DisplayTimeText(max(expires_at - world.time, 0), round_seconds_to = 1)]."
+	addtimer(CALLBACK(src, PROC_REF(expire_contract)), max(expires_at - world.time, 1), TIMER_STOPPABLE)
+
+/obj/structure/closet/supplypod/storyteller_contract/pre_open()
+	. = ..()
+	SStgui.update_uis(src)
+
+/obj/structure/closet/supplypod/storyteller_contract/attack_hand(mob/living/user, list/modifiers)
+	ui_interact(user)
+	return TRUE
+
+/obj/structure/closet/supplypod/storyteller_contract/ui_state(mob/user)
+	return GLOB.physical_state
+
+/obj/structure/closet/supplypod/storyteller_contract/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "StorytellerContractPod", name)
+		ui.open()
+
+/obj/structure/closet/supplypod/storyteller_contract/ui_data(mob/user)
+	var/list/data = list()
+	data["title"] = contract_title
+	data["summary"] = contract_summary
+	data["department"] = contract_department_id
+	data["reward"] = reward_credits
+	data["timeRemaining"] = max(round((expires_at - world.time) / 10), 0)
+	data["complete"] = contract_complete
+	data["departing"] = contract_departing
+	data["ready"] = is_contract_ready()
+	data["requirements"] = get_requirement_ui_data()
+	return data
+
+/obj/structure/closet/supplypod/storyteller_contract/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("dispatch")
+			try_dispatch(usr)
+			return TRUE
+
+/obj/structure/closet/supplypod/storyteller_contract/proc/get_contract_items()
+	var/list/items = list()
+	var/turf/pod_turf = get_turf(src)
+	if(isturf(pod_turf))
+		for(var/obj/item/item in pod_turf)
+			if(item == src || QDELETED(item) || item.anchored)
+				continue
+			items += item
+	for(var/obj/item/item in contents)
+		if(QDELETED(item) || item.anchored)
+			continue
+		items += item
+	return items
+
+/obj/structure/closet/supplypod/storyteller_contract/proc/get_matching_amount(list/requirement)
+	if(!islist(requirement))
+		return 0
+	var/item_type = requirement["type"]
+	if(!ispath(item_type, /obj/item))
+		return 0
+	var/amount = 0
+	for(var/obj/item/item as anything in get_contract_items())
+		if(!istype(item, item_type))
+			continue
+		if(istype(item, /obj/item/stack))
+			var/obj/item/stack/item_stack = item
+			amount += item_stack.amount
+		else
+			amount++
+	return amount
+
+/obj/structure/closet/supplypod/storyteller_contract/proc/is_contract_ready()
+	if(contract_complete || contract_departing || world.time >= expires_at)
+		return FALSE
+	if(!length(contract_requirements))
+		return FALSE
+	for(var/list/requirement as anything in contract_requirements)
+		var/required_amount = max(1, round(text2num("[requirement["amount"] || 1]")))
+		if(get_matching_amount(requirement) < required_amount)
+			return FALSE
+	return TRUE
+
+/obj/structure/closet/supplypod/storyteller_contract/proc/get_requirement_ui_data()
+	var/list/requirement_data = list()
+	for(var/list/requirement as anything in contract_requirements)
+		var/required_amount = max(1, round(text2num("[requirement["amount"] || 1]")))
+		var/present_amount = get_matching_amount(requirement)
+		var/status = "missing"
+		if(present_amount >= required_amount)
+			status = "complete"
+		else if(present_amount > 0)
+			status = "partial"
+		requirement_data += list(list(
+			"name" = requirement["name"] || "unknown item",
+			"required" = required_amount,
+			"present" = present_amount,
+			"tier" = max(1, round(text2num("[requirement["tier"] || 1]"))),
+			"unitValue" = max(0, round(text2num("[requirement["unit_value"] || 0]"))),
+			"status" = status,
+		))
+	return requirement_data
+
+/obj/structure/closet/supplypod/storyteller_contract/proc/consume_contract_items()
+	if(!is_contract_ready())
+		return FALSE
+	for(var/list/requirement as anything in contract_requirements)
+		var/item_type = requirement["type"]
+		var/remaining = max(1, round(text2num("[requirement["amount"] || 1]")))
+		for(var/obj/item/item as anything in get_contract_items())
+			if(remaining <= 0)
+				break
+			if(QDELETED(item) || !istype(item, item_type))
+				continue
+			if(istype(item, /obj/item/stack))
+				var/obj/item/stack/item_stack = item
+				var/used_amount = min(item_stack.amount, remaining)
+				if(item_stack.use(used_amount))
+					remaining -= used_amount
+				continue
+			qdel(item)
+			remaining--
+		if(remaining > 0)
+			return FALSE
+	return TRUE
+
+/obj/structure/closet/supplypod/storyteller_contract/proc/try_dispatch(mob/user)
+	if(!is_contract_ready())
+		if(user)
+			balloon_alert(user, "contract incomplete")
+		SStgui.update_uis(src)
+		return FALSE
+	if(!consume_contract_items())
+		if(user)
+			balloon_alert(user, "pickup failed")
+		SStgui.update_uis(src)
+		return FALSE
+	var/datum/bank_account/department/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(!cargo_account || !cargo_account.adjust_money(reward_credits, "Storyteller contract: [contract_title]"))
+		if(user)
+			balloon_alert(user, "payment failed")
+		return FALSE
+	SSeconomy.record_grant("storyteller_contract_pod", reward_credits, ACCOUNT_CAR)
+	contract_complete = TRUE
+	update_cargo_contract_message()
+	visible_message(span_notice("[src] confirms the pickup manifest and begins departure sequencing."))
+	depart_contract()
+	return TRUE
+
+/obj/structure/closet/supplypod/storyteller_contract/proc/expire_contract()
+	if(contract_complete || contract_departing || QDELETED(src))
+		return
+	visible_message(span_warning("[src]'s pickup window expires. It begins departure sequencing without issuing payment."))
+	depart_contract()
+
+/obj/structure/closet/supplypod/storyteller_contract/proc/depart_contract()
+	if(contract_departing || QDELETED(src))
+		return
+	contract_departing = TRUE
+	announce_contract_result()
+	SStgui.close_uis(src)
+	start_exit_sequence(src)
+
+/obj/structure/closet/supplypod/storyteller_contract/proc/update_cargo_contract_message()
+	SSshuttle.centcom_message = "Contract pickup complete: [contract_title]. Cargo has received [reward_credits] credits."
+	for(var/obj/machinery/computer/cargo/cargo_console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/cargo))
+		SStgui.update_uis(cargo_console)
+
+/obj/structure/closet/supplypod/storyteller_contract/proc/announce_contract_result()
+	if(contract_result_announced)
+		return
+	contract_result_announced = TRUE
+	if(contract_complete)
+		SSstoryteller.announce_storyteller_notice(
+			"The [contract_title] pickup pod has departed. Contract completed; Cargo has been paid [reward_credits] credits.",
+			"Contract Pickup Complete",
+			'sound/announcer/notice/notice2.ogg',
+			"green"
+		)
+		return
+	SSstoryteller.announce_storyteller_notice(
+		"The [contract_title] pickup pod has departed after its pickup window expired. Contract failed; no Cargo payment has been issued.",
+		"Contract Pickup Expired",
+		'sound/announcer/notice/notice1.ogg',
+		"orange"
+	)
+
 /obj/structure/closet/supplypod/centcompod/sisyphus
 	delays = list(POD_TRANSIT = 0, POD_FALLING = 0, POD_OPENING = 0, POD_LEAVING = 0.2)
 	reverse_delays = list(POD_TRANSIT = 0, POD_FALLING = 1.5 SECONDS, POD_OPENING = 0.6 SECONDS, POD_LEAVING = 0)

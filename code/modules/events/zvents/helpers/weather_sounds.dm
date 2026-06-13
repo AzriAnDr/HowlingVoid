@@ -44,9 +44,7 @@
 	addtimer(CALLBACK(src, PROC_REF(force_weather_sounds), M), 3 SECONDS)
 
 /datum/controller/subsystem/weather/run_weather(datum/weather/weather_datum_type, z_levels, list/weather_data)
-	. = ..()
-
-	var/datum/weather/W = locate() in processing
+	var/datum/weather/W = ..()
 	if(!W)
 		return
 
@@ -54,6 +52,7 @@
 	for(var/mob/client in GLOB.alive_player_list)
 		force_weather_sounds(client)
 	RegisterSignal(W, COMSIG_QDELETING, PROC_REF(on_weather_end))
+	return W
 
 /datum/controller/subsystem/weather/proc/on_weather_end(datum/weather/W)
 	SIGNAL_HANDLER

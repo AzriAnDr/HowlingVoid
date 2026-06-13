@@ -124,6 +124,61 @@
 		if ("Sort")
 			sort_mail(user)
 
+/obj/machinery/mailsorter/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	dispense_recipient_mail(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/// Scans the user and ejects all mail addressed to them.
+/obj/machinery/mailsorter/proc/dispense_recipient_mail(mob/user)
+	if (currentstate != STATE_IDLE)
+		balloon_alert(user, "busy!")
+		return
+	if (!ishuman(user))
+		balloon_alert(user, "scan failed!")
+		return
+	var/mob/living/carbon/human/human_user = user
+	var/obj/item/card/id/user_id = human_user.get_idcard(FALSE)
+	if (!user_id)
+		balloon_alert(user, "access not found!")
+		return
+	if (!length(mail_list))
+		to_chat(user, span_warning("There's no mail inside!"))
+		return
+
+	var/list/recipient_mail = list()
+	for(var/obj/item/mail/some_mail as anything in mail_list)
+		if(some_mail.recipient_ref && some_mail.matches_id(user_id))
+			recipient_mail += some_mail
+
+	user.visible_message(
+		span_notice("[user] scans [user.p_their()] ID at [src]."),
+		span_notice("You scan your ID at [src]."),
+	)
+
+	if (!length(recipient_mail))
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 20, TRUE)
+		say("No mail found for [user].")
+		return
+
+	var/dispensed = 0
+	for(var/obj/item/mail/some_mail as anything in recipient_mail)
+		if(!human_user.put_in_hands(some_mail, ignore_animation = FALSE))
+			break
+		mail_list -= some_mail
+		dispensed++
+
+	if(!dispensed)
+		balloon_alert(user, "hands full!")
+		return
+
+	playsound(src, 'sound/machines/ping.ogg', 20, TRUE)
+	say("[dispensed] envelope\s dispensed for [user].")
+	if(dispensed < length(recipient_mail))
+		balloon_alert(user, "hands full!")
+
 /// Prompts the player to select a department to sort the mail for. Returns if `null`.
 /obj/machinery/mailsorter/proc/sort_mail(mob/user)
 	var/sorting_dept = tgui_input_list(user, "Choose the department to sort mail for","Mail Sorting", sorting_departments)

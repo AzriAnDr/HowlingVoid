@@ -1442,7 +1442,27 @@ function set_tabs_style(style) {
   }
 }
 
-function restoreFocus() {
+function is_text_entry_target(target) {
+  if (!target || !target.tagName) {
+    return false;
+  }
+  var tagName = target.tagName.toLowerCase();
+  return (
+    tagName == "input" ||
+    tagName == "textarea" ||
+    tagName == "select" ||
+    target.isContentEditable
+  );
+}
+
+function restoreFocus(event) {
+  if (
+    event &&
+    (is_text_entry_target(event.target) ||
+      is_text_entry_target(document.activeElement))
+  ) {
+    return;
+  }
   run_after_focus(function () {
     Byond.winset("map", {
       focus: true,

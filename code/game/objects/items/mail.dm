@@ -1,3 +1,6 @@
+#define MAIL_ACCESS_FAILURE_LIMIT 3
+#define MAIL_ACCESS_BURN_DAMAGE 8
+
 /// Mail is tamper-evident and unresealable, postmarked by CentCom for an individual recepient.
 /obj/item/mail
 	name = "mail"
@@ -16,6 +19,8 @@
 	var/sort_tag = 0
 	/// Weak reference to who this mail is for and who can open it.
 	var/datum/weakref/recipient_ref
+	/// Failed ID access checks before the mail self-destructs.
+	var/failed_access_attempts = 0
 	/// How many goodies this mail contains.
 	var/goodie_count = 1
 	/// Goodies which can be given to anyone. The base weight is 50. For there to be a 50/50 chance of getting a department item, they need 50 weight as well.
@@ -126,18 +131,62 @@
 
 /// proc for unwrapping a mail. Goes just for an unwrapping procces, returns FALSE if it fails.
 /obj/item/mail/proc/unwrap(mob/user)
-	if(recipient_ref)
-		var/datum/mind/recipient = recipient_ref.resolve()
-		// If the recipient's mind has gone, then anyone can open their mail
-		// whether a mind can actually be qdel'd is an exercise for the reader
-		if(recipient && recipient != user?.mind)
-			to_chat(user, span_notice("You can't open somebody else's mail! That's <em>illegal</em>!"))
-			return FALSE
+	if(recipient_ref && !has_mail_access(user))
+		return fail_mail_access(user)
 
 	balloon_alert(user, "unwrapping...")
 	if(!do_after(user, 1.5 SECONDS, target = user))
 		return FALSE
 	return TRUE
+
+/// Returns TRUE if this ID is allowed to claim or open this piece of mail.
+/obj/item/mail/proc/matches_id(obj/item/card/id/id_card)
+	if(!recipient_ref)
+		return TRUE
+	var/datum/mind/recipient = recipient_ref.resolve()
+	// If the recipient's mind has gone, anyone can open their mail.
+	if(!recipient)
+		return TRUE
+	if(!id_card)
+		return FALSE
+	if(id_card.registered_name == recipient.name)
+		return TRUE
+	if(id_card.registered_account?.account_holder == recipient.name)
+		return TRUE
+	return FALSE
+
+/// Checks the ID card in the user's worn ID source, such as a PDA or wallet card slot.
+/obj/item/mail/proc/has_mail_access(mob/user)
+	if(!isliving(user))
+		return FALSE
+	var/mob/living/living_user = user
+	return matches_id(living_user.get_idcard(FALSE))
+
+/// Handles failed access attempts and triggers the tamper response on the final failure.
+/obj/item/mail/proc/fail_mail_access(mob/user)
+	failed_access_attempts++
+	if(failed_access_attempts < MAIL_ACCESS_FAILURE_LIMIT)
+		balloon_alert(user, "access not found!")
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', vol = 20, vary = TRUE)
+		return FALSE
+
+	trigger_access_failsafe(user)
+	return FALSE
+
+/// Destroys the mail in a small flash without a real explosion.
+/obj/item/mail/proc/trigger_access_failsafe(mob/user)
+	var/turf/mail_turf = get_turf(src)
+	visible_message(span_danger("[src] flashes white-hot and burns away!"))
+	playsound(mail_turf || src, 'sound/effects/sparks/sparks4.ogg', vol = 50, vary = TRUE)
+	if(mail_turf)
+		for(var/mob/living/victim in mail_turf)
+			victim.flash_act(intensity = 1, visual = TRUE, length = 3 SECONDS)
+	if(isliving(user))
+		var/mob/living/living_user = user
+		var/hand_zone = living_user.get_hand_zone_of_item(src)
+		if(hand_zone)
+			living_user.apply_damage(MAIL_ACCESS_BURN_DAMAGE, BURN, hand_zone)
+	qdel(src)
 
 // proc that goes after unwrapping a mail.
 /obj/item/mail/proc/after_unwrap(mob/user)
@@ -582,3 +631,6 @@
 /obj/item/storage/mail_counterfeit_device/bluespace/Initialize(mapload)
 	. = ..()
 	desc += " This model is the most advanced and capable of performing crazy bluespace compressions, making mail's storage space comparable to bluespace backpack."
+
+#undef MAIL_ACCESS_FAILURE_LIMIT
+#undef MAIL_ACCESS_BURN_DAMAGE

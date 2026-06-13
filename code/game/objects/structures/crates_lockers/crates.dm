@@ -147,8 +147,8 @@
 
 	UnregisterSignal(src, COMSIG_CLOSET_CONTENTS_INITIALIZED)
 
-///Removes the supply manifest from the closet
-/obj/structure/closet/crate/proc/tear_manifest(mob/user)
+/// Removes the supply manifest from the closet without putting it in a user's hands.
+/obj/structure/closet/crate/proc/drop_manifest(mob/user)
 	var/obj/item/paper/fluff/jobs/cargo/manifest/our_manifest = manifest?.resolve()
 	if(QDELETED(our_manifest))
 		manifest = null
@@ -158,10 +158,15 @@
 	playsound(src, 'sound/items/poster/poster_ripped.ogg', 75, TRUE)
 
 	our_manifest.forceMove(drop_location(src))
-	if(ishuman(user))
-		user.put_in_hands(our_manifest)
 	manifest = null
 	update_appearance()
+	return our_manifest
+
+///Removes the supply manifest from the closet
+/obj/structure/closet/crate/proc/tear_manifest(mob/user)
+	var/obj/item/paper/fluff/jobs/cargo/manifest/our_manifest = drop_manifest(user)
+	if(our_manifest && ishuman(user))
+		user.put_in_hands(our_manifest)
 
 /obj/structure/closet/crate/preopen
 	opened = TRUE

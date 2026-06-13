@@ -43,16 +43,29 @@
 		COMSIG_CLOSET_POST_OPEN,
 	))
 
+/datum/element/deliver_first/proc/get_goal_area_name()
+	var/area/goal_area = GLOB.areas_by_type[goal_area_type]
+	if(goal_area)
+		return goal_area.name
+	if(ispath(goal_area_type, /area))
+		for(var/area_type in GLOB.areas_by_type)
+			if(!ispath(area_type, goal_area_type))
+				continue
+			var/area/matching_area = GLOB.areas_by_type[area_type]
+			if(matching_area)
+				return matching_area.name
+	return "the assigned destination"
+
 ///signal sent from examining target
 /datum/element/deliver_first/proc/on_examine(obj/structure/closet/target, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	examine_list += span_warning("An electronic delivery lock prevents this from opening until it reaches its destination, [GLOB.areas_by_type[goal_area_type]].")
+	examine_list += span_warning("An electronic delivery lock prevents this from opening until it reaches its destination, [get_goal_area_name()].")
 	examine_list += span_warning("This crate cannot be sold until it is opened.")
 
 ///registers the signal that blocks target from opening when outside of the valid area, returns if it is now unlocked
 /datum/element/deliver_first/proc/area_check(obj/structure/closet/target)
 	var/area/target_area = get_area(target)
-	if(target_area.type == goal_area_type)
+	if(istype(target_area, goal_area_type))
 		UnregisterSignal(target, COMSIG_CLOSET_PRE_OPEN)
 		return TRUE
 	else
@@ -75,10 +88,10 @@
 		return
 	if(istype(target, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/opening_crate = target
-		if(opening_crate.manifest) //we don't want to send feedback if they're just tearing off the manifest
-			return BLOCK_OPEN
+		if(opening_crate.manifest)
+			opening_crate.drop_manifest(user)
 	if(user)
-		target.balloon_alert(user, "access denied until delivery!")
+		target.balloon_alert(user, "deliver to [get_goal_area_name()]!")
 	if(COOLDOWN_FINISHED(src, deny_cooldown))
 		playsound(target, 'sound/machines/buzz/buzz-two.ogg', 30, TRUE)
 		COOLDOWN_START(src, deny_cooldown, DENY_SOUND_COOLDOWN)

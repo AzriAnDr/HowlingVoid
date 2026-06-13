@@ -14,6 +14,10 @@
 #define CHAT_MESSAGE_APPROX_LHEIGHT 11
 /// Max width of chat message in pixels
 #define CHAT_MESSAGE_WIDTH 112
+/// Extra room for outlines and BYOND maptext measuring differences
+#define CHAT_MESSAGE_HEIGHT_PADDING 4
+/// Multiplier for measured maptext height, used to keep descenders and outlines visible
+#define CHAT_MESSAGE_HEIGHT_MULTIPLIER 1.25
 /// The dimensions of the chat message icons
 #define CHAT_MESSAGE_ICON_SIZE 9
 
@@ -186,24 +190,26 @@
 
 	// Approximate text height
 	var/complete_text = "<span style='color: [tgt_color]'><span class='center [extra_classes.Join(" ")]'>[owner.apply_message_emphasis(text)]</span></span>"
+	var/rendered_text = MAPTEXT(complete_text)
 
 	var/mheight
-	WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH), mheight)
+	WXH_TO_HEIGHT(owned_by.MeasureText(rendered_text, null, CHAT_MESSAGE_WIDTH), mheight)
+	var/rendered_height = CEILING(mheight * CHAT_MESSAGE_HEIGHT_MULTIPLIER + CHAT_MESSAGE_HEIGHT_PADDING, 1)
 
 
 	if(!VERB_SHOULD_YIELD)
-		return finish_image_generation(mheight, target, owner, complete_text, lifespan)
+		return finish_image_generation(rendered_height, target, owner, rendered_text, lifespan)
 
-	finish_callback = CALLBACK(src, PROC_REF(finish_image_generation), mheight, target, owner, complete_text, lifespan)
+	finish_callback = CALLBACK(src, PROC_REF(finish_image_generation), rendered_height, target, owner, rendered_text, lifespan)
 	SSrunechat.message_queue += finish_callback
 	return
 
 ///finishes the image generation after the MeasureText() call in generate_image().
 ///necessary because after that call the proc can resume at the end of the tick and cause overtime.
-/datum/chatmessage/proc/finish_image_generation(mheight, atom/target, mob/owner, complete_text, lifespan)
+/datum/chatmessage/proc/finish_image_generation(rendered_height, atom/target, mob/owner, rendered_text, lifespan)
 	finish_callback = null
 	var/rough_time = REALTIMEOFDAY
-	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
+	approx_lines = max(1, rendered_height / CHAT_MESSAGE_APPROX_LHEIGHT)
 	var/starting_height = target.maptext_height
 	// Translate any existing messages upwards, apply exponential decay factors to timers
 	message_loc = isturf(target) ? target : get_atom_on_turf(target)
@@ -225,8 +231,8 @@
 					if(max_height > 0)
 						animate(m.message, pixel_z = m.message.pixel_z + max_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
 						continuing |= ANIMATION_CONTINUE
-				else if(mheight + starting_height >= m.message.pixel_z)
-					animate(m.message, pixel_z = m.message.pixel_z + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
+				else if(rendered_height + starting_height >= m.message.pixel_z)
+					animate(m.message, pixel_z = m.message.pixel_z + rendered_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
 					continuing |= ANIMATION_CONTINUE
 				continue
 
@@ -256,8 +262,8 @@
 				if(max_height > 0)
 					animate(m.message, pixel_z = m.message.pixel_z + max_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
 					continuing |= ANIMATION_CONTINUE
-			else if(mheight + starting_height >= m.message.pixel_z)
-				animate(m.message, pixel_z = m.message.pixel_z + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
+			else if(rendered_height + starting_height >= m.message.pixel_z)
+				animate(m.message, pixel_z = m.message.pixel_z + rendered_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
 				continuing |= ANIMATION_CONTINUE
 
 	// Reset z index if relevant
@@ -272,9 +278,9 @@
 	message.pixel_z = starting_height
 	message.pixel_w = -message_loc.base_pixel_w
 	message.maptext_width = CHAT_MESSAGE_WIDTH
-	message.maptext_height = mheight * 1.25 // We add extra because some characters are superscript, like actions
+	message.maptext_height = rendered_height
 	message.maptext_x = (CHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5
-	message.maptext = MAPTEXT(complete_text)
+	message.maptext = rendered_text
 
 	animate_start = rough_time
 	animate_lifespan = lifespan
@@ -351,6 +357,8 @@
 #undef CHAT_MESSAGE_EOL_FADE
 #undef CHAT_MESSAGE_EXP_DECAY
 #undef CHAT_MESSAGE_HEIGHT_DECAY
+#undef CHAT_MESSAGE_HEIGHT_MULTIPLIER
+#undef CHAT_MESSAGE_HEIGHT_PADDING
 #undef CHAT_MESSAGE_ICON_SIZE
 #undef CHAT_MESSAGE_LIFESPAN
 #undef CHAT_MESSAGE_SPAWN_TIME

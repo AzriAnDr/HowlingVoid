@@ -17,6 +17,8 @@ SUBSYSTEM_DEF(vote)
 	var/list/voted = list()
 	/// A list of all ckeys currently voting for the current vote.
 	var/list/voting = list()
+	/// A list of ckeys that explicitly opened the storyteller vote information view.
+	var/list/storyteller_vote_info_viewers = list()
 	/// World.time we started our last vote
 	var/last_vote_time = -INFINITY
 
@@ -229,9 +231,10 @@ SUBSYSTEM_DEF(vote)
 	var/to_display = current_vote.initiate_vote(vote_initiator_name, duration)
 
 	log_vote(to_display)
-	to_chat(world, custom_boxed_message("purple_box center", span_infoplain(vote_font("[span_bold(to_display)]<br>\
-		Type <b>vote</b> or click <a href='byond://winset?command=vote'>here</a> to place your votes.\n\
-		You have [DisplayTimeText(duration)] to vote."))))
+	if(current_vote.announce_start)
+		to_chat(world, custom_boxed_message("purple_box center", span_infoplain(vote_font("[span_bold(to_display)]<br>\
+			Type <b>vote</b> or click <a href='byond://winset?command=vote'>here</a> to place your votes.\n\
+			You have [DisplayTimeText(duration)] to vote."))))
 
 	// And now that it's going, give everyone a voter action
 	for(var/client/new_voter as anything in GLOB.clients)
@@ -284,6 +287,14 @@ SUBSYSTEM_DEF(vote)
 	log_admin("[key_name(toggle_initiator)] [text_verb] Dead Vote.")
 	message_admins("[key_name_admin(toggle_initiator)] [text_verb] Dead Vote.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Dead Vote", text_verb))
+
+/datum/controller/subsystem/vote/proc/open_storyteller_vote_panel(mob/user)
+	if(!user?.client)
+		return
+
+	storyteller_vote_info_viewers[user.client.ckey] = TRUE
+	SSstoryteller?.process_pregame_mode_vote()
+	ui_interact(user)
 
 /datum/controller/subsystem/vote/ui_state()
 	return GLOB.always_state
@@ -350,6 +361,10 @@ SUBSYSTEM_DEF(vote)
 
 	data["possibleVotes"] = all_vote_data
 	data["LastVoteTime"] = last_vote_time - world.time
+	var/list/storyteller_vote_data = SSstoryteller?.get_mode_vote_ui_data(user)
+	if(islist(storyteller_vote_data) && storyteller_vote_info_viewers[user.client?.ckey])
+		storyteller_vote_data["infoRequested"] = TRUE
+	data["storytellerVote"] = storyteller_vote_data
 
 	return data
 
@@ -440,6 +455,7 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/ui_close(mob/user)
 	voting -= user.client?.ckey
+	storyteller_vote_info_viewers -= user.client?.ckey
 
 /// Mob level verb that allows players to vote on the current vote.
 /mob/verb/vote()
@@ -451,6 +467,17 @@ SUBSYSTEM_DEF(vote)
 		return
 
 	SSvote.ui_interact(usr)
+
+/// Mob level verb that opens the storyteller mode vote and reference panel.
+/mob/verb/storyteller_vote()
+	set category = "OOC"
+	set name = "Storyteller Vote"
+
+	if(!SSvote.initialized)
+		to_chat(usr, span_notice("<i>Voting is not set up yet!</i>"))
+		return
+
+	SSvote.open_storyteller_vote_panel(usr)
 
 /// Datum action given to mobs that allows players to vote on the current vote.
 /datum/action/vote
