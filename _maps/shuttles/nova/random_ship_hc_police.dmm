@@ -476,12 +476,6 @@
 /obj/item/pen,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/folder/blue/hc_cop,
-/obj/item/stamp/void{
-	pixel_x = -6
-	},
-/obj/item/stamp/granted{
-	pixel_x = 6
-	},
 /obj/effect/turf_decal/tile/neutral/anticorner{
 	dir = 1
 	},
@@ -489,31 +483,37 @@
 /obj/structure/noticeboard{
 	pixel_x = -32
 	},
+/obj/item/card/faction_access/guest{
+	extra_access = list("syndicate");
+	name = "guest access card"
+	},
+/obj/item/card/faction_access/guest{
+	extra_access = list("syndicate");
+	name = "guest access card"
+	},
+/obj/item/card/faction_access/guest{
+	extra_access = list("syndicate");
+	name = "guest access card"
+	},
+/obj/item/card/faction_access/guest{
+	extra_access = list("syndicate");
+	name = "guest access card"
+	},
+/obj/item/card/faction_access/guest{
+	extra_access = list("syndicate");
+	name = "guest access card"
+	},
+/obj/item/card/faction_access/guest{
+	extra_access = list("syndicate");
+	name = "guest access card"
+	},
+/obj/item/stamp/nri{
+	pixel_x = -6
+	},
+/obj/item/stamp/granted{
+	pixel_x = 6
+	},
 /obj/item/stamp/denied,
-/obj/item/card/faction_access/guest{
-	extra_access = list("syndicate");
-	name = "guest access card"
-	},
-/obj/item/card/faction_access/guest{
-	extra_access = list("syndicate");
-	name = "guest access card"
-	},
-/obj/item/card/faction_access/guest{
-	extra_access = list("syndicate");
-	name = "guest access card"
-	},
-/obj/item/card/faction_access/guest{
-	extra_access = list("syndicate");
-	name = "guest access card"
-	},
-/obj/item/card/faction_access/guest{
-	extra_access = list("syndicate");
-	name = "guest access card"
-	},
-/obj/item/card/faction_access/guest{
-	extra_access = list("syndicate");
-	name = "guest access card"
-	},
 /turf/open/floor/iron/dark/textured_corner,
 /area/shuttle/hc_cops/command)
 "eC" = (
@@ -568,6 +568,7 @@
 /obj/effect/turf_decal/tile/dark_blue/half{
 	dir = 1
 	},
+/obj/structure/sign/flag/nri/directional/north,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 4
 	},
@@ -1003,7 +1004,6 @@
 /obj/item/radio/headset/headset_sec/alt,
 /obj/item/clothing/glasses/hud/security/sunglasses/peacekeeper,
 /obj/item/storage/belt/security/webbing/peacekeeper,
-/obj/structure/sign/poster/official/space_cops/directional/east,
 /obj/structure/closet/secure_closet,
 /obj/machinery/light/cold/directional/east,
 /obj/effect/turf_decal/bot,
@@ -1022,6 +1022,7 @@
 /obj/item/clothing/head/security_garrison,
 /obj/item/clothing/neck/tie/blue,
 /obj/item/clothing/gloves/color/black/security/white,
+/obj/structure/sign/poster/contraband/nri/radar/directional/east,
 /turf/open/floor/pod/dark,
 /area/shuttle/hc_cops/ready_room)
 "jp" = (
@@ -1076,8 +1077,8 @@
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 1
 	},
-/obj/structure/sign/flag/hc/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/sign/flag/nri/directional/north,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 4
 	},
@@ -1098,6 +1099,7 @@
 	dir = 1
 	},
 /obj/machinery/light/cold/directional/east,
+/obj/structure/sign/poster/contraband/nri/directional/south,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
@@ -1786,7 +1788,7 @@
 	dir = 1
 	},
 /obj/item/flatpacked_machine/sustenance_machine,
-/obj/structure/sign/poster/timeclock_psa/directional/south,
+/obj/structure/sign/poster/contraband/nri/texto/directional/south,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 4
 	},
@@ -1927,6 +1929,8 @@
 /obj/machinery/button/door/directional/east{
 	id = "hccargoblastdoor"
 	},
+/obj/item/gun/ballistic/rifle/pulse_sniper,
+/obj/item/gun/ballistic/automatic/pulse_rifle,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
@@ -2002,20 +2006,9 @@
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 4
 	},
-/obj/item/ammo_box/magazine/miecz,
-/obj/item/ammo_box/magazine/miecz,
-/obj/item/ammo_box/magazine/miecz,
-/obj/item/ammo_box/magazine/miecz,
-/obj/item/ammo_box/magazine/miecz,
-/obj/item/ammo_box/magazine/miecz,
-/obj/item/ammo_box/magazine/miecz,
-/obj/item/ammo_box/magazine/miecz,
 /obj/item/ammo_box/magazine/lanca,
 /obj/item/ammo_box/magazine/lanca,
 /obj/item/ammo_box/magazine/lanca,
-/obj/item/ammo_box/magazine/pulse,
-/obj/item/ammo_box/magazine/pulse,
-/obj/item/ammo_box/magazine/pulse,
 /obj/structure/closet/crate/secure/weapon{
 	anchored = 1;
 	name = "munition crate"
@@ -2026,6 +2019,18 @@
 /obj/item/ammo_box/magazine/recharge/plasma_battery,
 /obj/item/ammo_box/magazine/recharge/plasma_battery,
 /obj/item/ammo_box/magazine/recharge/plasma_battery,
+/obj/item/ammo_box/magazine/akm/civvie,
+/obj/item/ammo_box/magazine/akm/civvie,
+/obj/item/ammo_box/magazine/akm/civvie,
+/obj/item/ammo_box/magazine/akm/civvie,
+/obj/item/ammo_box/magazine/akm/civvie,
+/obj/item/ammo_box/magazine/akm/civvie,
+/obj/item/ammo_box/magazine/akm/civvie,
+/obj/item/ammo_box/magazine/akm/civvie,
+/obj/item/ammo_box/magazine/akm/civvie,
+/obj/item/ammo_box/magazine/akm/civvie,
+/obj/item/ammo_box/magazine/akm/civvie,
+/obj/item/ammo_box/magazine/akm/civvie,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -2196,13 +2201,16 @@
 /turf/open/floor/iron,
 /area/shuttle/hc_cops/recreation)
 "tS" = (
-/obj/machinery/suit_storage_unit/hc_police,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/vg_decals/numbers/four,
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 1
 	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/machinery/suit_storage_unit{
+	mod_type = /obj/item/mod/control/pre_equipped/policing;
+	storage_type = /obj/item/tank/internals/oxygen/yellow
+	},
 /turf/open/floor/iron/dark/textured_half{
 	dir = 4
 	},
@@ -3354,11 +3362,11 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/stamp/void{
-	pixel_x = -6
-	},
 /obj/item/stamp/granted{
 	pixel_x = 6
+	},
+/obj/item/stamp/nri{
+	pixel_x = -6
 	},
 /obj/item/stamp/denied,
 /turf/open/floor/iron/dark/textured_half{
@@ -3386,9 +3394,9 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/hc_cops/armory)
 "EM" = (
-/obj/structure/sign/flag/terragov/directional/south,
 /obj/machinery/light/floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/flag/nri/directional/south,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
@@ -3654,10 +3662,13 @@
 /turf/open/floor/iron/white,
 /area/shuttle/hc_cops/infirmary)
 "Hx" = (
-/obj/machinery/suit_storage_unit/hc_police,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/vg_decals/numbers/five,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/machinery/suit_storage_unit{
+	mod_type = /obj/item/mod/control/pre_equipped/policing;
+	storage_type = /obj/item/tank/internals/oxygen/yellow
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/hc_cops/armory)
 "HF" = (
@@ -3705,13 +3716,16 @@
 /turf/open/floor/plating/reinforced,
 /area/shuttle/hc_cops/engineering)
 "Ie" = (
-/obj/machinery/suit_storage_unit/hc_police,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/vg_decals/numbers/six,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/east,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/suit_storage_unit{
+	mod_type = /obj/item/mod/control/pre_equipped/policing;
+	storage_type = /obj/item/tank/internals/oxygen/yellow
+	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/hc_cops/armory)
 "Ij" = (
@@ -3945,7 +3959,6 @@
 /obj/item/radio/headset/headset_sec/alt,
 /obj/item/clothing/glasses/hud/security/sunglasses/peacekeeper,
 /obj/item/storage/belt/security/webbing/peacekeeper,
-/obj/structure/sign/poster/contraband/kss13/directional/east,
 /obj/structure/closet/secure_closet,
 /obj/machinery/light/cold/directional/east,
 /obj/effect/turf_decal/bot,
@@ -3964,6 +3977,7 @@
 /obj/item/clothing/head/security_garrison,
 /obj/item/clothing/neck/tie/blue,
 /obj/item/clothing/gloves/color/black/security/white,
+/obj/structure/sign/poster/contraband/nri/texto/directional/east,
 /turf/open/floor/pod/dark,
 /area/shuttle/hc_cops/ready_room)
 "KI" = (
@@ -4198,11 +4212,14 @@
 	},
 /area/shuttle/hc_cops/conference)
 "Ml" = (
-/obj/machinery/suit_storage_unit/hc_police,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/vg_decals/numbers/two,
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 8
+	},
+/obj/machinery/suit_storage_unit{
+	mod_type = /obj/item/mod/control/pre_equipped/policing;
+	storage_type = /obj/item/tank/internals/oxygen/yellow
 	},
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
@@ -4347,14 +4364,23 @@
 "NC" = (
 /obj/effect/turf_decal/tile/dark/anticorner,
 /obj/structure/rack/gunrack,
-/obj/item/gun/ballistic/rifle/pulse_sniper,
-/obj/item/gun/ballistic/automatic/pulse_rifle,
-/obj/item/gun/ballistic/automatic/pulse_rifle,
-/obj/item/gun/ballistic/automatic/miecz,
-/obj/item/gun/ballistic/automatic/miecz,
-/obj/item/gun/ballistic/automatic/lanca,
-/obj/item/gun/ballistic/shotgun/automatic/combat/compact,
+/obj/item/gun/ballistic/shotgun/automatic/combat/compact{
+	pixel_y = -11
+	},
 /obj/machinery/light_switch/directional/south,
+/obj/item/gun/ballistic/automatic/akm/civvie{
+	pixel_y = 6
+	},
+/obj/item/gun/ballistic/automatic/akm/civvie{
+	pixel_y = 6
+	},
+/obj/item/gun/ballistic/automatic/akm/civvie{
+	pixel_y = 6
+	},
+/obj/item/gun/ballistic/automatic/akm/civvie{
+	pixel_y = 6
+	},
+/obj/item/gun/ballistic/automatic/lanca,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
@@ -4644,7 +4670,6 @@
 /obj/structure/table/reinforced/rglass,
 /obj/item/storage/pill_bottle/sansufentanyl,
 /obj/structure/window/reinforced/survival_pod/spawner/directional/west,
-/obj/structure/sign/flag/hc/directional/north,
 /obj/effect/turf_decal/tile/dark_red/anticorner/contrasted{
 	dir = 1
 	},
@@ -4664,13 +4689,16 @@
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/hc_cops/armory)
 "Qf" = (
-/obj/machinery/suit_storage_unit/hc_police,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/vg_decals/numbers/three,
 /obj/effect/turf_decal/tile/dark/half{
 	dir = 8
 	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/machinery/suit_storage_unit{
+	mod_type = /obj/item/mod/control/pre_equipped/policing;
+	storage_type = /obj/item/tank/internals/oxygen/yellow
+	},
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -4715,8 +4743,8 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/hc_cops/ready_room)
 "Qz" = (
-/obj/structure/sign/flag/nanotrasen/directional/south,
 /obj/machinery/light/floor,
+/obj/structure/sign/flag/ssc/directional/south,
 /turf/open/floor/iron/dark/textured_corner{
 	dir = 4
 	},
@@ -5162,11 +5190,14 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/hc_cops/armory)
 "Vl" = (
-/obj/machinery/suit_storage_unit/hc_police,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/vg_decals/numbers/one,
 /obj/effect/turf_decal/tile/dark/anticorner{
 	dir = 1
+	},
+/obj/machinery/suit_storage_unit{
+	mod_type = /obj/item/mod/control/pre_equipped/policing;
+	storage_type = /obj/item/tank/internals/oxygen/yellow
 	},
 /turf/open/floor/iron/dark/textured_corner,
 /area/shuttle/hc_cops/armory)
@@ -5261,7 +5292,6 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/hc_cops/hydroponics)
 "Wq" = (
-/obj/structure/sign/flag/hc/directional/south,
 /obj/effect/turf_decal/tile/neutral/half,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/fax{
@@ -5269,6 +5299,7 @@
 	name = "HC ship fax machine"
 	},
 /obj/item/paper/monitorkey,
+/obj/structure/sign/flag/nri/directional/south,
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/hc_cops/command)
 "Wr" = (
@@ -5376,6 +5407,7 @@
 "WY" = (
 /obj/machinery/light/cold/directional/south,
 /obj/effect/turf_decal/tile/dark/half,
+/obj/structure/sign/poster/contraband/nri/pistol/directional/south,
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/hc_cops/armory)
 "Xl" = (
@@ -5506,17 +5538,17 @@
 	pixel_y = 4
 	},
 /obj/item/folder/blue/hc_cop,
-/obj/item/stamp/void{
-	pixel_x = -6
-	},
-/obj/item/stamp/granted{
-	pixel_x = 6
-	},
 /obj/effect/turf_decal/tile/neutral/half{
 	dir = 1
 	},
 /obj/item/encryptionkey/heads/hos,
 /obj/item/stamp/denied,
+/obj/item/stamp/nri{
+	pixel_x = -6
+	},
+/obj/item/stamp/granted{
+	pixel_x = 6
+	},
 /turf/open/floor/iron/dark/textured_half,
 /area/shuttle/hc_cops/command)
 "Yn" = (

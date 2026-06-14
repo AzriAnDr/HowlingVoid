@@ -24,7 +24,10 @@
 /obj/structure/rack,
 /obj/structure/window/reinforced/tinted/spawner/directional/west,
 /obj/item/storage/box/breacherslug,
-/obj/item/gun/ballistic/shotgun/doublebarrel/breacherslug,
+/obj/item/ammo_box/advanced/s12gauge/flechette,
+/obj/item/ammo_box/advanced/s12gauge/magnum,
+/obj/item/ammo_box/advanced/s12gauge/rubber,
+/obj/item/gun/ballistic/shotgun/riot/sol,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "bo" = (
@@ -1356,6 +1359,9 @@
 	pixel_y = 7
 	},
 /obj/machinery/light/small/directional/west,
+/obj/item/grenade/c4,
+/obj/item/grenade/c4,
+/obj/item/grenade/c4,
 /turf/open/floor/iron/smooth,
 /area/shuttle/pirate)
 "KO" = (
