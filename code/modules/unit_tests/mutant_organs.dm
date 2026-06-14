@@ -155,6 +155,41 @@
 	TEST_ASSERT_NULL(lizard.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL), "Preview lizard kept a tail organ with the tail preference disabled.")
 	TEST_ASSERT_NULL(lizard.get_organ_slot(ORGAN_SLOT_EXTERNAL_SNOUT), "Preview lizard kept a snout organ with the snout preference disabled.")
 
+/datum/unit_test/admin_rejuvenate_keeps_removed_external_organs_removed
+
+/datum/unit_test/admin_rejuvenate_keeps_removed_external_organs_removed/Run()
+	var/mob/living/carbon/human/consistent/lizard = allocate(/mob/living/carbon/human/consistent)
+
+	lizard.dna.mutant_bodyparts[FEATURE_TAIL] = build_mutant_part("Light Tiger")
+	lizard.dna.mutant_bodyparts[FEATURE_SNOUT] = build_mutant_part("Mammal, Long")
+	lizard.set_species(/datum/species/lizard, icon_update = FALSE)
+
+	var/obj/item/organ/tail = lizard.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+	var/obj/item/organ/snout = lizard.get_organ_slot(ORGAN_SLOT_EXTERNAL_SNOUT)
+	var/obj/item/organ/eyes = lizard.get_organ_slot(ORGAN_SLOT_EYES)
+	if(isnull(tail))
+		TEST_FAIL("Test setup failed to create a lizard tail.")
+		return
+	if(isnull(snout))
+		TEST_FAIL("Test setup failed to create a lizard snout.")
+		return
+	if(isnull(eyes))
+		TEST_FAIL("Test setup failed to create lizard eyes.")
+		return
+
+	tail.Remove(lizard, special = TRUE, movement_flags = KEEP_IN_MUTANT_BODYPARTS)
+	qdel(tail)
+	snout.Remove(lizard, special = TRUE, movement_flags = KEEP_IN_MUTANT_BODYPARTS)
+	qdel(snout)
+	eyes.Remove(lizard, special = TRUE)
+	qdel(eyes)
+
+	lizard.admin_rejuvenate()
+
+	TEST_ASSERT_NULL(lizard.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL), "Admin rejuvenate regrew a removed external tail.")
+	TEST_ASSERT_NULL(lizard.get_organ_slot(ORGAN_SLOT_EXTERNAL_SNOUT), "Admin rejuvenate regrew a removed external snout.")
+	TEST_ASSERT_NOTNULL(lizard.get_organ_slot(ORGAN_SLOT_EYES), "Admin rejuvenate did not restore a missing internal organ.")
+
 /datum/unit_test/ashwalker_disabled_spines_stay_removed
 
 /datum/unit_test/ashwalker_disabled_spines_stay_removed/Run()

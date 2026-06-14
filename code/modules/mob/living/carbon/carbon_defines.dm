@@ -116,6 +116,9 @@
 	/// Only load in visual organs
 	var/visual_only_organs = FALSE
 
+	/// Whether the current full-heal pass may add or replace external visual organs.
+	var/tmp/full_heal_include_external_organs = TRUE
+
 	/// Stores the result of our last known top_offset generation for optimisation purposes when drawing limb icons.
 	var/last_top_offset
 

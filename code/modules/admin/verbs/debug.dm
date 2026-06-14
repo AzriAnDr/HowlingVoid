@@ -456,11 +456,20 @@ ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, "Test Areas (ALL)", "Tests the areas
 
 	return dresscode
 
+/mob/living/proc/admin_rejuvenate()
+	return revive(ADMIN_HEAL_ALL)
+
+/mob/living/carbon/admin_rejuvenate()
+	var/old_include_external_organs = full_heal_include_external_organs
+	full_heal_include_external_organs = FALSE
+	. = ..()
+	full_heal_include_external_organs = old_include_external_organs
+
 ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, "Rejuvenate", mob/living/M in world)
 	if(!istype(M))
 		tgui_alert(user,"Cannot revive a ghost")
 		return
-	M.revive(ADMIN_HEAL_ALL)
+	M.admin_rejuvenate()
 
 	log_admin("[key_name(user)] healed / revived [key_name(M)]")
 	var/msg = span_danger("Admin [key_name_admin(user)] healed / revived [ADMIN_LOOKUPFLW(M)]!")

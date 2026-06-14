@@ -342,7 +342,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * * regenerate_existing - if TRUE, existing organs will be deleted and replaced with new ones
  */
 
-/mob/living/carbon/proc/regenerate_organs(remove_hazardous = FALSE)
+/mob/living/carbon/proc/regenerate_organs(remove_hazardous = FALSE, include_external = TRUE)
 	// Delegate to species if possible.
 	if(dna?.species)
 		for(var/obj/item/organ/organ as anything in organs)
@@ -354,7 +354,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			// Species regenerate organs doesn't ALWAYS handle healing the organs because it's dumb
 			organ.set_organ_damage(0)
 
-		dna.species.regenerate_organs(src, replace_current = FALSE)
+		dna.species.regenerate_organs(src, replace_current = FALSE, include_external = include_external)
 		set_heartattack(FALSE)
 
 		// Ears have aditional var "deaf", need to update it too

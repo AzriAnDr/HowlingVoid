@@ -175,8 +175,10 @@ GLOBAL_LIST_EMPTY(customizable_races)
 		target.unwag_tail()
 	return ..()
 
-/datum/species/regenerate_organs(mob/living/carbon/organ_holder, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE, replace_missing = TRUE)
+/datum/species/regenerate_organs(mob/living/carbon/organ_holder, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE, replace_missing = TRUE, include_external = TRUE)
 	. = ..()
+	if(!include_external)
+		return
 
 	var/robot_organs = HAS_TRAIT(organ_holder, TRAIT_ROBOTIC_DNA_ORGANS)
 

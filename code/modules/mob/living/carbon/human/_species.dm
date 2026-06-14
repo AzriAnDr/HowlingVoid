@@ -295,12 +295,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * excluded_zones - list, add zone defines to block organs inside of the zones from getting handled. see headless mutation for an example
  * * visual_only - boolean, only load organs that change how the species looks. Do not use for normal gameplay stuff
  * * replace_missing - Whether or not to replace missing organs
+ * * include_external - Whether or not external visual organs should be added or replaced
  */
-/datum/species/proc/regenerate_organs(mob/living/carbon/organ_holder, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE, replace_missing = TRUE)
+/datum/species/proc/regenerate_organs(mob/living/carbon/organ_holder, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE, replace_missing = TRUE, include_external = TRUE)
 	for(var/slot in get_all_slots())
 		var/obj/item/organ/existing_organ = organ_holder.get_organ_slot(slot)
 		var/obj/item/organ/new_organ = get_mutant_organ_type_for_slot(slot)
 		var/old_organ_type = old_species?.get_mutant_organ_type_for_slot(slot)
+		if(new_organ && !include_external && (initial(new_organ.organ_flags) & ORGAN_EXTERNAL))
+			continue
 
 		// if we have an extra organ that before changing that the species didnt have, remove it
 		if(!new_organ)
