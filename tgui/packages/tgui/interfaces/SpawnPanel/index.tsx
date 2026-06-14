@@ -51,7 +51,7 @@ export function SpawnPanel() {
     <Window
       height={550}
       title={t('ui.spawn_panel.title')}
-      width={500}
+      width={530}
       theme="admin"
     >
       <Window.Content>
