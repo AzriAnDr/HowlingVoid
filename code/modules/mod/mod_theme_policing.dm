@@ -71,6 +71,8 @@
 	wound = 20
 
 /obj/item/mod/control/pre_equipped/policing
+	name = "policing MOD control unit"
+	desc = "The control unit of the MOD suit used by the security forces of the New Russian Empire. Developed in the Pan-Slavic Commonwealth for operation in hostile alien environments. After the creation of the Empire, armor protection was enhanced and uniform production standards were established. It is produced in many Imperial factories. The suit is also exported to Coalition and Allied forces. The shoulder plate is engraved with a silver eagle and the Imperial Police crest."
 	theme = /datum/mod_theme/policing
 	applied_modules = list(
 		/obj/item/mod/module/storage/large_capacity,

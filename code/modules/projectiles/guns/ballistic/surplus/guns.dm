@@ -1,6 +1,6 @@
 /obj/item/gun/ballistic/automatic/akm
 	name = "\improper KAR-84 carbine"
-	desc = "Old developments of the InteQ weapons factories. A copy of one of the Old Empire's machine guns. Has a slightly cheaper price tag, and mercenaries don't need more."
+	desc = "An ancient and well-known Kalashnikov design, modified in 2384. The only change since 1974 is the addition of new materials that help the weapon withstand the harsh conditions of alien worlds. The rifle was used by Slavic colonists and later by the Imperial army. The weapon is engraved with the word \"Zaryan.\""
 	icon = 'icons/obj/weapons/guns/surplus/gunsgalore_guns40x32.dmi'
 	icon_state = "akm"
 	lefthand_file = 'icons/obj/weapons/guns/surplus/gunsgalore_lefthand.dmi'
@@ -30,7 +30,7 @@
 /// INTEQ NEW
 /obj/item/gun/ballistic/automatic/akm/modern
 	name = "\improper KAR-19 carbine"
-	desc = "An upgraded version of the KAR, InteQ assault rifles. It has a shorter firing delay and better reliability."
+	desc = "A modification of the Kalashnikov 2419 assault rifle for special forces and imperial private military companies. It uses more durable and expensive materials in its construction. It boasts a higher rate of fire and features tactical adjustments that improve the rifle's ergonomics. Its main drawback is its high cost. The weapon is engraved with a <font color='#FFD700'>golden eagle</font> and the inscription <font color='green'>\"Zvirdnyansky Arms Factory\"</font>."
 	icon_state = "akm_modern"
 	inhand_icon_state = "akm"
 	worn_icon_state = "akm"
@@ -40,7 +40,7 @@
 /// INTEQ CIV
 /obj/item/gun/ballistic/automatic/akm/civvie
 	name = "\improper Sabel carbine"
-	desc = "Civilian version of the KAR-12 assault rifles produced by InteQ."
+	desc = "A civilian version of the AK-19. Developed by the Zaryansky Rifle Concern as a weapon for the imperial police and private security companies. It differs from the military-grade original in that it has a smaller magazine and a lower rate of fire. It is not compatible with military magazines. The weapon is engraved with the emblem of the Ministry of Internal Affairs and the inscription \"Zaryan Rifle Concern\"."
 	icon_state = "akm_civ"
 	inhand_icon_state = "akm_civ"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/akm/civvie
@@ -53,7 +53,7 @@
 /// NRI
 /obj/item/gun/ballistic/automatic/akm/nri
 	name = "\improper IKAR-19 carbine"
-	desc = "The newest version of the 'KR', a former weapon of the Old Empire, after the collapse the plans were given to the NRI."
+	desc = "The Imperial Kalashnikov assault rifle. A modification of the AK-19 for the Imperial Army. Adopted by the Imperial Army in 2436, it utilizes advanced materials and ergonomic innovations, taking into account numerous conflicts: the magazine position has been changed, and a less expensive version of the AK-19 sight has been added. Despite these innovations, most of the parts and magazines are compatible with older models. It combines innovation, reliability, and an affordable production cost. The rifle is engraved with a golden eagle and the inscription \"Svarog Factory\"."
 	icon_state = "akm_nri"
 	inhand_icon_state = "akm_nri"
 	worn_icon_state = "akm_nri"
@@ -178,7 +178,7 @@
 
 /obj/item/gun/ballistic/automatic/m16
 	name = "\improper M-61 rifle"
-	desc = "A cheap variation of the weapon used in the Civil War. Produced by the mercenary military industry InteQ."
+	desc = "Developed in 2250, this rifle was based on the M-16. It was used by the armed forces of the Solar Federation during the unification of the Solar System. The design was chosen due to the large number of ancient assault rifles in Earth warehouses that had been modernized for the needs of a modern military. The rifle utilized space-resistant materials. The rifle's sale began after the end of the border wars and the Great Economic Crisis. The Solar Federation sells the remaining units to its allies or private military companies. The rifle is engraved with the words \"United Americas\"."
 	icon = 'icons/obj/weapons/guns/surplus/gunsgalore_guns40x32.dmi'
 	icon_state = "m16"
 	lefthand_file = 'icons/obj/weapons/guns/surplus/gunsgalore_lefthand.dmi'
@@ -222,7 +222,7 @@
 /// SOLFED
 /obj/item/gun/ballistic/automatic/m16/modern
 	name = "\improper M-61 Solar rifle"
-	desc = "A newer version of the standard M-61. Shoots faster, has better flatness and reliability, and is fully automatic. The plans from the Old Empire were transferred to the Solar Federation after its collapse."
+	desc = "A modernized version of the M61 rifle for planetary garrisons. It differs from the original in that it features an automatic fire mode and materials more resistant to alien conditions. These rifles were issued to military units guarding worlds of the Solar Federation. Parts and magazines are compatible with the original M61. Even after the border wars and the Great Economic Crisis, the rifle remained in service with the Solar Federation and planets that had previously belonged to it but seceded. Stockpiles are sold to allies and private security companies. The rifle is engraved with a four-star star and the inscription \"Armdyne-Technology\"."
 	icon_state = "m16_modern"
 	inhand_icon_state = "m16"
 	worn_icon_state = "m16"
@@ -523,7 +523,7 @@
 
 /obj/item/gun/ballistic/automatic/mp5
 	name = "\improper SG-5"
-	desc = "A compact submachine gun of the pilots and tank crew of the Old Empire."
+	desc = "A submachine gun based on the MP-5. The weapon uses more wear-resistant materials. It was widely used by pilots and armored vehicle crews of the Solar Federation. It also became widespread among the Solar Federation's security forces. After the Great Economic Crisis and the secession of numerous planets from the Federation, the weapon fell into the hands of local armed groups and bandits. Subsequently, it began to appear on the black market. The weapon is engraved with a four-pointed star and the inscription \"Armdyne-Technology\"."
 	icon = 'icons/obj/weapons/guns/surplus/gunsgalore_guns40x32.dmi'
 	icon_state = "mp5"
 	lefthand_file = 'icons/obj/weapons/guns/surplus/gunsgalore_lefthand.dmi'
@@ -581,7 +581,7 @@
 /// InteQ Bizon
 /obj/item/gun/ballistic/automatic/bison
 	name = "\improper Bizon"
-	desc = "A compact submachine gun of the pilots and tank crew of the Old Empire. After its collapse, the weapon's blueprints were taken by mercenaries from InteQ."
+	desc = "A submachine gun developed in ancient times, but found use among Slavic militias and later among imperial special forces. The modern version uses modern materials. It is popular among private security forces and police agencies. The weapon is engraved with the word \"Zaryan\"."
 	icon = 'icons/obj/weapons/guns/surplus/gunsgalore_guns.dmi'
 	lefthand_file = 'icons/obj/weapons/guns/surplus/gunsgalore_lefthand.dmi'
 	righthand_file = 'icons/obj/weapons/guns/surplus/gunsgalore_righthand.dmi'
@@ -738,7 +738,7 @@
 
 /obj/item/gun/ballistic/automatic/scar
 	name = "SCAR-L"
-	desc = "Part of the SCAR family rifles. This one is SCAR-L, which is for 'Light'. Chambered in .277 Aestus."
+	desc = "This rifle was developed to replace the M61 in planetary garrisons of the Solar Federation, but war on multiple fronts prevented sufficient funding for mass production. The weapon's design was acquired by Armdyne Technology. The rifle is currently distributed on the Solar Federation arms market. It is used by military and special forces units in the Solar System. A small number are supplied to private armies and corporate security agencies. The weapon is engraved with a four-pointed star and the inscription \"Armdyne-Technology\"."
 	icon = 'icons/obj/weapons/guns/surplus/gunsgalore_guns40x32.dmi'
 	icon_state = "scar"
 	lefthand_file = 'icons/obj/weapons/guns/surplus/gunsgalore_lefthand.dmi'
