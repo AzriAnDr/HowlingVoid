@@ -389,7 +389,7 @@ export function CreateObject(props: CreateObjectProps) {
                   checked={showPreview}
                   tooltip={t('ui.spawn_panel.toggle_large_object_preview_panel')}
                 >
-                  {t('ui.spawn_panel.preview')}
+                  {t('ui.spawn_panel.preview_short')}
                 </Button.Checkbox>
               </Stack.Item>
               <Stack.Item>

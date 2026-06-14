@@ -459,9 +459,15 @@ export type SupermatterData = {
 
 export const Supermatter = (props) => {
   const { act, data } = useBackend<SupermatterData>();
+  const { t } = usePreferencesLocalization(data);
   const { sm_data, gas_metadata } = data;
   return (
-    <Window width={700} height={400} theme="ntos">
+    <Window
+      title={t('ui.supermatter.title')}
+      width={700}
+      height={400}
+      theme="ntos"
+    >
       <Window.Content>
         <SupermatterContent {...sm_data[0]} gas_metadata={gas_metadata} />
       </Window.Content>

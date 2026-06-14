@@ -42,8 +42,10 @@ type ReactorInfo = {
 export const RBMK2 = (props) => {
   const { act, data } = useBackend<ReactorInfo>();
   const { t } = usePreferencesLocalization(data);
+  const statusWidth = '64px';
+
   return (
-    <Window width={360} height={710}>
+    <Window title={t('ui.rbmk.title')} width={360} height={710}>
       <Window.Content>
         <Section textAlign="center" title={t('ui.rbmk.status')}>
           <LabeledList>
@@ -251,7 +253,13 @@ export const RBMK2 = (props) => {
               label={t('ui.rbmk.vent_power')}
               buttons={
                 <>
-                  <Box inline mx={2} color={data.venting ? 'good' : 'bad'}>
+                  <Box
+                    inline
+                    mr={1}
+                    width={statusWidth}
+                    textAlign="right"
+                    color={data.venting ? 'good' : 'bad'}
+                  >
                     {data.venting ? t('ui.rbmk.online').toUpperCase() : t('ui.rbmk.offline').toUpperCase()}
                   </Box>
                   <Button.Confirm
@@ -260,9 +268,7 @@ export const RBMK2 = (props) => {
                     icon="fa-fan"
                     color={data.venting ? 'bad' : 'good'}
                     onClick={() => act('venttoggle')}
-                  >
-                    {t('ui.common.toggle').toUpperCase()}
-                  </Button.Confirm>
+                  />
                 </>
               }
             />
@@ -270,7 +276,13 @@ export const RBMK2 = (props) => {
               label={t('ui.rbmk.vent_direction')}
               buttons={
                 <>
-                  <Box inline mx={5.68} color={data.vent_dir ? 'bad' : 'good'}>
+                  <Box
+                    inline
+                    mr={1}
+                    width={statusWidth}
+                    textAlign="right"
+                    color={data.vent_dir ? 'bad' : 'good'}
+                  >
                     {data.vent_dir ? t('ui.rbmk.pulling').toUpperCase() : t('ui.rbmk.pushing').toUpperCase()}
                   </Box>
                   <Button
@@ -299,7 +311,13 @@ export const RBMK2 = (props) => {
               label={t('ui.rbmk.safeties')}
               buttons={
                 <>
-                  <Box inline mx={2} color={data.safety ? 'good' : 'bad'}>
+                  <Box
+                    inline
+                    mr={1}
+                    width={statusWidth}
+                    textAlign="right"
+                    color={data.safety ? 'good' : 'bad'}
+                  >
                     {data.safety ? t('ui.rbmk.online').toUpperCase() : t('ui.rbmk.offline').toUpperCase()}
                   </Box>
                   <Button.Confirm
@@ -307,9 +325,7 @@ export const RBMK2 = (props) => {
                     icon="fa-helmet-safety"
                     color={data.safety ? 'bad' : 'good'}
                     onClick={() => act('safetytoggle')}
-                  >
-                    {t('ui.common.toggle').toUpperCase()}
-                  </Button.Confirm>
+                  />
                 </>
               }
             />
@@ -317,7 +333,13 @@ export const RBMK2 = (props) => {
               label={t('ui.rbmk.overclock')}
               buttons={
                 <>
-                  <Box inline mx={2} color={data.overclocked ? 'good' : 'bad'}>
+                  <Box
+                    inline
+                    mr={1}
+                    width={statusWidth}
+                    textAlign="right"
+                    color={data.overclocked ? 'good' : 'bad'}
+                  >
                     {data.overclocked ? t('ui.rbmk.online').toUpperCase() : t('ui.rbmk.offline').toUpperCase()}
                   </Box>
                   <Button.Confirm
@@ -325,9 +347,7 @@ export const RBMK2 = (props) => {
                     icon="exclamation-triangle"
                     color={data.overclocked ? 'yellow' : 'good'}
                     onClick={() => act('overclocktoggle')}
-                  >
-                    {t('ui.common.toggle').toUpperCase()}
-                  </Button.Confirm>
+                  />
                 </>
               }
             />

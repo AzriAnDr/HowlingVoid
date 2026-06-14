@@ -66,7 +66,8 @@ export const BeakerDisplay = (props: BeakerProps) => {
         {beakerContents.map((chemical) => (
           <Box key={chemical.name} color="label">
             <AnimatedNumber initial={0} value={chemical.volume} />{' '}
-            {t('ui.common.units')} {t('ui.common.of')} {chemical.name}
+            {t('ui.common.units')} {t('ui.common.of_reagent')}{' '}
+            {chemical.name}
           </Box>
         ))}
         {beakerContents.length > 0 && !!showpH && (
@@ -134,7 +135,7 @@ export const BeakerSectionDisplay = (props: BeakerProps) => {
       {beakerContents.map((chemical) => (
         <Box key={chemical.name} color="label">
           <AnimatedNumber initial={0} value={chemical.volume} />{' '}
-          {t('ui.common.units')} {t('ui.common.of')} {chemical.name}
+          {t('ui.common.units')} {t('ui.common.of_reagent')} {chemical.name}
         </Box>
       ))}
       {beakerContents.length > 0 && !!showpH && (

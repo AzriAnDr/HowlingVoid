@@ -15,19 +15,19 @@ import { type Beaker, BeakerSectionDisplay } from './common/BeakerDisplay';
 
 const damageTypes = [
   {
-    label: 'Brute',
+    label: 'ui.cryo.damage_brute',
     type: 'bruteLoss',
   },
   {
-    label: 'Respiratory',
+    label: 'ui.cryo.damage_respiratory',
     type: 'oxyLoss',
   },
   {
-    label: 'Toxin',
+    label: 'ui.cryo.damage_toxin',
     type: 'toxLoss',
   },
   {
-    label: 'Burn',
+    label: 'ui.cryo.damage_burn',
     type: 'fireLoss',
   },
 ] as const;
@@ -37,6 +37,12 @@ const stat_to_color = {
   Conscious: 'bad',
   Unconscious: 'good',
 } as const;
+
+const stat_to_label: Record<string, string> = {
+  Dead: 'ui.common.dead',
+  Conscious: 'ui.common.conscious',
+  Unconscious: 'ui.common.unconscious',
+};
 
 type Occupant = {
   name: string;
@@ -66,20 +72,22 @@ export const Cryo = () => {
   const { occupant, isOperating, isOpen } = data;
 
   return (
-    <Window width={400} height={550}>
+    <Window title={t('ui.cryo.title')} width={400} height={550}>
       <Window.Content scrollable>
-        <Section title={t('ui.common.occupant')}>
+        <Section title={t('ui.cryo.occupant')}>
           <LabeledList>
-            <LabeledList.Item label={t('ui.common.occupant')}>
+            <LabeledList.Item label={t('ui.cryo.occupant')}>
               {occupant?.name || t('ui.cryo.no_occupant')}
             </LabeledList.Item>
             {!!occupant && (
               <>
                 <LabeledList.Item
-                  label={t('ui.common.state')}
+                  label={t('ui.cryo.state')}
                   color={stat_to_color[occupant.stat]}
                 >
-                  {occupant.stat}
+                  {stat_to_label[occupant.stat]
+                    ? t(stat_to_label[occupant.stat])
+                    : occupant.stat}
                 </LabeledList.Item>
                 <LabeledList.Item
                   label={t('ui.common.temperature')}
@@ -99,7 +107,7 @@ export const Cryo = () => {
                 {damageTypes.map((damageType) => (
                   <LabeledList.Item
                     key={damageType.type}
-                    label={damageType.label}
+                    label={t(damageType.label)}
                   >
                     <ProgressBar
                       value={round(data.occupant[damageType.type] / 100, 2)}
@@ -116,7 +124,7 @@ export const Cryo = () => {
         </Section>
         <Section title={t('ui.cryo.cell')}>
           <LabeledList>
-            <LabeledList.Item label={t('ui.common.power')}>
+            <LabeledList.Item label={t('ui.cryo.power')}>
               <Button
                 icon={isOperating ? 'power-off' : 'times'}
                 disabled={isOpen}
@@ -129,12 +137,12 @@ export const Cryo = () => {
             <LabeledList.Item label={t('ui.common.temperature')}>
               <AnimatedNumber value={round(data.cellTemperature, 0)} /> K
             </LabeledList.Item>
-            <LabeledList.Item label={t('ui.common.door')}>
+            <LabeledList.Item label={t('ui.cryo.door')}>
               <Button
                 icon={isOpen ? 'unlock' : 'lock'}
                 onClick={() => act('door')}
               >
-                {isOpen ? t('ui.common.open') : t('ui.common.closed')}
+                {isOpen ? t('ui.cryo.open') : t('ui.cryo.closed')}
               </Button>
               <Button
                 icon={data.autoEject ? 'sign-out-alt' : 'sign-in-alt'}
