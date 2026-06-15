@@ -8,7 +8,6 @@
 	invocation_text = list("Space shall fold...", "Time shall mold...", "Anchor us here...", "Engine is near!")
 	summoned_structure = /obj/structure/destructible/clockwork/anchoring_crystal
 	cogs_required = 5
-	invokers_required = 3
 	category = SPELLTYPE_STRUCTURES
 	var/static/next_invocation_at = 0
 
