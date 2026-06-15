@@ -192,7 +192,9 @@
 
 /// Check whether a mob could take a picture of the target turf.
 /obj/item/camera/proc/can_mob_target(turf/target_turf, mob/user)
-	return (target_turf in get_hear_turfs(user.client?.view || world.view, user.client?.eye || user))
+	var/list/view_size = getviewsize(user.client?.view || world.view)
+	var/view_range = max(view_size[1], view_size[2])
+	return (target_turf in get_hear_turfs(view_range, user.client?.eye || user))
 
 /obj/item/camera/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	// Always skip on storage and tables
