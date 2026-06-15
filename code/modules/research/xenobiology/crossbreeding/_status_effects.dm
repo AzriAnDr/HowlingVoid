@@ -602,13 +602,49 @@
 /datum/status_effect/stabilized/grey
 	id = "stabilizedgrey"
 	colour = SLIME_TYPE_GREY
+	var/list/befriended_slimes
 
 /datum/status_effect/stabilized/grey/tick(seconds_between_ticks)
 	for(var/mob/living/basic/slime/slimes_in_range in range(1, get_turf(owner)))
-		if(!slimes_in_range.has_ally(owner))
+		if(pacify_slime(slimes_in_range))
 			to_chat(owner, span_notice("[linked_extract] pulses gently as it communicates with [slimes_in_range]."))
-			slimes_in_range.befriend(owner)
 	return ..()
+
+/datum/status_effect/stabilized/grey/on_remove()
+	if(QDELETED(owner))
+		return
+	for(var/mob/living/basic/slime/befriended_slime as anything in befriended_slimes)
+		if(QDELETED(befriended_slime))
+			continue
+		befriended_slime.unfriend(owner)
+	LAZYNULL(befriended_slimes)
+
+/datum/status_effect/stabilized/grey/proc/pacify_slime(mob/living/basic/slime/slime_to_pacify)
+	if(slime_to_pacify.befriend(owner))
+		LAZYOR(befriended_slimes, slime_to_pacify)
+		return TRUE
+	if(!slime_to_pacify.has_ally(owner))
+		return FALSE
+
+	var/datum/ai_controller/slime_controller = slime_to_pacify.ai_controller
+	if(isnull(slime_controller))
+		return FALSE
+
+	var/pacified = FALSE
+	if(slime_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] == owner)
+		slime_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+		pacified = TRUE
+	if(slime_controller.blackboard[BB_CURRENT_HUNTING_TARGET] == owner)
+		slime_controller.clear_blackboard_key(BB_CURRENT_HUNTING_TARGET)
+		pacified = TRUE
+	if(owner in slime_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
+		slime_controller.remove_from_blackboard_lazylist_key(BB_BASIC_MOB_RETALIATE_LIST, owner)
+		pacified = TRUE
+	if(slime_to_pacify.buckled == owner)
+		slime_controller.CancelActions()
+		pacified = TRUE
+
+	return pacified
 
 /datum/status_effect/stabilized/orange
 	id = "stabilizedorange"
