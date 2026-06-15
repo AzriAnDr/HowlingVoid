@@ -45,39 +45,14 @@
 	return get_latejoin_spawn_point()
 
 /datum/job/human_ai/get_latejoin_spawn_point()
-	for(var/obj/structure/ai_core/latejoin_inactive/inactive_core as anything in GLOB.latejoin_ai_cores)
-		if(!inactive_core.is_available())
-			continue
-		GLOB.latejoin_ai_cores -= inactive_core
-		inactive_core.available = FALSE
-		var/turf/core_turf = get_turf(inactive_core)
-		qdel(inactive_core)
+	var/turf/core_turf = get_station_ai_latejoin_core_spawn_point()
+	if(core_turf)
 		return core_turf
-	var/list/primary_spawn_points = list() // Ideal locations.
-	var/list/secondary_spawn_points = list() // Fallback locations.
-	for(var/obj/effect/landmark/start/ai/spawn_point in GLOB.landmarks_list)
-		if(spawn_point.used)
-			secondary_spawn_points += list(spawn_point)
-			continue
-		if(spawn_point.primary_ai)
-			primary_spawn_points = list(spawn_point)
-			break // Bingo.
-		primary_spawn_points += spawn_point
-	var/obj/effect/landmark/start/ai/chosen_spawn_point
-	if(length(primary_spawn_points))
-		chosen_spawn_point = pick(primary_spawn_points)
-	else if(length(secondary_spawn_points))
-		chosen_spawn_point = pick(secondary_spawn_points)
-	else
-		CRASH("Failed to find any AI spawn points.")
-	chosen_spawn_point.used = TRUE
-	return chosen_spawn_point
+
+	return get_station_ai_landmark_spawn_point()
 
 /datum/job/human_ai/special_check_latejoin(client/latejoin_client)
-	for(var/obj/structure/ai_core/latejoin_inactive/latejoin_core as anything in GLOB.latejoin_ai_cores)
-		if(latejoin_core.is_available())
-			return TRUE
-	return FALSE
+	return has_station_ai_latejoin_core()
 
 /datum/job/human_ai/announce_job(mob/living/joining_mob)
 	. = ..()
