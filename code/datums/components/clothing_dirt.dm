@@ -77,9 +77,22 @@
 	if (isinhands || !dirtiness || !dirt_state || !(source.flags_cover & PEPPERPROOF))
 		return
 
-	var/mutable_appearance/dirt_overlay = mutable_appearance(source.worn_icon, dirt_state)
+	var/mutable_appearance/dirt_overlay = build_worn_dirt_overlay(source, icon_file, mutant_styles)
+	if(isnull(dirt_overlay))
+		return
+
 	dirt_overlay.color = dirt_color
 	overlays += dirt_overlay
+
+/datum/component/clothing_dirt/proc/build_worn_dirt_overlay(obj/item/source, icon_file, mutant_styles)
+	var/overlay_icon = icon_file || source.worn_icon
+	if(icon_exists(overlay_icon, dirt_state))
+		return mutable_appearance(overlay_icon, dirt_state)
+
+	if(!(mutant_styles & STYLE_TAUR_ALL) || !icon_exists(source.worn_icon, dirt_state))
+		return
+
+	return mutable_appearance(wear_taur_version(dirt_state, icon(source.worn_icon, dirt_state), NO_FEMALE_UNIFORM, null))
 
 /datum/component/clothing_dirt/proc/on_expose(atom/target, list/reagents, datum/reagents/source, methods)
 	SIGNAL_HANDLER
