@@ -74,6 +74,8 @@
 		return
 
 	var/mutable_appearance/blood_overlay = mutable_appearance('icons/mob/64x32_blood.dmi', "[blood_overlay_type]blood")
+	if(!has_taur_worn_icon(mutant_styles))
+		blood_overlay.pixel_w = -16
 
 	blood_overlay.color = get_blood_dna_color()
 
@@ -83,6 +85,15 @@
 		blood_overlay.overlays += emissive_overlay
 
 	return blood_overlay
+
+/obj/item/clothing/suit/proc/has_taur_worn_icon(mutant_styles)
+	if((mutant_styles & STYLE_TAUR_SNAKE) && worn_icon_taur_snake)
+		return TRUE
+	if((mutant_styles & STYLE_TAUR_PAW) && worn_icon_taur_paw)
+		return TRUE
+	if((mutant_styles & STYLE_TAUR_HOOF) && worn_icon_taur_hoof)
+		return TRUE
+	return FALSE
 
 //Define worn_icon_digi below here for suits so we don't have to make whole new .dm files for each
 /obj/item/clothing/suit/armor
