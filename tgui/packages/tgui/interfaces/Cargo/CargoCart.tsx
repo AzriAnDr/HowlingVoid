@@ -81,7 +81,7 @@ function CheckoutItems(props) {
       </Table.Row>
 
       {cart.map((entry) => (
-        <Table.Row className="candystripe" key={entry.id}>
+        <Table.Row className="candystripe" key={entry.cart_key || entry.id}>
           <Table.Cell collapsing color="label">
             #{entry.id}
           </Table.Cell>
@@ -92,7 +92,12 @@ function CheckoutItems(props) {
               <>
                 <Button
                   icon="minus"
-                  onClick={() => act('remove', { order_name: entry.object })}
+                  onClick={() =>
+                    act('remove', {
+                      cart_key: entry.cart_key,
+                      order_name: entry.object,
+                    })
+                  }
                 />
                 <RestrictedInput
                   width={5}
@@ -102,6 +107,7 @@ function CheckoutItems(props) {
                   onEnter={(value) =>
                     isValid &&
                     act('modify', {
+                      cart_key: entry.cart_key,
                       order_name: entry.object,
                       amount: value,
                     })
@@ -112,7 +118,9 @@ function CheckoutItems(props) {
                   icon="plus"
                   disabled={entry.amount >= max_order}
                   onClick={() =>
-                    act('add_by_name', { order_name: entry.object })
+                    act('add_by_name', {
+                      order_name: entry.object,
+                    })
                   }
                 />
               </>

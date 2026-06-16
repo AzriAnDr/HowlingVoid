@@ -55,6 +55,10 @@
 	var/department_destination
 	var/datum/supply_pack/pack
 	var/datum/bank_account/paying_account
+	/// Whether this order was explicitly placed as a private purchase.
+	var/private_purchase = FALSE
+	/// Account allowed to open private delivery containers. Falls back to paying_account when unset.
+	var/datum/bank_account/recipient_account
 	var/obj/item/coupon/applied_coupon
 	///Boolean on whether the manifest can fail or not.
 	var/manifest_can_fail = TRUE
@@ -74,6 +78,8 @@
 	manifest_can_fail = TRUE,
 	cost_type = MONEY_SYMBOL,
 	can_be_cancelled = TRUE,
+	datum/bank_account/recipient_account = null,
+	private_purchase = FALSE,
 )
 	id = SSshuttle.order_number++
 	src.cost_type = cost_type
@@ -88,6 +94,8 @@
 	src.charge_on_purchase = charge_on_purchase
 	src.manifest_can_fail = manifest_can_fail
 	src.can_be_cancelled = can_be_cancelled
+	src.recipient_account = recipient_account
+	src.private_purchase = private_purchase
 
 /datum/supply_order/Destroy(force)
 	QDEL_NULL(applied_coupon)
@@ -98,9 +106,60 @@
 	var/cost = pack.get_cost()
 	if(applied_coupon) //apply discount price
 		cost *= (1 - applied_coupon.discount_pct_off)
-	if(paying_account?.add_to_accounts && !(pack.order_flags & ORDER_GOODY)) //privately purchased and not a goody means 1.1x the cost
+	if(is_private_purchase() && !(pack.order_flags & ORDER_GOODY)) //privately purchased and not a goody means 1.1x the cost
 		cost *= 1.1
 	return round(cost)
+
+/datum/supply_order/proc/get_private_delivery_account()
+	return recipient_account || paying_account
+
+/datum/supply_order/proc/is_private_purchase()
+	return private_purchase || !!paying_account?.add_to_accounts
+
+/datum/supply_order/proc/ships_in_goody_case()
+	return pack?.ships_in_goody_case && (pack.order_flags & ORDER_GOODY)
+
+/datum/supply_order/proc/get_checkout_group_key()
+	var/datum/bank_account/private_delivery_account = get_private_delivery_account()
+	var/paying_account_key = paying_account ? REF(paying_account) : "none"
+	var/private_delivery_key = private_delivery_account ? REF(private_delivery_account) : "none"
+	return "[pack?.type]|[is_private_purchase()]|[paying_account_key]|[private_delivery_key]|[department_destination]|[cost_type]|[can_be_cancelled]"
+
+/datum/supply_order/proc/get_goody_delivery_group_key()
+	var/datum/bank_account/private_delivery_account = get_private_delivery_account()
+	var/private_delivery_key = private_delivery_account ? REF(private_delivery_account) : "none"
+	return "[private_delivery_key]|[is_private_purchase()]"
+
+/proc/build_cargo_cart_ui_data(list/orders)
+	var/list/cart_list = list()
+	for(var/datum/supply_order/order as anything in orders)
+		var/cart_key = order.get_checkout_group_key()
+		if(cart_list[cart_key])
+			cart_list[cart_key][1]["amount"]++
+			cart_list[cart_key][1]["cost"] += order.get_final_cost()
+			if(order.department_destination)
+				cart_list[cart_key][1]["dep_order"]++
+			if(order.is_private_purchase())
+				cart_list[cart_key][1]["paid"]++
+			continue
+
+		cart_list[cart_key] = list(list(
+			"cart_key" = cart_key,
+			"cost_type" = order.cost_type,
+			"object" = order.pack.name,
+			"cost" = order.get_final_cost(),
+			"id" = order.id,
+			"amount" = 1,
+			"orderer" = order.orderer,
+			"paid" = order.is_private_purchase(),
+			"dep_order" = !!order.department_destination,
+			"can_be_cancelled" = order.can_be_cancelled,
+		))
+
+	var/list/cart_data = list()
+	for(var/cart_key in cart_list)
+		cart_data += cart_list[cart_key]
+	return cart_data
 
 /datum/supply_order/proc/generateRequisition(turf/T)
 	var/obj/item/paper/requisition/requisition_paper = new(T)
@@ -183,12 +242,9 @@
 	return manifest_paper
 
 /datum/supply_order/proc/generate(atom/A)
-	var/account_holder
-	if(paying_account)
-		account_holder = paying_account.account_holder
-	else
-		account_holder = "Cargo"
-	var/obj/structure/closet/crate/crate = pack.generate(A, paying_account, initial(pack.storage_override))
+	var/datum/bank_account/private_label_account = is_private_purchase() ? paying_account : null
+	var/account_holder = private_label_account?.account_holder || "Cargo"
+	var/obj/structure/closet/crate/crate = pack.generate(A, get_private_delivery_account(), initial(pack.storage_override), private_label_account)
 	if(pack.order_flags & ORDER_CONTRABAND)
 		for(var/atom/movable/item_within as anything in crate.get_all_contents())
 			ADD_TRAIT(item_within, TRAIT_CONTRABAND, INNATE_TRAIT)

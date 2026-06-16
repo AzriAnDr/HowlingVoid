@@ -237,7 +237,7 @@
 		return FALSE
 
 	var/reason = ""
-	var/request_order = should_request_order()
+	var/request_order = should_route_order_to_requests(buyer)
 	if(request_order && !self_paid)
 		reason = tgui_input_text(user, "Reason", name, max_length = MAX_MESSAGE_LEN)
 		if(isnull(reason))
@@ -249,8 +249,10 @@
 		orderer_rank = rank,
 		orderer_ckey = user.ckey,
 		reason = reason,
-		paying_account = (buyer == SSeconomy.get_dep_account(ACCOUNT_CAR) && !(pack.order_flags & ORDER_GOODY)) ? null : buyer,
+		paying_account = buyer,
 		can_be_cancelled = TRUE,
+		recipient_account = id_card?.registered_account,
+		private_purchase = self_paid,
 	)
 	created_order.generateRequisition(get_turf(parent))
 	if(request_order && !self_paid)
@@ -271,6 +273,13 @@
 	if(console_state == COMPANY_IMPORT_ORDER_APP)
 		return parent_prog?.requestonly || !parent_prog?.computer?.stored_id
 	return FALSE
+
+/datum/component/armament/company_imports/proc/should_route_order_to_requests(datum/bank_account/buyer)
+	if(self_paid)
+		return FALSE
+	if(buyer == SSeconomy.get_dep_account(ACCOUNT_CAR))
+		return TRUE
+	return should_request_order()
 
 /datum/component/armament/company_imports/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

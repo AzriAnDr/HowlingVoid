@@ -271,6 +271,7 @@
 					say("[id_card] lacks the requisite access for this purchase.")
 					return
 				order.paying_account = account
+				order.private_purchase = TRUE
 			else
 				account = get_budget_account()
 				if (isnull(account))

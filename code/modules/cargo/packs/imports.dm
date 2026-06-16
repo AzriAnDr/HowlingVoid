@@ -89,8 +89,8 @@
 	crate_name = "putrid dumpster"
 	crate_type = /obj/structure/closet/crate/trashcart
 
-/datum/supply_pack/imports/dumpstercorpse/generate(atom/A, datum/bank_account/paying_account, crate_override)
-	. = ..()
+/datum/supply_pack/imports/dumpstercorpse/generate(atom/A, datum/bank_account/paying_account, crate_override, private_label_account = TRUE)
+	. = ..(A, paying_account, crate_override, private_label_account)
 	var/mob/living/carbon/human/corpse = locate() in .
 	corpse.death()
 
@@ -380,15 +380,15 @@
 		/obj/item/paper/fluff/certificate,
 	)
 
-/datum/supply_pack/imports/fan_upgrade/generate(atom/A, datum/bank_account/paying_account, crate_override)
+/datum/supply_pack/imports/fan_upgrade/generate(atom/A, datum/bank_account/paying_account, crate_override, private_label_account = TRUE)
 	if(SSshuttle.renew_cargo_air)
-		return ..()
+		return ..(A, paying_account, crate_override, private_label_account)
 
 	for(var/obj/spawnpoint as anything in GLOB.cargo_shuttle_flaps_landmarks)
 		new /obj/structure/plasticflaps(spawnpoint.loc)
 		SSshuttle.renew_cargo_air = TRUE
 		order_flags = ORDER_INVISIBLE
-	return ..()
+	return ..(A, paying_account, crate_override, private_label_account)
 
 /obj/item/paper/fluff/certificate
 	name = "Certificate of Shuttle Upgrade"

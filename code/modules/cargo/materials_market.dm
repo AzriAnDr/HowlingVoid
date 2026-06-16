@@ -318,7 +318,8 @@
 				orderer_ckey = living_user.ckey,
 				paying_account = is_ordering_private ? account_payable : null,
 				cost_type = MONEY_SYMBOL,
-				can_be_cancelled = FALSE
+				can_be_cancelled = FALSE,
+				private_purchase = is_ordering_private,
 			)
 			//first time order compute the correct cost and compare
 			if(new_order.get_final_cost() > account_payable.account_balance)

@@ -9,8 +9,8 @@
 	contains = list(/mob/living/basic/parrot)
 	crate_name = "parrot crate"
 
-/datum/supply_pack/critter/parrot/generate(atom/A, datum/bank_account/paying_account, crate_override)
-	. = ..()
+/datum/supply_pack/critter/parrot/generate(atom/A, datum/bank_account/paying_account, crate_override, private_label_account = TRUE)
+	. = ..(A, paying_account, crate_override, private_label_account)
 	for(var/i in 1 to 4)
 		new /mob/living/basic/parrot(.)
 
@@ -22,8 +22,8 @@
 	contains = list(/mob/living/basic/butterfly)
 	crate_name = "entomology samples crate"
 
-/datum/supply_pack/critter/butterfly/generate(atom/A, datum/bank_account/paying_account, crate_override)
-	. = ..()
+/datum/supply_pack/critter/butterfly/generate(atom/A, datum/bank_account/paying_account, crate_override, private_label_account = TRUE)
+	. = ..(A, paying_account, crate_override, private_label_account)
 	for(var/i in 1 to 49)
 		new /mob/living/basic/butterfly(.)
 
@@ -38,8 +38,8 @@
 	)
 	crate_name = "cat crate"
 
-/datum/supply_pack/critter/cat/generate(atom/A, datum/bank_account/paying_account, crate_override)
-	. = ..()
+/datum/supply_pack/critter/cat/generate(atom/A, datum/bank_account/paying_account, crate_override, private_label_account = TRUE)
+	. = ..(A, paying_account, crate_override, private_label_account)
 	if(!prob(50))
 		return
 	var/mob/living/basic/pet/cat/delete_cat = locate() in .
@@ -65,8 +65,8 @@
 				)
 	crate_name = "corgi crate"
 
-/datum/supply_pack/critter/corgi/generate(atom/A, datum/bank_account/paying_account, crate_override)
-	. = ..()
+/datum/supply_pack/critter/corgi/generate(atom/A, datum/bank_account/paying_account, crate_override, private_label_account = TRUE)
+	. = ..(A, paying_account, crate_override, private_label_account)
 	if(prob(50))
 		var/mob/living/basic/pet/dog/corgi/D = locate() in .
 		if(D.gender == FEMALE)
@@ -115,8 +115,8 @@
 	crate_name = "look sir free crabs"
 	order_flags = ORDER_POD_ONLY
 
-/datum/supply_pack/critter/crab/generate(atom/A, datum/bank_account/paying_account, crate_override)
-	. = ..()
+/datum/supply_pack/critter/crab/generate(atom/A, datum/bank_account/paying_account, crate_override, private_label_account = TRUE)
+	. = ..(A, paying_account, crate_override, private_label_account)
 	for(var/i in 1 to 49)
 		new /mob/living/basic/crab(.)
 
@@ -224,8 +224,8 @@
 	crate_name = "garden gnome crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
-/datum/supply_pack/critter/garden_gnome/generate(atom/A, datum/bank_account/paying_account, crate_override)
-	. = ..()
+/datum/supply_pack/critter/garden_gnome/generate(atom/A, datum/bank_account/paying_account, crate_override, private_label_account = TRUE)
+	. = ..(A, paying_account, crate_override, private_label_account)
 	for(var/i in 1 to 2)
 		new /mob/living/basic/garden_gnome(.)
 

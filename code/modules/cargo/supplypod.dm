@@ -949,10 +949,12 @@
 	if (single_order)
 		if (istype(single_order, /datum/supply_order))
 			var/datum/supply_order/SO = single_order
-			if (SO.pack.crate_type)
-				SO.generate(pod)
-			else if (SO.pack.order_flags & ORDER_GOODY) //Goody orders lack a crate_type and need special handling
+			if (SO.ships_in_goody_case())
 				SO.generateCombo(pod, SO.orderer, SO.pack.contains, SO.pack.cost)
+			else if (SO.pack.crate_type)
+				SO.generate(pod)
+			else
+				SO.generate(pod)
 		else if (istype(single_order, /atom/movable))
 			var/atom/movable/O = single_order
 			O.forceMove(pod)
