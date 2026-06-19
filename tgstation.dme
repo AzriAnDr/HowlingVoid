@@ -3607,7 +3607,6 @@
 #include "code\modules\aesthetics\disposals\disposals.dm"
 #include "code\modules\aesthetics\emitter\emitter.dm"
 #include "code\modules\aesthetics\firealarm\firealarm.dm"
-#include "code\modules\aesthetics\flag\signs_flags.dm"
 #include "code\modules\aesthetics\floors\floors.dm"
 #include "code\modules\aesthetics\furniture\bed.dm"
 #include "code\modules\aesthetics\guns\energy.dm"
