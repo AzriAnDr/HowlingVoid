@@ -3629,7 +3629,6 @@
 #include "code\modules\aesthetics\tools\tools.dm"
 #include "code\modules\aesthetics\vending\access_vending.dm"
 #include "code\modules\aesthetics\walls\walls.dm"
-#include "code\modules\aesthetics\washing_machine\washing_machine.dm"
 #include "code\modules\aesthetics\windows\windows.dm"
 #include "code\modules\ahabs_spear\trophies_misc.dm"
 #include "code\modules\ai_uplink_upload\design.dm"
