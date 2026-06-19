@@ -3599,7 +3599,6 @@
 #include "code\modules\advanced_shuttles\decals.dm"
 #include "code\modules\advanced_shuttles\shuttles.dm"
 #include "code\modules\advanced_shuttles\turfs.dm"
-#include "code\modules\aesthetics\device\device.dm"
 #include "code\modules\aesthetics\disposals\disposals.dm"
 #include "code\modules\aesthetics\emitter\emitter.dm"
 #include "code\modules\aesthetics\floors\floors.dm"
