@@ -24,7 +24,7 @@
 
 /turf/closed/indestructible/normal_wall
 	name = "wall"
-	icon = 'icons/aesthetics/walls/icons/wall.dmi'
+	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall-0"
 	base_icon_state = "wall"
 	smoothing_flags = SMOOTH_BITMASK
@@ -49,4 +49,3 @@
 		if(HAS_TRAIT(src, TRAIT_CHASM_STOPPED)) // lets people walk on catwalks and such
 			return
 		return HAS_TRAIT(movable, TRAIT_MOVE_FLYING) || HAS_TRAIT(movable, TRAIT_MOVE_FLOATING)
-
