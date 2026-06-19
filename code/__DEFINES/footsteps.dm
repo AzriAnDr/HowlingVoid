@@ -27,6 +27,7 @@
 #define FOOTSTEP_MOB_SLIME "footstep_slime"
 #define FOOTSTEP_MOB_RUST "footstep_rust"
 #define FOOTSTEP_MOB_SNAKE "footstep_snake"
+#define FOOTSTEP_MOB_SNAKE_VOLUME 12
 #define FOOTSTEP_OBJ_MACHINE "footstep_machine"
 #define FOOTSTEP_OBJ_ROBOT "footstep_robot"
 #define FOOTSTEP_ROBOT_SMALL "footstep_smallrobot"

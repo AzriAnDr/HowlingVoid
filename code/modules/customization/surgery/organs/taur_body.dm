@@ -52,7 +52,7 @@
 	/// If TRUE, this taur body replaces normal human footsteps with a crawling sound.
 	var/uses_crawling_footsteps = FALSE
 	/// Volume used by the crawling footstep sound.
-	var/crawling_footstep_volume = 12
+	var/crawling_footstep_volume = FOOTSTEP_MOB_SNAKE_VOLUME
 
 /obj/item/organ/taur_body/horselike
 	can_use_saddle = TRUE
