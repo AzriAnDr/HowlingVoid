@@ -3599,7 +3599,6 @@
 #include "code\modules\advanced_shuttles\decals.dm"
 #include "code\modules\advanced_shuttles\shuttles.dm"
 #include "code\modules\advanced_shuttles\turfs.dm"
-#include "code\modules\aesthetics\camera\camera.dm"
 #include "code\modules\aesthetics\cells\cell.dm"
 #include "code\modules\aesthetics\chemical_tanks\chemical_tanks.dm"
 #include "code\modules\aesthetics\clothing\clothing.dm"
