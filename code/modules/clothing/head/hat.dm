@@ -311,6 +311,8 @@
 	name = "wedding veil"
 	desc = "A gauzy white veil."
 	icon_state = "weddingveil"
+	worn_icon = 'icons/mob/clothing/head/costume_additions.dmi'
+	worn_icon_state = "weddingveil_temp"
 	inhand_icon_state = null
 
 /obj/item/clothing/head/hats/centcom_cap
