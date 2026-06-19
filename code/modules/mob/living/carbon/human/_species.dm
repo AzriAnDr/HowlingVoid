@@ -628,6 +628,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(H.get_item_by_slot(slot))
 			if(slot != ITEM_SLOT_GLOVES)
 				return FALSE
+			var/obj/item/clothing/gloves/worn_gloves = H.gloves
+			if(istype(worn_gloves) && worn_gloves.can_attach_accessory(I))
+				return equip_delay_self_check(I, H, bypass_equip_delay_self)
 			var/obj/item/clothing/gloves/ring/worn_ring = H.gloves
 			var/obj/item/clothing/gloves/new_gloves = I
 			if(!istype(worn_ring) || !istype(new_gloves) || istype(new_gloves, /obj/item/clothing/gloves/ring) || new_gloves.covered_ring)

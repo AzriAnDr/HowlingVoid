@@ -165,6 +165,9 @@
 	if(istype(wearer) && wearer.get_item_by_slot(ITEM_SLOT_GLOVES) == src)
 		return wearer
 
+/obj/item/clothing/gloves/proc/can_attach_accessory(obj/item/glove_accessory)
+	return glove_accessory?.can_attach_to_gloves() && LAZYLEN(attached_rings) < max_rings
+
 /// Attach an accessory to these gloves.
 /obj/item/clothing/gloves/proc/attach_ring(obj/item/glove_accessory, mob/living/user)
 	if(LAZYLEN(attached_rings) >= max_rings)
