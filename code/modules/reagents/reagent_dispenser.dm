@@ -57,7 +57,7 @@
 
 	if(icon_state == "water" && check_holidays(APRIL_FOOLS))
 		icon_state = "water_fools"
-		icon = 'icons/obj/medical/chemical_tanks.dmi' // NOVA EDIT ADDITION - undoes override
+		icon = 'icons/obj/medical/chemical_tanks.dmi'
 	if(climbable)
 		AddElement(/datum/element/climbable, climb_time = 4 SECONDS, climb_stun = 4 SECONDS)
 		AddElement(/datum/element/elevation, pixel_shift = 14)
@@ -247,7 +247,7 @@
 	icon_state = "water_high" //I was gonna clean my room...
 	tank_volume = 3000
 
-/obj/structure/reagent_dispensers/foamtank //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
+/obj/structure/reagent_dispensers/foamtank
 	name = "firefighting foam tank"
 	desc = "A tank full of firefighting foam."
 	icon_state = "foam"
@@ -256,7 +256,7 @@
 	openable = TRUE
 	climbable = TRUE
 
-/obj/structure/reagent_dispensers/fueltank //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
+/obj/structure/reagent_dispensers/fueltank
 	name = "fuel tank"
 	desc = "A tank full of industrial welding fuel. Do not consume."
 	icon_state = "fuel"
@@ -270,7 +270,7 @@
 
 	if(check_holidays(APRIL_FOOLS))
 		icon_state = "fuel_fools"
-		icon = 'icons/obj/medical/chemical_tanks.dmi' // NOVA EDIT ADDITION - undoes override
+		icon = 'icons/obj/medical/chemical_tanks.dmi'
 
 /obj/structure/reagent_dispensers/fueltank/boom(damage_type = BRUTE, guaranteed_violent = FALSE) //NOVA EDIT CHANGE
 	if(damage_type == BURN || guaranteed_violent)
@@ -648,7 +648,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	icon_state = "serving"
 	reagent_id = /datum/reagent/consumable/nutraslop
 
-/obj/structure/reagent_dispensers/plumbed //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
+/obj/structure/reagent_dispensers/plumbed
 	name = "stationary water tank"
 	anchored = TRUE
 	icon_state = "water_stationary"
