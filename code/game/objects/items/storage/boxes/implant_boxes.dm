@@ -45,6 +45,7 @@
 /obj/item/storage/box/chemimp
 	name = "boxed chemical implant kit"
 	desc = "Box of stuff used to implant chemicals."
+	icon_state = "medbox"
 	illustration = "implant"
 
 /obj/item/storage/box/chemimp/PopulateContents()
@@ -58,6 +59,7 @@
 /obj/item/storage/box/exileimp
 	name = "boxed exile implant kit"
 	desc = "Box of exile implants. It has a picture of a clown being booted through the Gateway."
+	icon_state = "secbox"
 	illustration = "implant"
 
 /obj/item/storage/box/exileimp/PopulateContents()
@@ -100,6 +102,7 @@
 	name = "boxed cybernetic implants"
 	desc = "A sleek, sturdy box."
 	icon_state = "cyber_implants"
+	illustration = null
 
 /obj/item/storage/box/cyber_implants/PopulateContents()
 	new /obj/item/autosurgeon/syndicate/xray_eyes(src)

@@ -117,6 +117,8 @@
 /obj/item/storage/box/holobadge
 	name = "holobadge box"
 	desc = "A box claiming to contain holobadges."
+	icon_state = "secbox"
+	illustration = "holobadge"
 
 /obj/item/storage/box/holobadge/PopulateContents()
 	. = ..()

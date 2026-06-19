@@ -124,6 +124,7 @@
 
 // Security survival box
 /obj/item/storage/box/survival/security
+	icon_state = "secbox"
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 
 /obj/item/storage/box/survival/security/radio/PopulateContents()
@@ -132,6 +133,7 @@
 
 // Medical survival box
 /obj/item/storage/box/survival/medical
+	icon_state = "medbox"
 	mask_type = /obj/item/clothing/mask/breath/medical
 
 /obj/item/storage/box/survival/crafted
@@ -185,6 +187,7 @@
 /obj/item/storage/box/clown
 	name = "clown box"
 	desc = "A colorful cardboard box for the clown"
+	icon_state = "hugbox"
 	illustration = "clown"
 
 /obj/item/storage/box/clown/tool_act(mob/living/user, obj/item/tool, list/modifiers)

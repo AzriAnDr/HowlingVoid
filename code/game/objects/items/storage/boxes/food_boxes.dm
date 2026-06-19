@@ -64,16 +64,27 @@
 	var/list/papersack_designs = list()
 	///What design from papersack_designs we are currently using.
 	var/design_choice = "None"
+	/// Additional paper sack designs.
+	var/modular_additions_icon = 'icons/obj/storage/paperbag_additions.dmi'
 
 /obj/item/storage/box/papersack/Initialize(mapload)
 	. = ..()
-	papersack_designs = sort_list(list(
+	papersack_designs = list(
 		"None" = image(icon = src.icon, icon_state = "paperbag_None"),
 		"NanotrasenStandard" = image(icon = src.icon, icon_state = "paperbag_NanotrasenStandard"),
 		"SyndiSnacks" = image(icon = src.icon, icon_state = "paperbag_SyndiSnacks"),
 		"Heart" = image(icon = src.icon, icon_state = "paperbag_Heart"),
 		"SmileyFace" = image(icon = src.icon, icon_state = "paperbag_SmileyFace")
-		))
+		)
+	papersack_designs += list(
+		"Grey" = image(icon = modular_additions_icon, icon_state = "paperbag_Grey"),
+		"Black" = image(icon = modular_additions_icon, icon_state = "paperbag_Black"),
+		"Sec" = image(icon = modular_additions_icon, icon_state = "paperbag_Sec"),
+		"Medical" = image(icon = modular_additions_icon, icon_state = "paperbag_Medical"),
+		"Fox" = image(icon = modular_additions_icon, icon_state = "paperbag_Fox"),
+		"Bunny" = image(icon = modular_additions_icon, icon_state = "paperbag_Bunny"),
+		)
+	papersack_designs = sort_list(papersack_designs)
 	update_appearance()
 
 /obj/item/storage/box/papersack/vv_edit_var(vname, vval)
@@ -86,6 +97,11 @@
 	return ..()
 
 /obj/item/storage/box/papersack/update_desc(updates)
+	if(design_choice in list("Grey", "Black", "Sec", "Medical", "Fox", "Bunny"))
+		icon = modular_additions_icon
+	else
+		icon = initial(icon)
+
 	switch(design_choice)
 		if("None")
 			desc = "A sack neatly crafted out of paper."
@@ -97,6 +113,18 @@
 			desc = "A paper sack with a heart etched onto the side."
 		if("SmileyFace")
 			desc = "A paper sack with a crude smile etched onto the side."
+		if("Grey")
+			desc = "A grey sack neatly crafted out of paper."
+		if("Black")
+			desc = "A black sack neatly crafted out of paper."
+		if("Sec")
+			desc = "A sturdy paper sack ideal to carry lunch on those lonely long patrols."
+		if("Medical")
+			desc = "A nitrile-lined sack useful to carry sanitized snacks for both patients and medical staff alike."
+		if("Fox")
+			desc = "A paper sack with a prowling fox etched onto the side."
+		if("Bunny")
+			desc = "A paper sack with a hopping bunny etched onto the side."
 	return ..()
 
 /obj/item/storage/box/papersack/tool_act(mob/living/user, obj/item/tool, list/modifiers)

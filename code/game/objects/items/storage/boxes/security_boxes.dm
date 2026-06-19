@@ -63,6 +63,7 @@
 /obj/item/storage/box/emps
 	name = "box of emp grenades"
 	desc = "A box with 5 emp grenades."
+	icon_state = "syndiebox"
 	illustration = "emp"
 
 /obj/item/storage/box/emps/PopulateContents()
@@ -164,8 +165,8 @@
 /obj/item/storage/box/rubbershot
 	name = "box of shotgun shells (Less Lethal - Rubber Shot)"
 	desc = "A box full of rubber shot shotgun shells, designed for shotguns."
-	icon_state = "rubbershot_box"
-	illustration = null
+	icon_state = "secbox_xl"
+	illustration = "rubbershot"
 
 /obj/item/storage/box/rubbershot/PopulateContents()
 	for(var/i in 1 to 7)
@@ -174,8 +175,8 @@
 /obj/item/storage/box/lethalshot
 	name = "box of shotgun shells (Lethal)"
 	desc = "A box full of lethal shotgun shells, designed for shotguns."
-	icon_state = "lethalshot_box"
-	illustration = null
+	icon_state = "secbox_xl"
+	illustration = "buckshot"
 
 /obj/item/storage/box/lethalshot/PopulateContents()
 	for(var/i in 1 to 7)
@@ -190,8 +191,8 @@
 /obj/item/storage/box/slugs
 	name = "box of shotgun shells (Lethal - Slugs)"
 	desc = "A box full of lethal shotgun slugs, designed for shotguns."
-	icon_state = "breacher_box"
-	illustration = null
+	icon_state = "secbox_xl"
+	illustration = "breacherslug"
 
 /obj/item/storage/box/slugs/PopulateContents()
 	for(var/i in 1 to 7)
@@ -200,8 +201,8 @@
 /obj/item/storage/box/beanbag
 	name = "box of shotgun shells (Less Lethal - Beanbag)"
 	desc = "A box full of beanbag shotgun shells, designed for shotguns."
-	icon_state = "beanbagshot_box"
-	illustration = null
+	icon_state = "secbox_xl"
+	illustration = "beanbag"
 
 /obj/item/storage/box/beanbag/PopulateContents()
 	for(var/i in 1 to 6)
@@ -210,8 +211,8 @@
 /obj/item/storage/box/breacherslug
 	name = "box of breaching shotgun shells"
 	desc = "A box full of breaching slugs, designed for rapid entry, not very effective against anything else."
-	icon_state = "breacher_box"
-	illustration = null
+	icon_state = "secbox_xl"
+	illustration = "breacherslug"
 
 /obj/item/storage/box/breacherslug/PopulateContents()
 	for(var/i in 1 to 7)
@@ -220,8 +221,8 @@
 /obj/item/storage/box/large_dart
 	name = "box of XL shotgun darts"
 	desc = "A box full of shotgun darts with increased chemical storage capacity."
-	icon_state = "shotdart_box"
-	illustration = null
+	icon_state = "secbox_xl"
+	illustration = "shotdart"
 
 /obj/item/storage/box/large_dart/PopulateContents()
 	for(var/i in 1 to 7)
@@ -289,6 +290,8 @@
 /obj/item/storage/box/evidence
 	name = "evidence bag box"
 	desc = "A box claiming to contain evidence bags."
+	icon_state = "secbox"
+	illustration = "evidence"
 
 /obj/item/storage/box/evidence/PopulateContents()
 	for(var/i in 1 to 6)

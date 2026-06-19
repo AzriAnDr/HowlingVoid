@@ -3,6 +3,7 @@
 /obj/item/storage/box/metalfoam
 	name = "box of metal foam grenades"
 	desc = "To be used to rapidly seal hull breaches."
+	icon_state = "engibox"
 	illustration = "grenade"
 
 /obj/item/storage/box/metalfoam/PopulateContents()
@@ -12,6 +13,7 @@
 /obj/item/storage/box/smart_metal_foam
 	name = "box of smart metal foam grenades"
 	desc = "Used to rapidly seal hull breaches. This variety conforms to the walls of its area."
+	icon_state = "engibox"
 	illustration = "grenade"
 
 /obj/item/storage/box/smart_metal_foam/PopulateContents()

@@ -3,6 +3,7 @@
 /obj/item/storage/box/syringes
 	name = "box of syringes"
 	desc = "A box full of syringes."
+	icon_state = "medbox"
 	illustration = "syringe"
 
 /obj/item/storage/box/syringes/PopulateContents()
@@ -21,6 +22,7 @@
 /obj/item/storage/box/medipens
 	name = "box of medipens"
 	desc = "A box full of epinephrine MediPens."
+	icon_state = "medbox"
 	illustration = "epipen"
 
 /obj/item/storage/box/medipens/PopulateContents()
@@ -75,6 +77,7 @@
 /obj/item/storage/box/medigels
 	name = "box of medical gels"
 	desc = "A box full of medical gel applicators, with unscrewable caps and precision spray heads."
+	icon_state = "medbox"
 	illustration = "medgel"
 
 /obj/item/storage/box/medigels/PopulateContents()
@@ -84,6 +87,7 @@
 /obj/item/storage/box/injectors
 	name = "box of DNA injectors"
 	desc = "This box contains injectors, it seems."
+	icon_state = "medbox"
 	illustration = "dna"
 
 /obj/item/storage/box/injectors/PopulateContents()
@@ -96,6 +100,7 @@
 /obj/item/storage/box/bodybags
 	name = "body bags"
 	desc = "The label indicates that it contains body bags."
+	icon_state = "medbox"
 	illustration = "bodybags"
 
 /obj/item/storage/box/bodybags/PopulateContents()
@@ -106,6 +111,7 @@
 /obj/item/storage/box/pillbottles
 	name = "box of pill bottles"
 	desc = "It has pictures of pill bottles on its front."
+	icon_state = "medbox"
 	illustration = "pillbox"
 
 /obj/item/storage/box/pillbottles/PopulateContents()
