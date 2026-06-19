@@ -26,8 +26,10 @@
 #define FOOTSTEP_MOB_HUMAN "footstep_human" //Warning: Only works on /mob/living/carbon/human
 #define FOOTSTEP_MOB_SLIME "footstep_slime"
 #define FOOTSTEP_MOB_RUST "footstep_rust"
+#define FOOTSTEP_MOB_SNAKE "footstep_snake"
 #define FOOTSTEP_OBJ_MACHINE "footstep_machine"
 #define FOOTSTEP_OBJ_ROBOT "footstep_robot"
+#define FOOTSTEP_ROBOT_SMALL "footstep_smallrobot"
 
 //priority defines for the footstep_override element
 #define STEP_SOUND_NO_PRIORITY 0

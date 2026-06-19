@@ -27,6 +27,11 @@
 			qdel(cyborg.GetComponent(/datum/component/robot_smoke))
 			QDEL_NULL(cyborg.particles)	// Removing left over particles
 
+	if(model_features && (TRAIT_R_SMALL in model_features))
+		cyborg.AddElement(/datum/element/footstep, FOOTSTEP_ROBOT_SMALL, 6, -6, sound_vary = TRUE)
+	else
+		cyborg.RemoveElement(/datum/element/footstep, FOOTSTEP_ROBOT_SMALL, 6, -6, sound_vary = TRUE)
+
 
 /obj/item/robot_model/proc/update_quadborg()
 	var/mob/living/silicon/robot/cyborg = robot || loc

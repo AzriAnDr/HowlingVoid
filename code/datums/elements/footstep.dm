@@ -44,6 +44,8 @@
 		if(FOOTSTEP_MOB_SLIME)
 			footstep_sounds = 'sound/effects/footstep/slime1.ogg'
 			src.volume = 90*volume
+		if(FOOTSTEP_MOB_SNAKE)
+			footstep_sounds = 'sound/effects/footstep/crawl1.ogg'
 		if(FOOTSTEP_OBJ_MACHINE)
 			footstep_sounds = 'sound/effects/bang.ogg'
 			src.volume = 90*volume
@@ -54,6 +56,8 @@
 			src.volume = 90*volume
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(play_simplestep_machine))
 			return
+		if(FOOTSTEP_ROBOT_SMALL)
+			footstep_sounds = 'sound/effects/servostep.ogg'
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(play_simplestep))
 	steps_for_living[target] = 0
 
