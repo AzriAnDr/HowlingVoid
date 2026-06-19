@@ -18,11 +18,11 @@
 /datum/sound_effect/keyboard
 	key = SFX_KEYBOARD
 	file_paths = list(
-		'sound/aesthetics/computer/sound/keypress1.ogg',
-		'sound/aesthetics/computer/sound/keypress2.ogg',
-		'sound/aesthetics/computer/sound/keypress3.ogg',
-		'sound/aesthetics/computer/sound/keypress4.ogg',
-		'sound/aesthetics/computer/sound/keystroke4.ogg',
+		'sound/machines/computer/keypress1.ogg',
+		'sound/machines/computer/keypress2.ogg',
+		'sound/machines/computer/keypress3.ogg',
+		'sound/machines/computer/keypress4.ogg',
+		'sound/machines/computer/keystroke4.ogg',
 	)
 /datum/sound_effect/impact_metal
 	key = SFX_BULLET_IMPACT_METAL // This is the one that will be used most, it is extensive.
@@ -251,4 +251,3 @@
 
 /obj/machinery/computer/security/wooden_tv
 	bullet_impact_sound = SFX_BULLET_IMPACT_WOOD
-

@@ -21,6 +21,8 @@
 	var/authenticated = FALSE
 	/// Will projectiles be able to pass over this computer?
 	var/projectiles_pass_chance = 65
+	/// The time the next keyboard click sound is allowed to be played at.
+	var/next_clicksound
 
 /datum/armor/machinery_computer
 	fire = 40
@@ -29,6 +31,12 @@
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	power_change()
+
+/obj/machinery/computer/interact(mob/user, special_state)
+	. = ..()
+	if(world.time > next_clicksound && isliving(user))
+		next_clicksound = world.time + 5
+		playsound(src, SFX_KEYBOARD, 40)
 
 /obj/machinery/computer/mouse_drop_receive(mob/living/dropping, mob/user, params)
 	. = ..()
@@ -158,11 +166,9 @@
 
 /obj/machinery/computer/ui_interact(mob/user, datum/tgui/ui)
 	SHOULD_CALL_PARENT(TRUE)
-	//NOVA EDIT ADDITION BEGIN - AESTHETICS
 	if(world.time > next_clicksound && isliving(user))
 		next_clicksound = world.time + rand(50, 150)
 		playsound(src, SFX_KEYBOARD, 40)
-	//NOVA EDIT END
 	. = ..()
 	update_use_power(ACTIVE_POWER_USE)
 
