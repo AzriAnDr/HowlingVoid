@@ -1,7 +1,7 @@
 /obj/item/implantpad
 	name = "implant pad"
 	desc = "Used to modify implants."
-	icon = 'icons/obj/devices/tool.dmi' //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "implantpad-0"
 	base_icon_state = "implantpad"
 	inhand_icon_state = "electronic"
