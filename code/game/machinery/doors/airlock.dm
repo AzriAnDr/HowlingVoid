@@ -137,14 +137,14 @@
 	var/normalspeed = TRUE
 	var/cutAiWire = FALSE
 	var/autoname = FALSE
-	var/doorOpen = 'sound/aesthetics/airlock/sound/open.ogg'
-	var/doorClose = 'sound/aesthetics/airlock/sound/close.ogg'
+	var/doorOpen = 'sound/machines/airlock/open.ogg'
+	var/doorClose = 'sound/machines/airlock/close.ogg'
 	var/doorDeni = 'sound/machines/beep/deniedbeep.ogg' // i'm thinkin' Deni's
-	var/boltUp = 'sound/aesthetics/airlock/sound/bolts_up.ogg'
-	var/boltDown = 'sound/aesthetics/airlock/sound/bolts_down.ogg'
+	var/boltUp = 'sound/machines/airlock/bolts_up.ogg'
+	var/boltDown = 'sound/machines/airlock/bolts_down.ogg'
 	var/noPower = 'sound/machines/airlock/doorclick.ogg'
-	var/forcedOpen = 'sound/aesthetics/airlock/sound/open_force.ogg'
-	var/forcedClosed = 'sound/aesthetics/airlock/sound/close_force.ogg'
+	var/forcedOpen = 'sound/machines/airlock/open_force.ogg'
+	var/forcedClosed = 'sound/machines/airlock/close_force.ogg'
 	/// What airlock assembly mineral plating was applied to
 	var/previous_airlock = /obj/structure/door_assembly
 	/// Material of inner filling; if its an airlock with glass, this should be set to "glass"
