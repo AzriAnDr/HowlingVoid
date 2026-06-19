@@ -3599,7 +3599,6 @@
 #include "code\modules\advanced_shuttles\decals.dm"
 #include "code\modules\advanced_shuttles\shuttles.dm"
 #include "code\modules\advanced_shuttles\turfs.dm"
-#include "code\modules\aesthetics\furniture\bed.dm"
 #include "code\modules\aesthetics\guns\energy.dm"
 #include "code\modules\aesthetics\guns\guns.dm"
 #include "code\modules\aesthetics\guns\magazine.dm"

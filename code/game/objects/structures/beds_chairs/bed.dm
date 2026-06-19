@@ -380,7 +380,7 @@
 /obj/structure/bed/double
 	name = "double bed"
 	desc = "A luxurious double bed, for those too important for small dreams."
-	icon_state = "bed_double"
+	icon_state = "doublebed"
 	build_stack_amount = 4
 	max_buckled_mobs = 2
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4)

@@ -409,18 +409,21 @@ LINEN BINS
 	light_range = 1.4
 
 /obj/item/bedsheet/double
-	icon_state = "double_sheetwhite"
+	icon_state = "doublesheet"
 	worn_icon_state = "sheetwhite"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/blue/double
-	icon_state = "double_sheetblue"
+	icon_state = "doublesheetblue"
 	worn_icon_state = "sheetblue"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/green/double
-	icon_state = "double_sheetgreen"
+	icon_state = "doublesheetgreen"
 	worn_icon_state = "sheetgreen"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/grey/double
@@ -429,14 +432,16 @@ LINEN BINS
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/orange/double
-	icon_state = "double_sheetorange"
+	icon_state = "doublesheetorange"
 	worn_icon_state = "sheetorange"
 	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/purple/double
-	icon_state = "double_sheetpurple"
+	icon_state = "doublesheetpurple"
 	worn_icon_state = "sheetpurple"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/patriot/double
@@ -445,39 +450,46 @@ LINEN BINS
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/rainbow/double
-	icon_state = "double_sheetrainbow"
+	icon_state = "doublesheetrainbow"
 	worn_icon_state = "sheetrainbow"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/red/double
-	icon_state = "double_sheetred"
+	icon_state = "doublesheetred"
 	worn_icon_state = "sheetred"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/yellow/double
-	icon_state = "double_sheetyellow"
+	icon_state = "doublesheetyellow"
 	worn_icon_state = "sheetyellow"
 	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/mime/double
-	icon_state = "double_sheetmime"
+	icon_state = "doublesheetmime"
 	worn_icon_state = "sheetmime"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/clown/double
-	icon_state = "double_sheetclown"
+	icon_state = "doublesheetclown"
 	worn_icon_state = "sheetclown"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/captain/double
-	icon_state = "double_sheetcaptain"
+	icon_state = "doublesheetcaptain"
 	worn_icon_state = "sheetcaptain"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/rd/double
-	icon_state = "double_sheetrd"
+	icon_state = "doublesheetrd"
 	worn_icon_state = "sheetrd"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/medical/double
@@ -486,28 +498,33 @@ LINEN BINS
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/cmo/double
-	icon_state = "double_sheetcmo"
+	icon_state = "doublesheetCMO"
 	worn_icon_state = "sheetcmo"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/hos/double
-	icon_state = "double_sheethos"
+	icon_state = "doublesheethos"
 	worn_icon_state = "sheethos"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/hop/double
-	icon_state = "double_sheethop"
+	icon_state = "doublesheethop"
 	worn_icon_state = "sheethop"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/ce/double
-	icon_state = "double_sheetce"
+	icon_state = "doublesheetce"
 	worn_icon_state = "sheetce"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/qm/double
-	icon_state = "double_sheetqm"
+	icon_state = "doublesheetqm"
 	worn_icon_state = "sheetqm"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/chaplain/double
@@ -516,8 +533,9 @@ LINEN BINS
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/brown/double
-	icon_state = "double_sheetbrown"
+	icon_state = "doublesheetbrown"
 	worn_icon_state = "sheetbrown"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/black/double
@@ -526,8 +544,9 @@ LINEN BINS
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/centcom/double
-	icon_state = "double_sheetcentcom"
+	icon_state = "doublesheetcc"
 	worn_icon_state = "sheetcentcom"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/syndie/double
@@ -551,13 +570,15 @@ LINEN BINS
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/nanotrasen/double
-	icon_state = "double_sheetNT"
+	icon_state = "doublesheetNT"
 	worn_icon_state = "sheetNT"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/ian/double
-	icon_state = "double_sheetian"
+	icon_state = "doublesheetian"
 	worn_icon_state = "sheetian"
+	slot_flags = null
 	bedsheet_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/runtime/double
