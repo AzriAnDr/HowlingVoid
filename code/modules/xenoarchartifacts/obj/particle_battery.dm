@@ -65,7 +65,7 @@
 					span_notice("You insert the battery into the utilizer."),
 					blind_message = span_notice("You hear click nearby."),
 				)
-				playsound(src, 'sound/aesthetics/lightswitch/sound/lightswitch.ogg', 25, FALSE)
+				playsound(src, 'sound/machines/lightswitch.ogg', 25, FALSE)
 				inserted_battery = attacking_item
 				update_icon()
 	else

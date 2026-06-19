@@ -51,6 +51,8 @@
 	var/datum/alarm_handler/alarm_manager
 
 	var/lightswitch = TRUE
+	/// Whether or not the area's light switch was turned off during init.
+	var/light_turned_off_at_spawn = FALSE
 
 	/// All beauty in this area combined, only includes indoor area.
 	var/totalbeauty = 0
