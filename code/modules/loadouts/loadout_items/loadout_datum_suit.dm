@@ -77,7 +77,7 @@
 
 /datum/loadout_item/suit/security_jacket
 	name = "Security Work Jacket"
-	item_path = /obj/item/clothing/suit/toggle/jacket/nova/sec
+	item_path = /obj/item/clothing/suit/toggle/jacket/nova/colorable_bomber/sec
 	restricted_roles = list(ALL_JOBS_SEC)
 	group = "Job-Locked"
 
