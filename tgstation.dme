@@ -3596,7 +3596,6 @@
 #include "code\modules\advanced_shuttles\decals.dm"
 #include "code\modules\advanced_shuttles\shuttles.dm"
 #include "code\modules\advanced_shuttles\turfs.dm"
-#include "code\modules\aesthetics\airalarm\airalarm.dm"
 #include "code\modules\aesthetics\airlock\airlock.dm"
 #include "code\modules\aesthetics\blast_door\blast_door.dm"
 #include "code\modules\aesthetics\bureaucracy\bureaucracy.dm"
