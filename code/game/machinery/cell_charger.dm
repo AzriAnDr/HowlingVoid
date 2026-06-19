@@ -9,7 +9,6 @@
 	var/obj/item/stock_parts/power_store/cell/charging = null
 	var/charge_rate = STANDARD_CELL_RATE //NOVA EDIT CHANGE - ORIGINAL: 0.25 * STANDARD_CELL_RATE
 
-/* NOVA EDIT REMOVAL - AESTHETICS - OVERWRITTEN IN migrated cell aesthetics code.
 /obj/machinery/cell_charger/update_overlays()
 	. = ..()
 
@@ -19,13 +18,10 @@
 	if(!(machine_stat & (BROKEN|NOPOWER)))
 		var/newlevel = round(charging.percent() * 4 / 100)
 		. += "ccharger-o[newlevel]"
-	. += image(charging.icon, charging.icon_state)
-	if(charging.grown_battery)
-		. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "grown_wires")
-	. += "ccharger-[charging.connector_type]-on"
-	if((charging.charge > 0.01) && charging.charge_light_type)
-		. += mutable_appearance('icons/obj/machines/cell_charger.dmi', "cell-[charging.charge_light_type]-o[(charging.percent() >= 99.5) ? 2 : 1]")
-NOVA EDIT END */
+	if(!charging.charging_icon)
+		. += image(charging.icon, charging.icon_state)
+	else
+		. += image('icons/obj/machines/cell_charger.dmi', charging.charging_icon)
 
 /obj/machinery/cell_charger/examine(mob/user)
 	. = ..()

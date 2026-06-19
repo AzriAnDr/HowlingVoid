@@ -10,6 +10,9 @@
 	icon = 'icons/obj/machines/cell_charger.dmi'
 	icon_state = "cell"
 	inhand_icon_state = "cell"
+	/// The inserted-cell overlay icon state used by cell chargers.
+	var/charging_icon = "cell_in"
+	connector_type = null
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	force = 5
@@ -114,6 +117,7 @@
 /obj/item/stock_parts/power_store/cell/high
 	name = "high-capacity power cell"
 	icon_state = "hcell"
+	charging_icon = "hcell_in"
 	emp_damage_modifier = 3
 	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
@@ -126,6 +130,7 @@
 /obj/item/stock_parts/power_store/cell/super
 	name = "super-capacity power cell"
 	icon_state = "scell"
+	charging_icon = "scell_in"
 	emp_damage_modifier = 5
 	maxcharge = STANDARD_CELL_CHARGE * 20
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
@@ -137,6 +142,7 @@
 /obj/item/stock_parts/power_store/cell/hyper
 	name = "hyper-capacity power cell"
 	icon_state = "hpcell"
+	charging_icon = "hpcell_in"
 	emp_damage_modifier = 5
 	maxcharge = STANDARD_CELL_CHARGE * 30
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
@@ -149,6 +155,7 @@
 	name = "bluespace power cell"
 	desc = "A rechargeable transdimensional power cell."
 	icon_state = "bscell"
+	charging_icon = "bscell_in"
 	emp_damage_modifier = 5
 	maxcharge = STANDARD_CELL_CHARGE * 40
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*6)
@@ -160,6 +167,7 @@
 /obj/item/stock_parts/power_store/cell/infinite
 	name = "infinite-capacity power cell"
 	icon_state = "icell"
+	charging_icon = "icell_in"
 	emp_damage_modifier = 0
 	maxcharge = INFINITY //little disappointing if you examine it and it's not huge
 	custom_materials = list(/datum/material/glass=HALF_SHEET_MATERIAL_AMOUNT)
@@ -186,9 +194,10 @@
 	desc = "A rechargeable starch based power cell."
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "potato"
+	charging_icon = "potato_in"
 	maxcharge = STANDARD_CELL_CHARGE * 0.3
 	emp_damage_modifier = 0.5 //It's biological, so
-	charge_light_type = null
+	charge_light_type = "old"
 	connector_type = null
 	custom_materials = null
 	grown_battery = TRUE //it has the overlays for wires
@@ -219,6 +228,7 @@
 	desc = "A yellow slime core infused with plasma. Its organic nature makes it immune to EMPs."
 	icon = 'icons/mob/simple/slimes.dmi'
 	icon_state = "yellow-core"
+	charging_icon = "slime_in"
 	custom_materials = null
 	maxcharge = STANDARD_CELL_CHARGE * 5
 	charge_light_type = null

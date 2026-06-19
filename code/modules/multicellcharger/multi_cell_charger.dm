@@ -1,7 +1,7 @@
 /obj/machinery/cell_charger_multi
 	name = "multi-cell charging rack"
 	desc = "A cell charging rack for multiple batteries."
-	icon = 'icons/aesthetics/cells/icons/cell.dmi'
+	icon = 'icons/obj/machines/cell_charger.dmi'
 	icon_state = "cchargermulti"
 	base_icon_state = "cchargermulti"
 	use_power = IDLE_POWER_USE
