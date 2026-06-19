@@ -4,7 +4,7 @@
 /obj/machinery/door/airlock/tram
 	name = "tram door"
 	icon = 'icons/obj/doors/airlocks/tram/tram.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/tram/tram-overlays.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/tram/tram_overlays.dmi'
 	multi_tile = TRUE
 	opacity = FALSE
 	assemblytype = /obj/structure/door_assembly/multi_tile/door_assembly_tram

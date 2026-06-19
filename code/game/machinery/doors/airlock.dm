@@ -137,19 +137,29 @@
 	var/normalspeed = TRUE
 	var/cutAiWire = FALSE
 	var/autoname = FALSE
-	var/doorOpen = 'sound/machines/airlock/airlock.ogg'
-	var/doorClose = 'sound/machines/airlock/airlockclose.ogg'
+	var/doorOpen = 'sound/aesthetics/airlock/sound/open.ogg'
+	var/doorClose = 'sound/aesthetics/airlock/sound/close.ogg'
 	var/doorDeni = 'sound/machines/beep/deniedbeep.ogg' // i'm thinkin' Deni's
-	var/boltUp = 'sound/machines/airlock/boltsup.ogg'
-	var/boltDown = 'sound/machines/airlock/boltsdown.ogg'
+	var/boltUp = 'sound/aesthetics/airlock/sound/bolts_up.ogg'
+	var/boltDown = 'sound/aesthetics/airlock/sound/bolts_down.ogg'
 	var/noPower = 'sound/machines/airlock/doorclick.ogg'
+	var/forcedOpen = 'sound/aesthetics/airlock/sound/open_force.ogg'
+	var/forcedClosed = 'sound/aesthetics/airlock/sound/close_force.ogg'
 	/// What airlock assembly mineral plating was applied to
 	var/previous_airlock = /obj/structure/door_assembly
 	/// Material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/airlock_material
-	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
+	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 	/// Used for papers and photos pinned to the airlock
-	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
+	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+	/// For airlocks that need varying fill overlays without a separate icon file.
+	var/fill_state_suffix = null
+	/// Accent color for airlocks that use greyscale accent overlays.
+	var/greyscale_accent_color = null
+	/// Whether this airlock emits environment lights.
+	var/has_environment_lights = TRUE
+	/// Whether this airlock leads externally, such as to space.
+	var/external = FALSE
 
 	/// Airlock pump that overrides airlock controlls when set up for cycling
 	var/obj/machinery/atmospherics/components/unary/airlock_pump/cycle_pump
@@ -225,6 +235,25 @@
 /obj/machinery/door/airlock/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	if(id_tag)
 		id_tag = "[port.shuttle_id]_[id_tag]"
+	validate_as_external(port)
+
+/// Checks whether this airlock is external, including shuttle-border doors and airless neighboring turfs.
+/obj/machinery/door/airlock/proc/validate_as_external(obj/docking_port/mobile/port)
+	if(port)
+		if(!port.shuttle_areas[get_area(src)])
+			return
+
+		var/list/bounds = port.return_coords()
+		if(x == bounds[1] || y == bounds[2] || x == bounds[3] || y == bounds[4])
+			external = TRUE
+			return
+
+	for(var/turf/turf_nearby in get_adjacent_open_turfs(src))
+		if(is_space_or_openspace(turf_nearby) || turf_nearby.initial_gas_mix == AIRLESS_ATMOS)
+			external = TRUE
+			return
+
+	external = FALSE
 
 /obj/machinery/door/airlock/proc/update_other_id()
 	for(var/obj/machinery/door/airlock/Airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
@@ -565,6 +594,10 @@
 
 	return ..()
 
+/obj/machinery/door/airlock/power_change()
+	. = ..()
+	update_icon()
+
 /obj/machinery/door/airlock/update_icon_state()
 	. = ..()
 	if(animation)
@@ -574,12 +607,15 @@
 	else
 		icon_state = "[base_icon_state]closed"
 
-/* NOVA EDIT REMOVAL - AESTHETICS - OVERWRITTEN IN code/modules/aesthetics/airlock/airlock.dm
 /obj/machinery/door/airlock/update_overlays()
 	. = ..()
-
+	if(QDELETED(src))
+		return
+	if(isnull(overlays_file))
+		return
 	var/frame_state
-	var/light_state
+	var/light_state = AIRLOCK_LIGHT_POWERON
+	var/pre_light_color
 	if(machine_stat & MAINT) // in the process of being emagged
 		frame_state = AIRLOCK_FRAME_CLOSED
 	else switch(airlock_state)
@@ -587,40 +623,81 @@
 			frame_state = AIRLOCK_FRAME_CLOSED
 			if(locked)
 				light_state = AIRLOCK_LIGHT_BOLTS
+				pre_light_color = AIRLOCK_BOLTS_LIGHT_COLOR
 			else if(emergency)
 				light_state = AIRLOCK_LIGHT_EMERGENCY
-			else if(has_active_reta_access())
+				pre_light_color = AIRLOCK_EMERGENCY_LIGHT_COLOR
+			else if (has_active_reta_access())
 				light_state = AIRLOCK_LIGHT_RETA
+				pre_light_color = AIRLOCK_EMERGENCY_LIGHT_COLOR
+			else if(fire_active)
+				light_state = AIRLOCK_LIGHT_FIRE
+				pre_light_color = AIRLOCK_FIRE_LIGHT_COLOR
+			else if(engineering_override)
+				light_state = AIRLOCK_LIGHT_ENGINEERING
+				pre_light_color = AIRLOCK_ENGINEERING_LIGHT_COLOR
+			else
+				pre_light_color = AIRLOCK_POWERON_LIGHT_COLOR
 		if(AIRLOCK_DENY)
 			frame_state = AIRLOCK_FRAME_CLOSED
 			light_state = AIRLOCK_LIGHT_DENIED
+			pre_light_color = AIRLOCK_DENY_LIGHT_COLOR
 		if(AIRLOCK_CLOSING)
 			frame_state = AIRLOCK_FRAME_CLOSING
 			light_state = AIRLOCK_LIGHT_CLOSING
+			pre_light_color = AIRLOCK_ACCESS_LIGHT_COLOR
 		if(AIRLOCK_OPEN)
 			frame_state = AIRLOCK_FRAME_OPEN
+			if(locked)
+				light_state = AIRLOCK_LIGHT_BOLTS
+				pre_light_color = AIRLOCK_BOLTS_LIGHT_COLOR
+			else if(emergency)
+				light_state = AIRLOCK_LIGHT_EMERGENCY
+				pre_light_color = AIRLOCK_EMERGENCY_LIGHT_COLOR
+			else if (has_active_reta_access())
+				light_state = AIRLOCK_LIGHT_RETA
+				pre_light_color = AIRLOCK_EMERGENCY_LIGHT_COLOR
+			else if(fire_active)
+				light_state = AIRLOCK_LIGHT_FIRE
+				pre_light_color = AIRLOCK_FIRE_LIGHT_COLOR
+			else if(engineering_override)
+				light_state = AIRLOCK_LIGHT_ENGINEERING
+				pre_light_color = AIRLOCK_ENGINEERING_LIGHT_COLOR
+			else
+				pre_light_color = AIRLOCK_POWERON_LIGHT_COLOR
+			light_state += "_open"
 		if(AIRLOCK_OPENING)
 			frame_state = AIRLOCK_FRAME_OPENING
 			light_state = AIRLOCK_LIGHT_OPENING
+			pre_light_color = AIRLOCK_ACCESS_LIGHT_COLOR
 
 	. += get_airlock_overlay(frame_state, icon, src, em_block = TRUE)
 	if(airlock_material)
 		. += get_airlock_overlay("[airlock_material]_[frame_state]", overlays_file, src, em_block = TRUE)
 	else
-		. += get_airlock_overlay("fill_[frame_state]", icon, src, em_block = TRUE)
+		. += get_airlock_overlay("fill_[frame_state + fill_state_suffix]", icon, src, em_block = TRUE)
 
-	if(feedback && hasPower() && light_state)
+	if(feedback && hasPower() && has_environment_lights)
 		. += get_airlock_overlay("lights_[light_state]", overlays_file, src, em_block = FALSE)
+		. += emissive_appearance(overlays_file, "lights_[light_state]", src, alpha = src.alpha)
+
+		if(multi_tile && filler)
+			filler.set_light(l_range = AIRLOCK_LIGHT_RANGE, l_power = AIRLOCK_LIGHT_POWER, l_color = pre_light_color, l_on = TRUE)
+
+		set_light(l_range = AIRLOCK_LIGHT_RANGE, l_power = AIRLOCK_LIGHT_POWER, l_color = pre_light_color, l_on = TRUE)
+	else
+		set_light(l_on = FALSE)
+
+	if(greyscale_accent_color)
+		. += get_airlock_overlay("[frame_state]_accent", overlays_file, src, em_block = TRUE, state_color = greyscale_accent_color)
 
 	if(panel_open)
 		. += get_airlock_overlay("panel_[frame_state][security_level ? "_protected" : null]", overlays_file, src, em_block = TRUE)
-
 	if(frame_state == AIRLOCK_FRAME_CLOSED && welded)
 		. += get_airlock_overlay("welded", overlays_file, src, em_block = TRUE)
 
-	if(machine_stat & MAINT) // in the process of being emagged
+	if(machine_stat & MAINT) // in the process of being emagged // copy paste modular code *cry
 		. += get_airlock_overlay("sparks", overlays_file, src, em_block = FALSE)
-
 	if(hasPower())
 		if(frame_state == AIRLOCK_FRAME_CLOSED)
 			if(atom_integrity < integrity_failure * max_integrity)
@@ -641,8 +718,7 @@
 		for(var/heading in list(NORTH,SOUTH,EAST,WEST))
 			if(!(unres_sides & heading))
 				continue
-			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER, src, O_LIGHTING_VISUAL_PLANE, appearance_flags = RESET_COLOR | KEEP_APART)
-			floorlight.color = LIGHT_COLOR_DEFAULT
+			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER, src, ABOVE_LIGHTING_PLANE)
 			switch (heading)
 				if (NORTH)
 					floorlight.pixel_w = 0
@@ -657,7 +733,7 @@
 					floorlight.pixel_w = -32
 					floorlight.pixel_z = 0
 			. += floorlight
-*/
+
 
 /obj/machinery/door/airlock/run_animation(animation, force_type = DEFAULT_DOOR_CHECKS)
 	if(animation == DOOR_DENY_ANIMATION)
@@ -1967,7 +2043,7 @@
 
 /obj/machinery/door/airlock/hydroponics	//Hydroponics front doors!
 	name = "hydroponics airlock"
-	icon = 'icons/obj/doors/airlocks/station/hydroponics.dmi'
+	icon = 'icons/obj/doors/airlocks/station/botany.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_hydro
 
 /obj/machinery/door/airlock/maintenance
@@ -2268,8 +2344,8 @@
 
 /obj/machinery/door/airlock/public
 	name = "public airlock"
-	icon = 'icons/obj/doors/airlocks/public/glass.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/public/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_public
 
 /obj/machinery/door/airlock/public/glass
@@ -2297,6 +2373,7 @@
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
+	external = TRUE
 
 	/// Whether or not the airlock can be opened without access from a certain direction while powered, or with bare hands from any direction while unpowered OR pressurized.
 	var/space_dir = null
@@ -2419,6 +2496,7 @@
 	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_shuttle
+	external = TRUE
 
 /obj/machinery/door/airlock/shuttle/glass
 	opacity = FALSE
@@ -2570,8 +2648,8 @@
 // Multi-tile (Large) Airlocks
 
 /obj/machinery/door/airlock/multi_tile
-	icon = 'icons/obj/doors/airlocks/multi_tile/public/glass.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/multi_tile/public/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/multi_tile/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/multi_tile/glass_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/multi_tile/door_assembly_public
 	multi_tile = TRUE
 	opacity = FALSE
@@ -2655,3 +2733,105 @@
 #undef AIRLOCK_FRAME_OPENING
 */
 // NOVA EDIT REMOVAL END - moved to code/__DEFINES/~nova_defines/airlock.dm
+
+/obj/machinery/door/airlock/security/blue
+	icon = 'icons/obj/doors/airlocks/station/securityblue.dmi'
+
+/obj/machinery/door/airlock/corporate
+	icon = 'icons/obj/doors/airlocks/station/corporate.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_corporate
+	normal_integrity = 450
+
+/obj/machinery/door/airlock/corporate/glass
+	opacity = FALSE
+	glass = TRUE
+	normal_integrity = 400
+
+/obj/machinery/door/airlock/service
+	icon = 'icons/obj/doors/airlocks/station/service.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_service
+
+/obj/machinery/door/airlock/service/glass
+	opacity = FALSE
+	glass = TRUE
+
+/obj/machinery/door/airlock/captain
+	icon = 'icons/obj/doors/airlocks/cap.dmi'
+
+/obj/machinery/door/airlock/hop
+	icon = 'icons/obj/doors/airlocks/hop.dmi'
+
+/obj/machinery/door/airlock/hos
+	icon = 'icons/obj/doors/airlocks/hos.dmi'
+
+/obj/machinery/door/airlock/hos/glass
+	opacity = FALSE
+	glass = TRUE
+	normal_integrity = 400
+
+/obj/machinery/door/airlock/ce
+	icon = 'icons/obj/doors/airlocks/ce.dmi'
+
+/obj/machinery/door/airlock/ce/glass
+	opacity = FALSE
+	glass = TRUE
+	normal_integrity = 400
+
+/obj/machinery/door/airlock/rd
+	icon = 'icons/obj/doors/airlocks/rd.dmi'
+
+/obj/machinery/door/airlock/rd/glass
+	opacity = FALSE
+	glass = TRUE
+	normal_integrity = 400
+
+/obj/machinery/door/airlock/qm
+	icon = 'icons/obj/doors/airlocks/qm.dmi'
+
+/obj/machinery/door/airlock/qm/glass
+	opacity = FALSE
+	glass = TRUE
+	normal_integrity = 400
+
+/obj/machinery/door/airlock/cmo
+	icon = 'icons/obj/doors/airlocks/cmo.dmi'
+
+/obj/machinery/door/airlock/cmo/glass
+	opacity = FALSE
+	glass = TRUE
+	normal_integrity = 400
+
+/obj/machinery/door/airlock/psych
+	icon = 'icons/obj/doors/airlocks/psych.dmi'
+
+/obj/machinery/door/airlock/asylum
+	icon = 'icons/obj/doors/airlocks/asylum.dmi'
+
+/obj/machinery/door/airlock/bathroom
+	icon = 'icons/obj/doors/airlocks/bathroom.dmi'
+
+/obj/machinery/door/airlock/shuttle/ferry
+	icon = 'icons/obj/doors/airlocks/shuttle2/erokez.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/shuttle2/overlays.dmi'
+
+/obj/machinery/door/airlock/external/wagon
+	icon = 'icons/obj/doors/airlocks/shuttle2/wagon.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/shuttle2/overlays.dmi'
+
+/obj/machinery/door/airlock/survival_pod
+	overlays_file = 'icons/obj/doors/airlocks/survival/overlays.dmi'
+
+/obj/machinery/door/airlock/multi_tile/glass
+	icon = 'icons/obj/doors/airlocks/multi_tile/glass.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/multi_tile/glass_overlays.dmi'
+
+/obj/machinery/door/airlock/multi_tile/metal
+	icon = 'icons/obj/doors/airlocks/multi_tile/metal.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/multi_tile/metal_overlays.dmi'
+
+/obj/machinery/door/airlock/tram
+	name = "tram door"
+	icon = 'icons/obj/doors/airlocks/tram/tram.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/tram/tram_overlays.dmi'
+	doorOpen = 'sound/machines/tram/tramopen.ogg'
+	doorClose = 'sound/machines/tram/tramclose.ogg'

@@ -12,6 +12,8 @@
 	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 5, /datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	animation_sound = 'sound/machines/shutter.ogg'
 	show_nav_computer_icon = FALSE
+	var/door_open_sound = 'sound/aesthetics/blast_door/sound/shutters_open.ogg'
+	var/door_close_sound = 'sound/aesthetics/blast_door/sound/shutters_close.ogg'
 
 /obj/machinery/door/poddoor/shutters/animation_length(animation)
 	switch(animation)
@@ -30,6 +32,13 @@
 			return 0.152 SECONDS
 		if(DOOR_CLOSING_FINISHED)
 			return 1.388 SECONDS
+
+/obj/machinery/door/poddoor/shutters/animation_effects(animation)
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			playsound(src, door_open_sound, 30, TRUE)
+		if(DOOR_CLOSING_ANIMATION)
+			playsound(src, door_close_sound, 30, TRUE)
 
 /obj/machinery/door/poddoor/shutters/preopen
 	icon_state = "open"

@@ -1,4 +1,4 @@
-// Similar to puzzle doors but with a closing function and a more general appearance that fits our spriting style. Minus the INDISTRUCTIBLE flag as well
+// Similar to puzzle doors but with a closing function and a more general appearance that fits our spriting style.
 
 /**
  * Keycard that's meant to be able to open a /obj/machinery/door/airlock/keyed. Without it, the door will not open.
@@ -15,23 +15,18 @@
 	throw_range = 7
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	/// The access ID of the airlock it can be used to unlock.
-	var/access_id  = null
+	var/access_id = null
 	/// Is this keycard a master keycard, i.e. will it open all locked airlocks
-	/// no matter their access_id? (Don't give this out willy-nilly, due to the
-	/// possible implications it has).
+	/// no matter their access_id? Don't give this out willy-nilly.
 	var/master_access = FALSE
 
-
 /**
- * The doors and Keys need to match when being built, demo variants are found below
- * along with the requirements for use. Make sure the access_id matches the door or it won't work.
- *
+ * The doors and keys need to match when being built. Make sure the access_id matches the door or it won't work.
  */
 /obj/machinery/door/airlock/keyed
 	name = "locked airlock"
 	desc = "This door only opens when a keycard with the proper access is swiped. It looks virtually indestructible."
-	icon = 'icons/aesthetics/keyed_doors/icons/keyed.dmi'
-	// overlays_file = 'icons/aesthetics/keyed_doors/icons/keyed.dmi' // if this route is ever taken
+	icon = 'icons/obj/doors/keyed.dmi'
 	icon_state = "closed"
 	explosion_block = 3
 	heat_proof = TRUE
@@ -51,7 +46,6 @@
 	/// it for something that's meant to have only one unique key.
 	var/respects_master_access = TRUE
 
-
 /datum/armor/airlock_keyed
 	melee = 100
 	bullet = 100
@@ -66,12 +60,11 @@
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
-
 /obj/machinery/door/airlock/keyed/check_access(obj/item/key_card/used_keycard)
 	if(!used_keycard || !istype(used_keycard))
 		return FALSE
 
-	if(locked) // Sorry, can't cheese this one if it's locked. :)
+	if(locked)
 		return FALSE
 
 	if(access_id && access_id != used_keycard.access_id && !(respects_master_access && used_keycard.master_access))
@@ -79,67 +72,50 @@
 
 	return TRUE
 
-
 /obj/machinery/door/airlock/keyed/allowed(mob/accessor)
-	if(issilicon(accessor)) // No, cyborgs, pAIs or AIs can't open these doors, sorry.
+	if(issilicon(accessor))
 		return FALSE
 
 	return ..()
 
-
-// Standard Expressions to make keyed airlocks basically un-cheeseable
-
 /obj/machinery/door/airlock/keyed/ex_act(severity, target)
 	return FALSE
-
 
 /obj/machinery/door/airlock/keyed/emag_act(mob/user, obj/item/card/emag/doorjack/D)
 	return
 
-
 /obj/machinery/door/airlock/keyed/screwdriver_act(mob/living/user, obj/item/tool)
 	return
-
 
 /obj/machinery/door/airlock/keyed/canAIControl(mob/user)
 	return FALSE
 
-
 /obj/machinery/door/airlock/keyed/canAIHack()
 	return FALSE
-
 
 /obj/machinery/door/airlock/keyed/AICtrlClick()
 	return FALSE
 
-
 /obj/machinery/door/airlock/keyed/ai_click_alt(mob/living/silicon/ai/user)
 	return
-
 
 /obj/machinery/door/airlock/keyed/AIShiftClick()
 	return FALSE
 
-
 /obj/machinery/door/airlock/keyed/AICtrlShiftClick()
 	return FALSE
-
 
 /obj/machinery/door/airlock/keyed/BorgCtrlClick(mob/living/silicon/robot/user)
 	return FALSE
 
-
 /obj/machinery/door/airlock/keyed/borg_click_alt(mob/living/silicon/robot/user)
 	return FALSE
-
 
 /obj/machinery/door/airlock/keyed/BorgShiftClick(mob/living/silicon/robot/user)
 	return FALSE
 
-
 /obj/machinery/door/airlock/keyed/BorgCtrlShiftClick(mob/living/silicon/robot/user)
 	return FALSE
-
 
 /obj/machinery/door/airlock/keyed/ui_interact(mob/user, datum/tgui/ui)
 	return FALSE

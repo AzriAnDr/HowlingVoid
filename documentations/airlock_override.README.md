@@ -18,8 +18,8 @@ tgui/packages/tgui/interfaces/KeycardAuth.js
 
 ### Defines:
 
-AIRLOCK_LIGHT_ENGINEERING in code\modules\aesthetics\airlock\airlock.dm
-AIRLOCK_ENGINEERING_LIGHT_COLOR in code\modules\aesthetics\airlock\airlock.dm
+AIRLOCK_LIGHT_ENGINEERING in code\__DEFINES\~nova_defines\airlock.dm
+AIRLOCK_ENGINEERING_LIGHT_COLOR in code\__DEFINES\~nova_defines\airlock.dm
 
 ### Credits:
 
