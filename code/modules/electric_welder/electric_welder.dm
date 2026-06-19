@@ -1,7 +1,7 @@
 /obj/item/weldingtool/electric
 	name = "electrical welding tool"
 	desc = "An experimental welding tool capable of welding functionality through the use of electricity. The flame seems almost cold."
-	icon = 'icons/aesthetics/tools/icons/tools_skyrat.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "elwelder"
 	light_power = 1
 	light_color = LIGHT_COLOR_HALOGEN
@@ -81,4 +81,3 @@
 	else
 		inhand_icon_state = "[initial(inhand_icon_state)]"
 	return ..()
-

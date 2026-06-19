@@ -3610,7 +3610,6 @@
 #include "code\modules\aesthetics\rack\rack.dm"
 #include "code\modules\aesthetics\stationobjs\stationobjs.dm"
 #include "code\modules\aesthetics\storage\storage.dm"
-#include "code\modules\aesthetics\tools\tools.dm"
 #include "code\modules\aesthetics\vending\access_vending.dm"
 #include "code\modules\aesthetics\walls\walls.dm"
 #include "code\modules\aesthetics\windows\windows.dm"
