@@ -701,7 +701,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 /obj/structure/window/fulltile
 	name = "full tile window"
 	desc = "A full tile window."
-	icon = 'icons/obj/smooth_structures/window.dmi' //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
+	icon = 'icons/obj/smooth_structures/window.dmi'
 	icon_state = "window-0"
 	base_icon_state = "window"
 	max_integrity = 100
@@ -710,9 +710,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	glass_amount = 2
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
+
+/obj/structure/window/fulltile/Initialize(mapload, direct)
+	. = ..()
+	RemoveElement(/datum/element/simple_rotation)
 
 /obj/structure/window/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
@@ -724,27 +728,31 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 
 /obj/structure/window/plasma/fulltile
 	name = "full tile plasma window"
-	icon = 'icons/obj/smooth_structures/plasma_window.dmi' //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
-	icon_state = "plasma_window-0"
-	base_icon_state = "plasma_window"
+	icon = 'icons/obj/smooth_structures/plasma_window.dmi'
+	icon_state = "window-0"
+	base_icon_state = "window"
 	max_integrity = 400
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	glass_amount = 2
 	custom_materials = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT * 2)
+
+/obj/structure/window/plasma/fulltile/Initialize(mapload, direct)
+	. = ..()
+	RemoveElement(/datum/element/simple_rotation)
 
 /obj/structure/window/plasma/fulltile/unanchored
 	anchored = FALSE
 
 /obj/structure/window/reinforced/plasma/fulltile
 	name = "full tile reinforced plasma window"
-	icon = 'icons/obj/smooth_structures/rplasma_window.dmi' //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
-	icon_state = "rplasma_window-0"
-	base_icon_state = "rplasma_window"
+	icon = 'icons/obj/smooth_structures/rplasma_window.dmi'
+	icon_state = "reinforced_window-0"
+	base_icon_state = "reinforced_window"
 	state = RWINDOW_SECURE
 	max_integrity = 1000
 	fulltile = TRUE
@@ -752,9 +760,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	glass_amount = 2
 	custom_materials = list(/datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
+
+/obj/structure/window/reinforced/plasma/fulltile/Initialize(mapload, direct)
+	. = ..()
+	RemoveElement(/datum/element/simple_rotation)
 
 /obj/structure/window/reinforced/plasma/fulltile/unanchored
 	anchored = FALSE
@@ -763,7 +775,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 /obj/structure/window/reinforced/fulltile
 	name = "full tile reinforced window"
 	desc = "A full tile window that is reinforced with metal rods."
-	icon = 'icons/obj/smooth_structures/reinforced_window.dmi' //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
+	icon = 'icons/obj/smooth_structures/reinforced_window.dmi'
 	icon_state = "reinforced_window-0"
 	base_icon_state = "reinforced_window"
 	max_integrity = 150
@@ -773,9 +785,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	state = RWINDOW_SECURE
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	glass_amount = 2
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
+
+/obj/structure/window/reinforced/fulltile/Initialize(mapload, direct)
+	. = ..()
+	RemoveElement(/datum/element/simple_rotation)
 
 /obj/structure/window/reinforced/fulltile/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
@@ -787,18 +803,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	state = WINDOW_OUT_OF_FRAME
 
 /obj/structure/window/reinforced/tinted/fulltile
-	icon = 'icons/obj/smooth_structures/tinted_window.dmi' //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
-	icon_state = "tinted_window-0"
-	base_icon_state = "tinted_window"
+	icon = 'icons/obj/smooth_structures/tinted_window.dmi'
+	icon_state = "reinforced_window-0"
+	base_icon_state = "reinforced_window"
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
-	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
+	canSmoothWith = SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WALLS
 	glass_amount = 2
 	// Not on the parent because directional opacity does NOT WORK
 	opacity = TRUE
+
+/obj/structure/window/reinforced/tinted/fulltile/Initialize(mapload, direct)
+	. = ..()
+	RemoveElement(/datum/element/simple_rotation)
 
 /obj/structure/window/reinforced/fulltile/ice
 	icon = 'icons/obj/smooth_structures/rice_window.dmi'
