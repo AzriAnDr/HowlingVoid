@@ -40,7 +40,7 @@
 	},
 /obj/structure/showcase{
 	name = "doorphone";
-	icon = 'icons/aesthetics/intercom/icons/intercom.dmi';
+	icon = 'icons/obj/machines/wallmounts.dmi';
 	icon_state = "intercom";
 	pixel_y = 24;
 	density = 0
