@@ -3599,7 +3599,6 @@
 #include "code\modules\advanced_shuttles\decals.dm"
 #include "code\modules\advanced_shuttles\shuttles.dm"
 #include "code\modules\advanced_shuttles\turfs.dm"
-#include "code\modules\aesthetics\plasticflaps\plasticflaps.dm"
 #include "code\modules\aesthetics\posters\posters.dm"
 #include "code\modules\aesthetics\rack\rack.dm"
 #include "code\modules\aesthetics\stationobjs\stationobjs.dm"
