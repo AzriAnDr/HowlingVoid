@@ -12,7 +12,7 @@
 /obj/item/ammo_casing/energy/laser/accelerator
 	projectile_type = /obj/projectile/beam/laser/accelerator
 	select_name = "accelerator"
-	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
+	fire_sound = 'sound/items/weapons/gun/energy/laser_cannon_fire.ogg'
 
 /obj/item/ammo_casing/energy/lasergun
 	projectile_type = /obj/projectile/beam/laser
@@ -123,7 +123,7 @@
 	projectile_type = /obj/projectile/beam/pulse
 	e_cost = LASER_SHOTS(200, STANDARD_CELL_CHARGE * 40)
 	select_name = "DESTROY"
-	fire_sound = 'sound/items/weapons/pulse.ogg'
+	fire_sound = 'sound/items/weapons/gun/energy/pulse.ogg'
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 	muzzle_flash_color = LIGHT_COLOR_BLUE
 
@@ -146,7 +146,7 @@
 /obj/item/ammo_casing/energy/xray
 	projectile_type = /obj/projectile/beam/xray
 	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE)
-	fire_sound = 'sound/items/weapons/laser3.ogg'
+	fire_sound = 'sound/items/weapons/gun/energy/xray_laser.ogg'
 
 /obj/item/ammo_casing/energy/mindflayer
 	projectile_type = /obj/projectile/beam/mindflayer

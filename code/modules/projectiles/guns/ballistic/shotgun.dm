@@ -83,11 +83,18 @@
 	..()
 	rack()
 
-/obj/item/gun/ballistic/shotgun/automatic/combat //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
-	name = "combat shotgun"
-	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
+/obj/item/gun/ballistic/shotgun/automatic/combat
+	name = "\improper Peacekeeper combat shotgun"
+	desc = "A semi-automatic Nanotrasen Peacekeeper shotgun with tactical furnishing and heavier internals meant for sustained fire. Lacks a threaded barrel."
+	icon = 'icons/obj/weapons/guns/guns_40x32.dmi'
 	icon_state = "cshotgun"
+	worn_icon = 'icons/mob/clothing/back.dmi'
+	worn_icon_state = "cshotgun"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "shotgun_combat"
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 	projectile_damage_multiplier = 1.5
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
@@ -103,7 +110,13 @@
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "compact combat shotgun"
 	desc = "A compact version of the semi automatic combat shotgun. Lower magazine capacity, but more easily carried."
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "cshotgunc"
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	worn_icon = null
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com/compact
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM

@@ -4,6 +4,7 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "taser"
 	inhand_icon_state = "armcannonstun4"
+	shaded_charge = FALSE
 	display_empty = FALSE
 	force = 5
 	selfcharge = 1

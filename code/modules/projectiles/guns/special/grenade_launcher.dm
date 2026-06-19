@@ -1,8 +1,10 @@
 /obj/item/gun/grenadelauncher
 	name = "pneumatic grenade launcher"
 	desc = "A terrible, terrible thing. It's really awful!"
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/guns_40x32.dmi'
 	icon_state = "riotgun"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "riotgun"
 	w_class = WEIGHT_CLASS_BULKY
 	can_muzzle_flash = FALSE

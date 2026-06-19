@@ -243,6 +243,7 @@
 	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/xray)
 	ammo_x_offset = 3
+	fire_sound_volume = 100
 	custom_materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5,
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5,
@@ -250,7 +251,7 @@
 		/datum/material/titanium = SHEET_MATERIAL_AMOUNT,
 		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT,
 	)
-	shaded_charge = FALSE
+	shaded_charge = TRUE
 	light_color = LIGHT_COLOR_GREEN
 
 ////////Laser Tag////////////////////

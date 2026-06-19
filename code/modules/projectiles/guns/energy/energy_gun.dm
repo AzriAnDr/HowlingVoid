@@ -2,6 +2,7 @@
 	name = "energy gun"
 	desc = "A basic hybrid energy gun with two settings: disable and kill."
 	icon_state = "energy"
+	shaded_charge = SHADED_CHARGE_MODE_LABELED
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = null //so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
@@ -37,7 +38,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	cell_type = /obj/item/stock_parts/power_store/cell/mini_egun
 	ammo_x_offset = 2
-	charge_sections = 3
+	charge_sections = 4
 	single_shot_type_overlay = FALSE
 
 /obj/item/gun/energy/e_gun/mini/add_seclight_point()
@@ -45,15 +46,16 @@
 	AddComponent(/datum/component/seclite_attachable, \
 		starting_light = new /obj/item/flashlight/seclite(src), \
 		is_light_removable = FALSE, \
-		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
+		light_overlay_icon = 'icons/obj/weapons/guns/energy.dmi', \
 		light_overlay = "mini-light", \
-		overlay_x = 19, \
-		overlay_y = 13)
+		overlay_x = 0, \
+		overlay_y = 0)
 
 /obj/item/gun/energy/e_gun/stun
 	name = "tactical energy gun"
 	desc = "Military issue energy gun, is able to fire stun rounds."
 	icon_state = "energytac"
+	shaded_charge = FALSE
 	ammo_x_offset = 2
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/spec, /obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 
@@ -61,6 +63,7 @@
 	name = "prototype energy gun"
 	desc = "NT-P:01 Prototype Energy Gun. Early stage development of a unique laser rifle that has multifaceted energy lens allowing the gun to alter the form of projectile it fires on command."
 	icon_state = "protolaser"
+	shaded_charge = FALSE
 	ammo_x_offset = 2
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/electrode/old)
 
@@ -69,9 +72,13 @@
 	desc = "A modified version of the basic phaser gun, this one fires less concentrated energy bolts designed for target practice."
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser/practice)
 	icon_state = "decloner"
+	shaded_charge = FALSE
 	//You have no icons for energy types, you're a decloner
 	modifystate = FALSE
 	gun_flags = NOT_A_REAL_GUN
+
+/obj/item/gun/energy/e_gun/mini/practice_phaser/add_seclight_point()
+	return
 
 /obj/item/gun/energy/e_gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
@@ -102,6 +109,7 @@
 	ammo_y_offset = 1
 	ammo_x_offset = 0
 	charge_sections = 3
+	shaded_charge = FALSE
 	shot_type_fluff_overlay = TRUE
 	///A dragnet beacon set to be the teleport destination for snare teleport rounds.
 	var/obj/item/dragnet_beacon/linked_beacon
@@ -137,6 +145,7 @@
 	desc = "A heavy hybrid energy cannon with two settings: Stun and kill."
 	icon_state = "turretlaser"
 	inhand_icon_state = "turretlaser"
+	shaded_charge = FALSE
 	slot_flags = null
 	w_class = WEIGHT_CLASS_HUGE
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode/ai_turrets, /obj/item/ammo_casing/energy/laser)
@@ -151,7 +160,9 @@
 	name = "advanced energy gun"
 	desc = "An energy gun with an experimental miniaturized nuclear reactor that automatically charges the internal power cell."
 	icon_state = "nucgun"
-	inhand_icon_state = "nucgun"
+	inhand_icon_state = null
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	charge_delay = 10
 	can_charge = FALSE
 	ammo_x_offset = 1

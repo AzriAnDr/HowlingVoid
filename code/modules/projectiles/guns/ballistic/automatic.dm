@@ -37,6 +37,7 @@
 /obj/item/gun/ballistic/automatic/c20r
 	name = "\improper C-20r SMG"
 	desc = "A bullpup three-round burst .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
+	icon = 'icons/obj/weapons/guns/guns_40x32.dmi'
 	icon_state = "c20r"
 	inhand_icon_state = "c20r"
 	selector_switch_icon = TRUE
@@ -143,6 +144,7 @@
 	name = "\improper M-90gl Carbine"
 	desc = "A three-round burst .223 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher."
 	desc_controls = "Right-click to use grenade launcher."
+	icon = 'icons/obj/weapons/guns/guns_40x32.dmi'
 	icon_state = "m90"
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "m90"
@@ -234,6 +236,15 @@
 	can_suppress = FALSE
 	burst_size = 3
 	burst_delay = 1
+
+/obj/item/gun/ballistic/automatic/ar/modular
+	name = "\improper NT ARG-63"
+	desc = "Nanotrasen's prime ballistic option based on the Stoner design, fitted with a light polymer frame and other tactical furniture, chambered in .223 - nicknamed 'Boarder' by Special Operations teams."
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	icon_state = "arg"
+	inhand_icon_state = "arg"
+	can_suppress = FALSE
+	SET_BASE_PIXEL(-8, 0)
 
 // L6 SAW //
 
