@@ -3599,7 +3599,6 @@
 #include "code\modules\advanced_shuttles\decals.dm"
 #include "code\modules\advanced_shuttles\shuttles.dm"
 #include "code\modules\advanced_shuttles\turfs.dm"
-#include "code\modules\aesthetics\stationobjs\stationobjs.dm"
 #include "code\modules\aesthetics\storage\storage.dm"
 #include "code\modules\aesthetics\vending\access_vending.dm"
 #include "code\modules\aesthetics\walls\walls.dm"
