@@ -1477,17 +1477,8 @@
 /obj/item/poster/korpstech
 	name = "\improper Empire Enhancements poster"
 	poster_type = /obj/structure/sign/poster/contraband/korpstech
-	icon = 'icons/aesthetics/posters/icons/contraband.dmi'
+	icon = 'icons/obj/poster.dmi'
 	icon_state = "rolled_poster"
-
-/obj/structure/sign/poster/contraband/korpstech
-	name = "Empire Enhancements"
-	desc = "This poster bears a huge, pink helix on it, with smaller text underneath it that mentions some alleged genetic advancements from a long time ago."
-	icon = 'icons/aesthetics/posters/icons/contraband.dmi'
-	icon_state = "korpsposter"
-	never_random = TRUE
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/korpstech, 32)
 
 // Donation reward for Kay-Nite
 /obj/item/clothing/glasses/eyepatch/rosecolored
