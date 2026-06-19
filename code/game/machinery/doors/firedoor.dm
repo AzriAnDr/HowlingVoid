@@ -61,8 +61,8 @@
 
 	var/knock_sound = 'sound/effects/glass/glassknock.ogg'
 	var/bash_sound = 'sound/effects/glass/glassbash.ogg'
-	var/door_open_sound = 'sound/aesthetics/firedoor/sound/firedoor_open.ogg'
-	var/door_close_sound = 'sound/aesthetics/firedoor/sound/firedoor_open.ogg'
+	var/door_open_sound = 'sound/machines/door/firedoor_open.ogg'
+	var/door_close_sound = 'sound/machines/door/firedoor_open.ogg'
 
 
 /datum/armor/door_firedoor

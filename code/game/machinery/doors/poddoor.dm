@@ -22,7 +22,7 @@
 	/// The door's ID (used for buttons, etc to control the door)
 	var/id = null
 	/// The sound that plays when the door opens/closes
-	var/animation_sound = 'sound/aesthetics/blast_door/sound/blast_door.ogg'
+	var/animation_sound = 'sound/machines/blastdoor.ogg'
 	var/show_nav_computer_icon = TRUE
 	///The mob who crafted this blastdoor
 	var/datum/weakref/owner
