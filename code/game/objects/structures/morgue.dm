@@ -31,7 +31,7 @@
 GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants and other ghosties.
 
 /obj/structure/bodycontainer
-	icon = 'icons/obj/structures.dmi' //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "morgue1"
 	density = TRUE
 	anchored = TRUE
