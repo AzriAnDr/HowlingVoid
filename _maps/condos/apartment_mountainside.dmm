@@ -4609,7 +4609,7 @@
 "AF" = (
 /obj/structure/fake_stairs/directional/south{
 	icon_state = "stairs-old";
-	icon = 'icons/aesthetics/floors/icons/floors.dmi';
+	icon = 'icons/turf/floors.dmi';
 	color = "#555555";
 	dir = 4;
 	pixel_y = 1
@@ -5808,7 +5808,7 @@
 "Jv" = (
 /obj/structure/fake_stairs/directional/north{
 	icon_state = "stairs-old";
-	icon = 'icons/aesthetics/floors/icons/floors.dmi';
+	icon = 'icons/turf/floors.dmi';
 	color = "#555555"
 	},
 /obj/structure/railing{
@@ -6256,7 +6256,7 @@
 "MI" = (
 /obj/structure/fake_stairs/directional/north{
 	icon_state = "stairs-old";
-	icon = 'icons/aesthetics/floors/icons/floors.dmi';
+	icon = 'icons/turf/floors.dmi';
 	color = "#555555";
 	dir = 8;
 	pixel_y = 1

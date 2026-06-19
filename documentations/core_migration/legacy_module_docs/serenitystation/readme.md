@@ -29,7 +29,7 @@ To rerun the cutting tool move the relevant .dmi .png and .png.toml files to the
 
 ### Modular File Changes:
 
-- `icons/aesthetics/floors/icons/floors.dmi` -> added mushroom turf icon
+- `icons/turf/floors.dmi` -> added mushroom turf icon
 - `code/modules/automapper/area_spawn_subsystem.dm `-> added SerenityStation to the automapper's blacklisted stations
 - `code/modules/mapping/areas/shuttles.dm `-> added the area for the planetary_ferry
 - `code/modules/mapping/areas/station.dm` -> added the areas used in the station (as these might be reused in mapping; forest-related areas are in the module's folder)
