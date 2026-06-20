@@ -5563,7 +5563,6 @@
 #include "code\modules\delam_emergency_stop\scram.dm"
 #include "code\modules\Department_Budgets\cards.dm"
 #include "code\modules\departmentization\cargo_technician.dm"
-#include "code\modules\departmentization\clothing_overrides.dm"
 #include "code\modules\departmentization\quartermaster.dm"
 #include "code\modules\detectivework\detective_scan_category.dm"
 #include "code\modules\detectivework\evidence.dm"
