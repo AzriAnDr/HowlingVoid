@@ -95,7 +95,7 @@
 	inhand_icon_state = "shotgun_combat"
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
-	projectile_damage_multiplier = 1.5
+	projectile_damage_multiplier = 1.35
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
 
@@ -118,6 +118,7 @@
 	inhand_y_dimension = 64
 	worn_icon = null
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com/compact
+	projectile_damage_multiplier = 1
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM
 

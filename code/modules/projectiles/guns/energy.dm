@@ -55,6 +55,40 @@
 	/// A divide to the amount of charge lost when the weapon is EMP'd. Higher means more resistant.
 	var/emp_resistance = 1
 
+#define SLOW_CHARGE_MESSAGE "Equipped with a drip-charge microcell. Regains a couple of shots after a while without external power, maybe. Remember - switching to another gun is <b>definitely</b> faster than waiting for this to recharge."
+#define CHARGE_MESSAGE "Equipped with a trickle-charge microcell. Regains a couple of shots every quarter minute or so without external power. Don't expect it to keep up with heavy use."
+#define SUPER_CHARGE_MESSAGE "Equipped with a hyper-charge microcell. Regains a couple of shots next to every ten seconds without external power. While not infinite, it can handle heavier usage than its peers without running dry."
+#define HYPER_CHARGE_MESSAGE "Equipped with a fission-powered microcell. Regains a couple of shots every few seconds without external power. If this thing runs out of juice, you have bigger problems than recharging your gun."
+
+/// Returns the examine text describing this energy gun's self-charging cell, if it has one.
+/obj/item/gun/energy/proc/get_charge_message()
+	if(!selfcharge)
+		return
+
+	var/charge_message
+	switch(charge_delay)
+		if(1 to 7)
+			charge_message = HYPER_CHARGE_MESSAGE
+		if(8 to 14)
+			charge_message = SUPER_CHARGE_MESSAGE
+		if(15 to 21)
+			charge_message = CHARGE_MESSAGE
+		if(21 to INFINITY)
+			charge_message = SLOW_CHARGE_MESSAGE
+
+	return span_notice(charge_message)
+
+/obj/item/gun/energy/examine(mob/user)
+	. = ..()
+	var/charge_message = get_charge_message()
+	if(charge_message)
+		. += charge_message
+
+#undef SLOW_CHARGE_MESSAGE
+#undef CHARGE_MESSAGE
+#undef SUPER_CHARGE_MESSAGE
+#undef HYPER_CHARGE_MESSAGE
+
 /obj/item/gun/energy/fire_sounds()
 	// What frequency the energy gun's sound will make
 	var/pitch_to_use = 1

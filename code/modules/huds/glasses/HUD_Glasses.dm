@@ -31,6 +31,9 @@
 	LAZYADD(clothing_traits, TRAIT_NEARSIGHTED_CORRECTED)
 	return ..()
 
+/obj/item/clothing/glasses/hud/security/prescription/setup_reskins()
+	return
+
 /obj/item/clothing/glasses/science/prescription
 	name = "prescription science glasses"
 	desc = "These glasses scan the contents of containers and projects their contents to the user in an easy to read format. This one has prescription lenses."

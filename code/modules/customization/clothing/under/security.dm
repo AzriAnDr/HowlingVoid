@@ -1,4 +1,4 @@
-// MODULAR SECURITY WEAR (NOT OVERRIDES, LOOK IN 'code\modules\sec_haul\security_clothing\sec_clothing_overrides.dm')
+// MODULAR SECURITY WEAR
 
 // DETECTIVE
 /obj/item/clothing/under/rank/security/detective/cowboy

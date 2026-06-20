@@ -502,14 +502,6 @@ GLOBAL_LIST_EMPTY(room_controller_by_area)
 /obj/machinery/door/airlock
 	var/obj/machinery/room_controller/linked_room_controller
 
-/obj/machinery/door/airlock/allowed(mob/user)
-	. = ..()
-	if(!linked_room_controller)
-		return .
-	if(linked_room_controller.can_bypass_room_restrictions(user))
-		return TRUE
-	return linked_room_controller.can_enter_room(user)
-
 /mob/dead/observer/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if(client?.holder)

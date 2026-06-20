@@ -577,6 +577,18 @@
 	update_appearance()
 	return TRUE
 
+/// Reloading with ammo box can incur penalty with some guns.
+/obj/item/gun/ballistic/proc/handle_box_reload(mob/user, obj/item/ammo, num_loaded)
+	SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD)
+	if(!istype(ammo, /obj/item/ammo_box))
+		balloon_alert(user, "[num_loaded] [cartridge_wording]\s loaded")
+		return
+	var/obj/item/ammo_box/reloader = ammo
+	if(reloader.reload_delay)
+		var/penalty = reloader.reload_delay
+		user.changeNext_move(penalty)
+		balloon_alert(user, "[num_loaded] [cartridge_wording]\s loaded (delayed [penalty * 0.1]s)!")
+
 /obj/item/gun/ballistic/proc/check_if_held(mob/user)
 	if(src != user.get_inactive_held_item())
 		return FALSE
@@ -608,7 +620,6 @@
 /obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/new_suppressor)
 	suppressor = new_suppressor
 	suppressed = suppressor.suppression
-	update_weight_class(w_class + suppressor.w_class) //so pistols do not fit in pockets when suppressed
 	can_muzzle_flash = FALSE
 	update_appearance()
 
@@ -617,7 +628,6 @@
 		return
 	suppressed = SUPPRESSED_NONE
 	if(suppressor)
-		update_weight_class(w_class - suppressor.w_class)
 		suppressor = null
 	can_muzzle_flash = initial(can_muzzle_flash)
 	update_appearance()

@@ -490,9 +490,9 @@
 
 	id = /obj/item/card/id/advanced/centcom/ert/commander
 	suit = /obj/item/clothing/suit/armor/vest/marine
-	suit_store = /obj/item/gun/ballistic/automatic/wt550
-	back = /obj/item/shield/riot
-	belt = /obj/item/storage/belt/military/assault/full
+	suit_store = /obj/item/gun/ballistic/automatic/ar/modular/m44a/grenadelauncher
+	back = /obj/item/mod/control/pre_equipped/marine
+	belt = /obj/item/storage/belt/military/assault/full/m44a
 	ears = /obj/item/radio/headset/headset_cent/alt/leader
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
 	l_pocket = /obj/item/knife/combat
@@ -501,16 +501,35 @@
 	mask = /obj/item/clothing/mask/gas/sechailer
 	head = /obj/item/clothing/head/helmet/marine
 	additional_radio = /obj/item/encryptionkey/heads/captain
+	backpack_contents = list(
+		/obj/item/storage/box/survival/engineer/marine = 1,
+		/obj/item/melee/baton/security/loaded = 1,
+		/obj/item/storage/box/handcuffs = 1,
+		/obj/item/ammo_box/a40mm = 2,
+	)
+	l_hand = null
+	r_hand = null
 
 /datum/outfit/centcom/ert/marine/security
 	name = "Marine Heavy"
 
 	id = /obj/item/card/id/advanced/centcom/ert/security
 	suit = /obj/item/clothing/suit/armor/vest/marine/security
+	suit_store = /obj/item/gun/ballistic/automatic/ar/modular/m44a/shotgun
+	back = /obj/item/mod/control/pre_equipped/marine
+	belt = /obj/item/storage/belt/military/assault/full/m44a
 	ears = /obj/item/radio/headset/headset_cent/alt
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	head = /obj/item/clothing/head/helmet/marine/security
 	additional_radio = /obj/item/encryptionkey/heads/hos
+	backpack_contents = list(
+		/obj/item/storage/box/survival/engineer/marine = 1,
+		/obj/item/melee/baton/security/loaded = 1,
+		/obj/item/storage/box/handcuffs = 1,
+		/obj/item/ammo_box/advanced/s12gauge/buckshot = 2,
+	)
+	l_hand = null
+	r_hand = null
 
 	skillchips = null
 
@@ -519,19 +538,27 @@
 
 	id = /obj/item/card/id/advanced/centcom/ert/medical
 	suit = /obj/item/clothing/suit/armor/vest/marine/medic
-	suit_store = /obj/item/storage/belt/holster/detective/full/ert
-	back = /obj/item/storage/backpack/ert/medical
+	suit_store = /obj/item/gun/ballistic/automatic/ar/modular/m44a/scoped
+	back = /obj/item/mod/control/pre_equipped/marine
 	l_pocket = /obj/item/healthanalyzer
 	head = /obj/item/clothing/head/helmet/marine/medic
 	backpack_contents = list(
+		/obj/item/storage/box/survival/engineer/marine = 1,
 		/obj/item/reagent_containers/hypospray/combat = 1,
 		/obj/item/storage/medkit/regular = 1,
 		/obj/item/storage/medkit/advanced = 1,
+		/obj/item/sensor_device = 1,
+		/obj/item/stack/medical/wrap/gauze/twelve = 1,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/reagent_containers/cup/bottle/formaldehyde = 1,
+		/obj/item/stack/medical/wrap/sticky_tape/surgical = 1,
 	)
-	belt = /obj/item/storage/belt/medical/paramedic
+	belt = /obj/item/storage/belt/military/assault/full/m44a
 	ears = /obj/item/radio/headset/headset_cent/alt
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
 	additional_radio = /obj/item/encryptionkey/heads/cmo
+	l_hand = /obj/item/gun/medbeam
+	r_hand = null
 
 	skillchips = list(/obj/item/skillchip/entrails_reader)
 
@@ -540,14 +567,20 @@
 
 	id = /obj/item/card/id/advanced/centcom/ert/engineer
 	suit = /obj/item/clothing/suit/armor/vest/marine/engineer
-	suit_store = /obj/item/gun/ballistic/shotgun/lethal
+	suit_store = /obj/item/melee/breaching_hammer
 	head = /obj/item/clothing/head/helmet/marine/engineer
-	back = /obj/item/deployable_turret_folded
+	back = /obj/item/mod/control/pre_equipped/marine/engineer
 	uniform = /obj/item/clothing/under/rank/centcom/military/eng
 	belt = /obj/item/storage/belt/utility/full/powertools/rcd
 	ears = /obj/item/radio/headset/headset_cent/alt
 	glasses = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
 	additional_radio = /obj/item/encryptionkey/heads/ce
+	backpack_contents = list(
+		/obj/item/storage/box/survival/engineer/marine = 1,
+		/obj/item/ammo_box/magazine/smartgun_drum = 4,
+	)
+	l_hand = null
+	r_hand = null
 
 	skillchips = list(/obj/item/skillchip/job/engineer)
 

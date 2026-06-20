@@ -7,6 +7,7 @@
 	caliber = CALIBER_SHOTGUN
 	max_ammo = 8
 	casing_phrasing = "shell"
+	reload_delay = CLICK_CD_MELEE
 
 /obj/item/ammo_box/magazine/m12g/update_icon_state()
 	. = ..()
@@ -95,6 +96,7 @@
 	max_ammo = 10
 	casing_phrasing = "shell"
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	reload_delay = CLICK_CD_MELEE
 
 /obj/item/ammo_box/magazine/katyusha/buckshot
 	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/nanotrasen_armories/magazines.dmi'
@@ -116,6 +118,7 @@
 	ammo_type = /obj/item/ammo_casing/shotgun
 	caliber = CALIBER_SHOTGUN
 	max_ammo = 4
+	reload_delay = CLICK_CD_MELEE
 
 /obj/item/ammo_box/magazine/jager/rubbershot
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
@@ -144,6 +147,7 @@
 	max_ammo = 10
 	casing_phrasing = "shell"
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
+	reload_delay = CLICK_CD_MELEE
 
 /obj/item/ammo_box/magazine/shitzu/milspec
 	ammo_type = /obj/item/ammo_casing/shotgun/milspec

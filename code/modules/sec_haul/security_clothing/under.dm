@@ -1,6 +1,3 @@
-// Sec overrides can be found on
-// code\modules\sec_haul\security_clothing\sec_clothing_overrides.dm
-
 /obj/item/clothing/under/rank/security/nova
 	icon = 'icons/obj/clothing/under/security_additions.dmi'
 	worn_icon = 'icons/mob/clothing/under/security_additions.dmi'

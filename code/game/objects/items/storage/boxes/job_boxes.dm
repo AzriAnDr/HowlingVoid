@@ -91,6 +91,14 @@
 	illustration = "extendedtank"
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 
+/obj/item/storage/box/survival/engineer/marine
+	name = "military survival box"
+	desc = "A box issued to Nanotrasen space marines, containing field essentials. This one is labelled to contain an extended-capacity tank."
+
+/obj/item/storage/box/survival/engineer/marine/PopulateContents()
+	..()
+	new /obj/item/storage/crayons(src)
+
 /obj/item/storage/box/survival/engineer/radio/PopulateContents()
 	..() // we want the regular items too.
 	new /obj/item/radio/off(src)

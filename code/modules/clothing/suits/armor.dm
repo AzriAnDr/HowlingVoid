@@ -58,6 +58,7 @@
 	inhand_icon_state = "armor"
 
 /obj/item/clothing/suit/armor/vest/alt/sec
+	desc = "A Type-II-NT-P armored vest that provides decent protection against most types of damage."
 	icon_state = "armor_sec"
 
 /obj/item/clothing/suit/armor/vest/press
@@ -160,6 +161,31 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 8 SECONDS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/datum/atom_skin/hos_coat
+	abstract_type = /datum/atom_skin/hos_coat
+
+/datum/atom_skin/hos_coat/greatcoat
+	preview_name = "Greatcoat"
+	new_icon = 'icons/obj/clothing/suits/armor.dmi'
+	new_icon_state = "hos"
+	new_worn_icon = 'icons/mob/clothing/suits/armor.dmi'
+
+/datum/atom_skin/hos_coat/trenchcoat
+	preview_name = "Trenchcoat"
+	new_icon = 'icons/obj/clothing/suits/armor.dmi'
+	new_icon_state = "hostrench"
+	new_worn_icon = 'icons/mob/clothing/suits/armor.dmi'
+
+/datum/atom_skin/hos_coat/trenchcloak
+	preview_name = "Trenchcloak"
+	new_icon = 'icons/obj/clothing/suits/armor_additions.dmi'
+	new_icon_state = "trenchcloak"
+	new_worn_icon = 'icons/mob/clothing/suits/armor_additions.dmi'
+
+/obj/item/clothing/suit/armor/hos/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/hos_coat)
 
 /datum/armor/armor_hos
 	melee = 30
@@ -185,12 +211,18 @@
 	icon_state = "hoswinter"
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
+/obj/item/clothing/suit/armor/hos/trenchcoat/winter/setup_reskins()
+	return
+
 /obj/item/clothing/suit/armor/hos/hos_formal
 	name = "\improper Head of Security's parade jacket"
 	desc = "For when an armoured vest isn't fashionable enough."
 	icon_state = "hosformal"
 	inhand_icon_state = "hostrench"
 	body_parts_covered = CHEST|GROIN|ARMS
+
+/obj/item/clothing/suit/armor/hos/hos_formal/setup_reskins()
+	return
 
 /obj/item/clothing/suit/armor/hos/hos_formal/Initialize(mapload)
 	. = ..()
@@ -352,13 +384,14 @@
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof armor"
-	desc = "A Type III heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	desc = "A Type-III-NT-P heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
 	icon_state = "bulletproof"
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
 	armor_type = /datum/armor/armor_bulletproof
 	strip_delay = 7 SECONDS
 	equip_delay_other = 5 SECONDS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /datum/armor/armor_bulletproof
 	melee = 15

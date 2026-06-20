@@ -411,6 +411,34 @@
 	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge. Looks a bit stout."
 	icon_state = "hoscap"
 
+/datum/atom_skin/hos_cap
+	abstract_type = /datum/atom_skin/hos_cap
+
+/datum/atom_skin/hos_cap
+	preview_name = "Red Cap"
+	new_icon_state = "hoscap"
+
+/datum/atom_skin/hos_cap/blue
+	preview_name = "Blue Cap"
+	new_icon = 'icons/obj/clothing/hats.dmi'
+	new_icon_state = "hoscap_blue"
+	new_worn_icon = 'icons/mob/clothing/head.dmi'
+
+/datum/atom_skin/hos_cap/sol
+	preview_name = "Sol Cap"
+	new_icon = 'icons/obj/clothing/hats.dmi'
+	new_icon_state = "policechiefcap"
+	new_worn_icon = 'icons/mob/clothing/head.dmi'
+
+/datum/atom_skin/hos_cap/sheriff
+	preview_name = "Sheriff Hat"
+	new_icon = 'icons/obj/clothing/hats.dmi'
+	new_icon_state = "cowboyhat_black"
+	new_worn_icon = 'icons/mob/clothing/head.dmi'
+
+/obj/item/clothing/head/hats/hos/cap/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/hos_cap)
+
 /obj/item/clothing/head/hats/hos/cap/Initialize(mapload)
 	. = ..()
 	// Give it a little publicity
@@ -437,6 +465,9 @@
 /obj/item/clothing/head/hats/hos/cap/syndicate
 	name = "syndicate cap"
 	desc = "A black cap fit for a high ranking syndicate officer."
+
+/obj/item/clothing/head/hats/hos/cap/syndicate/setup_reskins()
+	return
 
 /obj/item/clothing/head/hats/hos/shako
 	name = "sturdy shako"

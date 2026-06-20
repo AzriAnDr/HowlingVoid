@@ -7,7 +7,7 @@
 
 /obj/item/ammo_casing/energy/ion/hos
 	projectile_type = /obj/projectile/ion/weak
-	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE * 1.2)
+	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE * 1.2)
 
 /obj/item/ammo_casing/energy/radiation
 	projectile_type = /obj/projectile/energy/radiation

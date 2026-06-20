@@ -82,7 +82,7 @@
 
 /obj/item/stock_parts/power_store/cell/mini_egun
 	name = "miniature energy gun power cell"
-	maxcharge = STANDARD_CELL_CHARGE * 0.6
+	maxcharge = STANDARD_CELL_CHARGE * 0.75
 
 /obj/item/stock_parts/power_store/cell/hos_gun
 	name = "X-01 multiphase energy gun power cell"

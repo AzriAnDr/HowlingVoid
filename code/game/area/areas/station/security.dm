@@ -26,6 +26,7 @@
 /area/station/security/brig
 	name = "\improper Brig"
 	icon_state = "brig"
+	engineering_override_eligible = TRUE
 
 /area/station/security/holding_cell
 	name = "\improper Holding Cell"
@@ -115,6 +116,7 @@
 /area/station/security/execution/transfer
 	name = "\improper Transfer Centre"
 	icon_state = "sec_processing"
+	engineering_override_eligible = TRUE
 
 /area/station/security/execution/education
 	name = "\improper Prisoner Education Chamber"
@@ -130,6 +132,7 @@
 /area/station/security/checkpoint
 	name = "\improper Security Checkpoint"
 	icon_state = "checkpoint"
+	engineering_override_eligible = TRUE
 
 /area/station/security/checkpoint/escape
 	name = "\improper Departures Security Checkpoint"
@@ -195,6 +198,7 @@
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
 	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
+	engineering_override_eligible = TRUE
 
 //Rad proof
 /area/station/security/prison/toilet

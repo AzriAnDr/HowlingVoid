@@ -163,6 +163,24 @@
 	clothing_traits = list(TRAIT_SECURITY_HUD)
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
+/datum/atom_skin/security_hudglasses
+	abstract_type = /datum/atom_skin/security_hudglasses
+	new_icon = 'icons/obj/clothing/glasses_additions.dmi'
+	new_worn_icon = 'icons/mob/clothing/eyes_additions.dmi'
+
+/datum/atom_skin/security_hudglasses/red
+	preview_name = "Red HUD"
+	new_icon = 'icons/obj/clothing/glasses.dmi'
+	new_icon_state = "securityhud"
+	new_worn_icon = 'icons/mob/clothing/eyes.dmi'
+
+/datum/atom_skin/security_hudglasses/blue
+	preview_name = "Blue HUD"
+	new_icon_state = "security_hud"
+
+/obj/item/clothing/glasses/hud/security/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_hudglasses)
+
 /obj/item/clothing/glasses/hud/security/chameleon
 	name = "chameleon security HUD"
 	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Provides flash protection."
@@ -175,6 +193,22 @@
 	icon_state = "hudpatch"
 	base_icon_state = "hudpatch"
 	actions_types = list(/datum/action/item_action/flip)
+
+/datum/atom_skin/security_eyepatch
+	abstract_type = /datum/atom_skin/security_eyepatch
+
+/datum/atom_skin/security_eyepatch/red
+	preview_name = "Red Eyepatches"
+	new_icon_state = "hudpatch"
+
+/datum/atom_skin/security_eyepatch/blue
+	preview_name = "Blue Eyepatches"
+	new_icon = 'icons/obj/clothing/glasses_additions.dmi'
+	new_icon_state = "hudpatch"
+	new_worn_icon = 'icons/mob/clothing/eyes_additions.dmi'
+
+/obj/item/clothing/glasses/hud/security/sunglasses/eyepatch/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_eyepatch)
 
 /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch/attack_self(mob/user, modifiers)
 	. = ..()
@@ -191,6 +225,33 @@
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.55, /datum/material/iron = SMALL_MATERIAL_AMOUNT / 2)
+
+/obj/item/clothing/glasses/hud/security/sunglasses/setup_reskins()
+	return
+
+/datum/atom_skin/security_hud_sunglasses
+	abstract_type = /datum/atom_skin/security_hud_sunglasses
+
+/datum/atom_skin/security_hud_sunglasses/dark
+	preview_name = "Dark-Tint Blue Sunglasses"
+	new_icon = 'icons/obj/clothing/glasses_additions.dmi'
+	new_icon_state = "security_hud_blue_black"
+	new_worn_icon = 'icons/mob/clothing/eyes_additions.dmi'
+
+/datum/atom_skin/security_hud_sunglasses/light
+	preview_name = "Light-Tint Blue Sunglasses"
+	new_icon = 'icons/obj/clothing/glasses_additions.dmi'
+	new_icon_state = "security_hud_blue"
+	new_worn_icon = 'icons/mob/clothing/eyes_additions.dmi'
+
+/obj/item/clothing/glasses/hud/security/sunglasses/blue
+	icon = 'icons/obj/clothing/glasses_additions.dmi'
+	worn_icon = 'icons/mob/clothing/eyes_additions.dmi'
+	icon_state = "security_hud_blue_black"
+	worn_icon_state = "security_hud_blue_black"
+
+/obj/item/clothing/glasses/hud/security/sunglasses/blue/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_hud_sunglasses)
 
 /obj/item/clothing/glasses/hud/security/sunglasses/Initialize(mapload)
 	. = ..()
@@ -212,6 +273,9 @@
 	glass_colour_type = /datum/client_colour/glass_colour/lightred
 	actions_types = list(/datum/action/item_action/toggle_nv)
 
+/obj/item/clothing/glasses/hud/security/night/setup_reskins()
+	return
+
 /obj/item/clothing/glasses/hud/security/night/update_icon_state()
 	. = ..()
 	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
@@ -231,12 +295,31 @@
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
+/datum/atom_skin/sec_gars
+	abstract_type = /datum/atom_skin/sec_gars
+
+/datum/atom_skin/sec_gars/red
+	preview_name = "Red Gars"
+	new_icon_state = "gar_sec"
+
+/datum/atom_skin/sec_gars/blue
+	preview_name = "Blue Gars"
+	new_icon = 'icons/obj/clothing/glasses_additions.dmi'
+	new_icon_state = "gar_sec"
+	new_worn_icon = 'icons/mob/clothing/eyes_additions.dmi'
+
+/obj/item/clothing/glasses/hud/security/sunglasses/gars/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/sec_gars)
+
 /obj/item/clothing/glasses/hud/security/sunglasses/gars/giga
 	name = "giga HUD gar glasses"
 	desc = "GIGA GAR glasses with a HUD."
 	icon_state = "gigagar_sec"
 	force = 12
 	throwforce = 12
+
+/obj/item/clothing/glasses/hud/security/sunglasses/gars/giga/setup_reskins()
+	return
 
 /obj/item/clothing/glasses/hud/toggle
 	name = "Toggle HUD"

@@ -92,6 +92,7 @@
 /area/station/hallway/secondary/service
 	name = "\improper Service Hallway"
 	icon_state = "hall_service"
+	engineering_override_eligible = TRUE
 
 /area/station/hallway/secondary/spacebridge
 	name = "\improper Space Bridge"

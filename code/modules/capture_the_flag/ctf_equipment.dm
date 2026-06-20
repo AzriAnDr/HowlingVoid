@@ -156,6 +156,7 @@
 	charge_sections = 5
 	ammo_x_offset = 2
 	shaded_charge = FALSE
+	selfcharge = FALSE
 
 /obj/item/gun/energy/laser/instakill/add_deep_lore()
 	return

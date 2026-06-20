@@ -9,6 +9,9 @@
 	name = "security deputy armband"
 	desc = "An armband, worn by personnel authorized to act as a deputy of station security."
 
+/obj/item/clothing/accessory/armband/nonsec
+	desc = "An armband, worn to signify proficiency in a skill or association with a department. This one is red."
+
 /obj/item/clothing/accessory/armband/cargo
 	name = "cargo bay guard armband"
 	desc = "An armband, worn by the station's security forces to display which department they're assigned to. This one is brown."

@@ -32,6 +32,8 @@
 	var/caliber
 	/// Determines whether ammo boxes can multiload in or out. See code/__DEFINES/combat.dm for details.
 	var/ammo_box_multiload = AMMO_BOX_MULTILOAD_BOTH
+	/// Next move/click delay penalty applied when reloading with this.
+	var/reload_delay = NONE
 
 	///Whether the magazine should start with nothing in it
 	var/start_empty = FALSE
@@ -303,6 +305,9 @@
 	ammo_box_multiload = AMMO_BOX_MULTILOAD_IN // so you can't use a magazine like a bootleg speedloader
 	drop_sound = 'sound/items/handling/gun/ballistics/magazine/magazine_drop1.ogg'
 	pickup_sound = 'sound/items/handling/gun/ballistics/magazine/magazine_pickup1.ogg'
+
+/obj/item/ammo_box/magazine/ammo_stack
+	reload_delay = CLICK_CD_RANGE
 
 ///Count of number of bullets in the magazine
 /obj/item/ammo_box/magazine/proc/ammo_count(countempties = TRUE)

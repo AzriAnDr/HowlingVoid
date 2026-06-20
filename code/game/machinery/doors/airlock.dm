@@ -135,6 +135,12 @@
 	var/abandoned = FALSE
 	/// Controls if the door closes quickly or not. FALSE = the door autocloses in 1.5 seconds, TRUE = 8 seconds - see autoclose_in()
 	var/normalspeed = TRUE
+	/// Whether engineers can access this door during an engineering override.
+	var/engineering_override = FALSE
+	/// Whether this door's area has an active fire alarm.
+	var/fire_active = FALSE
+	/// The area this door is located in.
+	var/area/door_area
 	var/cutAiWire = FALSE
 	var/autoname = FALSE
 	var/doorOpen = 'sound/machines/airlock/open.ogg'
@@ -214,6 +220,10 @@
 	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
+	door_area = get_area(src)
+	if(door_area)
+		RegisterSignal(door_area, COMSIG_AREA_FIRE_CHANGED, PROC_REF(update_fire_status))
+	RegisterSignal(SSdcs, COMSIG_GLOB_FORCE_ENG_OVERRIDE, PROC_REF(force_eng_override))
 
 // if dragging, block 'Click on the floor to close airlocks'
 /obj/machinery/door/airlock/proc/drag_check(mob/user)
@@ -397,6 +407,112 @@
 
 /obj/machinery/door/airlock/requiresID()
 	return !(wires.is_cut(WIRE_IDSCAN) || aiDisabledIdScanner)
+
+/// Checks for the three open-access states: emergency access, unrestricted side, and engineering override.
+/obj/machinery/door/airlock/allowed(mob/user)
+	if(emergency)
+		return TRUE
+
+	if(unrestricted_side(user))
+		return TRUE
+
+	if(engineering_override || fire_active)
+		var/mob/living/carbon/human/interacting_human = user
+		if(!istype(interacting_human))
+			return ..()
+
+		var/obj/item/card/id/card = interacting_human.get_idcard(TRUE)
+		if(card && (ACCESS_ENGINEERING in card.access))
+			return TRUE
+
+	. = ..()
+	if(!linked_room_controller)
+		return .
+	if(linked_room_controller.can_bypass_room_restrictions(user))
+		return TRUE
+	return linked_room_controller.can_enter_room(user)
+
+/obj/machinery/door/airlock/check_security_level(datum/source, level)
+	. = ..()
+	if(!door_area?.engineering_override_eligible)
+		return
+
+	if(isnull(req_access) && isnull(req_one_access))
+		return
+
+	if(level != SEC_LEVEL_ORANGE && GLOB.force_eng_override)
+		return
+
+	if(level == SEC_LEVEL_ORANGE)
+		engineering_override = TRUE
+		normalspeed = FALSE
+		update_appearance()
+		return
+
+	engineering_override = FALSE
+	if(!fire_active)
+		normalspeed = TRUE
+
+	update_appearance()
+
+/obj/machinery/door/airlock/proc/force_eng_override(datum/source, status)
+	SIGNAL_HANDLER
+
+	if(!door_area?.engineering_override_eligible)
+		return
+
+	if(isnull(req_access) && isnull(req_one_access))
+		return
+
+	engineering_override = status
+	if(!engineering_override && !fire_active)
+		normalspeed = TRUE
+		update_appearance()
+		return
+
+	normalspeed = FALSE
+	update_appearance()
+
+/**
+ * Change the airlock's fire_active status, triggered by COMSIG_AREA_FIRE_CHANGED.
+ *
+ * Arguments:
+ * * source - The /area with changed fire status.
+ * * fire - The new fire status.
+ */
+/obj/machinery/door/airlock/proc/update_fire_status(datum/source, fire)
+	SIGNAL_HANDLER
+
+	if(!door_area?.engineering_override_eligible)
+		return
+
+	if(isnull(req_access) && isnull(req_one_access))
+		return
+
+	fire_active = fire
+	if(!fire_active && !engineering_override)
+		normalspeed = TRUE
+		update_appearance()
+		return
+
+	normalspeed = FALSE
+	update_appearance()
+
+/**
+ * Make the airlock unrestricted as a temporary emergency exit.
+ *
+ * Arguments:
+ * * duration - How long the door will operate as an emergency exit before reverting to normal operation.
+ */
+/obj/machinery/door/airlock/proc/temp_emergency_exit(duration)
+	if(!emergency)
+		set_emergency_exit(TRUE)
+		addtimer(CALLBACK(src, PROC_REF(set_emergency_exit), FALSE), duration)
+
+/// Set the airlock's emergency exit status.
+/obj/machinery/door/airlock/proc/set_emergency_exit(active)
+	emergency = active
+	update_appearance()
 
 /obj/machinery/door/airlock/proc/isAllPowerCut()
 	if((wires.is_cut(WIRE_POWER1) || wires.is_cut(WIRE_POWER2)) && (wires.is_cut(WIRE_BACKUP1) || wires.is_cut(WIRE_BACKUP2)))

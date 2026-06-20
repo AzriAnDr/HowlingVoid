@@ -47,6 +47,7 @@
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+	clothing_traits = list(TRAIT_SILENT_FOOTSTEPS)
 	strip_delay = 3 SECONDS
 	equip_delay_other = 5 SECONDS
 	resistance_flags = NONE
@@ -61,6 +62,7 @@
 	. = ..()
 	create_storage(storage_type = /datum/storage/pockets/shoes)
 	AddElement(/datum/element/ignites_matches)
+	AddComponent(/datum/component/squeak, list('sound/effects/footstep1.ogg' = 1, 'sound/effects/footstep2.ogg' = 1, 'sound/effects/footstep3.ogg' = 1), 100)
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1

@@ -198,7 +198,6 @@
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/jetpack,
-		/obj/item/mod/module/pepper_shoulders,
 		/obj/item/mod/module/criminalcapture,
 		/obj/item/mod/module/quick_cuff,
 		/obj/item/mod/module/headprotector,
@@ -217,7 +216,6 @@
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/megaphone,
 		/obj/item/mod/module/projectile_dampener,
-		/obj/item/mod/module/pepper_shoulders,
 		/obj/item/mod/module/quick_cuff,
 		/obj/item/mod/module/headprotector,
 	)

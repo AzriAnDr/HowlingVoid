@@ -91,6 +91,24 @@
 /datum/armor/combat_insulated
 	bio = 50
 
+/datum/atom_skin/tackler_gloves
+	abstract_type = /datum/atom_skin/tackler_gloves
+
+/datum/atom_skin/tackler_gloves/red
+	preview_name = "Red Variant"
+	new_icon_state = "tackle"
+
+/datum/atom_skin/tackler_gloves/blue
+	preview_name = "Blue Variant"
+	new_icon = 'icons/obj/clothing/gloves_additions.dmi'
+	new_icon_state = "tackle_blue"
+	new_worn_icon = 'icons/mob/clothing/hands_additions.dmi'
+
+/obj/item/clothing/gloves/tackler/security
+
+/obj/item/clothing/gloves/tackler/security/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/tackler_gloves)
+
 /obj/item/clothing/gloves/tackler/rocket
 	name = "rocket gloves"
 	desc = "The ultimate in high risk, high reward, perfect for when you need to stop a criminal from fifty feet away or die trying. Banned in most Spinward gridiron football and rugby leagues."

@@ -1,15 +1,18 @@
 /obj/item/gun/energy/e_gun
-	name = "energy gun"
-	desc = "A basic hybrid energy gun with two settings: disable and kill."
+	name = "energy carbine"
+	desc = "The Allstar Lasers Star Combat 2, or \"Allstar SC-2\", \
+		is a basic hybrid energy carbine with two settings: disable and kill."
 	icon_state = "energy"
 	shaded_charge = SHADED_CHARGE_MODE_LABELED
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = null //so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
 	modifystate = TRUE
 	ammo_x_offset = 3
 	dual_wield_spread = 60
 	light_color = LIGHT_COLOR_CYAN
+	selfcharge = TRUE
+	charge_delay = 15
 
 /obj/item/gun/energy/e_gun/Initialize(mapload)
 	. = ..()
@@ -163,11 +166,12 @@
 	inhand_icon_state = null
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	charge_delay = 10
+	charge_delay = 5
 	can_charge = FALSE
 	ammo_x_offset = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 	selfcharge = 1
+	self_charge_amount = STANDARD_ENERGY_GUN_SELF_CHARGE_RATE * 3
 	custom_materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6,
 		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 1.5,
