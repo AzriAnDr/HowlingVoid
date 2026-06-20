@@ -13,6 +13,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	inhand_icon_state = "knife"
 	worn_icon_state = "knife"
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
 	icon_angle = -90
 	desc = "The original knife, it is said that all other knives are only copies of this one."
 	obj_flags = CONDUCTS_ELECTRICITY

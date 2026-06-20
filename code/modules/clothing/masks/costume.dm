@@ -47,6 +47,7 @@
 	icon_state = "scarecrow_sack"
 	inhand_icon_state = null
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	supports_variations_flags = NONE
 
 /obj/item/clothing/mask/kitsune
 	name = "kitsune mask"
@@ -63,6 +64,7 @@
 	greyscale_config = /datum/greyscale_config/kitsune
 	greyscale_config_worn = /datum/greyscale_config/kitsune/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/mask/kitsune/examine(mob/user)
 	. = ..()

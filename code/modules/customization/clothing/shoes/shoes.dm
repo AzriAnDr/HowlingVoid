@@ -91,6 +91,7 @@
 	icon = MODULAR_SHOES_ICON
 	worn_icon = MODULAR_SHOES_WORN_ICON
 	icon_state = "blackjack"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/wraps/cloth
 	name = "cloth foot wraps"
@@ -131,6 +132,7 @@
 	icon = MODULAR_SHOES_ICON
 	worn_icon = MODULAR_SHOES_WORN_ICON
 	icon_state = "kneeboots"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/jackboots/timbs
 	name = "hiking boots"
@@ -139,6 +141,7 @@
 	worn_icon = MODULAR_SHOES_WORN_ICON
 	icon_state = "timbs"
 	fastening_type = SHOES_LACED
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/jackboots/duckboots
 	name = "northeastern duck boots"
@@ -159,6 +162,7 @@
 	icon_state = "jackboots-toeless"
 	worn_icon = MODULAR_SHOES_WORN_ICON
 	worn_icon_digi = 'icons/mob/clothing/feet_digi.dmi'
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/workboots/toeless // Ported from SPLURT
 	name = "toe-less workboots"
@@ -167,6 +171,7 @@
 	icon_state = "workboots-toeless"
 	worn_icon = MODULAR_SHOES_WORN_ICON
 	worn_icon_digi = 'icons/mob/clothing/feet_digi.dmi'
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/winterboots/christmas
 	name = "christmas boots"
@@ -503,4 +508,3 @@
 	icon_state = "/obj/item/clothing/shoes/fancy_heels/darkgrey"
 	greyscale_colors = "#46464d"
 	flags_1 = null
-

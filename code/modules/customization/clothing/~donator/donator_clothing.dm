@@ -318,6 +318,7 @@
 	righthand_file = 'icons/donator/mob/inhands/donator_right.dmi'
 	icon_state = "paddedboots"
 	inhand_icon_state = "paddedboots"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 
 // Donation reward for Thedragmeme and snailomi
 /obj/item/clothing/gloves/padded
@@ -355,7 +356,7 @@
 	icon = 'icons/donator/obj/clothing/shoes.dmi'
 	worn_icon = 'icons/donator/mob/clothing/feet.dmi'
 	icon_state = "heel-jackboots"
-	supports_variations_flags = NONE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 
 /obj/item/clothing/shoes/jackboots/heel/Initialize(mapload)
 	. = ..()
@@ -738,7 +739,7 @@
 	icon = 'icons/donator/obj/clothing/shoes.dmi'
 	icon_state = "silver_dress_boots"
 	worn_icon = 'icons/donator/mob/clothing/feet.dmi'
-	supports_variations_flags = NONE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 
 /****************LEGACY REWARDS***************/
 // Donation reward for inferno707
@@ -1938,6 +1939,7 @@
 	icon = 'icons/donator/obj/clothing/shoes.dmi'
 	worn_icon = 'icons/donator/mob/clothing/feet.dmi'
 	icon_state = "boots_blackblue"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 
 /obj/item/clothing/shoes/jackboots/elofy/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/boots_elofy)

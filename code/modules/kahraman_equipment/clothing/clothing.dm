@@ -29,6 +29,7 @@
 	worn_icon = 'icons/kahraman_equipment/clothes/clothing_worn.dmi'
 	worn_icon_digi = 'icons/kahraman_equipment/clothes/clothing_worn_digi.dmi'
 	worn_icon_teshari = 'icons/kahraman_equipment/clothes/clothing_worn_teshari.dmi'
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	worn_icon_state = "boots"
 	armor_type = /datum/armor/colonist_clothing
 	resistance_flags = FIRE_PROOF

@@ -26,6 +26,7 @@
 	distill_reagent = /datum/reagent/consumable/ethanol/beer
 	slot_flags = ITEM_SLOT_MASK
 	worn_icon = 'icons/mob/clothing/head/hydroponics.dmi'
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
 
 /obj/item/food/grown/wheat/grind_results()
 	return list(/datum/reagent/consumable/flour = 0)

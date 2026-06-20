@@ -17,6 +17,7 @@
 	icon_state = "security_boots"
 	icon = 'icons/obj/clothing/shoes_additions.dmi'
 	worn_icon = 'icons/mob/clothing/feet_additions.dmi'
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/jackboots/sec/blue/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_jackboots)
