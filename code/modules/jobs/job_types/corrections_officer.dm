@@ -29,15 +29,18 @@
 		/obj/item/food/donut/matcha = 10,
 		/obj/item/food/donut/blumpkin = 5,
 		/obj/item/clothing/mask/whistle = 5,
-		/obj/effect/spawner/random/contraband/prison = 5, //Gives them something fun to hold over the prisoners, or hide from them.
-		/obj/item/melee/baton/security/boomerang/loaded = 1
+		/obj/effect/spawner/random/contraband/prison = 5,
+		/obj/item/melee/baton/security/boomerang/loaded = 1,
 	)
 	rpg_title = "Bailiff"
-	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law, /obj/item/clothing/head/security_cap, /obj/item/clothing/mask/whistle)
+	family_heirlooms = list(
+		/obj/item/book/manual/wiki/security_space_law,
+		/obj/item/clothing/head/security_cap,
+		/obj/item/clothing/mask/whistle,
+	)
 
 	job_flags = STATION_JOB_FLAGS | JOB_ANTAG_PROTECTED
 
-// OUTFIT
 /datum/outfit/job/corrections_officer
 	name = "Corrections Officer"
 	jobtype = /datum/job/corrections_officer
@@ -46,7 +49,12 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	ears = /obj/item/radio/headset/headset_sec
 	glasses = /obj/item/clothing/glasses/sunglasses
-	backpack_contents = list(/obj/item/melee/baton/security/loaded/departmental/prison, /obj/item/restraints/handcuffs = 2, /obj/item/clothing/mask/whistle, /obj/item/gun/energy/disabler)
+	backpack_contents = list(
+		/obj/item/melee/baton/security/loaded/departmental/prison,
+		/obj/item/restraints/handcuffs = 2,
+		/obj/item/clothing/mask/whistle,
+		/obj/item/gun/energy/disabler,
+	)
 	implants = list(/obj/item/implant/mindshield)
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec
@@ -57,6 +65,3 @@
 	belt = /obj/item/modular_computer/pda/security
 
 	id_trim = /datum/id_trim/job/corrections_officer
-
-
-

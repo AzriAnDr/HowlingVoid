@@ -45,6 +45,9 @@
 	/// Is the greyscale icon used for the ammo band when it's empty of bullets, only if it's not null.
 	var/ammo_band_icon_empty
 
+/obj/item/ammo_box/advanced
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+
 /obj/item/ammo_box/Initialize(mapload)
 	. = ..()
 	if(!start_empty)

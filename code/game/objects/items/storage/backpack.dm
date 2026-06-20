@@ -158,6 +158,28 @@
 	icon_state = "backpack-security"
 	inhand_icon_state = "securitypack"
 
+/datum/atom_skin/security_backpack_blue
+	abstract_type = /datum/atom_skin/security_backpack_blue
+
+/datum/atom_skin/security_backpack_blue/black
+	preview_name = "Black Variant"
+	new_icon_state = "backpack_security_black"
+
+/datum/atom_skin/security_backpack_blue/white
+	preview_name = "White Variant"
+	new_icon_state = "backpack_security_white"
+
+/obj/item/storage/backpack/security/blue
+	icon = 'icons/obj/clothing/backpacks.dmi'
+	worn_icon = 'icons/mob/clothing/back_additions.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/backpack_righthand.dmi'
+	icon_state = "backpack_security_black"
+	inhand_icon_state = "backpack_security_black"
+
+/obj/item/storage/backpack/security/blue/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_backpack_blue)
+
 /obj/item/storage/backpack/captain
 	name = "captain's backpack"
 	desc = "It's a special backpack made exclusively for Nanotrasen officers."
@@ -369,6 +391,28 @@
 	icon_state = "satchel-security"
 	inhand_icon_state = "satchel-sec"
 
+/datum/atom_skin/security_satchel_blue
+	abstract_type = /datum/atom_skin/security_satchel_blue
+
+/datum/atom_skin/security_satchel_blue/black
+	preview_name = "Black Variant"
+	new_icon_state = "satchel_security_black"
+
+/datum/atom_skin/security_satchel_blue/white
+	preview_name = "White Variant"
+	new_icon_state = "satchel_security_white"
+
+/obj/item/storage/backpack/satchel/sec/blue
+	icon = 'icons/obj/clothing/backpacks.dmi'
+	worn_icon = 'icons/mob/clothing/back_additions.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/backpack_righthand.dmi'
+	icon_state = "satchel_security_black"
+	inhand_icon_state = "satchel_security_black"
+
+/obj/item/storage/backpack/satchel/sec/blue/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_satchel_blue)
+
 /obj/item/storage/backpack/satchel/explorer
 	name = "explorer satchel"
 	desc = "A robust satchel for stashing your loot."
@@ -479,6 +523,28 @@
 	desc = "A robust messenger bag for security related needs."
 	icon_state = "messenger_security"
 	inhand_icon_state = "messenger_security"
+
+/datum/atom_skin/security_messenger_blue
+	abstract_type = /datum/atom_skin/security_messenger_blue
+
+/datum/atom_skin/security_messenger_blue/black
+	preview_name = "Black Variant"
+	new_icon_state = "messenger_security_black"
+
+/datum/atom_skin/security_messenger_blue/white
+	preview_name = "White Variant"
+	new_icon_state = "messenger_security_white"
+
+/obj/item/storage/backpack/messenger/sec/blue
+	icon = 'icons/obj/clothing/backpacks.dmi'
+	worn_icon = 'icons/mob/clothing/back_additions.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/backpack_righthand.dmi'
+	icon_state = "messenger_security_black"
+	inhand_icon_state = "messenger_security_black"
+
+/obj/item/storage/backpack/messenger/sec/blue/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_messenger_blue)
 
 /obj/item/storage/backpack/messenger/explorer
 	name = "explorer messenger bag"

@@ -296,7 +296,10 @@
 /obj/item/storage/belt/security/full/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/restraints/handcuffs(src)
-	new /obj/item/grenade/flashbang(src)
+	if(CONFIG_GET(flag/replace_secbelt_flashbangs_with_bola))
+		new /obj/item/restraints/legcuffs/bola/energy(src)
+	else
+		new /obj/item/grenade/flashbang(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/melee/baton/security/loaded(src)
 	update_appearance()
@@ -332,6 +335,15 @@
 
 /obj/item/storage/belt/security/webbing/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_webbing)
+
+/obj/item/storage/belt/security/webbing/peacekeeper
+	icon = 'icons/obj/clothing/belts_additions.dmi'
+	worn_icon = 'icons/mob/clothing/belt_additions.dmi'
+	icon_state = "blue_webbing"
+	worn_icon_state = "blue_webbing"
+
+/obj/item/storage/belt/security/webbing/peacekeeper/setup_reskins()
+	return
 
 /obj/item/storage/belt/mining
 	name = "explorer's webbing"
@@ -956,6 +968,27 @@
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
 	storage_type = /datum/storage/plant_belt
+
+/obj/item/storage/belt/security/armadyne
+	name = "armadyne belt"
+	desc = "Can hold security gear like handcuffs and flashes. Has a holster for a gun."
+	icon = 'icons/obj/clothing/belts_additions.dmi'
+	worn_icon = 'icons/mob/clothing/belt_additions.dmi'
+	icon_state = "armadyne_belt"
+	worn_icon_state = "armadyne_belt"
+
+/obj/item/storage/belt/security/armadyne/setup_reskins()
+	return
+
+/obj/item/storage/belt/security/webbing/armadyne
+	name = "armadyne webbing"
+	icon = 'icons/obj/clothing/belts_additions.dmi'
+	worn_icon = 'icons/mob/clothing/belt_additions.dmi'
+	icon_state = "red_webbing"
+	worn_icon_state = "red_webbing"
+
+/obj/item/storage/belt/security/webbing/armadyne/setup_reskins()
+	return
 
 /obj/item/storage/belt/sheath/sabre/gunpowered
 	name = "modified sabre sheath"

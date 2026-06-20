@@ -283,6 +283,20 @@
 	icon_state = "hood_security"
 	armor_type = /datum/armor/winterhood_security
 
+/obj/item/clothing/head/hooded/winterhood/security/blue
+	desc = "A blue, armour-padded winter hood. Definitely not bulletproof, especially not the part where your face goes."
+	icon = 'icons/obj/clothing/head/winterhood_additions.dmi'
+	worn_icon = 'icons/mob/clothing/head/winterhood_additions.dmi'
+	icon_state = "winterhood_security"
+
+/obj/item/clothing/suit/hooded/wintercoat/security/blue
+	name = "security winter coat"
+	desc = "A blue, armour-padded winter coat. It glitters with a mild ablative coating and a robust air of authority."
+	icon = 'icons/obj/clothing/suits/wintercoat_additions.dmi'
+	worn_icon = 'icons/mob/clothing/suits/wintercoat_additions.dmi'
+	icon_state = "coatsecurity_winter"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/security/blue
+
 // Medical Doctor
 /datum/armor/winterhood_security
 	melee = 25

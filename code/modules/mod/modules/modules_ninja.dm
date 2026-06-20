@@ -229,18 +229,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/computer/records/security/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 20 SECONDS, src, extra_checks = CALLBACK(src, PROC_REF(can_hack), ninja), hidden = TRUE))
-		return
-	for(var/datum/record/crew/target in GLOB.manifest.general)
-		target.wanted_status = WANTED_ARREST
-	update_all_security_huds()
-
-	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
-	if(!ninja_antag)
-		return
-	var/datum/objective/security_scramble/objective = locate() in ninja_antag.objectives
-	if(objective)
-		objective.completed = TRUE
+	balloon_alert(ninja, "nothing happens!")
 
 /obj/machinery/computer/records/security/proc/can_hack(mob/living/hacker, feedback = FALSE)
 	if(machine_stat & (NOPOWER|BROKEN))

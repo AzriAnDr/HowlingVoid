@@ -922,4 +922,104 @@
 	ID.assignment = "Solfed Espatier Squad Leader"
 	ID.update_label()
 	..()
+
+/datum/outfit/armadyne_rep
+	name = "Armadyne Corporate Representative"
+
+	suit_store = /obj/item/modular_computer/pda/security
+	ears = /obj/item/radio/headset/headset_cent/commander
+	uniform = /obj/item/clothing/under/rank/security/armadyne
+	gloves = /obj/item/clothing/gloves/combat/armadyne
+	head =  /obj/item/clothing/head/beret/sec/armadyne
+	neck = /obj/item/clothing/neck/tie/black
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/armadyne
+	suit = /obj/item/clothing/suit/armor/vest/armadyne
+	shoes = /obj/item/clothing/shoes/jackboots/armadyne
+	belt = /obj/item/storage/belt/security/armadyne
+	r_pocket = /obj/item/assembly/flash/handheld
+	backpack_contents = list(
+		/obj/item/melee/baton/telescopic,
+		/obj/item/storage/toolbox/guncase/nova/pistol/trappiste_small_case/skild,
+	)
+	back = /obj/item/storage/backpack/satchel/leather
+	box = /obj/item/storage/box/survival/security
+	l_pocket = /obj/item/megaphone/command
+	id = /obj/item/card/id/advanced/armadyne/agent
+
+/datum/outfit/armadyne_rep/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/card/id/W = H.wear_id
+	if(W)
+		W.registered_name = H.real_name
+		W.update_label()
+	..()
+
+/datum/outfit/armadyne_security
+	name = "Armadyne Corporate Security"
+
+	ears = /obj/item/radio/headset/headset_sec/alt
+	uniform = /obj/item/clothing/under/rank/security/armadyne/tactical
+	gloves = /obj/item/clothing/gloves/combat/armadyne
+	head = /obj/item/clothing/head/helmet
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/armadyne
+	mask = /obj/item/clothing/mask/gas/sechailer
+	suit = /obj/item/clothing/suit/armor/vest/armadyne/armor
+	suit_store = /obj/item/gun/ballistic/automatic/sol_smg
+	shoes = /obj/item/clothing/shoes/jackboots/armadyne
+	backpack_contents = list(
+		/obj/item/storage/toolbox/guncase/nova/pistol/trappiste_small_case/wespe,
+		/obj/item/storage/box/handcuffs,
+		/obj/item/ammo_box/magazine/c35sol_pistol/stendo,
+		/obj/item/modular_computer/pda/security,
+	)
+	back = /obj/item/storage/backpack/security
+	box = /obj/item/storage/box/survival/security
+	id = /obj/item/card/id/advanced/armadyne/security
+
+/datum/outfit/armadyne_security/commander
+	name = "Armadyne Corporate Security Commander"
+
+	ears = /obj/item/radio/headset/headset_sec/alt
+	uniform = /obj/item/clothing/under/rank/security/armadyne/tactical
+	gloves = /obj/item/clothing/gloves/combat/armadyne
+	head =  /obj/item/clothing/head/beret/sec/armadyne
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/armadyne
+	mask = /obj/item/clothing/mask/gas/sechailer/swat
+	suit = /obj/item/clothing/suit/armor/vest/armadyne/armor
+	suit_store = /obj/item/gun/ballistic/automatic/sol_rifle
+	shoes = /obj/item/clothing/shoes/jackboots/armadyne
+	belt = /obj/item/storage/belt/security/webbing/armadyne
+	backpack_contents = list(
+		/obj/item/storage/toolbox/guncase/nova/pistol/trappiste_small_case/wespe,
+		/obj/item/storage/box/handcuffs,
+		/obj/item/ammo_box/magazine/c40sol_rifle/standard,
+		/obj/item/modular_computer/pda/security,
+	)
+	back = /obj/item/storage/backpack/security
+	box = /obj/item/storage/box/survival/security
+	l_pocket = /obj/item/megaphone/command
+	id = /obj/item/card/id/advanced/armadyne/security
+
+/datum/outfit/armadyne_security/high_alert
+	name = "Armadyne Corporate Security (High Alert)"
+	belt = /obj/item/storage/belt/security/webbing/armadyne
+	suit_store = /obj/item/gun/ballistic/automatic/sol_rifle
+	backpack_contents = list(
+		/obj/item/melee/baton/telescopic,
+		/obj/item/storage/toolbox/guncase/nova/pistol/trappiste_small_case/wespe,
+		/obj/item/storage/box/handcuffs,
+		/obj/item/ammo_box/magazine/c40sol_rifle/standard = 2,
+	)
+
+/datum/outfit/armadyne_security/commander/high_alert
+	name = "Armadyne Corporate Security Commander (High Alert)"
+	suit_store = /obj/item/gun/ballistic/automatic/sol_rifle
+	backpack_contents = list(
+		/obj/item/melee/baton/telescopic,
+		/obj/item/storage/toolbox/guncase/nova/pistol/trappiste_small_case/skild,
+		/obj/item/storage/box/handcuffs,
+		/obj/item/ammo_box/magazine/c40sol_rifle/standard = 2,
+	)
 // END NOVA CORE MIGRATION: code/modules/clothing/outfits/ert.dm

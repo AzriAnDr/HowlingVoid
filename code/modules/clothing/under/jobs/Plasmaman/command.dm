@@ -27,6 +27,9 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
+/obj/item/clothing/under/plasmaman/security/nova/head_of_security
+	icon_state = "hos_envirosuit_new"
+
 /datum/armor/clothing_under/security_head_of_security/plasmaman
 	bio = 100
 	fire = 95

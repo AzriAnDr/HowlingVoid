@@ -71,6 +71,37 @@
 	icon_state = "jackboots_sec"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
+/datum/atom_skin/security_jackboots
+	abstract_type = /datum/atom_skin/security_jackboots
+
+/datum/atom_skin/security_jackboots/blue_trim
+	preview_name = "Blue-Trimmed Variant"
+	new_icon_state = "security_boots"
+
+/datum/atom_skin/security_jackboots/white_trim
+	preview_name = "White-Trimmed Variant"
+	new_icon_state = "security_boots_white"
+
+/datum/atom_skin/security_jackboots/fullwhite
+	preview_name = "Full White Variant"
+	new_icon_state = "security_boots_fullwhite"
+
+/obj/item/clothing/shoes/jackboots/sec/blue
+	icon = 'icons/obj/clothing/shoes_additions.dmi'
+	worn_icon = 'icons/mob/clothing/feet_additions.dmi'
+	icon_state = "security_boots"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+
+/obj/item/clothing/shoes/jackboots/sec/blue/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_jackboots)
+
+/obj/item/clothing/shoes/jackboots/peacekeeper
+	name = "peacekeeper boots"
+	desc = "High speed, low drag combat boots."
+	icon = 'icons/obj/clothing/shoes_additions.dmi'
+	worn_icon = 'icons/mob/clothing/feet_additions.dmi'
+	icon_state = "peacekeeper"
+
 /obj/item/clothing/shoes/jackboots/tall
 	name = "tall jackboots"
 	desc = "A pair of knee-high jackboots, complete with heels. All style, all the time."
@@ -197,6 +228,15 @@
 	desc = "A crisp, clean set of boots for working long hours on the beat."
 	icon_state = "aerostatic_boots"
 	inhand_icon_state = null
+
+/obj/item/clothing/shoes/jackboots/armadyne
+	name = "armadyne combat boots"
+	desc = "Tactical and sleek. Worn by Armadyne representatives."
+	icon = 'icons/obj/clothing/shoes_additions.dmi'
+	worn_icon = 'icons/mob/clothing/feet_additions.dmi'
+	icon_state = "armadyne_boots"
+	inhand_icon_state = "jackboots"
+	worn_icon_state = "armadyne_boots"
 
 /obj/item/clothing/shoes/pirate
 	name = "pirate boots"

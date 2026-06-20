@@ -199,6 +199,11 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	worn_icon_state = "sec_headset"
 	keyslot = /obj/item/encryptionkey/headset_sec
 
+/obj/item/radio/headset/corrections_officer
+	name = "\proper corrections officer's headset"
+	icon_state = "sec_headset"
+	keyslot = /obj/item/encryptionkey/headset_sec
+
 /obj/item/radio/headset/headset_sec/alt
 	name = "security bowman headset"
 	desc = "This is used by your elite security force. Protects ears from flashbangs."

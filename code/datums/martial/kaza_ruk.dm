@@ -337,6 +337,14 @@
 /obj/item/clothing/gloves/kaza_ruk/sec/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/fight_gloves, infinite = TRUE)
 
+/obj/item/clothing/gloves/kaza_ruk/sec/peacekeeper
+	name = "peacekeeper krav maga gloves"
+	desc = "These gloves can teach you to perform Krav Maga using nanochips."
+	icon = 'icons/obj/clothing/gloves_additions.dmi'
+	worn_icon = 'icons/mob/clothing/hands_additions.dmi'
+	icon_state = "fightgloves_blue"
+	greyscale_colors = "#3F6E9E"
+
 /obj/item/clothing/gloves/kaza_ruk/combatglovesplus
 	name = "combat gloves plus"
 	desc = "These tactical gloves are fireproof and electrically insulated. These gloves seem to guide you through a non-lizardperson friendly variant of the Tiziran martial art, Kaza Ruk."

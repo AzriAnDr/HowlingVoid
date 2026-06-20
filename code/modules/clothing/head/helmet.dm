@@ -96,6 +96,23 @@
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
+/obj/item/clothing/head/helmet/sec/white
+	icon = 'icons/obj/clothing/head/helmet_additions.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet_additions.dmi'
+	icon_state = "security_helmet"
+	base_icon_state = "security_helmet"
+	actions_types = list(/datum/action/item_action/toggle)
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
+	flags_cover = parent_type::flags_cover | PEPPERPROOF
+	dog_fashion = null
+
+/obj/item/clothing/head/helmet/sec/white/click_alt(mob/user)
+	. = ..()
+	if (flipped_visor)
+		flags_cover &= ~PEPPERPROOF
+	else
+		flags_cover |= PEPPERPROOF
+
 /obj/item/clothing/head/helmet/press
 	name = "press helmet"
 	desc = "A blue helmet used to distinguish <i>non-combatant</i> \"PRESS\" members, like anyone cares."

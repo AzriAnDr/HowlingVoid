@@ -24,6 +24,11 @@
 	desc = "Worn by Securistan, ruling the station with an iron fist."
 	icon_state = "hoscloak"
 
+/obj/item/clothing/neck/cloak/hos/blue
+	icon = 'icons/obj/clothing/neck_additions.dmi'
+	worn_icon = 'icons/mob/clothing/neck_additions.dmi'
+	icon_state = "hoscloak_blue"
+
 /obj/item/clothing/neck/cloak/qm
 	name = "quartermaster's cloak"
 	desc = "Worn by Cargonia, supplying the station with the necessary tools for survival."

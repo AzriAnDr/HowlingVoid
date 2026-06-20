@@ -521,6 +521,37 @@
 	name = "police officer's hat"
 	desc = "A police officer's hat. This hat emphasizes that you are THE LAW."
 
+/datum/atom_skin/police_patrol_cap
+	abstract_type = /datum/atom_skin/police_patrol_cap
+
+/datum/atom_skin/police_patrol_cap/blue
+	preview_name = "Blue"
+	new_icon_state = "policeofficercap"
+
+/datum/atom_skin/police_patrol_cap/sillitoe
+	preview_name = "Sillitoe"
+	new_icon_state = "policetrafficcap"
+
+/datum/atom_skin/police_patrol_cap/black
+	preview_name = "Black"
+	new_icon_state = "policeofficerpatrolcap"
+
+/datum/atom_skin/police_patrol_cap/policecadetcap
+	preview_name = "Cadet"
+	new_icon_state = "policecadetcap"
+
+/obj/item/clothing/head/hats/warden/police/patrol
+	name = "police patrol cap"
+	desc = "A dark colored hat with a silver badge, for the officer interested in style."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "policeofficerpatrolcap"
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
+	armor_type = /datum/armor/head_helmet
+
+/obj/item/clothing/head/hats/warden/police/patrol/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/police_patrol_cap)
+
 /obj/item/clothing/head/hats/warden/red
 	name = "warden's hat"
 	desc = "A warden's red hat. Looking at it gives you the feeling of wanting to keep people in cells for as long as possible."
@@ -596,6 +627,59 @@
 					message += pick(", eh?", ", EH?")
 		speech_args[SPEECH_MESSAGE] = message
 
+/datum/atom_skin/security_garrison_cap
+	abstract_type = /datum/atom_skin/security_garrison_cap
+
+/datum/atom_skin/security_garrison_cap/black
+	preview_name = "Black Variant"
+	new_icon_state = "garrison_black"
+
+/datum/atom_skin/security_garrison_cap/blue
+	preview_name = "Blue Variant"
+	new_icon_state = "garrison_blue"
+
+/obj/item/clothing/head/security_garrison
+	name = "security garrison cap"
+	desc = "A robust garrison cap with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "garrison_black"
+	armor_type = /datum/armor/head_helmet
+	strip_delay = 60
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/head/security_garrison/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_garrison_cap)
+
+/datum/atom_skin/security_cap
+	abstract_type = /datum/atom_skin/security_cap
+
+/datum/atom_skin/security_cap/black
+	preview_name = "Black Variant"
+	new_icon_state = "security_cap_black"
+
+/datum/atom_skin/security_cap/blue
+	preview_name = "Blue Variant"
+	new_icon_state = "security_cap_blue"
+
+/datum/atom_skin/security_cap/white
+	preview_name = "White Variant"
+	new_icon_state = "security_cap_white"
+
+/obj/item/clothing/head/security_cap
+	name = "security cap"
+	desc = "A robust cap with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "security_cap_black"
+	armor_type = /datum/armor/head_helmet
+	strip_delay = 60
+	dog_fashion = null
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/head/security_cap/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_cap)
+
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
 	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
@@ -619,12 +703,31 @@
 	acid = 50
 	wound = 5
 
+/obj/item/clothing/head/beret/sec/nova
+	icon_state = "/obj/item/clothing/head/beret/sec/nova"
+	post_init_icon_state = "beret_badge"
+	greyscale_config = /datum/greyscale_config/beret_badge
+	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_colors = "#3F3C40#375989"
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
+	armor_type = /datum/armor/head_helmet
+
 /obj/item/clothing/head/beret/sec/navywarden
 	name = "warden's beret"
 	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
 	icon_state = "/obj/item/clothing/head/beret/sec/navywarden"
 	greyscale_colors = "#638799#ebebeb"
 	strip_delay = 6 SECONDS
+
+/obj/item/clothing/head/beret/sec/navywarden/nova
+	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
+	icon_state = "/obj/item/clothing/head/beret/sec/navywarden/nova"
+	post_init_icon_state = "beret_badge_fancy_twist"
+	greyscale_config = /datum/greyscale_config/beret_badge_fancy
+	greyscale_config_worn = /datum/greyscale_config/beret_badge_fancy/worn
+	greyscale_colors = "#3f6e9e#FF0000#00AEEF"
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
+	armor_type = /datum/armor/hats_warden
 
 /obj/item/clothing/head/beret/sec/navyofficer
 	desc = "A special beret with the security insignia emblazoned on it. For officers with class."
@@ -889,3 +992,13 @@
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#43523d#a2abb0"
 	armor_type = /datum/armor/cosmetic_sec
+
+/obj/item/clothing/head/beret/sec/armadyne
+	name = "armadyne corporate beret"
+	desc = "A comfy yet robust beret worn by Armadyne corporate."
+	icon_state = "/obj/item/clothing/head/beret/sec/armadyne"
+	post_init_icon_state = "beret_badge_fancy_diagonal"
+	greyscale_config = /datum/greyscale_config/beret_badge_fancy
+	greyscale_config_worn = /datum/greyscale_config/beret_badge_fancy/worn
+	greyscale_colors = "#3F3C40#5B2423#491716"
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON

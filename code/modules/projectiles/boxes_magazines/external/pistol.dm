@@ -102,6 +102,13 @@
 	MAGAZINE_TYPE_ARMORPIERCE
 	ammo_type = /obj/item/ammo_casing/c10mm/ap
 
+/obj/item/ammo_box/magazine/m10mm/downer
+	name = "pistol magazine (10mm downer)"
+	desc = parent_type::desc + "<br>Carries rounds which severely exhaust targets. Fully exhausted targets sleep when shot, \
+		while partially exhausted targets have a chance to go to sleep scaling with how exhausted they are."
+	ammo_band_color = COLOR_CARP_LIGHT_BLUE
+	ammo_type = /obj/item/ammo_casing/c10mm/downer
+
 // Regal Condor (10mm) //
 
 /obj/item/ammo_box/magazine/r10mm

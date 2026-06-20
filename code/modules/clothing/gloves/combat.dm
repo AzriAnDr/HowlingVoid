@@ -21,6 +21,32 @@
 	fire = 80
 	acid = 50
 
+/obj/item/clothing/gloves/combat/peacekeeper
+	name = "peacekeeper gloves"
+	desc = "These tactical gloves are fireproof."
+	icon = 'icons/obj/clothing/gloves_additions.dmi'
+	worn_icon = 'icons/mob/clothing/hands_additions.dmi'
+	icon_state = "black_blue_gloves"
+	worn_icon_state = "black_blue"
+	siemens_coefficient = 0.5
+	strip_delay = 20
+	cold_protection = 0
+	min_cold_protection_temperature = null
+	heat_protection = 0
+	max_heat_protection_temperature = null
+	resistance_flags = FLAMMABLE
+	armor_type = /datum/armor/none
+	cut_type = null
+
+/obj/item/clothing/gloves/combat/armadyne
+	name = "armadyne combat gloves"
+	desc = "Tactical and sleek. Worn by Armadyne representatives."
+	icon = 'icons/obj/clothing/gloves_additions.dmi'
+	worn_icon = 'icons/mob/clothing/hands_additions.dmi'
+	icon_state = "armadyne_gloves"
+	worn_icon_state = "armadyne_gloves"
+	cut_type = null
+
 /obj/item/clothing/gloves/combat/wizard
 	name = "enchanted gloves"
 	desc = "These gloves have been enchanted with a spell that makes them electrically insulated and fireproof."

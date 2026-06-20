@@ -2275,6 +2275,25 @@
 /obj/item/card/id/advanced/centcom/station
 	wildcard_slots = WILDCARD_LIMIT_SILVER
 
+/obj/item/card/id/advanced/armadyne
+	name = "\improper Armadyne ID"
+	desc = "An Armadyne ID card."
+	icon_state = "card_centcom"
+	assigned_icon_state = "assigned_centcom"
+	registered_age = null
+	trim = /datum/id_trim/centcom/armadyne
+	wildcard_slots = WILDCARD_LIMIT_CENTCOM
+
+/obj/item/card/id/advanced/armadyne/security
+	registered_name = "Armadyne Corpo"
+	trim = /datum/id_trim/centcom/armadyne/security
+
+/obj/item/card/id/advanced/armadyne/agent
+	trim = /datum/id_trim/centcom/armadyne/agent
+
+/obj/item/card/id/armadyne/corpo/security
+	assignment = "Armadyne Corporate Security"
+
 /obj/item/card/id/examine_more(mob/user)
 	. = ..()
 

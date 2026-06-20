@@ -253,6 +253,12 @@
 /obj/item/clothing/glasses/hud/security/sunglasses/blue/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_hud_sunglasses)
 
+/obj/item/clothing/glasses/hud/security/sunglasses/peacekeeper
+	name = "peacekeeper hud glasses"
+	icon = 'icons/obj/clothing/glasses_additions.dmi'
+	worn_icon = 'icons/mob/clothing/eyes_additions.dmi'
+	icon_state = "peacekeeperglasses"
+
 /obj/item/clothing/glasses/hud/security/sunglasses/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsunsecremoval)
@@ -399,3 +405,9 @@
 	desc = "These sunglasses are special, and let you view potential criminals."
 	icon_state = "sun"
 	inhand_icon_state = "sunglasses"
+
+/obj/item/clothing/glasses/hud/security/sunglasses/armadyne
+	name = "armadyne hud glasses"
+	icon_state = "armadyne_glasses"
+	worn_icon = 'icons/mob/clothing/eyes_additions.dmi'
+	icon = 'icons/obj/clothing/glasses_additions.dmi'

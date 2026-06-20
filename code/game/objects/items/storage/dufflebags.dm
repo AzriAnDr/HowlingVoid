@@ -186,6 +186,28 @@
 	icon_state = "duffel-security"
 	inhand_icon_state = "duffel-sec"
 
+/datum/atom_skin/security_duffelbag_black
+	abstract_type = /datum/atom_skin/security_duffelbag_black
+
+/datum/atom_skin/security_duffelbag_black/black
+	preview_name = "Black Variant"
+	new_icon_state = "duffel_security_black"
+
+/datum/atom_skin/security_duffelbag_black/white
+	preview_name = "White Variant"
+	new_icon_state = "duffel_security_white"
+
+/obj/item/storage/backpack/duffelbag/sec/blue
+	icon = 'icons/obj/clothing/backpacks.dmi'
+	worn_icon = 'icons/mob/clothing/back_additions.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/backpack_righthand.dmi'
+	icon_state = "duffel_security_black"
+	inhand_icon_state = "duffel_security_black"
+
+/obj/item/storage/backpack/duffelbag/sec/blue/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_duffelbag_black)
+
 /obj/item/storage/backpack/duffelbag/sec/surgery
 	name = "surgical duffel bag"
 	desc = "A large duffel bag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools."

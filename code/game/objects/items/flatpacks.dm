@@ -232,4 +232,8 @@
 /obj/item/flatpack/mailsorter // to have a roundstart mail sorter at cargo
 	name = "mail sorter"
 	board = /obj/item/circuitboard/machine/mailsorter
+
+/obj/item/flatpack/bullet_drive
+	name = "flatpacked bullet drive"
+	board = /obj/item/circuitboard/machine/dish_drive/bullet
 	custom_premium_price = PAYCHECK_CREW * 1.5

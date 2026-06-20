@@ -109,6 +109,13 @@
 /obj/item/clothing/gloves/tackler/security/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/tackler_gloves)
 
+/obj/item/clothing/gloves/tackler/peacekeeper
+	name = "peacekeeper gripper gloves"
+	desc = "Special gloves that manipulate the blood vessels in the wearer's hands, granting them the ability to launch headfirst into walls."
+	icon = 'icons/obj/clothing/gloves_additions.dmi'
+	worn_icon = 'icons/mob/clothing/hands_additions.dmi'
+	icon_state = "black_blue_gripper_gloves"
+
 /obj/item/clothing/gloves/tackler/rocket
 	name = "rocket gloves"
 	desc = "The ultimate in high risk, high reward, perfect for when you need to stop a criminal from fifty feet away or die trying. Banned in most Spinward gridiron football and rugby leagues."
