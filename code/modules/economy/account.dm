@@ -214,8 +214,6 @@
 		return FALSE
 
 	var/base_paycheck = round(account_job.paycheck * payday_modifier * amount_of_paychecks)
-	if(amount_of_paychecks == 1)
-		base_paycheck = clamp(base_paycheck, 0, PAYCHECK_CREW) //We want to limit single, passive paychecks to regular crew income.
 	var/money_to_transfer = max(0, base_paycheck + (paycheck_adjustment * amount_of_paychecks))
 	if(free)
 		// NOVA EDIT ADDITION START - Corporate economy wage tracking
