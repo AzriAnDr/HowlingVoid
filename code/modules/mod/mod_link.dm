@@ -285,7 +285,13 @@
 
 /obj/item/clothing/neck/link_scryer/proc/can_call()
 	var/mob/living/user = loc
-	return istype(user) && cell?.charge && user.stat < DEAD
+	. = istype(user) && cell?.charge && user.stat < DEAD
+	if(!.)
+		return FALSE
+
+	var/area/user_area = get_area(user)
+	if(user_area.type in GLOB.ghost_cafe_areas)
+		return FALSE
 
 /obj/item/clothing/neck/link_scryer/proc/make_link_visual()
 	var/mob/living/user = mod_link.get_user_callback.Invoke()

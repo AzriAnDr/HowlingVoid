@@ -45,6 +45,9 @@
 			attach_to.balloon_alert(user, "isn't compatible!")
 		return FALSE
 
+	if(!attachment_slot || (attach_to.attachment_slot_override & attachment_slot))
+		return TRUE
+
 	if(attachment_slot && !(attach_to.body_parts_covered & attachment_slot))
 		if(user)
 			attach_to.balloon_alert(user, "can't attach there!")
@@ -225,4 +228,39 @@
 		return .
 
 	context[SCREENTIP_CONTEXT_RMB] = "Wear [above_suit ? "below" : "above"] suit"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/clothing/accessory/chaps
+	name = "chaps"
+	desc = "Padding typically worn over one's trousers to better protect the outside of their legs from hazards."
+	icon = 'icons/map_icons/clothing/accessory.dmi'
+	icon_state = "/obj/item/clothing/accessory/chaps"
+	post_init_icon_state = "chaps"
+	worn_icon = 'icons/mob/clothing/under/shorts_pants_shirts_additions.dmi'
+	attachment_slot = LEGS
+	gender = PLURAL
+	greyscale_config = /datum/greyscale_config/chaps
+	greyscale_config_worn = /datum/greyscale_config/chaps/worn
+	greyscale_config_worn_digi = /datum/greyscale_config/chaps/worn/digi
+	greyscale_colors = "#787878#252525#2B2B2B"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/accessory/chaps/click_ctrl_shift(mob/user)
+	var/obj/item/clothing/under/pants/nova/chaps/chaps_uniform = new(user.drop_location())
+	chaps_uniform.greyscale_colors = greyscale_colors
+	chaps_uniform.update_greyscale()
+	user.balloon_alert(user, "changed to uniform!")
+	qdel(src)
+	user.put_in_hands(chaps_uniform)
+
+/obj/item/clothing/accessory/chaps/examine(mob/user)
+	. = ..()
+	. += span_notice("It can be [EXAMINE_HINT("ctrl+shift clicked")] to be worn as a uniform.")
+
+/obj/item/clothing/accessory/chaps/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(held_item != source)
+		return .
+
+	context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Wear as uniform"
 	return CONTEXTUAL_SCREENTIP_SET
