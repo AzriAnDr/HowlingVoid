@@ -126,7 +126,7 @@
 	description = "Temporary side effects include - nausea, dizziness, impaired motor coordination."
 	color = "#07e4d1"
 	ph = 6.2
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/sansufentanyl/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -134,6 +134,25 @@
 	affected_mob.adjust_confusion_up_to(1.5 SECONDS * metabolization_ratio * seconds_per_tick, 5 SECONDS)
 	affected_mob.adjust_dizzy_up_to(3 SECONDS * metabolization_ratio * seconds_per_tick, 12 SECONDS)
 	if(affected_mob.adjust_stamina_loss(0.5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
+		. = UPDATE_MOB_HEALTH
+
+	if(SPT_PROB(10, seconds_per_tick))
+		to_chat(affected_mob, "You feel confused and disoriented.")
+		if(prob(30))
+			SEND_SOUND(affected_mob, sound('sound/items/weapons/flash_ring.ogg'))
+
+/datum/reagent/medicine/sansufentanyl_base
+	name = "Experimental Fentanyl Base"
+	description = "The secret base reagent used to create sansufentanyl. Developed by Interdyne Pharmacuticals, it is a closely held secret recipe."
+	color = "#8659a6"
+	ph = 5
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+
+/datum/reagent/medicine/sansufentanyl_base/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	affected_mob.adjust_confusion_up_to(1.5 SECONDS * seconds_per_tick * metabolization_ratio, 10 SECONDS)
+	affected_mob.adjust_dizzy_up_to(3 SECONDS * seconds_per_tick * metabolization_ratio, 20 SECONDS)
+	if(affected_mob.adjust_stamina_loss(2 * seconds_per_tick * metabolization_ratio, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
 
 	if(SPT_PROB(10, seconds_per_tick))

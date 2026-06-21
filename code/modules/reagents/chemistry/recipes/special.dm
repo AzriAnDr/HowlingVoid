@@ -287,6 +287,24 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 			return possible_ingredients
 	return ..()
 
+/datum/chemical_reaction/randomized/sansufentanyl
+	randomize_req_temperature = FALSE
+	possible_catalysts = list(/datum/reagent/bluespace)
+	min_catalysts = 1
+	max_catalysts = 1
+	max_input_reagents = 4
+	results = list(/datum/reagent/medicine/sansufentanyl_base = 20)
+
+/datum/chemical_reaction/randomized/sansufentanyl/GetPossibleReagents(kind)
+	switch(kind)
+		if(RNGCHEM_INPUT)
+			var/list/possible_ingredients = list()
+			for(var/datum/reagent/compound as anything in GLOB.medicine_reagents)
+				if(initial(compound.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
+					possible_ingredients += compound
+			return possible_ingredients
+	return ..()
+
 /obj/item/paper/secretrecipe
 	name = "Old Recipe"
 
@@ -294,6 +312,11 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	var/list/possible_recipes = list(/datum/chemical_reaction/randomized/secret_sauce, /datum/chemical_reaction/randomized/metalgen)
 	///The one we actually end up displaying
 	var/recipe_id = null
+
+/obj/item/paper/secretrecipe/secretformula
+	name = "\improper Sansufentanyl Secret Formula"
+	recipe_id = /datum/chemical_reaction/randomized/sansufentanyl
+	possible_recipes = list(/datum/chemical_reaction/randomized/sansufentanyl)
 
 /obj/item/paper/secretrecipe/Initialize(mapload)
 	. = ..()

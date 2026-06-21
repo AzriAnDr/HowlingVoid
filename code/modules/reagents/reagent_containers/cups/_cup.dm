@@ -499,6 +499,9 @@
 /obj/item/reagent_containers/cup/beaker/cryoxadone
 	list_reagents = list(/datum/reagent/medicine/cryoxadone = 30)
 
+/obj/item/reagent_containers/cup/beaker/sansufentanyl_base
+	list_reagents = list(/datum/reagent/medicine/sansufentanyl_base = 60)
+
 /obj/item/reagent_containers/cup/beaker/sulfuric
 	list_reagents = list(/datum/reagent/toxin/acid = 50)
 
@@ -520,6 +523,9 @@
 /obj/item/reagent_containers/cup/beaker/large/epinephrine
 	name = "epinephrine reserve tank (diluted)"
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 50)
+
+/obj/item/reagent_containers/cup/beaker/large/spaceacillin
+	list_reagents = list(/datum/reagent/medicine/spaceacillin = 120)
 
 /obj/item/reagent_containers/cup/beaker/synthflesh
 	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 50)

@@ -26,6 +26,8 @@
 
 	/// Angle of the icon, used for piercing and slashing attack animations, clockwise from *east-facing* sprites
 	var/icon_angle = 0
+	/// Current rotation angle from messy item placement.
+	var/messy_angle = 0
 	///icon file for an alternate attack icon
 	var/attack_icon
 	///icon state for an alternate attack icon
@@ -927,6 +929,56 @@
 	if(!pixel_y && !pixel_x && !(item_flags & NO_PIXEL_RANDOM_DROP))
 		pixel_x = rand(-8,8)
 		pixel_y = rand(-8,8)
+	undo_messy()
+	do_messy(duration = 0.2 SECONDS)
+
+/// Randomly rotates and pixel shifts the item for a messy appearance.
+/obj/item/proc/do_messy(pixel_variation = 8, angle_variation = 360, duration = 0)
+	if(item_flags & NO_PIXEL_RANDOM_DROP)
+		return
+	if(!prob(35))
+		return
+
+	var/matrix/new_transform = transform
+	if(messy_angle)
+		new_transform = new_transform.Turn(-messy_angle)
+
+	var/new_x = base_pixel_x + rand(-pixel_variation, pixel_variation)
+	var/new_y = base_pixel_y + rand(-pixel_variation, pixel_variation)
+
+	messy_angle = rand(0, angle_variation)
+	new_transform = new_transform.Turn(messy_angle)
+
+	animate(
+		src,
+		pixel_x = new_x,
+		pixel_y = new_y,
+		transform = new_transform,
+		time = duration,
+		flags = ANIMATION_PARALLEL,
+	)
+
+/// Unrotates and resets item pixel position.
+/obj/item/proc/undo_messy(duration = 0)
+	var/matrix/new_transform = transform
+	if(messy_angle)
+		new_transform = new_transform.Turn(-messy_angle)
+
+	animate(
+		src,
+		pixel_x = base_pixel_x,
+		pixel_y = base_pixel_y,
+		transform = new_transform,
+		time = duration,
+		flags = ANIMATION_PARALLEL,
+	)
+
+	messy_angle = 0
+
+/obj/item/onZImpact(turf/impacted_turf, levels, impact_flags = NONE)
+	. = ..()
+	undo_messy()
+	do_messy(duration = 0.4 SECONDS)
 
 /// Takes the location to move the item to, and optionally the mob doing the removing
 /// If no mob is provided, we'll pass in the location, assuming it is a mob
@@ -1390,6 +1442,8 @@
 	if(throwforce && (HAS_TRAIT(user, TRAIT_PACIFISM)) || HAS_TRAIT(user, TRAIT_NO_THROWING))
 		to_chat(user, span_notice("You set [src] down gently on the ground."))
 		return
+	undo_messy()
+	do_messy(duration = 0.4 SECONDS)
 	return src
 
 /// How many different types of mats will be counted in a bite?

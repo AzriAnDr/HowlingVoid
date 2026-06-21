@@ -30,6 +30,11 @@
 	required_reagents = list(/datum/reagent/cryptobiolin = 1, /datum/reagent/medicine/epinephrine = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
 
+/datum/chemical_reaction/medicine/sansufentanyl
+	results = list(/datum/reagent/medicine/sansufentanyl = 10)
+	required_reagents = list(/datum/reagent/medicine/sansufentanyl_base = 1, /datum/reagent/medicine/spaceacillin = 3, /datum/reagent/bluespace = 6)
+	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_HEALING | REACTION_TAG_OTHER
+
 /datum/chemical_reaction/medicine/oculine
 	results = list(/datum/reagent/medicine/oculine = 3)
 	required_reagents = list(/datum/reagent/medicine/c2/multiver = 1, /datum/reagent/carbon = 1, /datum/reagent/hydrogen = 1)

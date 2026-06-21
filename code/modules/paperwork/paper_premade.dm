@@ -2,6 +2,24 @@
  * Premade paper
  */
 
+/obj/item/paper/fluff/sansufentanyl
+	name = "sansufentanyl recipe"
+	default_raw_text = {"Sansufentanyl Recipe! <br>
+		Within this box contains the base reagents in order to make the experimental medicine, sansufentanyl. <br>
+		1. Grind the bluespace crystals into a fine powder. <br>
+		2. Mix 1 part Experimental Fentanyl Base with 3 parts spaceacillin and 6 parts bluespace dust. <br>
+		3. Mix the reagents together in a beaker and keep tempratue to around 350k. <br>
+		4. Once the reagents have been mixed, pour the mixture into a chem master. <br>
+		5. Initiate the chem master's pill press and press the pills into units of 10 per pill. <br>
+		6. Once the pills have been pressed, place them into a pill bottle and store them in a cool, dark place. <br>
+
+		If you run out of the base reagent you can make more using the secret formula stored in the vault.
+
+
+		THE RECIPE STORED IN THE VAULT IS TOP SECRET, DO NOT GIVE IT AWAY UNDER ANY CIRCUMSTANCE.
+		IF YOU ARE CAUGHT GIVING AWAY THE RECIPE, YOU WILL BE TERMINATED.
+	"}
+
 /obj/item/paper/fluff/sop
 	name = "paper- 'Standard Operating Procedure'"
 	default_raw_text = {"Alert Levels:

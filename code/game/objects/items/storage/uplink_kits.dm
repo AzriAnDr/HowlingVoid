@@ -494,6 +494,18 @@
 	new /obj/item/reagent_containers/cup/bottle/amanitin(src)
 	new /obj/item/reagent_containers/syringe(src)
 
+/obj/item/storage/box/syndie_kit/sansufentanyl
+	name = "sansufentanyl reagent box"
+	desc = "Contains everything you'll need to create new batches of sansufentanyl. Careful, do not spill contents."
+
+/obj/item/storage/box/syndie_kit/sansufentanyl/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/reagent_containers/cup/beaker/sansufentanyl_base = 1,
+		/obj/item/reagent_containers/cup/beaker/large/spaceacillin = 1,
+		/obj/item/paper/fluff/sansufentanyl = 1,
+	), src)
+	new /obj/item/stack/ore/bluespace_crystal(src, 15)
+
 /obj/item/storage/box/syndie_kit/nuke
 	name = "nuke core extraction kit"
 	desc = "A box containing the equipment and instructions for extracting the plutonium cores of most Nanotrasen nuclear explosives."

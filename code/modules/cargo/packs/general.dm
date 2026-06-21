@@ -206,6 +206,12 @@
 	contains = list(/obj/item/training_toolbox = 2)
 	crate_name = "training toolbox crate"
 
+/datum/supply_pack/misc/experimentalmedicine
+	name = "Sanusfentanyl Medicine Crate"
+	desc = "A crate containing the medication required for living with Hereditary Manifold Sickness, Sansufentanyl."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/storage/pill_bottle/sansufentanyl = 2)
+
 ///Special supply crate that generates random syndicate gear up to a determined TC value
 /datum/supply_pack/misc/syndicate
 	name = "Assorted Syndicate Gear"
