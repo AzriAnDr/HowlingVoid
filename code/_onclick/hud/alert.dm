@@ -270,6 +270,11 @@
 	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "bronchoconstricted"
 
+/atom/movable/screen/alert/numbed
+	name = "Numbed"
+	desc = "Your body is numb, painless. You're under the effect of some kind of anaesthetic."
+	icon_state = "stasis"
+
 /atom/movable/screen/alert/gross
 	name = "Grossed out."
 	desc = "That was kind of gross..."

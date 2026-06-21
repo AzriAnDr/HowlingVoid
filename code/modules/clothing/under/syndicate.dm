@@ -292,6 +292,16 @@
 	var/obj/item/clothing/accessory/maidcorset/syndicate/apron = new(src)
 	attach_accessory(apron)
 
+/obj/item/clothing/under/syndicate/nova/maid/loadout_maid
+	name = "tactical maid outfit"
+	desc = "A 'tactical' skirtleneck fashioned to the likeness of a maid outfit"
+	has_sensor = HAS_SENSORS
+	icon_state = "syndimaid"
+	armor_type = /datum/armor/clothing_under
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	dying_key = DYE_REGISTRY_JUMPSKIRT
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
 /obj/item/clothing/under/syndicate/nova/interdyne
 	name = "interdyne turtleneck"
 	desc = "A sleek white turtleneck with a hint of interdyne-green, appropriately paired with some charcoal-black cargo pants."

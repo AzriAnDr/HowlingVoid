@@ -26,6 +26,13 @@
 	desc = "These 'tactical' gloves and sleeves are fireproof and electrically insulated. Warm to boot."
 	icon_state = "syndimaid_arms"
 
+/obj/item/clothing/gloves/tactical_maid
+	name = "tactical maid sleeves"
+	desc = "These 'tactical' gloves and heavy and warm."
+	icon = 'icons/obj/clothing/gloves_additions.dmi'
+	worn_icon = 'icons/mob/clothing/hands_additions.dmi'
+	icon_state = "syndimaid_arms"
+
 /obj/item/clothing/gloves/kaza_ruk/combatglovesplus
 	icon = 'icons/obj/clothing/gloves_additions.dmi'
 	worn_icon = 'icons/mob/clothing/hands_additions.dmi'

@@ -51,6 +51,15 @@
 		return FALSE
 	return TRUE
 
+/obj/item/clothing/accessory/maidcorset/syndicate/loadout_corset
+	name = "tactical maid apron"
+	desc = "Practical? No. Tactical? Also no. Cute? Most definitely yes."
+	icon = 'icons/obj/clothing/accessories_additions.dmi'
+	worn_icon = 'icons/mob/clothing/accessories_additions.dmi'
+	icon_state = "syndimaid_corset"
+	minimize_when_attached = FALSE
+	attachment_slot = NONE
+
 /obj/item/clothing/accessory/Initialize(mapload)
 	. = ..()
 	register_context()
