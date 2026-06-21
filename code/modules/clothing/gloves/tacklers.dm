@@ -84,7 +84,9 @@
 /obj/item/clothing/gloves/tackler/combat/insulated
 	name = "guerrilla gloves"
 	desc = "Superior quality combative gloves, good for performing tackle takedowns as well as absorbing electrical shocks."
-	icon_state = "guerrilla"
+	icon = 'icons/obj/clothing/gloves_additions.dmi'
+	worn_icon = 'icons/mob/clothing/hands_additions.dmi'
+	icon_state = "combat"
 	siemens_coefficient = 0
 	armor_type = /datum/armor/combat_insulated
 

@@ -507,6 +507,14 @@
 	strip_delay = 6 SECONDS
 	dog_fashion = /datum/dog_fashion/head/warden
 
+/obj/item/clothing/head/hats/warden/syndicate
+	name = "master at arms' police hat"
+	desc = "A fashionable police cap emblazoned with a golden badge, issued to the Master at Arms. Protects the head from impacts."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "policehelm_syndie"
+	dog_fashion = null
+
 /datum/armor/hats_warden
 	melee = 40
 	bullet = 30
@@ -712,6 +720,15 @@
 	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
 	armor_type = /datum/armor/head_helmet
 
+/obj/item/clothing/head/beret/sec/syndicate
+	name = "brig officer's beret"
+	desc = "A stylish and protective beret, produced and manufactured by Interdyne Pharmaceuticals with help from the Gorlex Marauders."
+	icon_state = "/obj/item/clothing/head/beret/sec/syndicate"
+	post_init_icon_state = "beret_badge"
+	greyscale_config = /datum/greyscale_config/beret_badge
+	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_colors = "#3F3C40#DB2929"
+
 /obj/item/clothing/head/beret/sec/navywarden
 	name = "warden's beret"
 	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
@@ -769,6 +786,28 @@
 	desc = "A beret in a distinct surgical turquoise!"
 	icon_state = "/obj/item/clothing/head/beret/medical/cmo"
 	greyscale_colors = "#5EB8B8"
+
+/obj/item/clothing/head/beret/medical/nova/interdyne
+	name = "interdyne beret"
+	desc = "A white and green beret denoting one's allegiance to Interdyne Pharmaceutics."
+	icon_state = "/obj/item/clothing/head/beret/medical/nova/interdyne"
+	greyscale_colors = "#FFFFFF#198019"
+
+/obj/item/clothing/head/hats/syndicate/interdyne_deckofficer_black
+	name = "black deck officer's cap"
+	desc = "A black officer's cap that demands discipline from the one who wears it."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "ip_officercap_black"
+	armor_type = /datum/armor/sec_navywarden
+
+/obj/item/clothing/head/hats/syndicate/interdyne_deckofficer_white
+	name = "white deck officer's cap"
+	desc = "A white officer's cap that demands discipline from the one who wears it."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "ip_officercap_white"
+	armor_type = /datum/armor/sec_navywarden
 
 /obj/item/clothing/head/utility/surgerycap
 	name = "blue surgery cap"

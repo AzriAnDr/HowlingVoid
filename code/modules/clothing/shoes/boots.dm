@@ -1,7 +1,9 @@
 /obj/item/clothing/shoes/combat //basic syndicate combat boots for nuke ops and mob corpses
 	name = "combat boots"
 	desc = "High speed, low drag combat boots."
-	icon_state = "jackboots"
+	icon = 'icons/obj/clothing/shoes_additions.dmi'
+	worn_icon = 'icons/mob/clothing/feet_additions.dmi'
+	icon_state = "combat"
 	inhand_icon_state = "jackboots"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	body_parts_covered = FEET|LEGS

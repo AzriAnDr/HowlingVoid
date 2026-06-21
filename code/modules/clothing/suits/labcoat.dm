@@ -233,6 +233,11 @@
 	body_parts_covered = CHEST|ARMS|LEGS
 	armor_type = /datum/armor/nova_rd
 
+/obj/item/clothing/suit/toggle/labcoat/nova/fancy/rd/deckofficer
+	icon_state = "/obj/item/clothing/suit/toggle/labcoat/nova/fancy/rd/deckofficer"
+	greyscale_colors = "#FFFFFF#4F8F56"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
 /datum/armor/nova_rd
 	melee = 5
 	bio = 80
@@ -256,6 +261,29 @@
 	icon_state = "/obj/item/clothing/suit/toggle/labcoat/nova/lalunevest"
 	icon_state = "labcoat_lalunevest"
 	gets_cropped_on_taurs = FALSE
+
+/obj/item/clothing/suit/toggle/labcoat/nova/interdyne_labcoat/black
+	name = "interdyne black labcoat"
+	desc = "A black labcoat accented with interdyne-green colors."
+	icon_state = "ip_labcoatblack"
+	worn_icon_teshari = 'icons/mob/clothing/species/teshari/suit.dmi'
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/toggle/labcoat/nova/interdyne_labcoat/white
+	name = "interdyne white labcoat"
+	desc = "A white labcoat accented with interdyne-green colors."
+	icon_state = "ip_labcoatwhite"
+	worn_icon_teshari = 'icons/mob/clothing/species/teshari/suit.dmi'
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/syndicate/interdyne_jacket
+	name = "interdyne jacket"
+	desc = "A green high-visibility jacket bearing interdyne colors."
+	icon = 'icons/obj/clothing/suits/labcoat_additions.dmi'
+	worn_icon = 'icons/mob/clothing/suits/labcoat_additions.dmi'
+	icon_state = "ip_armorlabcoat"
+	armor_type = /datum/armor/wintercoat_syndicate
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/toggle/labcoat/nova/fancy/pharmacist
 	name = "pharmacist's labcoat"

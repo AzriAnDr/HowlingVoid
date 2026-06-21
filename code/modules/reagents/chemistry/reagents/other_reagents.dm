@@ -111,6 +111,7 @@
 	taste_description = "water"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 	default_container = /obj/item/reagent_containers/cup/glass/waterbottle
 	var/cooling_temperature = 2
 
@@ -502,6 +503,7 @@
 	ph = 0.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1357,6 +1359,7 @@
 	burning_volume = 0.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 	addiction_types = list(/datum/addiction/alcohol = 300)
 
 /datum/glass_style/drinking_glass/fuel
@@ -1647,6 +1650,7 @@
 	ph = 6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 
 /datum/reagent/carbondioxide/expose_turf(turf/open/exposed_turf, reac_volume)
 	if(istype(exposed_turf))
@@ -1953,6 +1957,7 @@
 	burning_volume = 0.05 //but has a lot of hydrocarbons
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 	addiction_types = null
 	default_container = /obj/effect/decal/cleanable/blood/oil
 
@@ -1965,6 +1970,7 @@
 	ph = 1.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 
 /datum/reagent/stable_plasma/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -2807,6 +2813,7 @@
 	ph = 15
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 	metabolized_traits = list(TRAIT_PACIFISM)
 
 /datum/reagent/bz_metabolites

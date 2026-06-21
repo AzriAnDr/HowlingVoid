@@ -21,6 +21,21 @@
 	fire = 80
 	acid = 50
 
+/obj/item/clothing/gloves/combat/maid
+	name = "combat maid sleeves"
+	desc = "These 'tactical' gloves and sleeves are fireproof and electrically insulated. Warm to boot."
+	icon_state = "syndimaid_arms"
+
+/obj/item/clothing/gloves/kaza_ruk/combatglovesplus
+	icon = 'icons/obj/clothing/gloves_additions.dmi'
+	worn_icon = 'icons/mob/clothing/hands_additions.dmi'
+	icon_state = "combat"
+
+/obj/item/clothing/gloves/kaza_ruk/combatglovesplus/maa
+	name = "master at arms' combat gloves"
+	desc = "A set of combat gloves plus emblazoned with red knuckles, showing dedication to the trade while also hiding any blood left after use."
+	icon_state = "maagloves"
+
 /obj/item/clothing/gloves/combat/peacekeeper
 	name = "peacekeeper gloves"
 	desc = "These tactical gloves are fireproof."
@@ -50,6 +65,8 @@
 /obj/item/clothing/gloves/combat/wizard
 	name = "enchanted gloves"
 	desc = "These gloves have been enchanted with a spell that makes them electrically insulated and fireproof."
+	icon = 'icons/obj/clothing/gloves.dmi'
+	worn_icon = null
 	icon_state = "wizard"
 	greyscale_colors = null
 	inhand_icon_state = null
@@ -61,6 +78,8 @@
 /obj/item/clothing/gloves/combat/floortile
 	name = "floortile camouflage gloves"
 	desc = "Is it just me or is there a pair of gloves on the floor?"
+	icon = 'icons/obj/clothing/gloves.dmi'
+	worn_icon = null
 	icon_state = "ftc_gloves"
 	inhand_icon_state = "greyscale_gloves"
 

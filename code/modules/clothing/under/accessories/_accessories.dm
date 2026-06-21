@@ -29,6 +29,28 @@
 	/// If NONE, can always attach, while if supplied, can only attach if the clothing covers this slot.
 	var/attachment_slot = CHEST
 
+/obj/item/clothing/accessory/maidcorset/syndicate
+	name = "syndicate maid apron"
+	desc = "Practical? No. Tactical? Also no. Cute? Most definitely yes."
+	icon = 'icons/obj/clothing/accessories_additions.dmi'
+	worn_icon = 'icons/mob/clothing/accessories_additions.dmi'
+	icon_state = "syndimaid_corset"
+	minimize_when_attached = FALSE
+	attachment_slot = NONE
+
+/obj/item/clothing/accessory/maidcorset/syndicate/can_attach_accessory(obj/item/clothing/under/attach_to, mob/living/user)
+	if(!..())
+		return FALSE
+	if(length(attach_to.attached_accessories) >= attach_to.max_number_of_accessories)
+		if(user)
+			attach_to.balloon_alert(user, "too many accessories!")
+		return FALSE
+	if(locate(/obj/item/clothing/accessory/maidcorset/syndicate) in attach_to.attached_accessories)
+		if(user)
+			attach_to.balloon_alert(user, "already has an apron!")
+		return FALSE
+	return TRUE
+
 /obj/item/clothing/accessory/Initialize(mapload)
 	. = ..()
 	register_context()

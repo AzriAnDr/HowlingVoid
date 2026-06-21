@@ -203,7 +203,6 @@
 	can_adjust = FALSE
 
 //Related files:
-// code\modules\syndie_edits\syndie_edits.dm (this has the Overalls and non-Uniforms)
 // code\modules\novaya_ert\uniform.dm (HC uniform(s))
 
 /*
@@ -264,6 +263,60 @@
 	name = "syndicate baseball tee"
 	desc = "Aaand the Syndicate Snakes are up to bat, ready for one of their signature nuclear home-runs! Lets show these corpos a good time." //NT pitches their plasma/bluespace(something)
 	icon_state = "syndicate_baseball"
+
+/obj/item/clothing/under/syndicate/nova/overalls
+	name = "utility overalls turtleneck"
+	desc = "A pair of spiffy overalls with a turtleneck underneath, useful for both engineering and botanical work."
+	icon_state = "syndicate_overalls"
+	can_adjust = TRUE
+
+/obj/item/clothing/under/syndicate/nova/overalls/skirt
+	name = "utility overalls skirtleneck"
+	desc = "A pair of spiffy overalls with a turtleneck underneath, this one is a skirt instead, breezy."
+	icon_state = "syndicate_overallskirt"
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	dying_key = DYE_REGISTRY_JUMPSKIRT
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON | CLOTHING_BIG_LEGS_MASK
+
+/obj/item/clothing/under/syndicate/nova/maid
+	name = "tactical maid outfit"
+	desc = "A 'tactical' skirtleneck fashioned to the likeness of a maid outfit. Why the Syndicate has these, you'll never know."
+	icon_state = "syndimaid"
+	armor_type = /datum/armor/clothing_under
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	dying_key = DYE_REGISTRY_JUMPSKIRT
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/under/syndicate/nova/maid/Initialize(mapload)
+	. = ..()
+	var/obj/item/clothing/accessory/maidcorset/syndicate/apron = new(src)
+	attach_accessory(apron)
+
+/obj/item/clothing/under/syndicate/nova/interdyne
+	name = "interdyne turtleneck"
+	desc = "A sleek white turtleneck with a hint of interdyne-green, appropriately paired with some charcoal-black cargo pants."
+	has_sensor = HAS_SENSORS
+	armor_type = /datum/armor/clothing_under/syndicate
+	icon_state = "ip_turtleneck"
+	can_adjust = TRUE
+	alt_covers_chest = TRUE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION | CLOTHING_BIG_LEGS_MASK
+
+/obj/item/clothing/under/syndicate/nova/interdyne/miner
+	name = "interdyne jumpsuit"
+	desc = "A black and green Interdyne Pharmaceutics jumpsuit with reinforced fibers."
+	armor_type = /datum/armor/clothing_under/cargo_miner
+	icon_state = "ip_miner"
+	can_adjust = TRUE
+	alt_covers_chest = FALSE
+
+/obj/item/clothing/under/syndicate/nova/interdyne/deckofficer
+	name = "deck officer's jumpsuit"
+	desc = "A black and green Interdyne Pharmaceutics uniform complete with a golden belt buckle."
+	armor_type = /datum/armor/clothing_under/syndicate
+	icon_state = "ip_deckofficer"
+	can_adjust = TRUE
+	alt_covers_chest = FALSE
 
 /obj/item/clothing/under/syndicate/unarmoured
 	name = "suspicious tactical turtleneck"
@@ -331,6 +384,13 @@
 /obj/item/clothing/under/syndicate/nova/overalls/unarmoured/examine_more(mob/user)
 	. = ..()
 	. += span_notice("The armor has been removed from the fabric.")
+
+/obj/item/clothing/mask/neck_gaiter/syndicate
+	name = "tactical neck gaiter"
+	desc = "For the agent wanting to keep a low profile whilst concealing their identity. Has a small respirator to be used with internals."
+	unique_death = 'sound/effects/hacked.ogg'
+	icon_state = "/obj/item/clothing/mask/neck_gaiter/syndicate"
+	greyscale_colors = "#2c2c2e"
 
 /obj/item/clothing/mask/neck_gaiter/syndicate/tacticool
 	name = "tacticool neck gaiter"

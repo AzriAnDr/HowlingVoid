@@ -304,6 +304,17 @@
 /obj/item/clothing/suit/armor/hos/trenchcoat/winter/setup_reskins()
 	return
 
+/obj/item/clothing/suit/armor/hos/deckofficer
+	name = "deck officer's cloak"
+	desc = "An armored trench-cloak with green accents worn by high-ranking interdyne staff."
+	icon = 'icons/obj/clothing/suits/armor_additions.dmi'
+	worn_icon = 'icons/mob/clothing/suits/armor_additions.dmi'
+	worn_icon_teshari = 'icons/mob/clothing/species/teshari/suit.dmi'
+	icon_state = "ip_officercloak"
+
+/obj/item/clothing/suit/armor/hos/deckofficer/setup_reskins()
+	return
+
 /obj/item/clothing/suit/armor/hos/hos_formal
 	name = "\improper Head of Security's parade jacket"
 	desc = "For when an armoured vest isn't fashionable enough."
@@ -406,7 +417,29 @@
 /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	name = "syndicate captain's vest"
 	desc = "A sinister looking vest of advanced armor worn over a black and red fireproof jacket. The gold collar and shoulders denote that this belongs to a high ranking syndicate officer."
+	icon = 'icons/syndie_edits/obj.dmi'
+	worn_icon = 'icons/syndie_edits/worn.dmi'
 	icon_state = "syndievest"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/armor/vest/capcarapace/syndicate/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon)
+
+/obj/item/clothing/suit/armor/vest/capcarapace/syndicate/winter
+	name = "syndicate captain's winter vest"
+	desc = "A sinister yet comfortable looking vest of advanced armor worn over a black and red fireproof jacket. The fur is said to be from wolves on the icemoon."
+	icon = 'icons/syndie_edits/obj.dmi'
+	worn_icon = 'icons/syndie_edits/worn.dmi'
+	icon_state = "syndievest_winter"
+	body_parts_covered = CHEST|GROIN
+	cold_protection = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/suit/armor/vest/capcarapace/syndicate/winter/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon)
 
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal
 	name = "captain's parade coat"
@@ -503,6 +536,13 @@
 	fire = 50
 	acid = 50
 	wound = 20
+
+/obj/item/clothing/suit/armor/bulletproof/old
+	desc = "A Type III heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	icon = 'icons/obj/clothing/suits/armor.dmi'
+	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
+	icon_state = "bulletproof"
+	body_parts_covered = CHEST
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "reflector vest"

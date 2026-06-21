@@ -405,6 +405,14 @@
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
+/obj/item/clothing/head/helmet/swat/ds
+	name = "SWAT helmet"
+	desc = "A robust and spaceworthy helmet with a small cross on it along with 'IP' written across the earpad."
+	icon = 'icons/obj/clothing/head/helmet_additions.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet_additions.dmi'
+	icon_state = "swat_ds"
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
+
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
 	desc = "<i>'Let the battle commence!'</i>"

@@ -345,6 +345,16 @@
 /obj/item/storage/belt/security/webbing/peacekeeper/setup_reskins()
 	return
 
+/obj/item/storage/belt/security/webbing/ds
+	name = "brig officer webbing"
+	icon = 'icons/obj/clothing/belts_additions.dmi'
+	worn_icon = 'icons/mob/clothing/belt_additions.dmi'
+	icon_state = "webbingds"
+	worn_icon_state = "webbingds"
+
+/obj/item/storage/belt/security/webbing/ds/setup_reskins()
+	return
+
 /obj/item/storage/belt/mining
 	name = "explorer's webbing"
 	desc = "A versatile chest rig, cherished by miners and hunters alike."

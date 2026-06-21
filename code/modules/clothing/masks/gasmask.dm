@@ -288,6 +288,15 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/syndicate/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman
 
+/obj/item/clothing/mask/gas/syndicate/ds
+	name = "balaclava"
+	desc = "A fancy balaclava, while it doesn't muffle your voice, it's fireproof and has a miniature rebreather for internals. Comfy to boot!"
+	icon = 'icons/obj/clothing/masks_additions.dmi'
+	worn_icon = 'icons/mob/clothing/mask_additions.dmi'
+	icon_state = "balaclava_ds"
+	flags_inv = HIDEFACE | HIDEEARS | HIDEFACIALHAIR
+	alternate_worn_layer = LOW_FACEMASK_LAYER
+
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."

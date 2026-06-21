@@ -185,6 +185,7 @@
 	name = "Flight Potion"
 	description = "Strange mutagenic compound of unknown origins."
 	color = "#976230"
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 
 /datum/reagent/flightpotion/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
 	. = ..()
