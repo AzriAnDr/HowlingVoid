@@ -37,6 +37,8 @@
 	var/list/transaction_history
 	///A lazylist of coupons redeemed with the Coupon Master pda app associated with this account.
 	var/list/redeemed_coupons
+	/// Forensic marker keys already paid out to this account for detective analysis.
+	var/list/detective_paid_forensic_markers
 	/// How many paychecks to skip when payday is called.
 	var/paydays_to_skip = 0
 	/// Flat per-payday payroll adjustment set by authorized command staff.

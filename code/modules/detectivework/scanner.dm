@@ -19,6 +19,8 @@
 	var/range = 8
 	var/view_check = TRUE
 	var/forensicPrintCount = 0
+	/// Detective bank account ID that receives forensic analysis rewards.
+	var/linked_reward_account_id
 
 /obj/item/detective_scanner/interact(mob/user)
 	. = ..()
@@ -26,6 +28,28 @@
 		return ITEM_INTERACT_BLOCKING
 	ui_interact(user)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/detective_scanner/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	var/obj/item/card/id/id_card = attacking_item.GetID()
+	if(!id_card)
+		return
+	if(scanner_busy)
+		balloon_alert(user, "scanner busy!")
+		return TRUE
+	var/datum/bank_account/card_account = id_card.registered_account
+	if(!card_account)
+		balloon_alert(user, "no account!")
+		return TRUE
+	if(!istype(card_account.account_job, /datum/job/detective))
+		balloon_alert(user, "detective ID required!")
+		return TRUE
+
+	linked_reward_account_id = card_account.account_id
+	playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
+	balloon_alert(user, "account linked")
+	to_chat(user, span_notice("[src] links forensic analysis payouts to [card_account.account_holder]'s account."))
+	return TRUE
 
 /**
  * safe_print_report - a wrapper proc for print_report
@@ -85,6 +109,53 @@
 	if(!scan(user, atom_to_scan)) // this should only return FALSE if a runtime occurs during the scan proc, so ideally never
 		balloon_alert(user, "scanner error!") // but in case it does, we 'error' instead of just bricking the scanner
 	scanner_busy = FALSE
+
+/obj/item/detective_scanner/proc/get_linked_reward_account()
+	RETURN_TYPE(/datum/bank_account)
+	if(isnull(linked_reward_account_id))
+		return
+	var/datum/bank_account/linked_account = SSeconomy.bank_accounts_by_id["[linked_reward_account_id]"]
+	if(!istype(linked_account?.account_job, /datum/job/detective))
+		linked_reward_account_id = null
+		return
+	return linked_account
+
+/obj/item/detective_scanner/proc/collect_new_analysis_markers(datum/bank_account/detective_account, datum/detective_scanner_log/log_entry, scan_category_id, list/new_forensic_markers)
+	var/datum/detective_scanner_data_entry/data_entry = log_entry.data_entries[scan_category_id]
+	if(!length(data_entry?.data))
+		return
+
+	for(var/marker in data_entry.data)
+		var/marker_key = "[scan_category_id]:[marker]"
+		if(LAZYACCESS(detective_account.detective_paid_forensic_markers, marker_key) || new_forensic_markers[marker_key])
+			continue
+		new_forensic_markers[marker_key] = TRUE
+
+/// Pays detectives for the first successful forensic analysis of an object with real trace evidence.
+/obj/item/detective_scanner/proc/try_pay_analysis_reward(atom/scanned_atom, datum/detective_scanner_log/log_entry)
+	if(!istype(scanned_atom) || ismob(scanned_atom))
+		return
+	var/datum/bank_account/detective_account = get_linked_reward_account()
+	if(!detective_account)
+		return
+
+	var/list/new_forensic_markers = list()
+	for(var/category in list(DETSCAN_CATEGORY_FINGERS, DETSCAN_CATEGORY_BLOOD, DETSCAN_CATEGORY_FIBER))
+		collect_new_analysis_markers(detective_account, log_entry, category, new_forensic_markers)
+	if(!length(new_forensic_markers))
+		return
+
+	var/reward = min(DETECTIVE_ANALYSIS_REWARD_MAX, length(new_forensic_markers) * DETECTIVE_ANALYSIS_REWARD_PER_CATEGORY)
+	if(reward <= 0 || !detective_account.adjust_money(reward, "Detective: Forensic analysis"))
+		return
+
+	LAZYINITLIST(detective_account.detective_paid_forensic_markers)
+	for(var/marker_key in new_forensic_markers)
+		detective_account.detective_paid_forensic_markers[marker_key] = TRUE
+
+	detective_account.bank_card_talk("You have received [reward][MONEY_SYMBOL] for [length(new_forensic_markers)] new forensic trace\s from [scanned_atom].")
+	SSeconomy.record_wages(reward)
+	log_econ("[reward] [MONEY_NAME] were awarded to [detective_account.account_holder]'s account for [length(new_forensic_markers)] new forensic traces from [scanned_atom].")
 
 /**
  * scan - scans an atom for forensic data and outputs it to the mob holding the scanner
@@ -176,6 +247,7 @@
 	log_entry.sort_data_entries()
 
 	stoplag(3 SECONDS)
+	try_pay_analysis_reward(scanned_atom, log_entry)
 	log_data += log_entry
 	return TRUE
 
@@ -184,6 +256,11 @@
 
 /obj/item/detective_scanner/examine(mob/user)
 	. = ..()
+	var/datum/bank_account/linked_account = get_linked_reward_account()
+	if(linked_account)
+		. += span_notice("Forensic analysis payouts are linked to [linked_account.account_holder]'s account.")
+	else
+		. += span_notice("Swipe a detective ID card to link forensic analysis payouts.")
 	if(length(log_data) && !scanner_busy)
 		. += span_notice("Alt-click to clear scanner logs.")
 

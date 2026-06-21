@@ -24,6 +24,11 @@
 //How much of a paid security fine is deposited into the issuing officer's bank account.
 #define SECURITY_FINE_OFFICER_SHARE 0.3
 
+//How much a detective earns for finding new forensic markers during a paid evidence analysis.
+#define DETECTIVE_ANALYSIS_REWARD_PER_CATEGORY 1
+//Maximum personal payout from a single paid evidence analysis.
+#define DETECTIVE_ANALYSIS_REWARD_MAX 6
+
 //the amount of credits collected by the vending machines that can be redeemed when restocking it.
 #define VENDING_CREDITS_COLLECTION_AMOUNT 0.2
 
