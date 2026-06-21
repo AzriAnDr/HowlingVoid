@@ -365,6 +365,7 @@
 						return
 
 					var/datum/crime/citation/new_citation = new(name = citation_name, author = allowed_access, fine = fine)
+					new_citation.set_author_account_from_mob(human_user)
 
 					target_record.citations += new_citation
 					new_citation.alert_owner(usr, src, target_record.name, "You have been fined [fine] [MONEY_NAME] for '[citation_name]'. Fines may be paid at security.")

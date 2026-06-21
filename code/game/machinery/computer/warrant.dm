@@ -126,9 +126,19 @@
 		)
 		warrant.alert_owner(user, src, target.name, "[pick(titles)] has paid [amount][MONEY_SYMBOL] towards your fine.")
 
+	var/officer_cut = round(amount * SECURITY_FINE_OFFICER_SHARE)
+	var/security_cut = amount - officer_cut
+	var/datum/bank_account/officer_account = warrant.get_author_account()
+	if(officer_account && officer_cut > 0)
+		officer_account.adjust_money(officer_cut, "Security: Fine commission")
+		officer_account.bank_card_talk("You have received [officer_cut][MONEY_SYMBOL] from [target.name]'s paid fine.")
+		SSeconomy.record_transfer_activity("security_fine_commission", officer_cut)
+	else
+		security_cut = amount
 	var/datum/bank_account/sec_account = SSeconomy.get_dep_account(ACCOUNT_SEC)
-	sec_account.adjust_money(amount)
-	SSeconomy.record_tax_fine("security_fines", amount, ACCOUNT_SEC)
+	if(sec_account && security_cut > 0)
+		sec_account.adjust_money(security_cut, "Security: Fine payment")
+		SSeconomy.record_tax_fine("security_fines", security_cut, ACCOUNT_SEC)
 	SSblackbox.ReportCitation(REF(warrant), paid = warrant.paid)
 
 	if(warrant.fine != 0 || target.name == user)

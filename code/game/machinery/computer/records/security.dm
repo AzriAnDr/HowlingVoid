@@ -237,6 +237,7 @@
 		return TRUE
 
 	var/datum/crime/citation/new_citation = new(name = input_name, details = input_details, author = usr, fine = params["fine"])
+	new_citation.set_author_account_from_mob(user)
 
 	target.citations += new_citation
 	new_citation.alert_owner(user, src, target.name, "You have been issued a [params["fine"]][MONEY_SYMBOL] citation for [input_name]. Fines are payable at Security.")
