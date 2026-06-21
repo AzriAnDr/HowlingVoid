@@ -92,6 +92,8 @@
 	prereq_ids = list(TECHWEB_NODE_ANOMALY_RESEARCH)
 	design_ids = list(
 		"bag_holding",
+		"satchel_holding",
+		"duffel_holding",
 		"cybernetic_heart_anomalock",
 		"mod_storage_holding",
 		"wormholeprojector",

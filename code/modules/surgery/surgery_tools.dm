@@ -626,6 +626,10 @@
 	icon_state = "toolkit_medborg_bonesetter"
 	icon_angle = 45
 
+/obj/item/bonesetter/augment
+	desc = "An augmented bonesetter, fit for setting bones into place."
+	toolspeed = 0.5
+
 /obj/item/blood_filter
 	name = "blood filter"
 	desc = "For filtering the blood."
@@ -649,6 +653,11 @@
 
 /obj/item/blood_filter/get_surgery_tool_overlay(tray_extended)
 	return surgical_tray_overlay
+
+/obj/item/blood_filter/augment
+	desc = "A smaller filtering device, to purge a patient of chemicals."
+	w_class = WEIGHT_CLASS_SMALL
+	toolspeed = 0.5
 
 /obj/item/blood_filter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -757,6 +766,10 @@
 	surgical_tray_overlay = "bonesetter_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
 
+/obj/item/bonesetter/cruel/augment
+	desc = "Every fracture is a simple lesson in obedience..."
+	toolspeed = 0.5
+
 /obj/item/blood_filter/cruel
 	name = "malignant blood filter"
 	desc = "You must be made pure..."
@@ -764,6 +777,10 @@
 	inhand_icon_state = "cruelbloodfilter"
 	surgical_tray_overlay = "filter_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
+
+/obj/item/blood_filter/cruel/augment
+	desc = "Drop by drop, your impurities will be bled out..."
+	toolspeed = 0.5
 
 /obj/item/retractor/cruel/augment
 	desc = "A twisted micro-mechanical manipulator for retracting flesh and sinew."
