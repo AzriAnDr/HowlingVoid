@@ -18,7 +18,7 @@
 			The suit does come pre-equipped with a special psi-emitter stealth module that makes it impossible to recognize the wearer \
 			as well as causing significant demoralization amongst Nanotrasen crew."
 	item = /obj/item/mod/control/pre_equipped/infiltrator
-	cost = 6
+	cost = /datum/uplink_item/medium_cost/modsuit::cost
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/suits/space_suit
@@ -33,7 +33,7 @@
 	name = "Syndicate MODsuit"
 	desc = "The feared MODsuit of a Syndicate agent. Features armoring and a set of inbuilt modules."
 	item = /obj/item/mod/control/pre_equipped/traitor
-	cost = 8
+	cost = /datum/uplink_item/low_cost/modsuit::cost
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //you can't buy it in nuke, because the elite modsuit costs the same while being better
 
 //---- MODULES
@@ -42,7 +42,7 @@
 	name = "MODsuit Thermal Visor Module"
 	desc = "A visor for a MODsuit. Lets you see living beings through walls."
 	item = /obj/item/mod/module/visor/thermal
-	cost = 2
+	cost = 6 // grandfather value
 
 /datum/uplink_item/suits/chameleon
 	name = "MODsuit Chameleon Module"

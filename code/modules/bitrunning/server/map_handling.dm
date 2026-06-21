@@ -215,6 +215,7 @@
 	update_use_power(IDLE_POWER_USE)
 	domain_randomized = FALSE
 	retries_spent = 0
+	current_anchors = initial(current_anchors)
 
 	stop_broadcasting_network(BITRUNNER_CAMERA_NET)
 

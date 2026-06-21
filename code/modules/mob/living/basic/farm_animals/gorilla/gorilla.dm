@@ -14,8 +14,8 @@
 	icon_dead = "dead"
 	health_doll_icon = "crawling"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-	maxHealth = 220
-	health = 220
+	maxHealth = 180
+	health = 180
 	initial_language_holder = /datum/language_holder/monkey
 	response_help_continuous = "prods"
 	response_help_simple = "prod"
@@ -38,7 +38,7 @@
 	butcher_results = list(/obj/item/food/meat/slab/gorilla = 4, /obj/effect/gibspawner/generic/animal = 1)
 	max_grab = GRAB_KILL
 	/// How likely our meaty fist is to stun someone
-	var/paralyze_chance = 20
+	var/paralyze_chance = 10
 	/// A counter for when we can scream again
 	var/oogas = 0
 	/// Types of things we want to find and eat

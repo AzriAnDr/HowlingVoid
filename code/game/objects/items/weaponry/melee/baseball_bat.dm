@@ -11,6 +11,7 @@
 	wound_bonus = -10
 	throwforce = 12
 	demolition_mod = 1.25
+	item_flags = parent_type::item_flags & ~NEEDS_PERMIT
 	attack_verb_continuous = list("beats", "smacks")
 	attack_verb_simple = list("beat", "smack")
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 3.5)

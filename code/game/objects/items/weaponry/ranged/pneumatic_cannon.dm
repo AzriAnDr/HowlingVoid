@@ -144,11 +144,23 @@
 		if(user)
 			to_chat(user, span_warning("\The [I] is too large to fit into \the [src]!"))
 		return FALSE
+	if(locate(/obj/item/storage/toolbox/emergency/turret/mag_fed) in src)
+		if(user)
+			to_chat(user, span_warning("\The [I] is blocked from \the [src]'s loader!"))
+		return FALSE
+	if(istype(I, /obj/item/storage/toolbox/emergency/turret/mag_fed) && length(loadedItems) >= 1)
+		if(user)
+			to_chat(user, span_warning("\The [I] needs an empty cannon!"))
+		return FALSE
 	return TRUE
 
 /obj/item/pneumatic_cannon/proc/load_item(obj/item/I, mob/user)
 	if(!can_load_item(I, user))
 		return FALSE
+	if(user && istype(I, /obj/item/storage/toolbox/emergency/turret/mag_fed))
+		to_chat(user, span_warning("You prepare \the [I] to load into \the [src]. This action will block other items from being loaded!"))
+		if(!do_after(user, 15))
+			return FALSE
 	if(user) //Only use transfer proc if there's a user, otherwise just set loc.
 		if(!user.transferItemToLoc(I, src))
 			return FALSE

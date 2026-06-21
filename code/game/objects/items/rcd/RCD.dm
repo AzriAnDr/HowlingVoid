@@ -580,6 +580,18 @@
 	has_ammobar = FALSE
 	construction_upgrades = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
 
+/obj/item/construction/rcd/arcd/mattermanipulator
+	name = "matter manipulator"
+	desc = "A strange, familiar yet distinctly different analogue to the Nanotrasen standard RCD. Works at range, and can deconstruct reinforced walls. Reload using metal, glass, or plasteel."
+	icon = 'icons/obj/tools_additions.dmi'
+	icon_state = "rcd"
+	worn_icon_state = "RCD"
+	ranged = TRUE
+	canRturf = TRUE
+	max_matter = 500
+	matter = 500
+	construction_upgrades = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
+
 ///How much charge is used up for each matter unit.
 #define MASS_TO_ENERGY (0.016 * STANDARD_CELL_CHARGE)
 

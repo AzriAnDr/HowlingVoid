@@ -786,7 +786,7 @@
 	cost = 25
 	population_minimum = TRAITOR_POPULATION_LOWPOP
 	progression_minimum = 30 MINUTES
-	purchasable_from = UPLINK_ALL_SYNDIE_OPS | UPLINK_TRAITORS // Don't give this to spies
+	purchasable_from = NONE
 	cant_discount = TRUE
 
 // Modsuits
@@ -842,7 +842,7 @@
 	name = "Syndicate AI Upgrade"
 	desc = "...unless you buy the Syndicate Upgrade! This data chip allows the captured AI to increase its interaction range by two tiles per application. The Syndicate recommends three or four purchases at most, for a total of seven or infinite meters of range."
 	item = /obj/item/disk/computer/syndie_ai_upgrade
-	cost = 4
+	cost = /datum/uplink_item/low_cost::cost
 	purchasable_from = UPLINK_ALL_SYNDIE_OPS
 	cant_discount = TRUE
 	refundable = TRUE

@@ -1,4 +1,5 @@
 #define ASH_WALKER_SPAWN_THRESHOLD 2
+#define MEGAFAUNA_MEAT_AMOUNT 20
 //The ash walker den consumes corpses or unconscious mobs to create ash walker eggs. For more info on those, check ghost_role_spawners.dm
 /obj/structure/lavaland/ash_walker
 	name = "necropolis tendril nest"
@@ -45,52 +46,45 @@
 	spawn_mob()
 
 /obj/structure/lavaland/ash_walker/proc/consume()
-	for(var/mob/living/offeredmob in view(src, 1)) //Only for corpse right next to/on same tile
-		if(offeredmob.loc == src)
-			continue //Ashwalker Revive in Progress...
-		if(offeredmob.stat)
-			offeredmob.unequip_everything()
+	for(var/mob/living/offered_mob in view(src, 1)) //Only for corpses right next to/on the same tile.
+		if(!offered_mob.stat)
+			continue
 
-			if(issilicon(offeredmob)) //no advantage to sacrificing borgs...
-				offeredmob.investigate_log("has been gibbed by the necropolis tendril.", INVESTIGATE_DEATHS)
-				visible_message(span_notice("Serrated tendrils eagerly pull [offeredmob] apart, but find nothing of interest."))
-				offeredmob.gib()
-				return
+		offered_mob.unequip_everything()
 
-			if(offeredmob.mind?.has_antag_datum(/datum/antagonist/ashwalker) && (offeredmob.ckey || offeredmob.get_ghost(FALSE, TRUE))) //special interactions for dead lava lizards with ghosts attached
-				visible_message(span_warning("Serrated tendrils carefully pull [offeredmob] to [src], absorbing the body and creating it anew."))
-				var/mob/deadmob
-				if(offeredmob.ckey)
-					deadmob = offeredmob
-				else
-					deadmob = offeredmob.get_ghost(FALSE, TRUE)
-				to_chat(deadmob, "Your body has been returned to the nest. You are being remade anew, and will awaken shortly. </br><b>Your memories will remain intact in your new body, as your soul is being salvaged</b>")
-				SEND_SOUND(deadmob, sound('sound/effects/magic/enter_blood.ogg',volume=100))
-				addtimer(CALLBACK(src, PROC_REF(remake_walker), offeredmob), 20 SECONDS)
-				offeredmob.forceMove(src)
-				return
+		if(issilicon(offered_mob)) //No advantage to sacrificing borgs.
+			offered_mob.investigate_log("has been gibbed via ashwalker sacrifice as a borg.", INVESTIGATE_DEATHS)
+			offered_mob.gib()
+			return
 
-			if(ismegafauna(offeredmob))
-				meat_counter += 20
+		if(offered_mob.mind?.has_antag_datum(/datum/antagonist/ashwalker) && (offered_mob.ckey || offered_mob.get_ghost(FALSE, TRUE))) //Special interactions for dead lava lizards with ghosts attached.
+			revive_ashwalker(offered_mob)
+			return
+
+		if(ismegafauna(offered_mob))
+			meat_counter += MEGAFAUNA_MEAT_AMOUNT
+		else
+			meat_counter++
+
+		playsound(get_turf(src), 'sound/effects/magic/demon_consume.ogg', 100, TRUE)
+		var/delivery_key = offered_mob.fingerprintslast
+		var/mob/living/delivery_mob = get_mob_by_key(delivery_key)
+
+		if(delivery_mob && delivery_mob.mind?.has_antag_datum(/datum/antagonist/ashwalker) && (delivery_key in ashies.players_spawned) && prob(40))
+			to_chat(delivery_mob, span_boldwarning("The Necropolis is pleased with your sacrifice. You feel confident your existence after death is secure."))
+			ashies.players_spawned -= delivery_key
+
+		offered_mob.investigate_log("has been gibbed via ashwalker sacrifice.", INVESTIGATE_DEATHS)
+		offered_mob.gib()
+		atom_integrity = min(atom_integrity + max_integrity * 0.05, max_integrity)
+
+		for(var/mob/living/living_observer in view(src, 5))
+			if(living_observer.mind?.has_antag_datum(/datum/antagonist/ashwalker))
+				living_observer.add_mood_event("oogabooga", /datum/mood_event/sacrifice_good)
 			else
-				meat_counter++
-			visible_message(span_warning("Serrated tendrils eagerly pull [offeredmob] to [src], tearing the body apart as its blood seeps over the eggs."))
-			playsound(get_turf(src),'sound/effects/magic/demon_consume.ogg', 100, TRUE)
-			var/deliverykey = offeredmob.fingerprintslast //ckey of whoever brought the body
-			var/mob/living/deliverymob = get_mob_by_key(deliverykey) //mob of said ckey
-			//there is a 40% chance that the Lava Lizard unlocks their respawn with each sacrifice
-			if(deliverymob && (deliverymob.mind?.has_antag_datum(/datum/antagonist/ashwalker)) && (deliverykey in ashies.players_spawned) && (prob(40)))
-				to_chat(deliverymob, span_warning("<b>The Necropolis is pleased with your sacrifice. You feel confident your existence after death is secure.</b>"))
-				ashies.players_spawned -= deliverykey
-			offeredmob.investigate_log("has been gibbed by the necropolis tendril.", INVESTIGATE_DEATHS)
-			offeredmob.gib(DROP_ALL_REMAINS)
-			atom_integrity = min(atom_integrity + max_integrity*0.05,max_integrity)//restores 5% hp of tendril
-			for(var/mob/living/L in view(src, 5))
-				if(L.mind?.has_antag_datum(/datum/antagonist/ashwalker))
-					L.add_mood_event("oogabooga", /datum/mood_event/sacrifice_good)
-				else
-					L.add_mood_event("oogabooga", /datum/mood_event/sacrifice_bad)
-			ashies.sacrifices_made++
+				living_observer.add_mood_event("oogabooga", /datum/mood_event/sacrifice_bad)
+
+		ashies.sacrifices_made++
 
 /obj/structure/lavaland/ash_walker/proc/remake_walker(mob/living/carbon/oldmob)
 	var/mob/living/carbon/human/newwalker = new /mob/living/carbon/human(get_step(loc, pick(GLOB.alldirs)))
@@ -124,3 +118,4 @@
 	max_integrity = 200
 
 #undef ASH_WALKER_SPAWN_THRESHOLD
+#undef MEGAFAUNA_MEAT_AMOUNT

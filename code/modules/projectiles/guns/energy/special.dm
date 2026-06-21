@@ -48,6 +48,7 @@
 	ammo_x_offset = 1
 	selfcharge = 1
 	gun_flags = NOT_A_REAL_GUN
+	item_flags = parent_type::item_flags & ~NEEDS_PERMIT
 
 /obj/item/gun/energy/meteorgun
 	name = "meteor gun"
