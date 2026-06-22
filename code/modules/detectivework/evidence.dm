@@ -64,6 +64,11 @@
 	if(!atom_storage.get_total_weight())
 		update_weight_class(WEIGHT_CLASS_TINY)
 
+/obj/item/evidencebag/proc/get_contained_evidence()
+	if(!atom_storage.get_total_weight())
+		return
+	return locate(/obj/item) in atom_storage.real_location
+
 /obj/item/evidencebag/attack_self(mob/user)
 	if(!atom_storage.get_total_weight())
 		to_chat(user, span_notice("[src] is empty."))

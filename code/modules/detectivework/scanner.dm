@@ -131,9 +131,16 @@
 			continue
 		new_forensic_markers[marker_key] = TRUE
 
-/// Pays detectives for the first successful forensic analysis of an object with real trace evidence.
-/obj/item/detective_scanner/proc/try_pay_analysis_reward(atom/scanned_atom, datum/detective_scanner_log/log_entry)
-	if(!istype(scanned_atom) || ismob(scanned_atom))
+/obj/item/detective_scanner/proc/get_analysis_target(atom/scanned_atom)
+	RETURN_TYPE(/atom)
+	if(!istype(scanned_atom, /obj/item/evidencebag))
+		return scanned_atom
+	var/obj/item/evidencebag/evidence_bag = scanned_atom
+	return evidence_bag.get_contained_evidence() || scanned_atom
+
+/// Pays detectives for official evidence bag analysis with new trace evidence.
+/obj/item/detective_scanner/proc/try_pay_analysis_reward(atom/scanned_atom, atom/analysis_target, datum/detective_scanner_log/log_entry)
+	if(!istype(scanned_atom, /obj/item/evidencebag) || !istype(analysis_target) || analysis_target == scanned_atom || ismob(analysis_target))
 		return
 	var/datum/bank_account/detective_account = get_linked_reward_account()
 	if(!detective_account)
@@ -153,9 +160,9 @@
 	for(var/marker_key in new_forensic_markers)
 		detective_account.detective_paid_forensic_markers[marker_key] = TRUE
 
-	detective_account.bank_card_talk("You have received [reward][MONEY_SYMBOL] for [length(new_forensic_markers)] new forensic trace\s from [scanned_atom].")
+	detective_account.bank_card_talk("You have received [reward][MONEY_SYMBOL] for [length(new_forensic_markers)] new forensic trace\s from [analysis_target].")
 	SSeconomy.record_wages(reward)
-	log_econ("[reward] [MONEY_NAME] were awarded to [detective_account.account_holder]'s account for [length(new_forensic_markers)] new forensic traces from [scanned_atom].")
+	log_econ("[reward] [MONEY_NAME] were awarded to [detective_account.account_holder]'s account for [length(new_forensic_markers)] new forensic traces from [analysis_target].")
 
 /**
  * scan - scans an atom for forensic data and outputs it to the mob holding the scanner
@@ -184,37 +191,38 @@
 	// GATHER INFORMATION
 
 	var/datum/detective_scanner_log/log_entry = new
+	var/atom/analysis_target = get_analysis_target(scanned_atom)
 
 	// Start gathering
 
-	log_entry.scan_target = scanned_atom.name
+	log_entry.scan_target = analysis_target.name
 	log_entry.scan_time = station_time_timestamp()
 
-	var/list/atom_fibers = GET_ATOM_FIBRES(scanned_atom)
+	var/list/atom_fibers = GET_ATOM_FIBRES(analysis_target)
 	if(length(atom_fibers))
 		log_entry.add_data_entry(DETSCAN_CATEGORY_FIBER, atom_fibers.Copy())
 
-	var/list/blood = GET_ATOM_BLOOD_DNA(scanned_atom)
+	var/list/blood = GET_ATOM_BLOOD_DNA(analysis_target)
 	if(length(blood))
 		log_entry.add_data_entry(DETSCAN_CATEGORY_BLOOD, blood.Copy())
 
-	if(ishuman(scanned_atom))
-		var/mob/living/carbon/human/scanned_human = scanned_atom
+	if(ishuman(analysis_target))
+		var/mob/living/carbon/human/scanned_human = analysis_target
 		if(!scanned_human.gloves)
 			log_entry.add_data_entry(
 				DETSCAN_CATEGORY_FINGERS,
 				rustg_hash_string(RUSTG_HASH_MD5, scanned_human.dna?.unique_identity)
 			)
 
-	else if(!ismob(scanned_atom))
+	else if(!ismob(analysis_target))
 
-		var/list/atom_fingerprints = GET_ATOM_FINGERPRINTS(scanned_atom)
+		var/list/atom_fingerprints = GET_ATOM_FINGERPRINTS(analysis_target)
 		if(length(atom_fingerprints))
 			log_entry.add_data_entry(DETSCAN_CATEGORY_FINGERS, atom_fingerprints.Copy())
 
 		// Only get reagents from non-mobs.
-		SEND_SIGNAL(scanned_atom, COMSIG_ON_REAGENT_SCAN, user)
-		for(var/datum/reagent/present_reagent as anything in scanned_atom.reagents?.reagent_list)
+		SEND_SIGNAL(analysis_target, COMSIG_ON_REAGENT_SCAN, user)
+		for(var/datum/reagent/present_reagent as anything in analysis_target.reagents?.reagent_list)
 			log_entry.add_data_entry(DETSCAN_CATEGORY_REAGENTS, list(present_reagent.name = present_reagent.volume))
 
 			// Get blood data from the blood reagent.
@@ -228,8 +236,8 @@
 
 			log_entry.add_data_entry(DETSCAN_CATEGORY_BLOOD, list(blood_DNA = blood_type))
 
-	if(istype(scanned_atom, /obj/item/card/id))
-		var/obj/item/card/id/user_id = scanned_atom
+	if(istype(analysis_target, /obj/item/card/id))
+		var/obj/item/card/id/user_id = analysis_target
 		for(var/region in DETSCAN_ACCESS_ORDER())
 			var/access_in_region = SSid_access.accesses_by_region[region] & user_id.GetAccess()
 			if(!length(access_in_region))
@@ -241,13 +249,13 @@
 			log_entry.add_data_entry(DETSCAN_CATEGORY_ACCESS, list("[region]" = english_list(access_names)))
 
 	// sends it off to be modified by the items
-	SEND_SIGNAL(scanned_atom, COMSIG_DETECTIVE_SCANNED, user, log_entry)
+	SEND_SIGNAL(analysis_target, COMSIG_DETECTIVE_SCANNED, user, log_entry)
 
 	// Perform sorting now, because probably this will be never modified
 	log_entry.sort_data_entries()
 
 	stoplag(3 SECONDS)
-	try_pay_analysis_reward(scanned_atom, log_entry)
+	try_pay_analysis_reward(scanned_atom, analysis_target, log_entry)
 	log_data += log_entry
 	return TRUE
 
