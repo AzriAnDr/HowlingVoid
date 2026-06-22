@@ -7574,6 +7574,7 @@
 #include "code\modules\modular_computers\file_system\programs\payroll_adjustment.dm"
 #include "code\modules\modular_computers\file_system\programs\portrait_printer.dm"
 #include "code\modules\modular_computers\file_system\programs\powermonitor.dm"
+#include "code\modules\modular_computers\file_system\programs\prisoner_intake.dm"
 #include "code\modules\modular_computers\file_system\programs\radar.dm"
 #include "code\modules\modular_computers\file_system\programs\raptordex.dm"
 #include "code\modules\modular_computers\file_system\programs\records.dm"

@@ -85,6 +85,18 @@
 	var/security_note
 	/// Current arrest status
 	var/wanted_status = WANTED_NONE
+	/// Whether this record has already paid a corrections intake reward this round.
+	var/corrections_intake_rewarded = FALSE
+	/// World time when the current corrections sentence was processed.
+	var/corrections_sentence_start = 0
+	/// Current corrections sentence length in seconds.
+	var/corrections_sentence_duration = 0
+	/// Whether the current corrections sentence is permanent.
+	var/corrections_sentence_permanent = FALSE
+	/// Timer id for automatic corrections sentence completion.
+	var/corrections_sentence_timer_id
+	/// Incremented whenever the corrections sentence changes, invalidating old timers.
+	var/corrections_sentence_serial = 0
 
 	///Photo used for records, which we store here so we don't have to constantly make more of.
 	var/list/obj/item/photo/record_photos
@@ -140,8 +152,48 @@
 
 /datum/record/crew/Destroy()
 	GLOB.manifest.general -= src
+	if(corrections_sentence_timer_id)
+		deltimer(corrections_sentence_timer_id)
 	QDEL_LAZYLIST(record_photos)
 	return ..()
+
+/datum/record/crew/proc/clear_corrections_sentence()
+	corrections_sentence_serial++
+	if(corrections_sentence_timer_id)
+		deltimer(corrections_sentence_timer_id)
+		corrections_sentence_timer_id = null
+	corrections_sentence_start = 0
+	corrections_sentence_duration = 0
+	corrections_sentence_permanent = FALSE
+
+/datum/record/crew/proc/set_corrections_sentence(duration, permanent = FALSE)
+	corrections_sentence_serial++
+	if(corrections_sentence_timer_id)
+		deltimer(corrections_sentence_timer_id)
+		corrections_sentence_timer_id = null
+	corrections_sentence_start = world.time
+	corrections_sentence_duration = permanent ? 0 : duration
+	corrections_sentence_permanent = permanent
+	if(!permanent && duration > 0)
+		corrections_sentence_timer_id = addtimer(CALLBACK(src, PROC_REF(complete_corrections_sentence), corrections_sentence_serial), duration * 1 SECONDS, TIMER_STOPPABLE)
+
+/datum/record/crew/proc/complete_corrections_sentence(sentence_serial)
+	if(sentence_serial != corrections_sentence_serial)
+		return
+	corrections_sentence_timer_id = null
+	if(corrections_sentence_permanent || corrections_sentence_duration <= 0)
+		return
+	if(wanted_status != WANTED_PRISONER)
+		return
+	if(world.time < corrections_sentence_start + corrections_sentence_duration * 1 SECONDS)
+		var/remaining = max(corrections_sentence_start + corrections_sentence_duration * 1 SECONDS - world.time, 1)
+		corrections_sentence_timer_id = addtimer(CALLBACK(src, PROC_REF(complete_corrections_sentence), corrections_sentence_serial), remaining, TIMER_STOPPABLE)
+		return
+	var/old_status = wanted_status
+	wanted_status = WANTED_DISCHARGED
+	update_matching_security_huds(name)
+	log_game("[name]'s corrections sentence expired automatically, setting their status from [old_status] to [WANTED_DISCHARGED].")
+	aas_config_announce(/datum/aas_config_entry/corrections_sentence_served, list("PERSON" = name), null, list(RADIO_CHANNEL_SECURITY))
 
 /**
  * Admin locked record
