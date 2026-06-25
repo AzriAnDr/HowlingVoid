@@ -60,6 +60,14 @@
 	armor_type = /datum/armor/none
 	cut_type = null
 
+/obj/item/clothing/gloves/combat/peacekeeper/stormtrooper
+	name = "stormtrooper gloves"
+	desc = "White gloves with some limited reflective armor."
+	icon = 'icons/stormtrooper/items.dmi'
+	worn_icon = 'icons/stormtrooper/hands.dmi'
+	icon_state = "stormtrooper_gloves"
+	worn_icon_state = "stormtrooper_gloves"
+
 /obj/item/clothing/gloves/combat/armadyne
 	name = "armadyne combat gloves"
 	desc = "Tactical and sleek. Worn by Armadyne representatives."

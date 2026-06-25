@@ -648,6 +648,27 @@
  * Messenger Bag Types
  */
 
+/obj/item/storage/backpack/head_of_personnel
+	name = "head of personnel backpack"
+	desc = "A exclusive backpack issued to Nanotrasen's finest second."
+	icon_state = "backpack_hop"
+	inhand_icon_state = "backpack_hop"
+	NOVA_BACKPACK_ICON_DEFINES
+
+/obj/item/storage/backpack/satchel/head_of_personnel
+	name = "head of personnel satchel"
+	desc = "A exclusive satchel issued to Nanotrasen's finest second."
+	icon_state = "satchel_hop"
+	inhand_icon_state = "satchel_hop"
+	NOVA_BACKPACK_ICON_DEFINES
+
+/obj/item/storage/backpack/duffelbag/head_of_personnel
+	name = "head of personnel duffelbag"
+	desc = "A robust duffelbag issued to Nanotrasen's finest second."
+	icon_state = "duffel_hop"
+	inhand_icon_state = "duffel_hop"
+	NOVA_BACKPACK_ICON_DEFINES
+
 /obj/item/storage/backpack/messenger/head_of_personnel
 	name = "head of personnel's messenger bag"
 	desc = "A exclusive messenger bag issued to Nanotrasen's finest second, with great storage space for all that paperwork you have planned."

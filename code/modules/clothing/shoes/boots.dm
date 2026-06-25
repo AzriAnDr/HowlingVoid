@@ -271,4 +271,17 @@
 // BEGIN NOVA CORE MIGRATION: code/modules/clothing/shoes/boots.dm
 /obj/item/clothing/shoes/gunboots/dm
 	projectile_type = /obj/projectile/beam/laser
+
+/obj/item/clothing/shoes/combat/stormtrooper
+	name = "stormtrooper boots"
+	desc = "A pair of white boots."
+	icon = 'icons/stormtrooper/items.dmi'
+	worn_icon = 'icons/stormtrooper/feet.dmi'
+	icon_state = "stormtrooper_boots"
+	armor_type = /datum/armor/none
+	strip_delay = 30
+	equip_delay_other = 50
+	resistance_flags = NONE
+	fastening_type = SHOES_SLIPON
+	supports_variations_flags = NONE
 // END NOVA CORE MIGRATION: code/modules/clothing/shoes/boots.dm

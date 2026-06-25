@@ -343,6 +343,15 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "The headset of the guy who will one day be captain."
 	keyslot = /obj/item/encryptionkey/heads/hop
 
+/obj/item/radio/headset/heads/hop/alt
+	name = "\proper the head of personnel's bowman headset"
+	desc = "The headset of the second. Protects ears from flashbangs."
+	icon_state = "com_headset_alt"
+
+/obj/item/radio/headset/heads/hop/alt/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+
 /obj/item/radio/headset/heads/qm
 	name = "\proper the quartermaster's headset"
 	desc = "The headset of the guy who runs the cargo department."
@@ -414,6 +423,10 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/headset_cent/alt/leader
 	command = TRUE
+
+/obj/item/radio/headset/headset_cent/alt/with_key
+	keyslot = new /obj/item/encryptionkey/headset_com
+	keyslot2 = new /obj/item/encryptionkey/headset_cent
 
 /obj/item/radio/headset/silicon/pai
 	name = "\proper mini Integrated Subspace Transceiver"

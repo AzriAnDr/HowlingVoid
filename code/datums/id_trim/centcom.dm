@@ -36,6 +36,9 @@
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_WEAPONS)
 	assignment = JOB_CENTCOM_OFFICIAL
 
+/datum/id_trim/centcom/prison_transport
+	assignment = "Prison Transport Officer"
+
 /// Trim for Centcom Interns.
 /datum/id_trim/centcom/intern
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_WEAPONS)

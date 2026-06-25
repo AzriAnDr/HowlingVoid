@@ -806,3 +806,11 @@
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+
+/obj/item/clothing/head/helmet/stormtrooper
+	name = "stormtrooper helmet"
+	desc = "A shiny white helmet with some very narrow holes for the users eyes."
+	icon = 'icons/stormtrooper/items.dmi'
+	worn_icon = 'icons/stormtrooper/head.dmi'
+	icon_state = "stormtrooper_helmet"
+	supports_variations_flags = NONE

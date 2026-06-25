@@ -1074,3 +1074,11 @@
 	desc = "A nanocarbon and high-grade polymer vest, with the worn-red Armadyne logo printed on the back. Used by Armadyne corporate when they need emergency armor."
 	icon_state = "armadyne_armor"
 	worn_icon_state = "armadyne_armor"
+
+/obj/item/clothing/suit/armor/stormtrooper
+	name = "stormtrooper suit"
+	desc = "A shiny white armoured suit, looks like it'd be good for deflecting blaster fire."
+	icon = 'icons/stormtrooper/items.dmi'
+	worn_icon = 'icons/stormtrooper/suit.dmi'
+	icon_state = "stormtrooper_suit"
+	supports_variations_flags = NONE

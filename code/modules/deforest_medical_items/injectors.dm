@@ -14,6 +14,47 @@
 	. = ..()
 	amount_per_transfer_from_this = volume
 
+// Open-source printable pen injectors using the Deforest medipen injection behavior.
+/obj/item/reagent_containers/hypospray/medipen/deforest/printable
+	name = "pen injector"
+	desc = "The pen injector is an open-source copy of the medipen system - Its less compact design eases mass production, and ensures safety even with untrained personnel by retracting the needle after use, while requiring a more deliberate pen-like grip."
+	icon = 'icons/chemistry_love/obj/medical/pen_medipens/pen_medipens.dmi'
+	icon_state = "default"
+	base_icon_state = "default"
+	volume = 25
+	fill_icon = 'icons/chemistry_love/obj/medical/pen_medipens/fill_overlay.dmi'
+	fill_icon_state = "tank"
+	fill_icon_thresholds = list(0, 1)
+	adjust_color_contrast = FALSE
+	list_reagents = list()
+	custom_price = 0
+	inject_others_time = 1.5 SECONDS
+	initial_reagent_flags = TRANSPARENT
+
+/obj/item/reagent_containers/hypospray/medipen/deforest/printable/brute
+	base_icon_state = "brute"
+	icon_state = "brute"
+
+/obj/item/reagent_containers/hypospray/medipen/deforest/printable/burn
+	base_icon_state = "burn"
+	icon_state = "burn"
+
+/obj/item/reagent_containers/hypospray/medipen/deforest/printable/tox
+	base_icon_state = "tox"
+	icon_state = "tox"
+
+/obj/item/reagent_containers/hypospray/medipen/deforest/printable/oxy
+	base_icon_state = "oxy"
+	icon_state = "oxy"
+
+/obj/item/reagent_containers/hypospray/medipen/deforest/printable/red
+	base_icon_state = "red"
+	icon_state = "red"
+
+/obj/item/reagent_containers/hypospray/medipen/deforest/printable/medical
+	base_icon_state = "medicinedrug"
+	icon_state = "medicinedrug"
+
 /obj/item/reagent_containers/hypospray/medipen/deforest/inject(mob/living/affected_mob, mob/user)
 	if(!reagents.total_volume)
 		to_chat(user, span_warning("[src] is empty!"))

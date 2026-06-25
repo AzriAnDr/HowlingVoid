@@ -8,7 +8,7 @@
 	mob_trait = TRAIT_ROBOTIC_LIMBATTACHMENT
 	icon = FA_ICON_HANDSHAKE_SIMPLE_SLASH
 	quirk_flags = QUIRK_HUMAN_ONLY
-	/// The action we add with this quirk in add(), used for easy deletion later
+	/// The action added by this quirk.
 	var/datum/action/cooldown/spell/added_action
 
 /datum/quirk/robot_limb_detach/add(client/client_source)
@@ -39,25 +39,24 @@
 		to_chat(cast_on, span_warning("ERROR: LIMB DISENGAGEMENT PROTOCOLS OFFLINE. Seek out a maintenance technician."))
 		return
 
-	var/list/exclusions = list()
-	exclusions += BODY_ZONE_CHEST
-	if (!issynthetic(cast_on))
-		exclusions += BODY_ZONE_HEAD // no decapitating yourself unless you're a synthetic, who keep their brains in their chest
+	var/list/exclusions = list(BODY_ZONE_CHEST)
+	if(!issynthetic(cast_on))
+		exclusions += BODY_ZONE_HEAD
 
 	var/list/robot_parts = list()
-	for (var/obj/item/bodypart/possible_part as anything in cast_on.bodyparts)
-		if ((possible_part.bodytype & BODYTYPE_ROBOTIC) && !(possible_part.body_zone in exclusions)) //only robot limbs and only if they're not crucial to our like, ongoing life, you know?
+	for(var/obj/item/bodypart/possible_part as anything in cast_on.bodyparts)
+		if((possible_part.bodytype & BODYTYPE_ROBOTIC) && !(possible_part.body_zone in exclusions))
 			robot_parts += possible_part
 
-	if (!length(robot_parts))
+	if(!length(robot_parts))
 		to_chat(cast_on, "ERROR: Limb disengagement protocols report no compatible cybernetics currently installed. Seek out a maintenance technician.")
 		return
 
 	var/obj/item/bodypart/limb_to_detach = tgui_input_list(cast_on, "Limb to detach", "Cybernetic Limb Detachment", sort_names(robot_parts))
-	if (QDELETED(src) || QDELETED(cast_on) || QDELETED(limb_to_detach))
+	if(QDELETED(src) || QDELETED(cast_on) || QDELETED(limb_to_detach))
 		return
 
-	if (length(limb_to_detach.wounds) >= 1)
+	if(length(limb_to_detach.wounds) >= 1)
 		cast_on.balloon_alert(cast_on, "can't detach wounded limbs!")
 		playsound(cast_on, 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return
