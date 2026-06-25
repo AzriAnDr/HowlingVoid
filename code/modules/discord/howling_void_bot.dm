@@ -51,6 +51,7 @@
 
 	var/alive_count = min(living_player_count(), player_count)
 	var/dead_count = max(player_count - alive_count, 0)
+	var/ghost_count = length(GLOB.dead_player_list) + length(GLOB.current_observers_list)
 
 	var/list/payload = list(
 		"roundId" = "[GLOB.round_id]",
@@ -59,6 +60,8 @@
 		"roundTime" = DisplayTimeText(world.time - SSticker.round_start_time),
 		"alive" = alive_count,
 		"dead" = dead_count,
+		"adminCount" = length(GLOB.admins),
+		"ghostCount" = ghost_count,
 	)
 
 	var/datum/http_request/request = new

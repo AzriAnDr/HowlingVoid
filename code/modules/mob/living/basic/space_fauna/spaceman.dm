@@ -25,6 +25,7 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	ai_controller = /datum/ai_controller/basic_controller/spaceman
+	gold_core_spawnable = HOSTILE_SPAWN
 
 /mob/living/basic/spaceman/Initialize(mapload)
 	. = ..()

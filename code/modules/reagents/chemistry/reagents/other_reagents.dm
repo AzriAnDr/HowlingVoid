@@ -1885,6 +1885,13 @@
 		myseed.adjust_potency(round(volume * 0.3))
 		myseed.adjust_yield(round(volume * 0.1))
 
+/datum/reagent/plantnutriment/eznutriment/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(SPT_PROB(tox_prob, seconds_per_tick))
+		var/flipped_number = (affected_mob.mob_biotypes & MOB_PLANT) ? -1 : 1
+		if(affected_mob.adjust_brute_loss(flipped_number, updating_health = FALSE))
+			return UPDATE_MOB_HEALTH
+
 /datum/reagent/plantnutriment/left4zednutriment
 	name = "Left 4 Zed"
 	description = "Unstable nutriment that makes plants mutate more often than usual."
@@ -1897,6 +1904,13 @@
 
 	mytray.adjust_plant_health(round(volume * 0.1))
 	mytray.myseed?.adjust_instability(round(volume * 0.2))
+
+/datum/reagent/plantnutriment/left4zednutriment/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(SPT_PROB(tox_prob, seconds_per_tick))
+		var/flipped_number = (affected_mob.mob_biotypes & MOB_PLANT) ? -1 : 1
+		if(affected_mob.adjust_oxy_loss(flipped_number, updating_health = FALSE))
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/plantnutriment/robustharvestnutriment
 	name = "Robust Harvest"
@@ -1912,6 +1926,13 @@
 		myseed.adjust_instability(-0.25)
 		myseed.adjust_potency(round(volume * 0.1))
 		myseed.adjust_yield(round(volume * 0.2))
+
+/datum/reagent/plantnutriment/robustharvestnutriment/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(SPT_PROB(tox_prob, seconds_per_tick))
+		var/flipped_number = (affected_mob.mob_biotypes & MOB_PLANT) ? -1 : 1
+		if(affected_mob.adjust_fire_loss(flipped_number, updating_health = FALSE))
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/plantnutriment/endurogrow
 	name = "Enduro Grow"
