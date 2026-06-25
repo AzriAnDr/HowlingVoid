@@ -628,6 +628,11 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 ## The number of seconds before tts https requests timeout (0 for infinite not recommended)
 #TTS_HTTP_TIMEOUT_SECONDS 30
 
+## External Howling Void Discord bot API. Used for round announcements. Verification uses the existing discord_links DB flow.
+#HOWLING_VOID_BOT_API_URL http://127.0.0.1:5088
+#HOWLING_VOID_BOT_API_KEY change_me_to_the_same_secret_as_the_csharp_bot
+#HOWLING_VOID_BOT_HTTP_TIMEOUT_SECONDS 5
+
 ## Add voices to the TTS voice blacklist.
 #TTS_VOICE_BLACKLIST Sans Undertale
 #TTS_VOICE_BLACKLIST Papyrus Undertale
