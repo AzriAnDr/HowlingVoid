@@ -7,7 +7,7 @@
 	lose_text = span_notice("Your body temperature is feeling right.")
 	medical_record_text = "Patient's body has an abnormal temperature for their species."
 	icon = FA_ICON_THERMOMETER_HALF
-	/// The number that will be added to the original quirk_holder's bodytemp_normal
+	/// The amount added to the quirk holder's species body temperature values.
 	var/bodytemp_modifier = 0
 
 /datum/quirk_constant_data/bodytemp
@@ -20,8 +20,8 @@
 	abstract_type = /datum/preference/numeric/bodytemp_customization
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_identifier = PREFERENCE_CHARACTER
-	minimum = -40 //Plasmamen
-	maximum = 70 //Skrell
+	minimum = -40
+	maximum = 70
 
 /datum/preference/numeric/bodytemp_customization/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return FALSE
@@ -50,19 +50,3 @@
 	user.dna.species.bodytemp_normal -= bodytemp_modifier
 	user.dna.species.bodytemp_heat_damage_limit -= bodytemp_modifier
 	user.dna.species.bodytemp_cold_damage_limit -= bodytemp_modifier
-
-/datum/quirk/coldblooded
-	name = "Cold Blooded"
-	desc = "You're cold blooded like lizards! Try to control your body temperature or you're dead."
-	value = -2
-	medical_record_text = "Patient is cold blooded."
-	gain_text = span_danger("You feel like you're unable to warm yourself.")
-	lose_text = span_notice("You feel like you're able to warm yourself again.")
-	icon = FA_ICON_SNOWFLAKE
-	mob_trait = TRAIT_COLDBLOODED
-
-/datum/quirk/coldblooded/is_species_appropriate(datum/species/mob_species)
-	if(ispath(mob_species, /datum/species/lizard))
-		return FALSE
-
-	return ..()

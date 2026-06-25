@@ -13,5 +13,4 @@
 	var/datum/species_traits = GLOB.species_prototypes[mob_species].inherent_traits
 	if(TRAIT_DRINKS_BLOOD in species_traits)
 		return TRUE
-	else
-		return FALSE
+	return FALSE

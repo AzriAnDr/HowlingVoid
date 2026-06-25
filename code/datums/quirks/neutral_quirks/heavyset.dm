@@ -6,7 +6,6 @@
 	gain_text = span_notice("You feel heavy.")
 	lose_text = span_notice("You feel light.")
 	medical_record_text = "The patient is far above average weight."
-
 	mob_trait = TRAIT_HEAVYSET
 
 /datum/movespeed_modifier/heavyset
