@@ -3,9 +3,9 @@
 #define BALLOON_TEXT_FADE_TIME (0.1 SECONDS)
 #define BALLOON_TEXT_FULLY_VISIBLE_TIME (0.7 SECONDS)
 #define BALLOON_TEXT_TOTAL_LIFETIME(mult) (BALLOON_TEXT_SPAWN_TIME + BALLOON_TEXT_FULLY_VISIBLE_TIME*mult + BALLOON_TEXT_FADE_TIME)
-/// The increase in duration per character in seconds
+/// The increase in duration per character in seconds.
 #define BALLOON_TEXT_CHAR_LIFETIME_INCREASE_MULT (0.05)
-/// The amount of characters needed before this increase takes into effect
+/// The amount of characters needed before this increase takes into effect.
 #define BALLOON_TEXT_CHAR_LIFETIME_INCREASE_MIN 10
 
 /**
@@ -28,8 +28,8 @@
 	var/list/hearers = get_hearers_in_view(vision_distance, src, RECURSIVE_CONTENTS_CLIENT_MOBS)
 	hearers -= ignored_mobs
 
-	for (var/mob/hearer in hearers)
-		if (hearer.is_blind())
+	for(var/mob/hearer in hearers)
+		if(hearer.is_blind())
 			continue
 
 		balloon_alert(hearer, (hearer == src && self_message) || message)
@@ -42,7 +42,7 @@
 	var/list/hearers = get_hearers_in_view(hearing_distance, src, RECURSIVE_CONTENTS_CLIENT_MOBS)
 	hearers -= ignored_mobs
 
-	for (var/mob/hearer in hearers)
+	for(var/mob/hearer in hearers)
 		if(HAS_TRAIT(hearer, TRAIT_DEAF))
 			continue
 
@@ -53,14 +53,11 @@
 // I would've made the maptext_height update on its own, but I don't know
 // if this would look bad on laggy clients.
 /atom/proc/balloon_alert_perform(mob/viewer, text)
-
-	// Howling Void add. Ensure the viewer is actually a mob with a client before accessing `.client`.
-	if (!viewer || !istype(viewer, /mob))
+	if(!viewer || !istype(viewer, /mob))
 		return
 
 	var/client/viewer_client = viewer.client
-	//Howling void add end
-	if (isnull(viewer_client))
+	if(isnull(viewer_client))
 		return
 
 	if(!runechat_prefs_check(viewer, EMOTE_MESSAGE))
@@ -101,9 +98,9 @@
 	)
 
 	LAZYADD(update_on_z, balloon_alert)
-	// These two timers are not the same
-	// One manages the relation to the atom that spawned us, the other to the client we're displaying to
-	// We could lose our loc, and still need to talk to our client, so they are done seperately
+	// These two timers are not the same.
+	// One manages the relation to the atom that spawned us, the other to the client we're displaying to.
+	// We could lose our loc, and still need to talk to our client, so they are done separately.
 	addtimer(CALLBACK(balloon_alert.loc, PROC_REF(forget_balloon_alert), balloon_alert), BALLOON_TEXT_TOTAL_LIFETIME(length_mult))
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_image_from_client), balloon_alert, viewer_client), BALLOON_TEXT_TOTAL_LIFETIME(length_mult))
 
@@ -117,3 +114,4 @@
 #undef BALLOON_TEXT_SPAWN_TIME
 #undef BALLOON_TEXT_TOTAL_LIFETIME
 #undef BALLOON_TEXT_WIDTH
+

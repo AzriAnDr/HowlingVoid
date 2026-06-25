@@ -1,22 +1,22 @@
 #define POINT_TIME (2.5 SECONDS)
 
 /**
- * Point at an atom
+ * Point at an atom.
  *
- * Intended to enable and standardise the pointing animation for all atoms
+ * Intended to enable and standardise the pointing animation for all atoms.
  *
- * Not intended as a replacement for the mob verb
+ * Not intended as a replacement for the mob verb.
  */
 /atom/movable/proc/point_at(atom/pointed_atom, intentional = FALSE)
 	if(!isturf(loc))
 		return FALSE
 
-	if (pointed_atom in src)
+	if(pointed_atom in src)
 		create_point_bubble(pointed_atom)
 		return FALSE
 
 	var/turf/tile = get_turf(pointed_atom)
-	if (!tile)
+	if(!tile)
 		return FALSE
 
 	var/turf/our_tile = get_turf(src)
@@ -87,17 +87,17 @@
 #undef POINT_TIME
 
 /**
- * Point at an atom
+ * Point at an atom.
  *
  * mob verbs are faster than object verbs. See
  * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
- * for why this isn't atom/verb/pointed()
+ * for why this isn't atom/verb/pointed().
  *
- * note: ghosts can point, this is intended
+ * Note: ghosts can point, this is intended.
  *
- * visible_message will handle invisibility properly
+ * visible_message will handle invisibility properly.
  *
- * overridden here and in /mob/dead/observer for different point span classes and sanity checks
+ * Overridden here and in /mob/dead/observer for different point span classes and sanity checks.
  */
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
@@ -108,10 +108,10 @@
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(_pointed), A))
 
-/// possibly delayed verb that finishes the pointing process starting in [/mob/verb/pointed()].
-/// either called immediately or in the tick after pointed() was called, as per the [DEFAULT_QUEUE_OR_CALL_VERB()] macro
+/// Possibly delayed verb that finishes the pointing process starting in [/mob/verb/pointed()].
+/// Either called immediately or in the tick after pointed() was called, as per the [DEFAULT_QUEUE_OR_CALL_VERB()] macro.
 /mob/proc/_pointed(atom/pointing_at)
-	if(client) //Clientless mobs can just go ahead and point
+	if(client)
 		if(ismovable(pointing_at))
 			var/atom/movable/pointed_movable = pointing_at
 			if(HAS_TRAIT(pointed_movable, TRAIT_SKIP_BASIC_REACH_CHECK) || pointing_at.loc.IsContainedAtomAccessible(pointing_at, src))
@@ -119,11 +119,10 @@
 
 		if(!(pointing_at in view(client.view, src)))
 			return FALSE
-	if(iscarbon(src)) // special interactions for carbons
+	if(iscarbon(src))
 		var/mob/living/carbon/our_carbon = src
 		if(our_carbon.usable_hands <= 0 || src.incapacitated & INCAPABLE_RESTRAINTS || HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 			if(TIMER_COOLDOWN_FINISHED(src, "point_verb_emote_cooldown"))
-				//cooldown handled in the emote.
 				our_carbon.emote("point [pointing_at]")
 			else
 				to_chat(src, span_warning("You need to wait before pointing again!"))
@@ -131,3 +130,4 @@
 	point_at(pointing_at, TRUE)
 
 	return TRUE
+
