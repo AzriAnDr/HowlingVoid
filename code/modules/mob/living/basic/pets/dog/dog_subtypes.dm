@@ -135,3 +135,23 @@
 	if(user.combat_mode && user.reagents && !stat)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment, 0.4)
 		user.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)
+
+/mob/living/basic/pet/dog/shorg
+	name = "\improper shorg"
+	real_name = "shorg"
+	desc = "It's an adorable mix of dog and shark with not so adorable species name - shorg."
+	icon = 'icons/shorg/pets.dmi'
+	held_lh = 'icons/shorg/pets_held_lh.dmi'
+	held_rh = 'icons/shorg/pets_held_rh.dmi'
+	icon_state = "shorg"
+	icon_living = "shorg"
+	icon_dead = "shorg_dead"
+	collar_icon_state = "shorg"
+	held_state = "shorg"
+	butcher_results = list(/obj/item/food/fishmeat/quality = 3, /obj/item/food/meat/slab/corgi = 1)
+	gold_core_spawnable = FRIENDLY_SPAWN
+	faction = list(FACTION_NEUTRAL, FACTION_CARP)
+	obj_damage = 5
+	melee_damage_lower = 8
+	melee_damage_upper = 16
+	wound_bonus = 15

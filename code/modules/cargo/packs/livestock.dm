@@ -130,6 +130,13 @@
 				)
 	crate_name = "exotic corgi crate"
 
+/datum/supply_pack/critter/corgis/shorg
+	name = "Shorg Crate"
+	desc = "Contains a single shorg - a shark-corgi hybrid. Adorable."
+	cost = CARGO_CRATE_VALUE * 10
+	contains = list(/mob/living/basic/pet/dog/shorg)
+	crate_name = "shorg crate"
+
 /datum/supply_pack/critter/fox
 	name = "Fox Crate"
 	desc = "The fox goes...? Contains one fox. Comes with a collar!"//what does the fox say

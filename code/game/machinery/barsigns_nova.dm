@@ -1,17 +1,3 @@
-// Modularly set the correct icon file
-/obj/machinery/barsign/update_icon_state()
-	. = ..()
-	// uses tg icon file
-	if(!istype(chosen_sign, /datum/barsign/nova) || icon_state == "empty")
-		icon = initial(icon)
-		return
-
-	// uses modular icon file
-	if(istype(chosen_sign, /datum/barsign/nova/large))
-		icon = NOVA_LARGE_BARSIGN_FILE
-	else
-		icon = NOVA_BARSIGN_FILE
-
 /datum/barsign/nova/topmen
 	name = "Top Men"
 	icon_state = "topmen"

@@ -507,6 +507,34 @@
 
 	to_chat(user, boxed_message(msg))
 
+/// Adds a moodlet entry based on if the mob currently has alcohol processing in their system.
+/datum/mood/proc/get_alcohol_processing(mob/user)
+	if(user.reagents.reagent_list.len)
+		for(var/datum/reagent/consumable/ethanol/booze in user.reagents.reagent_list)
+			return span_notice("I'm still processing that alcohol I drank...\n")
+
+/// Adds a moodlet entry based on the current blood alcohol content of the mob.
+/datum/mood/proc/get_drunk_mood(mob/user)
+	var/mob/living/target = user
+	var/blood_alcohol_content = target.get_blood_alcohol_content()
+	switch(blood_alcohol_content)
+		if(0.01 to 0.05)
+			return span_notice("Had a drink, time to relax!\n")
+		if(0.05 to 0.07)
+			return span_nicegreen("Now I'm starting to feel that drink.\n")
+		if(0.07 to 0.11)
+			return span_nicegreen("A bit tipsy, this feels good!\n")
+		if(0.11 to 0.13)
+			return span_nicegreen("Those drinks are really starting to hit!\n")
+		if(0.13 to 0.17)
+			return span_nicegreen("I can't remember how many I've had, but I feel great!\n")
+		if(0.17 to 0.19)
+			return span_warning("I think I've had too much to drink... I should probably stop... drink some water...\n")
+		if(0.19 to 0.23)
+			return span_bolddanger("I'm not feeling so hot...\n")
+		if(0.23 to INFINITY)
+			return span_bolddanger("Is there a doctor around? I really don't feel good...\n")
+
 /// Updates the mob's moodies, if the area provides a mood bonus
 /datum/mood/proc/check_area_mood(datum/source, area/new_area)
 	SIGNAL_HANDLER

@@ -260,7 +260,8 @@
 /atom/movable/screen/alert/status_effect/drunk
 	name = "Drunk"
 	desc = "All that alcohol you've been drinking is impairing your speech, \
-		motor skills, and mental cognition. Make sure to act like it."
+		motor skills, and mental cognition. Make sure to act like it. \
+		Check your current drunkenness level using your mood status."
 	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "drunk"
 

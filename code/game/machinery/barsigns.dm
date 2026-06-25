@@ -50,6 +50,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	else
 		icon_state = "empty"
 
+	if(!istype(chosen_sign, /datum/barsign/nova) || icon_state == "empty")
+		icon = initial(icon)
+		return ..()
+
+	if(istype(chosen_sign, /datum/barsign/nova/large))
+		icon = NOVA_LARGE_BARSIGN_FILE
+	else
+		icon = NOVA_BARSIGN_FILE
+
 	return ..()
 
 /obj/machinery/barsign/update_desc()
