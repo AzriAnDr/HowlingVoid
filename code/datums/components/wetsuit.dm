@@ -1,4 +1,4 @@
-/// How many wetstacks does the clothing's status effect apply to its wearer
+/// How many wet stacks the clothing's status effect applies to its wearer.
 #define STATUS_EFFECT_STACKS 5
 
 /datum/component/wetsuit
@@ -16,18 +16,18 @@
 		COMSIG_ITEM_DROPPED,
 	))
 
-/// A proc for all akula clothing which has the 'special tech' to keep their wearers slippery
+/// Applies the slippery status effect used by wetsuit-style clothing.
 /datum/component/wetsuit/proc/apply_wetsuit_status_effect(obj/item/source, mob/living/user, slot)
 	if(slot == ITEM_SLOT_HANDS)
 		return FALSE
 
 	user.apply_status_effect(/datum/status_effect/grouped/wetsuit, REF(source))
 
-/// A proc to remove the wetsuit status effect
+/// Removes the wetsuit status effect.
 /datum/component/wetsuit/proc/remove_wetsuit_status_effect(obj/item/source, mob/living/user, slot)
 	user.remove_status_effect(/datum/status_effect/grouped/wetsuit, REF(source))
 
-/// The status effect which `apply_wetsuit_status_effect` gives
+/// The status effect granted by /datum/component/wetsuit.
 /datum/status_effect/grouped/wetsuit
 	id = "wetsuit"
 	alert_type = null
@@ -37,3 +37,4 @@
 	owner.set_wet_stacks(stacks = STATUS_EFFECT_STACKS, remove_fire_stacks = FALSE)
 
 #undef STATUS_EFFECT_STACKS
+

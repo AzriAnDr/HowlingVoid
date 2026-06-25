@@ -1,4 +1,4 @@
-/// Enables the choice of background in the character preview menu
+/// Enables the choice of background in the character preview menu.
 /datum/preference/choiced/background_state
 	savefile_key = "background_state"
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(background_state_options, list(
 	"White",
 	"White Tiles",
 	"Plasteel",
-	"Dark Tiles" ,
+	"Dark Tiles",
 	"Plating",
 	"Reinforced Floor",
 ))
@@ -22,3 +22,4 @@ GLOBAL_LIST_INIT(background_state_options, list(
 
 /datum/preference/choiced/background_state/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return
+

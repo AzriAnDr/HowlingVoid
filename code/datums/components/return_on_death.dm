@@ -1,4 +1,4 @@
-//This component makes the ckey be moved to a target body on death
+/// Moves a ckey back to a source mob when the temporary host dies or is deleted.
 /datum/component/return_on_death
 	var/mob/sourcemob
 	var/deleting
@@ -24,7 +24,6 @@
 		qdel(src)
 		deleting = TRUE
 
-
 /datum/component/return_on_death/Destroy(force)
 	if(!deleting)
 		deleting = TRUE
@@ -32,6 +31,6 @@
 	sourcemob = null
 	. = ..()
 
-
 /datum/component/return_on_death/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING))
+
