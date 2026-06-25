@@ -38,6 +38,40 @@
 /datum/voucher_set/mining
 	blackbox_key = "mining_voucher_redeemed"
 
+/datum/voucher_set/mining_suits/seva
+	name = "SEVA Suit"
+	description = "Contains a SEVA suit and mask for exploring hot environments."
+	icon = 'icons/obj/clothing/suits.dmi'
+	icon_state = "seva"
+	set_items = list(
+		/obj/item/clothing/suit/hooded/seva,
+		/obj/item/clothing/mask/gas/seva,
+	)
+
+/datum/voucher_set/mining_suits/explorer
+	name = "Explorer Suit"
+	description = "Contains an explorer's suit and gas mask."
+	icon = 'icons/obj/clothing/suits/utility.dmi'
+	icon_state = "explorer"
+	set_items = list(
+		/obj/item/clothing/suit/hooded/explorer,
+		/obj/item/clothing/mask/gas/explorer,
+	)
+
+/datum/voucher_set/mining_suits/carota
+	name = "Bunny Suit"
+	description = "Designed for miners on the planet of Carota. You might get some odd looks from your co-workers."
+	icon = 'icons/mob/simple/rabbit.dmi'
+	icon_state = "rabbit_white"
+	set_items = list(
+		/obj/item/clothing/head/playbunnyears/miner,
+		/obj/item/clothing/neck/tie/bunnytie/miner,
+		/obj/item/clothing/suit/jacket/tailcoat/miner,
+		/obj/item/clothing/under/rank/cargo/miner/bunnysuit,
+		/obj/item/clothing/shoes/workboots/mining/heeled,
+		/obj/item/clothing/mask/gas/explorer,
+	)
+
 /datum/voucher_set/mining/crusher_kit
 	name = "Crusher Kit"
 	description = "Contains a crusher conversion kit and a pocket fire extinguisher. The conversion kit will transform into a proto-kinetic crusher variant of one's choice, giving a versatile melee mining tool capable both of mining and fighting local fauna. It is difficult to use effectively for anyone but most skilled and/or suicidal miners."

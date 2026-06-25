@@ -29,6 +29,7 @@
 /obj/machinery/computer/order_console/mining/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/voucher_redeemer, /obj/item/mining_voucher, /datum/voucher_set/mining)
+	AddElement(/datum/element/voucher_redeemer, /obj/item/suit_voucher, /datum/voucher_set/mining_suits)
 
 /obj/machinery/computer/order_console/mining/subtract_points(final_cost, obj/item/card/id/card)
 	if(final_cost <= card.registered_account.mining_points)
@@ -81,6 +82,13 @@
 /obj/item/mining_voucher
 	name = "mining voucher"
 	desc = "A token to redeem a piece of equipment. Use it on a mining equipment vendor."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "mining_voucher"
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/suit_voucher
+	name = "suit voucher"
+	desc = "A token to redeem a new suit. Use it on a mining equipment vendor."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
 	w_class = WEIGHT_CLASS_TINY

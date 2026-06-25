@@ -75,6 +75,29 @@
 	for(var/i in 1 to 7)
 		new /obj/item/tank/internals/emergency_oxygen/engi(src) //in case anyone ever wants to do anything with spawning them, apart from crafting the box
 
+/obj/item/storage/box/emergency_spacesuit
+	name = "emergency space suit case"
+	desc = "A small case containing an emergency space suit and helmet."
+	icon = 'icons/more_briefcases/briefcases.dmi'
+	icon_state = "briefcase_suit"
+	illustration = null
+	storage_type = /datum/storage/box/emergency_space
+
+/datum/storage/box/emergency_space
+	max_specific_storage = WEIGHT_CLASS_BULKY
+	max_slots = 2
+
+/datum/storage/box/emergency_space/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+	set_holdable(list(
+		/obj/item/clothing/head/helmet/space/emergency,
+		/obj/item/clothing/suit/space/emergency,
+	))
+
+/obj/item/storage/box/emergency_spacesuit/PopulateContents()
+	new /obj/item/clothing/head/helmet/space/emergency(src)
+	new /obj/item/clothing/suit/space/emergency(src)
+
 /obj/item/storage/box/stickers/chief_engineer
 	name = "CE approved sticker pack"
 	desc = "With one of these stickers, inform the crew that the contraption in the corridor is COMPLETELY SAFE!"

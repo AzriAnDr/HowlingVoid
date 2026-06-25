@@ -3,11 +3,9 @@
 	desc = "A console that will ping when a positronic personality is available for download."
 	icon = 'icons/positronic_alert_console/terminals.dmi'
 	icon_state = "posialert"
-	// to create a cooldown so if roboticists are tired of ghosts
 	COOLDOWN_DECLARE(robotics_cooldown)
-	/// the reason that the console is muted (player decided)
+	/// The reason that the console is muted.
 	var/mute_reason
-	// to create a cooldown so ghosts cannot spam it
 	COOLDOWN_DECLARE(ghost_cooldown)
 	/// The radio channel used to send messages.
 	var/announcement_channel = RADIO_CHANNEL_SCIENCE
@@ -37,11 +35,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/posialert, 28)
 		COOLDOWN_RESET(src, robotics_cooldown)
 		to_chat(user, span_notice("You have removed the mute on [src]."))
 		return
+
 	mute_reason = null
 	mute_reason = stripped_input(user, "What would the reason for the mute be? (max characters is 20)", "Mute Reason", "", 20)
 	if(!mute_reason)
 		to_chat(user, span_warning("[src] requires a reason to mute!"))
 		return
+
 	COOLDOWN_START(src, robotics_cooldown, 5 MINUTES)
 	to_chat(user, span_notice("You have muted [src] for five minutes."))
 
@@ -54,8 +54,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/posialert, 28)
 	if(!COOLDOWN_FINISHED(src, ghost_cooldown))
 		to_chat(user, span_warning("[src] is currently still on cooldown! Remaining time on cooldown is [COOLDOWN_TIMELEFT(src, ghost_cooldown) * 0.1] seconds."))
 		return
+
 	COOLDOWN_START(src, ghost_cooldown, 30 SECONDS)
-	flick("posialertflash",src)
+	flick("posialertflash", src)
 	say("There are positronic personalities available.")
 	aas_config_announce(/datum/aas_config_entry/posibrain_alert, list(), src, list(announcement_channel))
 	playsound(loc, 'sound/machines/ping.ogg', 50)
@@ -69,10 +70,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/posialert, 28)
 
 /datum/aas_config_entry/posibrain_alert/act_up()
 	. = ..()
-	if (.)
+	if(.)
 		return
 
 	announcement_lines_map["Message"] = pick(
-		"R/NT1M3 A= ANNOUN-*#nt_SY!?EM.dm, LI%£ 86: N=0DE NULL!",
+		"R/NT1M3 A= ANNOUN-*#nt_SY!?EM.dm, LI% 86: N=0DE NULL!",
 		"New version of SyndieOS downloaded and ready for installation. Please proceed to robotics.",
-		"ERR)#R - B*@ TEXT F*O(ND!")
+		"ERR)#R - B*@ TEXT F*O(ND!",
+	)
