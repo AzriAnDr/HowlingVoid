@@ -51,6 +51,12 @@
 
 	/// List of antag datums on this mind
 	var/list/antag_datums
+	/// Standard exploitable record access, usually granted by antagonist datums.
+	var/can_see_exploitables = FALSE
+	/// Manual exploitable record access, granted by admins and OPFOR.
+	var/has_exploitables_override = FALSE
+	/// Tracks whether the mind currently has the exploitable records verb.
+	var/has_exploitable_menu = FALSE
 	/// this mind's ANTAG_HUD should have this icon_state
 	var/antag_hud_icon_state = null
 	///this mind's antag HUD

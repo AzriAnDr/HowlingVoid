@@ -61,6 +61,43 @@
 			return TRUE
 	return FALSE
 
+/// Updates whether this mind can view exploitable crew records and refreshes the verb.
+/datum/mind/proc/handle_exploitables()
+	if(has_exploitables_override)
+		can_see_exploitables = TRUE
+		handle_exploitables_menu()
+		return
+
+	if(!antag_datums)
+		can_see_exploitables = FALSE
+		handle_exploitables_menu()
+		return
+
+	can_see_exploitables = FALSE
+	for(var/datum/antagonist/antag_datum as anything in antag_datums)
+		if(antag_datum.view_exploitables)
+			can_see_exploitables = TRUE
+			break
+
+	handle_exploitables_menu()
+
+/// Adds or removes the exploitable crew records verb to match this mind's access.
+/datum/mind/proc/handle_exploitables_menu()
+	if(has_exploitables_override)
+		if(!has_exploitable_menu)
+			add_verb(current, /mob/proc/view_exploitables_verb)
+			has_exploitable_menu = TRUE
+			to_chat(current, span_danger(VIEW_CREW_EXPLOITABLES_GAIN_TEXT))
+		return
+
+	if(!has_exploitable_menu && can_see_exploitables)
+		add_verb(current, /mob/proc/view_exploitables_verb)
+		has_exploitable_menu = TRUE
+		to_chat(current, span_danger(VIEW_CREW_EXPLOITABLES_GAIN_TEXT))
+	else if(has_exploitable_menu && !can_see_exploitables)
+		remove_verb(current, /mob/proc/view_exploitables_verb)
+		has_exploitable_menu = FALSE
+
 /datum/mind/proc/remove_antag_equip()
 	if(!current)
 		return

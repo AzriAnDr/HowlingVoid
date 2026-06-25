@@ -262,10 +262,12 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/backpack/duffelbag/syndie
-	name = "suspicious looking duffel bag"
-	desc = "A large duffel bag for holding extra tactical supplies. It contains an oiled plastitanium zipper for maximum speed tactical zipping, and is better balanced on your back than an average duffelbag. Can hold two bulky items!"
+	name = "duffel bag"
+	desc = "A large duffel bag for holding extra supplies."
 	icon_state = "duffel-syndie"
 	inhand_icon_state = "duffel-syndieammo"
+	special_desc_requirement = EXAMINE_CHECK_SYNDICATE
+	special_desc = "This bag is used to store tactical equipment and is manufactured by the syndicate."
 	storage_type = /datum/storage/duffel/syndicate
 	resistance_flags = FIRE_PROOF
 	// Less slowdown while unzipped. Still bulky, but it won't halve your movement speed in an active combat situation.

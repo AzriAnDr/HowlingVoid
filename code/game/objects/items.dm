@@ -236,6 +236,18 @@
 	var/offensive_notes
 	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force requirements
 	var/override_notes = FALSE
+	/// Special description that is shown when [special_desc_requirement] is met.
+	var/special_desc = ""
+	/// Custom affiliation text used instead of "Syndicate Affiliation" for syndicate special examine checks.
+	var/special_desc_affiliation = ""
+	/// Requirement setting for special descriptions. See examine_defines.dm for valid values.
+	var/special_desc_requirement = EXAMINE_CHECK_NONE
+	/// Role requirements used when [special_desc_requirement] is [EXAMINE_CHECK_ROLE].
+	var/list/special_desc_roles
+	/// Job requirements used when [special_desc_requirement] is [EXAMINE_CHECK_JOB].
+	var/list/special_desc_jobs
+	/// Faction requirements used when [special_desc_requirement] is [EXAMINE_CHECK_FACTION].
+	var/list/special_desc_factions
 	/// Used if we want to have a custom verb text for throwing. "John Spaceman flicks the ciggerate" for example.
 	var/throw_verb
 
@@ -464,12 +476,89 @@
 	if(!(item_flags & WEAPON_DESCRIPTION_INITIALIZED))
 		add_weapon_description()
 		item_flags |= WEAPON_DESCRIPTION_INITIALIZED
-	return ..()
+	. = ..()
+	if(special_desc_requirement == EXAMINE_CHECK_NONE && special_desc)
+		. += span_notice("This item could be examined further...")
 
 /obj/item/examine_more(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_RESEARCH_SCANNER))
 		. += research_scan(user)
+	if(!special_desc)
+		return
+
+	var/composed_message
+	switch(special_desc_requirement)
+		if(EXAMINE_CHECK_NONE)
+			composed_message = "You note the following: <br>"
+			composed_message += special_desc
+			. += composed_message
+		if(EXAMINE_CHECK_MINDSHIELD)
+			if(HAS_TRAIT(user, TRAIT_MINDSHIELD))
+				composed_message = "You note the following because of your <span class='blue'><b>mindshield</b></span>: <br>"
+				composed_message += special_desc
+				. += composed_message
+		if(EXAMINE_CHECK_SYNDICATE)
+			if(user.mind)
+				var/datum/mind/user_mind = user.mind
+				if((ROLE_TRAITOR in user_mind.special_roles) || user.has_faction(ROLE_SYNDICATE))
+					composed_message = "You note the following because of your <span class='red'><b>[special_desc_affiliation ? special_desc_affiliation : "Syndicate Affiliation"]</b></span>: <br>"
+					composed_message += special_desc
+					. += composed_message
+				else if(HAS_TRAIT(user_mind, TRAIT_DETECTIVE))
+					composed_message = "You note the following because of your brilliant <span class='blue'><b>Detective skills</b></span>: <br>"
+					composed_message += special_desc
+					. += composed_message
+		if(EXAMINE_CHECK_SYNDICATE_TOY)
+			if(user.mind)
+				var/datum/mind/user_mind = user.mind
+				if((ROLE_TRAITOR in user_mind.special_roles) || user.has_faction(ROLE_SYNDICATE))
+					composed_message = "You note the following because of your <span class='red'><b>[special_desc_affiliation ? special_desc_affiliation : "Syndicate Affiliation"]</b></span>: <br>"
+					composed_message += special_desc
+					. += composed_message
+				else if(HAS_TRAIT(user_mind, TRAIT_DETECTIVE))
+					composed_message = "You note the following because of your brilliant <span class='blue'><b>detective skills</b></span>: <br>"
+					composed_message += special_desc
+					. += composed_message
+				else
+					composed_message = "The popular toy resembling [src] from your local arcade, suitable for children and adults alike."
+					. += composed_message
+		if(EXAMINE_CHECK_ROLE)
+			if(user.mind)
+				var/datum/mind/user_mind = user.mind
+				for(var/role_i in special_desc_roles)
+					if(role_i in user_mind.special_roles)
+						composed_message = "You note the following because of your <b>[role_i]</b> role: <br>"
+						composed_message += special_desc
+						. += composed_message
+		if(EXAMINE_CHECK_JOB)
+			if(ishuman(user))
+				var/mob/living/carbon/human/human_user = user
+				for(var/job_i in special_desc_jobs)
+					if(human_user.job == job_i)
+						composed_message = "You note the following because of your job as a <b>[job_i]</b>: <br>"
+						composed_message += special_desc
+						. += composed_message
+		if(EXAMINE_CHECK_FACTION)
+			for(var/faction_i in special_desc_factions)
+				if(user.has_faction(faction_i))
+					composed_message = "You note the following because of your loyalty to <b>[faction_i]</b>: <br>"
+					composed_message += special_desc
+					. += composed_message
+		if(EXAMINE_CHECK_CONTRACTOR)
+			var/mob/living/carbon/human/human_user = user
+			if(ROLE_DRIFTING_CONTRACTOR in human_user.mind.special_roles)
+				composed_message = "You note the following because of your [span_red("<b>Contractor Status</b>")]: <br>"
+				composed_message += special_desc
+				. += composed_message
+			else if(HAS_TRAIT(human_user, TRAIT_DETECTIVE))
+				composed_message = "You note the following because of your brilliant <span class='blue'><b>Detective skills</b></span>: <br>"
+				composed_message += special_desc
+				. += composed_message
+			else if((ROLE_TRAITOR in human_user.mind.special_roles) || human_user.has_faction(ROLE_SYNDICATE))
+				composed_message = "You note the following because of your [span_red("<b>[special_desc_affiliation ? special_desc_affiliation : "Syndicate Affiliation"]</b>")]: <br>"
+				composed_message += special_desc
+				. += composed_message
 
 /obj/item/proc/research_scan(mob/user)
 	/// Research prospects, including boostable nodes and point values. Deliver to a console to know whether the boosts have already been used.

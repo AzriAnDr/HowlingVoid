@@ -23,6 +23,7 @@
 	paycheck_department = ACCOUNT_SEC
 
 	desensitized_base = DESENSITIZED_THRESHOLD
+	mind_traits = list(TRAIT_DETECTIVE)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_DETECTIVE
