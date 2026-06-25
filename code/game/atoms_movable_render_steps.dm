@@ -1,20 +1,20 @@
 /**
- * Internal atom that uses render relays to apply "appearance things" to a render source
- * Branch, subtypes have behavior
-*/
+ * Internal atom that uses render relays to apply "appearance things" to a render source.
+ *
+ * Branch, subtypes have behavior.
+ */
 /atom/movable/render_step
 	name = "render step"
 	plane = DEFAULT_PLANE
 	layer = FLOAT_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	//Why?
-	//render_targets copy the transform of the target as well, but vis_contents also applies the transform
-	//we'll display using that, so we gotta reset
+	// render_targets copy the transform of the target as well, but vis_contents also applies the transform.
+	// We'll display using that, so we have to reset.
 	appearance_flags = KEEP_APART|KEEP_TOGETHER|RESET_TRANSFORM
 
 /atom/movable/render_step/Initialize(mapload, atom/source)
 	. = ..()
-	verbs.Cut() //Cargo cultttttt
+	verbs.Cut()
 
 	if(!source)
 		return
@@ -35,7 +35,7 @@
 /atom/movable/render_step/blob_act()
 	return
 
-//Prevents people from moving these after creation, because they shouldn't be.
+// Prevents people from moving these after creation, because they shouldn't be.
 /atom/movable/render_step/forceMove(atom/destination, no_tp=FALSE, harderforce = FALSE)
 	if(harderforce)
 		return ..()
@@ -47,13 +47,12 @@
 		qdel(src)
 
 /**
- * Render step that modfies an atom's color
- * Useful for creating coherent emissive blockers out of things like glass floors by lowering alpha statically using matrixes
- * Other stuff too I'm sure
+ * Render step that modifies an atom's color.
+ *
+ * Useful for creating coherent emissive blockers out of things like glass floors by lowering alpha statically using matrixes.
  */
 /atom/movable/render_step/color
 	name = "color step"
-	//RESET_COLOR is obvious I hope
 	appearance_flags = KEEP_APART|KEEP_TOGETHER|RESET_COLOR|RESET_TRANSFORM
 
 /atom/movable/render_step/color/Initialize(mapload, atom/source, color)
@@ -61,7 +60,7 @@
 	src.color = color
 
 /**
- * Render step that makes the passed in render source block emissives
+ * Render step that makes the passed in render source block emissives.
  *
  * Copies an appearance vis render_target and render_source on to the emissive blocking plane.
  * This means that the atom in question will block any emissive sprites.
@@ -78,9 +77,9 @@
 	src.color = GLOB.em_block_color
 
 /**
- * Render step that makes the passed in render source GLOW
+ * Render step that makes the passed in render source glow.
  *
- * Copies an appearance vis render_target and render_source on to the emissive plane
+ * Copies an appearance vis render_target and render_source on to the emissive plane.
  */
 /atom/movable/render_step/emissive
 	name = "emissive"
@@ -90,3 +89,4 @@
 /atom/movable/render_step/emissive/Initialize(mapload, source)
 	. = ..()
 	src.color = GLOB.emissive_color
+

@@ -1,4 +1,5 @@
-/proc/emoji_parse(text) //turns :ai: into an emoji in text.
+/// Turns :emoji_name: sequences into chat emoji tags.
+/proc/emoji_parse(text)
 	if(!text)
 		return text
 	. = text
@@ -32,12 +33,13 @@
 		break
 	return parsed
 
-/proc/emoji_sanitize(text) //cuts any text that would not be parsed as an emoji
+/// Cuts any text that would not be parsed as an emoji.
+/proc/emoji_sanitize(text)
 	. = text
 	if(!CONFIG_GET(flag/emojis))
 		return
 	var/static/list/emojis = icon_states(icon(EMOJI_SET))
-	var/final = "" //only tags are added to this
+	var/final = ""
 	var/pos = 1
 	var/search = 0
 	while(1)
@@ -53,3 +55,4 @@
 				continue
 		break
 	return final
+
