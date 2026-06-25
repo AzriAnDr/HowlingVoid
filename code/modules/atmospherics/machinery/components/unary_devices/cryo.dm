@@ -120,6 +120,16 @@
 
 	register_context()
 
+/obj/machinery/cryo_cell/post_machine_initialize()
+	. = ..()
+	tune_special_cases()
+
+/obj/machinery/cryo_cell/interdinify()
+	broadcast_channel = RADIO_CHANNEL_INTERDYNE
+
+/obj/machinery/cryo_cell/tarkonize()
+	broadcast_channel = RADIO_CHANNEL_TARKON
+
 /obj/machinery/cryo_cell/Destroy()
 	on = FALSE
 

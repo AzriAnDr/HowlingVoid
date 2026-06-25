@@ -14,6 +14,16 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/posialert, 28)
 
+/obj/machinery/posialert/post_machine_initialize()
+	. = ..()
+	tune_special_cases()
+
+/obj/machinery/posialert/interdinify()
+	announcement_channel = RADIO_CHANNEL_INTERDYNE
+
+/obj/machinery/posialert/tarkonize()
+	announcement_channel = RADIO_CHANNEL_TARKON
+
 /obj/machinery/posialert/examine(mob/user)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, robotics_cooldown))

@@ -40,13 +40,12 @@
 
 /datum/voucher_set/mining/crusher_kit
 	name = "Crusher Kit"
-	description = "Contains a kinetic crusher, expanded pocket oxygen tank and a pocket fire extinguisher. Kinetic crusher is a versatile melee mining tool capable both of mining and fighting local fauna, however it is difficult to use effectively for anyone but most skilled and/or suicidal miners."
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "crusher"
+	description = "Contains a crusher conversion kit and a pocket fire extinguisher. The conversion kit will transform into a proto-kinetic crusher variant of one's choice, giving a versatile melee mining tool capable both of mining and fighting local fauna. It is difficult to use effectively for anyone but most skilled and/or suicidal miners."
+	icon = 'icons/mining_crushers/crusher_conversion_kit.dmi'
+	icon_state = "crusher_kit"
 	set_items = list(
-		/obj/item/kinetic_crusher,
+		/obj/item/crusher_conversion_kit,
 		/obj/item/extinguisher/mini,
-		/obj/item/tank/internals/emergency_oxygen/engi,
 	)
 
 /datum/voucher_set/mining/extraction_kit
@@ -72,11 +71,12 @@
 
 /datum/voucher_set/mining/survival_capsule
 	name = "Survival Capsule and Explorer's Webbing"
-	description = "Contains an explorer's webbing, which allows you to carry even more mining equipment and already has a spare shelter capsule in it."
+	description = "Contains an explorer's webbing, which allows you to carry even more mining equipment and already has a spare shelter capsule in it. It also comes with a set of Kheiral Cuffs to extend the range of sensors."
 	icon = 'icons/obj/clothing/belts.dmi'
 	icon_state = "explorer1"
 	set_items = list(
 		/obj/item/storage/belt/mining/vendor,
+		/obj/item/clothing/accessory/kheiral_cuffs,
 	)
 
 /datum/voucher_set/mining/minebot_kit
@@ -108,4 +108,13 @@
 	set_items = list(
 		/obj/item/clothing/gloves/fingerless/punch_mitts,
 		/obj/item/clothing/head/cowboy,
+	)
+
+/datum/voucher_set/mining/bunny
+	name = "Bunny Conscription Kit"
+	description = "Designed for Miners on the planet of Carota, this kit includes all you need to imitate them! Weapons sold separately."
+	icon = 'icons/mob/simple/rabbit.dmi'
+	icon_state = "rabbit_white"
+	set_items = list(
+		/obj/item/storage/backpack/duffelbag/mining_bunny/conscript,
 	)

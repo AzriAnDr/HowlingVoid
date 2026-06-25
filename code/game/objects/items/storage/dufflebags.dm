@@ -439,3 +439,27 @@
 	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
 	new /obj/item/knife/combat/survival(src)
 	new /obj/item/flashlight/seclite(src)
+
+/obj/item/storage/backpack/duffelbag/mining_bunny
+	name = "Bunny Kit"
+	desc = "A mining outfit kit themed around bunnies, they do live in burrows after all..."
+	icon_state = "satchel_carrot"
+	inhand_icon_state = null
+
+/obj/item/storage/backpack/duffelbag/mining_bunny/PopulateContents()
+	new /obj/item/clothing/head/playbunnyears/miner(src)
+	new /obj/item/clothing/neck/tie/bunnytie/miner(src)
+	new /obj/item/clothing/suit/jacket/tailcoat/miner(src)
+	new /obj/item/clothing/under/rank/cargo/miner/bunnysuit(src)
+	new /obj/item/clothing/shoes/workboots/mining/heeled(src)
+
+/obj/item/storage/backpack/duffelbag/mining_bunny/conscript/PopulateContents()
+	..()
+	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
+	new /obj/item/storage/bag/ore(src)
+	new /obj/item/knife/shiv/carrot(src)
+	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
+	new /obj/item/flashlight/seclite(src)
+	new /obj/item/knife/combat/survival(src)
+	new /obj/item/storage/lunchbox/bunny/carrot(src)

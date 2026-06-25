@@ -28,6 +28,8 @@ SUBSYSTEM_DEF(machines)
 		)
 	///List of all powernets on the server.
 	var/list/datum/powernet/powernets = list()
+	/// Area typecaches used by /obj/machinery/tune_special_cases().
+	var/list/special_tune_whitelist_areas = list()
 
 /datum/controller/subsystem/machines/Initialize()
 	makepowernets()

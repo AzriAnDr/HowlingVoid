@@ -471,6 +471,9 @@
 		),
 	)
 
+/datum/mod_theme/advanced/atmos
+	ui_theme = "neutral"
+
 /datum/armor/mod_theme_advanced
 	melee = 30
 	bullet = 5

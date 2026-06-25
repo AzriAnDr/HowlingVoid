@@ -119,6 +119,15 @@
 	new /obj/item/extinguisher/mini(src)
 	new /obj/item/stack/cable_coil(src)
 
+/obj/item/storage/belt/utility/full/powertools/ircd/PopulateContents()
+	new /obj/item/screwdriver/power(src)
+	new /obj/item/crowbar/power(src)
+	new /obj/item/weldingtool/electric(src)
+	new /obj/item/construction/rcd/combat(src)
+	new /obj/item/pipe_dispenser(src)
+	new /obj/item/wrench/bolter(src)
+	new /obj/item/analyzer/ranged(src)
+
 /obj/item/storage/belt/utility/full/engi/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/screwdriver, src)
 	SSwardrobe.provide_type(/obj/item/wrench, src)
