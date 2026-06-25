@@ -21,6 +21,8 @@
 		. = pseudocircuit_act(user, tool)
 	else if(istype(tool, /obj/item/wallframe/apc))
 		. = wallframe_act(user, tool)
+	else if(istype(tool, /obj/item/stack/sheet/bronze) && panel_open)
+		. = bronze_act(user, tool)
 	if(.)
 		return .
 
@@ -299,6 +301,25 @@
 	balloon_alert(user, "removed the board")
 	new /obj/item/electronics/apc(loc)
 	return
+
+/// Handles installing arc shielding with bronze.
+/obj/machinery/power/apc/proc/bronze_act(mob/living/user, obj/item/stack/sheet/bronze/bronze)
+	if(arc_shielded)
+		balloon_alert(user, "already arc shielded!")
+		return ITEM_INTERACT_BLOCKING
+	bronze.use(1)
+	balloon_alert(user, "installed arc shielding")
+	arc_shielded = TRUE
+	playsound(src, 'sound/items/tools/rped.ogg', 20)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/power/apc/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(panel_open && arc_shielded)
+		balloon_alert(user, "arc shielding removed")
+		arc_shielded = FALSE
+		tool.play_tool_sound(src, 50)
+		return TRUE
 
 /obj/machinery/power/apc/screwdriver_act(mob/living/user, obj/item/W)
 	if(..())

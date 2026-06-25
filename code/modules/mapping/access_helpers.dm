@@ -1007,3 +1007,90 @@
 	var/list/access_list = ..()
 	access_list += ACCESS_CENT_SPECOPS
 	return access_list
+
+// Howling Void access helpers
+
+/obj/effect/mapping_helpers/airlock/access/any/cent_com
+	icon_state = "access_helper_serv"
+
+/obj/effect/mapping_helpers/airlock/access/any/cent_com/rep_door/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_GENERAL
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/cent_com/rep_or_captain/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_GENERAL
+	access_list += ACCESS_CAPTAIN
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/supply/customs/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_BRIG_ENTRANCE
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/engineering/engie_guard/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_BRIG_ENTRANCE
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/medical/orderly/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_BRIG_ENTRANCE
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/science/sci_guard/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_BRIG_ENTRANCE
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/service/bouncer/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_BRIG_ENTRANCE
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/cent_com
+	icon_state = "access_helper_serv"
+
+/obj/effect/mapping_helpers/airlock/access/all/cent_com/rep_door/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_GENERAL
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/supply/customs/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_BRIG_ENTRANCE
+	access_list += ACCESS_CARGO
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/engineering/engie_guard/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_BRIG_ENTRANCE
+	access_list += ACCESS_ENGINEERING
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/medical/orderly/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_BRIG_ENTRANCE
+	access_list += ACCESS_MEDICAL
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/science/sci_guard/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_BRIG_ENTRANCE
+	access_list += ACCESS_SCIENCE
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/service/bouncer/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_BRIG_ENTRANCE
+	access_list += ACCESS_SERVICE
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/tarkon
+	icon_state = "access_helper_syn"
+
+/obj/effect/mapping_helpers/airlock/access/all/tarkon/general/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_TARKON
+	return access_list
