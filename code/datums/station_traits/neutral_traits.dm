@@ -162,7 +162,7 @@
 /datum/station_trait/birthday
 	name = "Employee Birthday"
 	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 2
+	weight = 3
 	show_in_report = TRUE
 	report_message = "We here at Nanotrasen would all like to wish Employee Name a very happy birthday"
 	trait_to_give = STATION_TRAIT_BIRTHDAY
@@ -405,7 +405,7 @@
 	name = "The Great Skub Contention"
 	trait_type = STATION_TRAIT_NEUTRAL
 	show_in_report = FALSE
-	weight = 2
+	weight = 0
 	sign_up_button = TRUE
 	/// List of people signed up to be either pro_skub or anti_skub
 	var/list/skubbers = list()
