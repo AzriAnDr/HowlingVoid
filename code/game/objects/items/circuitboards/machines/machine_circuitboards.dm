@@ -272,6 +272,13 @@
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/cell_charger_multi
+	name = "Multi-Cell Charger"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/cell_charger_multi
+	req_components = list(/datum/stock_part/capacitor = 6)
+	needs_anchored = FALSE
+
 /obj/item/circuitboard/machine/circulator
 	name = "Circulator/Heat Exchanger"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

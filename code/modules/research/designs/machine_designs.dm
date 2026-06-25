@@ -901,6 +901,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/board/cell_charger_multi
+	name = "Multi-Cell Charger Board"
+	desc = "The circuit board for a multi-cell charger."
+	id = "multi_cell_charger"
+	build_path = /obj/item/circuitboard/machine/cell_charger_multi
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/dish_drive
 	name = "Dish Drive Board"
 	desc = "The circuit board for a dish drive."
