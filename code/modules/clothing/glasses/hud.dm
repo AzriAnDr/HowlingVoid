@@ -60,6 +60,17 @@
 	clothing_traits = list(TRAIT_MEDICAL_HUD)
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
 
+/obj/item/clothing/glasses/hud/health/prescription
+	name = "prescription health scanner HUD"
+	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their health status. This one has prescription lenses."
+	icon = 'icons/huds/huds.dmi'
+	icon_state = "glasses_healthhud"
+	worn_icon = 'icons/huds/hudeyes.dmi'
+
+/obj/item/clothing/glasses/hud/health/prescription/Initialize(mapload)
+	LAZYADD(clothing_traits, TRAIT_NEARSIGHTED_CORRECTED)
+	return ..()
+
 /obj/item/clothing/glasses/hud/medsechud
 	name = "health scanner security HUD"
 	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their health status, ID status and security records."
@@ -120,6 +131,17 @@
 	clothing_traits = list(TRAIT_DIAGNOSTIC_HUD)
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
+/obj/item/clothing/glasses/hud/diagnostic/prescription
+	name = "prescription diagnostic HUD"
+	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits. This one has prescription lenses."
+	icon = 'icons/huds/huds.dmi'
+	icon_state = "glasses_diagnostichud"
+	worn_icon = 'icons/huds/hudeyes.dmi'
+
+/obj/item/clothing/glasses/hud/diagnostic/prescription/Initialize(mapload)
+	LAZYADD(clothing_traits, TRAIT_NEARSIGHTED_CORRECTED)
+	return ..()
+
 /obj/item/clothing/glasses/hud/diagnostic/night
 	name = "night vision diagnostic HUD"
 	desc = "A robotics diagnostic HUD fitted with a light amplifier."
@@ -162,6 +184,20 @@
 	icon_state = "securityhud"
 	clothing_traits = list(TRAIT_SECURITY_HUD)
 	glass_colour_type = /datum/client_colour/glass_colour/red
+
+/obj/item/clothing/glasses/hud/security/prescription
+	name = "prescription security HUD"
+	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their ID status and security records. This one has prescription lenses."
+	icon = 'icons/huds/huds.dmi'
+	icon_state = "glasses_securityhud"
+	worn_icon = 'icons/huds/hudeyes.dmi'
+
+/obj/item/clothing/glasses/hud/security/prescription/Initialize(mapload)
+	LAZYADD(clothing_traits, TRAIT_NEARSIGHTED_CORRECTED)
+	return ..()
+
+/obj/item/clothing/glasses/hud/security/prescription/setup_reskins()
+	return
 
 /datum/atom_skin/security_hudglasses
 	abstract_type = /datum/atom_skin/security_hudglasses

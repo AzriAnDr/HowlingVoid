@@ -105,6 +105,14 @@
 	drop_sound = SFX_GOGGLES_DROP
 	equip_sound = SFX_GOGGLES_EQUIP
 
+/obj/item/clothing/glasses/meson/prescription
+	name = "prescription optical meson scanner"
+	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions. This one has prescription lens fitted in."
+
+/obj/item/clothing/glasses/meson/prescription/Initialize(mapload)
+	LAZYADD(clothing_traits, TRAIT_NEARSIGHTED_CORRECTED)
+	return ..()
+
 /obj/item/clothing/glasses/meson/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/meson, blacklisted_subtypes = subtypesof(/datum/atom_skin/meson/engine))
 
@@ -162,6 +170,23 @@
 	equip_sound = SFX_GOGGLES_EQUIP
 
 /datum/armor/glasses_science
+	fire = 80
+	acid = 100
+
+/obj/item/clothing/glasses/science/prescription
+	name = "prescription science glasses"
+	desc = "These glasses scan the contents of containers and projects their contents to the user in an easy to read format. This one has prescription lenses."
+	icon = 'icons/huds/huds.dmi'
+	icon_state = "glasses_sciencehud"
+	worn_icon = 'icons/huds/hudeyes.dmi'
+	glass_colour_type = /datum/client_colour/glass_colour/purple
+	armor_type = /datum/armor/prescription_science
+
+/obj/item/clothing/glasses/science/prescription/Initialize(mapload)
+	LAZYADD(clothing_traits, TRAIT_NEARSIGHTED_CORRECTED)
+	return ..()
+
+/datum/armor/prescription_science
 	fire = 80
 	acid = 100
 
