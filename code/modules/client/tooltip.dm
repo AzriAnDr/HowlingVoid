@@ -31,7 +31,7 @@ Notes:
 		owner = C
 		var/datum/asset/stuff = get_asset_datum(/datum/asset/simple/jquery)
 		stuff.send(owner)
-		owner << browse(file2text('code/modules/tooltip/tooltip.html'), "window=[control]")
+		owner << browse(file2text('code/modules/client/tooltip.html'), "window=[control]")
 
 	..()
 
@@ -124,5 +124,4 @@ Notes:
 	if(!istype(user) || !user.client?.tooltips)
 		return
 	user.client.tooltips.hide()
-
 
