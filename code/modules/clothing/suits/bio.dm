@@ -22,6 +22,7 @@
 		AddComponent(/datum/component/clothing_dirt, dirt_state)
 	AddElement(/datum/element/adjust_fishing_difficulty, 6)
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
+	qdel(GetComponent(/datum/component/clothing_fov_visor))
 
 /datum/armor/head_bio_hood
 	bio = 100

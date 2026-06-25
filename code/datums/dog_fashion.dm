@@ -121,6 +121,18 @@
 	name = "Nurse %REAL_NAME%"
 	desc = "%NAME% needs 100cc of beef jerky... STAT!"
 
+/datum/dog_fashion/head/yankee
+	name = "MC %REAL_NAME%"
+	desc = "They're a big deal in the dog rapping world, apperently."
+	icon_file = 'icons/mob/dog/corgi_head.dmi'
+	emote_see = list("mumbles some bars.", "practises their beatboxing.")
+
+/datum/dog_fashion/head/cone
+	name = "Shamed %REAL_NAME%"
+	desc = "This poor woofer. Stripped of their rights to happiness."
+	icon_file = 'icons/mob/dog/corgi_head.dmi'
+	obj_icon_state = "cone"
+
 /datum/dog_fashion/head/pirate
 	name = "Pirate-title Pirate-name"
 	desc = "Yaarghh!! Thar' be a scurvy dog!"

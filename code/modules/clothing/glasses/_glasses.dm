@@ -74,6 +74,22 @@
 	if(glass_colour_type)
 		AddElement(/datum/element/wearable_client_colour, glass_colour_type, ITEM_SLOT_EYES, GLASSES_TRAIT, forced = forced_glass_color)
 
+/datum/atom_skin/meson
+	abstract_type = /datum/atom_skin/meson
+	new_icon_state = "meson_scouter"
+
+/datum/atom_skin/meson/glasses
+	preview_name = "Meson Glasses"
+	new_icon = 'icons/obj/clothing/glasses.dmi'
+	new_icon_state = "meson"
+	new_worn_icon = 'icons/mob/clothing/eyes.dmi'
+
+/datum/atom_skin/meson/scouter
+	preview_name = "Meson Scouter"
+	new_icon = 'icons/meson_scouter/meson_scouter.dmi'
+	new_icon_state = "meson_scouter"
+	new_worn_icon = 'icons/meson_scouter/meson-scouter_mob.dmi'
+
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
@@ -88,6 +104,9 @@
 	pickup_sound = SFX_GOGGLES_PICKUP
 	drop_sound = SFX_GOGGLES_DROP
 	equip_sound = SFX_GOGGLES_EQUIP
+
+/obj/item/clothing/glasses/meson/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/meson, blacklisted_subtypes = subtypesof(/datum/atom_skin/meson/engine))
 
 /obj/item/clothing/glasses/meson/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is putting \the [src] to [user.p_their()] eyes and overloading the brightness! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -108,6 +127,9 @@
 	. = ..()
 	icon_state = length(color_cutoffs) ? initial(icon_state) : "nvgmeson_off"
 
+/obj/item/clothing/glasses/meson/night/setup_reskins()
+	return
+
 /obj/item/clothing/glasses/meson/gar
 	name = "gar mesons"
 	desc = "Do the impossible, see the invisible!"
@@ -121,6 +143,9 @@
 	attack_verb_simple = list("slice")
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
+
+/obj/item/clothing/glasses/meson/gar/setup_reskins()
+	return
 
 /obj/item/clothing/glasses/science
 	name = "science goggles"

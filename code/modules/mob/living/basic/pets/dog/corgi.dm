@@ -348,6 +348,8 @@
 	response_harm_simple = "kick"
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
+	// Objective pets cannot be made too difficult to find.
+	held_w_class = WEIGHT_CLASS_BULKY
 	///Tracks how many rounds did Ian survive from start to finish
 	var/age = 0
 	///Callback to execute upon roundend to check whether Ian has survived the round or not

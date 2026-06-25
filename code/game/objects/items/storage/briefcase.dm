@@ -1,7 +1,7 @@
 /obj/item/storage/briefcase
 	name = "briefcase"
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
-	icon = 'icons/obj/storage/case.dmi'
+	icon = 'icons/more_briefcases/briefcases.dmi'
 	icon_state = "briefcase"
 	inhand_icon_state = "briefcase"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
@@ -32,11 +32,32 @@
 		new /obj/item/paper(folder)
 
 /obj/item/storage/briefcase/lawyer
+	icon_state = "briefcase_black"
+	inhand_icon_state = "sec-case"
 	folder_path = /obj/item/folder/blue
 
 /obj/item/storage/briefcase/lawyer/PopulateContents()
 	new /obj/item/stamp/law(src)
 	..()
+
+/obj/item/storage/briefcase/central_command
+	name = "nanotrasen briefcase"
+	icon_state = "briefcase_cc"
+	inhand_icon_state = "sec-case"
+
+/obj/item/storage/briefcase/medical
+	name = "medical briefcase"
+	icon_state = "briefcase_med"
+	inhand_icon_state = "lockbox"
+
+/obj/item/storage/briefcase/virology
+	name = "virology briefcase"
+	icon_state = "briefcase_vir"
+	inhand_icon_state = "lockbox"
+
+/obj/item/storage/briefcase/engineering
+	name = "engineering briefcase"
+	icon_state = "briefcase_eng"
 
 /obj/item/storage/briefcase/suicide_act(mob/living/user)
 	var/list/papers_found = list()
@@ -86,8 +107,8 @@
 /obj/item/storage/briefcase/secure
 	name = "secure briefcase"
 	desc = "A large briefcase with a digital locking system."
-	icon_state = "secure"
-	base_icon_state = "secure"
+	icon_state = "briefcase_secure_black"
+	base_icon_state = "briefcase_secure_black"
 	inhand_icon_state = "sec-case"
 	var/stored_lock_code
 
@@ -101,12 +122,27 @@
 
 	stored_lock_code = new_code
 
+/obj/item/storage/briefcase/secure/attack_self(mob/user)
+	. = ..()
+	update_appearance()
+
+/obj/item/storage/briefcase/secure/update_overlays()
+	. = ..()
+	if(atom_storage?.locked)
+		. += "briefcase_locked"
+	else
+		. += "briefcase_open"
+
+/obj/item/storage/briefcase/secure/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)]"
+
 /// Base container used for gimmick disks.
 /obj/item/storage/briefcase/secure/digital_storage
 	name = "digi-case"
-	desc = "It's made of AUTHENTIC digital leather and has a price-tag still attached. Its owner must be a real professional."
-	icon_state = "secure"
-	base_icon_state = "secure"
+	desc = "It's made of AUTHENTIC digital metal and has a price-tag still attached. Its owner must be a real professional."
+	icon_state = "briefcase_secure_black"
+	base_icon_state = "briefcase_secure_black"
 	inhand_icon_state = "sec-case"
 
 /obj/item/storage/briefcase/secure/digital_storage/PopulateContents()
@@ -130,6 +166,12 @@
 	new /obj/item/clothing/mask/balaclava(src)
 	new /obj/item/bodybag(src)
 	new /obj/item/soap/nanotrasen(src)
+
+/obj/item/storage/briefcase/secure/white
+	name = "white secure briefcase"
+	icon_state = "briefcase_secure_white"
+	base_icon_state = "briefcase_secure_white"
+	inhand_icon_state = "lockbox"
 
 /obj/item/storage/briefcase/hitchiker/PopulateContents()
 	new /obj/item/food/sandwich/peanut_butter_jelly(src)

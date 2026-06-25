@@ -12,6 +12,21 @@
 #define TEMP_SHADE_YELLOW 300
 #define TEMP_SHADE_RED 500
 
+/datum/atom_skin/meson/engine
+	abstract_type = /datum/atom_skin/meson/engine
+
+/datum/atom_skin/meson/engine/trayson
+	preview_name = "Engine Glasses"
+	new_icon = 'icons/obj/clothing/glasses.dmi'
+	new_icon_state = "trayson-"
+	new_worn_icon = 'icons/mob/clothing/eyes.dmi'
+
+/datum/atom_skin/meson/engine/scouter
+	preview_name = "Engine Scouter"
+	new_icon = 'icons/meson_scouter/meson_scouter.dmi'
+	new_icon_state = "trayson-"
+	new_worn_icon = 'icons/meson_scouter/meson-scouter_mob.dmi'
+
 /obj/item/clothing/glasses/meson/engine
 	name = "engineering scanner goggles"
 	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls and the T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
@@ -32,6 +47,9 @@
 	var/range = 1
 	/// A cache of tracked pipes used in MODE_PIPE_CONNECTABLE
 	var/list/connection_images = list()
+
+/obj/item/clothing/glasses/meson/engine/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/meson/engine)
 
 /obj/item/clothing/glasses/meson/engine/Initialize(mapload)
 	. = ..()
