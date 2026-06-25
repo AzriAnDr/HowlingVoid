@@ -501,7 +501,7 @@ DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
 #RESUME_AFTER_INITIALIZATIONS
 
 ## Uncomment to set the number of /world/Reboot()s before the DreamDaemon restarts itself. 0 means restart every round. Requires tgstation server tools.
-#ROUNDS_UNTIL_HARD_RESTART 10
+ROUNDS_UNTIL_HARD_RESTART 5
 
 ## Enable automatic profiling - Byond 513.1506 and newer only.
 #AUTO_PROFILE
