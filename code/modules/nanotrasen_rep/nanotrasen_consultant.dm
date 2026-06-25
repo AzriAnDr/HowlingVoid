@@ -26,6 +26,7 @@
 	paycheck_department = ACCOUNT_CMD
 
 	display_order = JOB_DISPLAY_ORDER_NANOTRASEN_CONSULTANT
+	antagonist_restricted = TRUE
 	bounty_types = CIV_JOB_SEC
 
 	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law)

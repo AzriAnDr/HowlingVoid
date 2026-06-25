@@ -18,6 +18,7 @@
 	outfit = /datum/outfit/job/corrections_officer
 	plasmaman_outfit = /datum/outfit/plasmaman/security
 	display_order = JOB_DISPLAY_ORDER_CORRECTIONS_OFFICER
+	antagonist_restricted = TRUE
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 	bounty_types = CIV_JOB_SEC
 	departments_list = list(

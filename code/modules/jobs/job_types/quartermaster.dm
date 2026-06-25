@@ -23,6 +23,7 @@
 	liver_traits = list(TRAIT_ROYAL_METABOLISM) // finally upgraded
 
 	display_order = JOB_DISPLAY_ORDER_QUARTERMASTER
+	antagonist_restricted = TRUE
 	bounty_types = CIV_JOB_RANDOM
 	departments_list = list(
 		/datum/job_department/cargo,

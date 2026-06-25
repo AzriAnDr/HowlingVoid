@@ -31,6 +31,7 @@
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR
+	antagonist_restricted = TRUE
 	bounty_types = CIV_JOB_SCI
 
 	mail_goodies = list(

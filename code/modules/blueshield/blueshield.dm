@@ -19,6 +19,7 @@
 	outfit = /datum/outfit/job/blueshield
 	plasmaman_outfit = /datum/outfit/plasmaman/blueshield
 	display_order = JOB_DISPLAY_ORDER_BLUESHIELD
+	antagonist_restricted = TRUE
 	bounty_types = CIV_JOB_SEC
 
 	department_for_prefs = /datum/job_department/captain

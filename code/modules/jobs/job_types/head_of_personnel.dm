@@ -31,6 +31,7 @@
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_HEAD_OF_PERSONNEL
+	antagonist_restricted = TRUE
 
 	mail_goodies = list(
 		/obj/item/card/id/advanced/silver = 10,

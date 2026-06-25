@@ -8342,8 +8342,6 @@
 #include "code\modules\projectiles\projectile\special\spit.dm"
 #include "code\modules\projectiles\projectile\special\temperature.dm"
 #include "code\modules\projectiles\projectile\special\wormhole.dm"
-#include "code\modules\protected_roles\_job.dm"
-#include "code\modules\protected_roles\antag_restricted_jobs.dm"
 #include "code\modules\psionics\code\_psionic_abilities.dm"
 #include "code\modules\psionics\code\_psionic_datum.dm"
 #include "code\modules\psionics\code\admin.dm"
