@@ -49,6 +49,18 @@
 	var/paycheck_adjustment_basis
 	/// Name recorded for whoever authorized the active payroll adjustment.
 	var/paycheck_adjustment_authorized_by
+	/// Credits reserved for medical insurance. These can only be spent through valid medical claims.
+	var/insurance_balance = 0
+	/// Fractional payday insurance contribution remainder.
+	var/insurance_payday_remainder = 0
+	/// Currently active medical insurance claim for this account.
+	var/datum/medical_insurance_claim/active_insurance_claim
+	/// World time when this account can open another medical insurance claim.
+	var/next_insurance_claim_time = 0
+	/// Temporary health analyzer link access by scanning medic.
+	var/list/insurance_scan_access
+	/// Temporary scanned patient refs by scanning medic.
+	var/list/insurance_scan_patients
 
 /datum/bank_account/New(newname, job, modifier = 1, player_account = TRUE)
 	account_holder = newname
@@ -57,12 +69,15 @@
 	add_to_accounts = player_account
 	setup_unique_account_id()
 	update_account_job_lists(job)
+	initialize_medical_insurance()
 	pay_token = uppertext("[copytext(newname, 1, 2)][copytext(newname, -1)]-[random_capital_letter()]-[rand(1111,9999)]")
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
 		SSeconomy.bank_accounts_by_id -= "[account_id]"
 		SSeconomy.bank_accounts_by_job[account_job.type] -= src
+	QDEL_NULL(active_insurance_claim)
+	clear_medical_insurance_scan_access()
 	QDEL_LIST(redeemed_coupons)
 	return ..()
 
@@ -217,9 +232,13 @@
 
 	var/base_paycheck = round(account_job.paycheck * payday_modifier * amount_of_paychecks)
 	var/money_to_transfer = max(0, base_paycheck + (paycheck_adjustment * amount_of_paychecks))
+	var/insurance_to_transfer = get_payday_insurance_contribution(money_to_transfer)
+	var/account_money_to_transfer = money_to_transfer - insurance_to_transfer
 	if(free)
 		// NOVA EDIT ADDITION START - Corporate economy wage tracking
-		var/free_payday_success = !money_to_transfer || adjust_money(money_to_transfer, "Nanotrasen: Shift Payment")
+		var/free_payday_success = !account_money_to_transfer || adjust_money(account_money_to_transfer, "Nanotrasen: Shift Payment")
+		if(free_payday_success && insurance_to_transfer)
+			adjust_insurance_money(insurance_to_transfer, "Nanotrasen: Insurance Contribution")
 		if(money_to_transfer && free_payday_success)
 			SSeconomy.record_wages(money_to_transfer)
 		// NOVA EDIT ADDITION END
@@ -235,7 +254,17 @@
 		return FALSE
 	var/station_payroll_adjustment = max(0, money_to_transfer - base_paycheck)
 	var/department_transfer = money_to_transfer - station_payroll_adjustment
-	if(department_transfer > 0 && !transfer_money(department_account, department_transfer))
+	var/insurance_from_department = min(insurance_to_transfer, department_transfer)
+	var/insurance_from_station = insurance_to_transfer - insurance_from_department
+	var/account_from_department = department_transfer - insurance_from_department
+	var/account_from_station = station_payroll_adjustment - insurance_from_station
+	if(department_transfer > 0 && !department_account.has_money(department_transfer))
+		bank_card_talk("ERROR: [event] aborted, departmental funds insufficient.")
+		return FALSE
+	if(account_from_department > 0 && !transfer_money(department_account, account_from_department))
+		bank_card_talk("ERROR: [event] aborted, departmental funds insufficient.")
+		return FALSE
+	if(insurance_from_department > 0 && !fund_insurance_from_account(department_account, insurance_from_department, "Nanotrasen: Salary Insurance"))
 		bank_card_talk("ERROR: [event] aborted, departmental funds insufficient.")
 		return FALSE
 	// NOVA EDIT ADDITION START - Corporate economy wage tracking
@@ -244,13 +273,19 @@
 	// NOVA EDIT ADDITION END
 	if(station_payroll_adjustment > 0)
 		var/datum/bank_account/station_account = SSeconomy.get_dep_account(ACCOUNT_CIV)
-		if(isnull(station_account) || !transfer_money(station_account, station_payroll_adjustment, "Nanotrasen: Payroll Adjustment"))
+		if(isnull(station_account) || !station_account.has_money(station_payroll_adjustment))
+			bank_card_talk("ERROR: [event] adjustment skipped, station budget funds insufficient.")
+			return TRUE
+		if(account_from_station > 0 && !transfer_money(station_account, account_from_station, "Nanotrasen: Payroll Adjustment"))
+			bank_card_talk("ERROR: [event] adjustment skipped, station budget funds insufficient.")
+			return TRUE
+		if(insurance_from_station > 0 && !fund_insurance_from_account(station_account, insurance_from_station, "Nanotrasen: Salary Insurance"))
 			bank_card_talk("ERROR: [event] adjustment skipped, station budget funds insufficient.")
 			return TRUE
 		// NOVA EDIT ADDITION START - Corporate economy wage tracking
 		SSeconomy.record_wages(station_payroll_adjustment)
 		// NOVA EDIT ADDITION END
-	bank_card_talk("[event] processed, account now holds [account_balance] [MONEY_SYMBOL].")
+	bank_card_talk("[event] processed, account now holds [account_balance] [MONEY_SYMBOL]. Insurance: [insurance_balance] [MONEY_SYMBOL].")
 	return TRUE
 
 /**

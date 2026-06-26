@@ -468,6 +468,10 @@
 				render_list += consequences_trauma.get_health_analyzer_link_text(user)
 	// NOVA EDIT ADDITION END
 
+	var/insurance_scan_line = get_medical_insurance_healthscan_line(user, target)
+	if(insurance_scan_line)
+		render_list += insurance_scan_line
+
 	// Time of death
 	if(target.station_timestamp_timeofdeath && !target.appears_alive())
 		render_list += "<hr>"
