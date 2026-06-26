@@ -115,6 +115,8 @@
 
 	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
 	var/gold_core_spawnable = NO_SPAWN
+	/// Whether this mob can be healed or damaged through reagents.
+	var/reagent_health = FALSE
 
 	///Sentience type, for slime potions.
 	var/sentience_type = SENTIENCE_ORGANIC
@@ -161,6 +163,8 @@
 
 /mob/living/simple_animal/Initialize(mapload)
 	. = ..()
+	if(reagent_health)
+		create_reagents(1000, REAGENT_HOLDER_ALIVE)
 	GLOB.simple_animals[AIStatus] += src
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
@@ -212,6 +216,24 @@
 	. = ..()
 	if(staminaloss > 0)
 		adjust_stamina_loss(-stamina_recovery * seconds_per_tick, FALSE, TRUE)
+
+	if(!reagent_health || !reagents || stat == DEAD)
+		return
+
+	for(var/datum/reagent/reagent_within as anything in reagents.reagent_list)
+		if(handle_fauna_chemical(reagent_within, seconds_per_tick))
+			continue
+
+		if(istype(reagent_within, /datum/reagent/toxin))
+			var/datum/reagent/toxin/toxin_reagent = reagent_within
+			var/toxin_damage = round(toxin_reagent.toxpwr)
+			adjustHealth(toxin_damage + 1)
+			reagents?.remove_reagent(toxin_reagent.type, 0.5)
+			continue
+
+		if(istype(reagent_within, /datum/reagent/medicine))
+			adjustHealth(-1)
+			reagents?.remove_reagent(reagent_within.type, 0.5)
 
 /mob/living/simple_animal/Destroy()
 	GLOB.simple_animals[AIStatus] -= src

@@ -1,6 +1,7 @@
 //the base mining mob
 /mob/living/simple_animal/hostile/asteroid
 	abstract_type = /mob/living/simple_animal/hostile/asteroid
+	reagent_health = TRUE
 	vision_range = 2
 	atmos_requirements = null
 	faction = list(FACTION_MINING)

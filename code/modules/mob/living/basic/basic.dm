@@ -103,9 +103,13 @@
 	var/unsuitable_cold_damage = 1
 	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the body_temp_sensitive element.
 	var/unsuitable_heat_damage = 1
+	/// Whether this mob can be healed or damaged through reagents.
+	var/reagent_health = TRUE
 
 /mob/living/basic/Initialize(mapload)
 	. = ..()
+	if(reagent_health)
+		create_reagents(1000, REAGENT_HOLDER_ALIVE)
 
 	if(gender == PLURAL)
 		gender = pick(MALE,FEMALE)
@@ -168,6 +172,24 @@
 	. = ..()
 	if(staminaloss > 0)
 		adjust_stamina_loss(-stamina_recovery * seconds_per_tick, forced = TRUE)
+
+	if(!reagent_health || !reagents || stat == DEAD)
+		return
+
+	for(var/datum/reagent/reagent_within as anything in reagents.reagent_list)
+		if(handle_fauna_chemical(reagent_within, seconds_per_tick))
+			continue
+
+		if(istype(reagent_within, /datum/reagent/toxin))
+			var/datum/reagent/toxin/toxin_reagent = reagent_within
+			var/toxin_damage = round(toxin_reagent.toxpwr)
+			adjust_health(toxin_damage + 1)
+			reagents?.remove_reagent(toxin_reagent.type, 0.5)
+			continue
+
+		if(istype(reagent_within, /datum/reagent/medicine))
+			adjust_health(-1)
+			reagents?.remove_reagent(reagent_within.type, 0.5)
 
 /mob/living/basic/get_default_say_verb()
 	return length(speak_emote) ? pick(speak_emote) : ..()

@@ -3205,6 +3205,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 	INVOKE_ASYNC(src, PROC_REF(emote), "scream")
 
+/// Allows snowflake reagent handling for non-human fauna.
+/mob/living/proc/handle_fauna_chemical(datum/reagent/chem, seconds_per_tick)
+	if((mob_biotypes & MOB_BUG) && istype(chem, /datum/reagent/toxin/pestkiller))
+		return TRUE
+
 
 // BEGIN NOVA CORE MIGRATION: code/modules/mob/living/living.dm
 /mob/living
