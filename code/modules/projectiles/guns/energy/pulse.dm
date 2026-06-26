@@ -12,6 +12,8 @@
 	light_color = COLOR_BLUE
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	cell_type = /obj/item/stock_parts/power_store/cell/pulse
+	selfcharge = TRUE
+	charge_delay = 15
 
 /obj/item/gun/energy/pulse/Initialize(mapload)
 	. = ..()

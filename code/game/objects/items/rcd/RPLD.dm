@@ -247,11 +247,23 @@
 /obj/item/construction/plumbing/proc/canPlace(turf/destination)
 	if(!isopenturf(destination))
 		return FALSE
+	if(ispath(blueprint, /obj/structure/drain))
+		for(var/obj/structure/drain/other_drain in destination.contents)
+			if(istype(other_drain))
+				return FALSE
 	if(initial(blueprint.density) && destination.is_blocked_turf(exclude_mobs = FALSE, source_atom = null, ignore_atoms = null))
 		return FALSE
 	return isnull(ducting_layer_check(destination, (ispath(blueprint, /obj/machinery/duct) ? 1 : -1) * GLOB.plumbing_layers[current_layer]))
 
 /obj/item/construction/plumbing/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /obj/structure/drain))
+		var/obj/structure/drain/drain_target = interacting_with
+		if(do_after(user, 2 SECONDS, target = interacting_with))
+			drain_target.deconstruct()
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
@@ -367,6 +379,42 @@
 
 /obj/item/construction/plumbing/service/Initialize(mapload)
 	plumbing_design_types = service_design_types
+
+	. = ..()
+
+/obj/item/construction/plumbing/mining
+	name = "mining plumbing constructor"
+	desc = "A type of plumbing constructor designed to harvest from geysers and collect their fluids."
+	icon_state = "plumberer_mining"
+	var/static/list/mining_design_types = list(
+		"Synthesizers" = list(
+			/obj/machinery/plumbing/grinder_chemical = 30,
+			/obj/machinery/plumbing/liquid_pump = 35,
+			/obj/machinery/plumbing/disposer = 10,
+			/obj/machinery/plumbing/buffer = 10,
+		),
+		"Distributors" = list(
+			/obj/machinery/duct = 1,
+			/obj/machinery/plumbing/layer_manifold = 5,
+			/obj/machinery/plumbing/input = 5,
+			/obj/machinery/plumbing/filter = 5,
+			/obj/machinery/plumbing/splitter = 5,
+			/obj/machinery/plumbing/sender = 20,
+			/obj/machinery/plumbing/output = 5,
+		),
+		"Storage" = list(
+			/obj/machinery/plumbing/tank = 20,
+			/obj/machinery/plumbing/acclimator = 10,
+			/obj/machinery/plumbing/bottler = 50,
+			/obj/machinery/iv_drip/plumbing = 20,
+		),
+		"Liquids" = list(
+			/obj/structure/drain = 5,
+		),
+	)
+
+/obj/item/construction/plumbing/mining/Initialize(mapload)
+	plumbing_design_types = mining_design_types
 
 	. = ..()
 

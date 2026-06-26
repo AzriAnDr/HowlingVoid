@@ -272,6 +272,13 @@
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/cell_charger_multi
+	name = "Multi-Cell Charger"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/cell_charger_multi
+	req_components = list(/datum/stock_part/capacitor = 6)
+	needs_anchored = FALSE
+
 /obj/item/circuitboard/machine/circulator
 	name = "Circulator/Heat Exchanger"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -1359,6 +1366,17 @@
 	transmit = !transmit
 	to_chat(user, span_notice("You [transmit ? "enable" : "disable"] the board's automatic disposal transmission."))
 	return CLICK_ACTION_SUCCESS
+
+/obj/item/circuitboard/machine/dish_drive/bullet
+	name = "Bullet Drive"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/dish_drive/bullet
+	req_components = list(
+		/obj/item/stack/sheet/glass = 1,
+		/datum/stock_part/servo = 1,
+		/datum/stock_part/matter_bin = 2,
+	)
+	needs_anchored = TRUE
 
 /obj/item/circuitboard/machine/gibber
 	name = "Gibber"

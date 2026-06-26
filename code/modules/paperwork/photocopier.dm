@@ -872,6 +872,10 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	starting_toner = /obj/item/toner
 	starting_paper = 30
 
+/obj/machinery/photocopier/gratis/nova_inf
+	starting_toner = /obj/item/toner/infinite
+	starting_paper = 30
+
 /*
  * Toner cartridge
  */

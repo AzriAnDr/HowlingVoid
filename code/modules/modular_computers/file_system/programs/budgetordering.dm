@@ -137,32 +137,7 @@
 	if(SSshuttle.supply_blocked)
 		message = blockade_warning
 	data["message"] = message
-	var/cart_list = list()
-	for(var/datum/supply_order/order in SSshuttle.shopping_list)
-		if(cart_list[order.pack.name])
-			cart_list[order.pack.name][1]["amount"]++
-			cart_list[order.pack.name][1]["cost"] += order.get_final_cost()
-			if(order.department_destination)
-				cart_list[order.pack.name][1]["dep_order"]++
-			if(!isnull(order.paying_account))
-				cart_list[order.pack.name][1]["paid"]++
-			continue
-
-		cart_list[order.pack.name] = list(list(
-			"cost_type" = order.cost_type,
-			"object" = order.pack.name,
-			"cost" = order.get_final_cost(),
-			"id" = order.id,
-			"amount" = 1,
-			"orderer" = order.orderer,
-			"paid" = !isnull(order.paying_account), //number of orders purchased privatly
-			"dep_order" = !!order.department_destination, //number of orders purchased by a department
-			"can_be_cancelled" = order.can_be_cancelled,
-		))
-	data["cart"] = list()
-	for(var/item_id in cart_list)
-		data["cart"] += cart_list[item_id]
-
+	data["cart"] = build_cargo_cart_ui_data(SSshuttle.shopping_list)
 
 	data["requests"] = list()
 	for(var/datum/supply_order/order in SSshuttle.request_list)
@@ -288,7 +263,15 @@
 				account = personal_department
 
 			var/turf/T = get_turf(computer)
-			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
+			var/datum/supply_order/SO = new(
+				pack = pack,
+				orderer = name,
+				orderer_rank = rank,
+				orderer_ckey = ckey,
+				reason = reason,
+				paying_account = account,
+				private_purchase = self_paid,
+			)
 			SO.generateRequisition(T)
 			if((requestonly && !self_paid) || !(computer.stored_id?.GetID()))
 				SSshuttle.request_list += SO
@@ -305,11 +288,16 @@
 			. = TRUE
 		if("remove")
 			var/id = text2num(params["id"])
+			var/cart_key = params["cart_key"]
+			var/order_name = params["order_name"]
 			for(var/datum/supply_order/SO in SSshuttle.shopping_list)
-				if(SO.id == id)
-					SSshuttle.shopping_list -= SO
-					. = TRUE
-					break
+				if(cart_key && (SO.get_checkout_group_key() != cart_key || SO.pack.name != order_name))
+					continue
+				if(!cart_key && SO.id != id)
+					continue
+				SSshuttle.shopping_list -= SO
+				. = TRUE
+				break
 		if("clear")
 			for(var/datum/supply_order/cancelled_order in SSshuttle.shopping_list)
 				if(cancelled_order.department_destination || cancelled_order.can_be_cancelled)

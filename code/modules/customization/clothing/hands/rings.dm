@@ -16,6 +16,12 @@
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/gloves/ring/can_attach_to_gloves()
+	return TRUE
+
+/obj/item/clothing/gloves/ring/build_glove_accessory_overlay()
+	return build_ring_overlay()
+
 /obj/item/clothing/gloves/ring/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("\[user] is putting the [src] in [user.p_their()] mouth! It looks like [user] is trying to choke on the [src]!"))
 	return OXYLOSS

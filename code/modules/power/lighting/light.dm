@@ -30,6 +30,16 @@
 	var/status = LIGHT_OK
 	///Should we flicker?
 	var/flickering = FALSE
+	/// Tracks whether this light was initially on during mapload to avoid mass delayed startup.
+	var/maploaded = FALSE
+	/// TRUE while a delayed turn-on timer is pending.
+	var/turning_on = FALSE
+	/// TRUE when this fixture should keep flickering until repaired.
+	var/constant_flickering = FALSE
+	/// Timer id for the constant flicker loop.
+	var/flicker_timer
+	/// If TRUE, this fixture starts with a damaged ballast.
+	var/roundstart_flicker = FALSE
 	///The type of light item
 	var/light_type = /obj/item/light/tube
 	///String of the light type, used in descriptions and in examine
@@ -115,6 +125,12 @@
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Remove bulb")
 	if(mapload)
 		find_and_mount_on_atom(mark_for_late_init = TRUE)
+
+	if(on)
+		maploaded = TRUE
+
+	if(roundstart_flicker)
+		start_flickering()
 
 /obj/machinery/light/get_turfs_to_mount_on()
 	return list(get_step(src, dir))
@@ -234,6 +250,57 @@
 	SIGNAL_HANDLER
 	update(instant = TRUE, play_sound = FALSE) // NOVA EDIT CHANGE - ORIGINAL: update()
 
+/obj/machinery/light/proc/delayed_turn_on(trigger, play_sound = TRUE, color_set, power_set, brightness_set)
+	if(QDELETED(src))
+		return
+	turning_on = FALSE
+	if(!on)
+		return
+
+	if(prob(min(60, (switchcount ** 2) * 0.01)))
+		if(trigger)
+			burn_out()
+	else
+		use_power = ACTIVE_POWER_USE
+		set_light(
+			l_range = brightness_set,
+			l_power = power_set,
+			l_color = color_set,
+		)
+		if(play_sound)
+			playsound(src.loc, 'sound/machines/light_on.ogg', 65, TRUE)
+
+/obj/machinery/light/proc/start_flickering()
+	on = FALSE
+	update(FALSE, instant = TRUE, play_sound = FALSE)
+
+	constant_flickering = TRUE
+	flicker_timer = addtimer(CALLBACK(src, PROC_REF(flicker_on)), rand(5, 10))
+
+/obj/machinery/light/proc/stop_flickering()
+	constant_flickering = FALSE
+
+	if(flicker_timer)
+		deltimer(flicker_timer)
+		flicker_timer = null
+
+	set_on(has_power())
+
+/obj/machinery/light/proc/alter_flicker(enable = TRUE)
+	if(!constant_flickering)
+		return
+	if(has_power())
+		on = enable
+		update(FALSE, instant = TRUE, play_sound = FALSE)
+
+/obj/machinery/light/proc/flicker_on()
+	alter_flicker(TRUE)
+	flicker_timer = addtimer(CALLBACK(src, PROC_REF(flicker_off)), rand(5, 10))
+
+/obj/machinery/light/proc/flicker_off()
+	alter_flicker(FALSE)
+	flicker_timer = addtimer(CALLBACK(src, PROC_REF(flicker_on)), rand(5, 50))
+
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE, instant = FALSE, play_sound = TRUE) // NOVA EDIT CHANGE - ORIGINAL: /obj/machinery/light/proc/update(trigger = TRUE)
 	switch(status)
@@ -301,10 +368,10 @@
 					l_power = power_set,
 					l_color = color_set
 					)
-		// NOVA EDIT ADDITION START
+				// NOVA EDIT ADDITION START
 				maploaded = FALSE
 				if(play_sound)
-					playsound(src.loc, 'sound/aesthetics/lights/sound/light_on.ogg', 65, 1)
+					playsound(src.loc, 'sound/machines/light_on.ogg', 65, TRUE)
 		else if(!matching && !turning_on)
 			switchcount++
 			turning_on = TRUE
@@ -391,6 +458,18 @@
 /obj/machinery/light/proc/set_on(turn_on)
 	on = (turn_on && status == LIGHT_OK)
 	update()
+
+/obj/machinery/light/multitool_act(mob/living/user, obj/item/multitool)
+	if(!constant_flickering)
+		balloon_alert(user, "ballast is already working!")
+		return ITEM_INTERACT_SUCCESS
+
+	balloon_alert(user, "repairing the ballast...")
+	if(do_after(user, 2 SECONDS, src))
+		stop_flickering()
+		balloon_alert(user, "ballast repaired!")
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
 /obj/machinery/light/get_cell()
 	if (has_mock_cell)

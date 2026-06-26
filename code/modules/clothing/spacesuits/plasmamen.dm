@@ -228,6 +228,11 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/head_helmet/plasmaman
 
+/obj/item/clothing/head/helmet/space/plasmaman/security/nova
+	icon = 'icons/obj/clothing/head/plasmaman_hats_additions.dmi'
+	worn_icon = 'icons/mob/clothing/head/plasmaman_head_additions.dmi'
+	icon_state = "security_envirohelm_new"
+
 /datum/armor/head_helmet/plasmaman
 	bio = 100
 	fire = 100
@@ -252,6 +257,9 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/hats_warden/plasmaman
 
+/obj/item/clothing/head/helmet/space/plasmaman/security/nova/warden
+	icon_state = "warden_envirohelm_new"
+
 /datum/armor/hats_warden/plasmaman
 	bio = 100
 	fire = 100
@@ -263,6 +271,9 @@
 	icon_state = "hos_envirohelm"
 	inhand_icon_state = null
 	armor_type = /datum/armor/hats_hos/plasmaman
+
+/obj/item/clothing/head/helmet/space/plasmaman/security/nova/head_of_security
+	icon_state = "hos_envirohelm_new"
 
 /datum/armor/hats_hos/plasmaman
 	bio = 100

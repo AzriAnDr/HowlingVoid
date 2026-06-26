@@ -125,7 +125,7 @@
 /datum/station_trait/overflow_job_bureaucracy
 	name = "Overflow bureaucracy mistake"
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 5
+	weight = 0
 	show_in_report = TRUE
 	var/chosen_job_name
 
@@ -138,7 +138,9 @@
 
 /datum/station_trait/overflow_job_bureaucracy/proc/set_overflow_job_override(datum/source)
 	SIGNAL_HANDLER
-	var/datum/job/picked_job = pick(SSjob.get_valid_overflow_jobs())
+	var/datum/job/picked_job = pick(SSjob.joinable_occupations)
+	while(picked_job.nova_stars_only)
+		picked_job = pick(SSjob.joinable_occupations)
 	chosen_job_name = LOWER_TEXT(picked_job.title) // like Chief Engineers vs like chief engineers
 	SSjob.set_overflow_role(picked_job.type)
 	UnregisterSignal(SSjob, COMSIG_SUBSYSTEM_POST_INITIALIZE)
@@ -332,10 +334,10 @@
 	name = "Radiation Stormfront"
 	report_message = "A radioactive stormfront is passing through your station's system. Expect an increased likelihood of radiation storms passing over your station, as well the potential for multiple radiation storms to occur during your shift."
 	trait_type = STATION_TRAIT_NEGATIVE
-	weight = 2
+	weight = 0
 	event_control_path = /datum/round_event_control/radiation_storm
 	weight_multiplier = 1.5
-	max_occurrences_modifier = 2
+	max_occurrences_modifier = 0
 
 /datum/station_trait/random_event_weight_modifier/dust_storms
 	name = "Dust Stormfront"

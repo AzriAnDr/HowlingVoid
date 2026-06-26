@@ -21,6 +21,19 @@
 //What should vending machines charge when you buy something in-department.
 #define DEPARTMENT_DISCOUNT 0.2
 
+//How much of a paid security fine is deposited into the issuing officer's bank account.
+#define SECURITY_FINE_OFFICER_SHARE 0.3
+
+//How much a detective earns for finding new forensic markers during a paid evidence analysis.
+#define DETECTIVE_ANALYSIS_REWARD_PER_CATEGORY 1
+//Maximum personal payout from a single paid evidence analysis.
+#define DETECTIVE_ANALYSIS_REWARD_MAX 6
+
+//How much a brig-authorized officer earns for processing a prisoner intake.
+#define CORRECTIONS_INTAKE_REWARD 4
+//Transaction reason for paid prisoner intake processing.
+#define CORRECTIONS_INTAKE_TRANSACTION_REASON "Corrections: Prisoner intake"
+
 //the amount of credits collected by the vending machines that can be redeemed when restocking it.
 #define VENDING_CREDITS_COLLECTION_AMOUNT 0.2
 

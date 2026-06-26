@@ -28,9 +28,10 @@
 	paycheck_department = ACCOUNT_SCI
 
 	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS)
-	liver_traits = list(TRAIT_ROYAL_METABOLISM, TRAIT_SCIENTIST_LIVER)
+	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR
+	antagonist_restricted = TRUE
 	bounty_types = CIV_JOB_SCI
 
 	mail_goodies = list(

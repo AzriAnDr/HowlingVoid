@@ -36,6 +36,7 @@
 	desc = "A primitive battery. It is quite large and feels unexpectedly heavy."
 	icon = 'icons/obj/maintenance_loot.dmi'
 	icon_state = "lead_battery"
+	charging_icon = "lead_in"
 	force = 10 // double the force of a normal cell
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL

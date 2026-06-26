@@ -35,6 +35,28 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	GLOB.announcement_systems += src
 	update_appearance()
 
+/obj/machinery/announcement_system/post_machine_initialize()
+	. = ..()
+	tune_special_cases()
+
+/obj/machinery/announcement_system/interdinify()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_INTERDYNE)
+	radio_type = /obj/item/radio/headset/interdyne/command
+	QDEL_NULL(radio)
+	radio = new radio_type(src)
+	var/datum/aas_config_entry/config = locate(/datum/aas_config_entry/newhead) in config_entries
+	if(config)
+		config.announcement_lines_map = list("Message" = "%PERSON, %RANK is the representative of the command at the installation.")
+
+/obj/machinery/announcement_system/tarkonize()
+	AddElement(/datum/element/manufacturer_examine, "It has <b>[span_brown("Tarkon Industries")]</b> logo on it.")
+	radio_type = /obj/item/radio/headset/tarkon/command
+	QDEL_NULL(radio)
+	radio = new radio_type(src)
+	var/datum/aas_config_entry/config = locate(/datum/aas_config_entry/newhead) in config_entries
+	if(config)
+		config.announcement_lines_map = list("Message" = "%PERSON, %RANK now represents Tarkon interests on this facility.")
+
 /obj/machinery/announcement_system/randomize_language_if_on_station()
 	return
 

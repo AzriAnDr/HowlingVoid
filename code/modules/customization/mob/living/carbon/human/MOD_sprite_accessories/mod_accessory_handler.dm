@@ -35,26 +35,6 @@
 	special_icon.Blend(MOD_texture, ICON_MULTIPLY)
 	return special_icon
 
-/obj/item/mod/control/seal_part(obj/item/clothing/part, is_sealed, no_activation = FALSE)
-	. = ..()
-	if(activating)
-		return
-
-	wearer?.update_body_parts(TRUE)
-
-/obj/item/mod/control/control_activation(is_on)
-	. = ..()
-	wearer?.update_body_parts(TRUE)
-
-/obj/item/mod/control/deploy(mob/user, obj/item/part, instant = FALSE)
-	. = ..()
-	wearer?.update_body_parts(TRUE)
-
-/obj/item/mod/control/retract(mob/user, obj/item/part, instant = FALSE)
-	. = ..()
-	wearer?.update_body_parts(TRUE)
-
-
 // Tail hardlight
 /datum/sprite_accessory/tails
 	use_custom_mod_icon = TRUE

@@ -249,6 +249,7 @@
 	paycheck_department = ACCOUNT_SCI
 
 	display_order = JOB_DISPLAY_ORDER_SCIENCE_GUARD
+	antagonist_restricted = TRUE
 	bounty_types = CIV_JOB_SCI
 	departments_list = list(
 		/datum/job_department/science,
@@ -348,6 +349,7 @@
 	paycheck_department = ACCOUNT_MED
 
 	display_order = JOB_DISPLAY_ORDER_ORDERLY
+	antagonist_restricted = TRUE
 	bounty_types = CIV_JOB_MED
 	departments_list = list(
 		/datum/job_department/medical,
@@ -443,6 +445,7 @@
 	paycheck_department = ACCOUNT_ENG
 
 	display_order = JOB_DISPLAY_ORDER_ENGINEER_GUARD
+	antagonist_restricted = TRUE
 	bounty_types = CIV_JOB_ENG
 	departments_list = list(
 		/datum/job_department/engineering,
@@ -543,6 +546,7 @@
 	paycheck_department = ACCOUNT_CAR
 
 	display_order = JOB_DISPLAY_ORDER_CUSTOMS_AGENT
+	antagonist_restricted = TRUE
 	bounty_types = CIV_JOB_RANDOM
 	departments_list = list(
 		/datum/job_department/cargo,
@@ -635,6 +639,7 @@
 	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_BOUNCER
+	antagonist_restricted = TRUE
 	bounty_types = CIV_JOB_DRINK
 	departments_list = list(
 		/datum/job_department/service,

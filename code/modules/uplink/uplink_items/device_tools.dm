@@ -26,7 +26,7 @@
 	name = "combat first aid kit"
 	desc = "An medkit meant for combat support, it contains. Two medicated sutures and mesh, Gauze, Advanced health analyzer, And as last atropine medipen"
 	item = /obj/item/storage/medkit/tactical_lite
-	cost = 3
+	cost = /datum/uplink_item/low_cost::cost
 	surplus = 72
 	purchasable_from = UPLINK_TRAITORS
 
@@ -35,7 +35,7 @@
 	desc = "The Syndicate surgery medkit is a toolkit containing all surgery tools, surgical drapes, \
 			a syringe, and some sedatives."
 	item = /obj/item/storage/medkit/surgery_syndie
-	cost = 3
+	cost = /datum/uplink_item/low_cost::cost
 	surplus = 66
 
 /datum/uplink_item/device_tools/encryptionkey
@@ -44,7 +44,7 @@
 			as well as talk on an encrypted Syndicate channel with other agents that have the same key. In addition, this key also protects \
 			your headset from radio jammers."
 	item = /obj/item/encryptionkey/syndicate
-	cost = 2
+	cost = /datum/uplink_item/low_cost::cost
 	surplus = 75
 	restricted = TRUE
 
@@ -57,7 +57,7 @@
 			Though, it can be used to heal and harm other people with decent effectiveness much like a regular bible. \
 			Can also be used in-hand to 'claim' it, granting you priest-like abilities -- no training required!"
 	item = /obj/item/book/bible/syndicate
-	cost = 5
+	cost = /datum/uplink_item/low_cost::cost
 
 /datum/uplink_item/device_tools/tram_remote
 	name = "Tram Remote Control"
@@ -66,6 +66,7 @@
 		Perfect for running someone over in the name of a tram malfunction!"
 	item = /obj/item/assembly/control/transport/remote
 	cost = 2
+	purchasable_from = NONE // not sure what the story is
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
@@ -74,7 +75,7 @@
 			emitted as heat and light by objects. Hotter objects, such as warm bodies, cybernetic organisms \
 			and artificial intelligence cores emit more of this light than cooler objects like walls and airlocks."
 	item = /obj/item/clothing/glasses/thermal/syndi
-	cost = 4
+	cost = /datum/uplink_item/medium_cost::cost
 
 /datum/uplink_item/device_tools/cutouts
 	name = "Adaptive Cardboard Cutouts"
@@ -91,6 +92,7 @@
 	surplus = 0
 	item = /obj/item/storage/briefcase/launchpad
 	cost = 6
+	purchasable_from = NONE
 
 /datum/uplink_item/device_tools/syndicate_teleporter
 	name = "Experimental Syndicate Teleporter"
@@ -99,7 +101,7 @@
 			however if that fails, you may need to be stitched back together. \
 			Comes with 4 charges, recharges randomly. Warranty null and void if exposed to an electromagnetic pulse."
 	item = /obj/item/storage/box/syndie_kit/syndicate_teleporter
-	cost = 8
+	cost = /datum/uplink_item/high_cost::cost
 
 /datum/uplink_item/device_tools/camera_app
 	name = "SyndEye Program"
@@ -120,7 +122,7 @@
 	desc = "A specialized cryptographic sequencer specifically designed to override station airlock access codes. \
 			After hacking a certain number of airlocks, the device will require some time to recharge."
 	item = /obj/item/card/emag/doorjack
-	cost = 3
+	cost = /datum/uplink_item/low_cost::cost
 	purchasable_from = NONE
 
 /datum/uplink_item/device_tools/fakenucleardisk
@@ -202,6 +204,7 @@
 	restricted = TRUE
 	cost = 7
 	limited_stock = 1
+	purchasable_from = NONE
 
 /datum/uplink_item/device_tools/binary
 	name = "Binary Translator Key"
@@ -209,7 +212,7 @@
 			such as AI units and cyborgs, over their private binary channel. Caution should \
 			be taken while doing this, as unless they are allied with you, they are programmed to report such intrusions."
 	item = /obj/item/encryptionkey/binary
-	cost = 5
+	cost = /datum/uplink_item/low_cost::cost
 	surplus = 75
 	restricted = TRUE
 
@@ -225,7 +228,7 @@
 	desc = "Stimpacks, the tool of many great heroes, make you nearly immune to stuns and knockdowns for about \
 			5 minutes after injection."
 	item = /obj/item/reagent_containers/hypospray/medipen/stimulants
-	cost = 5
+	cost = /datum/uplink_item/medium_cost::cost
 	surplus = 90
 
 /datum/uplink_item/device_tools/super_pointy_tape
@@ -253,7 +256,7 @@
 	name = "Hypnotic Grenade"
 	desc = "A modified flashbang grenade able to hypnotize targets. The sound portion of the flashbang causes hallucinations, and will allow the flash to induce a hypnotic trance to viewers."
 	item = /obj/item/grenade/hypnotic
-	cost = 12
+	cost = /datum/uplink_item/high_cost::cost
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Power Beacon"
@@ -274,7 +277,7 @@
 			traditional bags and boxes. Caution: Will explode if the powernet contains sufficient amounts of energy."
 	progression_minimum = 20 MINUTES
 	item = /obj/item/powersink
-	cost = 11
+	cost = /datum/uplink_item/high_cost::cost
 	limited_stock = 1
 
 /datum/uplink_item/device_tools/syndicate_contacts

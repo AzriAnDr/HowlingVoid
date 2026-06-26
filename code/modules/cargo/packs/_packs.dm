@@ -21,6 +21,8 @@
 	var/desc = ""
 	/// What typepath of crate do you spawn?
 	var/crate_type = /obj/structure/closet/crate
+	/// What typepath of private crate should be spawned when this pack has a private delivery owner?
+	var/private_crate_type = /obj/structure/closet/crate/secure/owned
 	/// If we're not going to use a crate, then what would we like to use as a container for the order/manifest?
 	var/storage_override
 	/// If this pack comes shipped in a specific pod when launched from the express console
@@ -31,6 +33,8 @@
 	var/test_ignored = FALSE
 	/// Various properties for cargo order mostly used to determine which consoles can see it
 	var/order_flags = NONE
+	/// If TRUE, ORDER_GOODY packs are bundled into goody cases instead of normal crates.
+	var/ships_in_goody_case = TRUE
 
 /datum/supply_pack/New()
 	id = type
@@ -53,14 +57,21 @@
  * Proc that takes a given supply_pack, and attempts to create a crate containing the pack's contents as determined by fill()
  *
  * @ atom/A: The location or turf that the pack is being generated onto. Cargo shuttle provides an empty turf, other generate()s call this either null or otherwise.
- * @ datum/bank_account/paying_account: The account to associate the supply pack with when going and generating the crate. Only the paying account can open said secure crate/case.
+ * @ datum/bank_account/paying_account: The account allowed to open the generated private crate.
  * @ crate_override: If defined, we will fill our supply pack with this object. This is used for when we need to spawn a random crate but the contents are goodies or we don't need a full crate.
+ * @ private_label_account: The account whose name should be printed on private crates. TRUE means use paying_account. Null means no private label.
  */
-/datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account, crate_override)
+/datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account, crate_override, private_label_account = TRUE)
 	var/obj/structure/closet/crate/C
 	if(paying_account)
-		C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
-		C.name = "[crate_name] - Purchased by [paying_account.account_holder]"
+		C = new private_crate_type(A, paying_account)
+		if(private_label_account == TRUE)
+			private_label_account = paying_account
+		if(private_label_account)
+			var/datum/bank_account/label_account = private_label_account
+			C.name = "[crate_name] - Purchased by [label_account.account_holder]"
+		else
+			C.name = crate_name
 	else if(!crate_type && !crate_override)
 		CRASH("tried to generate a supply pack without a valid crate type")
 	else if(crate_override)

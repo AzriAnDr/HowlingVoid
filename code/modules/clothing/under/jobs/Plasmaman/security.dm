@@ -7,6 +7,11 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
+/obj/item/clothing/under/plasmaman/security/nova
+	icon = 'icons/obj/clothing/under/plasmaman_additions.dmi'
+	worn_icon = 'icons/mob/clothing/under/plasmaman_additions.dmi'
+	icon_state = "security_envirosuit_new"
+
 /datum/armor/clothing_under/rank_security/plasmaman
 	bio = 100
 	fire = 95
@@ -23,3 +28,6 @@
 	desc = "A plasmaman containment suit designed for the warden, white stripes being added to differentiate them from other members of security."
 	icon_state = "warden_envirosuit"
 	inhand_icon_state = null
+
+/obj/item/clothing/under/plasmaman/security/nova/warden
+	icon_state = "warden_envirosuit_new"

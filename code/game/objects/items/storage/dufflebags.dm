@@ -186,6 +186,28 @@
 	icon_state = "duffel-security"
 	inhand_icon_state = "duffel-sec"
 
+/datum/atom_skin/security_duffelbag_black
+	abstract_type = /datum/atom_skin/security_duffelbag_black
+
+/datum/atom_skin/security_duffelbag_black/black
+	preview_name = "Black Variant"
+	new_icon_state = "duffel_security_black"
+
+/datum/atom_skin/security_duffelbag_black/white
+	preview_name = "White Variant"
+	new_icon_state = "duffel_security_white"
+
+/obj/item/storage/backpack/duffelbag/sec/blue
+	icon = 'icons/obj/clothing/backpacks.dmi'
+	worn_icon = 'icons/mob/clothing/back_additions.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/backpack_righthand.dmi'
+	icon_state = "duffel_security_black"
+	inhand_icon_state = "duffel_security_black"
+
+/obj/item/storage/backpack/duffelbag/sec/blue/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_duffelbag_black)
+
 /obj/item/storage/backpack/duffelbag/sec/surgery
 	name = "surgical duffel bag"
 	desc = "A large duffel bag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools."
@@ -240,10 +262,12 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/backpack/duffelbag/syndie
-	name = "suspicious looking duffel bag"
-	desc = "A large duffel bag for holding extra tactical supplies. It contains an oiled plastitanium zipper for maximum speed tactical zipping, and is better balanced on your back than an average duffelbag. Can hold two bulky items!"
+	name = "duffel bag"
+	desc = "A large duffel bag for holding extra supplies."
 	icon_state = "duffel-syndie"
 	inhand_icon_state = "duffel-syndieammo"
+	special_desc_requirement = EXAMINE_CHECK_SYNDICATE
+	special_desc = "This bag is used to store tactical equipment and is manufactured by the syndicate."
 	storage_type = /datum/storage/duffel/syndicate
 	resistance_flags = FIRE_PROOF
 	// Less slowdown while unzipped. Still bulky, but it won't halve your movement speed in an active combat situation.
@@ -415,3 +439,27 @@
 	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
 	new /obj/item/knife/combat/survival(src)
 	new /obj/item/flashlight/seclite(src)
+
+/obj/item/storage/backpack/duffelbag/mining_bunny
+	name = "Bunny Kit"
+	desc = "A mining outfit kit themed around bunnies, they do live in burrows after all..."
+	icon_state = "satchel_carrot"
+	inhand_icon_state = null
+
+/obj/item/storage/backpack/duffelbag/mining_bunny/PopulateContents()
+	new /obj/item/clothing/head/playbunnyears/miner(src)
+	new /obj/item/clothing/neck/tie/bunnytie/miner(src)
+	new /obj/item/clothing/suit/jacket/tailcoat/miner(src)
+	new /obj/item/clothing/under/rank/cargo/miner/bunnysuit(src)
+	new /obj/item/clothing/shoes/workboots/mining/heeled(src)
+
+/obj/item/storage/backpack/duffelbag/mining_bunny/conscript/PopulateContents()
+	..()
+	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
+	new /obj/item/storage/bag/ore(src)
+	new /obj/item/knife/shiv/carrot(src)
+	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
+	new /obj/item/flashlight/seclite(src)
+	new /obj/item/knife/combat/survival(src)
+	new /obj/item/storage/lunchbox/bunny/carrot(src)

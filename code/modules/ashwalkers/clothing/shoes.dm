@@ -3,14 +3,16 @@
 	desc = "Boots decorated with poorly forged metal."
 	icon = 'icons/ashwalkers/shoes.dmi'
 	worn_icon = 'icons/ashwalkers/feet.dmi'
+	worn_icon_digi = 'icons/ashwalkers/feet_digi.dmi'
 	icon_state = "legionmetal"
-	supports_variations_flags = NONE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/jackboots/ashwalker/legate
 	icon = 'icons/ashwalkers/shoes.dmi'
 	worn_icon = 'icons/ashwalkers/feet.dmi'
+	worn_icon_digi = 'icons/ashwalkers/feet_digi.dmi'
 	icon_state = "legionlegate"
-	supports_variations_flags = NONE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/wraps/ashwalker
 	icon = 'icons/ashwalkers/shoes.dmi'
@@ -37,4 +39,3 @@
 	desc = "A mundane set of leg wraps often worn by tribal villagers."
 	icon_state = "mundanecuffs"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
-

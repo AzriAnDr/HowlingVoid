@@ -17,6 +17,7 @@
 	maxHealth = 200
 	health = 200
 	faction = list(FACTION_GONDOLA)
+	gold_core_spawnable = HOSTILE_SPAWN // Make them less consistent.
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "bops"

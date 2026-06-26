@@ -478,6 +478,122 @@
 		START_PROCESSING(SSobj,linked_extract)
 	qdel(src)
 
+/datum/status_effect/stabilized/proc/copy_mutant_bodyparts(list/source_bodyparts)
+	var/list/copied_bodyparts = list()
+	for(var/key in source_bodyparts)
+		var/datum/mutant_bodypart/source_part = source_bodyparts[key]
+		if(!istype(source_part))
+			copied_bodyparts[key] = source_part
+			continue
+
+		var/list/source_colors = source_part.get_colors()
+		var/list/source_emissives = source_part.get_emissive_tri_bool_list()
+		copied_bodyparts[key] = build_mutant_part(normalize_mutant_part_name(source_part.name), islist(source_colors) ? source_colors.Copy() : source_colors, source_emissives?.Copy())
+	return copied_bodyparts
+
+/datum/status_effect/stabilized/proc/normalize_mutant_part_name(mutant_part_name)
+	var/datum/sprite_accessory/sprite_accessory = mutant_part_name
+	if(istype(sprite_accessory))
+		return sprite_accessory.name
+	return mutant_part_name
+
+/datum/status_effect/stabilized/proc/copy_visual_mutant_organs(mob/living/carbon/human/human)
+	var/list/copied_organs = list()
+	for(var/obj/item/organ/current_organ as anything in human.organs)
+		if(!(current_organ.organ_flags & ORGAN_EXTERNAL))
+			continue
+		if(!current_organ.mutantpart_key || !current_organ.bodypart_overlay?.sprite_datum)
+			continue
+
+		var/datum/bodypart_overlay/mutant/bodypart_overlay = current_organ.bodypart_overlay
+		var/datum/sprite_accessory/sprite_accessory = bodypart_overlay.sprite_datum
+		var/organ_colors = bodypart_overlay.draw_color
+		if(isnull(organ_colors))
+			var/datum/mutant_bodypart/current_part = human.dna.mutant_bodyparts[current_organ.mutantpart_key]
+			organ_colors = current_part?.get_colors()
+		var/list/organ_emissives = bodypart_overlay.emissive_eligibility_by_color_index
+		var/list/copied_colors = islist(organ_colors) ? organ_colors : null
+		copied_organs[current_organ.mutantpart_key] = build_mutant_part(sprite_accessory.name, copied_colors?.Copy() || organ_colors, organ_emissives?.Copy())
+	return copied_organs
+
+/datum/status_effect/stabilized/proc/copy_body_markings(list/source_markings)
+	var/list/copied_markings = list()
+	for(var/zone in source_markings)
+		var/list/source_zone_markings = source_markings[zone]
+		if(!islist(source_zone_markings))
+			copied_markings[zone] = source_zone_markings
+			continue
+
+		var/list/copied_zone_markings = list()
+		for(var/marking_key in source_zone_markings)
+			var/list/source_marking = source_zone_markings[marking_key]
+			copied_zone_markings[marking_key] = islist(source_marking) ? source_marking.Copy() : source_marking
+		copied_markings[zone] = copied_zone_markings
+	return copied_markings
+
+/datum/status_effect/stabilized/proc/rebuild_visual_mutant_organs(mob/living/carbon/human/human)
+	for(var/obj/item/organ/current_organ as anything in human.organs.Copy())
+		if(!(current_organ.organ_flags & ORGAN_EXTERNAL))
+			continue
+		if(current_organ.organ_flags & ORGAN_UNREMOVABLE)
+			continue
+		if(!current_organ.mutantpart_key)
+			continue
+		current_organ.Remove(human, special = TRUE, movement_flags = KEEP_IN_MUTANT_BODYPARTS)
+		qdel(current_organ)
+
+	var/old_visual_only_organs = human.visual_only_organs
+	human.visual_only_organs = TRUE
+	human.dna.species.regenerate_organs(human, human.dna.species, replace_current = TRUE, visual_only = TRUE)
+	human.visual_only_organs = old_visual_only_organs
+	sync_visual_mutant_organs_from_dna(human)
+	human.update_body(is_creating = TRUE)
+
+/datum/status_effect/stabilized/proc/sync_visual_mutant_organs_from_dna(mob/living/carbon/human/human)
+	for(var/obj/item/organ/current_organ as anything in human.organs)
+		if(!(current_organ.organ_flags & ORGAN_EXTERNAL))
+			continue
+		if(!current_organ.mutantpart_key || !current_organ.bodypart_overlay)
+			continue
+		var/datum/mutant_bodypart/mutant_part = human.dna.mutant_bodyparts[current_organ.mutantpart_key]
+		if(!mutant_part)
+			continue
+		current_organ.bodypart_overlay.set_appearance_from_dna(human.dna, normalize_mutant_part_name(mutant_part.name), current_organ.mutantpart_key)
+
+/datum/status_effect/stabilized/proc/rebuild_visual_bodyparts(mob/living/carbon/human/human)
+	var/datum/species/species = human.dna.species
+
+	var/list/correct_bodyparts = species.bodypart_overrides.Copy()
+	var/ignore_digi = FALSE
+	if(issynthetic(human))
+		var/datum/mutant_bodypart/chassis = human.dna.mutant_bodyparts[FEATURE_SYNTH_CHASSIS]
+		var/list/chassis_accessories = SSaccessories.sprite_accessories[FEATURE_SYNTH_CHASSIS]
+		var/datum/sprite_accessory/synth_chassis/chassis_accessory = chassis_accessories?[chassis?.name]
+		if(chassis_accessory && !chassis_accessory.is_digi_compatible)
+			ignore_digi = TRUE
+
+	if(!ignore_digi && ((species.digitigrade_customization == DIGITIGRADE_FORCED) || (species.digitigrade_customization == DIGITIGRADE_OPTIONAL && human.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)))
+		var/obj/item/bodypart/leg/right/right_leg = species.bodypart_overrides[BODY_ZONE_R_LEG]
+		var/obj/item/bodypart/leg/left/left_leg = species.bodypart_overrides[BODY_ZONE_L_LEG]
+		if(right_leg)
+			correct_bodyparts[BODY_ZONE_R_LEG] = initial(right_leg.digitigrade_type)
+		if(left_leg)
+			correct_bodyparts[BODY_ZONE_L_LEG] = initial(left_leg.digitigrade_type)
+
+	for(var/obj/item/bodypart/old_part as anything in human.get_bodyparts())
+		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))
+			continue
+
+		var/new_part_path = correct_bodyparts[old_part.body_zone]
+		if(!new_part_path || old_part.type == new_part_path)
+			continue
+
+		var/obj/item/bodypart/new_part = new new_part_path()
+		new_part.replace_limb(human)
+		new_part.update_limb(is_creating = TRUE)
+		new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
+		qdel(old_part)
+
 /datum/status_effect/stabilized/null //This shouldn't ever happen, but just in case.
 	id = "stabilizednull"
 
@@ -486,13 +602,49 @@
 /datum/status_effect/stabilized/grey
 	id = "stabilizedgrey"
 	colour = SLIME_TYPE_GREY
+	var/list/befriended_slimes
 
 /datum/status_effect/stabilized/grey/tick(seconds_between_ticks)
 	for(var/mob/living/basic/slime/slimes_in_range in range(1, get_turf(owner)))
-		if(!slimes_in_range.has_ally(owner))
+		if(pacify_slime(slimes_in_range))
 			to_chat(owner, span_notice("[linked_extract] pulses gently as it communicates with [slimes_in_range]."))
-			slimes_in_range.befriend(owner)
 	return ..()
+
+/datum/status_effect/stabilized/grey/on_remove()
+	if(QDELETED(owner))
+		return
+	for(var/mob/living/basic/slime/befriended_slime as anything in befriended_slimes)
+		if(QDELETED(befriended_slime))
+			continue
+		befriended_slime.unfriend(owner)
+	LAZYNULL(befriended_slimes)
+
+/datum/status_effect/stabilized/grey/proc/pacify_slime(mob/living/basic/slime/slime_to_pacify)
+	if(slime_to_pacify.befriend(owner))
+		LAZYOR(befriended_slimes, slime_to_pacify)
+		return TRUE
+	if(!slime_to_pacify.has_ally(owner))
+		return FALSE
+
+	var/datum/ai_controller/slime_controller = slime_to_pacify.ai_controller
+	if(isnull(slime_controller))
+		return FALSE
+
+	var/pacified = FALSE
+	if(slime_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] == owner)
+		slime_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+		pacified = TRUE
+	if(slime_controller.blackboard[BB_CURRENT_HUNTING_TARGET] == owner)
+		slime_controller.clear_blackboard_key(BB_CURRENT_HUNTING_TARGET)
+		pacified = TRUE
+	if(owner in slime_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
+		slime_controller.remove_from_blackboard_lazylist_key(BB_BASIC_MOB_RETALIATE_LIST, owner)
+		pacified = TRUE
+	if(slime_to_pacify.buckled == owner)
+		slime_controller.CancelActions()
+		pacified = TRUE
+
+	return pacified
 
 /datum/status_effect/stabilized/orange
 	id = "stabilizedorange"
@@ -760,17 +912,55 @@
 	var/typepath = owner.type
 	clone = new typepath(owner.drop_location())
 	if(iscarbon(owner) && iscarbon(clone))
-		var/mob/living/carbon/human/human_owner = owner
-		var/mob/living/carbon/human/human_clone = clone
-		human_clone.physique = human_owner.physique
-		human_clone.real_name = human_owner.real_name
-		human_clone.age = human_owner.age
-		human_clone.voice = human_owner.voice
-		human_clone.voice_filter = human_owner.voice_filter
-		for(var/datum/quirk/original_quirks as anything in human_owner.quirks)
-			human_clone.add_quirk(original_quirks.type, add_unique = FALSE, announce = FALSE)
-		human_owner.dna.copy_dna(human_clone.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
-		human_clone.updateappearance(mutcolor_update = TRUE)
+		var/mob/living/carbon/carbon_owner = owner
+		var/mob/living/carbon/carbon_clone = clone
+		carbon_clone.real_name = carbon_owner.real_name
+		carbon_owner.dna.copy_dna(carbon_clone.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
+		if(ishuman(owner) && ishuman(clone))
+			var/mob/living/carbon/human/human_owner = owner
+			var/mob/living/carbon/human/human_clone = clone
+			human_clone.physique = human_owner.physique
+			human_clone.gender = human_owner.gender
+			human_clone.age = human_owner.age
+			human_clone.voice = human_owner.voice
+			human_clone.pitch = human_owner.pitch
+			human_clone.voice_filter = human_owner.voice_filter
+			human_clone.set_hairstyle(human_owner.hairstyle, update = FALSE)
+			human_clone.set_facial_hairstyle(human_owner.facial_hairstyle, update = FALSE)
+			human_clone.set_haircolor(human_owner.hair_color, update = FALSE)
+			human_clone.set_facial_haircolor(human_owner.facial_hair_color, update = FALSE)
+			human_clone.set_eye_color(human_owner.eye_color_left, human_owner.eye_color_right)
+			human_clone.eye_color_heterochromatic = human_owner.eye_color_heterochromatic
+			human_clone.skin_tone = human_owner.skin_tone
+			human_clone.underwear = human_owner.underwear
+			human_clone.underwear_color = human_owner.underwear_color
+			human_clone.undershirt = human_owner.undershirt
+			human_clone.undershirt_color = human_owner.undershirt_color
+			human_clone.socks = human_owner.socks
+			human_clone.socks_color = human_owner.socks_color
+			human_clone.bra = human_owner.bra
+			human_clone.bra_color = human_owner.bra_color
+			human_clone.blooper = human_owner.blooper
+			human_clone.blooper_id = human_owner.blooper_id
+			human_clone.blooper_pitch = human_owner.blooper_pitch
+			human_clone.blooper_pitch_range = human_owner.blooper_pitch_range
+			human_clone.blooper_speed = human_owner.blooper_speed
+			human_clone.dna.features = human_owner.dna.features.Copy()
+			human_clone.dna.mutant_bodyparts = copy_mutant_bodyparts(human_owner.dna.mutant_bodyparts)
+			var/list/visual_mutant_organs = copy_visual_mutant_organs(human_owner)
+			for(var/key in visual_mutant_organs)
+				var/list/visual_organ = list()
+				visual_organ[key] = visual_mutant_organs[key]
+				human_clone.dna.mutant_bodyparts[key] = copy_mutant_bodyparts(visual_organ)[key]
+			human_clone.dna.body_markings = copy_body_markings(human_owner.dna.body_markings)
+			human_clone.name = human_clone.get_visible_name()
+			human_clone.apply_customizable_dna_features_to_species()
+			human_clone.dna.update_dna_identity()
+			rebuild_visual_bodyparts(human_clone)
+			rebuild_visual_mutant_organs(human_clone)
+			for(var/datum/quirk/original_quirks as anything in human_owner.quirks)
+				human_clone.add_quirk(original_quirks.type, add_unique = FALSE, announce = FALSE)
+		carbon_clone.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	return ..()
 
 /datum/status_effect/stabilized/cerulean/tick(seconds_between_ticks)
@@ -790,6 +980,12 @@
 /datum/status_effect/stabilized/cerulean/on_remove()
 	if(clone)
 		clone.visible_message(span_warning("[clone] dissolves into a puddle of goo!"))
+		if(ishuman(clone))
+			var/mob/living/carbon/human/human_clone = clone
+			human_clone.remove_extra_inventory_item(human_clone.w_underwear)
+			human_clone.remove_extra_inventory_item(human_clone.w_socks)
+			human_clone.remove_extra_inventory_item(human_clone.w_shirt)
+			human_clone.remove_extra_inventory_item(human_clone.w_bra)
 		clone.unequip_everything()
 		qdel(clone)
 
@@ -894,122 +1090,6 @@
 		return span_warning("[owner.p_They()] look[owner.p_s()] a bit green and gooey...")
 
 	return null
-
-/datum/status_effect/stabilized/green/proc/copy_mutant_bodyparts(list/source_bodyparts)
-	var/list/copied_bodyparts = list()
-	for(var/key in source_bodyparts)
-		var/datum/mutant_bodypart/source_part = source_bodyparts[key]
-		if(!istype(source_part))
-			copied_bodyparts[key] = source_part
-			continue
-
-		var/list/source_colors = source_part.get_colors()
-		var/list/source_emissives = source_part.get_emissive_tri_bool_list()
-		copied_bodyparts[key] = build_mutant_part(normalize_mutant_part_name(source_part.name), islist(source_colors) ? source_colors.Copy() : source_colors, source_emissives?.Copy())
-	return copied_bodyparts
-
-/datum/status_effect/stabilized/green/proc/normalize_mutant_part_name(mutant_part_name)
-	var/datum/sprite_accessory/sprite_accessory = mutant_part_name
-	if(istype(sprite_accessory))
-		return sprite_accessory.name
-	return mutant_part_name
-
-/datum/status_effect/stabilized/green/proc/copy_visual_mutant_organs(mob/living/carbon/human/human)
-	var/list/copied_organs = list()
-	for(var/obj/item/organ/current_organ as anything in human.organs)
-		if(!(current_organ.organ_flags & ORGAN_EXTERNAL))
-			continue
-		if(!current_organ.mutantpart_key || !current_organ.bodypart_overlay?.sprite_datum)
-			continue
-
-		var/datum/bodypart_overlay/mutant/bodypart_overlay = current_organ.bodypart_overlay
-		var/datum/sprite_accessory/sprite_accessory = bodypart_overlay.sprite_datum
-		var/organ_colors = bodypart_overlay.draw_color
-		if(isnull(organ_colors))
-			var/datum/mutant_bodypart/current_part = human.dna.mutant_bodyparts[current_organ.mutantpart_key]
-			organ_colors = current_part?.get_colors()
-		var/list/organ_emissives = bodypart_overlay.emissive_eligibility_by_color_index
-		var/list/copied_colors = islist(organ_colors) ? organ_colors : null
-		copied_organs[current_organ.mutantpart_key] = build_mutant_part(sprite_accessory.name, copied_colors?.Copy() || organ_colors, organ_emissives?.Copy())
-	return copied_organs
-
-/datum/status_effect/stabilized/green/proc/copy_body_markings(list/source_markings)
-	var/list/copied_markings = list()
-	for(var/zone in source_markings)
-		var/list/source_zone_markings = source_markings[zone]
-		if(!islist(source_zone_markings))
-			copied_markings[zone] = source_zone_markings
-			continue
-
-		var/list/copied_zone_markings = list()
-		for(var/marking_key in source_zone_markings)
-			var/list/source_marking = source_zone_markings[marking_key]
-			copied_zone_markings[marking_key] = islist(source_marking) ? source_marking.Copy() : source_marking
-		copied_markings[zone] = copied_zone_markings
-	return copied_markings
-
-/datum/status_effect/stabilized/green/proc/rebuild_visual_mutant_organs(mob/living/carbon/human/human)
-	for(var/obj/item/organ/current_organ as anything in human.organs.Copy())
-		if(!(current_organ.organ_flags & ORGAN_EXTERNAL))
-			continue
-		if(current_organ.organ_flags & ORGAN_UNREMOVABLE)
-			continue
-		if(!current_organ.mutantpart_key)
-			continue
-		current_organ.Remove(human, special = TRUE, movement_flags = KEEP_IN_MUTANT_BODYPARTS)
-		qdel(current_organ)
-
-	var/old_visual_only_organs = human.visual_only_organs
-	human.visual_only_organs = TRUE
-	human.dna.species.regenerate_organs(human, human.dna.species, replace_current = TRUE, visual_only = TRUE)
-	human.visual_only_organs = old_visual_only_organs
-	sync_visual_mutant_organs_from_dna(human)
-	human.update_body(is_creating = TRUE)
-
-/datum/status_effect/stabilized/green/proc/sync_visual_mutant_organs_from_dna(mob/living/carbon/human/human)
-	for(var/obj/item/organ/current_organ as anything in human.organs)
-		if(!(current_organ.organ_flags & ORGAN_EXTERNAL))
-			continue
-		if(!current_organ.mutantpart_key || !current_organ.bodypart_overlay)
-			continue
-		var/datum/mutant_bodypart/mutant_part = human.dna.mutant_bodyparts[current_organ.mutantpart_key]
-		if(!mutant_part)
-			continue
-		current_organ.bodypart_overlay.set_appearance_from_dna(human.dna, normalize_mutant_part_name(mutant_part.name), current_organ.mutantpart_key)
-
-/datum/status_effect/stabilized/green/proc/rebuild_visual_bodyparts(mob/living/carbon/human/human)
-	var/datum/species/species = human.dna.species
-
-	var/list/correct_bodyparts = species.bodypart_overrides.Copy()
-	var/ignore_digi = FALSE
-	if(issynthetic(human))
-		var/datum/mutant_bodypart/chassis = human.dna.mutant_bodyparts[FEATURE_SYNTH_CHASSIS]
-		var/list/chassis_accessories = SSaccessories.sprite_accessories[FEATURE_SYNTH_CHASSIS]
-		var/datum/sprite_accessory/synth_chassis/chassis_accessory = chassis_accessories?[chassis?.name]
-		if(chassis_accessory && !chassis_accessory.is_digi_compatible)
-			ignore_digi = TRUE
-
-	if(!ignore_digi && ((species.digitigrade_customization == DIGITIGRADE_FORCED) || (species.digitigrade_customization == DIGITIGRADE_OPTIONAL && human.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)))
-		var/obj/item/bodypart/leg/right/right_leg = species.bodypart_overrides[BODY_ZONE_R_LEG]
-		var/obj/item/bodypart/leg/left/left_leg = species.bodypart_overrides[BODY_ZONE_L_LEG]
-		if(right_leg)
-			correct_bodyparts[BODY_ZONE_R_LEG] = initial(right_leg.digitigrade_type)
-		if(left_leg)
-			correct_bodyparts[BODY_ZONE_L_LEG] = initial(left_leg.digitigrade_type)
-
-	for(var/obj/item/bodypart/old_part as anything in human.get_bodyparts())
-		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))
-			continue
-
-		var/new_part_path = correct_bodyparts[old_part.body_zone]
-		if(!new_part_path || old_part.type == new_part_path)
-			continue
-
-		var/obj/item/bodypart/new_part = new new_part_path()
-		new_part.replace_limb(human)
-		new_part.update_limb(is_creating = TRUE)
-		new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
-		qdel(old_part)
 
 /datum/status_effect/stabilized/green/on_remove()
 	to_chat(owner, span_notice("You feel more like yourself."))

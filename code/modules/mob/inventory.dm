@@ -191,6 +191,7 @@
 	update_held_items()
 	I.pixel_x = I.base_pixel_x
 	I.pixel_y = I.base_pixel_y
+	I.undo_messy(duration = 0 SECONDS)
 	if(QDELETED(I)) // this is here because some ABSTRACT items like slappers and circle hands could be moved from hand to hand then delete, which meant you'd have a null in your hand until you cleared it (say, by dropping it)
 		held_items[hand_index] = null
 		return FALSE
@@ -378,6 +379,13 @@
 		return
 
 	return to_drop
+
+/mob/living/dropItemToGround(obj/item/to_drop, force = FALSE, silent = FALSE, invdrop = TRUE)
+	. = ..()
+	if(!combat_mode)
+		return
+	if(. && to_drop && !(to_drop.item_flags & NO_PIXEL_RANDOM_DROP))
+		to_drop.do_messy(duration = 0.2 SECONDS)
 
 /// Unequips and transfers an item to a given turf, if possible.
 /mob/proc/transfer_item_to_turf(

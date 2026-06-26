@@ -580,6 +580,18 @@
 	has_ammobar = FALSE
 	construction_upgrades = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
 
+/obj/item/construction/rcd/arcd/mattermanipulator
+	name = "matter manipulator"
+	desc = "A strange, familiar yet distinctly different analogue to the Nanotrasen standard RCD. Works at range, and can deconstruct reinforced walls. Reload using metal, glass, or plasteel."
+	icon = 'icons/obj/tools_additions.dmi'
+	icon_state = "rcd"
+	worn_icon_state = "RCD"
+	ranged = TRUE
+	canRturf = TRUE
+	max_matter = 500
+	matter = 500
+	construction_upgrades = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
+
 ///How much charge is used up for each matter unit.
 #define MASS_TO_ENERGY (0.016 * STANDARD_CELL_CHARGE)
 
@@ -668,3 +680,27 @@
 /obj/item/rcd_ammo/large
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*24, /datum/material/glass=SHEET_MATERIAL_AMOUNT*16)
 	ammoamt = 160
+
+/obj/item/rcd_ammo/combat
+	name = "industrial RCD matter cartridge"
+	desc = "A cartridge with one complete refill for an industrial RCD."
+	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 60,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 40,
+	)
+	ammoamt = 440
+
+/obj/item/storage/box/rcd_ammo
+	name = "industrial RCD matter box"
+	icon = 'icons/obj/storage/box.dmi'
+	desc = "A durable box with refill cartridges for an industrial RCD."
+	icon_state = "engibox"
+	illustration = "rcd"
+	custom_materials = list(
+		/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT,
+	)
+
+/obj/item/storage/box/rcd_ammo/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/rcd_ammo/combat(src)

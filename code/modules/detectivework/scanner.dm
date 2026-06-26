@@ -19,6 +19,8 @@
 	var/range = 8
 	var/view_check = TRUE
 	var/forensicPrintCount = 0
+	/// Detective bank account ID that receives forensic analysis rewards.
+	var/linked_reward_account_id
 
 /obj/item/detective_scanner/interact(mob/user)
 	. = ..()
@@ -26,6 +28,28 @@
 		return ITEM_INTERACT_BLOCKING
 	ui_interact(user)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/detective_scanner/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	var/obj/item/card/id/id_card = attacking_item.GetID()
+	if(!id_card)
+		return
+	if(scanner_busy)
+		balloon_alert(user, "scanner busy!")
+		return TRUE
+	var/datum/bank_account/card_account = id_card.registered_account
+	if(!card_account)
+		balloon_alert(user, "no account!")
+		return TRUE
+	if(!istype(card_account.account_job, /datum/job/detective))
+		balloon_alert(user, "detective ID required!")
+		return TRUE
+
+	linked_reward_account_id = card_account.account_id
+	playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
+	balloon_alert(user, "account linked")
+	to_chat(user, span_notice("[src] links forensic analysis payouts to [card_account.account_holder]'s account."))
+	return TRUE
 
 /**
  * safe_print_report - a wrapper proc for print_report
@@ -86,6 +110,60 @@
 		balloon_alert(user, "scanner error!") // but in case it does, we 'error' instead of just bricking the scanner
 	scanner_busy = FALSE
 
+/obj/item/detective_scanner/proc/get_linked_reward_account()
+	RETURN_TYPE(/datum/bank_account)
+	if(isnull(linked_reward_account_id))
+		return
+	var/datum/bank_account/linked_account = SSeconomy.bank_accounts_by_id["[linked_reward_account_id]"]
+	if(!istype(linked_account?.account_job, /datum/job/detective))
+		linked_reward_account_id = null
+		return
+	return linked_account
+
+/obj/item/detective_scanner/proc/collect_new_analysis_markers(datum/bank_account/detective_account, datum/detective_scanner_log/log_entry, scan_category_id, list/new_forensic_markers)
+	var/datum/detective_scanner_data_entry/data_entry = log_entry.data_entries[scan_category_id]
+	if(!length(data_entry?.data))
+		return
+
+	for(var/marker in data_entry.data)
+		var/marker_key = "[scan_category_id]:[marker]"
+		if(LAZYACCESS(detective_account.detective_paid_forensic_markers, marker_key) || new_forensic_markers[marker_key])
+			continue
+		new_forensic_markers[marker_key] = TRUE
+
+/obj/item/detective_scanner/proc/get_analysis_target(atom/scanned_atom)
+	RETURN_TYPE(/atom)
+	if(!istype(scanned_atom, /obj/item/evidencebag))
+		return scanned_atom
+	var/obj/item/evidencebag/evidence_bag = scanned_atom
+	return evidence_bag.get_contained_evidence() || scanned_atom
+
+/// Pays detectives for official evidence bag analysis with new trace evidence.
+/obj/item/detective_scanner/proc/try_pay_analysis_reward(atom/scanned_atom, atom/analysis_target, datum/detective_scanner_log/log_entry)
+	if(!istype(scanned_atom, /obj/item/evidencebag) || !istype(analysis_target) || analysis_target == scanned_atom || ismob(analysis_target))
+		return
+	var/datum/bank_account/detective_account = get_linked_reward_account()
+	if(!detective_account)
+		return
+
+	var/list/new_forensic_markers = list()
+	for(var/category in list(DETSCAN_CATEGORY_FINGERS, DETSCAN_CATEGORY_BLOOD, DETSCAN_CATEGORY_FIBER))
+		collect_new_analysis_markers(detective_account, log_entry, category, new_forensic_markers)
+	if(!length(new_forensic_markers))
+		return
+
+	var/reward = min(DETECTIVE_ANALYSIS_REWARD_MAX, length(new_forensic_markers) * DETECTIVE_ANALYSIS_REWARD_PER_CATEGORY)
+	if(reward <= 0 || !detective_account.adjust_money(reward, "Detective: Forensic analysis"))
+		return
+
+	LAZYINITLIST(detective_account.detective_paid_forensic_markers)
+	for(var/marker_key in new_forensic_markers)
+		detective_account.detective_paid_forensic_markers[marker_key] = TRUE
+
+	detective_account.bank_card_talk("You have received [reward][MONEY_SYMBOL] for [length(new_forensic_markers)] new forensic trace\s from [analysis_target].")
+	SSeconomy.record_wages(reward)
+	log_econ("[reward] [MONEY_NAME] were awarded to [detective_account.account_holder]'s account for [length(new_forensic_markers)] new forensic traces from [analysis_target].")
+
 /**
  * scan - scans an atom for forensic data and outputs it to the mob holding the scanner
  *
@@ -113,37 +191,38 @@
 	// GATHER INFORMATION
 
 	var/datum/detective_scanner_log/log_entry = new
+	var/atom/analysis_target = get_analysis_target(scanned_atom)
 
 	// Start gathering
 
-	log_entry.scan_target = scanned_atom.name
+	log_entry.scan_target = analysis_target.name
 	log_entry.scan_time = station_time_timestamp()
 
-	var/list/atom_fibers = GET_ATOM_FIBRES(scanned_atom)
+	var/list/atom_fibers = GET_ATOM_FIBRES(analysis_target)
 	if(length(atom_fibers))
 		log_entry.add_data_entry(DETSCAN_CATEGORY_FIBER, atom_fibers.Copy())
 
-	var/list/blood = GET_ATOM_BLOOD_DNA(scanned_atom)
+	var/list/blood = GET_ATOM_BLOOD_DNA(analysis_target)
 	if(length(blood))
 		log_entry.add_data_entry(DETSCAN_CATEGORY_BLOOD, blood.Copy())
 
-	if(ishuman(scanned_atom))
-		var/mob/living/carbon/human/scanned_human = scanned_atom
+	if(ishuman(analysis_target))
+		var/mob/living/carbon/human/scanned_human = analysis_target
 		if(!scanned_human.gloves)
 			log_entry.add_data_entry(
 				DETSCAN_CATEGORY_FINGERS,
 				rustg_hash_string(RUSTG_HASH_MD5, scanned_human.dna?.unique_identity)
 			)
 
-	else if(!ismob(scanned_atom))
+	else if(!ismob(analysis_target))
 
-		var/list/atom_fingerprints = GET_ATOM_FINGERPRINTS(scanned_atom)
+		var/list/atom_fingerprints = GET_ATOM_FINGERPRINTS(analysis_target)
 		if(length(atom_fingerprints))
 			log_entry.add_data_entry(DETSCAN_CATEGORY_FINGERS, atom_fingerprints.Copy())
 
 		// Only get reagents from non-mobs.
-		SEND_SIGNAL(scanned_atom, COMSIG_ON_REAGENT_SCAN, user)
-		for(var/datum/reagent/present_reagent as anything in scanned_atom.reagents?.reagent_list)
+		SEND_SIGNAL(analysis_target, COMSIG_ON_REAGENT_SCAN, user)
+		for(var/datum/reagent/present_reagent as anything in analysis_target.reagents?.reagent_list)
 			log_entry.add_data_entry(DETSCAN_CATEGORY_REAGENTS, list(present_reagent.name = present_reagent.volume))
 
 			// Get blood data from the blood reagent.
@@ -157,8 +236,8 @@
 
 			log_entry.add_data_entry(DETSCAN_CATEGORY_BLOOD, list(blood_DNA = blood_type))
 
-	if(istype(scanned_atom, /obj/item/card/id))
-		var/obj/item/card/id/user_id = scanned_atom
+	if(istype(analysis_target, /obj/item/card/id))
+		var/obj/item/card/id/user_id = analysis_target
 		for(var/region in DETSCAN_ACCESS_ORDER())
 			var/access_in_region = SSid_access.accesses_by_region[region] & user_id.GetAccess()
 			if(!length(access_in_region))
@@ -170,12 +249,13 @@
 			log_entry.add_data_entry(DETSCAN_CATEGORY_ACCESS, list("[region]" = english_list(access_names)))
 
 	// sends it off to be modified by the items
-	SEND_SIGNAL(scanned_atom, COMSIG_DETECTIVE_SCANNED, user, log_entry)
+	SEND_SIGNAL(analysis_target, COMSIG_DETECTIVE_SCANNED, user, log_entry)
 
 	// Perform sorting now, because probably this will be never modified
 	log_entry.sort_data_entries()
 
 	stoplag(3 SECONDS)
+	try_pay_analysis_reward(scanned_atom, analysis_target, log_entry)
 	log_data += log_entry
 	return TRUE
 
@@ -184,6 +264,11 @@
 
 /obj/item/detective_scanner/examine(mob/user)
 	. = ..()
+	var/datum/bank_account/linked_account = get_linked_reward_account()
+	if(linked_account)
+		. += span_notice("Forensic analysis payouts are linked to [linked_account.account_holder]'s account.")
+	else
+		. += span_notice("Swipe a detective ID card to link forensic analysis payouts.")
 	if(length(log_data) && !scanner_busy)
 		. += span_notice("Alt-click to clear scanner logs.")
 

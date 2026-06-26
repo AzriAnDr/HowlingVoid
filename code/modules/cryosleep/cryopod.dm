@@ -47,6 +47,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 	. = ..()
 	GLOB.cryopod_computers += src
 
+/obj/machinery/computer/cryopod/post_machine_initialize()
+	. = ..()
+	tune_special_cases()
+
+/obj/machinery/computer/cryopod/interdinify()
+	announcement_channel = RADIO_CHANNEL_INTERDYNE
+	req_one_access = list(ACCESS_SYNDICATE_LEADER)
+
+/obj/machinery/computer/cryopod/tarkonize()
+	announcement_channel = RADIO_CHANNEL_TARKON
+	req_one_access = list(ACCESS_TARKON)
+
 /obj/machinery/computer/cryopod/Destroy()
 	GLOB.cryopod_computers -= src
 	return ..()

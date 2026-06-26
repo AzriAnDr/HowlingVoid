@@ -10,6 +10,7 @@
 	desc = "A traditional clusterbang grenade with a payload consisting entirely of Syndicate soap. Useful in any scenario!"
 	item = /obj/item/grenade/clusterbuster/soap
 	cost = 1
+	purchasable_from = NONE // low RP and annoying
 
 /datum/uplink_item/explosives/c4
 	name = "Composition C-4"
@@ -33,7 +34,7 @@
 	name = "Bag of C-4 explosives"
 	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
 	item = /obj/item/storage/backpack/duffelbag/syndie/c4
-	cost = 5 // 50% discount!
+	cost = /datum/uplink_item/low_cost/explosive::cost
 	cant_discount = TRUE
 	limited_stock = 2
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //nukies get their own version
@@ -54,13 +55,14 @@
 	item = /obj/item/disk/computer/virus/detomatix
 	cost = 6
 	restricted = TRUE
+	purchasable_from = NONE
 
 /datum/uplink_item/explosives/emp
 	name = "EMP Grenades and Implanter Kit"
 	desc = "A box that contains five EMP grenades and an EMP implant with three uses. Useful to disrupt communications, \
 			security's energy weapons and silicon lifeforms when you're in a tight spot."
 	item = /obj/item/storage/box/syndie_kit/emp
-	cost = 2
+	cost = /datum/uplink_item/low_cost/explosive::cost
 
 /datum/uplink_item/explosives/emp/New()
 	..()
@@ -98,7 +100,7 @@
 	name = "Syndicate EMP Bomb"
 	desc = "A variation of the syndicate bomb designed to produce a large EMP effect."
 	item = /obj/item/sbeacondrop/emp
-	cost = 7
+	cost = /datum/uplink_item/high_cost/explosive::cost
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS /// Ops get their own version.
 	limited_discount_stock = 4
 
@@ -117,7 +119,7 @@
 		The bomb core can be pried out and manually detonated with other explosives."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop/bomb
-	cost = 11
+	cost = /datum/uplink_item/high_cost/explosive::cost
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS /// Ops get their own version.
 	limited_discount_stock = 4
 
@@ -132,4 +134,4 @@
 	item = /obj/item/storage/box/syndie_kit/feral_cat_grenades
 	surplus = 30
 	limited_stock = 2
-	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
+	purchasable_from = NONE // low roleplay

@@ -36,6 +36,12 @@
 
 /datum/config_entry/flag/sec_start_brig //makes sec start in brig instead of dept sec posts
 
+/datum/config_entry/flag/replace_secbelt_flashbangs_with_bola
+	default = FALSE
+
+/datum/config_entry/flag/flashbangs_forbidden_during_green
+	default = FALSE
+
 /datum/config_entry/flag/force_random_names
 
 /datum/config_entry/flag/humans_need_surnames

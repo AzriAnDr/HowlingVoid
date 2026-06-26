@@ -10,6 +10,9 @@
 	icon = 'icons/obj/machines/cell_charger.dmi'
 	icon_state = "cell"
 	inhand_icon_state = "cell"
+	/// The inserted-cell overlay icon state used by cell chargers.
+	var/charging_icon = "cell_in"
+	connector_type = null
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	force = 5
@@ -79,7 +82,7 @@
 
 /obj/item/stock_parts/power_store/cell/mini_egun
 	name = "miniature energy gun power cell"
-	maxcharge = STANDARD_CELL_CHARGE * 0.6
+	maxcharge = STANDARD_CELL_CHARGE * 0.75
 
 /obj/item/stock_parts/power_store/cell/hos_gun
 	name = "X-01 multiphase energy gun power cell"
@@ -114,6 +117,7 @@
 /obj/item/stock_parts/power_store/cell/high
 	name = "high-capacity power cell"
 	icon_state = "hcell"
+	charging_icon = "hcell_in"
 	emp_damage_modifier = 3
 	maxcharge = STANDARD_CELL_CHARGE * 10
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
@@ -126,6 +130,7 @@
 /obj/item/stock_parts/power_store/cell/super
 	name = "super-capacity power cell"
 	icon_state = "scell"
+	charging_icon = "scell_in"
 	emp_damage_modifier = 5
 	maxcharge = STANDARD_CELL_CHARGE * 20
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
@@ -137,6 +142,7 @@
 /obj/item/stock_parts/power_store/cell/hyper
 	name = "hyper-capacity power cell"
 	icon_state = "hpcell"
+	charging_icon = "hpcell_in"
 	emp_damage_modifier = 5
 	maxcharge = STANDARD_CELL_CHARGE * 30
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
@@ -149,6 +155,7 @@
 	name = "bluespace power cell"
 	desc = "A rechargeable transdimensional power cell."
 	icon_state = "bscell"
+	charging_icon = "bscell_in"
 	emp_damage_modifier = 5
 	maxcharge = STANDARD_CELL_CHARGE * 40
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*6)
@@ -160,6 +167,7 @@
 /obj/item/stock_parts/power_store/cell/infinite
 	name = "infinite-capacity power cell"
 	icon_state = "icell"
+	charging_icon = "icell_in"
 	emp_damage_modifier = 0
 	maxcharge = INFINITY //little disappointing if you examine it and it's not huge
 	custom_materials = list(/datum/material/glass=HALF_SHEET_MATERIAL_AMOUNT)
@@ -186,9 +194,10 @@
 	desc = "A rechargeable starch based power cell."
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "potato"
+	charging_icon = "potato_in"
 	maxcharge = STANDARD_CELL_CHARGE * 0.3
 	emp_damage_modifier = 0.5 //It's biological, so
-	charge_light_type = null
+	charge_light_type = "old"
 	connector_type = null
 	custom_materials = null
 	grown_battery = TRUE //it has the overlays for wires
@@ -219,6 +228,7 @@
 	desc = "A yellow slime core infused with plasma. Its organic nature makes it immune to EMPs."
 	icon = 'icons/mob/simple/slimes.dmi'
 	icon_state = "yellow-core"
+	charging_icon = "slime_in"
 	custom_materials = null
 	maxcharge = STANDARD_CELL_CHARGE * 5
 	charge_light_type = null
@@ -250,6 +260,75 @@
 
 /obj/item/stock_parts/power_store/cell/crystal_cell/grind_results()
 	return null
+
+/obj/item/stock_parts/power_store/cell/crank
+	name = "crank cell"
+	desc = "Go ahead, wind it up to charge it."
+	icon = 'icons/new_cells/power.dmi'
+	icon_state = "crankcell"
+	charge_light_type = "old"
+	emp_damage_modifier = 0.5
+	/// How much each crank adds to the cell charge.
+	var/crank_amount = STANDARD_CELL_CHARGE * 0.1
+	/// How long each crank takes.
+	var/crank_speed = 1 SECONDS
+	/// How much charge drains each process tick.
+	var/discharge_amount = STANDARD_CELL_CHARGE * 0.01
+
+/obj/item/stock_parts/power_store/cell/crank/examine(mob/user)
+	. = ..()
+	. += span_notice("Click to start cranking the cell.")
+
+/obj/item/stock_parts/power_store/cell/crank/Initialize(mapload, override_maxcharge)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/stock_parts/power_store/cell/crank/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/stock_parts/power_store/cell/crank/process(seconds_per_tick)
+	use(discharge_amount)
+
+/obj/item/stock_parts/power_store/cell/crank/attack_self(mob/user)
+	while(charge < maxcharge)
+		if(!do_after(user, crank_speed, src))
+			return
+		give(crank_amount)
+		playsound(src, 'sound/new_cells/crank.ogg', 25, FALSE)
+
+/obj/item/stock_parts/power_store/cell/self_charge
+	name = "charging cell"
+	desc = "A special cell that will recharge itself over time."
+	icon = 'icons/new_cells/power.dmi'
+	icon_state = "chargecell"
+	maxcharge = STANDARD_CELL_CHARGE * 5
+	charge_light_type = "old"
+	/// How much charge is restored each process tick.
+	var/recharge_amount = STANDARD_CELL_CHARGE * 0.34
+
+/obj/item/stock_parts/power_store/cell/self_charge/exotic
+	name = "exotic charging cell"
+	desc = "A special cell that will recharge itself over time. The casing doesn't seem to have seams."
+	maxcharge = STANDARD_CELL_CHARGE * 15
+	recharge_amount = STANDARD_CELL_CHARGE
+
+/obj/item/stock_parts/power_store/cell/self_charge/anomalous
+	name = "anomalous charge cell"
+	desc = "A power cell of unfamiliar construction. Its casing is perfectly smooth, and it appears to recover energy on its own."
+	maxcharge = STANDARD_CELL_CHARGE * 30
+	recharge_amount = STANDARD_CELL_CHARGE * 2
+
+/obj/item/stock_parts/power_store/cell/self_charge/Initialize(mapload, override_maxcharge)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/stock_parts/power_store/cell/self_charge/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/stock_parts/power_store/cell/self_charge/process(seconds_per_tick)
+	give(recharge_amount)
 
 /obj/item/stock_parts/power_store/cell/ethereal
 	name = "ahelp it"

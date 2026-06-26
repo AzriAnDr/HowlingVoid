@@ -99,6 +99,11 @@
 		handle_player_polling()
 		return
 
+	if(href_list["open_discord"])
+		if(client)
+			client << link(CONFIG_GET(string/discord_link))
+		return
+
 	if(href_list["viewpoll"])
 		var/datum/poll_question/poll = locate(href_list["viewpoll"]) in GLOB.polls
 		poll_player(poll)

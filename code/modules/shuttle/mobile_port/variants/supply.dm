@@ -170,6 +170,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/price
 	var/pack_cost
 	var/list/goodies_by_buyer = list() // if someone orders more than GOODY_FREE_SHIPPING_MAX goodies, we upcharge to a normal crate so they can't carry around 20 combat shotties
+	var/list/goody_group_owners = list()
+	var/list/goody_group_private = list()
 	var/list/clean_up_orders = list() // orders to remove since we are done with them
 	var/list/forced_briefcases = list() // NOVA EDIT ADDITION
 
@@ -192,6 +194,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				paying_for_this.bank_card_talk("Order #[spawning_order.id] ([spawning_order.pack.name]) had the following orders adjusted<br>[orders_adjusted.Join("<br>")]<br>.")
 
 		price = spawning_order.get_final_cost()
+		var/datum/bank_account/private_delivery_account = spawning_order.get_private_delivery_account()
+		var/goody_group_key = spawning_order.get_goody_delivery_group_key()
 
 		// department orders EARN money for cargo, not the other way around
 		var/datum/bank_account/paying_for_this
@@ -199,8 +203,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			if(spawning_order.paying_account) //Someone paid out of pocket
 				paying_for_this = spawning_order.paying_account
 				// note this is before we increment, so this is the GOODY_FREE_SHIPPING_MAX + 1th goody to ship. also note we only increment off this step if they successfully pay the fee, so there's no way around it
-				if(spawning_order.pack.order_flags & ORDER_GOODY)
-					var/list/current_buyer_orders = goodies_by_buyer[spawning_order.paying_account]
+				if(spawning_order.ships_in_goody_case())
+					var/list/current_buyer_orders = goodies_by_buyer[goody_group_key]
 					if(LAZYLEN(current_buyer_orders) == GOODY_FREE_SHIPPING_MAX)
 						price = round(price + CRATE_TAX)
 						paying_for_this.bank_card_talk("Goody order size exceeds free shipping limit: Assessing [CRATE_TAX] [MONEY_NAME_SINGULAR] S&H fee.")
@@ -231,11 +235,13 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		value += pack_cost
 		SSeconomy.record_import_cost("cargo_imports", pack_cost, ACCOUNT_CAR)
 
-		if(spawning_order.pack.order_flags & ORDER_GOODY)
-			var/datum/bank_account/goody_buyer = paying_for_this || spawning_order.paying_account || SSeconomy.get_dep_account(ACCOUNT_CAR)
-			LAZYADD(goodies_by_buyer[goody_buyer], spawning_order)
+		if(spawning_order.ships_in_goody_case())
+			var/datum/bank_account/goody_buyer = private_delivery_account || paying_for_this || SSeconomy.get_dep_account(ACCOUNT_CAR)
+			goody_group_owners[goody_group_key] = goody_buyer
+			goody_group_private[goody_group_key] = spawning_order.is_private_purchase()
+			LAZYADD(goodies_by_buyer[goody_group_key], spawning_order)
 
-		if(!(spawning_order.pack.order_flags & ORDER_GOODY) && !(spawning_order?.paying_account in forced_briefcases)) //we handle goody crates below // NOVA EDIT CHANGE - ORIGINAL : if(!(spawning_order.pack.order_flags & ORDER_GOODY)) //we handle goody crates below
+		if(!spawning_order.ships_in_goody_case() && !(private_delivery_account in forced_briefcases)) //we handle goody crates below // NOVA EDIT CHANGE - ORIGINAL : if(!(spawning_order.pack.order_flags & ORDER_GOODY)) //we handle goody crates below
 			var/obj/structure/closet/crate = spawning_order.generate(pick_n_take(empty_turfs))
 			crate.name += " - #[spawning_order.id]"
 
@@ -253,10 +259,13 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	// we handle packing all the goodies last, since the type of crate we use depends on how many goodies they ordered. If it's more than GOODY_FREE_SHIPPING_MAX
 	// then we send it in a crate (including the CRATE_TAX cost), otherwise send it in a free shipping case
-	for(var/buyer_key in goodies_by_buyer)
-		var/list/buying_account_orders = goodies_by_buyer[buyer_key]
-		var/datum/bank_account/buying_account = buyer_key
-		var/buyer = buying_account.account_holder
+	for(var/goody_group_key in goodies_by_buyer)
+		var/list/buying_account_orders = goodies_by_buyer[goody_group_key]
+		var/datum/bank_account/buying_account = goody_group_owners[goody_group_key] || SSeconomy.get_dep_account(ACCOUNT_CAR)
+		var/datum/supply_order/first_goody_order = buying_account_orders[1]
+		var/buyer = buying_account.account_holder || first_goody_order?.orderer || "Cargo"
+		var/private_goody_group = goody_group_private[goody_group_key]
+		var/goody_purchase_word = private_goody_group ? "purchased" : "ordered"
 
 		if(buying_account_orders.len > GOODY_FREE_SHIPPING_MAX) // no free shipping, send a crate
 			var/obj/structure/closet/crate/secure/owned/our_crate = new /obj/structure/closet/crate/secure/owned(pick_n_take(empty_turfs))
@@ -266,30 +275,34 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				our_crate.department_purchase = TRUE
 				our_crate.department_account = our_crate.buyer_account
 			/// NOVA EDIT ADDITION END
-			our_crate.name = "goody crate - purchased by [buyer]"
-			miscboxes[buyer] = our_crate
+			our_crate.name = "goody crate - [goody_purchase_word] by [buyer]"
+			miscboxes[goody_group_key] = our_crate
 		else //free shipping in a case
-			miscboxes[buyer] = new /obj/item/storage/lockbox/order(pick_n_take(empty_turfs))
-			var/obj/item/storage/lockbox/order/our_case = miscboxes[buyer]
+			miscboxes[goody_group_key] = new /obj/item/storage/lockbox/order(pick_n_take(empty_turfs))
+			var/obj/item/storage/lockbox/order/our_case = miscboxes[goody_group_key]
 			our_case.buyer_account = buying_account
 			/// NOVA EDIT ADDITION START - FIXES COMMAND BUDGET CASES BEING UNOPENABLE
 			if(istype(our_case.buyer_account, /datum/bank_account/department))
 				our_case.department_purchase = TRUE
 				our_case.department_account = our_case.buyer_account
 			/// NOVA EDIT ADDITION END
-			miscboxes[buyer].name = "goody case - purchased by [buyer]"
-		misc_contents[buyer] = list()
+			miscboxes[goody_group_key].name = "goody case - [goody_purchase_word] by [buyer]"
+		misc_contents[goody_group_key] = list()
 
 		for(var/datum/supply_order/our_order as anything in buying_account_orders)
 			for (var/item in our_order.pack.contains)
-				misc_contents[buyer] += item
-			misc_costs[buyer] += our_order.pack.cost
-			misc_order_num[buyer] = "[misc_order_num[buyer]]#[our_order.id] "
+				misc_contents[goody_group_key] += item
+			misc_costs[goody_group_key] += our_order.pack.cost
+			misc_order_num[goody_group_key] = "[misc_order_num[goody_group_key]]#[our_order.id] "
 
 	for(var/miscbox in miscboxes)
 		var/datum/supply_order/order = new/datum/supply_order()
 		order.id = misc_order_num[miscbox]
-		order.generateCombo(miscboxes[miscbox], miscbox, misc_contents[miscbox], misc_costs[miscbox])
+		var/datum/bank_account/goody_owner = goody_group_owners[miscbox]
+		var/list/goody_orders = goodies_by_buyer[miscbox]
+		var/datum/supply_order/first_manifest_order = goody_orders[1]
+		var/manifest_owner = goody_group_private[miscbox] ? (goody_owner?.account_holder || first_manifest_order?.orderer) : "Cargo"
+		order.generateCombo(miscboxes[miscbox], manifest_owner, misc_contents[miscbox], misc_costs[miscbox])
 		qdel(order)
 
 	//clean up all dealt with orders

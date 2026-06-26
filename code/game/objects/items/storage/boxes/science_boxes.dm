@@ -3,6 +3,7 @@
 /obj/item/storage/box/swab
 	name = "box of microbiological swabs"
 	desc = "Contains a number of sterile swabs for collecting microbiological samples."
+	icon_state = "medbox"
 	illustration = "swab"
 
 /obj/item/storage/box/swab/PopulateContents()

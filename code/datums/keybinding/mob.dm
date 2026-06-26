@@ -80,6 +80,31 @@
 	M.mode()
 	return TRUE
 
+/datum/keybinding/mob/ctrl_activate_inhand
+	hotkey_keys = list("CtrlZ")
+	name = "ctrl-activate_inhand"
+	full_name = "CTRL-Activate in-hand"
+	description = "Uses whatever item you have inhand"
+	keybind_signal = COMSIG_KB_MOB_CTRL_ACTIVATEINHAND_DOWN
+
+/datum/keybinding/mob/ctrl_activate_inhand/down(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/user_mob = user.mob
+	if(ismecha(user_mob.loc))
+		return
+
+	if(user_mob.incapacitated)
+		return
+
+	var/obj/item/held_item = user_mob.get_active_held_item()
+	if(held_item)
+		user_mob.CtrlClickOn(held_item)
+		user_mob.update_held_items()
+
+	return TRUE
+
 /datum/keybinding/mob/drop_item
 	hotkey_keys = list("Q") //HOWLING VOID EDIT. ORIGINAL: list("X")
 	name = "drop_item"

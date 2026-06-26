@@ -323,6 +323,7 @@ SUBSYSTEM_DEF(ticker)
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(howling_void_bot_announce_round_start))
 
 	if(length(GLOB.holidays))
 		to_chat(world, span_notice("and..."))

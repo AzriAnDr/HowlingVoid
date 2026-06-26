@@ -246,3 +246,19 @@
 	big_pointer = TRUE
 	honorifics = list("Minuteman General", "General")
 	honorific_positions = HONORIFIC_POSITION_LAST | HONORIFIC_POSITION_NONE
+
+/datum/id_trim/centcom/armadyne
+	assignment = "Armadyne Corporate"
+	trim_state = "trim_ert_commander"
+
+/datum/id_trim/centcom/armadyne/New()
+	. = ..()
+	access = SSid_access.get_region_access_list(list(REGION_GENERAL, REGION_CENTCOM))
+
+/datum/id_trim/centcom/armadyne/security
+	assignment = "Armadyne Corporate Security Detail"
+	trim_state = "trim_ert_commander"
+
+/datum/id_trim/centcom/armadyne/agent
+	assignment = "Armadyne Corporate Directorate"
+	trim_state = "trim_ert_commander"

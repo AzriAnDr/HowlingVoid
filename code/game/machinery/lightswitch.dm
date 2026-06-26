@@ -1,7 +1,7 @@
 /// The light switch. Can have multiple per area.
 /obj/machinery/light_switch
 	name = "light switch"
-	icon = 'icons/obj/machines/wallmounts.dmi' //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "light-nopower"
 	base_icon_state = "light"
 	desc = "Make dark."
@@ -36,6 +36,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 		find_and_mount_on_atom()
 	register_context()
 	update_appearance()
+
+#ifndef UNIT_TESTS
+/obj/machinery/light_switch/post_machine_initialize()
+	. = ..()
+	if(prob(50) && area.lightswitch && !is_reserved_level(loc.z))
+		turn_off_at_spawn()
+#endif
 
 /obj/machinery/light_switch/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -74,6 +81,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()
 	set_lights(!area.lightswitch)
+	playsound(src, 'sound/machines/lightswitch.ogg', 100, TRUE)
 
 /obj/machinery/light_switch/screwdriver_act(mob/living/user, obj/item/tool)
 	user.visible_message(span_notice("[user] starts unscrewing [src]..."), span_notice("You start unscrewing [src]..."))
@@ -97,6 +105,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 		SEND_SIGNAL(light_switch, COMSIG_LIGHT_SWITCH_SET, status)
 
 	area.power_change()
+
+/obj/machinery/light_switch/proc/turn_off_at_spawn()
+	if(!area.lightswitch)
+		return
+	area.light_turned_off_at_spawn = TRUE
+	set_lights(FALSE)
 
 /obj/machinery/light_switch/power_change()
 	SHOULD_CALL_PARENT(FALSE)

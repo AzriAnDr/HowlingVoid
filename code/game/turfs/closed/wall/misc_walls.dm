@@ -60,7 +60,7 @@
 /turf/closed/wall/r_wall/rust
 	//SDMM supports colors, this is simply for easier mapping
 	WHEN_MAP(color = COLOR_ORANGE_BROWN)
-	base_decon_state = "rusty_r_wall"
+	base_decon_state = "r_wall"
 
 /turf/closed/wall/r_wall/rust/Initialize(mapload)
 	. = ..()

@@ -77,7 +77,7 @@
 	item = /obj/item/storage/box/syndie_kit/mulligan
 	cost = 4
 	surplus = 30
-	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS)
+	purchasable_from = NONE // broken and pending rework
 
 /datum/uplink_item/stealthy_tools/jammer
 	name = "Radio Jammer"
@@ -103,13 +103,14 @@
 	item = /obj/item/storage/mail_counterfeit_device
 	cost = 1
 	surplus = 30
+	purchasable_from = NONE // not sure what the story is
 
 /datum/uplink_item/stealthy_tools/forensics_spofer
 	name = "Forensics Spoofing Kit"
 	desc = "A box that contains the forensics spoofer (and instructions) which can scan and replicate fingerprints and fibers \
 			and apply them to a target object. Helpful for framing crew. Recommend buying soap with your purchase."
 	item = /obj/item/storage/box/syndie_kit/forensics_spoofer
-	cost = 5
+	cost = /datum/uplink_item/low_cost::cost
 
 /datum/uplink_item/stealthy_tools/telecomm_blackout
 	name = "Disable Telecomms"
@@ -118,7 +119,7 @@
 	surplus = 0
 	progression_minimum = 15 MINUTES
 	limited_stock = 1
-	cost = 4
+	cost = /datum/uplink_item/medium_cost::cost
 	restricted = TRUE
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //Can still be purchased by loneops to give them an edge.
 
@@ -133,7 +134,7 @@
 	surplus = 0
 	progression_minimum = 15 MINUTES
 	limited_stock = 1
-	cost = 6
+	cost = /datum/uplink_item/medium_cost::cost
 	restricted = TRUE
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //Can still be purchased by loneops to give them an edge.
 

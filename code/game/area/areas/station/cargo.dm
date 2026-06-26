@@ -3,6 +3,7 @@
 	icon_state = "quart"
 	airlock_wires = /datum/wires/airlock/cargo
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	engineering_override_eligible = TRUE
 
 /area/station/cargo/sorting
 	name = "\improper Delivery Office"

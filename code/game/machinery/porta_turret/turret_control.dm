@@ -22,6 +22,8 @@
 	var/shoot_cyborgs = FALSE
 	/// List of weakrefs to all turrets
 	var/list/turrets = list()
+	/// ID used to link this controller to turrets with the same ID.
+	var/system_id
 
 /obj/machinery/turretid/Initialize(mapload)
 	. = ..()
@@ -48,6 +50,12 @@
 /obj/machinery/turretid/Destroy()
 	turrets.Cut()
 	return ..()
+
+/obj/machinery/turretid/post_machine_initialize()
+	. = ..()
+	if(system_id && GLOB.turret_id_refs[system_id])
+		for(var/obj/machinery/porta_turret/turret as anything in GLOB.turret_id_refs[system_id])
+			turrets |= WEAKREF(turret)
 
 /obj/machinery/turretid/update_overlays()
 	. = ..()

@@ -23,6 +23,7 @@
 /area/station/engineering/atmos
 	name = "Atmospherics"
 	icon_state = "atmos"
+	engineering_override_eligible = TRUE
 
 /area/station/engineering/atmos/upper
 	name = "Upper Atmospherics"
@@ -68,6 +69,7 @@
 	name = "\improper Atmospherics Engine"
 	icon_state = "atmos_engine"
 	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
+	engineering_override_eligible = TRUE
 
 /area/station/engineering/lobby
 	name = "\improper Engineering Lobby"
@@ -124,6 +126,7 @@
 	name = "Telecomms Storage"
 	icon_state = "tcom_storage"
 	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
+	engineering_override_eligible = TRUE
 
 /*
 * Construction Areas
@@ -143,3 +146,4 @@
 /area/station/construction/storage_wing
 	name = "\improper Storage Wing"
 	icon_state = "storage_wing"
+	engineering_override_eligible = TRUE

@@ -35,7 +35,7 @@
 	fire_sound = 'sound/items/weapons/taser3.ogg'
 
 /obj/item/ammo_casing/energy/disabler/hos
-	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE * 1.2)
+	e_cost = LASER_SHOTS(25, STANDARD_CELL_CHARGE * 1.2)
 
 /obj/item/ammo_casing/energy/disabler/smoothbore
 	projectile_type = /obj/projectile/beam/disabler/smoothbore

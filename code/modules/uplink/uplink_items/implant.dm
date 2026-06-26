@@ -11,7 +11,7 @@
 	name = "Freedom Implant"
 	desc = "Can be activated to release common restraints such as handcuffs, legcuffs, and even bolas tethered around the legs."
 	item = /obj/item/storage/box/syndie_kit/imp_freedom
-	cost = 5
+	cost = /datum/uplink_item/medium_cost::cost
 
 /datum/uplink_item/implants/freedom/New()
 	. = ..()
@@ -22,7 +22,7 @@
 	desc = "An implant injected into the body, allowing the use of an internal Syndicate radio. \
 			Used just like a regular headset, but can be disabled to use external headsets normally and to avoid detection."
 	item = /obj/item/storage/box/syndie_kit/imp_radio
-	cost = 4
+	cost = /datum/uplink_item/low_cost::cost
 	restricted = TRUE
 
 
@@ -31,14 +31,14 @@
 	desc = "This one-of-a-kind implant will make you almost invisible if you play your cards right. \
 			On activation, it will conceal you inside a chameleon cardboard box that is only revealed once someone bumps into it."
 	item = /obj/item/storage/box/syndie_kit/imp_stealth
-	cost = 8
+	cost = /datum/uplink_item/high_cost::cost
 
 /datum/uplink_item/implants/storage
 	name = "Storage Implant"
 	desc = "An implant injected into the body, and later activated at the user's will. It will open a small bluespace \
 			pocket capable of storing two regular-sized items."
 	item = /obj/item/storage/box/syndie_kit/imp_storage
-	cost = 8
+	cost = /datum/uplink_item/high_cost::cost
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"

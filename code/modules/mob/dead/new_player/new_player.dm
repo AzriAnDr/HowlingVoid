@@ -311,6 +311,11 @@
 	// NOVA EDIT ADDITION END
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
+	if(!SSticker.IsRoundInProgress() || QDELETED(employee))
+		return
+	if(employee.has_quirk(/datum/quirk/visitor) && istype(employee.mind?.assigned_role, SSjob.get_job_type(/datum/job/assistant)))
+		return
+
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
 	for(var/C in GLOB.employmentCabinets)
 		var/obj/structure/filingcabinet/employment/employmentCabinet = C

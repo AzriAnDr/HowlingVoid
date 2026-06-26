@@ -1338,6 +1338,11 @@
 	max_integrity = 20
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
+/obj/structure/rack/shelf
+	name = "shelf"
+	desc = "A shelf, for storing things on. Convenient!"
+	icon_state = "shelf"
+
 /obj/structure/rack/skeletal
 	name = "skeletal minibar"
 	desc = "Rattle me boozes!"
@@ -1360,7 +1365,9 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	return NONE
+	context[SCREENTIP_CONTEXT_LMB] = "Precise placement"
+	context[SCREENTIP_CONTEXT_RMB] = "Center item"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/rack/examine(mob/user)
 	. = ..()
@@ -1384,7 +1391,20 @@
 		return .
 	if((tool.item_flags & ABSTRACT) || (user.combat_mode && !(tool.item_flags & NOBLUDGEON)))
 		return NONE
-	if(user.transfer_item_to_turf(tool, get_turf(src), silent = FALSE))
+
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(user.transfer_item_to_turf(tool, get_turf(src), silent = FALSE))
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+
+	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
+		if(user.transfer_item_to_turf(tool, get_turf(src), silent = FALSE))
+			return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
+
+	var/x_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X * 0.5), ICON_SIZE_X * 0.5)
+	var/y_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y * 0.5), ICON_SIZE_Y * 0.5)
+	if(user.transfer_item_to_turf(tool, get_turf(src), x_offset, y_offset, silent = FALSE))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 

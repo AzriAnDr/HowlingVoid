@@ -19,6 +19,7 @@
 	outfit = /datum/outfit/job/blueshield
 	plasmaman_outfit = /datum/outfit/plasmaman/blueshield
 	display_order = JOB_DISPLAY_ORDER_BLUESHIELD
+	antagonist_restricted = TRUE
 	bounty_types = CIV_JOB_SEC
 
 	department_for_prefs = /datum/job_department/captain
@@ -91,7 +92,7 @@
 
 /obj/item/gun/energy/laser/hellgun/blueshield
 	name = "streamlined hellfire laser carbine"
-	icon = 'icons/aesthetics/guns/icons/energy.dmi'
+	icon = 'icons/obj/weapons/guns/energy.dmi'
 	icon_state = "bshg"
 	desc = parent_type::desc + " This one has been tinkered with by Central Command technicians to add blue-tinted furniture and squeeze out a few extra shots before running dry."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire/blueshield)

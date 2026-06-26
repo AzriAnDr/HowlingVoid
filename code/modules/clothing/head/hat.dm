@@ -65,6 +65,7 @@
 	flags_cover = NONE
 	dirt_state = null
 	alternate_worn_layer = HAIR_LAYER
+	supports_variations_flags = NONE
 
 /datum/armor/bio_hood_plague
 	bio = 100
@@ -311,6 +312,8 @@
 	name = "wedding veil"
 	desc = "A gauzy white veil."
 	icon_state = "weddingveil"
+	worn_icon = 'icons/mob/clothing/head/costume_additions.dmi'
+	worn_icon_state = "weddingveil_temp"
 	inhand_icon_state = null
 
 /obj/item/clothing/head/hats/centcom_cap

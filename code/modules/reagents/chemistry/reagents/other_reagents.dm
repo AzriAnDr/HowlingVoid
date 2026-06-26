@@ -111,6 +111,7 @@
 	taste_description = "water"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 	default_container = /obj/item/reagent_containers/cup/glass/waterbottle
 	var/cooling_temperature = 2
 
@@ -502,6 +503,7 @@
 	ph = 0.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 
 /datum/reagent/hellwater/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1357,6 +1359,7 @@
 	burning_volume = 0.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 	addiction_types = list(/datum/addiction/alcohol = 300)
 
 /datum/glass_style/drinking_glass/fuel
@@ -1647,6 +1650,7 @@
 	ph = 6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 
 /datum/reagent/carbondioxide/expose_turf(turf/open/exposed_turf, reac_volume)
 	if(istype(exposed_turf))
@@ -1881,6 +1885,13 @@
 		myseed.adjust_potency(round(volume * 0.3))
 		myseed.adjust_yield(round(volume * 0.1))
 
+/datum/reagent/plantnutriment/eznutriment/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(SPT_PROB(tox_prob, seconds_per_tick))
+		var/flipped_number = (affected_mob.mob_biotypes & MOB_PLANT) ? -1 : 1
+		if(affected_mob.adjust_brute_loss(flipped_number, updating_health = FALSE))
+			return UPDATE_MOB_HEALTH
+
 /datum/reagent/plantnutriment/left4zednutriment
 	name = "Left 4 Zed"
 	description = "Unstable nutriment that makes plants mutate more often than usual."
@@ -1893,6 +1904,13 @@
 
 	mytray.adjust_plant_health(round(volume * 0.1))
 	mytray.myseed?.adjust_instability(round(volume * 0.2))
+
+/datum/reagent/plantnutriment/left4zednutriment/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(SPT_PROB(tox_prob, seconds_per_tick))
+		var/flipped_number = (affected_mob.mob_biotypes & MOB_PLANT) ? -1 : 1
+		if(affected_mob.adjust_oxy_loss(flipped_number, updating_health = FALSE))
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/plantnutriment/robustharvestnutriment
 	name = "Robust Harvest"
@@ -1908,6 +1926,13 @@
 		myseed.adjust_instability(-0.25)
 		myseed.adjust_potency(round(volume * 0.1))
 		myseed.adjust_yield(round(volume * 0.2))
+
+/datum/reagent/plantnutriment/robustharvestnutriment/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(SPT_PROB(tox_prob, seconds_per_tick))
+		var/flipped_number = (affected_mob.mob_biotypes & MOB_PLANT) ? -1 : 1
+		if(affected_mob.adjust_fire_loss(flipped_number, updating_health = FALSE))
+			return UPDATE_MOB_HEALTH
 
 /datum/reagent/plantnutriment/endurogrow
 	name = "Enduro Grow"
@@ -1953,6 +1978,7 @@
 	burning_volume = 0.05 //but has a lot of hydrocarbons
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 	addiction_types = null
 	default_container = /obj/effect/decal/cleanable/blood/oil
 
@@ -1965,6 +1991,7 @@
 	ph = 1.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 
 /datum/reagent/stable_plasma/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -2807,6 +2834,7 @@
 	ph = 15
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 	metabolized_traits = list(TRAIT_PACIFISM)
 
 /datum/reagent/bz_metabolites

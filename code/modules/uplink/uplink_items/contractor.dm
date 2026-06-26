@@ -2,16 +2,21 @@
 	name = "Contractor"
 	weight = 10
 
+/// How much TC should an operative have left after buying the contractor kit, factoring in the default TC granted below.
+#define CONTRACTOR_KIT_REMAINING_TC (/datum/uplink_item/low_cost/modsuit::cost + /datum/uplink_item/low_cost::cost)
+/// Static define that will automatically update according to the traitor's default TC amount, factoring in the desired remaining TC defined above.
+#define CONTRACTOR_KIT_PRICE (TELECRYSTALS_DEFAULT - CONTRACTOR_KIT_REMAINING_TC)
+
 /datum/uplink_item/bundles_tc/contract_kit
 	name = "Contract Kit"
 	desc = "The Syndicate have offered you the chance to become a contractor, take on kidnapping contracts for TC \
 		and cash payouts. Upon purchase, you'll be granted your own contract uplink embedded within the supplied \
 		tablet computer. Additionally, you'll be granted standard contractor gear to help with your mission - \
-		comes supplied with the tablet, specialised space suit, chameleon jumpsuit and mask, agent card, \
+		comes supplied with the tablet, chameleon jumpsuit and mask, agent card, \
 		and a specialised contractor baton."
 	item = /obj/item/storage/box/syndicate/contract_kit
 	category = /datum/uplink_category/contractor
-	cost = 20
+	cost = CONTRACTOR_KIT_PRICE
 	purchasable_from = UPLINK_TRAITORS
 	population_minimum = TRAITOR_POPULATION_LOWPOP
 
@@ -20,6 +25,9 @@
 	for(var/uplink_items in subtypesof(/datum/uplink_item/contractor))
 		var/datum/uplink_item/uplink_item = new uplink_items
 		uplink_handler.extra_purchasable += uplink_item
+
+#undef CONTRACTOR_KIT_REMAINING_TC
+#undef CONTRACTOR_KIT_PRICE
 
 /datum/uplink_item/contractor
 	restricted = TRUE

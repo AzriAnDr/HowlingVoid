@@ -209,6 +209,20 @@
 /turf/open/indestructible/large
 	icon_state = "floor_large"
 
+/turf/open/indestructible/cobble
+	name = "cobblestone path"
+	desc = "A simple but beautiful path made of various sized stones."
+	icon = 'icons/turf/floors/floor.dmi'
+	icon_state = "cobble"
+	baseturfs = /turf/open/indestructible/cobble
+	tiled_turf = FALSE
+
+/turf/open/indestructible/cobble/side
+	icon_state = "cobble_side"
+
+/turf/open/indestructible/cobble/corner
+	icon_state = "cobble_corner"
+
 /turf/open/indestructible/white
 	icon_state = "white"
 

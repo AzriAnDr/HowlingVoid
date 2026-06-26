@@ -1,6 +1,22 @@
 /// Default duration of an EMP randomisation on a chameleon item
 #define EMP_RANDOMISE_TIME 30 SECONDS
 
+/datum/action/chameleon_slowdown
+	name = "Toggle Chameleon Slowdown"
+	button_icon_state = "chameleon_outfit"
+	var/savedslowdown = 0
+
+/datum/action/chameleon_slowdown/New(Target, slowdown)
+	..(Target)
+	savedslowdown = slowdown
+
+/datum/action/chameleon_slowdown/Trigger(trigger_flags)
+	var/obj/item/clothing/target_clothing = target
+	var/slow = target_clothing.slowdown
+	target_clothing.slowdown = savedslowdown
+	savedslowdown = slow
+	owner.update_equipment_speed_mods()
+
 /datum/action/item_action/chameleon
 
 /datum/action/item_action/chameleon/change
@@ -21,6 +37,7 @@
 	/// What chameleon is active right now?
 	/// Can be set in the declaration to update in init
 	var/active_type
+	var/datum/action/chameleon_slowdown/slowtoggle
 	/// Cooldown from when we started being EMP'd
 	COOLDOWN_DECLARE(emp_timer)
 
@@ -66,20 +83,20 @@
 		return
 
 	// Whenever a mob gains their first cham change action, they need to also gain the outfit action
-	if(locate(/datum/action/chameleon_outfit) in grant_to.actions)
-		return
-
-	var/datum/action/chameleon_outfit/outfit_action = new(owner)
-	outfit_action.Grant(owner)
+	if(!(locate(/datum/action/chameleon_outfit) in grant_to.actions))
+		var/datum/action/chameleon_outfit/outfit_action = new(owner)
+		outfit_action.Grant(owner)
+	if(grant_to == owner)
+		slowtoggle?.Grant(grant_to)
 
 /datum/action/item_action/chameleon/change/Remove(mob/remove_from)
 	. = ..()
 	// Likewise when the mob loses the cham change action, if they have no others, they need to lose the outfit action
-	if(locate(/datum/action/item_action/chameleon/change) in remove_from.actions)
-		return
-
-	var/datum/action/chameleon_outfit/outfit_action = locate() in remove_from.actions
-	QDEL_NULL(outfit_action)
+	if(!(locate(/datum/action/item_action/chameleon/change) in remove_from.actions))
+		var/datum/action/chameleon_outfit/outfit_action = locate() in remove_from.actions
+		QDEL_NULL(outfit_action)
+	if(remove_from == owner)
+		slowtoggle?.Remove(remove_from)
 
 /// Basic initialization of the chameleon items we cannot pick from
 /datum/action/item_action/chameleon/change/proc/initialize_blacklist()
@@ -138,6 +155,8 @@
 		var/mob/wearer = chameleon_item.loc
 		wearer.update_clothing(chameleon_item.slot_flags | ITEM_SLOT_HANDS)
 		wearer.refresh_obscured()
+		if(isliving(wearer))
+			wearer.regenerate_icons()
 
 /datum/action/item_action/chameleon/change/proc/update_item(obj/item/picked_item)
 	PROTECTED_PROC(TRUE) // Call update_look, not this!
@@ -180,6 +199,15 @@
 			var/obj/item/clothing/clothing_target = item_target
 			var/obj/item/clothing/picked_clothing = picked_item
 			clothing_target.flags_cover = picked_clothing::flags_cover
+			clothing_target.supports_variations_flags = picked_clothing::supports_variations_flags
+			clothing_target.worn_icon_digi = picked_clothing::worn_icon_digi
+			clothing_target.worn_icon_taur_snake = picked_clothing::worn_icon_taur_snake
+			clothing_target.worn_icon_taur_paw = picked_clothing::worn_icon_taur_paw
+			clothing_target.worn_icon_taur_hoof = picked_clothing::worn_icon_taur_hoof
+			clothing_target.worn_icon_muzzled = picked_clothing::worn_icon_muzzled
+			clothing_target.flags_inv = picked_clothing::flags_inv
+			clothing_target.visor_flags_cover = picked_clothing::visor_flags_cover
+			clothing_target.slowdown = 0
 
 
 	if((picked_item::greyscale_config) && picked_item::greyscale_colors)

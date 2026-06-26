@@ -80,7 +80,7 @@
 /obj/item/respawn_implant //Not actually an implanter
 	name = "Respawn Implanter"
 	desc = "Life doesn't end after death."
-	icon = 'icons/aesthetics/implanter/icons/implanter.dmi'
+	icon = 'icons/obj/medical/syringe.dmi'
 	icon_state = "implanter0"
 	inhand_icon_state = "syringe_0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'

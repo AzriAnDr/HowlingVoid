@@ -2,10 +2,24 @@
 // Some eye colors will produce very slightly stronger mechanical night vision effects just by virtue of their RGB values being scaled higher (typically lighter colours).
 
 /datum/quirk/night_vision
+	name = "Night Vision"
 	desc = "You can see a little better in darkness than most ordinary humanoids. If your eyes are naturally more sensitive to light through other means (such as being photophobic or a mothperson), this effect is significantly stronger."
+	icon = FA_ICON_MOON
+	value = 4
+	mob_trait = TRAIT_NIGHT_VISION
+	gain_text = span_notice("The shadows seem a little less dark.")
+	lose_text = span_danger("Everything seems a little darker.")
 	medical_record_text = "Patient's visual sensory organs demonstrate non-standard performance in low-light conditions."
+	mail_goodies = list(
+		/obj/item/flashlight/flashdark,
+		/obj/item/food/grown/mushroom/glowshroom/shadowshroom,
+		/obj/item/skillchip/light_remover,
+	)
 	var/nv_color = null /// Holds the player's selected night vision colour
 	var/list/nv_color_cutoffs = null /// Contains the color_cutoffs applied to the user's eyes w/ our custom hue (once built)
+
+/datum/quirk/night_vision/add(client/client_source)
+	refresh_quirk_holder_eyes()
 
 /datum/quirk/night_vision/add_unique(client/client_source)
 	. = ..()
@@ -15,6 +29,9 @@
 		nv_color = process_chat_color(human_holder.eye_color_left)
 	nv_color_cutoffs = calculate_color_cutoffs(nv_color)
 	refresh_quirk_holder_eyes() // make double triple dog sure we apply the overlay
+
+/datum/quirk/night_vision/remove()
+	refresh_quirk_holder_eyes()
 
 /// Calculate eye organ color_cutoffs used in tinted night vision with a supplied hexcode colour, clamping and scaling appropriately.
 /datum/quirk/night_vision/proc/calculate_color_cutoffs(color)
@@ -33,6 +50,18 @@
 		new_rgb_cutoffs[i] = adjusted_color
 
 	return new_rgb_cutoffs
+
+/datum/quirk/night_vision/proc/refresh_quirk_holder_eyes()
+	var/mob/living/carbon/human/human_quirk_holder = quirk_holder
+	var/obj/item/organ/eyes/eyes = human_quirk_holder.get_organ_by_type(/obj/item/organ/eyes)
+	if(!eyes)
+		return
+
+	// NIGHT VISION ADJUSTMENT - adjusts color cutoffs based on chosen quirk color, or left eye colour if not available.
+	nv_color_cutoffs = calculate_color_cutoffs(nv_color)
+	eyes.color_cutoffs = nv_color_cutoffs
+	// We've either added or removed TRAIT_NIGHT_VISION before calling this proc. Just refresh the eyes.
+	eyes.refresh()
 
 /datum/quirk_constant_data/night_vision
 	associated_typepath = /datum/quirk/night_vision

@@ -2,6 +2,18 @@
 #define PROXIMITY_ON_SCREEN "_red"
 #define PROXIMITY_NEAR "_yellow"
 
+/atom/movable/screen/multitool_arrow
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "multitool_arrow"
+	pixel_x = -32
+	pixel_y = -32
+
+/atom/movable/screen/multitool_arrow/Destroy()
+	if(hud)
+		hud.infodisplay -= src
+		INVOKE_ASYNC(hud, TYPE_PROC_REF(/datum/hud, show_hud), hud.hud_version)
+	return ..()
+
 /**
  * Multitool -- A multitool is used for hacking electronic devices.
  *
@@ -13,7 +25,7 @@
 /obj/item/multitool
 	name = "multitool"
 	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors. You can activate it in-hand to locate the nearest APC."
-	icon = 'icons/obj/devices/tool.dmi' //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "multitool"
 	inhand_icon_state = "multitool"
 	icon_angle = -90

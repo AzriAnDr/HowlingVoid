@@ -1,7 +1,7 @@
 /obj/item/holosign_creator/privacy
 	name = "personal holosign projector"
 	desc = "A holographic projector which creates privacy barriers to inform people that you are looking for privacy. Right-click to switch between pink (lewd advisory) and grey (privacy)."
-	icon = 'icons/obj/devices/tools.dmi'
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "signmaker_erp"
 	holosign_type = /obj/structure/holosign/privacy
 	creation_time = 0

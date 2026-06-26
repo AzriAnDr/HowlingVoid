@@ -121,6 +121,23 @@
 	..()
 	new /obj/item/storage/belt/security/full(src)
 
+/obj/structure/closet/secure_closet/corrections_officer
+	name = "corrections officer riot gear"
+	icon = 'icons/obj/closet.dmi'
+	icon_state = "riot"
+	door_anim_time = 0
+
+/obj/structure/closet/secure_closet/corrections_officer/PopulateContents()
+	..()
+	new /obj/item/clothing/suit/armor/riot(src)
+	new /obj/item/grenade/flashbang(src)
+	new /obj/item/assembly/flash/handheld(src)
+	new /obj/item/restraints/handcuffs(src)
+	new /obj/item/clothing/shoes/jackboots/sec(src)
+	new /obj/item/clothing/head/helmet/toggleable/riot(src)
+	new /obj/item/shield/riot(src)
+	new /obj/item/clothing/under/rank/security/corrections_officer(src)
+
 /obj/structure/closet/secure_closet/detective
 	name = "\improper detective's cabinet"
 	icon_state = "cabinet"

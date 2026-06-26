@@ -12,6 +12,7 @@
 /obj/item/storage/box/masks
 	name = "box of sterile masks"
 	desc = "This box contains sterile medical masks."
+	icon_state = "medbox"
 	illustration = "sterile"
 
 /obj/item/storage/box/masks/PopulateContents()
@@ -31,6 +32,7 @@
 /obj/item/storage/box/rxglasses/spyglasskit
 	name = "spyglass kit"
 	desc = "this box contains <i>cool</i> nerd glasses; with built-in displays to view a linked camera."
+	icon_state = "secbox"
 
 /obj/item/storage/box/rxglasses/spyglasskit/PopulateContents()
 	var/obj/item/clothing/accessory/spy_bug/newbug = new(src)

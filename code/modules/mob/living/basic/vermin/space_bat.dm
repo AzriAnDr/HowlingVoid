@@ -22,6 +22,7 @@
 	faction = list(FACTION_HOSTILE)
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	butcher_results = list(/obj/item/food/meat/slab = 1)
+	gold_core_spawnable = HOSTILE_SPAWN
 	pass_flags = PASSTABLE
 
 	attack_sound = 'sound/items/weapons/bite.ogg'

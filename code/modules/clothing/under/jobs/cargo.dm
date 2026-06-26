@@ -20,8 +20,8 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/rank/cargo/tech
-	name = "cargo technician's uniform"
-	desc = "A brown sweater and black jeans, because, honestly, who likes shorts?"
+	name = "cargo technician's jumpsuit"
+	desc = "A jumpsuit from the previous supply-department, a tag on the collar says, 'Production Line: 2557, Product of Nanotrasen.'"
 	icon_state = "cargotech"
 	inhand_icon_state = "lb_suit"
 
@@ -34,8 +34,8 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/rank/cargo/tech/skirt
-	name = "cargo technician's skirt"
-	desc = "A brown sweater and a black skirt to match."
+	name = "cargo technician's jumpskirt"
+	desc = "A jumpskirt from the previous supply-department, a tag on the collar says, 'Production Line: 2557, Product of Nanotrasen.'"
 	icon_state = "cargo_skirt"
 	inhand_icon_state = "lb_suit"
 	body_parts_covered = CHEST|GROIN|ARMS

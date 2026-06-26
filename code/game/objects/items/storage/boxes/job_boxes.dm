@@ -91,6 +91,14 @@
 	illustration = "extendedtank"
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 
+/obj/item/storage/box/survival/engineer/marine
+	name = "military survival box"
+	desc = "A box issued to Nanotrasen space marines, containing field essentials. This one is labelled to contain an extended-capacity tank."
+
+/obj/item/storage/box/survival/engineer/marine/PopulateContents()
+	..()
+	new /obj/item/storage/crayons(src)
+
 /obj/item/storage/box/survival/engineer/radio/PopulateContents()
 	..() // we want the regular items too.
 	new /obj/item/radio/off(src)
@@ -124,6 +132,7 @@
 
 // Security survival box
 /obj/item/storage/box/survival/security
+	icon_state = "secbox"
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 
 /obj/item/storage/box/survival/security/radio/PopulateContents()
@@ -132,6 +141,7 @@
 
 // Medical survival box
 /obj/item/storage/box/survival/medical
+	icon_state = "medbox"
 	mask_type = /obj/item/clothing/mask/breath/medical
 
 /obj/item/storage/box/survival/crafted
@@ -185,6 +195,7 @@
 /obj/item/storage/box/clown
 	name = "clown box"
 	desc = "A colorful cardboard box for the clown"
+	icon_state = "hugbox"
 	illustration = "clown"
 
 /obj/item/storage/box/clown/tool_act(mob/living/user, obj/item/tool, list/modifiers)

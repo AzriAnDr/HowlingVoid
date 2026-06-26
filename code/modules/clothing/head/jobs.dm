@@ -411,6 +411,34 @@
 	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge. Looks a bit stout."
 	icon_state = "hoscap"
 
+/datum/atom_skin/hos_cap
+	abstract_type = /datum/atom_skin/hos_cap
+
+/datum/atom_skin/hos_cap
+	preview_name = "Red Cap"
+	new_icon_state = "hoscap"
+
+/datum/atom_skin/hos_cap/blue
+	preview_name = "Blue Cap"
+	new_icon = 'icons/obj/clothing/hats.dmi'
+	new_icon_state = "hoscap_blue"
+	new_worn_icon = 'icons/mob/clothing/head.dmi'
+
+/datum/atom_skin/hos_cap/sol
+	preview_name = "Sol Cap"
+	new_icon = 'icons/obj/clothing/hats.dmi'
+	new_icon_state = "policechiefcap"
+	new_worn_icon = 'icons/mob/clothing/head.dmi'
+
+/datum/atom_skin/hos_cap/sheriff
+	preview_name = "Sheriff Hat"
+	new_icon = 'icons/obj/clothing/hats.dmi'
+	new_icon_state = "cowboyhat_black"
+	new_worn_icon = 'icons/mob/clothing/head.dmi'
+
+/obj/item/clothing/head/hats/hos/cap/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/hos_cap)
+
 /obj/item/clothing/head/hats/hos/cap/Initialize(mapload)
 	. = ..()
 	// Give it a little publicity
@@ -437,6 +465,9 @@
 /obj/item/clothing/head/hats/hos/cap/syndicate
 	name = "syndicate cap"
 	desc = "A black cap fit for a high ranking syndicate officer."
+
+/obj/item/clothing/head/hats/hos/cap/syndicate/setup_reskins()
+	return
 
 /obj/item/clothing/head/hats/hos/shako
 	name = "sturdy shako"
@@ -476,6 +507,14 @@
 	strip_delay = 6 SECONDS
 	dog_fashion = /datum/dog_fashion/head/warden
 
+/obj/item/clothing/head/hats/warden/syndicate
+	name = "master at arms' police hat"
+	desc = "A fashionable police cap emblazoned with a golden badge, issued to the Master at Arms. Protects the head from impacts."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "policehelm_syndie"
+	dog_fashion = null
+
 /datum/armor/hats_warden
 	melee = 40
 	bullet = 30
@@ -489,6 +528,37 @@
 /obj/item/clothing/head/hats/warden/police
 	name = "police officer's hat"
 	desc = "A police officer's hat. This hat emphasizes that you are THE LAW."
+
+/datum/atom_skin/police_patrol_cap
+	abstract_type = /datum/atom_skin/police_patrol_cap
+
+/datum/atom_skin/police_patrol_cap/blue
+	preview_name = "Blue"
+	new_icon_state = "policeofficercap"
+
+/datum/atom_skin/police_patrol_cap/sillitoe
+	preview_name = "Sillitoe"
+	new_icon_state = "policetrafficcap"
+
+/datum/atom_skin/police_patrol_cap/black
+	preview_name = "Black"
+	new_icon_state = "policeofficerpatrolcap"
+
+/datum/atom_skin/police_patrol_cap/policecadetcap
+	preview_name = "Cadet"
+	new_icon_state = "policecadetcap"
+
+/obj/item/clothing/head/hats/warden/police/patrol
+	name = "police patrol cap"
+	desc = "A dark colored hat with a silver badge, for the officer interested in style."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "policeofficerpatrolcap"
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
+	armor_type = /datum/armor/head_helmet
+
+/obj/item/clothing/head/hats/warden/police/patrol/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/police_patrol_cap)
 
 /obj/item/clothing/head/hats/warden/red
 	name = "warden's hat"
@@ -565,6 +635,59 @@
 					message += pick(", eh?", ", EH?")
 		speech_args[SPEECH_MESSAGE] = message
 
+/datum/atom_skin/security_garrison_cap
+	abstract_type = /datum/atom_skin/security_garrison_cap
+
+/datum/atom_skin/security_garrison_cap/black
+	preview_name = "Black Variant"
+	new_icon_state = "garrison_black"
+
+/datum/atom_skin/security_garrison_cap/blue
+	preview_name = "Blue Variant"
+	new_icon_state = "garrison_blue"
+
+/obj/item/clothing/head/security_garrison
+	name = "security garrison cap"
+	desc = "A robust garrison cap with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "garrison_black"
+	armor_type = /datum/armor/head_helmet
+	strip_delay = 60
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/head/security_garrison/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_garrison_cap)
+
+/datum/atom_skin/security_cap
+	abstract_type = /datum/atom_skin/security_cap
+
+/datum/atom_skin/security_cap/black
+	preview_name = "Black Variant"
+	new_icon_state = "security_cap_black"
+
+/datum/atom_skin/security_cap/blue
+	preview_name = "Blue Variant"
+	new_icon_state = "security_cap_blue"
+
+/datum/atom_skin/security_cap/white
+	preview_name = "White Variant"
+	new_icon_state = "security_cap_white"
+
+/obj/item/clothing/head/security_cap
+	name = "security cap"
+	desc = "A robust cap with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "security_cap_black"
+	armor_type = /datum/armor/head_helmet
+	strip_delay = 60
+	dog_fashion = null
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/head/security_cap/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_cap)
+
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
 	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
@@ -588,12 +711,40 @@
 	acid = 50
 	wound = 5
 
+/obj/item/clothing/head/beret/sec/nova
+	icon_state = "/obj/item/clothing/head/beret/sec/nova"
+	post_init_icon_state = "beret_badge"
+	greyscale_config = /datum/greyscale_config/beret_badge
+	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_colors = "#3F3C40#375989"
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
+	armor_type = /datum/armor/head_helmet
+
+/obj/item/clothing/head/beret/sec/syndicate
+	name = "brig officer's beret"
+	desc = "A stylish and protective beret, produced and manufactured by Interdyne Pharmaceuticals with help from the Gorlex Marauders."
+	icon_state = "/obj/item/clothing/head/beret/sec/syndicate"
+	post_init_icon_state = "beret_badge"
+	greyscale_config = /datum/greyscale_config/beret_badge
+	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
+	greyscale_colors = "#3F3C40#DB2929"
+
 /obj/item/clothing/head/beret/sec/navywarden
 	name = "warden's beret"
 	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
 	icon_state = "/obj/item/clothing/head/beret/sec/navywarden"
 	greyscale_colors = "#638799#ebebeb"
 	strip_delay = 6 SECONDS
+
+/obj/item/clothing/head/beret/sec/navywarden/nova
+	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
+	icon_state = "/obj/item/clothing/head/beret/sec/navywarden/nova"
+	post_init_icon_state = "beret_badge_fancy_twist"
+	greyscale_config = /datum/greyscale_config/beret_badge_fancy
+	greyscale_config_worn = /datum/greyscale_config/beret_badge_fancy/worn
+	greyscale_colors = "#3f6e9e#FF0000#00AEEF"
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
+	armor_type = /datum/armor/hats_warden
 
 /obj/item/clothing/head/beret/sec/navyofficer
 	desc = "A special beret with the security insignia emblazoned on it. For officers with class."
@@ -635,6 +786,28 @@
 	desc = "A beret in a distinct surgical turquoise!"
 	icon_state = "/obj/item/clothing/head/beret/medical/cmo"
 	greyscale_colors = "#5EB8B8"
+
+/obj/item/clothing/head/beret/medical/nova/interdyne
+	name = "interdyne beret"
+	desc = "A white and green beret denoting one's allegiance to Interdyne Pharmaceutics."
+	icon_state = "/obj/item/clothing/head/beret/medical/nova/interdyne"
+	greyscale_colors = "#FFFFFF#198019"
+
+/obj/item/clothing/head/hats/syndicate/interdyne_deckofficer_black
+	name = "black deck officer's cap"
+	desc = "A black officer's cap that demands discipline from the one who wears it."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "ip_officercap_black"
+	armor_type = /datum/armor/sec_navywarden
+
+/obj/item/clothing/head/hats/syndicate/interdyne_deckofficer_white
+	name = "white deck officer's cap"
+	desc = "A white officer's cap that demands discipline from the one who wears it."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "ip_officercap_white"
+	armor_type = /datum/armor/sec_navywarden
 
 /obj/item/clothing/head/utility/surgerycap
 	name = "blue surgery cap"
@@ -858,3 +1031,13 @@
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#43523d#a2abb0"
 	armor_type = /datum/armor/cosmetic_sec
+
+/obj/item/clothing/head/beret/sec/armadyne
+	name = "armadyne corporate beret"
+	desc = "A comfy yet robust beret worn by Armadyne corporate."
+	icon_state = "/obj/item/clothing/head/beret/sec/armadyne"
+	post_init_icon_state = "beret_badge_fancy_diagonal"
+	greyscale_config = /datum/greyscale_config/beret_badge_fancy
+	greyscale_config_worn = /datum/greyscale_config/beret_badge_fancy/worn
+	greyscale_colors = "#3F3C40#5B2423#491716"
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON

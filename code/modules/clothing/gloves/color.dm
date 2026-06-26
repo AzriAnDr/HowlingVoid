@@ -28,6 +28,38 @@
 /obj/item/clothing/gloves/color/black/security/blu
 	icon_state = "sec_blu"
 
+/datum/atom_skin/sec_gloves_white
+	abstract_type = /datum/atom_skin/sec_gloves_white
+
+/datum/atom_skin/sec_gloves_white/black
+	preview_name = "Black Variant"
+	new_icon_state = "gloves_black"
+
+/datum/atom_skin/sec_gloves_white/blue
+	preview_name = "Blue Variant"
+	new_icon_state = "gloves_blue"
+
+/datum/atom_skin/sec_gloves_white/white
+	preview_name = "White Variant"
+	new_icon_state = "gloves_white"
+
+/obj/item/clothing/gloves/color/black/security/white
+	icon = 'icons/obj/clothing/gloves_additions.dmi'
+	worn_icon = 'icons/mob/clothing/hands_additions.dmi'
+	icon_state = "gloves_white"
+
+/obj/item/clothing/gloves/color/black/security/white/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/sec_gloves_white)
+
+/obj/item/clothing/gloves/color/black/security/armadyne
+	name = "armadyne gloves"
+	desc = "Tactical and sleek. Worn by Armadyne representatives."
+	icon = 'icons/obj/clothing/gloves_additions.dmi'
+	worn_icon = 'icons/mob/clothing/hands_additions.dmi'
+	icon_state = "armadyne_gloves"
+	worn_icon_state = "armadyne_gloves"
+	cut_type = null
+
 /obj/item/clothing/gloves/fingerless
 	name = "fingerless gloves"
 	desc = "Plain black gloves without fingertips for the hard-working."

@@ -106,7 +106,7 @@
 	resistance_flags |= INDESTRUCTIBLE
 	atom_integrity = INFINITY
 	desc += " Reality around it shimmers, making it effectively impervious to damage."
-	send_clock_message(null, span_bigbrass(span_bold("The Anchoring Crystal at [crystal_area] has fully charged! [anchoring_crystal_charge_message(TRUE)]")), msg_ghosts = FALSE)
+	send_clock_message(null, span_bigbrass(span_bold("The Anchoring Crystal at [crystal_area] has fully charged! [anchoring_crystal_charge_message()]")), msg_ghosts = FALSE)
 	priority_announce("Reality in [crystal_area] has been destabilized. Personnel are advised to avoid the area.", "Central Command Higher Dimensional Affairs")
 
 /obj/structure/destructible/clockwork/anchoring_crystal/proc/on_update_overlays(atom/crystal, list/overlays)
@@ -123,14 +123,15 @@
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 2)
 	overlays += shield_appearance
 
-/proc/anchoring_crystal_charge_message(completed = FALSE)
-	switch(GLOB.charged_anchoring_crystals)
-		if(0)
-			return "[completed ? "We can now" : "We will be able to"] draw more power from the Ark."
-		if(ANCHORING_CRYSTALS_TO_SUMMON - 1)
-			return "[completed ? "We can now" : "We will be able to"] open the Ark."
-		else
-			return "Ratvar's grip on this reality strengthens."
+/proc/anchoring_crystal_charge_message()
+	var/charged_crystals = min(GLOB.charged_anchoring_crystals, ANCHORING_CRYSTALS_TO_SUMMON)
+	var/crystals_remaining = max(ANCHORING_CRYSTALS_TO_SUMMON - charged_crystals, 0)
+	var/progress_text = "([charged_crystals]/[ANCHORING_CRYSTALS_TO_SUMMON])"
+
+	if(!crystals_remaining)
+		return "All required Anchoring Crystals are charged [progress_text]. Create the Ark and strike it with a Clockwork Slab to open the way for Ratvar."
+
+	return "[crystals_remaining] more Anchoring Crystal[crystals_remaining == 1 ? "" : "s"] must be charged before the Ark can open [progress_text]."
 
 #undef CRYSTAL_SHIELD_DELAY
 #undef CRYSTAL_CHARGING

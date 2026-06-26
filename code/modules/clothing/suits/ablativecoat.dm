@@ -35,6 +35,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/ablative
 	strip_delay = 3 SECONDS
 	equip_delay_other = 4 SECONDS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	var/hit_reflect_chance = 50
 
 /obj/item/clothing/suit/hooded/ablative/Initialize(mapload)

@@ -54,6 +54,24 @@
 	var/static/list/recipes = list(/datum/crafting_recipe/boh)
 	AddElement(/datum/element/slapcrafting, recipes)
 
+/obj/item/satchel_of_holding_inert
+	name = "inert satchel of holding"
+	desc = "What is currently a just an unwieldly block of metal with a slot ready to accept a bluespace anomaly core."
+	icon = 'icons/holdingfashion_port/storage.dmi'
+	icon_state = "inertsatchel"
+	w_class = WEIGHT_CLASS_BULKY
+	resistance_flags = FIRE_PROOF
+	item_flags = NO_MAT_REDEMPTION
+
+/obj/item/duffel_of_holding_inert
+	name = "inert duffel bag of holding"
+	desc = "What is currently a just an unwieldly block of metal with a slot ready to accept a bluespace anomaly core."
+	icon = 'icons/holdingfashion_port/storage.dmi'
+	icon_state = "inertduffel"
+	w_class = WEIGHT_CLASS_BULKY
+	resistance_flags = FIRE_PROOF
+	item_flags = NO_MAT_REDEMPTION
+
 /obj/item/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of bluespace."
@@ -79,6 +97,21 @@
 	user.suicide_log()
 	qdel(user)
 
+/obj/item/storage/backpack/holding/satchel
+	name = "satchel of holding"
+	desc = "A satchel that opens into a localized pocket of bluespace."
+	icon = 'icons/holdingfashion_port/storage.dmi'
+	icon_state = "holdingsatchel"
+	worn_icon = 'icons/holdingfashion_port/back.dmi'
+	worn_icon_state = "holdingsatchel"
+
+/obj/item/storage/backpack/holding/duffel
+	name = "duffel bag of holding"
+	desc = "A duffel bag that opens into a localized pocket of bluespace."
+	icon = 'icons/holdingfashion_port/storage.dmi'
+	icon_state = "holdingduffel"
+	worn_icon = 'icons/holdingfashion_port/back.dmi'
+	worn_icon_state = "holdingduffel"
 
 /obj/item/storage/backpack/santabag
 	name = "Santa's Gift Bag"
@@ -157,6 +190,28 @@
 	desc = "It's a very robust backpack."
 	icon_state = "backpack-security"
 	inhand_icon_state = "securitypack"
+
+/datum/atom_skin/security_backpack_blue
+	abstract_type = /datum/atom_skin/security_backpack_blue
+
+/datum/atom_skin/security_backpack_blue/black
+	preview_name = "Black Variant"
+	new_icon_state = "backpack_security_black"
+
+/datum/atom_skin/security_backpack_blue/white
+	preview_name = "White Variant"
+	new_icon_state = "backpack_security_white"
+
+/obj/item/storage/backpack/security/blue
+	icon = 'icons/obj/clothing/backpacks.dmi'
+	worn_icon = 'icons/mob/clothing/back_additions.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/backpack_righthand.dmi'
+	icon_state = "backpack_security_black"
+	inhand_icon_state = "backpack_security_black"
+
+/obj/item/storage/backpack/security/blue/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_backpack_blue)
 
 /obj/item/storage/backpack/captain
 	name = "captain's backpack"
@@ -369,6 +424,28 @@
 	icon_state = "satchel-security"
 	inhand_icon_state = "satchel-sec"
 
+/datum/atom_skin/security_satchel_blue
+	abstract_type = /datum/atom_skin/security_satchel_blue
+
+/datum/atom_skin/security_satchel_blue/black
+	preview_name = "Black Variant"
+	new_icon_state = "satchel_security_black"
+
+/datum/atom_skin/security_satchel_blue/white
+	preview_name = "White Variant"
+	new_icon_state = "satchel_security_white"
+
+/obj/item/storage/backpack/satchel/sec/blue
+	icon = 'icons/obj/clothing/backpacks.dmi'
+	worn_icon = 'icons/mob/clothing/back_additions.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/backpack_righthand.dmi'
+	icon_state = "satchel_security_black"
+	inhand_icon_state = "satchel_security_black"
+
+/obj/item/storage/backpack/satchel/sec/blue/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_satchel_blue)
+
 /obj/item/storage/backpack/satchel/explorer
 	name = "explorer satchel"
 	desc = "A robust satchel for stashing your loot."
@@ -479,6 +556,28 @@
 	desc = "A robust messenger bag for security related needs."
 	icon_state = "messenger_security"
 	inhand_icon_state = "messenger_security"
+
+/datum/atom_skin/security_messenger_blue
+	abstract_type = /datum/atom_skin/security_messenger_blue
+
+/datum/atom_skin/security_messenger_blue/black
+	preview_name = "Black Variant"
+	new_icon_state = "messenger_security_black"
+
+/datum/atom_skin/security_messenger_blue/white
+	preview_name = "White Variant"
+	new_icon_state = "messenger_security_white"
+
+/obj/item/storage/backpack/messenger/sec/blue
+	icon = 'icons/obj/clothing/backpacks.dmi'
+	worn_icon = 'icons/mob/clothing/back_additions.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/backpack_righthand.dmi'
+	icon_state = "messenger_security_black"
+	inhand_icon_state = "messenger_security_black"
+
+/obj/item/storage/backpack/messenger/sec/blue/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_messenger_blue)
 
 /obj/item/storage/backpack/messenger/explorer
 	name = "explorer messenger bag"

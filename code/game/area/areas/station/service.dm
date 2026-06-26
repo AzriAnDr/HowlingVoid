@@ -1,5 +1,6 @@
 /area/station/service
 	airlock_wires = /datum/wires/airlock/service
+	engineering_override_eligible = TRUE
 
 /*
 * Bar/Kitchen Areas

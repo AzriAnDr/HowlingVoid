@@ -1,6 +1,4 @@
 #define REQUIRED_OBSERVERS 2
-#define MEGAFAUNA_MEAT_AMOUNT 20
-
 //this is for revitalizing/preserving regen cores
 /obj/structure/lavaland/ash_walker/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(attacking_item, /obj/item/organ/monster_core/regenerative_core))
@@ -87,51 +85,6 @@
 
 	return ..()
 
-//this is the nova override
-/obj/structure/lavaland/ash_walker/consume()
-	for(var/mob/living/viewable_living in view(src, 1)) //Only for corpse right next to/on same tile
-		if(!viewable_living.stat)
-			continue
-
-		viewable_living.unequip_everything()
-
-		if(issilicon(viewable_living)) //no advantage to sacrificing borgs...
-			viewable_living.investigate_log("has been gibbed via ashwalker sacrifice as a borg.", INVESTIGATE_DEATHS)
-			viewable_living.gib()
-			return
-
-		if(viewable_living.mind?.has_antag_datum(/datum/antagonist/ashwalker) && (viewable_living.ckey || viewable_living.get_ghost(FALSE, TRUE))) //special interactions for dead lava lizards with ghosts attached
-			revive_ashwalker(viewable_living)
-			return
-
-		if(ismegafauna(viewable_living))
-			meat_counter += MEGAFAUNA_MEAT_AMOUNT
-
-		else
-			meat_counter++
-
-		playsound(get_turf(src),'sound/effects/magic/demon_consume.ogg', 100, TRUE)
-		var/delivery_key = viewable_living.fingerprintslast //key of whoever brought the body
-		var/mob/living/delivery_mob = get_mob_by_key(delivery_key) //mob of said key
-
-		//there is a 40% chance that the Lava Lizard unlocks their respawn with each sacrifice
-		if(delivery_mob && (delivery_mob.mind?.has_antag_datum(/datum/antagonist/ashwalker)) && (delivery_key in ashies.players_spawned) && prob(40))
-			to_chat(delivery_mob, span_boldwarning("The Necropolis is pleased with your sacrifice. You feel confident your existence after death is secure."))
-			ashies.players_spawned -= delivery_key
-
-		viewable_living.investigate_log("has been gibbed via ashwalker sacrifice.", INVESTIGATE_DEATHS)
-		viewable_living.gib()
-		atom_integrity = min(atom_integrity + max_integrity * 0.05, max_integrity) //restores 5% hp of tendril
-
-		for(var/mob/living/living_observers in view(src, 5))
-			if(living_observers.mind?.has_antag_datum(/datum/antagonist/ashwalker))
-				living_observers.add_mood_event("oogabooga", /datum/mood_event/sacrifice_good)
-
-			else
-				living_observers.add_mood_event("oogabooga", /datum/mood_event/sacrifice_bad)
-
-		ashies.sacrifices_made++
-
 /**
  * Proc that will spawn the egg that will revive the ashwalker
  * This is also the Nova replacement for /proc/remake_walker
@@ -170,4 +123,3 @@
 	qdel(src)
 
 #undef REQUIRED_OBSERVERS
-#undef MEGAFAUNA_MEAT_AMOUNT

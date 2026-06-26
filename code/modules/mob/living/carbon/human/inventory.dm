@@ -204,6 +204,11 @@
 			update_worn_glasses()
 		if(ITEM_SLOT_GLOVES)
 			if(gloves)
+				var/obj/item/clothing/gloves/worn_gloves = gloves
+				if(istype(worn_gloves) && worn_gloves.can_attach_accessory(equipping))
+					worn_gloves.attach_ring(equipping, src)
+					return
+
 				var/obj/item/clothing/gloves/ring/worn_ring = gloves
 				var/obj/item/clothing/gloves/new_gloves = equipping
 				if(!istype(worn_ring) || !istype(new_gloves) || istype(new_gloves, /obj/item/clothing/gloves/ring) || new_gloves.covered_ring)

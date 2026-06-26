@@ -1,7 +1,7 @@
 
 /obj/item/storage/belt/holster
 	name = "shoulder holster"
-	desc = "A rather plain but still cool looking holster that can hold a handgun."
+	desc = "A rather plain but still cool looking holster that can hold a handgun and some ammo."
 	icon_state = "holster"
 	inhand_icon_state = "holster"
 	worn_icon_state = "holster"
@@ -55,7 +55,7 @@
 
 /obj/item/storage/belt/holster/detective
 	name = "detective's holster"
-	desc = "A holster able to carry handguns and some ammo. WARNING: Badasses only."
+	desc = "A holster able to carry handguns and extra ammo, thanks to an additional hand-sewn pouch. WARNING: Badasses only."
 	w_class = WEIGHT_CLASS_BULKY
 	storage_type = /datum/storage/holster/detective
 

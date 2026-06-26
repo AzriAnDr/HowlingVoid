@@ -37,6 +37,8 @@
 	var/list/transaction_history
 	///A lazylist of coupons redeemed with the Coupon Master pda app associated with this account.
 	var/list/redeemed_coupons
+	/// Forensic marker keys already paid out to this account for detective analysis.
+	var/list/detective_paid_forensic_markers
 	/// How many paychecks to skip when payday is called.
 	var/paydays_to_skip = 0
 	/// Flat per-payday payroll adjustment set by authorized command staff.
@@ -229,8 +231,6 @@
 		return FALSE
 
 	var/base_paycheck = round(account_job.paycheck * payday_modifier * amount_of_paychecks)
-	if(amount_of_paychecks == 1)
-		base_paycheck = clamp(base_paycheck, 0, PAYCHECK_CREW) //We want to limit single, passive paychecks to regular crew income.
 	var/money_to_transfer = max(0, base_paycheck + (paycheck_adjustment * amount_of_paychecks))
 	var/insurance_to_transfer = get_payday_insurance_contribution(money_to_transfer)
 	var/account_money_to_transfer = money_to_transfer - insurance_to_transfer

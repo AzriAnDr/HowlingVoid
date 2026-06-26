@@ -21,6 +21,17 @@
 	///If it's a special named plant, set this to true to prevent dead-name overriding.
 	var/custom_plant_name = FALSE
 	var/static/list/random_plant_states
+	/// Extra plant states added by HowlingVoid.
+	var/list/modular_states = list(
+		"modular-1",
+		"modular-2",
+		"modular-3",
+		"modular-4",
+		"modular-5",
+		"modular-6",
+		"modular-7",
+		"modular-8",
+	)
 
 /obj/item/kirbyplants/Initialize(mapload)
 	. = ..()
@@ -49,12 +60,6 @@
 /obj/item/kirbyplants/update_icon_state()
 	. = ..()
 	icon_state = dead ? "plant-25" : base_icon_state
-	// NOVA EDIT ADDITION START - AESTHETICS
-	if(icon_state in modular_states)
-		icon = 'icons/aesthetics/plants/icons/plants.dmi'
-	else
-		icon = 'icons/obj/fluff/flora/plants.dmi'
-	// NOVA EDIT ADDITION END
 
 /obj/item/kirbyplants/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
@@ -89,7 +94,7 @@
 			number = "[i]"
 		plant_states += "plant-[number]"
 	plant_states += "applebush"
-	plant_states += modular_states // NOVA EDIT ADDITION - AESTHETICS - SEE code\modules\aesthetics\plants\plants.dm
+	plant_states += modular_states
 
 	return plant_states
 
@@ -140,6 +145,12 @@
 	icon_state = "plant-09"
 	light_color = COLOR_BRIGHT_BLUE
 	light_range = 3
+
+/obj/item/kirbyplants/monkey
+	name = "monkey plant"
+	desc = "Something that seems to have been made by the Nanotrasen science division, one might call it an abomination. Its heads seem... alive."
+	icon_state = "monkeyplant"
+	trimmable = FALSE
 
 /obj/item/kirbyplants/potty
 	name = "Potty the Potted Plant"

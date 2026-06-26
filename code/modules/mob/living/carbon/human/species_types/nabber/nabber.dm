@@ -82,6 +82,11 @@
 	return // TODO: fix create_and_destroy unit test issues for nabber species setup.
 #endif
 
+	C.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 0.6, -6)
+	C.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
+	C.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_SNAKE, 15, -6)
+	C.AddElement(/datum/element/footstep, FOOTSTEP_MOB_SNAKE, FOOTSTEP_MOB_SNAKE_VOLUME, -6)
+
 	arms = new(C)
 	arms.Grant(C)
 	camouflage = new(C)
@@ -105,6 +110,10 @@
 #ifdef UNIT_TESTS
 	return
 #endif
+
+	C.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_SNAKE, FOOTSTEP_MOB_SNAKE_VOLUME, -6)
+	C.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_SNAKE, 15, -6)
+	C.AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 0.6, -6)
 
 	QDEL_NULL(arms)
 	QDEL_NULL(camouflage)

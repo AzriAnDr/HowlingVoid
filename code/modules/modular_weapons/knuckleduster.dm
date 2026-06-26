@@ -25,6 +25,10 @@
 	slot_flags = ITEM_SLOT_GLOVES
 	/// Tracks whether the item is currently worn as gloves (used to manage bonuses and effects)
 	var/is_worn_as_glove = FALSE
+	/// Tracks the martial art granted while these knuckledusters are attached to worn gloves.
+	var/datum/martial_art/attached_style
+	/// Tracks the current wearer while these knuckledusters are attached to worn gloves.
+	var/mob/living/attached_wearer
 	/// Amount of stamina damage dealt on right-click attacks against living targets
 	var/stamina_damage = 35
 	/// Armor penetration value that only applies to stamina-based stun attacks
@@ -110,6 +114,33 @@
 	is_worn_as_glove = FALSE
 	if(istype(user))
 		user.remove_traits(list(TRAIT_CHUNKYFINGERS), REF(src))
+
+/// Knuckledusters use the glove slot without inheriting clothing glove ring storage.
+/obj/item/melee/knuckleduster/proc/uncover_ring()
+	return null
+
+/obj/item/melee/knuckleduster/can_attach_to_gloves()
+	return TRUE
+
+/obj/item/melee/knuckleduster/on_glove_accessory_equipped(obj/item/clothing/gloves/gloves, mob/living/user)
+	if(!istype(user) || attached_wearer == user)
+		return
+	attached_wearer = user
+	attached_style = new granted_style(src)
+	attached_style.teach(user)
+	add_glove_effects(user)
+
+/obj/item/melee/knuckleduster/on_glove_accessory_unequipped(obj/item/clothing/gloves/gloves, mob/living/user)
+	if(attached_style && attached_wearer)
+		attached_style.unlearn(attached_wearer)
+	QDEL_NULL(attached_style)
+	if(attached_wearer)
+		remove_glove_effects(attached_wearer)
+	attached_wearer = null
+
+/obj/item/melee/knuckleduster/Destroy()
+	on_glove_accessory_unequipped(null, attached_wearer)
+	return ..()
 
 /**
  * Handles right-click attacks to perform non-lethal stamina damage instead of brute.
@@ -240,3 +271,5 @@
 		defender.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
 		to_chat(attacker, span_danger("You stagger [defender] with a haymaker!"))
 		log_combat(attacker, defender, "staggered (boxing) ")
+
+#undef MARTIALART_STREET_BOXING

@@ -49,7 +49,7 @@
 			you will receive. May contain discontinued and/or exotic items. \
 			The Syndicate will only provide one Syndi-Kit per agent."
 	item = /obj/item/storage/box/syndicate/bundle_a
-	cost = 20
+	cost = /datum/uplink_item/medium_cost/bundle::cost
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 
@@ -60,7 +60,7 @@
 			Collectively worth more than 25 telecrystals, the syndicate loves a good throwback. \
 			The Syndicate will only provide one Syndi-Kit per agent."
 	item = /obj/item/storage/box/syndicate/bundle_b
-	cost = 20
+	cost = /datum/uplink_item/medium_cost/bundle::cost
 	stock_key = UPLINK_SHARED_STOCK_KITS
 	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 
@@ -69,14 +69,13 @@
 /datum/uplink_item/bundles_tc/surplus
 	name = "Syndicate Surplus Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
-			If the rumors are true, it will fill it's contents based on your current reputation. \
 			Contents are sorted to always be worth " + TC_VALUE_SURPLUS + " TC. The Syndicate will only provide one surplus item per agent."
 	item = /obj/structure/closet/crate // will be replaced in purchase()
-	cost = 20
+	cost = /datum/uplink_item/medium_cost/bundle::cost
 	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	/// Value of items inside the crate in TC
-	var/crate_tc_value = 40
+	var/crate_tc_value = 50
 	/// crate that will be used for the surplus crate
 	var/crate_type = /obj/structure/closet/crate
 
@@ -138,12 +137,11 @@
 	name = "United Surplus Crate"
 	desc = "A shiny and large crate to be delivered directly to you via Supply Pod. It has an advanced locking mechanism with an anti-tampering protocol. \
 			It is recommended that you only attempt to open it by having another agent purchase a Surplus Crate Key. Unite and fight. \
-			Rumored to contain a valuable assortment of items based on your current reputation. Contents are sorted to always be worth " + TC_VALUE_SURPLUS + " TC. \
-			The Syndicate will only provide one surplus item per agent."
-	cost = 20
+			Contents are sorted to always be worth " + TC_VALUE_SURPLUS + " TC. The Syndicate will only provide one surplus item per agent."
+	cost = /datum/uplink_item/medium_cost/bundle::cost
 	item = /obj/structure/closet/crate/secure/syndicrate
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
-	crate_tc_value = 100
+	crate_tc_value = 125
 	crate_type = /obj/structure/closet/crate/secure/syndicrate
 
 /// edited version of fill crate for super surplus to ensure it can only be unlocked with the syndicrate key
@@ -163,7 +161,7 @@
 	desc = "This inconscpicous device is actually a key that can open any United Surplus Crate. It can only be used once. \
 			Though initially designed to encourage cooperation, agents quickly discovered that you can turn the key to the crate by yourself.  \
 			The Syndicate will only provide one surplus item per agent."
-	cost = 20
+	cost = /datum/uplink_item/medium_cost/bundle::cost
 	item = /obj/item/syndicrate_key
 	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS

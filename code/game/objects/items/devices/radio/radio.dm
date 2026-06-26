@@ -64,6 +64,14 @@
 	var/command = FALSE
 	/// Does it play radio noise?
 	var/radio_noise = TRUE
+	/// The sound that plays when someone uses the radio.
+	var/radio_talk_sound = 'sound/radiosound/radio/walkie_talkie.ogg'
+	/// The volume of the radio sound.
+	var/radio_sound_volume = 25
+	/// The range of the radio sound.
+	var/radio_sound_range = SHORT_RANGE_SOUND_EXTRARANGE
+	/// Whether the radio sound varies.
+	var/radio_sound_has_vary = TRUE
 
 	///makes anyone who is talking through this anonymous.
 	var/anonymize = FALSE

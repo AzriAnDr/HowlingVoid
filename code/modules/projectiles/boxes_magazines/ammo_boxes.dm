@@ -12,11 +12,31 @@
 	name = "ammo box (9mm HP)"
 	ammo_type = /obj/item/ammo_casing/c9mm/hp
 
+/obj/item/ammo_box/c9mm/rubber
+	name = "9mm rubber box"
+	ammo_type = /obj/item/ammo_casing/c9mm/rubber
+
+/obj/item/ammo_box/c9mm/ihdf
+	name = "9mm IHDF box"
+	ammo_type = /obj/item/ammo_casing/c9mm/ihdf
+
 /obj/item/ammo_box/c10mm
 	name = "ammo box (10mm)"
 	icon_state = "10mmbox"
 	ammo_type = /obj/item/ammo_casing/c10mm
 	max_ammo = 20
+
+/obj/item/ammo_box/c10mm/rubber
+	name = "ammo box (10mm rubber)"
+	ammo_type = /obj/item/ammo_casing/c10mm/rubber
+
+/obj/item/ammo_box/c10mm/ihdf
+	name = "ammo box (10mm IHDF)"
+	ammo_type = /obj/item/ammo_casing/c10mm/ihdf
+
+/obj/item/ammo_box/c10mm/downer
+	name = "ammo box (10mm downer)"
+	ammo_type = /obj/item/ammo_casing/c10mm/downer
 
 /obj/item/ammo_box/c45
 	name = "ammo box (.45)"

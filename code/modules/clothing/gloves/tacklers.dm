@@ -84,12 +84,39 @@
 /obj/item/clothing/gloves/tackler/combat/insulated
 	name = "guerrilla gloves"
 	desc = "Superior quality combative gloves, good for performing tackle takedowns as well as absorbing electrical shocks."
-	icon_state = "guerrilla"
+	icon = 'icons/obj/clothing/gloves_additions.dmi'
+	worn_icon = 'icons/mob/clothing/hands_additions.dmi'
+	icon_state = "combat"
 	siemens_coefficient = 0
 	armor_type = /datum/armor/combat_insulated
 
 /datum/armor/combat_insulated
 	bio = 50
+
+/datum/atom_skin/tackler_gloves
+	abstract_type = /datum/atom_skin/tackler_gloves
+
+/datum/atom_skin/tackler_gloves/red
+	preview_name = "Red Variant"
+	new_icon_state = "tackle"
+
+/datum/atom_skin/tackler_gloves/blue
+	preview_name = "Blue Variant"
+	new_icon = 'icons/obj/clothing/gloves_additions.dmi'
+	new_icon_state = "tackle_blue"
+	new_worn_icon = 'icons/mob/clothing/hands_additions.dmi'
+
+/obj/item/clothing/gloves/tackler/security
+
+/obj/item/clothing/gloves/tackler/security/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/tackler_gloves)
+
+/obj/item/clothing/gloves/tackler/peacekeeper
+	name = "peacekeeper gripper gloves"
+	desc = "Special gloves that manipulate the blood vessels in the wearer's hands, granting them the ability to launch headfirst into walls."
+	icon = 'icons/obj/clothing/gloves_additions.dmi'
+	worn_icon = 'icons/mob/clothing/hands_additions.dmi'
+	icon_state = "black_blue_gripper_gloves"
 
 /obj/item/clothing/gloves/tackler/rocket
 	name = "rocket gloves"

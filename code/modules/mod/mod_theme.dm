@@ -336,7 +336,7 @@
 	bullet = 5
 	laser = 20
 	energy = 10
-	bomb = 10
+	bomb = 30
 	bio = 100
 	fire = 100
 	acid = 25
@@ -404,7 +404,7 @@
 	bullet = 5
 	laser = 10
 	energy = 15
-	bomb = 10
+	bomb = 40
 	bio = 100
 	fire = 100
 	acid = 75
@@ -471,8 +471,11 @@
 		),
 	)
 
+/datum/mod_theme/advanced/atmos
+	ui_theme = "neutral"
+
 /datum/armor/mod_theme_advanced
-	melee = 15
+	melee = 30
 	bullet = 5
 	laser = 20
 	energy = 15
@@ -649,13 +652,13 @@
 	)
 
 /datum/armor/mod_theme_loader
-	melee = 15
+	melee = 20
 	bullet = 5
-	laser = 5
-	energy = 5
-	bomb = 10
-	bio = 10
-	fire = 25
+	laser = 10
+	energy = 10
+	bomb = 50
+	bio = 100
+	fire = 50
 	acid = 25
 	wound = 10
 
@@ -759,15 +762,15 @@
 	)
 
 /datum/armor/mod_theme_medical
-	melee = 5
+	melee = 10
 	bullet = 5
 	laser = 5
-	energy = 5
+	energy = 10
 	bomb = 10
 	bio = 100
 	fire = 60
 	acid = 75
-	wound = 5
+	wound = 10
 
 /datum/mod_theme/rescue
 	name = "rescue"
@@ -843,15 +846,15 @@
 	complexity_max = 25
 
 /datum/armor/mod_theme_rescue
-	melee = 10
-	bullet = 10
-	laser = 5
-	energy = 5
-	bomb = 10
+	melee = 20
+	bullet = 5
+	laser = 10
+	energy = 10
+	bomb = 20
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 5
+	wound = 10
 
 /datum/mod_theme/research
 	name = "research"
@@ -917,8 +920,8 @@
 /datum/armor/mod_theme_research
 	melee = 20
 	bullet = 15
-	laser = 5
-	energy = 5
+	laser = 20
+	energy = 20
 	bomb = 100
 	bio = 100
 	fire = 100
@@ -983,7 +986,7 @@
 
 /datum/armor/mod_theme_security
 	melee = 35
-	bullet = 15
+	bullet = 20
 	laser = 30
 	energy = 40
 	bomb = 25
@@ -1051,7 +1054,7 @@
 
 /datum/armor/mod_theme_safeguard
 	melee = 45
-	bullet = 25
+	bullet = 30
 	laser = 30
 	energy = 40
 	bomb = 40
@@ -1131,7 +1134,7 @@
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 15
+	wound = 20
 
 /datum/mod_theme/cosmohonk
 	name = "cosmohonk"
@@ -1190,7 +1193,7 @@
 	)
 
 /datum/armor/mod_theme_cosmohonk
-	melee = 5
+	melee = 10
 	bullet = 5
 	laser = 20
 	energy = 20
@@ -1298,13 +1301,13 @@
 	)
 
 /datum/armor/mod_theme_syndicate
-	melee = 50
+	melee = 40
 	bullet = 50
-	laser = 40
-	energy = 50
-	bomb = 40
+	laser = 35
+	energy = 40
+	bomb = 30
 	bio = 100
-	fire = 50
+	fire = 80
 	acid = 90
 	wound = 25
 
@@ -1371,14 +1374,14 @@
 	)
 
 /datum/armor/mod_theme_elite
-	melee = 60
+	melee = 50
 	bullet = 60
-	laser = 50
-	energy = 50
-	bomb = 55
+	laser = 40
+	energy = 60
+	bomb = 40
 	bio = 100
 	fire = 100
-	acid = 100
+	acid = 90
 	wound = 25
 
 /datum/mod_theme/infiltrator
@@ -1740,10 +1743,10 @@
 	)
 
 /datum/armor/mod_theme_prototype
-	melee = 20
+	melee = 25
 	bullet = 5
-	laser = 10
-	energy = 10
+	laser = 20
+	energy = 20
 	bomb = 50
 	bio = 100
 	fire = 100
@@ -1915,7 +1918,7 @@
 	bio = 100
 	fire = 100
 	acid = 90
-	wound = 10
+	wound = 15
 
 /datum/mod_theme/responsory/traitor
 	name = "dark paladin"

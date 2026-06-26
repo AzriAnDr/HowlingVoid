@@ -23,6 +23,7 @@
 	liver_traits = list(TRAIT_ROYAL_METABOLISM) // finally upgraded
 
 	display_order = JOB_DISPLAY_ORDER_QUARTERMASTER
+	antagonist_restricted = TRUE
 	bounty_types = CIV_JOB_RANDOM
 	departments_list = list(
 		/datum/job_department/cargo,
@@ -45,7 +46,7 @@
 	)
 	id_trim = /datum/id_trim/job/quartermaster
 	id = /obj/item/card/id/advanced/silver
-	uniform = /obj/item/clothing/under/rank/cargo/qm
+	uniform = /obj/item/clothing/under/rank/cargo/qm/nova/turtleneck
 	belt = /obj/item/modular_computer/pda/heads/quartermaster
 	suit = /obj/item/clothing/suit/jacket/quartermaster
 	ears = /obj/item/radio/headset/heads/qm

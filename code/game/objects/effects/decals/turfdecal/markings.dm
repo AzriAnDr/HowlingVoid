@@ -58,6 +58,25 @@
 /obj/effect/turf_decal/stripes/red/full
 	icon_state = "warn_full_red"
 
+/obj/effect/turf_decal/stripes/blue
+	icon = 'icons/mapping/turf/turf_decals.dmi'
+	icon_state = "warningline_blue"
+
+/obj/effect/turf_decal/stripes/blue/line
+	icon_state = "warningline_blue"
+
+/obj/effect/turf_decal/stripes/blue/end
+	icon_state = "warn_end_blue"
+
+/obj/effect/turf_decal/stripes/blue/corner
+	icon_state = "warninglinecorner_blue"
+
+/obj/effect/turf_decal/stripes/blue/box
+	icon_state = "warn_box_blue"
+
+/obj/effect/turf_decal/stripes/blue/full
+	icon_state = "warn_full_blue"
+
 /obj/effect/turf_decal/delivery
 	icon_state = "delivery"
 
@@ -66,6 +85,10 @@
 
 /obj/effect/turf_decal/delivery/red
 	icon_state = "delivery_red"
+
+/obj/effect/turf_decal/delivery/blue
+	icon = 'icons/mapping/turf/turf_decals.dmi'
+	icon_state = "delivery_blue"
 
 /obj/effect/turf_decal/bot
 	icon_state = "bot"
@@ -94,6 +117,10 @@
 /obj/effect/turf_decal/bot_red/left
 	icon_state = "bot_left_red"
 
+/obj/effect/turf_decal/bot_blue
+	icon = 'icons/mapping/turf/turf_decals.dmi'
+	icon_state = "bot_blue"
+
 /obj/effect/turf_decal/loading_area
 	icon_state = "loadingarea"
 
@@ -102,6 +129,10 @@
 
 /obj/effect/turf_decal/loading_area/red
 	icon_state = "loadingarea_red"
+
+/obj/effect/turf_decal/loading_area/blue
+	icon = 'icons/mapping/turf/turf_decals.dmi'
+	icon_state = "loadingarea_blue"
 
 /obj/effect/turf_decal/caution
 	icon_state = "caution"
@@ -112,6 +143,10 @@
 /obj/effect/turf_decal/caution/red
 	icon_state = "caution_red"
 
+/obj/effect/turf_decal/caution/blue
+	icon = 'icons/mapping/turf/turf_decals.dmi'
+	icon_state = "caution_blue"
+
 /obj/effect/turf_decal/caution/stand_clear
 	icon_state = "stand_clear"
 
@@ -121,6 +156,10 @@
 /obj/effect/turf_decal/caution/stand_clear/red
 	icon_state = "stand_clear_red"
 
+/obj/effect/turf_decal/caution/stand_clear/blue
+	icon = 'icons/mapping/turf/turf_decals.dmi'
+	icon_state = "stand_clear_blue"
+
 /obj/effect/turf_decal/arrows
 	icon_state = "arrows"
 
@@ -129,6 +168,10 @@
 
 /obj/effect/turf_decal/arrows/red
 	icon_state = "arrows_red"
+
+/obj/effect/turf_decal/arrows/blue
+	icon = 'icons/mapping/turf/turf_decals.dmi'
+	icon_state = "arrows_blue"
 
 /obj/effect/turf_decal/box
 	icon_state = "box"
@@ -147,6 +190,13 @@
 
 /obj/effect/turf_decal/box/red/corners
 	icon_state = "box_corners_red"
+
+/obj/effect/turf_decal/box/blue
+	icon = 'icons/mapping/turf/turf_decals.dmi'
+	icon_state = "box_blue"
+
+/obj/effect/turf_decal/box/blue/corners
+	icon_state = "box_corners_blue"
 
 /obj/effect/turf_decal/plaque
 	icon_state = "plaque"

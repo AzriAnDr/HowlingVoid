@@ -117,6 +117,7 @@
 	melee_damage_upper = 20
 	armour_penetration = 15
 	obj_damage = 20
+	gold_core_spawnable = HOSTILE_SPAWN
 	death_message = "collapses into a pile of goo!"
 	///The ability to consume mobs
 	var/datum/action/consume/consume
@@ -323,6 +324,10 @@
 
 /mob/living/simple_animal/hostile/ooze/grapes/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GRAPE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
+/mob/living/simple_animal/hostile/ooze/grapes/xenobio
+	ghost_controllable = FALSE
+	gold_core_spawnable = HOSTILE_SPAWN
 
 ///Ability that allows the owner to fire healing globules at mobs, targeting specific limbs.
 /datum/action/cooldown/globules

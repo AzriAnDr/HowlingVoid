@@ -1,4 +1,4 @@
-/obj/item/gun/energy/ionrifle //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
+/obj/item/gun/energy/ionrifle
 	name = "ion rifle"
 	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
 	icon_state = "ionrifle"
@@ -11,6 +11,8 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 3, /datum/material/uranium = SHEET_MATERIAL_AMOUNT)
 	light_color = LIGHT_COLOR_BLUE
+	selfcharge = TRUE
+	charge_delay = 15
 
 /obj/item/gun/energy/ionrifle/Initialize(mapload)
 	. = ..()
@@ -46,6 +48,7 @@
 	ammo_x_offset = 1
 	selfcharge = 1
 	gun_flags = NOT_A_REAL_GUN
+	item_flags = parent_type::item_flags & ~NEEDS_PERMIT
 
 /obj/item/gun/energy/meteorgun
 	name = "meteor gun"
@@ -57,6 +60,7 @@
 	cell_type = /obj/item/stock_parts/power_store/cell/potato
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
 	selfcharge = 1
+	charge_delay = 15
 	automatic_charge_overlays = FALSE
 
 /obj/item/gun/energy/meteorgun/pen
@@ -79,6 +83,8 @@
 	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
 	ammo_x_offset = 2
+	selfcharge = TRUE
+	charge_delay = 15
 
 /// amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
 #define PLASMA_CUTTER_CHARGE_WELD (0.025 * STANDARD_CELL_CHARGE)
@@ -325,6 +331,8 @@
 	cell_type = /obj/item/stock_parts/power_store/cell/high
 	pin = null
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+	selfcharge = TRUE
+	charge_delay = 15
 
 /obj/item/gun/energy/temperature/security
 	name = "security temperature gun"
@@ -390,6 +398,8 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 	display_empty =  FALSE
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
+	selfcharge = TRUE
+	charge_delay = 15
 	///if our stpck is extended and we are ready to fire.
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 5)
 	var/ready_to_fire = FALSE
@@ -507,6 +517,8 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 	light_power = 2
 	light_range = 1
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 7, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 5)
+	selfcharge = TRUE
+	charge_delay = 15
 
 /obj/item/gun/energy/photon/Initialize(mapload)
 	. = ..()

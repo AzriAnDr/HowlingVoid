@@ -44,3 +44,23 @@
 /datum/orderable_item/accelerator/friendly_fire
 	purchase_path = /obj/item/borg/upgrade/modkit/human_passthrough
 	cost_per_order = 750
+
+/datum/orderable_item/accelerator/gun/repeater
+	purchase_path = /obj/item/gun/energy/recharge/kinetic_accelerator/variant/repeater
+	cost_per_order = 1250
+
+/datum/orderable_item/accelerator/gun/shotgun
+	purchase_path = /obj/item/gun/energy/recharge/kinetic_accelerator/variant/shotgun
+	cost_per_order = 1250
+
+/datum/orderable_item/accelerator/gun/glock
+	purchase_path = /obj/item/gun/energy/recharge/kinetic_accelerator/variant/glock
+	cost_per_order = 1250
+
+/datum/orderable_item/accelerator/gun/railgun
+	purchase_path = /obj/item/gun/energy/recharge/kinetic_accelerator/variant/railgun
+	cost_per_order = 1250
+
+/datum/orderable_item/accelerator/gun/m79
+	purchase_path = /obj/item/gun/energy/recharge/kinetic_accelerator/variant/nomod/m79
+	cost_per_order = 1250

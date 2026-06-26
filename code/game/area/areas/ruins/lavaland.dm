@@ -39,6 +39,7 @@
 	name = "\improper Secret Base"
 	ambience_index = AMBIENCE_DANGER
 	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
+	always_unpowered = FALSE
 
 /area/ruin/unpowered/cultaltar
 	name = "\improper Cult Altar"
@@ -55,37 +56,42 @@
 //Syndicate lavaland base
 
 /area/ruin/syndicate_lava_base/engineering
-	name = "Syndicate Lavaland Engineering"
+	name = "Interdyne Engineering"
 
 /area/ruin/syndicate_lava_base/medbay
-	name = "Syndicate Lavaland Medbay"
+	name = "Interdyne Medbay"
 
 /area/ruin/syndicate_lava_base/arrivals
-	name = "Syndicate Lavaland Arrivals"
+	name = "Interdyne Arrivals"
 
 /area/ruin/syndicate_lava_base/bar
-	name = "\improper Syndicate Lavaland Bar"
+	name = "\improper Interdyne Bar"
+
+/area/ruin/syndicate_lava_base/lounge
+	name = "\improper Interdyne Lounge"
 
 /area/ruin/syndicate_lava_base/main
-	name = "\improper Syndicate Lavaland Primary Hallway"
+	name = "\improper Interdyne Primary Hallway"
 
 /area/ruin/syndicate_lava_base/cargo
-	name = "\improper Syndicate Lavaland Cargo Bay"
+	name = "\improper Interdyne Cargo Bay"
 
 /area/ruin/syndicate_lava_base/chemistry
-	name = "Syndicate Lavaland Chemistry"
+	name = "Interdyne Chemistry"
 
 /area/ruin/syndicate_lava_base/virology
-	name = "Syndicate Lavaland Virology"
+	name = "Interdyne Virology"
 
 /area/ruin/syndicate_lava_base/testlab
-	name = "\improper Syndicate Lavaland Experimentation Lab"
+	name = "\improper Interdyne Experimentation Lab"
+	area_flags = XENOBIOLOGY_COMPATIBLE
+	area_flags_mapping = NONE
 
 /area/ruin/syndicate_lava_base/dormitories
-	name = "\improper Syndicate Lavaland Dormitories"
+	name = "\improper Interdyne Dormitories"
 
 /area/ruin/syndicate_lava_base/telecomms
-	name = "\improper Syndicate Lavaland Telecommunications"
+	name = "\improper Interdyne Telecommunications"
 
 /area/ruin/syndicate_lava_base/hydroponics
 	name = "\improper Syndicate Lavaland Hydroponics"

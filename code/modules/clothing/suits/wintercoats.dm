@@ -283,6 +283,20 @@
 	icon_state = "hood_security"
 	armor_type = /datum/armor/winterhood_security
 
+/obj/item/clothing/head/hooded/winterhood/security/blue
+	desc = "A blue, armour-padded winter hood. Definitely not bulletproof, especially not the part where your face goes."
+	icon = 'icons/obj/clothing/head/winterhood_additions.dmi'
+	worn_icon = 'icons/mob/clothing/head/winterhood_additions.dmi'
+	icon_state = "winterhood_security"
+
+/obj/item/clothing/suit/hooded/wintercoat/security/blue
+	name = "security winter coat"
+	desc = "A blue, armour-padded winter coat. It glitters with a mild ablative coating and a robust air of authority."
+	icon = 'icons/obj/clothing/suits/wintercoat_additions.dmi'
+	worn_icon = 'icons/mob/clothing/suits/wintercoat_additions.dmi'
+	icon_state = "coatsecurity_winter"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/security/blue
+
 // Medical Doctor
 /datum/armor/winterhood_security
 	melee = 25
@@ -716,6 +730,44 @@
 	icon = 'icons/obj/clothing/head/winterhood_additions.dmi'
 	worn_icon = 'icons/mob/clothing/head/winterhood_additions.dmi'
 	icon_state = "hood_aformal"
+
+/obj/item/clothing/suit/hooded/wintercoat/nova/syndicate
+	name = "syndicate winter coat"
+	desc = "A sinister black coat with red accents and a fancy mantle, it feels like it can take a hit. The zipper tab looks like a triple headed snake in the shape of an S, spooky."
+	icon_state = "coatsyndie"
+	inhand_icon_state = "coatwinter"
+	armor_type = /datum/armor/wintercoat_syndicate
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/nova/syndicate
+
+/datum/armor/wintercoat_syndicate
+	melee = 25
+	bullet = 15
+	laser = 30
+	energy = 40
+	bomb = 25
+	acid = 45
+
+/obj/item/clothing/suit/hooded/wintercoat/nova/syndicate/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_wintercoat_allowed
+
+/obj/item/clothing/head/hooded/winterhood/nova/syndicate
+	desc = "A sinister black hood with armor padding."
+	icon_state = "hood_syndie"
+	armor_type = /datum/armor/winterhood_syndicate
+
+/datum/armor/winterhood_syndicate
+	melee = 25
+	bullet = 15
+	laser = 30
+	energy = 40
+	bomb = 25
+	acid = 45
+
+/obj/item/clothing/suit/hooded/wintercoat/medical/viro/interdyne
+	name = "interdyne winter coat"
+	desc = "A fuzzy winter coat bearing interdyne colors, complete with armored fibers."
+	armor_type = /datum/armor/wintercoat_syndicate
 
 //Bartender
 /obj/item/clothing/suit/hooded/wintercoat/nova/bartender

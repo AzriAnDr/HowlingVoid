@@ -26,6 +26,8 @@
 	var/fine
 	/// Amount of money paid for the crime
 	var/paid
+	/// Bank account ID of the person who issued this citation.
+	var/author_account_id
 
 /datum/crime/citation/New(name = "Citation", details = "No details provided.", author = "Anonymous", fine = 0)
 	. = ..()
@@ -46,6 +48,49 @@
 		fine = 0
 
 	return TRUE
+
+/// Stores the issuing officer's bank account for fine commission payouts.
+/datum/crime/citation/proc/set_author_account_from_mob(mob/living/issuer)
+	if(!issuer)
+		return FALSE
+
+	var/obj/item/card/id/issuer_id
+	if(ishuman(issuer))
+		var/mob/living/carbon/human/human_issuer = issuer
+		issuer_id = human_issuer.wear_id?.GetID()
+	if(!issuer_id)
+		issuer_id = issuer.get_idcard(TRUE)
+
+	if(!issuer_id?.registered_account)
+		return FALSE
+
+	author_account_id = issuer_id.registered_account.account_id
+	return TRUE
+
+/// Finds the bank account that should receive the citation author commission.
+/datum/crime/citation/proc/get_author_account()
+	if(author_account_id)
+		var/datum/bank_account/stored_account = SSeconomy.bank_accounts_by_id["[author_account_id]"]
+		if(stored_account)
+			return stored_account
+
+	if(isliving(author))
+		var/mob/living/author_mob = author
+		var/obj/item/card/id/author_id
+		if(ishuman(author_mob))
+			var/mob/living/carbon/human/human_author = author_mob
+			author_id = human_author.wear_id?.GetID()
+		if(!author_id)
+			author_id = author_mob.get_idcard(TRUE)
+		return author_id?.registered_account
+
+	if(istext(author))
+		for(var/account_id in SSeconomy.bank_accounts_by_id)
+			var/datum/bank_account/account = SSeconomy.bank_accounts_by_id[account_id]
+			if(account?.account_holder == author)
+				return account
+
+	return null
 
 /// Sends a citation alert message to the target's PDA.
 /datum/crime/citation/proc/alert_owner(mob/sender, atom/source, target_name, message)

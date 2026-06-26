@@ -58,7 +58,98 @@
 	inhand_icon_state = "armor"
 
 /obj/item/clothing/suit/armor/vest/alt/sec
+	desc = "A Type-II-NT-P armored vest that provides decent protection against most types of damage."
 	icon_state = "armor_sec"
+
+/datum/atom_skin/security_armor_vest_white
+	abstract_type = /datum/atom_skin/security_armor_vest_white
+
+/datum/atom_skin/security_armor_vest_white/black
+	preview_name = "Black Variant"
+	new_icon_state = "vest_black"
+
+/datum/atom_skin/security_armor_vest_white/blue
+	preview_name = "Blue Variant"
+	new_icon_state = "vest_blue"
+
+/datum/atom_skin/security_armor_vest_white/white
+	preview_name = "White Variant"
+	new_icon_state = "vest_white"
+
+/obj/item/clothing/suit/armor/vest/alt/sec/white
+	icon = 'icons/obj/clothing/suits/armor_additions.dmi'
+	worn_icon = 'icons/mob/clothing/suits/armor_additions.dmi'
+	icon_state = "vest_white"
+
+/obj/item/clothing/suit/armor/vest/alt/sec/white/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_armor_vest_white)
+
+/obj/item/clothing/suit/armor/vest/brit
+	name = "high vis armored vest"
+	desc = "Oi bruv, you got a loicence for that?"
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "hazardbg"
+	worn_icon_state = "hazardbg"
+
+/obj/item/clothing/suit/armor/vest/brit/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon, "zipper")
+
+/datum/atom_skin/vested_jacket
+	abstract_type = /datum/atom_skin/vested_jacket
+
+/datum/atom_skin/vested_jacket/red
+	preview_name = "Red Variant"
+	new_icon_state = "vested_jacket"
+
+/datum/atom_skin/vested_jacket/blue
+	preview_name = "Blue Variant"
+	new_icon_state = "vested_jacket_blue"
+
+/datum/atom_skin/vested_jacket/white
+	preview_name = "White Variant"
+	new_icon_state = "vested_jacket_white"
+
+/datum/atom_skin/vested_jacket/black
+	preview_name = "Black Variant"
+	new_icon_state = "vested_jacket_black"
+
+/obj/item/clothing/suit/armor/vest/vested_jacket
+	name = "vested security jacket"
+	desc = "The company standard armor now with a stylish zipper jacket stitched in for when you don't think you'll get shot!"
+	icon = 'icons/obj/clothing/suits/armor_additions.dmi'
+	worn_icon = 'icons/mob/clothing/suits/armor_additions.dmi'
+	icon_state = "vested_jacket"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS
+	heat_protection = CHEST|GROIN|ARMS
+
+/obj/item/clothing/suit/armor/vest/vested_jacket/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/vested_jacket)
+	AddComponent(/datum/component/toggle_icon, "zipper")
+
+/obj/item/clothing/suit/armor/vest/peacekeeper
+	name = "peacekeeper armor vest"
+	desc = "A standard issue peacekeeper armor vest, versatile, lightweight, and most importantly, cheap."
+	icon = 'icons/obj/clothing/suits/armor_additions.dmi'
+	worn_icon = 'icons/mob/clothing/suits/armor_additions.dmi'
+	icon_state = "peacekeeper_white"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/armor/vest/peacekeeper/black
+	icon_state = "peacekeeper_black"
+
+/obj/item/clothing/suit/armor/vest/peacekeeper/spacecoat
+	name = "peacekeeper sleek coat"
+	desc = "An incredibly stylish and heavy black coat made of synthetic kangaroo leather, padded with durathread and lined with kevlar."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "peacekeeper_spacecoat"
+	worn_icon_state = "peacekeeper_spacecoat"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/armor/vest/press
 	name = "press armor vest"
@@ -160,6 +251,31 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	strip_delay = 8 SECONDS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/datum/atom_skin/hos_coat
+	abstract_type = /datum/atom_skin/hos_coat
+
+/datum/atom_skin/hos_coat/greatcoat
+	preview_name = "Greatcoat"
+	new_icon = 'icons/obj/clothing/suits/armor.dmi'
+	new_icon_state = "hos"
+	new_worn_icon = 'icons/mob/clothing/suits/armor.dmi'
+
+/datum/atom_skin/hos_coat/trenchcoat
+	preview_name = "Trenchcoat"
+	new_icon = 'icons/obj/clothing/suits/armor.dmi'
+	new_icon_state = "hostrench"
+	new_worn_icon = 'icons/mob/clothing/suits/armor.dmi'
+
+/datum/atom_skin/hos_coat/trenchcloak
+	preview_name = "Trenchcloak"
+	new_icon = 'icons/obj/clothing/suits/armor_additions.dmi'
+	new_icon_state = "trenchcloak"
+	new_worn_icon = 'icons/mob/clothing/suits/armor_additions.dmi'
+
+/obj/item/clothing/suit/armor/hos/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/hos_coat)
 
 /datum/armor/armor_hos
 	melee = 30
@@ -185,6 +301,20 @@
 	icon_state = "hoswinter"
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
+/obj/item/clothing/suit/armor/hos/trenchcoat/winter/setup_reskins()
+	return
+
+/obj/item/clothing/suit/armor/hos/deckofficer
+	name = "deck officer's cloak"
+	desc = "An armored trench-cloak with green accents worn by high-ranking interdyne staff."
+	icon = 'icons/obj/clothing/suits/armor_additions.dmi'
+	worn_icon = 'icons/mob/clothing/suits/armor_additions.dmi'
+	worn_icon_teshari = 'icons/mob/clothing/species/teshari/suit.dmi'
+	icon_state = "ip_officercloak"
+
+/obj/item/clothing/suit/armor/hos/deckofficer/setup_reskins()
+	return
+
 /obj/item/clothing/suit/armor/hos/hos_formal
 	name = "\improper Head of Security's parade jacket"
 	desc = "For when an armoured vest isn't fashionable enough."
@@ -192,9 +322,18 @@
 	inhand_icon_state = "hostrench"
 	body_parts_covered = CHEST|GROIN|ARMS
 
+/obj/item/clothing/suit/armor/hos/hos_formal/setup_reskins()
+	return
+
 /obj/item/clothing/suit/armor/hos/hos_formal/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/toggle_icon)
+
+/obj/item/clothing/suit/armor/hos/hos_formal/black
+	icon = 'icons/obj/clothing/suits/armor_additions.dmi'
+	worn_icon = 'icons/mob/clothing/suits/armor_additions.dmi'
+	icon_state = "hosformal_black"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
@@ -212,6 +351,11 @@
 	name = "warden's armored jacket"
 	desc = "A red jacket with silver rank pips and body armor strapped on top."
 	icon_state = "warden_jacket"
+
+/obj/item/clothing/suit/armor/vest/warden/blue
+	icon = 'icons/obj/clothing/suits/armor_additions.dmi'
+	worn_icon = 'icons/mob/clothing/suits/armor_additions.dmi'
+	icon_state = "vest_warden"
 
 /obj/item/clothing/suit/armor/vest/secjacket
 	name = "security jacket"
@@ -273,7 +417,29 @@
 /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	name = "syndicate captain's vest"
 	desc = "A sinister looking vest of advanced armor worn over a black and red fireproof jacket. The gold collar and shoulders denote that this belongs to a high ranking syndicate officer."
+	icon = 'icons/syndie_edits/obj.dmi'
+	worn_icon = 'icons/syndie_edits/worn.dmi'
 	icon_state = "syndievest"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/armor/vest/capcarapace/syndicate/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon)
+
+/obj/item/clothing/suit/armor/vest/capcarapace/syndicate/winter
+	name = "syndicate captain's winter vest"
+	desc = "A sinister yet comfortable looking vest of advanced armor worn over a black and red fireproof jacket. The fur is said to be from wolves on the icemoon."
+	icon = 'icons/syndie_edits/obj.dmi'
+	worn_icon = 'icons/syndie_edits/worn.dmi'
+	icon_state = "syndievest_winter"
+	body_parts_covered = CHEST|GROIN
+	cold_protection = CHEST|GROIN|ARMS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/suit/armor/vest/capcarapace/syndicate/winter/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon)
 
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal
 	name = "captain's parade coat"
@@ -352,13 +518,14 @@
 
 /obj/item/clothing/suit/armor/bulletproof
 	name = "bulletproof armor"
-	desc = "A Type III heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	desc = "A Type-III-NT-P heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
 	icon_state = "bulletproof"
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
 	armor_type = /datum/armor/armor_bulletproof
 	strip_delay = 7 SECONDS
 	equip_delay_other = 5 SECONDS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /datum/armor/armor_bulletproof
 	melee = 15
@@ -369,6 +536,13 @@
 	fire = 50
 	acid = 50
 	wound = 20
+
+/obj/item/clothing/suit/armor/bulletproof/old
+	desc = "A Type III heavy bulletproof vest that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
+	icon = 'icons/obj/clothing/suits/armor.dmi'
+	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
+	icon_state = "bulletproof"
+	body_parts_covered = CHEST
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "reflector vest"
@@ -874,3 +1048,29 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	allowed = list(/obj/item/spear/skybulge)
+
+/obj/item/clothing/suit/armor/hos/trenchcoat/armadyne
+	name = "armadyne trenchcoat"
+	desc = "A large and warm Armadyne-red trenchcoat worn by the wealthy higher-ups. A good half of its warmth - and bulk - actually comes from the polymer armor plating beneath it."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "armadyne_trench"
+
+/obj/item/clothing/suit/armor/vest/armadyne
+	name = "armadyne jacket"
+	desc = "An Armadyne branded track jacket, with a thin nanocarbon lining inside for protective purposes. Worn by Armadyne corporate, or wealthy supporters."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "armadyne_jacket"
+	worn_icon_state = "armadyne_jacket"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/armor/vest/armadyne/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/toggle_icon, "zipper")
+
+/obj/item/clothing/suit/armor/vest/armadyne/armor
+	name = "armadyne armor vest"
+	desc = "A nanocarbon and high-grade polymer vest, with the worn-red Armadyne logo printed on the back. Used by Armadyne corporate when they need emergency armor."
+	icon_state = "armadyne_armor"
+	worn_icon_state = "armadyne_armor"

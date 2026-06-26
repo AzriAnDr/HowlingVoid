@@ -4,6 +4,7 @@
 	ambience_index = AMBIENCE_MEDICAL
 	airlock_wires = /datum/wires/airlock/medbay
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	engineering_override_eligible = TRUE
 
 /area/station/medical/abandoned
 	name = "\improper Abandoned Medbay"

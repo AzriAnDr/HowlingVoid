@@ -402,59 +402,38 @@ GLOBAL_VAR_INIT(last_maptick_time, 0)
 	QDEL_NULL(Debugger)
 	. = ..()
 
-/* NOVA EDIT REMOVAL - OVERRIDDEN
 /world/proc/update_status()
 
 	var/list/features = list()
-
-	if(LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS))
-		features += "closed"
 
 	var/new_status = ""
 	var/hostedby
 	if(config)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
-			new_status += "<b>[server_name]</b> "
-		if(CONFIG_GET(flag/allow_respawn))
-			features += "respawn" // show "respawn" regardless of "respawn as char" or "free respawn"
-		if(!CONFIG_GET(flag/allow_ai))
-			features += "AI disabled"
+			new_status += "<b>[server_name]</b> &#8212; "
 		hostedby = CONFIG_GET(string/hostedby)
 
-	if (CONFIG_GET(flag/station_name_in_hub_entry))
-		new_status += " &#8212; <b>[station_name()]</b>"
+	new_status += " ("
+	new_status += "<a href=\"[CONFIG_GET(string/discord_link)]\">"
+	new_status += "Discord"
+	new_status += ")\]"
+	new_status += "<br>[CONFIG_GET(string/servertagline)]<br>"
 
 	var/players = GLOB.clients.len
 
-	game_state = (CONFIG_GET(number/extreme_popcap) && players >= CONFIG_GET(number/extreme_popcap)) //tells the hub if we are full
+	if(SSmapping.current_map)
+		features += "[SSmapping.current_map.map_name]"
+
+	features += "~[players] player[players == 1 ? "": "s"]"
 
 	if (!host && hostedby)
 		features += "hosted by <b>[hostedby]</b>"
 
 	if(length(features))
-		new_status += ": [jointext(features, ", ")]"
-
-	if(!SSticker || SSticker?.current_state == GAME_STATE_STARTUP)
-		new_status += "<br><b>STARTING</b>"
-	else if(SSticker)
-		if(SSticker.current_state == GAME_STATE_PREGAME && SSticker.GetTimeLeft() > 0)
-			new_status += "<br>Starting: <b>[round((SSticker.GetTimeLeft())/10)]</b>"
-		else if(SSticker.current_state == GAME_STATE_SETTING_UP)
-			new_status += "<br>Starting: <b>Now</b>"
-		else if(SSticker.IsRoundInProgress())
-			new_status += "<br>Time: <b>[time2text(STATION_TIME_PASSED(), "hh:mm", NO_TIMEZONE)]</b>"
-			if(SSshuttle?.emergency && SSshuttle?.emergency?.mode != (SHUTTLE_IDLE || SHUTTLE_ENDGAME))
-				new_status += " | Shuttle: <b>[SSshuttle.emergency.getModeStr()] [SSshuttle.emergency.getTimerStr()]</b>"
-		else if(SSticker.current_state == GAME_STATE_FINISHED)
-			new_status += "<br><b>RESTARTING</b>"
-	if(SSmapping.current_map)
-		new_status += "<br>Map: <b>[SSmapping.current_map.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.current_map.map_name]</b>"
-	if(SSmap_vote.next_map_config)
-		new_status += "[SSmapping.current_map ? " | " : "<br>"]Next: <b>[SSmap_vote.next_map_config.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmap_vote.next_map_config.map_name]</b>"
+		new_status += "\[[jointext(features, ", ")]"
 
 	status = new_status
-*/
 
 /world/proc/update_hub_visibility(new_visibility)
 	if(new_visibility == GLOB.hub_visibility)

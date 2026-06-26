@@ -66,6 +66,25 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
+/obj/item/clothing/head/costume/maid_headband/syndicate
+	name = "tactical maid headband"
+	desc = "Tacticute."
+	icon = 'icons/obj/clothing/head/costume_additions.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume_additions.dmi'
+	icon_state = "syndimaid_headband"
+	post_init_icon_state = null
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = "#88242D#591A2A"
+	flags_1 = NONE
+
+/obj/item/clothing/head/costume/maid_headband/syndicate/loadout_headband
+	name = "tactical maid headband"
+	desc = "Tacticute."
+	icon_state = "syndimaid_headband"
+	icon = 'icons/obj/clothing/head/costume_additions.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume_additions.dmi'
+
 /obj/item/clothing/head/costume/chicken
 	name = "chicken suit head"
 	desc = "Bkaw!"

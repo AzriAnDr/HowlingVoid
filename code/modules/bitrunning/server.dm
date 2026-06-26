@@ -38,10 +38,6 @@
 	if(scanner)
 		max_anchors = scanner.tier
 
-/obj/machinery/quantum_server/reset(fast = FALSE)
-	. = ..()
-	current_anchors = initial(current_anchors)
-
 /obj/machinery/quantum_server/attack_ghost(mob/user)
 	. = ..()
 	if(!is_operational)

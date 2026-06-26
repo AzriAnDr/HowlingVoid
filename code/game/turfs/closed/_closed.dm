@@ -23,7 +23,7 @@
 
 // BEGIN NOVA CORE MIGRATION: code/game/turfs/closed/_closed.dm
 /turf/closed/indestructible/steel
-	icon = 'icons/aesthetics/walls/icons/wall.dmi'
+	icon = 'icons/turf/walls/wall.dmi'
 	icon_state = "wall-0"
 	base_icon_state = "wall"
 	smoothing_flags = SMOOTH_BITMASK

@@ -4,8 +4,8 @@
 #define REACTIVATION_DELAY (3 SECONDS) // Delay on reactivation, used to prevent dumb crowbar things. Just trust me
 
 /obj/machinery/door/firedoor
-	name = "firelock"
-	desc = "Apply crowbar."
+	name = "emergency shutter"
+	desc = "Emergency air-tight shutter, capable of sealing off breached areas. This one has a glass panel. It has a mechanism to open it with just your hands."
 	icon = 'icons/obj/doors/doorfireglass.dmi'
 	icon_state = "door_open"
 	opacity = FALSE
@@ -61,6 +61,8 @@
 
 	var/knock_sound = 'sound/effects/glass/glassknock.ogg'
 	var/bash_sound = 'sound/effects/glass/glassbash.ogg'
+	var/door_open_sound = 'sound/machines/door/firedoor_open.ogg'
+	var/door_close_sound = 'sound/machines/door/firedoor_open.ogg'
 
 
 /datum/armor/door_firedoor
@@ -665,6 +667,9 @@
 		hazards.pixel_w = light_xoffset
 		hazards.pixel_z = light_yoffset
 		. += hazards
+	if(!istype(src, /obj/machinery/door/firedoor/border_only) && density)
+		. += mutable_appearance(icon, "firelock_alarm_type_bottom")
+		. += emissive_appearance(icon, "firelock_alarm_type_bottom", src, alpha = src.alpha)
 
 /**
  * Corrects the current state of the door, based on its activity.
@@ -685,6 +690,7 @@
 		return
 
 /obj/machinery/door/firedoor/open()
+	playsound(loc, door_open_sound, 100, TRUE)
 	if(welded)
 		return
 	var/old_activity = active
@@ -693,6 +699,7 @@
 		correct_state() //So we should re-evaluate our state
 
 /obj/machinery/door/firedoor/close()
+	playsound(loc, door_close_sound, 100, TRUE)
 	if(HAS_TRAIT(loc, TRAIT_FIREDOOR_STOP))
 		return
 	var/old_activity = active
@@ -793,8 +800,9 @@
 		return TRUE
 
 /obj/machinery/door/firedoor/heavy
-	name = "heavy firelock"
-	icon = 'icons/obj/doors/doorfire.dmi' //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
+	name = "heavy emergency shutter"
+	desc = "Emergency air-tight shutter, capable of sealing off breached areas. It has a mechanism to open it with just your hands."
+	icon = 'icons/obj/doors/doorfire.dmi'
 	glass = FALSE
 	explosion_block = 2
 	assemblytype = /obj/structure/firelock_frame/heavy
@@ -809,7 +817,7 @@
 /obj/structure/firelock_frame
 	name = "firelock frame"
 	desc = "A partially completed firelock."
-	icon = 'icons/obj/doors/doorfire.dmi' //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
+	icon = 'icons/obj/doors/doorfire.dmi'
 	icon_state = "frame1"
 	base_icon_state = "frame"
 	anchored = FALSE
@@ -1050,7 +1058,7 @@
 /obj/machinery/door/firedoor/solid
 	name = "solid emergency shutter"
 	desc = "Emergency air-tight shutter, capable of sealing off breached areas. It has a mechanism to open it with just your hands."
-	icon = 'icons/aesthetics/firedoor/icons/firedoor.dmi'
+	icon = 'icons/obj/doors/doorfire.dmi'
 	glass = FALSE
 
 /obj/machinery/door/firedoor/solid/closed

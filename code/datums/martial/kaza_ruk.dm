@@ -299,6 +299,29 @@
 	preview_name = "Blue"
 	reskin_color = list(0.33, 0.33, 0.33, 0, 0, 0, 0, 0, 1)
 
+/datum/atom_skin/fight_gloves
+	abstract_type = /datum/atom_skin/fight_gloves
+
+/datum/atom_skin/fight_gloves/red
+	preview_name = "Red Variant"
+	new_icon_state = "fightgloves"
+
+/datum/atom_skin/fight_gloves/blue
+	preview_name = "Blue Variant"
+	new_icon = 'icons/obj/clothing/gloves_additions.dmi'
+	new_icon_state = "fightgloves_blue"
+	new_worn_icon = 'icons/mob/clothing/hands_additions.dmi'
+
+/datum/atom_skin/fight_gloves/blue/apply(atom/apply_to, mob/user)
+	. = ..()
+	if(!isitem(apply_to))
+		return
+
+	var/obj/item/item_apply_to = apply_to
+	item_apply_to.greyscale_colors = /obj/item/clothing/gloves/kaza_ruk/sec/peacekeeper::greyscale_colors
+	item_apply_to.lefthand_file = SSgreyscale.GetColoredIconByType(/datum/greyscale_config/gloves_inhand_left, item_apply_to.greyscale_colors)
+	item_apply_to.righthand_file = SSgreyscale.GetColoredIconByType(/datum/greyscale_config/gloves_inhand_right, item_apply_to.greyscale_colors)
+
 /obj/item/clothing/gloves/kaza_ruk/sec//more obviously named, given to sec
 	name = "kaza ruk gloves"
 	desc = "These gloves seem to guide you through a non-lizardperson friendly variant of the Tiziran martial art, Kaza Ruk. \
@@ -312,7 +335,15 @@
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/kaza_ruk/sec/setup_reskins()
-	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/kaza_ruk, infinite = TRUE)
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/fight_gloves, infinite = TRUE)
+
+/obj/item/clothing/gloves/kaza_ruk/sec/peacekeeper
+	name = "peacekeeper krav maga gloves"
+	desc = "These gloves can teach you to perform Krav Maga using nanochips."
+	icon = 'icons/obj/clothing/gloves_additions.dmi'
+	worn_icon = 'icons/mob/clothing/hands_additions.dmi'
+	icon_state = "fightgloves_blue"
+	greyscale_colors = "#3F6E9E"
 
 /obj/item/clothing/gloves/kaza_ruk/combatglovesplus
 	name = "combat gloves plus"

@@ -10,6 +10,7 @@
 	weapon_weight = WEAPON_HEAVY
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.2, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.2)
 	light_color = COLOR_PURPLE
+	selfcharge = FALSE
 
 /obj/item/gun/energy/laser/musket/add_bayonet_point()
 	AddComponent(/datum/component/bayonet_attachable, offset_x = 22, offset_y = 11)
@@ -55,6 +56,7 @@
 	charge_sections = 1
 	spread = 22.5
 	obj_flags = UNIQUE_RENAME
+	selfcharge = FALSE
 	custom_materials = list(
 		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8,
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.25,
@@ -110,6 +112,7 @@
 	obj_flags = UNIQUE_RENAME
 	w_class = WEIGHT_CLASS_NORMAL
 	dual_wield_spread = 5 //as intended by the coders
+	selfcharge = FALSE
 
 /obj/item/gun/energy/laser/thermal/add_bayonet_point()
 	AddComponent(/datum/component/bayonet_attachable, offset_x = 19, offset_y = 13)

@@ -10,6 +10,7 @@
 /area/station/command/bridge
 	name = "\improper Bridge"
 	icon_state = "bridge"
+	engineering_override_eligible = TRUE
 
 /area/station/command/meeting_room
 	name = "\improper Heads of Staff Meeting Room"
@@ -43,6 +44,7 @@
 	icon_state = "eva"
 	ambience_index = AMBIENCE_DANGER
 	motion_monitored = TRUE
+	engineering_override_eligible = TRUE
 
 /area/station/command/eva/upper
 	name = "Upper EVA Storage"
@@ -101,11 +103,13 @@
 	name = "\improper Teleporter Room"
 	icon_state = "teleporter"
 	ambience_index = AMBIENCE_ENGI
+	engineering_override_eligible = TRUE
 
 /area/station/command/gateway
 	name = "\improper Gateway"
 	icon_state = "gateway"
 	ambience_index = AMBIENCE_ENGI
+	engineering_override_eligible = TRUE
 
 /*
 * Command - Misc

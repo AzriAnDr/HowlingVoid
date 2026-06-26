@@ -41,6 +41,14 @@
 	new /obj/item/documents/syndicate/red(src)
 	update_appearance()
 
+/obj/item/folder/syndicate/red/secretformula
+	icon_state = "folder_sred"
+
+/obj/item/folder/syndicate/red/secretformula/Initialize(mapload)
+	. = ..()
+	new /obj/item/paper/secretrecipe/secretformula(src)
+	update_appearance()
+
 /obj/item/folder/syndicate/blue
 	icon_state = "folder_sblue"
 

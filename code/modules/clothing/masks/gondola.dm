@@ -5,6 +5,7 @@
 	inhand_icon_state = null
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_SMALL
+	supports_variations_flags = NONE
 
 /obj/item/clothing/mask/gondola/Initialize(mapload)
 	. = ..()

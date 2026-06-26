@@ -27,6 +27,20 @@
 		/obj/item/clothing/mask/gas/explorer,
 	)
 
+/datum/voucher_set/mining_suits/carota
+	name = "Bunny Suit"
+	description = "Designed for Miners on the planet of Carota, while you might get some odd looks from your co-workers, decency is a foreign word around here."
+	icon = 'icons/mob/simple/rabbit.dmi'
+	icon_state = "rabbit_white"
+	set_items = list(
+		/obj/item/clothing/head/playbunnyears/miner,
+		/obj/item/clothing/neck/tie/bunnytie/miner,
+		/obj/item/clothing/suit/jacket/tailcoat/miner,
+		/obj/item/clothing/under/rank/cargo/miner/bunnysuit,
+		/obj/item/clothing/shoes/workboots/mining/heeled,
+		/obj/item/clothing/mask/gas/explorer,
+	)
+
 /obj/machinery/computer/order_console/mining/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/voucher_redeemer, /obj/item/suit_voucher, /datum/voucher_set/mining_suits)

@@ -22,6 +22,7 @@
 	color = "#DB90C6"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 
 /datum/reagent/medicine/leporazine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -125,7 +126,7 @@
 	description = "Temporary side effects include - nausea, dizziness, impaired motor coordination."
 	color = "#07e4d1"
 	ph = 6.2
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/medicine/sansufentanyl/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
@@ -133,6 +134,25 @@
 	affected_mob.adjust_confusion_up_to(1.5 SECONDS * metabolization_ratio * seconds_per_tick, 5 SECONDS)
 	affected_mob.adjust_dizzy_up_to(3 SECONDS * metabolization_ratio * seconds_per_tick, 12 SECONDS)
 	if(affected_mob.adjust_stamina_loss(0.5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
+		. = UPDATE_MOB_HEALTH
+
+	if(SPT_PROB(10, seconds_per_tick))
+		to_chat(affected_mob, "You feel confused and disoriented.")
+		if(prob(30))
+			SEND_SOUND(affected_mob, sound('sound/items/weapons/flash_ring.ogg'))
+
+/datum/reagent/medicine/sansufentanyl_base
+	name = "Experimental Fentanyl Base"
+	description = "The secret base reagent used to create sansufentanyl. Developed by Interdyne Pharmacuticals, it is a closely held secret recipe."
+	color = "#8659a6"
+	ph = 5
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+
+/datum/reagent/medicine/sansufentanyl_base/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	affected_mob.adjust_confusion_up_to(1.5 SECONDS * seconds_per_tick * metabolization_ratio, 10 SECONDS)
+	affected_mob.adjust_dizzy_up_to(3 SECONDS * seconds_per_tick * metabolization_ratio, 20 SECONDS)
+	if(affected_mob.adjust_stamina_loss(2 * seconds_per_tick * metabolization_ratio, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
 
 	if(SPT_PROB(10, seconds_per_tick))
@@ -801,6 +821,39 @@
 		affected_mob.set_dizzy_if_lower(4 SECONDS)
 		affected_mob.set_jitter_if_lower(4 SECONDS)
 
+/datum/reagent/medicine/lidocaine
+	name = "Lidocaine"
+	description = "A numbing agent used often for surgeries, metabolizes slowly."
+	color = "#6dbdbd" // 109, 189, 189
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	overdose_threshold = 20
+	ph = 6.09
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	inverse_chem_val = 0.55
+	inverse_chem = /datum/reagent/inverse/lidocaine
+	metabolized_traits = list(TRAIT_ANALGESIA)
+
+/datum/reagent/medicine/lidocaine/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, 3.75 * seconds_per_tick * metabolization_ratio, 80, required_organ_flag = affected_organ_flags)
+
+/datum/reagent/inverse/lidocaine
+	name = "Lidopaine"
+	description = "A paining agent used often for... being a jerk, metabolizes faster than lidocaine."
+	color = "#85111f" // 133, 17, 31
+	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+	ph = 6.09
+	tox_damage = 0
+
+/datum/reagent/inverse/lidocaine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	to_chat(affected_mob, span_userdanger("Your body aches with unimaginable pain!"))
+	affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, 3.75 * seconds_per_tick * metabolization_ratio, 85, required_organ_flag = affected_organ_flags)
+	if(affected_mob.adjust_stamina_loss(6.25 * seconds_per_tick * metabolization_ratio, updating_stamina = FALSE))
+		. = UPDATE_MOB_HEALTH
+	if(prob(30))
+		INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/mob, emote), "scream")
+
 
 /datum/reagent/medicine/oculine
 	name = "Oculine"
@@ -1367,6 +1420,7 @@
 	ph = 8.7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC // Syndicate developed 'accelerants' for synths?
 	addiction_types = list(/datum/addiction/stimulants = 150)
 	metabolized_traits = list(TRAIT_BATON_RESISTANCE, TRAIT_ANALGESIA, TRAIT_STIMULATED)
 
@@ -1468,6 +1522,7 @@
 	ph = 11
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC // Let's not cripple synth ops
 
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1937,6 +1992,13 @@
 			our_heart.apply_organ_damage(METABOLIZE_FREE_CONSTANT(0.5) * metabolization_ratio)
 
 		return UPDATE_MOB_HEALTH
+
+/datum/reagent/medicine/coagulant/fabricated
+	name = "fabricated coagulant"
+	description = "A synthesized coagulant created by Mediguns."
+	color = "#ff7373" //255, 155. 155
+	clot_rate = 0.15 //Half as strong as standard coagulant
+	passive_bleed_modifier = 0.5 // around 2/3 the bleeding reduction
 
 // i googled "natural coagulant" and a couple of results came up for banana peels, so after precisely 30 more seconds of research, i now dub grinding banana peels good for your blood
 /datum/reagent/medicine/coagulant/banana_peel

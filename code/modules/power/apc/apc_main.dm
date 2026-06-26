@@ -140,6 +140,10 @@
 	var/no_charge = FALSE
 	/// Used for apc helper called full_charge to make apc's charge at 100% meter.
 	var/full_charge = FALSE
+	/// Has the APC been protected against arcing?
+	var/arc_shielded = FALSE
+	/// Should this APC arc even when below the normal arcing threshold?
+	var/force_arcing = FALSE
 	///When did the apc generate last malf ai processing time.
 	COOLDOWN_DECLARE(malf_ai_pt_generation)
 	armor_type = /datum/armor/power_apc
@@ -340,6 +344,12 @@
 
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
+	. += "It [arc_shielded ? "has" : "does not have"] arc shielding installed."
+	if(panel_open)
+		if(arc_shielded)
+			. += "The arc shielding could be removed with a <b>wrench</b>."
+		else
+			. += "It could be arc shielded with a <b>sheet of bronze</b>."
 	if(machine_stat & BROKEN)
 		if(opened != APC_COVER_REMOVED)
 			. += "The cover is broken and can probably be <i>pried</i> off with enough force."
@@ -585,12 +595,15 @@
 	if(icon_update_needed)
 		update_appearance()
 	if(machine_stat & (BROKEN|MAINT))
+		process_arcing()
 		return
 	if(!area?.requires_power)
+		process_arcing()
 		return
 	if(failure_timer)
 		failure_timer--
 		force_update = TRUE
+		process_arcing()
 		return
 
 	if((obj_flags & EMAGGED) || malfai)
@@ -691,6 +704,48 @@
 		update()
 	else if(charging != last_charging)
 		queue_icon_update()
+
+	process_arcing()
+
+/obj/machinery/power/apc/proc/process_arcing()
+	if(!cell || shorted)
+		return
+	var/excess = energy_to_power(surplus())
+	if(((excess < APC_ARC_LOWERLIMIT) && !force_arcing) || arc_shielded)
+		return
+	var/shock_chance = 5
+	if(excess >= APC_ARC_UPPERLIMIT)
+		shock_chance = 15
+	else if(excess >= APC_ARC_MEDIUMLIMIT)
+		shock_chance = 10
+	if(prob(shock_chance))
+#define SHOCK_SOMEONE 1
+#define MAKE_SPARKS 2
+#define CAUSE_BROWNOUT 3
+		var/effect = pick(list(
+			SHOCK_SOMEONE,
+			MAKE_SPARKS,
+			CAUSE_BROWNOUT,
+		))
+		switch(effect)
+			if(SHOCK_SOMEONE)
+				var/list/shock_mobs = list()
+				for(var/mob/living/creature in viewers(get_turf(src), 5))
+					shock_mobs += creature
+				if(length(shock_mobs))
+					var/mob/living/living_target = pick(shock_mobs)
+					do_sparks(number = 3, cardinal_only = FALSE, source = living_target)
+					living_target.electrocute_act(rand(5, 25), "electrical arc")
+					playsound(get_turf(living_target), 'sound/effects/magic/lightningshock.ogg', 75, TRUE)
+					Beam(living_target, icon_state = "lightning[rand(1, 12)]", icon = 'icons/effects/beam.dmi', time = 5)
+					energy_fail(2)
+			if(MAKE_SPARKS)
+				do_sparks(number = 3, cardinal_only = FALSE, source = src)
+			if(CAUSE_BROWNOUT)
+				energy_fail(rand(2, 4))
+#undef SHOCK_SOMEONE
+#undef MAKE_SPARKS
+#undef CAUSE_BROWNOUT
 
 // charge until the battery is full or to the treshold of the provided channel
 /obj/machinery/power/apc/proc/charge_channel(channel = null, seconds_per_tick)

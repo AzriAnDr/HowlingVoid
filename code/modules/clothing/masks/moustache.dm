@@ -4,7 +4,8 @@
 	icon_state = "fake-moustache"
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	w_class = WEIGHT_CLASS_TINY
-	flags_inv = HIDEFACE
+	flags_inv = NONE
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/mask/fakemoustache/italian

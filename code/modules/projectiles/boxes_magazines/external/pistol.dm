@@ -3,6 +3,7 @@
 
 /obj/item/ammo_box/magazine/m9mm
 	name = "pistol magazine (9mm)"
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	icon_state = "9x19p"
 	base_icon_state = "9x19p"
 	desc = "A 9mm handgun magazine, suitable for the Makarov pistol."
@@ -13,6 +14,10 @@
 	max_ammo = 12
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 	multiple_sprite_use_base = TRUE
+
+/obj/item/ammo_box/magazine/m9mm/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]-[round(ammo_count(), 4)]"
 
 /obj/item/ammo_box/magazine/m9mm/fire
 	name = "pistol magazine (9mm incendiary)"
@@ -66,9 +71,10 @@
 /obj/item/ammo_box/magazine/m10mm
 	name = "pistol magazine (10mm)"
 	desc = "A 10mm handgun magazine, suitable for the Ansem pistol."
-	icon_state = "9x19p"
-	base_icon_state = "9x19p"
-	ammo_band_icon = "+9x19ab"
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
+	icon_state = "10mm_p"
+	base_icon_state = "10mm_p"
+	ammo_band_icon = "+10mm_p-ab"
 	ammo_band_color = null
 
 	ammo_type = /obj/item/ammo_casing/c10mm
@@ -76,6 +82,10 @@
 	max_ammo = 8
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 	multiple_sprite_use_base = TRUE
+
+/obj/item/ammo_box/magazine/m10mm/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]-[round(ammo_count(), 2)]"
 
 /obj/item/ammo_box/magazine/m10mm/fire
 	name = "pistol magazine (10mm incendiary)"
@@ -91,6 +101,13 @@
 	name = "pistol magazine (10mm AP)"
 	MAGAZINE_TYPE_ARMORPIERCE
 	ammo_type = /obj/item/ammo_casing/c10mm/ap
+
+/obj/item/ammo_box/magazine/m10mm/downer
+	name = "pistol magazine (10mm downer)"
+	desc = parent_type::desc + "<br>Carries rounds which severely exhaust targets. Fully exhausted targets sleep when shot, \
+		while partially exhausted targets have a chance to go to sleep scaling with how exhausted they are."
+	ammo_band_color = COLOR_CARP_LIGHT_BLUE
+	ammo_type = /obj/item/ammo_casing/c10mm/downer
 
 // Regal Condor (10mm) //
 

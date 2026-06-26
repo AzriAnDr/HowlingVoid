@@ -51,6 +51,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/scan_range = 7
 	/// For turrets inside other objects
 	var/atom/base = null
+	/// ID used to link this turret to a matching control panel.
+	var/system_id
 	/// If the turret cover is "open" and the turret is raised
 	var/raised = FALSE
 	/// If the turret is currently opening or closing its cover
@@ -140,8 +142,16 @@ DEFINE_BITFIELD(turret_flags, list(
 		INVOKE_ASYNC(src, PROC_REF(popUp))
 
 	AddElement(/datum/element/hostile_machine)
+	if(system_id)
+		if(!GLOB.turret_id_refs[system_id])
+			GLOB.turret_id_refs[system_id] = list()
+		GLOB.turret_id_refs[system_id][src] = TRUE
 
 /obj/machinery/porta_turret/Destroy()
+	if(system_id && GLOB.turret_id_refs[system_id])
+		GLOB.turret_id_refs[system_id] -= src
+		if(!length(GLOB.turret_id_refs[system_id]))
+			GLOB.turret_id_refs -= system_id
 	QDEL_NULL(tracker)
 	//deletes its own cover with it
 	QDEL_NULL(cover)

@@ -43,7 +43,7 @@
 		/obj/item/boxcutter = 1,
 	)
 	id_trim = /datum/id_trim/job/cargo_technician
-	uniform = /obj/item/clothing/under/rank/cargo/tech
+	uniform = /obj/item/clothing/under/rank/cargo/tech/nova/turtleneck
 	belt = /obj/item/modular_computer/pda/cargo
 	suit = /obj/item/clothing/suit/toggle/cargo_tech
 	ears = /obj/item/radio/headset/headset_cargo
@@ -52,5 +52,8 @@
 /datum/outfit/job/cargo_tech/mod
 	name = "Cargo Technician (MODsuit)"
 
-	back = /obj/item/mod/control/pre_equipped/loader
+	back = /obj/item/storage/backpack
+	belt = /obj/item/mod/control/pre_equipped/loader
+	l_pocket = /obj/item/modular_computer/pda/cargo
+	pda_slot = ITEM_SLOT_LPOCKET
 	suit = null

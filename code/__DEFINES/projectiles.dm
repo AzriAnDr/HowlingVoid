@@ -65,6 +65,71 @@
 /// The caliber used by the (gatfruit) peashooter
 #define CALIBER_PEA "pea"
 
+/// Baseline material costs for printable ammunition.
+#define AMMO_MATS_BASIC list( \
+	/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2, \
+)
+
+#define AMMO_MATS_AP list( \
+	/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.6, \
+	/datum/material/titanium = SMALL_MATERIAL_AMOUNT * 0.4, \
+)
+
+#define AMMO_MATS_TEMP list( \
+	/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.6, \
+	/datum/material/plasma = SMALL_MATERIAL_AMOUNT * 0.4, \
+)
+
+#define AMMO_MATS_EMP list( \
+	/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.6, \
+	/datum/material/uranium = SMALL_MATERIAL_AMOUNT * 0.4, \
+)
+
+#define AMMO_MATS_PHASIC list( \
+	/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.6, \
+	/datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 0.4, \
+)
+
+#define AMMO_MATS_TRAC list( \
+	/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.6, \
+	/datum/material/silver = SMALL_MATERIAL_AMOUNT * 0.2, \
+	/datum/material/gold = SMALL_MATERIAL_AMOUNT * 0.2, \
+)
+
+#define AMMO_MATS_HOMING list( \
+	/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1, \
+	/datum/material/silver = SMALL_MATERIAL_AMOUNT * 0.2, \
+	/datum/material/gold = SMALL_MATERIAL_AMOUNT * 0.2, \
+	/datum/material/plasma = SMALL_MATERIAL_AMOUNT * 0.2, \
+	/datum/material/diamond = SMALL_MATERIAL_AMOUNT * 0.2, \
+	/datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 0.2, \
+)
+
+// For .35 Sol Ripper.
+#define AMMO_MATS_RIPPER list( \
+	/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.6, \
+	/datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.4, \
+)
+
+#define AMMO_MATS_HEAVY list( \
+	/datum/material/iron = SMALL_MATERIAL_AMOUNT * 6, \
+)
+
+#define AMMO_MATS_HEAVY_TEMP list( \
+	/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, \
+	/datum/material/plasma = SMALL_MATERIAL_AMOUNT, \
+)
+
+#define AMMO_MATS_HEAVY_EMP list( \
+	/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, \
+	/datum/material/uranium = SMALL_MATERIAL_AMOUNT, \
+)
+
+#define AMMO_MATS_HEAVY_FAST list( \
+	/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, \
+	/datum/material/titanium = SMALL_MATERIAL_AMOUNT, \
+)
+
 /// For gunpoints, how many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2
 

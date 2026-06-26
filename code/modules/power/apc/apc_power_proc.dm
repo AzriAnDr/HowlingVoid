@@ -140,6 +140,11 @@
 	update()
 	queue_icon_update()
 
+/// Set all APCs to start or stop arcing.
+/proc/force_apc_arcing(force_mode = FALSE)
+	for(var/obj/machinery/power/apc/controller as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
+		controller.force_arcing = force_mode
+
 /obj/machinery/power/apc/proc/set_nightshift(on)
 	set waitfor = FALSE
 	if(low_power_nightshift_lights && !on)

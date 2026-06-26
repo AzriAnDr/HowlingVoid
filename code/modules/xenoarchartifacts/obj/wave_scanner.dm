@@ -38,7 +38,7 @@
 		if(!user.put_in_hands(processor))
 			to_chat(user, span_warning("You need a free hand to hold the [processor]!"))
 			return
-		playsound(src, 'sound/aesthetics/lightswitch/sound/lightswitch.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/lightswitch.ogg', 50, FALSE)
 	else
 		// Remove from their hands and put back "into" the backpack
 		remove_processor()
@@ -59,7 +59,7 @@
 		var/mob/mob_loc = processor.loc
 		if(mob_loc.dropItemToGround(processor))
 			to_chat(mob_loc, span_notice("The [processor] snaps back into the [src]."))
-			playsound(src, 'sound/aesthetics/lightswitch/sound/lightswitch.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/lightswitch.ogg', 50, FALSE)
 	else
 		processor.forceMove(src)
 
@@ -117,9 +117,9 @@
 	. = ..()
 	if(wavescanner)
 		wavescanner.remove_processor()
-		playsound(src, 'sound/aesthetics/lightswitch/sound/lightswitch.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/lightswitch.ogg', 50, FALSE)
 	else
-		playsound(src, 'sound/aesthetics/lightswitch/sound/lightswitch.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/lightswitch.ogg', 50, FALSE)
 		qdel(src)
 
 /obj/item/xenoarch/searcher/afterattack(atom/target, mob/user, proximity, params)
@@ -131,9 +131,9 @@
 	. = ..()
 	if(wavescanner)
 		wavescanner.remove_processor()
-		playsound(src, 'sound/aesthetics/lightswitch/sound/lightswitch.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/lightswitch.ogg', 50, FALSE)
 	else
-		playsound(src, 'sound/aesthetics/lightswitch/sound/lightswitch.ogg', 50, FALSE)
+		playsound(src, 'sound/machines/lightswitch.ogg', 50, FALSE)
 		qdel(src)
 	return
 

@@ -5,6 +5,12 @@
 	shuttle_id = "pod"
 	launch_status = UNLAUNCHED
 
+/obj/docking_port/mobile/pod/register()
+	. = ..()
+	if(CONFIG_GET(number/minimum_alert_for_pods) != 0)
+		launch_status = NOLAUNCH
+		RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(check_for_evac))
+
 /obj/docking_port/mobile/pod/request(obj/docking_port/stationary/S)
 	var/obj/machinery/computer/shuttle/connected_computer = get_control_console()
 	if(!istype(connected_computer, /obj/machinery/computer/shuttle/pod))
@@ -18,6 +24,21 @@
 
 /obj/docking_port/mobile/pod/cancel()
 	return
+
+/**
+ * Signal handler for checking if escape pods should be launchable according to the configured security level.
+ *
+ * Arguments:
+ * * source The datum source of the signal
+ * * new_level The new security level that is in effect
+ */
+/obj/docking_port/mobile/pod/proc/check_for_evac(datum/source, new_level)
+	SIGNAL_HANDLER
+
+	var/min_level = CONFIG_GET(number/minimum_alert_for_pods)
+	if(launch_status > UNLAUNCHED)
+		return
+	launch_status = (new_level >= min_level) ? UNLAUNCHED : NOLAUNCH
 
 /obj/machinery/computer/shuttle/pod
 	name = "pod control computer"
@@ -40,6 +61,10 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	locked = FALSE
+	var/obj/docking_port/mobile/our_pod = SSshuttle.getShuttle(shuttleId)
+	our_pod?.UnregisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED)
+	if(our_pod?.launch_status <= UNLAUNCHED)
+		our_pod.launch_status = UNLAUNCHED
 	balloon_alert(user, "alert level checking disabled")
 	icon_screen = "emagged_general"
 	update_appearance()

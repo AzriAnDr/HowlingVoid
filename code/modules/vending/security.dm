@@ -8,30 +8,33 @@
 	light_mask = "sec-light-mask"
 	products = list(
 		/obj/item/restraints/handcuffs = 8,
-		/obj/item/restraints/handcuffs/cable/zipties = 10,
-		/obj/item/grenade/flashbang = 4,
-		/obj/item/assembly/flash/handheld = 5,
+		/obj/item/restraints/handcuffs/cable/zipties = 12,
+		/obj/item/grenade/flashbang = 6,
+		/obj/item/assembly/flash/handheld = 8,
 		/obj/item/food/donut/plain = 12,
 		/obj/item/storage/box/evidence = 6,
-		/obj/item/flashlight/seclite = 4,
-		/obj/item/restraints/legcuffs/bola/energy = 7,
-		/obj/item/clothing/gloves/tackler = 5,
+		/obj/item/flashlight/seclite = 6,
+		/obj/item/restraints/legcuffs/bola/energy = 10,
+		/obj/item/clothing/gloves/tackler/security = 5,
 		/obj/item/holosign_creator/security = 2,
 		/obj/item/gun_maintenance_supplies = 2,
+		/obj/item/gun/energy/e_gun/advtaser = 3,
 	)
 	contraband = list(
 		/obj/item/clothing/glasses/sunglasses = 2,
 		/obj/item/storage/fancy/donut_box = 2,
+		/obj/item/melee/baton/security/stun_gun/stun_knife = 3,
 	)
 	premium = list(
+		/obj/item/ammo_workbench_module/lethal = 1,
 		/obj/item/storage/belt/security/webbing = 5,
 		/obj/item/coin/antagtoken = 1,
-		/obj/item/clothing/head/helmet/blueshirt = 1,
-		/obj/item/clothing/gloves/color/black/security/blu = 1,
-		/obj/item/clothing/suit/armor/vest/blueshirt = 1,
-		/obj/item/grenade/stingbang = 1,
+		/obj/item/clothing/head/helmet/blueshirt = 3,
+		/obj/item/clothing/suit/armor/vest/blueshirt = 3,
+		/obj/item/grenade/stingbang = 5,
 		/obj/item/watertank/pepperspray = 2,
 		/obj/item/storage/belt/holster/energy = 4,
+		/obj/item/storage/box/holobadge = 1,
 	)
 	refill_canister = /obj/item/vending_refill/security
 	default_price = PAYCHECK_CREW

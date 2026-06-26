@@ -200,6 +200,16 @@
 		if(my_area.type in GLOB.the_station_areas)
 			board.announce_when_buckled = TRUE
 
+/obj/machinery/stasis/post_machine_initialize()
+	. = ..()
+	tune_special_cases()
+
+/obj/machinery/stasis/interdinify()
+	announcement_channel = RADIO_CHANNEL_INTERDYNE
+
+/obj/machinery/stasis/tarkonize()
+	announcement_channel = RADIO_CHANNEL_TARKON
+
 /obj/machinery/stasis/post_buckle_mob(mob/living/buckled_mob)
 	. = ..()
 	var/obj/item/circuitboard/machine/stasis/board = circuit

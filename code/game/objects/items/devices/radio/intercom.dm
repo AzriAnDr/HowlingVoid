@@ -1,11 +1,12 @@
 /obj/item/radio/intercom
 	name = "station intercom"
 	desc = "A trusty station intercom, ready to spring into action even when the headsets go silent."
-	icon = 'icons/obj/machines/wallmounts.dmi' //NOVA EDIT - ICON OVERRIDDEN IN AESTHETICS MODULE
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "intercom"
 	anchored = TRUE
 	w_class = WEIGHT_CLASS_BULKY
 	canhear_range = 2
+	radio_sound_range = SHORT_RANGE_SOUND_EXTRARANGE
 	dog_fashion = null
 	unscrewed = FALSE
 	item_flags = NO_BLOOD_ON_ITEM

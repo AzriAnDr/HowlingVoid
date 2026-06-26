@@ -108,32 +108,7 @@
 	data["storytellerCargoModifierDescription"] = SSeconomy.get_cargo_sale_modifier_description()
 	data["storytellerIncomingPods"] = SSstoryteller.get_pending_pod_delivery_ui_data(ACCOUNT_CAR)
 
-	var/cart_list = list()
-	for(var/datum/supply_order/order in SSshuttle.shopping_list)
-		if(cart_list[order.pack.name])
-			cart_list[order.pack.name][1]["amount"]++
-			cart_list[order.pack.name][1]["cost"] += order.get_final_cost()
-			if(order.department_destination)
-				cart_list[order.pack.name][1]["dep_order"]++
-			if(!isnull(order.paying_account))
-				cart_list[order.pack.name][1]["paid"]++
-			continue
-
-		cart_list[order.pack.name] = list(list(
-			"cost_type" = order.cost_type,
-			"object" = order.pack.name,
-			"cost" = order.get_final_cost(),
-			"id" = order.id,
-			"amount" = 1,
-			"orderer" = order.orderer,
-			"paid" = !isnull(order.paying_account), //number of orders purchased privatly
-			"dep_order" = !!order.department_destination, //number of orders purchased by a department
-			"can_be_cancelled" = order.can_be_cancelled,
-		))
-	data["cart"] = list()
-	for(var/item_id in cart_list)
-		data["cart"] += cart_list[item_id]
-
+	data["cart"] = build_cargo_cart_ui_data(SSshuttle.shopping_list)
 
 	data["requests"] = list()
 	for(var/datum/supply_order/order in SSshuttle.request_list)
@@ -343,6 +318,7 @@
 			reason = reason,
 			paying_account = account,
 			coupon = applied_coupon,
+			private_purchase = self_paid,
 		)
 		working_list += order
 
@@ -421,9 +397,10 @@
 						if(restrictions)
 							requisition_text += "- Access Restrictions: [restrictions]</br>"
 						requisition_text += "- Ordered by: [order.orderer] ([order.orderer_rank])</br>"
-						var/paying_account = order.paying_account
-						if(paying_account)
+						if(order.is_private_purchase())
 							requisition_text += "- Paid Privately by: [order.paying_account.account_holder]<br/>"
+						else if(order.paying_account)
+							requisition_text += "- Paid by: [order.paying_account.account_holder]<br/>"
 						var/reason = order.reason
 						if(reason)
 							requisition_text += "- Reason Given: [reason]</br>"
@@ -466,8 +443,11 @@
 			return add_item(ui.user, supply_pack_id)
 		if("remove")
 			var/order_name = params["order_name"]
+			var/cart_key = params["cart_key"]
 			//try removing at least one item with the specified name. An order may not be removed if it was from the department
 			for(var/datum/supply_order/order in SSshuttle.shopping_list)
+				if(cart_key && order.get_checkout_group_key() != cart_key)
+					continue
 				if(order.pack.name != order_name)
 					continue
 				if(remove_item(order.id))
@@ -476,9 +456,21 @@
 			return TRUE
 		if("modify")
 			var/order_name = params["order_name"]
+			var/cart_key = params["cart_key"]
+			var/datum/supply_order/first_matching_order
+			if(cart_key)
+				for(var/datum/supply_order/order in SSshuttle.shopping_list)
+					if(order.get_checkout_group_key() == cart_key && order.pack.name == order_name)
+						first_matching_order = order
+						break
+				if(first_matching_order && first_matching_order.is_private_purchase() != self_paid)
+					say("Switch payment mode before changing this checkout entry.")
+					return TRUE
 
 			//clear out all orders with the above mentioned order_name name to make space for the new amount
 			for(var/datum/supply_order/order in SSshuttle.shopping_list) //find corresponding order id for the order name
+				if(cart_key && order.get_checkout_group_key() != cart_key)
+					continue
 				if(order.pack.name == order_name)
 					remove_item(order.id)
 

@@ -487,6 +487,29 @@
 	w_class = WEIGHT_CLASS_TINY
 	aug_overlay = "breathing_tube"
 
+/obj/item/organ/cyberimp/mouth/breathing_tube/examine()
+	. = ..()
+	. += span_info("It will currently be [aug_overlay ? "physically visible" : "practically invisible"] upon installation. \
+		This could be changed by using a [EXAMINE_HINT("screwdriver")].")
+
+/obj/item/organ/cyberimp/mouth/breathing_tube/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(isnull(aug_overlay))
+		name = "breathing tube implant"
+		aug_overlay = "breathing_tube"
+		if(isnull(bodypart_aug))
+			bodypart_aug = new(src)
+	else
+		name = "integrated breathing tube implant"
+		aug_overlay = null
+		QDEL_NULL(bodypart_aug)
+	tool.play_tool_sound(src)
+	balloon_alert(user, "visibility toggled")
+
+/obj/item/organ/cyberimp/mouth/breathing_tube/hidden
+	name = "integrated breathing tube implant"
+	aug_overlay = null
+
 /obj/item/organ/cyberimp/mouth/breathing_tube/emp_act(severity)
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)

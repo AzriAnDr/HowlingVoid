@@ -104,7 +104,7 @@
 
 	deploy(user)
 
-	playsound(src, 'sound/aesthetics/airlock/sound/bolts_down.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/airlock/bolts_down.ogg', 50, FALSE)
 
 	balloon_alert(user, "deployment successful!")
 

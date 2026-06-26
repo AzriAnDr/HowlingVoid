@@ -47,6 +47,8 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	///Parrots are kleptomaniacs. This variable ... stores the item a parrot is holding.
 	var/obj/item/held_item = null
+	/// Whether the parrot is perched on a human after a spoken command.
+	var/buckled_to_human = FALSE
 
 	/// The blackboard key we use to store the string we're repeating
 	var/speech_blackboard_key = BB_PARROT_REPEAT_STRING
@@ -208,6 +210,10 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	COOLDOWN_START(src, forced_speech_cooldown, FORCED_SPEECH_COOLDOWN_DURATION)
 	return ai_controller.blackboard[BB_PARROT_REPEAT_STRING]
 
+/// Handles special phrases heard by repeat listeners.
+/mob/living/basic/parrot/proc/check_command(message, speaker)
+	return FALSE
+
 /// Proc that listens for when a parrot is pet so we can dispatch a voice line.
 /mob/living/basic/parrot/proc/on_pet(mob/living/basic/source, mob/living/petter, modifiers)
 	SIGNAL_HANDLER
@@ -269,6 +275,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 /mob/living/basic/parrot/proc/toggle_perched(perched)
 	if(!perched)
+		buckled_to_human = FALSE
 		REMOVE_TRAIT(src, TRAIT_PARROT_PERCHED, PERCH_SOURCE)
 		remove_offsets(PERCH_SOURCE)
 	else

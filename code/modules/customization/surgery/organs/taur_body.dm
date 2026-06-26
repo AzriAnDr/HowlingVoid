@@ -49,6 +49,10 @@
 	var/hardened_soles
 	/// Did our owner have their feet blocked before we ran on_mob_insert? Used for determining if we should unblock their feet slots on removal.
 	var/owner_blocked_feet_before_insert
+	/// If TRUE, this taur body replaces normal human footsteps with a crawling sound.
+	var/uses_crawling_footsteps = FALSE
+	/// Volume used by the crawling footstep sound.
+	var/crawling_footstep_volume = FOOTSTEP_MOB_SNAKE_VOLUME
 
 /obj/item/organ/taur_body/horselike
 	can_use_saddle = TRUE
@@ -72,6 +76,7 @@
 	left_leg_name = "upper body"
 	right_leg_name = "lower body"
 	hardened_soles = TRUE
+	uses_crawling_footsteps = TRUE
 	/// Action to toggle on/off mermaid form
 	var/datum/action/cooldown/spell/mermaid_toggle/mermaid_toggle
 
@@ -171,6 +176,7 @@
 	left_leg_name = "upper serpentine body"
 	right_leg_name = "lower serpentine body"
 	hardened_soles = TRUE
+	uses_crawling_footsteps = TRUE
 
 /obj/item/organ/taur_body/serpentine/synth
 	organ_flags = ORGAN_ROBOTIC | ORGAN_EXTERNAL
@@ -182,6 +188,7 @@
 /obj/item/organ/taur_body/tentacle
 	left_leg_name = "front tentacles"
 	right_leg_name = "back tentacles"
+	uses_crawling_footsteps = TRUE
 
 /obj/item/organ/taur_body/blob
 	left_leg_name = "outer blob"
@@ -190,6 +197,7 @@
 /obj/item/organ/taur_body/centipede
 	left_leg_name = "dozens of left legs"
 	right_leg_name = "dozens of right legs"
+	uses_crawling_footsteps = TRUE
 
 /obj/item/organ/taur_body/centipede/synth
 	organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE | ORGAN_VIRGIN | ORGAN_EXTERNAL | ORGAN_ROBOTIC
@@ -299,6 +307,12 @@
 	if(overlay.can_lay_down)
 		add_verb(receiver, /obj/item/organ/taur_body/proc/toggle_laying)
 
+	if(uses_crawling_footsteps)
+		receiver.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 0.6, -6)
+		receiver.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
+		receiver.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_SNAKE, 15, -6)
+		receiver.AddElement(/datum/element/footstep, FOOTSTEP_MOB_SNAKE, crawling_footstep_volume, -6)
+
 	if(hardened_soles)
 		owner_blocked_feet_before_insert = (receiver.dna.species.no_equip_flags & ITEM_SLOT_FEET)
 		receiver.dna.species.no_equip_flags |= ITEM_SLOT_FEET
@@ -317,6 +331,11 @@
 /obj/item/organ/taur_body/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	if(QDELETED(organ_owner))
 		return ..()
+
+	if(uses_crawling_footsteps)
+		organ_owner.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_SNAKE, crawling_footstep_volume, -6)
+		organ_owner.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_SNAKE, 15, -6)
+		organ_owner.AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 0.6, -6)
 
 	var/obj/item/bodypart/leg/left/left_leg = organ_owner.get_bodypart(BODY_ZONE_L_LEG)
 	var/obj/item/bodypart/leg/right/right_leg = organ_owner.get_bodypart(BODY_ZONE_R_LEG)

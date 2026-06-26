@@ -1,9 +1,11 @@
 /obj/item/clothing/shoes/combat //basic syndicate combat boots for nuke ops and mob corpses
 	name = "combat boots"
 	desc = "High speed, low drag combat boots."
-	icon_state = "jackboots"
+	icon = 'icons/obj/clothing/shoes_additions.dmi'
+	worn_icon = 'icons/mob/clothing/feet_additions.dmi'
+	icon_state = "combat"
 	inhand_icon_state = "jackboots"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	body_parts_covered = FEET|LEGS
 	armor_type = /datum/armor/shoes_combat
 	strip_delay = 4 SECONDS
@@ -46,7 +48,8 @@
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+	clothing_traits = list(TRAIT_SILENT_FOOTSTEPS)
 	strip_delay = 3 SECONDS
 	equip_delay_other = 5 SECONDS
 	resistance_flags = NONE
@@ -61,18 +64,52 @@
 	. = ..()
 	create_storage(storage_type = /datum/storage/pockets/shoes)
 	AddElement(/datum/element/ignites_matches)
+	AddComponent(/datum/component/squeak, list('sound/effects/footstep1.ogg' = 1, 'sound/effects/footstep2.ogg' = 1, 'sound/effects/footstep3.ogg' = 1), 100)
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
 
 /obj/item/clothing/shoes/jackboots/sec
 	icon_state = "jackboots_sec"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+
+/datum/atom_skin/security_jackboots
+	abstract_type = /datum/atom_skin/security_jackboots
+
+/datum/atom_skin/security_jackboots/blue_trim
+	preview_name = "Blue-Trimmed Variant"
+	new_icon_state = "security_boots"
+
+/datum/atom_skin/security_jackboots/white_trim
+	preview_name = "White-Trimmed Variant"
+	new_icon_state = "security_boots_white"
+
+/datum/atom_skin/security_jackboots/fullwhite
+	preview_name = "Full White Variant"
+	new_icon_state = "security_boots_fullwhite"
+
+/obj/item/clothing/shoes/jackboots/sec/blue
+	icon = 'icons/obj/clothing/shoes_additions.dmi'
+	worn_icon = 'icons/mob/clothing/feet_additions.dmi'
+	icon_state = "security_boots"
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+
+/obj/item/clothing/shoes/jackboots/sec/blue/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_jackboots)
+
+/obj/item/clothing/shoes/jackboots/peacekeeper
+	name = "peacekeeper boots"
+	desc = "High speed, low drag combat boots."
+	icon = 'icons/obj/clothing/shoes_additions.dmi'
+	worn_icon = 'icons/mob/clothing/feet_additions.dmi'
+	icon_state = "peacekeeper"
 
 /obj/item/clothing/shoes/jackboots/tall
 	name = "tall jackboots"
 	desc = "A pair of knee-high jackboots, complete with heels. All style, all the time."
 	icon_state = "jackboots-tall"
 	worn_icon_digi = DIGITIGRADE_SHOES_FILE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/jackboots/tall/Initialize(mapload)
 	. = ..()
@@ -94,7 +131,7 @@
 	desc = "Boots lined with 'synthetic' animal fur."
 	icon_state = "winterboots"
 	inhand_icon_state = null
-	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	armor_type = /datum/armor/shoes_winterboots
 	cold_protection = FEET|LEGS
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
@@ -145,7 +182,7 @@
 	icon_state = "workboots"
 	inhand_icon_state = "jackboots"
 	armor_type = /datum/armor/shoes_workboots
-	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	strip_delay = 2 SECONDS
 	equip_delay_other = 4 SECONDS
 	lace_time = 8 SECONDS
@@ -175,7 +212,7 @@
 	icon_state = "rus_shoes"
 	inhand_icon_state = null
 	lace_time = 8 SECONDS
-	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/shoes/russian/Initialize(mapload)
 	. = ..()
@@ -193,6 +230,15 @@
 	desc = "A crisp, clean set of boots for working long hours on the beat."
 	icon_state = "aerostatic_boots"
 	inhand_icon_state = null
+
+/obj/item/clothing/shoes/jackboots/armadyne
+	name = "armadyne combat boots"
+	desc = "Tactical and sleek. Worn by Armadyne representatives."
+	icon = 'icons/obj/clothing/shoes_additions.dmi'
+	worn_icon = 'icons/mob/clothing/feet_additions.dmi'
+	icon_state = "armadyne_boots"
+	inhand_icon_state = "jackboots"
+	worn_icon_state = "armadyne_boots"
 
 /obj/item/clothing/shoes/pirate
 	name = "pirate boots"

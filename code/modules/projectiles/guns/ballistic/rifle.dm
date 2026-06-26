@@ -425,11 +425,9 @@
 // SNIPER //
 
 /obj/item/gun/ballistic/rifle/sniper_rifle
-	name = "anti-materiel sniper rifle"
-	desc = "A boltaction anti-materiel rifle, utilizing .50 BMG cartridges. While technically outdated in modern arms markets, it still works exceptionally well as \
-		an anti-personnel rifle. In particular, the employment of modern armored MODsuits utilizing advanced armor plating has given this weapon a new home on the battlefield. \
-		It is also able to be suppressed... somehow."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	name = "sniper rifle"
+	desc = "A long ranged weapon that does significant damage. No, you can't quickscope."
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	icon_state = "sniper"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -448,6 +446,9 @@
 	internal_magazine = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BACK
+	fire_delay = 6 SECONDS
+	burst_size = 1
+	actions_types = list()
 	mag_display = TRUE
 	tac_reloads = TRUE
 	rack_delay = 1 SECONDS
@@ -455,6 +456,7 @@
 	can_unsuppress = TRUE
 	suppressor_x_offset = 3
 	suppressor_y_offset = 3
+	SET_BASE_PIXEL(-8, 0)
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/examine(mob/user)
 	. = ..()
@@ -462,7 +464,7 @@
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/scope, range_modifier = 4) //enough range to at least make extremely good use of the penetrator rounds
+	AddComponent(/datum/component/scope, range_modifier = 2)
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/reset_fire_cd()
 	. = ..()
@@ -472,11 +474,61 @@
 		playsound(src, 'sound/machines/eject.ogg', 50, TRUE)
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/syndicate
-	desc = "A boltaction anti-materiel rifle, utilizing .50 BMG cartridges. While technically outdated in modern arms markets, it still works exceptionally well as \
-		an anti-personnel rifle. In particular, the employment of modern armored MODsuits utilizing advanced armor plating has given this weapon a new home on the battlefield. \
-		It is also able to be suppressed... somehow. This one seems to have a little picture of someone in a blood-red MODsuit stenciled on it, pointing at a green floppy disk. \
-		Who knows what that might mean."
+	name = "syndicate sniper rifle"
+	desc = "An illegally modified .50 sniper rifle with suppressor compatibility. Quickscoping still doesn't work."
+	icon_state = "sniper2"
+	worn_icon_state = "sniper"
+	fire_delay = 5.5 SECONDS
+	can_suppress = TRUE
+	can_unsuppress = TRUE
 	pin = /obj/item/firing_pin/implant/pindicate
+
+/obj/item/gun/ballistic/rifle/sniper_rifle/modular
+	name = "AUS-107 anti-materiel rifle"
+	desc = "A devastating Aussec Armory heavy sniper rifle, fitted with a modern scope."
+	icon_state = "sniper"
+	worn_icon_state = "sniper"
+	fire_sound = 'sound/items/weapons/gun/sniper/sniperrifle.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/sniper/sniperrifle_s.ogg'
+	w_class = WEIGHT_CLASS_BULKY
+	can_suppress = FALSE
+
+/obj/item/gun/ballistic/rifle/sniper_rifle/modular/syndicate
+	name = "'Caracal' anti-materiel rifle"
+	desc = "A sleek, light bullpup .50 sniper rifle with a reciprocating barrel, nicknamed 'Caracal' by Scarborough Arms. Its compact folding parts make it able to fit into a backpack, and its modular barrel can have a suppressor installed within it rather than as a muzzle extension. Its advanced scope accounts for all ballistic inaccuracies of a reciprocating barrel."
+	icon_state = "sysniper"
+	fire_sound = 'sound/items/weapons/gun/sniper/sniperrifle.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/sniper/sniperrifle_s.ogg'
+	fire_delay = 4 SECONDS
+	burst_size = 0.5
+	recoil = 1
+	can_suppress = TRUE
+	can_unsuppress = TRUE
+	weapon_weight = WEAPON_LIGHT
+
+/obj/item/gun/ballistic/rifle/sniper_rifle/modular/syndicate/give_manufacturer_examine()
+	AddElement(/datum/element/manufacturer_examine, COMPANY_SCARBOROUGH)
+
+/obj/item/gun/ballistic/rifle/sniper_rifle/modular/blackmarket
+	name = "SA-107 anti-materiel rifle"
+	desc = "An illegal Scarborough Arms rendition of an Aussec Armory sniper rifle. This one has been fitted with a heavy duty scope, a sturdier stock, and has a removable muzzle brake that allows easy attachment of suppressors."
+	icon_state = "sniper2"
+	fire_sound = 'sound/items/weapons/gun/sniper/sniperrifle.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/sniper/sniperrifle_s.ogg'
+	fire_sound_volume = 90
+	vary_fire_sound = FALSE
+	load_sound = 'sound/items/weapons/gun/sniper/mag_insert.ogg'
+	rack_sound = 'sound/items/weapons/gun/sniper/rack.ogg'
+	w_class = WEIGHT_CLASS_NORMAL
+	can_suppress = TRUE
+	can_unsuppress = TRUE
+	recoil = 1.8
+	weapon_weight = WEAPON_HEAVY
+	accepted_magazine_type = /obj/item/ammo_box/magazine/sniper_rounds
+	fire_delay = 55
+	burst_size = 1
+	slot_flags = ITEM_SLOT_BACK
+	mag_display = TRUE
 
 // SKS semi-automatic rifle //
 

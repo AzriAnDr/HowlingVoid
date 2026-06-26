@@ -13,6 +13,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	icon_state = "gas_alt"
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | GAS_FILTERING
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = "gas_alt"
 	armor_type = /datum/armor/mask_gas
@@ -287,6 +288,15 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/syndicate/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman
 
+/obj/item/clothing/mask/gas/syndicate/ds
+	name = "balaclava"
+	desc = "A fancy balaclava, while it doesn't muffle your voice, it's fireproof and has a miniature rebreather for internals. Comfy to boot!"
+	icon = 'icons/obj/clothing/masks_additions.dmi'
+	worn_icon = 'icons/mob/clothing/mask_additions.dmi'
+	icon_state = "balaclava_ds"
+	flags_inv = HIDEFACE | HIDEEARS | HIDEFACIALHAIR
+	alternate_worn_layer = LOW_FACEMASK_LAYER
+
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
@@ -427,6 +437,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	inhand_icon_state = "owl_mask"
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
+	supports_variations_flags = NONE
 	fishing_modifier = 0
 
 /obj/item/clothing/mask/gas/sexymime
@@ -456,6 +467,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	clothing_flags = MASKINTERNALS
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
+	supports_variations_flags = NONE
 	fishing_modifier = -2
 
 /obj/item/clothing/mask/gas/carp
@@ -465,6 +477,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	inhand_icon_state = null
 	flags_cover = MASKCOVERSEYES
 	clothing_flags = CARP_STYLE_FACTOR
+	supports_variations_flags = NONE
 	fishing_modifier = -4
 
 /obj/item/clothing/mask/gas/tiki_mask
@@ -478,6 +491,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	max_integrity = 100
 	actions_types = list(/datum/action/item_action/adjust_style)
 	dog_fashion = null
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
 	fishing_modifier = -4
 	var/list/tikimask_designs = list()
 

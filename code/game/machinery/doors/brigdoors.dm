@@ -63,6 +63,18 @@
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
 
+/obj/machinery/status_display/door_timer/post_machine_initialize()
+	. = ..()
+	tune_special_cases()
+
+/obj/machinery/status_display/door_timer/interdinify()
+	req_access = list(ACCESS_SYNDICATE)
+	broadcast_channel = RADIO_CHANNEL_INTERDYNE
+
+/obj/machinery/status_display/door_timer/tarkonize()
+	req_access = list(ACCESS_TARKON)
+	broadcast_channel = RADIO_CHANNEL_TARKON
+
 //Main door timer loop, if it's timing and time is >0 reduce time by 1.
 // if it's less than 0, open door, reset timer
 // update the door_timer window and the icon

@@ -14,9 +14,6 @@
 		object.pixel_y = - 16 // Look, wall sprites suck, layers do shenanigans that happen from an orientation that doesnt from the other. 
 	return ..()
 
-/obj/structure/fireplace/nova
-	icon = 'icons/aesthetics/furniture/icons/fireplace.dmi'
-
 /obj/structure/fireplace/nova/ignite()
 	START_PROCESSING(SSobj, src)
 	burning_loop.start()

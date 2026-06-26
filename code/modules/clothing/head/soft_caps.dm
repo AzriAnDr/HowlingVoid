@@ -128,6 +128,14 @@
 	strip_delay = 6 SECONDS
 	dog_fashion = null
 
+/obj/item/clothing/head/soft/sec/syndicate
+	name = "engine tech utility cover"
+	desc = "A utility cover for an engine technician, there's a tag that reads 'IP-DS-2'."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "dssoft"
+	soft_type = "ds"
+
 /obj/item/clothing/head/soft/veteran
 	name = "veteran cap"
 	desc = "It's a robust baseball hat in tasteful black colour with a golden connotation to \"REMEMBER\"."

@@ -103,3 +103,11 @@
 /obj/item/storage/lunchbox/fire_clock
 	desc = "A lunchbox with a flaming clock on it... weird... it seems to have the letter 'L' but the rest is scratched out."
 	icon_state = "fire_clock"
+
+/obj/item/storage/lunchbox/bunny/carrot
+	name = "carrot lunchbox"
+	desc = "Who needs Mesons?"
+
+/obj/item/storage/lunchbox/bunny/carrot/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/food/grown/carrot(src)

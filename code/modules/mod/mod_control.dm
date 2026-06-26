@@ -75,6 +75,10 @@
 	var/obj/item/mod/module/selected_module
 	/// AI or pAI mob inhabiting the MOD.
 	var/mob/living/silicon/ai_assistant
+	/// Whether or not an on-board pAI can move the suit.
+	var/can_pai_move_suit = FALSE
+	/// Whether or not this MODsuit can hold AIs, or if it's restricted to just pAIs.
+	var/allow_ai = FALSE
 	/// The MODlink datum, letting us call people from the suit.
 	var/datum/mod_link/mod_link
 	/// The starting MODlink frequency, overridden on subtypes that want it to be something.

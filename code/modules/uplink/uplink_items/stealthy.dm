@@ -35,7 +35,7 @@
 		After applying the lipstick to yourself, any kisses you blow will turn into laser kisses! (Use the kiss emote to fire laser kisses.) \
 		You may blow an unlimited amount of laser kisses! Stylish way to kiss to death, isn't it syndiekisser?"
 	item = /obj/item/lipstick/syndie
-	cost = 6
+	cost = /datum/uplink_item/low_cost::cost
 
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
@@ -88,7 +88,7 @@
 	item = /obj/item/storage/box/syndicate/sleeping_carp
 	progression_minimum = 30 MINUTES
 	population_minimum = TRAITOR_POPULATION_LOWPOP
-	cost = 17
+	cost = /datum/uplink_item/medium_cost/martial_arts::cost
 	surplus = 0
 	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS|UPLINK_SPY)
 
@@ -101,7 +101,7 @@
 	slur as if inebriated. It can produce an infinite number \
 	of bolts, but takes time to automatically recharge after each shot."
 	item = /obj/item/gun/energy/recharge/ebow
-	cost = 10
+	cost = /datum/uplink_item/low_cost/weaponry::cost
 	surplus = 50
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
@@ -111,7 +111,7 @@
 	These shocks are capable of affecting the inner circuitry of most robots as well, applying a short stun. \
 	Has the added benefit of affecting the vocal cords of your victim, causing them to slur as if inebriated."
 	item = /obj/item/melee/baton/telescopic/contractor_baton
-	cost = 7
+	cost = /datum/uplink_item/medium_cost/weaponry::cost
 	surplus = 50
 	limited_stock = 1
 	purchasable_from = UPLINK_TRAITORS | UPLINK_SPY

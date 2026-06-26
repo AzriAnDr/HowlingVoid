@@ -59,6 +59,8 @@ GLOBAL_LIST_EMPTY(ladders)
 GLOBAL_LIST_EMPTY(stairs)
 GLOBAL_LIST_EMPTY(janitor_devices)
 GLOBAL_LIST_EMPTY(trophy_cases)
+/// Turret control system IDs associated with matching turrets.
+GLOBAL_LIST_EMPTY(turret_id_refs)
 GLOBAL_LIST_EMPTY(experiment_handlers)
 
 ///This is a global list of all signs you can change an existing sign or new sign backing to, when using a pen on them.

@@ -6,6 +6,8 @@
 	light_color = LIGHT_COLOR_DIM_YELLOW
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	ammo_x_offset = 3
+	selfcharge = TRUE
+	charge_delay = 15
 
 /obj/item/gun/energy/e_gun/advtaser
 	name = "hybrid taser"
@@ -13,6 +15,8 @@
 	icon_state = "advtaser"
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 2
+	w_class = WEIGHT_CLASS_NORMAL
+	custom_price = PAYCHECK_CREW * 5
 
 /obj/item/gun/energy/e_gun/advtaser/cyborg
 	name = "cyborg taser"
@@ -32,8 +36,11 @@
 	desc = "A self-defense weapon that exhausts organic targets, weakening them until they collapse."
 	icon_state = "disabler"
 	inhand_icon_state = null
+	shaded_charge = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
 	ammo_x_offset = 2
+	selfcharge = TRUE
+	charge_delay = 15
 
 /obj/item/gun/energy/disabler/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \

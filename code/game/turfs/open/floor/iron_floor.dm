@@ -275,6 +275,9 @@
 	base_icon_state = "textured_white_large"
 	floor_tile = /obj/item/stack/tile/iron/white/textured_large
 
+/turf/open/floor/iron/white/textured_large/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/iron/white/small
 	icon_state = "white_small"
 	base_icon_state = "white_small"

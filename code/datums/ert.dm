@@ -300,4 +300,17 @@ GRAND RESPONSE VARIANTS OF ESPATIERS, USE ONLY IF SOMEONE ROYALLY FUCKED UP
 /// Forces the crew to be oops all corpsmans! (medics/doctors)
 /datum/ert/solfed/grand_espatier/medical/corpsman_only
 	roles = list(/datum/antagonist/ert/solfed/grand_espatier/corpsman)
+
+/datum/ert/armadyne
+	roles = list(/datum/antagonist/ert/armadyne)
+	leader_role = /datum/antagonist/ert/armadyne/leader
+	rename_team = "Armadyne PMC"
+	mission = "Assist any Armadyne corporate entities."
+	polldesc = "an Armadyne PMC."
+	teamsize = 3
+
+/datum/ert/armadyne/high_alert
+	roles = list(/datum/antagonist/ert/armadyne/high_alert)
+	leader_role = /datum/antagonist/ert/armadyne/leader/high_alert
+	rename_team = "Armadyne PMC (High Alert)"
 // END NOVA CORE MIGRATION: code/datums/ert.dm

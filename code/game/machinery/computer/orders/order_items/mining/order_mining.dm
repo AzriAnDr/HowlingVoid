@@ -31,7 +31,7 @@
 	cost_per_order = 650
 
 /datum/orderable_item/mining/crusher
-	purchase_path = /obj/item/kinetic_crusher
+	purchase_path = /obj/item/crusher_conversion_kit
 	cost_per_order = 650
 
 /datum/orderable_item/mining/punching_mitts
@@ -123,3 +123,35 @@
 /datum/orderable_item/mining/grapple_gun
 	purchase_path = /obj/item/grapple_gun
 	cost_per_order = 3000
+
+/datum/orderable_item/mining/survival_bodybag
+	purchase_path = /obj/item/bodybag/environmental
+	cost_per_order = 500
+
+/datum/orderable_item/mining/suit_voucher
+	purchase_path = /obj/item/suit_voucher
+	cost_per_order = 2000
+
+/datum/orderable_item/mining/bunny
+	purchase_path = /obj/item/storage/backpack/duffelbag/mining_bunny
+	desc = "A mining outfit kit themed around bunnies, they do live in burrows after all..."
+	cost_per_order = 500
+
+/datum/orderable_item/interdyne
+	category_index = CATEGORY_INTERDYNE
+
+/datum/orderable_item/interdyne/adv_plasmacutter
+	purchase_path = /obj/item/gun/energy/plasmacutter/adv
+	cost_per_order = 500
+
+/datum/orderable_item/interdyne/mining_AoE
+	purchase_path = /obj/item/borg/upgrade/modkit/aoe/turfs
+	cost_per_order = 750
+
+/datum/orderable_item/interdyne/night_vision_health_meson
+	purchase_path = /obj/item/clothing/glasses/hud/health/night/meson
+	cost_per_order = 2000
+
+/datum/orderable_item/interdyne/prescription_meson
+	purchase_path = /obj/item/clothing/glasses/meson/prescription
+	cost_per_order = 325

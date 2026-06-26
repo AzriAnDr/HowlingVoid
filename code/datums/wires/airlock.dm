@@ -130,6 +130,9 @@
 				if(A.emergency)
 					A.emergency = FALSE
 					A.update_appearance()
+				if(A.engineering_override)
+					A.engineering_override = FALSE
+					A.update_appearance()
 		if(WIRE_AI) // Pulse to disable WIRE_AI control for 10 ticks (follows same rules as cutting).
 			if(A.aiControlDisabled == AI_WIRE_NORMAL)
 				A.aiControlDisabled = AI_WIRE_DISABLED

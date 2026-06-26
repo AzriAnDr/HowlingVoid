@@ -72,6 +72,18 @@
 	. = ..()
 	allowed += GLOB.improvised_firearm_allowed
 
+/obj/item/clothing/suit/toggle/jacket/nova/corrections_officer
+	name = "corrections officer's suit jacket"
+	desc = "A pressed and ironed suit jacket, it has light armor against stabbings. There's some rank badges on the right breast."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "co_coat"
+	body_parts_covered = CHEST|ARMS
+	armor_type = /datum/armor/jacket_corrections_officer
+
+/datum/armor/jacket_corrections_officer
+	melee = 10
+
 /obj/item/clothing/suit/jacket/blazer
 	name = "blazer jacket"
 	desc = "A blazer jacket."

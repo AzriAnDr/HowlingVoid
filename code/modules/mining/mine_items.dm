@@ -11,19 +11,6 @@
 
 /obj/effect/light_emitter/Initialize(mapload)
 	. = ..()
-	if(!SSlighting.initialized)
-		RegisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(apply_mapped_light))
-	else
-		apply_mapped_light()
-
-/obj/effect/light_emitter/Destroy(force)
-	UnregisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE)
-	return ..()
-
-/obj/effect/light_emitter/proc/apply_mapped_light(datum/source)
-	SIGNAL_HANDLER
-	if(source)
-		UnregisterSignal(SSlighting, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	set_light(set_luminosity, set_cap)
 
 /obj/effect/light_emitter/singularity_pull(atom/singularity, current_size)

@@ -47,7 +47,7 @@
 	cost_per_order = 900
 
 /datum/orderable_item/consumables/space_cash
-	purchase_path = /obj/item/stack/spacecash/c1000
+	purchase_path = /obj/item/stack/spacecash/c500
 	desc = "A stack of space cash worth 1000 credits."
 	cost_per_order = 2000
 
@@ -56,3 +56,7 @@
 	purchase_path = /obj/item/fishing_rod/rescue
 	desc = "For when your fellow miner has inevitably fallen into a chasm, and it's up to you to save them."
 	cost_per_order = 600
+
+/datum/orderable_item/consumables/robo_medkit
+	purchase_path = /obj/item/storage/medkit/robotic_repair/stocked
+	cost_per_order = 650

@@ -68,6 +68,11 @@
 	///Lazylist of traits added to the liver of the mob assigned this job (used for the classic "cops heal from donuts" reaction, among others)
 	var/list/liver_traits = null
 
+	/// Whether this job is blocked from rolling antagonist roles.
+	var/antagonist_restricted = FALSE
+	/// If this job is restricted from antagonists, which antagonist roles it is blocked from. Empty means all antagonist roles.
+	var/list/restricted_antagonists
+
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
 
 	///What types of bounty tasks can this job receive past the default? TODO, move to id trims.

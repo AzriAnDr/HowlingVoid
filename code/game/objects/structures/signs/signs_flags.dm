@@ -1,47 +1,205 @@
 /obj/structure/sign/flag
-	name = "flag of the IT Division"
-	desc = "The flag of the Nanotrasen IT Division. Bears a symbol that only makes sense to those that understand."
+	name = "blank flag"
+	desc = "The flag of nothing. It has nothing on it. Magnificent."
 	icon = 'icons/obj/fluff/flags.dmi'
 	icon_state = "flag_coder"
+	buildable_sign = FALSE
+	custom_materials = null
+	var/item_flag = /obj/item/sign/flag
+
+/obj/structure/sign/flag/wrench_act(mob/living/user, obj/item/wrench/I)
+	return
+
+/obj/structure/sign/flag/welder_act(mob/living/user, obj/item/I)
+	return
+
+/obj/structure/sign/flag/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	. = ..()
+	if(over != user || !Adjacent(user))
+		return
+	if(!item_flag || src.obj_flags & NO_DEBRIS_AFTER_DECONSTRUCTION)
+		return
+	if(!user.can_perform_action(src, NEED_DEXTERITY))
+		return
+	user.visible_message(span_notice("[user] grabs and folds \the [src.name]."), span_notice("You grab and fold \the [src.name]."))
+	var/obj/item/flag_item = new item_flag(loc)
+	TransferComponents(flag_item)
+	user.put_in_hands(flag_item)
+	qdel(src)
 
 /obj/structure/sign/flag/nanotrasen
 	name = "flag of Nanotrasen"
 	desc = "The official corporate flag of Nanotrasen. Mostly flown as a ceremonial piece, or to mark land on a new frontier."
 	icon_state = "flag_nt"
+	item_flag = /obj/item/sign/flag/nanotrasen
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/nanotrasen, 32)
 
 /obj/structure/sign/flag/ssc
-	name = "flag of the Spinward Stellar Coalition"
-	desc = "The flag of the Independent Coalition of the Spinward Sector. The colours represent panslavism, and the three stars represent the three central systems of the SSC."
-	icon_state = "flag_ssc"
+	name = "flag of the Kingdom of Agurkrral"
+	desc = "The flag of the Kingdom of Agurkrral."
+	icon_state = "flag_agurk"
+	item_flag = /obj/item/sign/flag/ssc
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/ssc, 32)
 
 /obj/structure/sign/flag/terragov
-	name = "flag of TerraGov"
-	desc = "The flag of TerraGov. It's a symbol of humanity no matter where they go, or how much they wish it wasn't."
-	icon_state = "flag_terragov"
+	name = "flag of Sol Federation"
+	desc = "The flag of Sol Federation. It's a symbol of humanity no matter where they go, or how much they wish it wasn't."
+	icon_state = "flag_solfed"
+	item_flag = /obj/item/sign/flag/terragov
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/terragov, 32)
 
 /obj/structure/sign/flag/tizira
-	name = "flag of the Tiziran Empire"
-	desc = "The flag of the Great Empire of Tizira. Depending on who you ask, it represents strength or being stuck in the past."
+	name = "flag of the Talunan Imperium"
+	desc = "The flag of the Talunan Imperium. Born in the ashes of the Terran War, it represents resilience and bitter ancestral hatred in equal measure."
 	icon_state = "flag_tizira"
+	item_flag = /obj/item/sign/flag/tizira
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/tizira, 32)
 
 /obj/structure/sign/flag/mothic
 	name = "flag of the Grand Nomad Fleet"
-	desc = "The flag of the Mothic Grand Nomad Fleet. A classic naval ensign, its use has superseded the old national flag which can be seen in its canton."
+	desc = "The flag of the Mothic Grand Nomad Fleet. A classic naval ensign, its use has superceded the old national flag which can be seen in its canton."
 	icon_state = "flag_mothic"
+	item_flag = /obj/item/sign/flag/mothic
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/mothic, 32)
 
 /obj/structure/sign/flag/mars
-	name = "flag of the Martian Republic"
-	desc = "The flag of Mars. Originally a revolutionary flag during the Martian Rebellions, it has since been adopted as the official flag of the planet, as a reminder of how Mars fought for representation and democracy."
+	name = "flag of the Teshari League for Self-Determination"
+	desc = "The flag of the Teshari League for Self-Determination. Originally a revolutionary flag during the time of the Republic of the Golden Feather, \
+	it has since been adopted as the official flag of the planet, as a reminder of how Teshari fought for representation and independence."
 	icon_state = "flag_mars"
+	item_flag = /obj/item/sign/flag/mars
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/mars, 32)
+
+/obj/structure/sign/flag/hc
+	name = "flag of the Heliostatic Coalition"
+	desc = "The flag of the Heliostatic Coalition. The design of the 'True SolFed', as is evident by what seems to be very much not Sol."
+	icon_state = "flag_hc"
+	item_flag = /obj/item/sign/flag/hc
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/hc, 32)
+
+/obj/structure/sign/flag/azulea
+	name = "flag of the Azulean Nation"
+	desc = "The foundations of this banner stretch back almost a millennium, devised by the first King among the Azulean people to unite them under it. \n\
+		Dark blue, representing the seas of Azulean worlds, and light blue, representing the seas inbetween. \
+		Both make waves on each other, but both are pulled in and swallowed by all of the people of Agurkrral coming together as one; as one violent, restless maelstrom. \n\n\
+		It's common to see this banner just about everywhere in both the Old and New Principalities, reminding all of their purpose and unity."
+	icon_state = "flag_azulea"
+	item_flag = /obj/item/sign/flag/azulea
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/azulea, 32)
+
+/obj/structure/sign/flag/syndicate
+	name = "flag of the Syndicate"
+	desc = "The flag of the Sothran Syndicate. Previously used by the Sothran people as a way of declaring opposition against the Nanotrasen, \
+	now it became an intergalactic symbol of the same, yet way more skewed purpose, as more groups of interest have joined the rebellion's side for their own gain."
+	icon_state = "flag_syndi"
+	item_flag = /obj/item/sign/flag/syndicate
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/syndicate, 32)
+
+/obj/structure/sign/flag/interdyne
+	name = "flag of Interdyne"
+	desc = "The corporate flag of Interdyne Pharmaceuticals. It is, essentially, a clean white bedsheet. It's either the best or worst flag you've ever seen."
+	icon_state = "flag_coder"
+	item_flag = /obj/item/sign/flag/interdyne
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/interdyne, 32)
+
+/obj/structure/sign/flag/nri
+	name = "flag of the Novaya Rossiyskaya Imperiya"
+	desc = "The flag of the Novaya Rossiyskaya Imperiya. The yellow, black, and white colors represent its sovereignty, spirituality, and purity."
+	icon_state = "flag_nri"
+	item_flag = /obj/item/sign/flag/nri
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/nri, 32)
+
+/obj/item/sign/flag
+	name = "folded blank flag"
+	desc = "The folded flag of nothing. It has nothing on it. Beautiful."
+	icon = 'icons/obj/fluff/flags.dmi'
+	icon_state = "folded_coder"
+	sign_path = /obj/structure/sign/flag
+	is_editable = FALSE
+
+/obj/item/sign/flag/Initialize(mapload)
+	. = ..()
+	transform = matrix()
+
+/obj/item/sign/flag/welder_act(mob/living/user, obj/item/I)
+	return
+
+/obj/item/sign/flag/nanotrasen
+	name = "folded flag of the Nanotrasen"
+	desc = "The folded flag of the Nanotrasen."
+	icon_state = "folded_nt"
+	sign_path = /obj/structure/sign/flag/nanotrasen
+
+/obj/item/sign/flag/ssc
+	name = "folded flag of the Kingdom of Agurkrral"
+	desc = "The folded flag of the Kingdom of Agurkrral."
+	icon_state = "folded_agurk"
+	sign_path = /obj/structure/sign/flag/ssc
+
+/obj/item/sign/flag/terragov
+	name = "folded flag of the Sol Federation"
+	desc = "The folded flag of Sol Federation."
+	icon_state = "folded_solfed"
+	sign_path = /obj/structure/sign/flag/terragov
+
+/obj/item/sign/flag/tizira
+	name = "folded flag of the Talunan Imperium"
+	desc = "The folded flag of the Talunan Imperium."
+	icon_state = "folded_tizira"
+	sign_path = /obj/structure/sign/flag/tizira
+
+/obj/item/sign/flag/mothic
+	name = "folded flag of the Grand Nomad Fleet"
+	desc = "The folded flag of the Grand Nomad Fleet."
+	icon_state = "folded_mothic"
+	sign_path = /obj/structure/sign/flag/mothic
+
+/obj/item/sign/flag/mars
+	name = "folded flag of the Teshari League for Self-Determination"
+	desc = "The folded flag of the Teshari League for Self-Determination."
+	icon_state = "folded_mars"
+	sign_path = /obj/structure/sign/flag/mars
+
+/obj/item/sign/flag/hc
+	name = "folded flag of the Heliostatic Coalition"
+	desc = "The folded flag of the Heliostatic Coalition."
+	icon_state = "folded_hc"
+	sign_path = /obj/structure/sign/flag/hc
+
+/obj/item/sign/flag/azulea
+	name = "folded flag of Azulea"
+	desc = "The folded flag of the Akulan nation Azulea."
+	icon_state = "folded_azulea"
+	sign_path = /obj/structure/sign/flag/azulea
+
+/obj/item/sign/flag/syndicate
+	name = "folded flag of the Syndicate"
+	desc = "The folded flag of the Sothran Syndicate."
+	icon_state = "folded_syndi"
+	sign_path = /obj/structure/sign/flag/syndicate
+
+/obj/item/sign/flag/interdyne
+	name = "folded flag of the Interdyne"
+	desc = "The folded flag of Interdyne Pharmaceutics."
+	icon_state = "folded_coder"
+	sign_path = /obj/structure/sign/flag/interdyne
+	special_desc_requirement = EXAMINE_CHECK_JOB
+	special_desc_jobs = list(JOB_MIME)
+	special_desc = "The folded flag of Interdyne Pharmaceuticals. For some reason, it reminds you of the home of the mimes."
+
+/obj/item/sign/flag/nri
+	name = "folded flag of the Novaya Rossiyskaya Imperiya"
+	desc = "The folded flag of the Novaya Rossiyskaya Imperiya."
+	icon_state = "folded_nri"
+	sign_path = /obj/structure/sign/flag/nri

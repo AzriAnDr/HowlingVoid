@@ -12,6 +12,7 @@
 	cell_type = /obj/item/stock_parts/power_store/cell/crank_taser
 	ammo_x_offset = 2
 	charge_sections = 3
+	selfcharge = FALSE
 
 	lore_blurb = "The 'Mírotvůrce' was anticipated to become the main line of defense among colonial populations during the first months of settlement. \
 		The sheer amount of them that were produced and given out to people was overwhelming - which later gave it a status of a self-defense weapon \

@@ -67,6 +67,7 @@ type SupplyItem = {
 type CartEntry = {
   amount: number;
   can_be_cancelled: BooleanLike;
+  cart_key: string;
   cost_type: string;
   cost: number;
   dep_order: BooleanLike;

@@ -21,6 +21,8 @@
 	var/obj/structure/disposalconstruct/stored
 	/// Should we create a pipe on destroy?
 	var/spawn_pipe = TRUE
+	/// Whether this disposal pipe prevents riders from being hurt when changing direction.
+	var/padded_corners = FALSE
 
 /datum/armor/structure_disposalpipe
 	melee = 25
@@ -110,6 +112,14 @@
 			return
 		H.merge(H2)//Otherwise, we push it along through.
 	H.forceMove(P)
+	if(P && dir != P.dir && !padded_corners && prob(20) && is_station_level(z))
+		for(var/atom/movable/held_atom as anything in H.contents)
+			if(!isliving(held_atom))
+				continue
+			var/mob/living/living_held = held_atom
+			if(living_held.stat == DEAD || HAS_TRAIT(living_held, TRAIT_TRASHMAN))
+				continue
+			living_held.adjust_brute_loss(2)
 	return P
 
 // expel the held objects into a turf

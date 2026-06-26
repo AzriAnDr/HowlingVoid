@@ -22,6 +22,7 @@
 		AddComponent(/datum/component/clothing_dirt, dirt_state)
 	AddElement(/datum/element/adjust_fishing_difficulty, 6)
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
+	qdel(GetComponent(/datum/component/clothing_fov_visor))
 
 /datum/armor/head_bio_hood
 	bio = 100
@@ -74,6 +75,13 @@
 	armor_type = /datum/armor/bio_hood_security
 	icon_state = "bio_security"
 
+/obj/item/clothing/head/bio_hood/interdyne
+	name = "interdyne biosuit helmet"
+	desc = "An Interdyne Pharmaceutics biosuit helmet designed to keep the wearer safe from biohazardous materials."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "ip_biosuit_head"
+
 /datum/armor/bio_hood_security
 	melee = 25
 	bullet = 15
@@ -87,6 +95,15 @@
 /obj/item/clothing/suit/bio_suit/security
 	armor_type = /datum/armor/bio_suit_security
 	icon_state = "bio_security"
+
+/obj/item/clothing/suit/bio_suit/interdyne
+	name = "interdyne biosuit"
+	desc = "An Interdyne Pharmaceutics biosuit designed to keep the wearer safe from biohazardous materials. It's lighter than a typical biosuit."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "ip_biosuit"
+	slowdown = 0.3
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /datum/armor/bio_suit_security
 	melee = 25

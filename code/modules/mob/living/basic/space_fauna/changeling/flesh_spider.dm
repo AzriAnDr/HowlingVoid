@@ -35,6 +35,7 @@
 	combat_mode = TRUE
 	pass_flags = PASSTABLE
 	unique_name = TRUE
+	gold_core_spawnable = HOSTILE_SPAWN // Does not ping ghosts for control if spawned directly.
 	lighting_cutoff_red = 22
 	lighting_cutoff_green = 5
 	lighting_cutoff_blue = 5

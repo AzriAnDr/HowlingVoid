@@ -13,7 +13,7 @@
 		riot darts. Perfect for nonlethal takedowns at range, as well as deniability. While not included in the kit, the \
 		pistol is compatible with suppressors, which can be purchased separately."
 	item = /obj/item/storage/toolbox/guncase/traitor/donksoft
-	cost = 6
+	cost = 1
 	surplus = 10
 	purchasable_from = ~(UPLINK_SERIOUS_OPS | UPLINK_SPY)
 	relevant_child_items = list(
@@ -26,7 +26,7 @@
 		Chambered in 9mm. Perfect for frequent skirmishes with security, as well as ensuring you have enough firepower to outlast the competition. \
 		While not included in the kit, the pistol is compatible with suppressors, which can be purchased separately."
 	item = /obj/item/storage/toolbox/guncase/traitor
-	cost = 7
+	cost = /datum/uplink_item/low_cost/weaponry::cost
 	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 	relevant_child_items = list(
 		/datum/uplink_item/ammo/pistol,
@@ -56,7 +56,7 @@
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
 	item = /obj/item/melee/energy/sword/saber
-	cost = 6
+	cost = /datum/uplink_item/low_cost/weaponry::cost
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/powerfist
@@ -66,14 +66,14 @@
 			Using a wrench on the piston valve will allow you to tweak the amount of gas used per punch to \
 			deal extra damage and hit targets further. Use a screwdriver to take out any attached tanks."
 	item = /obj/item/melee/powerfist
-	cost = 6
+	cost = /datum/uplink_item/low_cost/weaponry::cost
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/dangerous/rapid
 	name = "Gloves of the North Star"
 	desc = "These gloves let the user punch people very fast. Does not improve weapon attack speed or the meaty fists of a hulk."
 	item = /obj/item/clothing/gloves/rapid
-	cost = 8
+	cost = /datum/uplink_item/medium_cost/weaponry::cost
 
 /datum/uplink_item/dangerous/doublesword
 	name = "Double-Bladed Energy Sword"
@@ -83,7 +83,7 @@
 	population_minimum = TRAITOR_POPULATION_LOWPOP
 	item = /obj/item/dualsaber
 
-	cost = 13
+	cost = /datum/uplink_item/high_cost/weaponry::cost
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //nukies get their own version
 
 /datum/uplink_item/dangerous/doublesword/get_discount_value(discount_type)
@@ -100,7 +100,7 @@
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
 			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
 	item = /obj/item/guardian_creator/tech
-	cost = 18
+	cost = /datum/uplink_item/medium_cost/weaponry::cost
 	surplus = 0
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 	restricted = TRUE
@@ -110,7 +110,7 @@
 	name = "Syndicate Revolver"
 	desc = "A brutally simple Syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
 	item = /obj/item/gun/ballistic/revolver
-	cost = 13
+	cost = /datum/uplink_item/low_cost/weaponry::cost
 	surplus = 50
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //only traitors get the original revolver
 	relevant_child_items = list(

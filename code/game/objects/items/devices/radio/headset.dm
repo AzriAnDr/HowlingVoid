@@ -40,6 +40,9 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	pickup_sound = SFX_HEADSET_PICKUP
 	drop_sound = 'sound/items/handling/headset/headset_drop1.ogg'
 	sound_vary = TRUE
+	radio_talk_sound = 'sound/radiosound/radio/radio_chirp.ogg'
+	radio_sound_range = SILENCED_SOUND_EXTRARANGE
+	radio_sound_has_vary = FALSE
 	var/obj/item/encryptionkey/keyslot2 = null
 
 	// headset is too small to display overlays
@@ -170,6 +173,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	return ..()
 
 /obj/item/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
+	radio_talk_sound = 'sound/radiosound/radio/syndie.ogg'
 
 /obj/item/radio/headset/syndicate/Initialize(mapload)
 	. = ..()
@@ -197,6 +201,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "This is used by your elite security force."
 	icon_state = "sec_headset"
 	worn_icon_state = "sec_headset"
+	keyslot = /obj/item/encryptionkey/headset_sec
+	radio_talk_sound = 'sound/radiosound/radio/security.ogg'
+
+/obj/item/radio/headset/corrections_officer
+	name = "\proper corrections officer's headset"
+	icon_state = "sec_headset"
 	keyslot = /obj/item/encryptionkey/headset_sec
 
 /obj/item/radio/headset/headset_sec/alt

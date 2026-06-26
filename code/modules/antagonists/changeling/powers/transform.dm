@@ -11,6 +11,7 @@
 	name = "flesh"
 	spawn_blacklisted = TRUE
 	item_flags = DROPDEL
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/glasses/changeling/attack_hand(mob/user, list/modifiers)
@@ -77,6 +78,7 @@
 	name = "flesh"
 	spawn_blacklisted = TRUE
 	item_flags = DROPDEL
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/shoes/changeling/attack_hand(mob/user, list/modifiers)
@@ -109,6 +111,7 @@
 	name = "flesh"
 	spawn_blacklisted = TRUE
 	item_flags = DROPDEL
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION_NO_NEW_ICON
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/changeling/attack_hand(mob/user, list/modifiers)

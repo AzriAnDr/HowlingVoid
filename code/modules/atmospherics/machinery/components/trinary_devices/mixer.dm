@@ -262,3 +262,6 @@
 /obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/inverse
 	node1_concentration = O2STANDARD
 	node2_concentration = N2STANDARD
+
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/flipped/inverse/layer4
+	piping_layer = 4

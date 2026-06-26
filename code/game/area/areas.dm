@@ -31,6 +31,8 @@
 
 	///Do we have an active fire alarm?
 	var/fire = FALSE
+	/// Whether airlocks in this area can grant emergency engineering access.
+	var/engineering_override_eligible = FALSE
 	///A var for whether the area allows for detecting fires/etc. Disabled or enabled at a fire alarm, checked by fire locks.
 	var/fire_detect = TRUE
 	///A list of all fire locks in this area. Used by fire alarm panels when resetting fire locks or activating all in an area
@@ -51,6 +53,8 @@
 	var/datum/alarm_handler/alarm_manager
 
 	var/lightswitch = TRUE
+	/// Whether or not the area's light switch was turned off during init.
+	var/light_turned_off_at_spawn = FALSE
 
 	/// All beauty in this area combined, only includes indoor area.
 	var/totalbeauty = 0

@@ -5,6 +5,7 @@
 	icon_state = "slug"
 	ammo_type = /obj/item/ammo_casing/shotgun
 	max_ammo = 15
+	reload_delay = CLICK_CD_MELEE
 
 /obj/item/ammo_box/advanced/s12gauge/buckshot
 	name = "shell box (buckshot)"

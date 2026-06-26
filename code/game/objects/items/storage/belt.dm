@@ -119,6 +119,15 @@
 	new /obj/item/extinguisher/mini(src)
 	new /obj/item/stack/cable_coil(src)
 
+/obj/item/storage/belt/utility/full/powertools/ircd/PopulateContents()
+	new /obj/item/screwdriver/power(src)
+	new /obj/item/crowbar/power(src)
+	new /obj/item/weldingtool/electric(src)
+	new /obj/item/construction/rcd/combat(src)
+	new /obj/item/pipe_dispenser(src)
+	new /obj/item/wrench/bolter(src)
+	new /obj/item/analyzer/ranged(src)
+
 /obj/item/storage/belt/utility/full/engi/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/screwdriver, src)
 	SSwardrobe.provide_type(/obj/item/wrench, src)
@@ -265,10 +274,41 @@
 	content_overlays = TRUE
 	storage_type = /datum/storage/security_belt
 
+/datum/atom_skin/security_belt
+	abstract_type = /datum/atom_skin/security_belt
+
+/datum/atom_skin/security_belt
+	preview_name = "Basic Variant"
+	new_icon_state = "security"
+
+/datum/atom_skin/security_belt/black
+	preview_name = "Black Variant"
+	new_icon = 'icons/obj/clothing/belts_additions.dmi'
+	new_icon_state = "belt_black"
+	new_worn_icon = 'icons/mob/clothing/belt_additions.dmi'
+
+/datum/atom_skin/security_belt/blue
+	preview_name = "Blue Variant"
+	new_icon = 'icons/obj/clothing/belts_additions.dmi'
+	new_icon_state = "belt_blue"
+	new_worn_icon = 'icons/mob/clothing/belt_additions.dmi'
+
+/datum/atom_skin/security_belt/white
+	preview_name = "White Variant"
+	new_icon = 'icons/obj/clothing/belts_additions.dmi'
+	new_icon_state = "belt_white"
+	new_worn_icon = 'icons/mob/clothing/belt_additions.dmi'
+
+/obj/item/storage/belt/security/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_belt)
+
 /obj/item/storage/belt/security/full/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/restraints/handcuffs(src)
-	new /obj/item/grenade/flashbang(src)
+	if(CONFIG_GET(flag/replace_secbelt_flashbangs_with_bola))
+		new /obj/item/restraints/legcuffs/bola/energy(src)
+	else
+		new /obj/item/grenade/flashbang(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/melee/baton/security/loaded(src)
 	update_appearance()
@@ -282,6 +322,47 @@
 	content_overlays = FALSE
 	custom_premium_price = PAYCHECK_COMMAND * 3
 	storage_type = /datum/storage/security_belt/webbing
+
+/datum/atom_skin/security_webbing
+	abstract_type = /datum/atom_skin/security_webbing
+
+/datum/atom_skin/security_webbing/basic
+	preview_name = "Basic Variant"
+	new_icon_state = "securitywebbing"
+
+/datum/atom_skin/security_webbing/red
+	preview_name = "Red Variant"
+	new_icon = 'icons/obj/clothing/belts_additions.dmi'
+	new_icon_state = "red_webbing"
+	new_worn_icon = 'icons/mob/clothing/belt_additions.dmi'
+
+/datum/atom_skin/security_webbing/blue
+	preview_name = "Blue Variant"
+	new_icon = 'icons/obj/clothing/belts_additions.dmi'
+	new_icon_state = "blue_webbing"
+	new_worn_icon = 'icons/mob/clothing/belt_additions.dmi'
+
+/obj/item/storage/belt/security/webbing/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/security_webbing)
+
+/obj/item/storage/belt/security/webbing/peacekeeper
+	icon = 'icons/obj/clothing/belts_additions.dmi'
+	worn_icon = 'icons/mob/clothing/belt_additions.dmi'
+	icon_state = "blue_webbing"
+	worn_icon_state = "blue_webbing"
+
+/obj/item/storage/belt/security/webbing/peacekeeper/setup_reskins()
+	return
+
+/obj/item/storage/belt/security/webbing/ds
+	name = "brig officer webbing"
+	icon = 'icons/obj/clothing/belts_additions.dmi'
+	worn_icon = 'icons/mob/clothing/belt_additions.dmi'
+	icon_state = "webbingds"
+	worn_icon_state = "webbingds"
+
+/obj/item/storage/belt/security/webbing/ds/setup_reskins()
+	return
 
 /obj/item/storage/belt/mining
 	name = "explorer's webbing"
@@ -435,6 +516,11 @@
 	generate_items_inside(list(
 		/obj/item/ammo_box/magazine/wt550m9 = 4,
 		/obj/item/ammo_box/magazine/wt550m9/wtap = 2,
+	), src)
+
+/obj/item/storage/belt/military/assault/full/m44a/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/ammo_box/magazine/m44a = 6,
 	), src)
 
 /obj/item/storage/belt/grenade
@@ -901,6 +987,27 @@
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
 	storage_type = /datum/storage/plant_belt
+
+/obj/item/storage/belt/security/armadyne
+	name = "armadyne belt"
+	desc = "Can hold security gear like handcuffs and flashes. Has a holster for a gun."
+	icon = 'icons/obj/clothing/belts_additions.dmi'
+	worn_icon = 'icons/mob/clothing/belt_additions.dmi'
+	icon_state = "armadyne_belt"
+	worn_icon_state = "armadyne_belt"
+
+/obj/item/storage/belt/security/armadyne/setup_reskins()
+	return
+
+/obj/item/storage/belt/security/webbing/armadyne
+	name = "armadyne webbing"
+	icon = 'icons/obj/clothing/belts_additions.dmi'
+	worn_icon = 'icons/mob/clothing/belt_additions.dmi'
+	icon_state = "red_webbing"
+	worn_icon_state = "red_webbing"
+
+/obj/item/storage/belt/security/webbing/armadyne/setup_reskins()
+	return
 
 /obj/item/storage/belt/sheath/sabre/gunpowered
 	name = "modified sabre sheath"

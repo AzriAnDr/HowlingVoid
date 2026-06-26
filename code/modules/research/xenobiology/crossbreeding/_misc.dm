@@ -78,6 +78,7 @@ Slimecrossing Items
 	desc = "A charged yellow slime extract, infused with plasma. It almost hurts to touch."
 	icon = 'icons/mob/simple/slimes.dmi'
 	icon_state = "yellow-core"
+	charging_icon = "slime_in"
 	rating = 7
 	custom_materials = null
 	maxcharge = 50 * STANDARD_CELL_CHARGE

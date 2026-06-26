@@ -2,8 +2,8 @@
 	name = "wall"
 	desc = "A huge chunk of material used to separate rooms."
 	icon = 'icons/turf/walls/material_wall.dmi'
-	icon_state = "material_wall-0"
-	base_icon_state = "material_wall"
+	icon_state = "wall-0"
+	base_icon_state = "wall"
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_MATERIAL_WALLS
 	canSmoothWith = SMOOTH_GROUP_MATERIAL_WALLS
@@ -25,4 +25,3 @@
 /turf/closed/wall/material/finalize_material_effects(list/materials)
 	. = ..()
 	desc = "A huge chunk of [get_material_english_list(materials)] used to separate rooms."
-

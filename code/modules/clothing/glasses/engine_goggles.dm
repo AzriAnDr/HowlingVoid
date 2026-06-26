@@ -12,6 +12,21 @@
 #define TEMP_SHADE_YELLOW 300
 #define TEMP_SHADE_RED 500
 
+/datum/atom_skin/meson/engine
+	abstract_type = /datum/atom_skin/meson/engine
+
+/datum/atom_skin/meson/engine/trayson
+	preview_name = "Engine Glasses"
+	new_icon = 'icons/obj/clothing/glasses.dmi'
+	new_icon_state = "trayson-"
+	new_worn_icon = 'icons/mob/clothing/eyes.dmi'
+
+/datum/atom_skin/meson/engine/scouter
+	preview_name = "Engine Scouter"
+	new_icon = 'icons/meson_scouter/meson_scouter.dmi'
+	new_icon_state = "trayson-"
+	new_worn_icon = 'icons/meson_scouter/meson-scouter_mob.dmi'
+
 /obj/item/clothing/glasses/meson/engine
 	name = "engineering scanner goggles"
 	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls and the T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
@@ -33,11 +48,22 @@
 	/// A cache of tracked pipes used in MODE_PIPE_CONNECTABLE
 	var/list/connection_images = list()
 
+/obj/item/clothing/glasses/meson/engine/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/meson/engine)
+
 /obj/item/clothing/glasses/meson/engine/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	START_PROCESSING(SSobj, src)
 	update_appearance()
+
+/obj/item/clothing/glasses/meson/engine/prescription
+	name = "prescription engineering scanner goggles"
+	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, the T-ray Scanner mode lets you see underfloor objects such as cables and pipes, and the Radiation Scanner mode let's you see objects contaminated by radiation. Each lens has been replaced with a corrective lens."
+
+/obj/item/clothing/glasses/meson/engine/prescription/Initialize(mapload)
+	LAZYADD(clothing_traits, TRAIT_NEARSIGHTED_CORRECTED)
+	return ..()
 
 /obj/item/clothing/glasses/meson/engine/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -154,6 +180,14 @@
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	range = 2
 	modes = list(MODE_NONE, MODE_TRAY, MODE_PIPE_CONNECTABLE, MODE_ATMOS_THERMAL) // atmos techs now finally have 3 modes on their  goggles!
+
+/obj/item/clothing/glasses/meson/engine/tray/prescription
+	name = "prescription optical t-ray scanner"
+	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, the T-ray Scanner mode lets you see underfloor objects such as cables and pipes, and the Radiation Scanner mode let's you see objects contaminated by radiation. This one has a lens that help correct eye sight."
+
+/obj/item/clothing/glasses/meson/engine/tray/prescription/Initialize(mapload)
+	LAZYADD(clothing_traits, TRAIT_NEARSIGHTED_CORRECTED)
+	return ..()
 
 /obj/item/clothing/glasses/meson/engine/tray/dropped(mob/user)
 	. = ..()

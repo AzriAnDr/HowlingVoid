@@ -94,10 +94,12 @@
 	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
+	held_w_class = WEIGHT_CLASS_BULKY
 
 // A more docile subtype that won't attack other animals.
 /mob/living/basic/pet/fox/docile
 	ai_controller = /datum/ai_controller/basic_controller/fox/docile
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 /mob/living/basic/pet/fox/icemoon
 	name = "icemoon fox"

@@ -101,7 +101,7 @@ GLOBAL_DATUM(clock_ark, /obj/structure/destructible/clockwork/the_ark)
 
 	if(GLOB.charged_anchoring_crystals < ANCHORING_CRYSTALS_TO_SUMMON)
 		user?.balloon_alert(user, "needs crystals!")
-		to_chat(user, span_brass("The Ark cannot open until [ANCHORING_CRYSTALS_TO_SUMMON] Anchoring Crystals are fully charged."))
+		to_chat(user, span_brass("The Ark cannot open yet. [GLOB.charged_anchoring_crystals]/[ANCHORING_CRYSTALS_TO_SUMMON] Anchoring Crystals are fully charged."))
 		return
 
 	current_state = ARK_STATE_CHARGING

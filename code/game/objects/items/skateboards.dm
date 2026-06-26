@@ -8,6 +8,7 @@
 	force = 12
 	throwforce = 4
 	w_class = WEIGHT_CLASS_NORMAL
+	item_flags = parent_type::item_flags & ~NEEDS_PERMIT
 	attack_verb_continuous = list("smacks", "whacks", "slams", "smashes")
 	attack_verb_simple = list("smack", "whack", "slam", "smash")
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
