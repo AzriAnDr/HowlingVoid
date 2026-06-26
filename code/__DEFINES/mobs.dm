@@ -10,6 +10,11 @@
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN "run"
 
+// Ian resting states.
+#define IAN_RESTING_STATE_NONE 0
+#define IAN_RESTING_STATE_SIT 1
+#define IAN_RESTING_STATE_REST 2
+
 /// Amount of oxyloss that KOs a human
 #define OXYLOSS_PASSOUT_THRESHOLD 50
 //Blood levels

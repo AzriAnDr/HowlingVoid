@@ -341,6 +341,7 @@
 	real_name = "Ian" //Intended to hold the name without altering it.
 	gender = MALE
 	desc = "He's the HoP's beloved corgi."
+	icon = 'icons/chadian/ian.dmi'
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "bops"
@@ -351,6 +352,7 @@
 	unique_pet = TRUE
 	// Objective pets cannot be made too difficult to find.
 	held_w_class = WEIGHT_CLASS_BULKY
+	ai_controller = /datum/ai_controller/basic_controller/dog/corgi/chadian
 	///Tracks how many rounds did Ian survive from start to finish
 	var/age = 0
 	///Callback to execute upon roundend to check whether Ian has survived the round or not
@@ -361,6 +363,8 @@
 	var/memory_saved = FALSE
 	///Path of the item Ian was wearing in a previous shift, if he survived through it
 	var/saved_head = null
+	///Current custom resting state.
+	var/resting_state = IAN_RESTING_STATE_NONE
 
 /mob/living/basic/pet/dog/corgi/ian/Initialize(mapload)
 	. = ..()
@@ -466,6 +470,35 @@
 /mob/living/basic/pet/dog/corgi/ian/proc/check_ian_survival()
 	if(!stat && !memory_saved)
 		Write_Memory(FALSE)
+
+/mob/living/basic/pet/dog/corgi/ian/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	if(resting_state)
+		manual_emote(pick("gets up and barks.", "walks around.", "stops resting."))
+		set_rest_state(IAN_RESTING_STATE_NONE)
+
+/mob/living/basic/pet/dog/corgi/ian/proc/set_rest_state(state)
+	resting_state = state
+	update_icons()
+
+/mob/living/basic/pet/dog/corgi/ian/update_icons()
+	. = ..()
+
+	if(stat)
+		icon_state = "[initial(icon_state)][is_slow ? "_old" : ""][shaved ? "_shaved" : ""]_dead"
+		return
+
+	if(is_slow)
+		icon_state = "[initial(icon_state)]_old[shaved ? "_shaved" : ""]"
+		return
+
+	switch(resting_state)
+		if(IAN_RESTING_STATE_NONE)
+			icon_state = initial(icon_state)
+		if(IAN_RESTING_STATE_SIT)
+			icon_state = "[initial(icon_state)]_sit[shaved ? "_shaved" : ""]"
+		if(IAN_RESTING_STATE_REST)
+			icon_state = "[initial(icon_state)]_rest[shaved ? "_shaved" : ""]"
 
 //NARS-IAN! SQ-Q-QooEglor-r'EEn-nl-luEEEf-f-fth-h
 /mob/living/basic/pet/dog/corgi/narsie

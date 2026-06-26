@@ -46,6 +46,9 @@
 
 	return corgi_pawn.access_card.GetAccess()
 
+/datum/ai_controller/basic_controller/dog/corgi/chadian
+	idle_behavior = /datum/idle_behavior/idle_dog/chadian
+
 /datum/ai_controller/basic_controller/dog/puppy
 	blackboard = list(
 		BB_DOG_HARASS_HARM = TRUE,

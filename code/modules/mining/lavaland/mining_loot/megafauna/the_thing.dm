@@ -24,8 +24,33 @@
 	var/datum/action/innate/brain_undeployment/undeployment_action = new
 	/// Weakref to our imaginary brain radio implant
 	var/datum/weakref/radio_weakref
+	/// Slots to ignore when checking for organic organs, used for external organs that do not have ORGAN_EXTERNAL.
+	var/static/list/ignored_organ_slots = list(
+		ORGAN_SLOT_EXTERNAL_CAP,
+		ORGAN_SLOT_EXTERNAL_EARS,
+		ORGAN_SLOT_EXTERNAL_FLUFF,
+		ORGAN_SLOT_EXTERNAL_FRILLS,
+		ORGAN_SLOT_EXTERNAL_HEAD_ACCESSORY,
+		ORGAN_SLOT_EXTERNAL_HORNS,
+		ORGAN_SLOT_EXTERNAL_MOTH_MARKINGS,
+		ORGAN_SLOT_EXTERNAL_NECK_ACCESSORY,
+		ORGAN_SLOT_EXTERNAL_POD_HAIR,
+		ORGAN_SLOT_EXTERNAL_SKRELL_HAIR,
+		ORGAN_SLOT_EXTERNAL_SYNTH_ANTENNA,
+		ORGAN_SLOT_EXTERNAL_SYNTH_SCREEN,
+		ORGAN_SLOT_EXTERNAL_TAUR,
+		ORGAN_SLOT_EXTERNAL_XENODORSAL,
+		ORGAN_SLOT_EXTERNAL_XENOHEAD,
+		ORGAN_SLOT_EXTERNAL_TAIL,
+		ORGAN_SLOT_EXTERNAL_SPINES,
+		ORGAN_SLOT_EXTERNAL_SNOUT,
+		ORGAN_SLOT_EXTERNAL_WINGS,
+		ORGAN_SLOT_EXTERNAL_ANTENNAE,
+	)
 
 /obj/item/organ/brain/cybernetic/ai/Initialize(mapload)
+	desc += " P.S. External organs such as tails, snouts, etc still work fine."
+	organ_traits += TRAIT_SILICON_EMOTES_ALLOWED
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes move with machine precision, their expression completely blank.")
 
@@ -49,6 +74,8 @@
 	var/obj/item/implant/radio/radio = new(owner)
 	radio.implant(owner, null, TRUE, TRUE)
 	radio_weakref = WEAKREF(radio)
+	if(!isnull(brain_owner.ai_controller))
+		QDEL_NULL(brain_owner.ai_controller)
 
 /obj/item/organ/brain/cybernetic/ai/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	undeploy()
