@@ -31,6 +31,13 @@
 	spell_type = /datum/action/cooldown/spell/jaunt/ethereal_jaunt
 	category = SPELLBOOK_CATEGORY_MOBILITY
 
+/datum/spellbook_entry/magical_stimpack
+	name = "Magic Stimpack"
+	desc = "This spell magically injects stimulants straight into your blood. Won't work on species with no reagent reactions!"
+	spell_type = /datum/action/cooldown/spell/stimpack
+	cost = 1
+	category = SPELLBOOK_CATEGORY_MOBILITY
+
 /datum/spellbook_entry/swap
 	name = "Swap"
 	desc = "Switch places with any living target within nine tiles. Right click to mark a secondary target. You will always swap to your primary target."

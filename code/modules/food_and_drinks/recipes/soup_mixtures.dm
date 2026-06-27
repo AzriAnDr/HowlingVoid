@@ -254,6 +254,16 @@
 
 	// Anything left in the ingredient list will get dumped out
 	pot.dump_ingredients(get_turf(pot), y_offset = 8)
+	if(length(results) && pot.emulsify_reagents)
+		var/soup_type = results[1]
+		var/list/cached_reagents = holder.reagent_list.Copy()
+		for(var/datum/reagent/current_reagent as anything in cached_reagents)
+			if(current_reagent.type == soup_type)
+				continue
+			var/reagent_volume = current_reagent.volume
+			holder.del_reagent(current_reagent.type)
+			holder.add_reagent(soup_type, reagent_volume)
+
 	// Blackbox log the chemical reaction used, to account for soup reaction that don't produce typical results
 	BLACKBOX_LOG_FOOD_MADE(type)
 

@@ -47,6 +47,8 @@
 	var/max_ingredients = 24
 	/// A lazylist of all the ingredients we have added
 	var/list/obj/item/added_ingredients
+	/// Whether the pot turns leftover non-soup reagents into the finished soup reagent.
+	var/emulsify_reagents = FALSE
 
 /obj/item/reagent_containers/cup/soup_pot/Initialize(mapload, vol)
 	. = ..()
@@ -69,6 +71,12 @@
 	. = ..()
 	. += span_notice("There's room for <b>[max_ingredients - LAZYLEN(added_ingredients)]</b> more ingredients \
 		or <b>[reagents.maximum_volume - reagents.total_volume]</b> more units of reagents in there.")
+	. += span_notice("You can enable or disable soup cleaning by alt-right-clicking [src].")
+
+/obj/item/reagent_containers/cup/soup_pot/click_alt_secondary(mob/user)
+	emulsify_reagents = !emulsify_reagents
+	balloon_alert(user, "soup cleaning [emulsify_reagents ? "enabled" : "disabled"]!")
+	return CLICK_ACTION_SUCCESS
 
 /**
  * Override standard reagent examine with something a bit more sensible for the soup pot,

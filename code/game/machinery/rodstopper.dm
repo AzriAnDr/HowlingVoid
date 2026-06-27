@@ -10,7 +10,7 @@
 /obj/machinery/rodstopper
 	name = "rodstopper"
 	desc = "An advanced machine which can halt immovable rods."
-	icon = 'icons/rod-stopper/rodstopper.dmi'
+	icon = 'icons/obj/machines/rodstopper.dmi'
 	icon_state = "rodstopper"
 	density = TRUE
 	use_power = NO_POWER_USE

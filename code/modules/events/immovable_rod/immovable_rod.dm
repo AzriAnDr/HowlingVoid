@@ -184,7 +184,10 @@
 
 		var/obj/clong_obj = clong
 		clong_obj.take_damage(INFINITY, BRUTE, NONE, TRUE, dir, INFINITY)
-		return ..()
+		. = ..()
+		if(istype(clong, /obj/machinery/rodstopper))
+			stop_at_rodstopper()
+		return
 
 	// If we Bump into a living thing, living thing goes splat.
 	if(isliving(clong))
@@ -197,6 +200,14 @@
 		return ..()
 
 	CRASH("[src] Bump()ed into non-atom thing [clong] ([clong.type])")
+
+/obj/effect/immovablerod/proc/stop_at_rodstopper()
+	visible_message(span_boldwarning("The rod tears into the rodstopper with a reality-rending screech!"))
+	playsound(src.loc, 'sound/effects/supermatter.ogg', 200, TRUE)
+	visible_message(span_boldwarning("You have five seconds to move away before the localized reality-collapse!"))
+	var/obj/reality_tear/tear = new(src.loc)
+	tear.start_disaster()
+	qdel(src)
 
 /obj/effect/immovablerod/proc/penetrate(mob/living/smeared_mob)
 	smeared_mob.visible_message(span_danger("[smeared_mob] is penetrated by an immovable rod!") , span_userdanger("The rod penetrates you!") , span_danger("You hear a CLANG!"))
