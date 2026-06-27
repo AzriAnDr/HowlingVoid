@@ -185,6 +185,7 @@
 	damage = 25
 	armour_penetration = 100
 	speed = 0.5
+	range = 40
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 	plane = GAME_PLANE

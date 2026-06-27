@@ -101,6 +101,14 @@
 	ai_controller = /datum/ai_controller/basic_controller/fox/docile
 	gold_core_spawnable = FRIENDLY_SPAWN
 
+/mob/living/basic/pet/fox/docile/sweater
+	name = "sweater fox"
+	desc = "They're a fox, in a sweater!"
+	icon = 'icons/mob/simple/fox_sweater.dmi'
+	icon_state = "fox"
+	icon_living = "fox"
+	icon_dead = "fox_dead"
+
 /mob/living/basic/pet/fox/icemoon
 	name = "icemoon fox"
 	desc = "A fox, scraping by the icemoon hostile atmosphere."

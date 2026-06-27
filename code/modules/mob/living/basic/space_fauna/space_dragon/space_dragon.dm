@@ -21,8 +21,8 @@
 	status_flags = CANPUSH
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	gender = NEUTER
-	maxHealth = 400
-	health = 400
+	maxHealth = 600
+	health = 600
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
 	unsuitable_atmos_damage = 0

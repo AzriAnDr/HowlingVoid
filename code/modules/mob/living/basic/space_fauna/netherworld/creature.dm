@@ -19,6 +19,7 @@
 	faction = list(FACTION_NETHER)
 	speak_emote = list("screams")
 	death_message = "gets his head split open."
+	gold_core_spawnable = NO_SPAWN
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
@@ -32,6 +33,7 @@
 	var/health_scaling = TRUE
 
 /mob/living/basic/creature/Initialize(mapload)
+	mob_biotypes |= MOB_SPECIAL
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
 	if(health_scaling)

@@ -45,6 +45,10 @@
 	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
+	health = 50
+	maxHealth = 50
+	melee_damage_lower = 15
+	melee_damage_upper = 23
 
 	/// If true we will run away from attackers even at full health
 	var/cowardly = FALSE
@@ -276,8 +280,8 @@
 	new_overlays += disk_overlay
 
 /mob/living/basic/carp/advanced
-	health = 40
-	maxHealth = 40
+	health = 65
+	maxHealth = 65
 	obj_damage = 15
 
 #undef RARE_CAYENNE_CHANCE
