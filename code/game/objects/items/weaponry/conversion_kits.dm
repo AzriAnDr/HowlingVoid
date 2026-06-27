@@ -29,7 +29,7 @@
 	name = "\improper Xhihao 'Rengo' rifle conversion kit"
 	desc = "All the parts you need to make a 'Rengo' rifle, outside of the parts that make the gun actually a gun. \
 		It looks like this stuff could fit on an old Sakhno rifle, if only you had one of those around."
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/cases.dmi'
+	icon = 'icons/obj/storage/company_weapon_cases.dmi'
 	icon_state = "xhihao_conversion_kit"
 
 	lore_blurb = "The Xhihao 'Rengo' rifle conversion kit is designed to take the receiver and barrel of the venerable \

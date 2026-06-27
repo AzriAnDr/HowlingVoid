@@ -5,11 +5,11 @@
 	desc = "A weapon that could hardly be called a 'sub' machinegun, firing the monstrous .585 cartridge. \
 		It provides enough kick to bruise a shoulder pretty bad if used without protection."
 
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/xhihao_light_arms/guns32x.dmi'
+	icon = 'icons/obj/weapons/guns/xhihao_light_arms/guns32x.dmi'
 	icon_state = "bogseo"
 
-	lefthand_file = 'icons/modular_weapons/mob/company_and_or_faction_based/xhihao_light_arms/guns_lefthand.dmi'
-	righthand_file = 'icons/modular_weapons/mob/company_and_or_faction_based/xhihao_light_arms/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns/xhihao_light_arms/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns/xhihao_light_arms/guns_righthand.dmi'
 	inhand_icon_state = "bogseo"
 
 	special_mags = FALSE

@@ -400,7 +400,7 @@ In case that doesn't stop you, you're going to want to look through:
 		<br><br>\
 		<i>RUBBER: Less than lethal ammo. Deals both stamina damage and regular damage.</i>"
 
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/xhihao_light_arms/ammo.dmi'
+	icon = 'icons/obj/weapons/ammo/xhihao_light_arms/ammo.dmi'
 	icon_state = "310-casing-rubber"
 
 	projectile_type = /obj/projectile/bullet/strilka310/rubber
@@ -428,7 +428,7 @@ In case that doesn't stop you, you're going to want to look through:
 		<br><br>\
 		<i>ARMOR-PIERCING: Improved armor-piercing capabilities, in return for less outright damage.</i>"
 
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/xhihao_light_arms/ammo.dmi'
+	icon = 'icons/obj/weapons/ammo/xhihao_light_arms/ammo.dmi'
 	icon_state = "310-casing-ap"
 
 	projectile_type = /obj/projectile/bullet/strilka310/ap

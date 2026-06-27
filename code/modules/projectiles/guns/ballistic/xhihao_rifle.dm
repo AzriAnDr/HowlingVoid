@@ -6,7 +6,7 @@
 	name = "\improper Rengo Precision Rifle"
 	desc = "A heavily modified Sakhno rifle, with parts made by Xhihao light arms based around Jupiter herself. \
 		Has a chassis that takes Lanca magazines in lieu of an internal magazine, leading to a higher capacity."
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/xhihao_light_arms/guns40x.dmi'
+	icon = 'icons/obj/weapons/guns/xhihao_light_arms/guns40x.dmi'
 	icon_state = "rengo"
 	worn_icon_state = "enchanted_rifle" // Not actually magical looking, just looks closest to this one
 	inhand_icon_state = "sakhno"
@@ -52,5 +52,5 @@
 
 /obj/item/storage/toolbox/guncase/soviet/sakhno
 	desc = "A weapon's case. This one is green and looks pretty old, but is otherwise in decent condition."
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/cases.dmi'
+	icon = 'icons/obj/storage/company_weapon_cases.dmi'
 	material_flags = NONE // ????? Why do these have materials enabled??
