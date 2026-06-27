@@ -313,4 +313,42 @@ GRAND RESPONSE VARIANTS OF ESPATIERS, USE ONLY IF SOMEONE ROYALLY FUCKED UP
 	roles = list(/datum/antagonist/ert/armadyne/high_alert)
 	leader_role = /datum/antagonist/ert/armadyne/leader/high_alert
 	rename_team = "Armadyne PMC (High Alert)"
+
+/datum/ert/fullengi
+	roles = list(/datum/antagonist/ert/engineer)
+	leader_role = /datum/antagonist/ert/engineer/red
+	rename_team = "Repairmen"
+	code = "Orange"
+	mission = "Repair the station."
+	polldesc = "a group of engineers"
+
+/datum/ert/weedkiller
+	roles = list(/datum/antagonist/ert/weedkiller)
+	leader_role = /datum/antagonist/ert/weedkiller/leader
+	rename_team = "ERT Pest Control"
+	code = "Green"
+	mission = "Clear out all insects, weeds, and/or vines."
+	polldesc = "a group of exterminators"
+
+/datum/ert/odst
+	roles = list(/datum/antagonist/ert/odst)
+	leader_role = /datum/antagonist/ert/odst/leader
+	rename_team = "ODST"
+	code = "Red"
+	polldesc = "a squad of specialized ODST"
+
+/datum/ert/pizza
+	roles = list(/datum/antagonist/ert/pizza)
+	leader_role = /datum/antagonist/ert/pizza/leader
+	rename_team = "Dogginos"
+	code = "Green"
+	mission = "Serve the station with a smile, remember to get a tip!"
+	polldesc = "a group of trained pizza delivery boys"
+
+/datum/ert/traumateam
+	roles = list(/datum/antagonist/ert/traumateam)
+	leader_role = /datum/antagonist/ert/traumateam/leader
+	rename_team = "Trauma Team"
+	code = "Violet"
+	polldesc = "a group of Trauma Team Specialists"
 // END NOVA CORE MIGRATION: code/datums/ert.dm

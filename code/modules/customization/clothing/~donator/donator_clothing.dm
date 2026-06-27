@@ -2133,8 +2133,8 @@
 	name = "cursed ritual knife"
 	desc = "A large carving or flensing dagger made of a heavy, dusty material. It seems to emit a soft, eerie crimson glow."
 	icon = 'icons/donator/obj/custom.dmi'
-	righthand_file = 'icons/modular_ert/pizza/righthand.dmi'
-	lefthand_file = 'icons/modular_ert/pizza/lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hotknife_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/hotknife_lefthand.dmi'
 	icon_state = "dagger"
 	inhand_icon_state = "hotknife"
 	toggle_sound = 'sound/items/haunted/ghostitemattack.ogg'

@@ -433,4 +433,54 @@
 	name = "Armadyne Corporate Security Commander (High Alert)"
 	outfit = /datum/outfit/armadyne_security/commander/high_alert
 	role = "Commander"
+
+/datum/antagonist/ert/weedkiller
+	name = "Fumigator"
+	outfit = /datum/outfit/ert/weedkiller
+	role = "Exterminator"
+
+/datum/antagonist/ert/weedkiller/leader
+	name = "Fumigator Leader"
+	outfit = /datum/outfit/ert/weedkiller/leader
+	role = "Head Exterminator"
+
+/datum/antagonist/ert/odst
+	name = "Orbital Drop Shock Trooper"
+	role = "Trooper"
+	outfit = /datum/outfit/centcom/ert/odst
+
+/datum/antagonist/ert/odst/on_gain()
+	. = ..()
+	equip_odst()
+
+/datum/antagonist/ert/odst/proc/equip_odst()
+	if(!ishuman(owner.current))
+		return
+	var/mob/living/carbon/human/human_target = owner.current
+	human_target.set_species(/datum/species/human)
+	return TRUE
+
+/datum/antagonist/ert/odst/leader
+	name = "Orbital Drop Shock Trooper Leader"
+	role = "Commander"
+
+/datum/antagonist/ert/pizza
+	name = "Pizza Delivery Boy"
+	outfit = /datum/outfit/centcom/ert/pizza
+	role = "Delivery Boy"
+
+/datum/antagonist/ert/pizza/leader
+	name = "Dogginos Regional Manager"
+	outfit = /datum/outfit/centcom/ert/pizza/leader
+	role = "Manager"
+
+/datum/antagonist/ert/traumateam
+	name = "Trauma Team Specialist"
+	outfit = /datum/outfit/centcom/ert/medic/traumateam
+	role = "Specialist"
+
+/datum/antagonist/ert/traumateam/leader
+	name = "Trauma Team Leader"
+	outfit = /datum/outfit/centcom/ert/medic/traumateam/leader
+	role = "Commander"
 // END NOVA CORE MIGRATION: code/modules/antagonists/ert/ert.dm

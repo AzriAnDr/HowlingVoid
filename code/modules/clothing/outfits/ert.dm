@@ -1035,4 +1035,293 @@
 		/obj/item/storage/box/handcuffs,
 		/obj/item/ammo_box/magazine/c40sol_rifle/standard = 2,
 	)
+
+/datum/outfit/ert
+	name = "Default ERT outfit"
+
+/datum/outfit/ert/weedkiller
+	name = "Fumigator"
+	id = /obj/item/card/id/advanced/centcom/ert
+	suit = /obj/item/clothing/suit/apron/waders
+	glasses = /obj/item/clothing/glasses/biker
+	head = /obj/item/clothing/head/soft/red
+	mask = /obj/item/clothing/mask/breathmuzzle/speak
+	uniform = /obj/item/clothing/under/rank/civilian/hydroponics
+	gloves = /obj/item/clothing/gloves/botanic_leather
+	ears = /obj/item/radio/headset/headset_cent/alt
+	back = /obj/item/storage/backpack/ert/odst
+	backpack_contents = list(
+		/obj/item/storage/box/survival,
+		/obj/item/hatchet,
+		/obj/item/toy/plush/nova/deer,
+		/obj/item/reagent_containers/cup/bottle/killer/weedkiller,
+		/obj/item/grenade/chem_grenade/antiweed,
+	)
+
+/datum/outfit/ert/weedkiller/leader
+	name = "Fumigator Leader"
+	id = /obj/item/card/id/advanced/centcom/ert
+	suit = /obj/item/clothing/suit/bio_suit/scientist
+	glasses = /obj/item/clothing/glasses/biker
+	head = /obj/item/clothing/head/bio_hood/scientist
+	mask = /obj/item/clothing/mask/breathmuzzle/speak
+	uniform = /obj/item/clothing/under/rank/civilian/hydroponics
+	gloves = /obj/item/clothing/gloves/botanic_leather
+	ears = /obj/item/radio/headset/headset_cent/alt
+	back = /obj/item/storage/backpack/ert/odst
+	backpack_contents = list(
+		/obj/item/storage/box/survival,
+		/obj/item/melee/tomahawk,
+		/obj/item/toy/plush/nova/deer,
+		/obj/item/reagent_containers/cup/bottle/killer/weedkiller,
+		/obj/item/grenade/chem_grenade/antiweed,
+	)
+
+/datum/outfit/centcom/ert/odst
+	name = "ODST"
+	id = /obj/item/card/id/advanced/centcom/ert
+	uniform = /obj/item/clothing/under/syndicate/combat
+	glasses = /obj/item/clothing/glasses/hud/security/night
+	ears = /obj/item/radio/headset/headset_cent/alt
+	gloves = /obj/item/clothing/gloves/combat
+	l_hand = /obj/item/gun/ballistic/automatic/sol_rifle/machinegun
+	belt = /obj/item/storage/belt/military/odst
+	back = /obj/item/mod/control/pre_equipped/responsory/security
+	backpack_contents = list(
+		/obj/item/storage/box/survival/security,
+		/obj/item/melee/baton/security/loaded,
+	)
+	l_pocket = /obj/item/gun/energy/e_gun/mini
+	r_pocket = /obj/item/tank/internals/emergency_oxygen/double
+
+/datum/outfit/centcom/ert/pizza
+	name = "Pizza Delivery Boy"
+	id = /obj/item/card/id/advanced/centcom/ert
+	suit = /obj/item/clothing/suit/toggle/jacket/nova/hoodie/pizza
+	glasses = /obj/item/clothing/glasses/regular/modern
+	head = /obj/item/clothing/head/soft/red
+	mask = /obj/item/clothing/mask/fakemoustache/italian
+	uniform = /obj/item/clothing/under/pizza
+	ears = /obj/item/radio/headset/headset_cent/alt
+	back = /obj/item/storage/backpack/ert/odst
+	backpack_contents = list(
+		/obj/item/storage/box/survival,
+		/obj/item/knife,
+		/obj/item/storage/box/ingredients/italian,
+	)
+
+/datum/outfit/centcom/ert/pizza/leader
+	name = "Pizza Delivery Manager"
+	id = /obj/item/card/id/advanced/centcom/ert
+	suit = /obj/item/clothing/suit/pizzaleader
+	uniform = /obj/item/clothing/under/pizza
+	mask = /obj/item/clothing/mask/fakemoustache/italian
+	head = /obj/item/clothing/head/pizza
+	ears = /obj/item/radio/headset/headset_cent/alt
+	back = /obj/item/storage/backpack/ert/odst
+	backpack_contents = list(
+		/obj/item/storage/box/survival,
+		/obj/item/knife/hotknife,
+		/obj/item/storage/box/ingredients/italian,
+	)
+
+/datum/outfit/centcom/ert/pizza/pre_equip(mob/living/carbon/human/equipped_human, visualsOnly)
+	var/list/pizza_list = list(/obj/item/pizzabox/margherita, /obj/item/pizzabox/mushroom, /obj/item/pizzabox/meat, /obj/item/pizzabox/pineapple)
+	r_hand = pick(pizza_list)
+
+/datum/outfit/centcom/ert/medic/traumateam
+	name = "Trauma Team"
+	id = /obj/item/card/id/advanced/centcom/ert/medical/ntrauma
+	uniform = /obj/item/clothing/under/rank/medical/paramedic
+	suit = /obj/item/clothing/suit/space/ntrauma
+	head = /obj/item/clothing/head/helmet/space/ntrauma
+	glasses = /obj/item/clothing/glasses/hud/health/night
+	ears = /obj/item/radio/headset/headset_cent/alt
+	gloves = /obj/item/clothing/gloves/latex/nitrile/ntrauma
+	l_hand = /obj/item/gun/energy/e_gun/stun
+	r_hand = null
+	shoes = /obj/item/clothing/shoes/combat
+	belt = /obj/item/storage/belt/medical/ntrauma
+	back = /obj/item/storage/backpack/medic
+	mask = /obj/item/clothing/mask/breath/medical
+	l_pocket = /obj/item/healthanalyzer/advanced
+	r_pocket = /obj/item/reagent_containers/hypospray/combat
+	backpack_contents = list(
+		/obj/item/melee/baton/security/loaded,
+		/obj/item/gun/energy/cell_loaded/medigun/upgraded,
+		/obj/item/storage/box/plastic/medicells,
+		/obj/item/storage/medkit/tactical/ntrauma,
+		/obj/item/emergency_bed,
+	)
+
+/datum/outfit/centcom/ert/medic/traumateam/leader
+	name = "Trauma Team Leader"
+	belt = /obj/item/defibrillator/compact/combat/loaded/nanotrasen
+	backpack_contents = list(
+		/obj/item/melee/baton/security/loaded,
+		/obj/item/gun/medbeam,
+		/obj/item/storage/medkit/tactical/ntrauma,
+		/obj/item/emergency_bed,
+		/obj/item/holosign_creator/medical/treatment_zone,
+		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset/single_use,
+	)
+
+/obj/item/clothing/mask/breathmuzzle/speak
+	name = "fumigator mask"
+	desc = "For killing those pesky insects."
+	icon_state = "breathmuzzle"
+	inhand_icon_state = "breathmuzzle"
+	body_parts_covered = NONE
+	clothing_flags = MASKINTERNALS
+
+/obj/item/storage/backpack/ert/odst
+	name = "odst backpack"
+	desc = "A modified backpack that attaches via magnetic harness, removing the need for straps."
+	icon = 'icons/obj/clothing/backpacks.dmi'
+	icon_state = "ert_odst"
+	worn_icon = 'icons/mob/clothing/back_additions.dmi'
+	worn_icon_state = "ert_odst"
+	inhand_icon_state = "securitypack"
+	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/storage/belt/military/odst
+	name = "commando chest rig"
+	desc = "A tactical plate carrier."
+	icon = 'icons/obj/clothing/belts_additions.dmi'
+	worn_icon = 'icons/mob/clothing/belt_additions.dmi'
+	icon_state = "ert_odst"
+	worn_icon_state = "ert_odst"
+	inhand_icon_state = "utility"
+	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/storage/belt/military/odst/PopulateContents()
+	new /obj/item/crowbar/red(src)
+	new /obj/item/grenade/frag(src)
+	new /obj/item/grenade/frag(src)
+
+/obj/item/clothing/head/pizza
+	name = "dogginos manager hat"
+	desc = "Looks like something a Sol general would wear."
+	icon = 'icons/obj/clothing/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "dominosleader"
+
+/obj/item/clothing/suit/toggle/jacket/nova/hoodie/pizza
+	name = "dogginos hoodie"
+	desc = "A hoodie often worn by the delivery boys of this intergalactically known brand of pizza."
+	greyscale_colors = "#c40000"
+
+/obj/item/clothing/suit/pizzaleader
+	name = "dogginos manager coat"
+	desc = "A long, cool, flowing coat in a tasteless red colour."
+	icon = 'icons/obj/clothing/suits.dmi'
+	worn_icon = 'icons/mob/clothing/suit.dmi'
+	icon_state = "forensics_red_long"
+
+/obj/item/clothing/under/pizza
+	name = "dogginos employee uniform"
+	desc = "The standard issue for the famous dog-founded pizza brand, Dogginos."
+	icon = 'icons/obj/clothing/under/centcom_additions.dmi'
+	worn_icon = 'icons/mob/clothing/under/centcom_additions.dmi'
+	icon_state = "dominos"
+
+/obj/item/storage/box/plastic/medicells
+	name = "box of medicells"
+	desc = "A box with a few basic Medicells designed for Vey-Medical CWM cell-powered Mediguns."
+	illustration = "medgel"
+
+/obj/item/storage/box/plastic/medicells/PopulateContents()
+	. = ..()
+	new /obj/item/weaponcell/medical/brute(src)
+	new /obj/item/weaponcell/medical/burn(src)
+	new /obj/item/weaponcell/medical/toxin/tier_2(src)
+	new /obj/item/weaponcell/medical/utility/temperature(src)
+	new /obj/item/weaponcell/medical/utility/bed(src)
+
+/datum/id_trim/centcom/ert/medical/ntrauma
+	assignment = "Trauma Team Specialist"
+	trim_state = "trim_highcleric"
+	sechud_icon_state = SECHUD_SCRAMBLED
+
+/obj/item/card/id/advanced/centcom/ert/medical/ntrauma
+	registered_name = "Trauma Team Specialist"
+	trim = /datum/id_trim/centcom/ert/medical/ntrauma
+	icon_state = "battlecruisercaller"
+	desc = "A semi-standard, black identification card rigged with what appears to be a small transmitter wired to a small disk, presumably filled with access tokens. Not NT standard, sure, but effectively the same card as their ERTs."
+
+/obj/item/storage/belt/medical/ntrauma
+	name = "trauma chest rig"
+	desc = "A set of tactical webbing worn by Trauma Response Teams."
+	icon = 'icons/obj/clothing/belts_additions.dmi'
+	worn_icon = 'icons/mob/clothing/belt_additions.dmi'
+	icon_state = "ert_ntrauma"
+	worn_icon_state = "ert_ntrauma"
+
+/obj/item/storage/belt/medical/ntrauma/PopulateContents()
+	new /obj/item/surgical_drapes(src)
+	new /obj/item/scalpel/advanced(src)
+	new /obj/item/cautery/advanced(src)
+	new /obj/item/retractor/advanced(src)
+	new /obj/item/blood_filter/advanced(src)
+	new /obj/item/holosign_creator/medical/treatment_zone(src)
+
+/obj/item/storage/medkit/tactical/ntrauma
+	name = "trauma medical kit"
+	desc = "I hope you've got insurance, because the Trauma Team's premiums are HIGH."
+
+/obj/item/storage/medkit/tactical/ntrauma/PopulateContents()
+	new /obj/item/reagent_containers/hypospray/medipen/atropine(src)
+	new /obj/item/reagent_containers/hypospray/medipen/atropine(src)
+	new /obj/item/stack/medical/wrap/gauze(src)
+	new /obj/item/stack/medical/suture/medicated(src)
+	new /obj/item/stack/medical/suture/medicated(src)
+	new /obj/item/stack/medical/mesh/advanced(src)
+	new /obj/item/stack/medical/mesh/advanced(src)
+	new /obj/item/sensor_device(src)
+	new /obj/item/pinpointer/crew(src)
+
+/obj/item/clothing/gloves/latex/nitrile/ntrauma
+	name = "trauma specialist gloves"
+	desc = "A pair of nitrile-alternative gloves used by Trauma Team specialists. Sealable to protect from pressure, with a unique acid-repellent coating to prevent damage when handling chemical hazards as well."
+	icon = 'icons/obj/clothing/gloves_additions.dmi'
+	worn_icon = 'icons/mob/clothing/hands_additions.dmi'
+	icon_state = "ert_ntrauma"
+	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
+
+/obj/item/clothing/suit/space/ntrauma
+	name = "trauma team softsuit"
+	desc = "A lightweight, minimally-armored, and entirely sterile softsuit used by Trauma Teams to operate in potentially hazardous environments of all sorts. It's coated in acid-repellent chemicals."
+	icon = 'icons/obj/clothing/suits/spacesuit_additions.dmi'
+	worn_icon = 'icons/mob/clothing/suits/spacesuit_additions.dmi'
+	worn_icon_digi = 'icons/mob/clothing/suits/spacesuit_digi.dmi'
+	icon_state = "ert_ntrauma"
+	inhand_icon_state = "syndicate-blue"
+	slowdown = 0.3
+	armor_type = /datum/armor/space_ntrauma
+	resistance_flags = ACID_PROOF
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS|FEET
+	cell = /obj/item/stock_parts/power_store/cell/hyper
+	allowed = list(/obj/item/gun/energy, /obj/item/gun/medbeam, /obj/item/melee/baton, /obj/item/storage/medkit, /obj/item/tank/internals)
+
+/datum/armor/space_ntrauma
+	melee = 10
+	bullet = 10
+	laser = 10
+	energy = 10
+	bomb = 10
+	bio = 100
+	fire = 80
+	acid = 80
+
+/obj/item/clothing/head/helmet/space/ntrauma
+	name = "trauma team helmet"
+	desc = "A faceless white helmet fit to seal with a softsuit, used by Trauma Teams to operate in potentially hazardous environments. It's coated in acid-repellent chemicals."
+	icon = 'icons/obj/clothing/head/helmet_additions.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet_additions.dmi'
+	icon_state = "ert_ntrauma"
+	resistance_flags = ACID_PROOF
+	supports_variations_flags = NONE
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 // END NOVA CORE MIGRATION: code/modules/clothing/outfits/ert.dm
