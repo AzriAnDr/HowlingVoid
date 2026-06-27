@@ -36,6 +36,10 @@
 	var/harmful = TRUE
 	/// How much force is applied when fired in zero-G
 	var/newtonian_force = 1
+	/// Can this casing be printed at an ammunition workbench without admin intervention?
+	var/can_be_printed = TRUE
+	/// What ammo categories this casing fulfills for the ammunition workbench.
+	var/ammo_categories = AMMO_CLASS_LETHAL
 
 	///If set to true or false, this ammunition can or cannot misfire, regardless the gun can_misfire setting
 	var/can_misfire = null

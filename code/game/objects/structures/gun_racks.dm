@@ -1,7 +1,7 @@
 /obj/structure/rack/gunrack
 	name = "gun rack"
 	desc = "A tall rack for storing guns."
-	icon = 'icons/modular_weapons/gun_rack.dmi'
+	icon = 'icons/obj/structures/gun_rack.dmi'
 	icon_state = "gunrack"
 
 /obj/structure/rack/gunrack/Initialize(mapload)

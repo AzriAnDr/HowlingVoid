@@ -1,7 +1,7 @@
 /obj/item/gun/ballistic/automatic/pistol/pepperball
 	name = "\improper Bolt Pepperball AHG"
 	desc = "An incredibly mediocre 'firearm' designed to fire soft pepper balls meant to easily subdue targets."
-	icon = 'icons/modular_weapons/obj/pepperball/pepperball.dmi'
+	icon = 'icons/obj/weapons/guns/pepperball.dmi'
 	icon_state = "peppergun"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_premium_price = PAYCHECK_COMMAND * 4
@@ -22,7 +22,7 @@
 /obj/item/ammo_box/magazine/pepperball
 	name = "pistol magazine (pepperball)"
 	desc = "A gun magazine filled with balls, the kind that make your face itch. Holds eight rounds."
-	icon = 'icons/modular_weapons/obj/pepperball/pepperball.dmi'
+	icon = 'icons/obj/weapons/guns/pepperball.dmi'
 	icon_state = "pepperball"
 	ammo_type = /obj/item/ammo_casing/pepperball
 	caliber = CALIBER_PEPPERBALL
@@ -40,7 +40,7 @@
 
 /obj/projectile/bullet/pepperball
 	name = "pepperball orb"
-	icon = 'icons/modular_weapons/obj/pepperball/projectiles.dmi'
+	icon = 'icons/obj/weapons/guns/pepperball_projectiles.dmi'
 	icon_state = "pepperball"
 	damage = 0
 	stamina = 5
@@ -75,7 +75,7 @@
 
 /obj/item/ammo_box/advanced/pepperballs
 	name = "pepperball ammo box"
-	icon = 'icons/modular_weapons/obj/pepperball/ammoboxes.dmi'
+	icon = 'icons/obj/weapons/guns/pepperball_ammo_boxes.dmi'
 	icon_state = "box10x24"
 	desc = "A box of pepper ball rounds, holds eighteen rounds."
 	custom_price = PAYCHECK_CREW * 2
