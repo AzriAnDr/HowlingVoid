@@ -26,7 +26,7 @@
 /obj/machinery/self_actualization_device
 	name = "Self-Actualization Device"
 	desc = "A state of the art medical device that can restore someone's physical appearance to the last known DNA database backup."
-	icon = 'icons/self_actualization_device/self_actualization_device.dmi'
+	icon = 'icons/obj/machines/self_actualization_device.dmi'
 	icon_state = "sad_open"
 	circuit = /obj/item/circuitboard/machine/self_actualization_device
 	state_open = FALSE

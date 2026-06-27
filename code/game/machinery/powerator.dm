@@ -50,7 +50,7 @@
 /obj/machinery/powerator
 	name = "\improper Nanotrasen Powerator"
 	desc = "Beyond the ridiculous name, it is the standard for transporting and selling energy to power networks that require additional sources!"
-	icon = 'icons/powerator/machines.dmi'
+	icon = 'icons/obj/machines/powerator.dmi'
 	icon_state = "powerator"
 
 	density = TRUE
