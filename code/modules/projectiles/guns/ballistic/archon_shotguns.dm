@@ -225,7 +225,7 @@
 	projectile_damage_multiplier = 1.1
 	projectile_speed_multiplier = 1.1
 	/// Base fire sound of the shotgun.
-	var/base_fire_sound = 'sound/weapons/modular_weapons/shotgun_heavy.ogg'
+	var/base_fire_sound = 'sound/weapons/guns/shotgun_heavy.ogg'
 	/// Base recoil of the shotgun.
 	var/base_recoil = NONE
 	/// Fire sound when the shotgun's barrel chargers are on (amped).

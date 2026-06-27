@@ -577,11 +577,11 @@
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
 	var/silent_blown = FALSE
 	var/list/kiss_sounds = list(
-		'sound/modular_items/lewd_items/sounds/kiss1.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss2.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss3.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss4.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss5.ogg',
+		'sound/lewd/sounds/kiss1.ogg',
+		'sound/lewd/sounds/kiss2.ogg',
+		'sound/lewd/sounds/kiss3.ogg',
+		'sound/lewd/sounds/kiss4.ogg',
+		'sound/lewd/sounds/kiss5.ogg',
 	)
 
 /obj/projectile/kiss/Initialize(mapload)

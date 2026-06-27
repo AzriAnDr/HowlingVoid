@@ -19,9 +19,9 @@
 
 	SET_BASE_PIXEL(-8, 0)
 
-	fire_sound = 'sound/weapons/modular_weapons/shotgun_heavy.ogg'
-	rack_sound = 'sound/weapons/modular_weapons/shotgun_rack.ogg'
-	suppressed_sound = 'sound/weapons/modular_weapons/suppressed_heavy.ogg'
+	fire_sound = 'sound/weapons/guns/shotgun_heavy.ogg'
+	rack_sound = 'sound/weapons/guns/shotgun_rack.ogg'
+	suppressed_sound = 'sound/weapons/guns/suppressed_heavy.ogg'
 	can_suppress = TRUE
 	rack_delay = 0.5 SECONDS
 	fire_delay = 0.5 SECONDS // Turns out, this is actually pretty fairly balanced

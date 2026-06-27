@@ -28,8 +28,8 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/c40sol_rifle
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c40sol_rifle/standard
 
-	fire_sound = 'sound/weapons/modular_weapons/rifle_heavy.ogg'
-	suppressed_sound = 'sound/weapons/modular_weapons/suppressed_rifle.ogg'
+	fire_sound = 'sound/weapons/guns/rifle_heavy.ogg'
+	suppressed_sound = 'sound/weapons/guns/suppressed_rifle.ogg'
 	can_suppress = TRUE
 
 	suppressor_x_offset = 12

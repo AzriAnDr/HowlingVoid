@@ -24,7 +24,7 @@
 
 	accepted_magazine_type = /obj/item/ammo_box/magazine/napad
 
-	fire_sound = 'sound/weapons/modular_weapons/smg_heavy.ogg'
+	fire_sound = 'sound/weapons/guns/smg_heavy.ogg'
 	fire_sound_volume = 80
 	can_suppress = FALSE
 

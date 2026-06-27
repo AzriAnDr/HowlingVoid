@@ -19,10 +19,10 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/pulse_sniper
 	semi_auto = FALSE
 	can_suppress = FALSE
-	fire_sound = 'sound/weapons/modular_weapons/pulse_shoot.ogg'
+	fire_sound = 'sound/weapons/guns/pulse_shoot.ogg'
 	fire_sound_volume = 70
-	rack_sound = 'sound/weapons/modular_weapons/pulse_pull.ogg'
-	bolt_drop_sound = 'sound/weapons/modular_weapons/pulse_push.ogg'
+	rack_sound = 'sound/weapons/guns/pulse_pull.ogg'
+	bolt_drop_sound = 'sound/weapons/guns/pulse_push.ogg'
 
 	fire_delay = 1.2 SECONDS
 

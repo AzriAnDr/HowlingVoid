@@ -26,7 +26,7 @@
 
 	accepted_magazine_type = /obj/item/ammo_box/magazine/c980_grenade
 
-	fire_sound = 'sound/weapons/modular_weapons/grenade_launcher.ogg'
+	fire_sound = 'sound/weapons/guns/grenade_launcher.ogg'
 
 	can_suppress = FALSE
 

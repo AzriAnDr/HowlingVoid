@@ -65,7 +65,7 @@
 
 /// Generic proc that is called when the projectile should 'detonate', being either on impact or when the range runs out
 /obj/projectile/bullet/c980grenade/proc/fuse_activation(atom/target)
-	playsound(src, 'sound/weapons/modular_weapons/grenade_burst.ogg', 50, TRUE, -3)
+	playsound(src, 'sound/weapons/guns/grenade_burst.ogg', 50, TRUE, -3)
 	do_sparks(3, FALSE, src)
 
 /obj/item/ammo_box/c980grenade
@@ -97,7 +97,7 @@
 	name = ".980 Tydhouer smoke grenade"
 
 /obj/projectile/bullet/c980grenade/smoke/fuse_activation(atom/target)
-	playsound(src, 'sound/weapons/modular_weapons/grenade_burst.ogg', 50, TRUE, -3)
+	playsound(src, 'sound/weapons/guns/grenade_burst.ogg', 50, TRUE, -3)
 	playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	do_smoke(GRENADE_SMOKE_RANGE, src, src, smoke_type = /datum/effect_system/fluid_spread/smoke/bad)
 
@@ -133,7 +133,7 @@
 /obj/projectile/bullet/c980grenade/shrapnel/fuse_activation(atom/target)
 	var/obj/item/grenade/shrapnel_maker = new casing_to_spawn(get_turf(target))
 	shrapnel_maker.detonate()
-	playsound(src, 'sound/weapons/modular_weapons/grenade_burst.ogg', 50, TRUE, -3)
+	playsound(src, 'sound/weapons/guns/grenade_burst.ogg', 50, TRUE, -3)
 	qdel(shrapnel_maker)
 
 /obj/item/ammo_box/c980grenade/shrapnel
@@ -238,7 +238,7 @@
 	name = ".980 Tydhouer tear gas grenade"
 
 /obj/projectile/bullet/c980grenade/riot/fuse_activation(atom/target)
-	playsound(src, 'sound/weapons/modular_weapons/grenade_burst.ogg', 50, TRUE, -3)
+	playsound(src, 'sound/weapons/guns/grenade_burst.ogg', 50, TRUE, -3)
 	playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	do_chem_smoke(GRENADE_SMOKE_RANGE, src, src, /datum/reagent/consumable/condensedcapsaicin, 10, smoke_type = /datum/effect_system/fluid_spread/smoke/chem)
 
@@ -269,7 +269,7 @@
 	var/stagger_size = 2
 
 /obj/projectile/bullet/c980grenade/concussive/fuse_activation(atom/target)
-	playsound(src, 'sound/weapons/modular_weapons/grenade_burst.ogg', 50, TRUE, -3)
+	playsound(src, 'sound/weapons/guns/grenade_burst.ogg', 50, TRUE, -3)
 	var/turf/burst_turf = get_turf(src)
 	for(var/mob/living/brainbonked in view(stagger_size, burst_turf))
 		var/distance = get_dist(brainbonked, burst_turf)

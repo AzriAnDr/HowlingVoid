@@ -247,7 +247,7 @@
 	desc = "A single-use beacon to deliver an alternative sidearm for investigative duties. Please only call this in your office!"
 	icon_state = "sec_beacon"
 	inhand_icon_state = "electronic"
-	icon = 'icons/modular_items/remote.dmi'
+	icon = 'icons/obj/items/nova/remote.dmi'
 	company_source = "Nanotrasen Rapid Equipment Deployment Division"
 	company_message = span_bold("Supply Pod incoming, please stand by.")
 

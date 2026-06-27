@@ -44,8 +44,8 @@
 	icon = 'icons/obj/weapons/guns/trappiste_fabriek/guns32x.dmi'
 	icon_state = "takbok"
 
-	fire_sound = 'sound/weapons/modular_weapons/revolver_heavy.ogg'
-	suppressed_sound = 'sound/weapons/modular_weapons/suppressed_heavy.ogg'
+	fire_sound = 'sound/weapons/guns/revolver_heavy.ogg'
+	suppressed_sound = 'sound/weapons/guns/suppressed_heavy.ogg'
 
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c585trappiste
 
@@ -82,8 +82,8 @@
 	icon = 'icons/obj/weapons/guns/trappiste_fabriek/guns32x.dmi'
 	icon_state = "bluvolva"
 
-	fire_sound = 'sound/weapons/modular_weapons/revolver_heavy.ogg'
-	suppressed_sound = 'sound/weapons/modular_weapons/suppressed_heavy.ogg'
+	fire_sound = 'sound/weapons/guns/revolver_heavy.ogg'
+	suppressed_sound = 'sound/weapons/guns/suppressed_heavy.ogg'
 
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c585trappiste
 

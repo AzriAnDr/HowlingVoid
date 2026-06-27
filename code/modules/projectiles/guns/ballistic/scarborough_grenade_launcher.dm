@@ -23,7 +23,7 @@
 	slot_flags = ITEM_SLOT_BACK
 
 	SET_BASE_PIXEL(-8, 0)
-	fire_sound = 'sound/weapons/modular_weapons/grenade_launcher.ogg'
+	fire_sound = 'sound/weapons/guns/grenade_launcher.ogg'
 	fire_sound_volume = 75
 	rack_sound = 'sound/items/weapons/gun/shotgun/rack.ogg'
 	load_sound = 'sound/items/weapons/gun/shotgun/insert_shell.ogg'

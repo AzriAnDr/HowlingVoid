@@ -272,7 +272,7 @@
 /obj/item/nanite_leg_reinforcement
 	name = "nanite leg reinforcement"
 	desc = "Gives you the ability to channel your nanites into letting you stand for a time."
-	icon = 'icons/modular_implants/obj/nifs.dmi'
+	icon = 'icons/obj/implants/nif/nifs.dmi'
 	icon_state = "base_nif"
 	/// Which action this item grants you.
 	var/action_to_grant = /datum/action/innate/nanite_leg_reinforcement

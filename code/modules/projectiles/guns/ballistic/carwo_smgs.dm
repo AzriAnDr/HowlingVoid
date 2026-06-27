@@ -22,7 +22,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/c35sol_pistol
 	spawn_magazine_type = /obj/item/ammo_box/magazine/c35sol_pistol/stendo
 
-	fire_sound = 'sound/weapons/modular_weapons/smg_light.ogg'
+	fire_sound = 'sound/weapons/guns/smg_light.ogg'
 	can_suppress = TRUE
 
 	suppressor_x_offset = 11

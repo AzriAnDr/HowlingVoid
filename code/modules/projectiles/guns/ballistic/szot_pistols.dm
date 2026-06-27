@@ -7,7 +7,7 @@
 	icon = 'icons/obj/weapons/guns/szot_dynamica/guns_32.dmi'
 	icon_state = "slonce"
 
-	fire_sound = 'sound/weapons/modular_weapons/laser_firing/incinerate.ogg'
+	fire_sound = 'sound/weapons/guns/laser_firing/incinerate.ogg'
 	fire_sound_volume = 40 // This thing is comically loud otherwise
 
 	w_class = WEIGHT_CLASS_NORMAL
@@ -51,7 +51,7 @@
 	icon = 'icons/obj/weapons/guns/szot_dynamica/guns_32.dmi'
 	icon_state = "gwiazda"
 
-	fire_sound = 'sound/weapons/modular_weapons/laser_firing/burn.ogg'
+	fire_sound = 'sound/weapons/guns/laser_firing/burn.ogg'
 	fire_sound_volume = 40 // This thing is comically loud otherwise
 
 	w_class = WEIGHT_CLASS_NORMAL
@@ -133,7 +133,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/zashch
 	can_suppress = FALSE
 	fire_delay = 1 SECONDS
-	fire_sound = 'sound/weapons/modular_weapons/pistol_heavy.ogg'
+	fire_sound = 'sound/weapons/guns/pistol_heavy.ogg'
 	rack_sound = 'sound/items/weapons/gun/pistol/rack.ogg'
 	lock_back_sound = 'sound/items/weapons/gun/pistol/slide_lock.ogg'
 	bolt_drop_sound = 'sound/items/weapons/gun/pistol/slide_drop.ogg'

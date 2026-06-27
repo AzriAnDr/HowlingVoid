@@ -13,7 +13,7 @@
 	user_required_item_paths = list(/obj/item/clothing/sextoy/vibrator)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/vibrate.ogg')
+	sound_possible = list('sound/lewd/sounds/vibrate.ogg')
 
 /datum/interaction/howling_item/wand
 	category = "Magic Wand"
@@ -21,7 +21,7 @@
 	user_required_item_paths = list(/obj/item/clothing/sextoy/magic_wand)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/vibrate.ogg')
+	sound_possible = list('sound/lewd/sounds/vibrate.ogg')
 
 /datum/interaction/howling_item/dildo
 	category = "Dildo"
@@ -33,7 +33,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 
 /datum/interaction/howling_item/fleshlight
 	category = "Fleshlight"
@@ -41,7 +41,7 @@
 	user_required_item_paths = list(/obj/item/clothing/sextoy/fleshlight)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 
 /datum/interaction/howling_item/strapon
 	category = "Strap-On"
@@ -50,9 +50,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 
 /datum/interaction/howling_item/whip
@@ -77,7 +77,7 @@
 	user_required_item_paths = list(/obj/item/tickle_feather)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 
 /datum/interaction/howling_item/shocker
 	category = "Shocker"
@@ -101,7 +101,7 @@
 	user_required_item_paths = list(/obj/item/clothing/sextoy/buttplug)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 
 /datum/interaction/howling_item/egg
 	category = "Egg Vibrator"
@@ -110,7 +110,7 @@
 	user_blocked_item_paths = list(/obj/item/clothing/sextoy/eggvib/signalvib)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/vibrate.ogg')
+	sound_possible = list('sound/lewd/sounds/vibrate.ogg')
 
 /datum/interaction/howling_item/ring
 	category = "Vibrating Ring"
@@ -118,7 +118,7 @@
 	user_required_item_paths = list(/obj/item/clothing/sextoy/vibroring)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/vibrate.ogg')
+	sound_possible = list('sound/lewd/sounds/vibrate.ogg')
 
 /datum/interaction/howling_item/clamps
 	category = "Nipple Clamps"
@@ -126,7 +126,7 @@
 	user_required_item_paths = list(/obj/item/clothing/sextoy/nipple_clamps)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 
 /datum/interaction/howling_item_inserted
 	register_in_menu = FALSE
@@ -144,7 +144,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 
 /datum/interaction/howling_item_inserted/plug
 	category = "Buttplug"
@@ -153,7 +153,7 @@
 	target_required_item_paths = list(/obj/item/clothing/sextoy/buttplug)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 
 /datum/interaction/howling_item_inserted/egg
 	category = "Egg Vibrator"
@@ -163,7 +163,7 @@
 	target_blocked_item_paths = list(/obj/item/clothing/sextoy/eggvib/signalvib)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/vibrate.ogg')
+	sound_possible = list('sound/lewd/sounds/vibrate.ogg')
 
 /datum/interaction/howling_item_inserted/ring
 	category = "Vibrating Ring"
@@ -172,7 +172,7 @@
 	target_required_item_paths = list(/obj/item/clothing/sextoy/vibroring)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/vibrate.ogg')
+	sound_possible = list('sound/lewd/sounds/vibrate.ogg')
 
 /datum/interaction/howling_item_inserted/clamps
 	category = "Nipple Clamps"
@@ -181,7 +181,7 @@
 	target_required_item_paths = list(/obj/item/clothing/sextoy/nipple_clamps)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 
 /datum/interaction/howling_item/condom
 	category = "Condom"
@@ -189,7 +189,7 @@
 	user_required_item_paths = list(/obj/item/clothing/sextoy/condom)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/latex.ogg')
+	sound_possible = list('sound/lewd/sounds/latex.ogg')
 
 /datum/interaction/howling_item_inserted/condom
 	category = "Condom"
@@ -198,7 +198,7 @@
 	target_required_item_paths = list(/obj/item/clothing/sextoy/condom)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 
 /datum/interaction/howling_item_inserted/signal_egg
 	category = "Signal Egg"
@@ -207,7 +207,7 @@
 	target_required_item_paths = list(/obj/item/clothing/sextoy/eggvib/signalvib)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/vibrate.ogg')
+	sound_possible = list('sound/lewd/sounds/vibrate.ogg')
 
 /datum/interaction/howling_item_inserted/double_dildo
 	category = "Double Dildo"
@@ -216,7 +216,7 @@
 	target_required_item_paths = list(/obj/item/clothing/sextoy/dildo/double_dildo)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/bang1.ogg')
+	sound_possible = list('sound/lewd/sounds/bang1.ogg')
 
 /datum/interaction/howling_item_self_inserted/double_dildo
 	parent_type = /datum/interaction/howling_item_inserted/double_dildo
@@ -228,7 +228,7 @@
 	user_required_item_paths = list(/obj/item/clothing/sextoy/dildo/custom_dildo)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 
 /datum/interaction/howling_item/double_dildo
 	category = "Double Dildo"
@@ -237,8 +237,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg'
 	)
 
 /datum/interaction/howling_item/signal_egg
@@ -247,7 +247,7 @@
 	user_required_item_paths = list(/obj/item/clothing/sextoy/eggvib/signalvib)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/vibrate.ogg')
+	sound_possible = list('sound/lewd/sounds/vibrate.ogg')
 
 /datum/interaction/howling_item_self/vibrator
 	parent_type = /datum/interaction/howling_item/vibrator

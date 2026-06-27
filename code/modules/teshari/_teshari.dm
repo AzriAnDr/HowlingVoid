@@ -90,7 +90,7 @@
 
 /obj/effect/temp_visual/howling_teshari_feathers
 	name = "feathers"
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_decals/lewd_decals.dmi'
+	icon = 'icons/lewd/icons/obj/lewd_decals/lewd_decals.dmi'
 	icon_state = "feathers"
 	duration = 14
 

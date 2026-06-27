@@ -68,7 +68,7 @@
 		span_purple("[stripper] touches your tail."),
 		blind_message = span_hear("You hear lewd bug noisses."),
 	)
-	playsound(get_turf(owner), 'sound/modular_items/lewd_items/sounds/vax2.ogg', 50, TRUE)
+	playsound(get_turf(owner), 'sound/lewd/sounds/vax2.ogg', 50, TRUE)
 
 /mob/living/carbon/human/update_worn_legcuffs()
 	if(isnabber(src) && istype(legcuffed, /obj/item/restraints/legcuffs/gas_placeholder))

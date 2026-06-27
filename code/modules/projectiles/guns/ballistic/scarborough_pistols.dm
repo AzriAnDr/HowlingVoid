@@ -13,11 +13,11 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/enforcer
 	fire_sound_volume = 120
 	w_class = WEIGHT_CLASS_NORMAL
-	fire_sound = 'sound/weapons/modular_weapons/bay_gunshot_magnum.ogg'
-	load_sound = 'sound/weapons/modular_weapons/bay_magnum_in.ogg'
-	load_empty_sound = 'sound/weapons/modular_weapons/bay_magnum_in.ogg'
-	eject_sound = 'sound/weapons/modular_weapons/bay_magnum_out.ogg'
-	eject_empty_sound = 'sound/weapons/modular_weapons/bay_magnum_out.ogg'
+	fire_sound = 'sound/weapons/guns/bay_gunshot_magnum.ogg'
+	load_sound = 'sound/weapons/guns/bay_magnum_in.ogg'
+	load_empty_sound = 'sound/weapons/guns/bay_magnum_in.ogg'
+	eject_sound = 'sound/weapons/guns/bay_magnum_out.ogg'
+	eject_empty_sound = 'sound/weapons/guns/bay_magnum_out.ogg'
 	empty_indicator = TRUE
 	obj_flags = UNIQUE_RENAME
 	lore_blurb = "The Enforcer-TEN is part of Scarborough Arms's Enforcer series of full-frame handguns, \

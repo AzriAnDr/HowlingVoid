@@ -30,7 +30,7 @@
 
 	accepted_magazine_type = /obj/item/ammo_box/magazine/miecz
 
-	fire_sound = 'sound/weapons/modular_weapons/ak_shoot.ogg'
+	fire_sound = 'sound/weapons/guns/ak_shoot.ogg'
 	can_suppress = TRUE
 	suppressor_x_offset = 0
 	suppressor_y_offset = 0
@@ -99,8 +99,8 @@
 
 	accepted_magazine_type = /obj/item/ammo_box/magazine/lanca
 
-	fire_sound = 'sound/weapons/modular_weapons/battle_rifle.ogg'
-	suppressed_sound = 'sound/weapons/modular_weapons/suppressed_heavy.ogg'
+	fire_sound = 'sound/weapons/guns/battle_rifle.ogg'
+	suppressed_sound = 'sound/weapons/guns/suppressed_heavy.ogg'
 	can_suppress = TRUE
 	suppressor_x_offset = 0
 	suppressor_y_offset = 0

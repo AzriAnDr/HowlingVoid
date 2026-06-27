@@ -55,7 +55,7 @@
 	/// Type of bullet we use
 	var/casingtype = /obj/item/ammo_casing/c27_54cesarzowa
 	/// Sound to play when firing weapon
-	var/projectilesound = 'sound/weapons/modular_weapons/smg_light.ogg'
+	var/projectilesound = 'sound/weapons/guns/smg_light.ogg'
 	/// number of burst shots
 	var/burst_shots = 2
 	/// Time between taking shots

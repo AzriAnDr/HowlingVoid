@@ -102,9 +102,9 @@
 	desc = "A single use beacon to deliver a weapon or set of your choice. Please only call this in your office!"
 	icon_state = "bs_beacon"
 	inhand_icon_state = "bs_beacon"
-	icon = 'icons/modular_items/remote.dmi'
-	lefthand_file = 'icons/modular_items/inhand/mobs/lefthand_remote.dmi'
-	righthand_file = 'icons/modular_items/inhand/mobs/righthand_remote.dmi'
+	icon = 'icons/obj/items/nova/remote.dmi'
+	lefthand_file = 'icons/mob/inhands/items/lefthand_remote.dmi'
+	righthand_file = 'icons/mob/inhands/items/righthand_remote.dmi'
 	company_source = "Nanotrasen Rapid Equipment Deployment Division"
 	company_message = span_bold("Supply pod incoming, please stand by.")
 

@@ -18,10 +18,10 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/pulse
 	semi_auto = FALSE
 	can_suppress = FALSE
-	fire_sound = 'sound/weapons/modular_weapons/pulse_shoot.ogg'
+	fire_sound = 'sound/weapons/guns/pulse_shoot.ogg'
 	fire_sound_volume = 50
-	lock_back_sound = 'sound/weapons/modular_weapons/pulse_pull.ogg'
-	bolt_drop_sound = 'sound/weapons/modular_weapons/pulse_push.ogg'
+	lock_back_sound = 'sound/weapons/guns/pulse_pull.ogg'
+	bolt_drop_sound = 'sound/weapons/guns/pulse_push.ogg'
 
 	burst_size = 3
 	burst_delay = 0.3 SECONDS

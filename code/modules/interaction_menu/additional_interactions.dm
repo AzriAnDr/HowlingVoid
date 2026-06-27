@@ -152,11 +152,11 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/kiss1.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss2.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss3.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss4.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss5.ogg'
+		'sound/lewd/sounds/kiss1.ogg',
+		'sound/lewd/sounds/kiss2.ogg',
+		'sound/lewd/sounds/kiss3.ogg',
+		'sound/lewd/sounds/kiss4.ogg',
+		'sound/lewd/sounds/kiss5.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(1, 3)
@@ -174,9 +174,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/kiss1.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss2.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss3.ogg'
+		'sound/lewd/sounds/kiss1.ogg',
+		'sound/lewd/sounds/kiss2.ogg',
+		'sound/lewd/sounds/kiss3.ogg'
 	)
 	user_arousal = list(0, 2)
 	target_arousal = list(0, 2)
@@ -194,9 +194,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/kiss2.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss4.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss5.ogg'
+		'sound/lewd/sounds/kiss2.ogg',
+		'sound/lewd/sounds/kiss4.ogg',
+		'sound/lewd/sounds/kiss5.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
@@ -215,9 +215,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/kiss1.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss2.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss3.ogg'
+		'sound/lewd/sounds/kiss1.ogg',
+		'sound/lewd/sounds/kiss2.ogg',
+		'sound/lewd/sounds/kiss3.ogg'
 	)
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
@@ -235,7 +235,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss4.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss4.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -253,8 +253,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
@@ -272,8 +272,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/kiss4.ogg',
-		'sound/modular_items/lewd_items/sounds/oral1.ogg'
+		'sound/lewd/sounds/kiss4.ogg',
+		'sound/lewd/sounds/oral1.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
@@ -291,8 +291,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/kiss4.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss5.ogg'
+		'sound/lewd/sounds/kiss4.ogg',
+		'sound/lewd/sounds/kiss5.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_arousal = list(4, 6)
@@ -309,7 +309,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -326,7 +326,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -343,7 +343,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -359,7 +359,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -375,7 +375,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(4, 6)
 
@@ -393,8 +393,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
@@ -412,7 +412,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(3, 5)
 
@@ -428,7 +428,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(4, 6)
 
@@ -445,7 +445,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss4.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss4.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 	target_pain = list(0, 2)
@@ -462,7 +462,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss3.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss3.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -478,7 +478,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -494,7 +494,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -510,7 +510,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(4, 6)
 
@@ -527,7 +527,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -544,7 +544,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -561,7 +561,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -578,7 +578,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -594,7 +594,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -611,7 +611,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -628,7 +628,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -645,7 +645,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -665,8 +665,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/kiss1.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss2.ogg'
+		'sound/lewd/sounds/kiss1.ogg',
+		'sound/lewd/sounds/kiss2.ogg'
 	)
 
 /datum/interaction/howling_extra/chest_lick
@@ -684,7 +684,7 @@
 	target_arousal = list(3, 5)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 
 /datum/interaction/howling_extra/trace_sternum
 	name = "Trace Sternum"
@@ -699,7 +699,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -716,7 +716,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -733,7 +733,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -749,7 +749,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -766,7 +766,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -782,7 +782,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -798,7 +798,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -814,7 +814,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -830,7 +830,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -847,7 +847,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -864,7 +864,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -881,7 +881,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -898,7 +898,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -915,7 +915,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -932,7 +932,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -949,7 +949,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -966,8 +966,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/kiss1.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss2.ogg'
+		'sound/lewd/sounds/kiss1.ogg',
+		'sound/lewd/sounds/kiss2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
@@ -985,7 +985,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1002,7 +1002,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1019,7 +1019,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1036,7 +1036,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -1053,7 +1053,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss4.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss4.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -1069,7 +1069,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1086,7 +1086,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -1103,7 +1103,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -1120,7 +1120,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -1137,7 +1137,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -1154,7 +1154,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -1171,7 +1171,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -1188,8 +1188,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
@@ -1205,7 +1205,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1220,7 +1220,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(0, 2)
 
@@ -1236,8 +1236,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
@@ -1254,7 +1254,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1270,7 +1270,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1286,7 +1286,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -1302,7 +1302,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -1318,7 +1318,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -1334,7 +1334,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -1350,7 +1350,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1365,7 +1365,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/bang1.ogg', 'sound/modular_items/lewd_items/sounds/bang2.ogg', 'sound/modular_items/lewd_items/sounds/bang3.ogg')
+	sound_possible = list('sound/lewd/sounds/bang1.ogg', 'sound/lewd/sounds/bang2.ogg', 'sound/lewd/sounds/bang3.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -1381,7 +1381,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1396,7 +1396,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -1413,7 +1413,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -1430,7 +1430,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -1447,7 +1447,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -1464,7 +1464,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -1481,7 +1481,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(4, 6)
 
@@ -1498,7 +1498,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -1515,7 +1515,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -1531,7 +1531,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(3, 5)
 
@@ -1547,7 +1547,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -1563,7 +1563,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(4, 6)
 
@@ -1580,7 +1580,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1597,7 +1597,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(0, 2)
 
@@ -1614,7 +1614,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1631,7 +1631,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -1647,7 +1647,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1663,7 +1663,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1679,7 +1679,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(1, 3)
 
@@ -1695,7 +1695,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(0, 2)
 
@@ -1712,7 +1712,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1728,7 +1728,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(1, 3)
 
@@ -1745,7 +1745,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1762,7 +1762,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(0, 2)
 
@@ -1779,7 +1779,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1796,7 +1796,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1813,7 +1813,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(1, 3)
 
@@ -1830,7 +1830,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -1847,7 +1847,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -1864,7 +1864,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -1881,7 +1881,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(1, 3)
 
@@ -1898,7 +1898,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1915,7 +1915,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(1, 3)
 
@@ -1932,7 +1932,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(0, 2)
 
@@ -1949,7 +1949,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -1966,7 +1966,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -1983,7 +1983,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(1, 3)
 
@@ -2000,7 +2000,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(1, 3)
 
@@ -2017,7 +2017,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -2035,7 +2035,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -2053,7 +2053,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -2071,7 +2071,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(3, 5)
 
@@ -2105,8 +2105,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
@@ -2124,7 +2124,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -2141,7 +2141,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -2158,7 +2158,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -2175,7 +2175,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -2192,7 +2192,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -2209,7 +2209,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss3.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss3.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(4, 6)
 
@@ -2226,7 +2226,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss4.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss4.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(4, 6)
 
@@ -2243,7 +2243,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(2, 4)
 	target_pleasure = list(1, 3)
 	target_arousal = list(4, 6)
@@ -2261,7 +2261,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -2278,7 +2278,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(4, 6)
 
@@ -2433,7 +2433,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(1, 3)
 
@@ -2467,7 +2467,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(3, 5)
 
@@ -2485,8 +2485,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(1, 3)
@@ -2505,7 +2505,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(2, 4)
 
@@ -2522,7 +2522,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(3, 5)
 
@@ -2539,7 +2539,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/squelch1.ogg')
+	sound_possible = list('sound/lewd/sounds/squelch1.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -2557,9 +2557,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(3, 5)
@@ -2579,8 +2579,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
@@ -2599,9 +2599,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
@@ -2621,8 +2621,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
@@ -2641,7 +2641,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -2659,9 +2659,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bj2.ogg',
-		'sound/modular_items/lewd_items/sounds/bj5.ogg',
-		'sound/modular_items/lewd_items/sounds/bj8.ogg'
+		'sound/lewd/sounds/bj2.ogg',
+		'sound/lewd/sounds/bj5.ogg',
+		'sound/lewd/sounds/bj8.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(2, 4)
@@ -2681,8 +2681,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
@@ -2702,8 +2702,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(1, 3)
@@ -2723,8 +2723,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(1, 3)
@@ -2744,8 +2744,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(2, 4)
@@ -2765,8 +2765,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bj1.ogg',
-		'sound/modular_items/lewd_items/sounds/bj4.ogg'
+		'sound/lewd/sounds/bj1.ogg',
+		'sound/lewd/sounds/bj4.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(3, 5)
@@ -2785,8 +2785,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_arousal = list(3, 5)
@@ -2804,9 +2804,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_arousal = list(3, 5)
@@ -2824,7 +2824,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(2, 4)
 	target_pleasure = list(4, 6)
 	target_arousal = list(6, 8)
@@ -2842,7 +2842,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -2859,7 +2859,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
 	target_arousal = list(3, 5)
@@ -2877,7 +2877,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -2895,9 +2895,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bj1.ogg',
-		'sound/modular_items/lewd_items/sounds/bj4.ogg',
-		'sound/modular_items/lewd_items/sounds/bj7.ogg'
+		'sound/lewd/sounds/bj1.ogg',
+		'sound/lewd/sounds/bj4.ogg',
+		'sound/lewd/sounds/bj7.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(2, 4)
@@ -2916,7 +2916,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
 	target_arousal = list(4, 6)
@@ -2934,7 +2934,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(3, 5)
 
@@ -2951,7 +2951,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(2, 4)
 	target_pleasure = list(2, 4)
 	target_arousal = list(5, 7)
@@ -2969,7 +2969,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(2, 4)
 	target_pleasure = list(1, 3)
 	target_arousal = list(5, 7)
@@ -2988,8 +2988,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(3, 5)
@@ -3008,7 +3008,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -3024,7 +3024,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/bang1.ogg', 'sound/modular_items/lewd_items/sounds/bang2.ogg', 'sound/modular_items/lewd_items/sounds/bang3.ogg')
+	sound_possible = list('sound/lewd/sounds/bang1.ogg', 'sound/lewd/sounds/bang2.ogg', 'sound/lewd/sounds/bang3.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(3, 5)
 
@@ -3041,7 +3041,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(3, 5)
 
@@ -3058,7 +3058,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(2, 4)
 	target_pleasure = list(3, 5)
 	target_arousal = list(5, 7)
@@ -3076,7 +3076,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -3093,7 +3093,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
 	target_arousal = list(3, 5)
@@ -3111,7 +3111,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
 	target_arousal = list(4, 6)
@@ -3129,7 +3129,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
 	target_arousal = list(4, 6)
@@ -3147,7 +3147,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(2, 4)
 	target_pleasure = list(1, 3)
 	target_arousal = list(4, 6)
@@ -3165,7 +3165,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(3, 5)
 
@@ -3182,7 +3182,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(3, 5)
 
@@ -3199,7 +3199,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -3217,9 +3217,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg',
-		'sound/modular_items/lewd_items/sounds/bj6.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg',
+		'sound/lewd/sounds/bj6.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(2, 4)
@@ -3239,8 +3239,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(1, 3)
@@ -3258,7 +3258,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/bang1.ogg', 'sound/modular_items/lewd_items/sounds/bang2.ogg', 'sound/modular_items/lewd_items/sounds/bang3.ogg')
+	sound_possible = list('sound/lewd/sounds/bang1.ogg', 'sound/lewd/sounds/bang2.ogg', 'sound/lewd/sounds/bang3.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(3, 5)
 
@@ -3276,10 +3276,10 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bj1.ogg',
-		'sound/modular_items/lewd_items/sounds/bj4.ogg',
-		'sound/modular_items/lewd_items/sounds/bj7.ogg',
-		'sound/modular_items/lewd_items/sounds/bj10.ogg'
+		'sound/lewd/sounds/bj1.ogg',
+		'sound/lewd/sounds/bj4.ogg',
+		'sound/lewd/sounds/bj7.ogg',
+		'sound/lewd/sounds/bj10.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(4, 6)
@@ -3299,10 +3299,10 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bj2.ogg',
-		'sound/modular_items/lewd_items/sounds/bj5.ogg',
-		'sound/modular_items/lewd_items/sounds/bj8.ogg',
-		'sound/modular_items/lewd_items/sounds/bj11.ogg'
+		'sound/lewd/sounds/bj2.ogg',
+		'sound/lewd/sounds/bj5.ogg',
+		'sound/lewd/sounds/bj8.ogg',
+		'sound/lewd/sounds/bj11.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(4, 6)
@@ -3322,9 +3322,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg',
-		'sound/modular_items/lewd_items/sounds/bj6.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg',
+		'sound/lewd/sounds/bj6.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(3, 5)
@@ -3344,9 +3344,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/foot_dry1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_dry2.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_dry3.ogg'
+		'sound/lewd/sounds/foot_dry1.ogg',
+		'sound/lewd/sounds/foot_dry2.ogg',
+		'sound/lewd/sounds/foot_dry3.ogg'
 	)
 	target_arousal = list(2, 4)
 
@@ -3364,9 +3364,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/foot_wet1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet2.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet3.ogg'
+		'sound/lewd/sounds/foot_wet1.ogg',
+		'sound/lewd/sounds/foot_wet2.ogg',
+		'sound/lewd/sounds/foot_wet3.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
@@ -3384,7 +3384,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/foot_dry1.ogg')
+	sound_possible = list('sound/lewd/sounds/foot_dry1.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -3401,7 +3401,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/foot_dry2.ogg')
+	sound_possible = list('sound/lewd/sounds/foot_dry2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(0, 2)
 
@@ -3419,8 +3419,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/kiss1.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss2.ogg'
+		'sound/lewd/sounds/kiss1.ogg',
+		'sound/lewd/sounds/kiss2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
@@ -3438,7 +3438,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/foot_dry2.ogg')
+	sound_possible = list('sound/lewd/sounds/foot_dry2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -3456,8 +3456,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/kiss1.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss3.ogg'
+		'sound/lewd/sounds/kiss1.ogg',
+		'sound/lewd/sounds/kiss3.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
@@ -3476,8 +3476,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/foot_wet1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet2.ogg'
+		'sound/lewd/sounds/foot_wet1.ogg',
+		'sound/lewd/sounds/foot_wet2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
@@ -3495,7 +3495,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/foot_dry3.ogg')
+	sound_possible = list('sound/lewd/sounds/foot_dry3.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(1, 3)
 
@@ -3512,7 +3512,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/foot_dry3.ogg')
+	sound_possible = list('sound/lewd/sounds/foot_dry3.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -3529,7 +3529,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/foot_dry1.ogg')
+	sound_possible = list('sound/lewd/sounds/foot_dry1.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -3547,8 +3547,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/kiss1.ogg',
-		'sound/modular_items/lewd_items/sounds/kiss2.ogg'
+		'sound/lewd/sounds/kiss1.ogg',
+		'sound/lewd/sounds/kiss2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
@@ -3567,8 +3567,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/foot_wet1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet2.ogg'
+		'sound/lewd/sounds/foot_wet1.ogg',
+		'sound/lewd/sounds/foot_wet2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
@@ -3586,7 +3586,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/foot_dry2.ogg')
+	sound_possible = list('sound/lewd/sounds/foot_dry2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -3603,7 +3603,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/foot_dry3.ogg')
+	sound_possible = list('sound/lewd/sounds/foot_dry3.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -3620,7 +3620,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/foot_dry1.ogg')
+	sound_possible = list('sound/lewd/sounds/foot_dry1.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -3638,8 +3638,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/foot_wet2.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet3.ogg'
+		'sound/lewd/sounds/foot_wet2.ogg',
+		'sound/lewd/sounds/foot_wet3.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(4, 6)
@@ -3657,7 +3657,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -3674,7 +3674,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/foot_dry1.ogg')
+	sound_possible = list('sound/lewd/sounds/foot_dry1.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -3691,7 +3691,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/foot_dry2.ogg')
+	sound_possible = list('sound/lewd/sounds/foot_dry2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -3708,7 +3708,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/foot_dry1.ogg')
+	sound_possible = list('sound/lewd/sounds/foot_dry1.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(0, 2)
 
@@ -3725,7 +3725,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/foot_dry2.ogg')
+	sound_possible = list('sound/lewd/sounds/foot_dry2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -3743,8 +3743,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/foot_wet2.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet3.ogg'
+		'sound/lewd/sounds/foot_wet2.ogg',
+		'sound/lewd/sounds/foot_wet3.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(4, 6)
@@ -3779,8 +3779,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
@@ -3798,7 +3798,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -3815,7 +3815,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -3832,7 +3832,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -3849,7 +3849,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -3866,7 +3866,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(0, 2)
 
@@ -3884,7 +3884,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_pleasure = list(4, 6)
 	user_arousal = list(6, 8)
 
@@ -3902,7 +3902,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/champ_fingering.ogg')
+	sound_possible = list('sound/lewd/sounds/champ_fingering.ogg')
 	user_pleasure = list(3, 5)
 	user_arousal = list(5, 7)
 
@@ -3921,9 +3921,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_pleasure = list(4, 6)
 	user_arousal = list(6, 8)
@@ -3943,9 +3943,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bj1.ogg',
-		'sound/modular_items/lewd_items/sounds/bj5.ogg',
-		'sound/modular_items/lewd_items/sounds/bj9.ogg'
+		'sound/lewd/sounds/bj1.ogg',
+		'sound/lewd/sounds/bj5.ogg',
+		'sound/lewd/sounds/bj9.ogg'
 	)
 	user_pleasure = list(4, 6)
 	user_arousal = list(6, 8)
@@ -3965,9 +3965,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bj2.ogg',
-		'sound/modular_items/lewd_items/sounds/bj6.ogg',
-		'sound/modular_items/lewd_items/sounds/bj10.ogg'
+		'sound/lewd/sounds/bj2.ogg',
+		'sound/lewd/sounds/bj6.ogg',
+		'sound/lewd/sounds/bj10.ogg'
 	)
 	user_pleasure = list(4, 6)
 	user_arousal = list(6, 8)
@@ -3986,7 +3986,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/squelch1.ogg')
+	sound_possible = list('sound/lewd/sounds/squelch1.ogg')
 	user_pleasure = list(1, 3)
 	user_arousal = list(3, 5)
 
@@ -4005,8 +4005,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_pleasure = list(2, 4)
 	user_arousal = list(4, 6)
@@ -4025,8 +4025,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_arousal = list(2, 4)
@@ -4045,8 +4045,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_arousal = list(2, 4)
@@ -4065,9 +4065,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_pleasure = list(2, 4)
 	user_arousal = list(4, 6)
@@ -4087,9 +4087,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_pleasure = list(2, 4)
@@ -4108,7 +4108,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -4125,7 +4125,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -4142,7 +4142,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -4159,7 +4159,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -4176,7 +4176,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -4193,7 +4193,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(4, 6)
 
@@ -4210,7 +4210,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(4, 6)
 
@@ -4227,7 +4227,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -4244,7 +4244,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -4262,9 +4262,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_pleasure = list(2, 4)
 	user_arousal = list(4, 6)
@@ -4282,7 +4282,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -4300,9 +4300,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch3.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg',
+		'sound/lewd/sounds/squelch3.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_arousal = list(2, 4)
@@ -4321,8 +4321,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_pleasure = list(1, 3)
 	user_arousal = list(2, 4)
@@ -4347,9 +4347,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_arousal = list(3, 5)
 	target_pleasure = list(3, 5)
@@ -4369,8 +4369,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_pleasure = list(2, 4)
@@ -4389,7 +4389,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/squelch1.ogg', 'sound/modular_items/lewd_items/sounds/squelch2.ogg')
+	sound_possible = list('sound/lewd/sounds/squelch1.ogg', 'sound/lewd/sounds/squelch2.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
 	target_arousal = list(4, 6)
@@ -4407,7 +4407,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/squelch1.ogg', 'sound/modular_items/lewd_items/sounds/squelch2.ogg')
+	sound_possible = list('sound/lewd/sounds/squelch1.ogg', 'sound/lewd/sounds/squelch2.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
 	target_arousal = list(4, 6)
@@ -4425,7 +4425,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/squelch1.ogg', 'sound/modular_items/lewd_items/sounds/squelch2.ogg')
+	sound_possible = list('sound/lewd/sounds/squelch1.ogg', 'sound/lewd/sounds/squelch2.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(0, 2)
 	target_arousal = list(4, 6)
@@ -4443,7 +4443,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/squelch1.ogg', 'sound/modular_items/lewd_items/sounds/squelch2.ogg')
+	sound_possible = list('sound/lewd/sounds/squelch1.ogg', 'sound/lewd/sounds/squelch2.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
 	target_arousal = list(4, 6)
@@ -4461,7 +4461,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -4478,7 +4478,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -4496,8 +4496,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
@@ -4517,8 +4517,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(2, 4)
@@ -4538,8 +4538,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
@@ -4558,8 +4558,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
@@ -4578,7 +4578,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/squelch1.ogg', 'sound/modular_items/lewd_items/sounds/squelch2.ogg')
+	sound_possible = list('sound/lewd/sounds/squelch1.ogg', 'sound/lewd/sounds/squelch2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(1, 3)
 
@@ -4595,7 +4595,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/squelch1.ogg', 'sound/modular_items/lewd_items/sounds/squelch2.ogg')
+	sound_possible = list('sound/lewd/sounds/squelch1.ogg', 'sound/lewd/sounds/squelch2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -4612,7 +4612,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/squelch1.ogg', 'sound/modular_items/lewd_items/sounds/squelch2.ogg')
+	sound_possible = list('sound/lewd/sounds/squelch1.ogg', 'sound/lewd/sounds/squelch2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -4629,7 +4629,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -4647,8 +4647,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(1, 3)
@@ -4667,7 +4667,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -4685,8 +4685,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(1, 3)
@@ -4705,7 +4705,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/squelch1.ogg', 'sound/modular_items/lewd_items/sounds/squelch2.ogg')
+	sound_possible = list('sound/lewd/sounds/squelch1.ogg', 'sound/lewd/sounds/squelch2.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
 	target_arousal = list(3, 5)
@@ -4723,7 +4723,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/squelch1.ogg', 'sound/modular_items/lewd_items/sounds/squelch2.ogg')
+	sound_possible = list('sound/lewd/sounds/squelch1.ogg', 'sound/lewd/sounds/squelch2.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(0, 2)
 	target_arousal = list(3, 5)
@@ -4741,7 +4741,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/squelch1.ogg', 'sound/modular_items/lewd_items/sounds/squelch2.ogg')
+	sound_possible = list('sound/lewd/sounds/squelch1.ogg', 'sound/lewd/sounds/squelch2.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
 	target_arousal = list(4, 6)
@@ -4759,7 +4759,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(2, 4)
 
@@ -4777,8 +4777,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg'
 	)
 	user_pleasure = list(3, 5)
 	user_arousal = list(6, 8)
@@ -4798,8 +4798,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_pleasure = list(4, 6)
 	user_arousal = list(7, 9)
@@ -4819,8 +4819,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_pleasure = list(4, 6)
 	user_arousal = list(7, 9)
@@ -4840,8 +4840,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_pleasure = list(6, 8)
 	user_arousal = list(9, 11)
@@ -4862,10 +4862,10 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/foot_dry1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_dry2.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_dry3.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_dry4.ogg'
+		'sound/lewd/sounds/foot_dry1.ogg',
+		'sound/lewd/sounds/foot_dry2.ogg',
+		'sound/lewd/sounds/foot_dry3.ogg',
+		'sound/lewd/sounds/foot_dry4.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_arousal = list(2, 4)
@@ -4884,9 +4884,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/foot_wet1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet2.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet3.ogg'
+		'sound/lewd/sounds/foot_wet1.ogg',
+		'sound/lewd/sounds/foot_wet2.ogg',
+		'sound/lewd/sounds/foot_wet3.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_arousal = list(2, 4)
@@ -4905,10 +4905,10 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/foot_dry1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_dry3.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet2.ogg'
+		'sound/lewd/sounds/foot_dry1.ogg',
+		'sound/lewd/sounds/foot_dry3.ogg',
+		'sound/lewd/sounds/foot_wet1.ogg',
+		'sound/lewd/sounds/foot_wet2.ogg'
 	)
 	target_pleasure = list(3, 5)
 	user_arousal = list(2, 4)
@@ -4928,10 +4928,10 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/foot_dry1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_dry3.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet2.ogg'
+		'sound/lewd/sounds/foot_dry1.ogg',
+		'sound/lewd/sounds/foot_dry3.ogg',
+		'sound/lewd/sounds/foot_wet1.ogg',
+		'sound/lewd/sounds/foot_wet2.ogg'
 	)
 	target_pleasure = list(4, 6)
 	user_arousal = list(3, 5)
@@ -4951,9 +4951,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/foot_dry1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet2.ogg'
+		'sound/lewd/sounds/foot_dry1.ogg',
+		'sound/lewd/sounds/foot_wet1.ogg',
+		'sound/lewd/sounds/foot_wet2.ogg'
 	)
 	user_arousal = list(3, 5)
 	target_pleasure = list(3, 5)
@@ -4973,10 +4973,10 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bj10.ogg',
-		'sound/modular_items/lewd_items/sounds/bj3.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_dry3.ogg'
+		'sound/lewd/sounds/bj10.ogg',
+		'sound/lewd/sounds/bj3.ogg',
+		'sound/lewd/sounds/foot_wet1.ogg',
+		'sound/lewd/sounds/foot_dry3.ogg'
 	)
 	user_pleasure = list(3, 5)
 	user_arousal = list(5, 7)
@@ -4996,10 +4996,10 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bj10.ogg',
-		'sound/modular_items/lewd_items/sounds/bj3.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_dry3.ogg'
+		'sound/lewd/sounds/bj10.ogg',
+		'sound/lewd/sounds/bj3.ogg',
+		'sound/lewd/sounds/foot_wet1.ogg',
+		'sound/lewd/sounds/foot_dry3.ogg'
 	)
 	user_pleasure = list(3, 5)
 	user_arousal = list(5, 7)
@@ -5019,9 +5019,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_pleasure = list(3, 5)
 	user_arousal = list(5, 7)
@@ -5041,9 +5041,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_arousal = list(3, 5)
 	target_pleasure = list(3, 5)
@@ -5062,7 +5062,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -5079,7 +5079,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -5096,7 +5096,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -5113,7 +5113,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -5130,7 +5130,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -5147,7 +5147,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(4, 6)
 
@@ -5164,7 +5164,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -5181,7 +5181,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -5198,7 +5198,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -5214,7 +5214,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(3, 5)
 
@@ -5230,7 +5230,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -5246,7 +5246,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -5262,7 +5262,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -5280,8 +5280,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg'
 	)
 	user_pleasure = list(5, 7)
 	target_pleasure = list(5, 7)
@@ -5302,9 +5302,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch3.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg',
+		'sound/lewd/sounds/squelch3.ogg'
 	)
 	user_pleasure = list(5, 7)
 	target_pleasure = list(5, 7)
@@ -5325,8 +5325,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg'
 	)
 	user_pleasure = list(4, 6)
 	target_pleasure = list(4, 6)
@@ -5347,9 +5347,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch3.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg',
+		'sound/lewd/sounds/squelch3.ogg'
 	)
 	user_pleasure = list(6, 8)
 	target_pleasure = list(6, 8)
@@ -5371,9 +5371,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch3.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg',
+		'sound/lewd/sounds/squelch3.ogg'
 	)
 	user_pleasure = list(6, 8)
 	target_pleasure = list(6, 8)
@@ -5395,9 +5395,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch3.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg',
+		'sound/lewd/sounds/squelch3.ogg'
 	)
 	user_pleasure = list(7, 9)
 	target_pleasure = list(7, 9)
@@ -5418,8 +5418,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/champ1.ogg',
-		'sound/modular_items/lewd_items/sounds/champ2.ogg'
+		'sound/lewd/sounds/champ1.ogg',
+		'sound/lewd/sounds/champ2.ogg'
 	)
 	user_pleasure = list(7, 9)
 	target_pleasure = list(7, 9)
@@ -5440,9 +5440,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_pleasure = list(7, 9)
 	target_pleasure = list(3, 5)
@@ -5464,9 +5464,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_pleasure = list(3, 5)
 	user_arousal = list(7, 9)
@@ -5486,10 +5486,10 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/foot_dry1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_dry3.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet2.ogg'
+		'sound/lewd/sounds/foot_dry1.ogg',
+		'sound/lewd/sounds/foot_dry3.ogg',
+		'sound/lewd/sounds/foot_wet1.ogg',
+		'sound/lewd/sounds/foot_wet2.ogg'
 	)
 	user_pleasure = list(2, 4)
 	user_arousal = list(5, 7)
@@ -5509,10 +5509,10 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/foot_dry1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_dry3.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet2.ogg'
+		'sound/lewd/sounds/foot_dry1.ogg',
+		'sound/lewd/sounds/foot_dry3.ogg',
+		'sound/lewd/sounds/foot_wet1.ogg',
+		'sound/lewd/sounds/foot_wet2.ogg'
 	)
 	user_pleasure = list(3, 5)
 	user_arousal = list(6, 8)
@@ -5532,9 +5532,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/foot_dry1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet1.ogg',
-		'sound/modular_items/lewd_items/sounds/foot_wet2.ogg'
+		'sound/lewd/sounds/foot_dry1.ogg',
+		'sound/lewd/sounds/foot_wet1.ogg',
+		'sound/lewd/sounds/foot_wet2.ogg'
 	)
 	user_pleasure = list(4, 6)
 	user_arousal = list(7, 9)
@@ -5554,9 +5554,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_pleasure = list(6, 8)
 	target_pleasure = list(6, 8)
@@ -5577,9 +5577,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_pleasure = list(3, 5)
 	target_pleasure = list(6, 8)
@@ -5601,9 +5601,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch3.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg',
+		'sound/lewd/sounds/squelch3.ogg'
 	)
 	user_pleasure = list(2, 4)
 	user_arousal = list(4, 6)
@@ -5623,8 +5623,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_pleasure = list(2, 4)
 	user_arousal = list(4, 6)
@@ -5643,7 +5643,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/slap.ogg')
+	sound_possible = list('sound/lewd/sounds/slap.ogg')
 	target_pain = list(14, 16)
 	user_arousal = list(1, 3)
 
@@ -5659,7 +5659,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(2, 4)
 	target_arousal = list(2, 4)
 
@@ -5677,10 +5677,10 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bj1.ogg',
-		'sound/modular_items/lewd_items/sounds/bj2.ogg',
-		'sound/modular_items/lewd_items/sounds/bj3.ogg',
-		'sound/modular_items/lewd_items/sounds/bj4.ogg'
+		'sound/lewd/sounds/bj1.ogg',
+		'sound/lewd/sounds/bj2.ogg',
+		'sound/lewd/sounds/bj3.ogg',
+		'sound/lewd/sounds/bj4.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(2, 4)
@@ -5699,7 +5699,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/bang1.ogg', 'sound/modular_items/lewd_items/sounds/bang2.ogg', 'sound/modular_items/lewd_items/sounds/bang3.ogg')
+	sound_possible = list('sound/lewd/sounds/bang1.ogg', 'sound/lewd/sounds/bang2.ogg', 'sound/lewd/sounds/bang3.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -5716,7 +5716,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/bang1.ogg', 'sound/modular_items/lewd_items/sounds/bang2.ogg', 'sound/modular_items/lewd_items/sounds/bang3.ogg')
+	sound_possible = list('sound/lewd/sounds/bang1.ogg', 'sound/lewd/sounds/bang2.ogg', 'sound/lewd/sounds/bang3.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -5733,7 +5733,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/bang1.ogg', 'sound/modular_items/lewd_items/sounds/bang2.ogg', 'sound/modular_items/lewd_items/sounds/bang3.ogg')
+	sound_possible = list('sound/lewd/sounds/bang1.ogg', 'sound/lewd/sounds/bang2.ogg', 'sound/lewd/sounds/bang3.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -5750,7 +5750,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/bang1.ogg', 'sound/modular_items/lewd_items/sounds/bang2.ogg', 'sound/modular_items/lewd_items/sounds/bang3.ogg')
+	sound_possible = list('sound/lewd/sounds/bang1.ogg', 'sound/lewd/sounds/bang2.ogg', 'sound/lewd/sounds/bang3.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
 	target_arousal = list(3, 5)
@@ -5768,7 +5768,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/bang1.ogg', 'sound/modular_items/lewd_items/sounds/bang2.ogg', 'sound/modular_items/lewd_items/sounds/bang3.ogg')
+	sound_possible = list('sound/lewd/sounds/bang1.ogg', 'sound/lewd/sounds/bang2.ogg', 'sound/lewd/sounds/bang3.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -5785,7 +5785,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/bang1.ogg', 'sound/modular_items/lewd_items/sounds/bang2.ogg', 'sound/modular_items/lewd_items/sounds/bang3.ogg')
+	sound_possible = list('sound/lewd/sounds/bang1.ogg', 'sound/lewd/sounds/bang2.ogg', 'sound/lewd/sounds/bang3.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
 	target_arousal = list(4, 6)
@@ -5803,7 +5803,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/bang1.ogg', 'sound/modular_items/lewd_items/sounds/bang2.ogg', 'sound/modular_items/lewd_items/sounds/bang3.ogg')
+	sound_possible = list('sound/lewd/sounds/bang1.ogg', 'sound/lewd/sounds/bang2.ogg', 'sound/lewd/sounds/bang3.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(0, 2)
 	target_arousal = list(3, 5)
@@ -5821,7 +5821,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -5839,9 +5839,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bj1.ogg',
-		'sound/modular_items/lewd_items/sounds/bj2.ogg',
-		'sound/modular_items/lewd_items/sounds/bj3.ogg'
+		'sound/lewd/sounds/bj1.ogg',
+		'sound/lewd/sounds/bj2.ogg',
+		'sound/lewd/sounds/bj3.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(3, 5)
@@ -5860,7 +5860,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/slap.ogg')
+	sound_possible = list('sound/lewd/sounds/slap.ogg')
 	target_pain = list(9, 11)
 	user_arousal = list(1, 3)
 
@@ -5878,8 +5878,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg'
 	)
 	target_pleasure = list(3, 5)
 	user_arousal = list(2, 4)
@@ -5899,8 +5899,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/champ_fingering.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg'
+		'sound/lewd/sounds/champ_fingering.ogg',
+		'sound/lewd/sounds/squelch1.ogg'
 	)
 	target_pleasure = list(4, 6)
 	user_arousal = list(3, 5)
@@ -5920,8 +5920,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg'
 	)
 	target_pleasure = list(3, 5)
 	user_arousal = list(2, 4)
@@ -5941,8 +5941,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/champ_fingering.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg'
+		'sound/lewd/sounds/champ_fingering.ogg',
+		'sound/lewd/sounds/squelch1.ogg'
 	)
 	target_pleasure = list(3, 5)
 	user_arousal = list(3, 5)
@@ -5963,8 +5963,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/slap.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg'
+		'sound/lewd/sounds/slap.ogg',
+		'sound/lewd/sounds/squelch1.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
@@ -5983,8 +5983,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
@@ -6001,7 +6001,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6018,7 +6018,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6036,8 +6036,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
@@ -6057,8 +6057,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
@@ -6076,7 +6076,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -6092,7 +6092,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -6110,7 +6110,7 @@
 
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 /datum/interaction/howling_extra/caress_snout
 	name = "Caress Their Snout"
 	description = "Caress their snout."
@@ -6124,7 +6124,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6141,7 +6141,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6158,7 +6158,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6175,7 +6175,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(1, 3)
 
@@ -6192,7 +6192,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6209,7 +6209,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -6226,7 +6226,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6243,7 +6243,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6260,7 +6260,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6277,7 +6277,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6294,7 +6294,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(4, 6)
 	user_arousal = list(0, 2)
@@ -6313,7 +6313,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6330,7 +6330,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -6348,8 +6348,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_arousal = list(1, 3)
 	target_pleasure = list(0, 2)
@@ -6368,7 +6368,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg', 'sound/modular_items/lewd_items/sounds/oral2.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg', 'sound/lewd/sounds/oral2.ogg')
 	user_arousal = list(0, 2)
 	target_arousal = list(2, 4)
 
@@ -6385,7 +6385,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/slap.ogg')
+	sound_possible = list('sound/lewd/sounds/slap.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 	target_pain = list(1, 3)
@@ -6421,7 +6421,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/squelch1.ogg', 'sound/modular_items/lewd_items/sounds/squelch2.ogg')
+	sound_possible = list('sound/lewd/sounds/squelch1.ogg', 'sound/lewd/sounds/squelch2.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
 	target_arousal = list(3, 5)
@@ -6440,8 +6440,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg'
 	)
 	user_arousal = list(2, 4)
 	target_pleasure = list(3, 5)
@@ -6460,7 +6460,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6476,7 +6476,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(1, 3)
 
@@ -6493,7 +6493,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6510,7 +6510,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6527,7 +6527,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6544,7 +6544,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6561,7 +6561,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_pleasure = list(1, 3)
 	target_arousal = list(2, 4)
@@ -6579,7 +6579,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6596,7 +6596,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6613,7 +6613,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6630,7 +6630,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6647,7 +6647,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6664,7 +6664,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6681,7 +6681,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(1, 3)
 
@@ -6698,7 +6698,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6715,7 +6715,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(1, 3)
 
@@ -6732,7 +6732,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6749,7 +6749,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6766,7 +6766,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6783,7 +6783,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6800,7 +6800,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6817,7 +6817,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6834,7 +6834,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6851,7 +6851,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -6868,7 +6868,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/oral1.ogg')
+	sound_possible = list('sound/lewd/sounds/oral1.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(4, 6)
 
@@ -6885,7 +6885,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6902,7 +6902,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6919,7 +6919,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/kiss1.ogg', 'sound/modular_items/lewd_items/sounds/kiss2.ogg')
+	sound_possible = list('sound/lewd/sounds/kiss1.ogg', 'sound/lewd/sounds/kiss2.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6936,7 +6936,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6953,7 +6953,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -6970,7 +6970,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(1, 3)
 
@@ -6987,7 +6987,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(3, 5)
 
@@ -7004,7 +7004,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(2, 4)
 
@@ -7021,7 +7021,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 	target_arousal = list(1, 3)
 
@@ -7062,8 +7062,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/champ1.ogg',
-		'sound/modular_items/lewd_items/sounds/champ2.ogg'
+		'sound/lewd/sounds/champ1.ogg',
+		'sound/lewd/sounds/champ2.ogg'
 	)
 	user_pleasure = list(9, 11)
 	target_pleasure = list(7, 9)
@@ -7085,9 +7085,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_pleasure = list(7, 9)
 	target_pleasure = list(5, 7)
@@ -7109,8 +7109,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_pleasure = list(6, 8)
 	user_arousal = list(9, 11)
@@ -7131,9 +7131,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_pleasure = list(3, 5)
 	target_pleasure = list(1, 3)
@@ -7155,9 +7155,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_pleasure = list(8, 10)
 	target_pleasure = list(8, 10)
@@ -7179,9 +7179,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_pleasure = list(4, 6)
 	target_pleasure = list(7, 9)
@@ -7203,8 +7203,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/champ1.ogg',
-		'sound/modular_items/lewd_items/sounds/champ2.ogg'
+		'sound/lewd/sounds/champ1.ogg',
+		'sound/lewd/sounds/champ2.ogg'
 	)
 	user_pleasure = list(5, 7)
 	target_pleasure = list(5, 7)
@@ -7225,8 +7225,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/champ1.ogg',
-		'sound/modular_items/lewd_items/sounds/champ2.ogg'
+		'sound/lewd/sounds/champ1.ogg',
+		'sound/lewd/sounds/champ2.ogg'
 	)
 	user_pleasure = list(6, 8)
 	target_pleasure = list(6, 8)
@@ -7248,9 +7248,9 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg',
-		'sound/modular_items/lewd_items/sounds/bang3.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg',
+		'sound/lewd/sounds/bang3.ogg'
 	)
 	user_pleasure = list(3, 5)
 	target_pleasure = list(5, 7)
@@ -7271,8 +7271,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/champ_fingering.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/champ_fingering.ogg'
 	)
 	user_pleasure = list(4, 6)
 	target_pleasure = list(6, 8)
@@ -7294,8 +7294,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/champ_fingering.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg'
+		'sound/lewd/sounds/champ_fingering.ogg',
+		'sound/lewd/sounds/squelch1.ogg'
 	)
 	user_pleasure = list(4, 6)
 	target_pleasure = list(4, 6)
@@ -7317,8 +7317,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/bang1.ogg',
-		'sound/modular_items/lewd_items/sounds/bang2.ogg'
+		'sound/lewd/sounds/bang1.ogg',
+		'sound/lewd/sounds/bang2.ogg'
 	)
 	user_pleasure = list(3, 5)
 	user_arousal = list(5, 7)
@@ -7337,8 +7337,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/champ_fingering.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg'
+		'sound/lewd/sounds/champ_fingering.ogg',
+		'sound/lewd/sounds/squelch1.ogg'
 	)
 	user_pleasure = list(4, 6)
 	user_arousal = list(6, 8)
@@ -7357,8 +7357,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg'
 	)
 	user_pleasure = list(3, 5)
 	user_arousal = list(5, 7)
@@ -7377,8 +7377,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/champ_fingering.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg'
+		'sound/lewd/sounds/champ_fingering.ogg',
+		'sound/lewd/sounds/squelch1.ogg'
 	)
 	user_pleasure = list(3, 5)
 	user_arousal = list(5, 7)
@@ -7398,8 +7398,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/slap.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg'
+		'sound/lewd/sounds/slap.ogg',
+		'sound/lewd/sounds/squelch1.ogg'
 	)
 	user_arousal = list(3, 5)
 
@@ -7417,8 +7417,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/squelch1.ogg',
-		'sound/modular_items/lewd_items/sounds/squelch2.ogg'
+		'sound/lewd/sounds/squelch1.ogg',
+		'sound/lewd/sounds/squelch2.ogg'
 	)
 	user_arousal = list(3, 5)
 
@@ -7435,7 +7435,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 
 /datum/interaction/howling_extra/tail_thighs_self
@@ -7451,7 +7451,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_pleasure = list(1, 3)
 	user_arousal = list(3, 5)
 
@@ -7468,7 +7468,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_pleasure = list(1, 3)
 	user_arousal = list(3, 5)
 
@@ -7485,7 +7485,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(2, 4)
 
 /datum/interaction/howling_extra/tail_waist_self
@@ -7501,7 +7501,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(1, 3)
 
 /datum/interaction/howling_extra/tail_belly_self
@@ -7517,7 +7517,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(2, 4)
 
 /datum/interaction/howling_extra/tail_nipples_self
@@ -7533,7 +7533,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_pleasure = list(1, 3)
 	user_arousal = list(3, 5)
 
@@ -7550,7 +7550,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(2, 4)
 
 /datum/interaction/howling_extra/tail_neck_self
@@ -7566,7 +7566,7 @@
 	)
 	sound_use = TRUE
 	sound_range = 1
-	sound_possible = list('sound/modular_items/lewd_items/sounds/hug.ogg')
+	sound_possible = list('sound/lewd/sounds/hug.ogg')
 	user_arousal = list(2, 4)
 
 /datum/interaction/howling_extra/lick_tail_self
@@ -7584,8 +7584,8 @@
 	sound_use = TRUE
 	sound_range = 1
 	sound_possible = list(
-		'sound/modular_items/lewd_items/sounds/oral1.ogg',
-		'sound/modular_items/lewd_items/sounds/oral2.ogg'
+		'sound/lewd/sounds/oral1.ogg',
+		'sound/lewd/sounds/oral2.ogg'
 	)
 	user_pleasure = list(1, 3)
 	user_arousal = list(3, 5)

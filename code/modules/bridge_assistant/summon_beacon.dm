@@ -1,5 +1,5 @@
 /obj/item/choice_beacon/job_locker/bridge_officer
-	icon = 'icons/modular_items/remote.dmi'
+	icon = 'icons/obj/items/nova/remote.dmi'
 	icon_state = "ba_beacon"
 	inhand_icon_state = "electronic"
 	locker_path = list(/obj/structure/closet/secure_closet/bridge_officer)
@@ -43,7 +43,7 @@
 /obj/item/choice_beacon/coffee
 	name = "coffeemaker beacon"
 	desc = "Summons coffee, because who can function without it?"
-	icon = 'icons/modular_items/remote.dmi'
+	icon = 'icons/obj/items/nova/remote.dmi'
 	icon_state = "coffee_beacon"
 	inhand_icon_state = "sb_delivery"
 	company_source = "Piccionaia Home Appliances"

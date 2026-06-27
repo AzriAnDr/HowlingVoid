@@ -1,7 +1,7 @@
 /obj/item/ttsdevice
 	name = "TTS device"
 	desc = "A small device with a keyboard attached. Anything entered on the keyboard is played out the speaker. \n<span class='notice'>Ctrl-click the device to make it beep.</span> \n<span class='notice'>Ctrl-shift-click to name the device."
-	icon = 'icons/modular_items/remote.dmi'
+	icon = 'icons/obj/items/nova/remote.dmi'
 	icon_state = "tts_device"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
