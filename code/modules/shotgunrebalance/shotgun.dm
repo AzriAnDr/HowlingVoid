@@ -385,12 +385,12 @@
 	SpinAnimation()
 	range = rand(1, 4)
 	color = pick(
-		COLOR_PRIDE_RED,
-		COLOR_PRIDE_ORANGE,
-		COLOR_PRIDE_YELLOW,
-		COLOR_PRIDE_GREEN,
-		COLOR_PRIDE_BLUE,
-		COLOR_PRIDE_PURPLE,
+		COLOR_RAINBOW_RED,
+		COLOR_RAINBOW_ORANGE,
+		COLOR_RAINBOW_YELLOW,
+		COLOR_RAINBOW_GREEN,
+		COLOR_RAINBOW_BLUE,
+		COLOR_RAINBOW_PURPLE,
 	)
 
 // This proc addition will spawn a decal on each tile the projectile travels over

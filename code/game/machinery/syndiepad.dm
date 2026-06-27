@@ -166,7 +166,7 @@
 // Interdyne Pad
 /obj/item/circuitboard/machine/ghostpad/interdyne
 	name = "\improper Interdyne deepspace sales pad"
-	greyscale_colors = COLOR_PRIDE_GREEN
+	greyscale_colors = COLOR_RAINBOW_GREEN
 	build_path = /obj/machinery/piratepad/ghostpad/interdyne
 
 /obj/machinery/piratepad/ghostpad/interdyne
@@ -184,7 +184,7 @@
 
 /obj/item/circuitboard/computer/ghostpad/interdyne
 	name = "\improper Interdyne deepspace sales terminal"
-	greyscale_colors = COLOR_PRIDE_GREEN
+	greyscale_colors = COLOR_RAINBOW_GREEN
 	build_path = /obj/machinery/computer/piratepad_control/ghostpad/interdyne
 
 /obj/machinery/computer/piratepad_control/ghostpad/interdyne

@@ -385,7 +385,7 @@
 //Interdyne Pharmaceuticals Console's console
 /obj/item/circuitboard/computer/cargo/express/ghost/interdyne
 	name = "Interdyne Express Supply Console"
-	greyscale_colors = COLOR_PRIDE_GREEN
+	greyscale_colors = COLOR_RAINBOW_GREEN
 	build_path = /obj/machinery/computer/cargo/express/ghost/interdyne
 
 /obj/machinery/computer/cargo/express/ghost/interdyne

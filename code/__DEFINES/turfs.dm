@@ -108,8 +108,6 @@
 #define PATTERN_VERTICAL_STRIPE "vertical"
 /// Generate random color turf decals
 #define PATTERN_RANDOM "random"
-/// Generate rainbow color turf decals
-#define PATTERN_RAINBOW "rainbow"
 
 /**
  * Finds the midpoint of two given turfs.

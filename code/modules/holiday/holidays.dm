@@ -100,9 +100,6 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	switch(pattern)
 		if(PATTERN_RANDOM)
 			return "#[random_short_color()]"
-		if(PATTERN_RAINBOW)
-			var/datum/holiday/pride_week/rainbow_datum = new()
-			return rainbow_datum.get_holiday_colors(thing_to_color, PATTERN_DEFAULT)
 	if(!length(GLOB.holidays))
 		return
 	for(var/holiday_key in GLOB.holidays)
@@ -448,35 +445,6 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	begin_day = 21
 	begin_month = JUNE
 	holiday_hat = /obj/item/clothing/head/costume/garland
-
-/datum/holiday/pride_week
-	name = PRIDE_WEEK
-	begin_month = JUNE
-	// Stonewall was June 28th, this captures its week.
-	begin_day = 23
-	end_day = 29
-	holiday_colors = list(
-		COLOR_PRIDE_PURPLE,
-		COLOR_PRIDE_BLUE,
-		COLOR_PRIDE_GREEN,
-		COLOR_PRIDE_YELLOW,
-		COLOR_PRIDE_ORANGE,
-		COLOR_PRIDE_RED,
-	)
-	holiday_mail = list(
-		/obj/item/bedsheet/rainbow,
-		/obj/item/clothing/accessory/pride,
-		/obj/item/clothing/gloves/color/rainbow,
-		/obj/item/clothing/head/costume/garland/rainbowbunch,
-		/obj/item/clothing/head/soft/rainbow,
-		/obj/item/clothing/shoes/sneakers/rainbow,
-		/obj/item/clothing/under/color/jumpskirt/rainbow,
-		/obj/item/clothing/under/color/rainbow,
-		/obj/item/food/egg/rainbow,
-		/obj/item/food/grown/rainbow_flower,
-		/obj/item/food/snowcones/rainbow,
-		/obj/item/toy/crayon/rainbow,
-	)
 
 // JULY
 
