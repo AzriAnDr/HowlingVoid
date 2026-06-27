@@ -596,7 +596,7 @@
 	if(isnull(registered_account) || registered_account.replaceable) //Same check we use when we check if we can assign an account
 		context[SCREENTIP_CONTEXT_ALT_RMB] = "Assign account"
 	else if(registered_account.account_balance > 0)
-		context[SCREENTIP_CONTEXT_ALT_LMB] = "Withdraw [MONEY_NAME]"
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Bank actions"
 	if(trim && length(trim.honorifics))
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle honorific"
 	return CONTEXTUAL_SCREENTIP_SET
@@ -848,16 +848,22 @@
 /obj/item/card/id/click_alt(mob/living/user)
 	if(!alt_click_can_use_id(user))
 		return NONE
+	if(!registered_account)
+		to_chat(user, span_warning("This ID has no linked bank account."))
+		return CLICK_ACTION_BLOCKING
 	if (registered_account.being_dumped)
 		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
 		return CLICK_ACTION_SUCCESS
+	var/chosen_bank_action = "Withdraw"
 	if(registered_account.account_debt)
-		var/choice = tgui_alert(user, "Choose An Action", "Bank Account", list("Withdraw", "Pay Debt"))
-		if(!choice || QDELETED(user) || QDELETED(src) || !alt_click_can_use_id(user) || loc != user)
+		chosen_bank_action = tgui_alert(user, "Choose An Action", "Bank Account", list("Withdraw", "Insurance", "Pay Debt"))
+		if(!chosen_bank_action || QDELETED(user) || QDELETED(src) || !alt_click_can_use_id(user) || loc != user)
 			return CLICK_ACTION_BLOCKING
-		if(choice == "Pay Debt")
+		if(chosen_bank_action == "Pay Debt")
 			pay_debt(user)
 			return CLICK_ACTION_SUCCESS
+		if(chosen_bank_action == "Insurance")
+			return transfer_to_insurance(user) ? CLICK_ACTION_SUCCESS : CLICK_ACTION_BLOCKING
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the ID to continue!"))
 		return CLICK_ACTION_BLOCKING
@@ -868,6 +874,12 @@
 		if(choice == "Link Account")
 			set_new_account(user)
 			return CLICK_ACTION_SUCCESS
+	if(!registered_account.account_debt && registered_account.account_balance > 0)
+		chosen_bank_action = tgui_alert(user, "Choose An Action", "Bank Account", list("Withdraw", "Insurance"))
+		if(!chosen_bank_action || QDELETED(user) || QDELETED(src) || !alt_click_can_use_id(user) || loc != user)
+			return CLICK_ACTION_BLOCKING
+		if(chosen_bank_action == "Insurance")
+			return transfer_to_insurance(user) ? CLICK_ACTION_SUCCESS : CLICK_ACTION_BLOCKING
 	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? (Max: [registered_account.account_balance] [MONEY_SYMBOL])", "Withdraw Funds", max_value = registered_account.account_balance)
 	if(!amount_to_remove || QDELETED(user) || QDELETED(src) || issilicon(user) || loc != user)
 		return CLICK_ACTION_BLOCKING
@@ -910,6 +922,7 @@
 
 	if(registered_account && !isnull(registered_account.account_id))
 		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] [MONEY_SYMBOL]."
+		. += "Its medical insurance account reports a balance of [registered_account.insurance_balance] [MONEY_SYMBOL]."
 		if(ACCESS_COMMAND in access)
 			var/datum/bank_account/linked_dept = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			. += "The [linked_dept.account_holder] linked to the ID reports a balance of [linked_dept.account_balance] [MONEY_SYMBOL]."
@@ -953,13 +966,14 @@
 		if(registered_account.mining_points)
 			. += "There's [registered_account.mining_points] mining point\s loaded onto the card's bank account."
 		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] [MONEY_SYMBOL]."
+		. += "The medical insurance account reports a balance of [registered_account.insurance_balance] [MONEY_SYMBOL]."
 		if(registered_account.account_debt)
 			. += span_warning("The account is currently indebted for [registered_account.account_debt] [MONEY_SYMBOL]. [100*DEBT_COLLECTION_COEFF]% of all earnings will go towards extinguishing it.")
 		if(registered_account.account_job)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
 				. += "The [D.account_holder] reports a balance of [D.account_balance] [MONEY_SYMBOL]."
-		. += span_info("Alt-Click the ID to pull money from the linked account in the form of holochips.")
+		. += span_info("Alt-Click the ID to withdraw money or move credits into medical insurance.")
 		. += span_info("You can insert [MONEY_NAME] into the linked account by pressing holochips, cash, or coins against the ID.")
 		if(registered_account.replaceable)
 			. += span_info("Alt-Right-Click the ID to change the linked bank account.")

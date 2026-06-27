@@ -5593,6 +5593,7 @@
 #include "code\modules\economy\account.dm"
 #include "code\modules\economy\holopay.dm"
 #include "code\modules\economy\howling_void_vending_prices.dm"
+#include "code\modules\economy\insurance.dm"
 #include "code\modules\economy\materials_market.dm"
 #include "code\modules\economy\materials_packs.dm"
 #include "code\modules\economy\poker_chips.dm"
