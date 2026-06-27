@@ -5,7 +5,7 @@
 	name = ".585 Trappiste lethal bullet casing"
 	desc = "A white polymer cased high caliber round commonly used in handguns."
 
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/trappiste_fabriek/ammo.dmi'
+	icon = 'icons/obj/weapons/ammo/trappiste_fabriek/ammo.dmi'
 	icon_state = "585trappiste"
 
 	caliber = CALIBER_585TRAPPISTE
@@ -21,7 +21,7 @@
 	name = "ammo box (.585 Trappiste lethal)"
 	desc = "A box of .585 Trappiste pistol rounds, holds ten cartridges."
 
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/trappiste_fabriek/ammo.dmi'
+	icon = 'icons/obj/weapons/ammo/trappiste_fabriek/ammo.dmi'
 	icon_state = "585box"
 
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
@@ -103,7 +103,7 @@
 /obj/item/ammo_box/speedloader/c585trappiste
 	name = "speed loader (.585 Trappiste)"
 	desc = "Designed to quickly reload six-chamber .585 Trappiste revolvers."
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/trappiste_fabriek/ammo.dmi'
+	icon = 'icons/obj/weapons/ammo/trappiste_fabriek/ammo.dmi'
 	icon_state = "sl585t"
 	ammo_type = /obj/item/ammo_casing/c585trappiste
 	max_ammo = 6

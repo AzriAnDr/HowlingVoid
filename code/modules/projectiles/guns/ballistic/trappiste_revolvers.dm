@@ -4,7 +4,7 @@
 	name = "\improper Renard Revolver"
 	desc = "A small revolver with a comically short barrel and cylinder space for eight .35 Sol Short rounds."
 
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
+	icon = 'icons/obj/weapons/guns/trappiste_fabriek/guns32x.dmi'
 	icon_state = "eland"
 
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/c35sol
@@ -41,7 +41,7 @@
 	name = "\improper Défonce Revolver"
 	desc = "A hefty revolver with an equally large cylinder capable of holding six .585 Trappiste rounds."
 
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
+	icon = 'icons/obj/weapons/guns/trappiste_fabriek/guns32x.dmi'
 	icon_state = "takbok"
 
 	fire_sound = 'sound/modular_weapons/revolver_heavy.ogg'
@@ -79,7 +79,7 @@
 	name = "\improper Fendér Revolver"
 	desc = "A custom fabricated version of the Défonce revolver. Made of more lightweight materials and utilizing a thinner grip and hammer."
 
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
+	icon = 'icons/obj/weapons/guns/trappiste_fabriek/guns32x.dmi'
 	icon_state = "bluvolva"
 
 	fire_sound = 'sound/modular_weapons/revolver_heavy.ogg'

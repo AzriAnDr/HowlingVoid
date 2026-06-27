@@ -4,7 +4,7 @@
 	name = "\improper Guêpe Pistol"
 	desc = "The standard issue service pistol of SolFed's various military branches. Uses .35 Sol, and comes with an attached light."
 
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
+	icon = 'icons/obj/weapons/guns/trappiste_fabriek/guns32x.dmi'
 	icon_state = "wespe"
 
 	fire_sound = 'sound/modular_weapons/pistol_light.ogg'
@@ -59,7 +59,7 @@
 	desc = "A somewhat rare to see Trappiste pistol firing the high caliber .585 developed by the same company. \
 		Sees rare use mainly due to its tendency to cause severe wrist discomfort."
 
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/trappiste_fabriek/guns32x.dmi'
+	icon = 'icons/obj/weapons/guns/trappiste_fabriek/guns32x.dmi'
 	icon_state = "skild"
 
 	fire_sound = 'sound/modular_weapons/pistol_heavy.ogg'
