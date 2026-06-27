@@ -4,7 +4,7 @@
 /obj/structure/cargo_shelf //Crate shelf port from Shiptest: https://github.com/shiptest-ss13/Shiptest/pull/2374
 	name = "crate shelf"
 	desc = "It's a shelf! For storing crates!"
-	icon = 'icons/shelves/structures.dmi'
+	icon = 'icons/obj/structures/cargo_shelf.dmi'
 	icon_state = "shelf_base"
 	density = TRUE
 	anchored = TRUE
@@ -27,7 +27,7 @@
 		else
 			stack_layer  = BELOW_OBJ_LAYER + (0.02 * i) - 0.01 // Make each shelf piece render above the last, but below the crate that should be on it.
 		stack_offset = DEFAULT_SHELF_VERTICAL_OFFSET * i // Make each shelf piece physically above the last.
-		var/mutable_appearance/shelf_overlay = mutable_appearance('icons/shelves/structures.dmi', "shelf_stack", layer = stack_layer)
+		var/mutable_appearance/shelf_overlay = mutable_appearance('icons/obj/structures/cargo_shelf.dmi', "shelf_stack", layer = stack_layer)
 		shelf_overlay.pixel_y = stack_offset
 		overlays += shelf_overlay
 	return
@@ -248,7 +248,7 @@
 
 /obj/item/rack_parts/cargo_shelf
 	name = "crate shelf parts"
-	icon = 'icons/shelves/structures.dmi'
+	icon = 'icons/obj/structures/cargo_shelf.dmi'
 	icon_state = "rack_parts"
 	desc = "Parts of a crate shelf, for storing crates."
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4)

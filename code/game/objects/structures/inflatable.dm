@@ -14,7 +14,7 @@
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 40
-	icon = 'icons/inflatables/inflatable.dmi'
+	icon = 'icons/obj/structures/inflatable.dmi'
 	icon_state = "wall"
 	flags_1 = PREVENT_CLICK_UNDER_1
 	bullet_impact_sound = NONE
@@ -125,7 +125,7 @@
 /obj/structure/inflatable/door
 	name = "inflatable door"
 	can_atmos_pass = ATMOS_PASS_DENSITY
-	icon = 'icons/inflatables/inflatable.dmi'
+	icon = 'icons/obj/structures/inflatable.dmi'
 	icon_state = "door_closed"
 	base_icon_state = "door"
 	torn_type = /obj/item/inflatable/door/torn
@@ -164,7 +164,7 @@
 /obj/item/inflatable
 	name = "inflatable wall"
 	desc = "A folded membrane which rapidly expands into a large cubical shape on activation."
-	icon = 'icons/inflatables/inflatable.dmi'
+	icon = 'icons/obj/structures/inflatable.dmi'
 	icon_state = "folded_wall"
 	base_icon_state = "folded_wall"
 	w_class = WEIGHT_CLASS_SMALL
@@ -206,7 +206,7 @@
 		return
 	if(!do_after(user, 2 SECONDS, src))
 		return
-	playsound(user, 'sound/inflatables/ducttape1.ogg', 50, TRUE)
+	playsound(user, 'sound/items/duct_tape/duct_tape_apply.ogg', 50, TRUE)
 	to_chat(user, span_notice("You fix [src] using [attacking_tape]!"))
 	attacking_tape.use(TAPE_REQUIRED_TO_FIX)
 	torn = FALSE
@@ -231,7 +231,7 @@
 /obj/item/inflatable/door
 	name = "inflatable door"
 	desc = "A folded membrane which rapidly expands into a simple door on activation."
-	icon = 'icons/inflatables/inflatable.dmi'
+	icon = 'icons/obj/structures/inflatable.dmi'
 	icon_state = "folded_door"
 	base_icon_state = "folded_door"
 	structure_type = /obj/structure/inflatable/door

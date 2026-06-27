@@ -78,7 +78,7 @@
 	name = "airbag"
 	desc = "A small package with an explosive attached. Stand clear! \n\
 		Can be attached to any window."
-	icon = 'icons/inflatables/inflatable.dmi'
+	icon = 'icons/obj/structures/inflatable.dmi'
 	icon_state = "airbag_safe"
 	base_icon_state = "airbag"
 	max_integrity = 10

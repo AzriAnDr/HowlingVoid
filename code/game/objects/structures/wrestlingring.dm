@@ -1,7 +1,7 @@
 /obj/structure/railing/wrestling
 	name = "wrestling ropes"
 	desc = "Ropes that are meant to go around a wrestling ring."
-	icon = 'icons/wrestlingring/wrestling.dmi'
+	icon = 'icons/obj/structures/wrestlingring.dmi'
 	icon_state = "ropes"
 	climbable = FALSE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5)
@@ -59,7 +59,7 @@
 
 /obj/structure/wrestling_corner
 	name = "wrestling turnbuckle"
-	icon = 'icons/wrestlingring/wrestling.dmi'
+	icon = 'icons/obj/structures/wrestlingring.dmi'
 	icon_state = "turnbuckle"
 	density = TRUE
 	anchored = TRUE
