@@ -79,11 +79,15 @@
 	// Uranium structures should irradiate, but not items, because item irradiation is a lot more annoying.
 	if (!isitem(new_atom))
 		new_atom.AddElement(/datum/element/radioactive, chance = source.get_property(id) / URANIUM_RADIOACTIVITY * URANIUM_IRRADIATION_CHANCE * multiplier)
+		new_atom.ensure_radioactive_contamination(RAD_CONTAMINATION_NATURAL_SOURCE_ACTIVITY, new_atom, RAD_CONTAMINATION_MAX_SPREAD_GENERATION + 1)
 
 /datum/material_property/radioactivity/proc/on_removed(datum/material/source, atom/old_atom, mat_amount, multiplier)
 	SIGNAL_HANDLER
 
 	if (!isitem(old_atom))
 		old_atom.RemoveElement(/datum/element/radioactive, chance = source.get_property(id) / URANIUM_RADIOACTIVITY * URANIUM_IRRADIATION_CHANCE * multiplier)
+		var/datum/component/radioactive_contamination/contamination = old_atom.GetComponent(/datum/component/radioactive_contamination)
+		if(contamination && contamination.activity <= RAD_CONTAMINATION_NATURAL_SOURCE_ACTIVITY)
+			qdel(contamination)
 
 #undef URANIUM_RADIOACTIVITY

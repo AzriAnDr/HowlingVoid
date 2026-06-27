@@ -135,6 +135,9 @@
 	if(!istype(exposed_turf))
 		return
 
+	if(reac_volume >= 1)
+		exposed_turf.wash(CLEAN_RAD, TRUE)
+
 	for(var/mob/living/basic/slime/exposed_slime in exposed_turf)
 		exposed_slime.apply_water()
 
@@ -162,7 +165,7 @@
 /datum/reagent/water/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	exposed_obj.extinguish()
-	exposed_obj.wash(CLEAN_TYPE_ACID)
+	exposed_obj.wash(CLEAN_TYPE_ACID | CLEAN_RAD)
 	// Monkey cube
 	if(istype(exposed_obj, /obj/item/food/monkeycube))
 		var/obj/item/food/monkeycube/cube = exposed_obj
@@ -190,6 +193,9 @@
  */
 /datum/reagent/water/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume)//Splashing people with water can help put them out!
 	. = ..()
+	if(methods & (TOUCH|VAPOR))
+		exposed_mob.wash(CLEAN_RAD)
+
 	if(methods & TOUCH)
 		exposed_mob.extinguish_mob() // extinguish removes all fire stacks
 		exposed_mob.adjust_wet_stacks(reac_volume * WATER_TO_WET_STACKS_FACTOR_TOUCH) // Water makes you wet, at a 50% water-to-wet-stacks ratio. Which, in turn, gives you some mild protection from being set on fire!

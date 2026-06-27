@@ -63,6 +63,32 @@
 	restricted_roles = list(ALL_JOBS_SEC)
 	group = "Job-Locked"
 
+/datum/loadout_item/suit/security_medic_armor
+	name = "Security Medic Armor Vest"
+	item_path = /obj/item/clothing/suit/armor/vest/security_medic
+	restricted_roles = list(JOB_SECURITY_MEDIC)
+	group = "Job-Locked"
+
+/datum/loadout_item/suit/security_medic_labcoat
+	name = "Security Medic Labcoat"
+	item_path = /obj/item/clothing/suit/toggle/labcoat/security_medic
+	restricted_roles = list(JOB_SECURITY_MEDIC)
+	group = "Job-Locked"
+
+/datum/loadout_item/suit/security_medic_labcoat/blue
+	name = "Security Medic Labcoat (Blue)"
+	item_path = /obj/item/clothing/suit/toggle/labcoat/security_medic/blue
+
+/datum/loadout_item/suit/security_medic_vest
+	name = "Security Medic Vest"
+	item_path = /obj/item/clothing/suit/hazardvest/security_medic
+	restricted_roles = list(JOB_SECURITY_MEDIC)
+	group = "Job-Locked"
+
+/datum/loadout_item/suit/security_medic_vest/blue
+	name = "Security Medic Vest (Blue)"
+	item_path = /obj/item/clothing/suit/hazardvest/security_medic/blue
+
 /datum/loadout_item/suit/security_wintercoat
 	name = "Security Winter Jacket"
 	item_path = /obj/item/clothing/suit/hooded/wintercoat/security

@@ -1,0 +1,632 @@
+.HealthAnalyzer {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 12px;
+}
+
+.HealthAnalyzer__Header {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(99, 204, 224, 0.38);
+  background:
+    linear-gradient(135deg, rgba(17, 44, 62, 0.9), rgba(19, 24, 37, 0.95)),
+    repeating-linear-gradient(
+      90deg,
+      rgba(99, 204, 224, 0.1) 0,
+      rgba(99, 204, 224, 0.1) 1px,
+      transparent 1px,
+      transparent 18px
+    );
+}
+
+.HealthAnalyzer--health .HealthAnalyzer__Header {
+  border-color: rgba(99, 204, 224, 0.38);
+}
+
+.HealthAnalyzer--chemicals .HealthAnalyzer__Header {
+  border-color: rgba(108, 214, 155, 0.45);
+  background:
+    linear-gradient(135deg, rgba(16, 52, 44, 0.9), rgba(18, 25, 37, 0.95)),
+    repeating-linear-gradient(
+      90deg,
+      rgba(108, 214, 155, 0.1) 0,
+      rgba(108, 214, 155, 0.1) 1px,
+      transparent 1px,
+      transparent 18px
+    );
+}
+
+.HealthAnalyzer--wounds .HealthAnalyzer__Header {
+  border-color: rgba(255, 150, 78, 0.45);
+  background:
+    linear-gradient(135deg, rgba(65, 35, 25, 0.9), rgba(24, 23, 35, 0.95)),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 150, 78, 0.11) 0,
+      rgba(255, 150, 78, 0.11) 1px,
+      transparent 1px,
+      transparent 18px
+    );
+}
+
+.HealthAnalyzer__Header .Section__content {
+  position: relative;
+}
+
+.HealthAnalyzer__Scope {
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(99, 204, 224, 0.7);
+  background: #08131a;
+  color: #63cce0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: inset 0 0 18px rgba(99, 204, 224, 0.16);
+}
+
+.HealthAnalyzer--chemicals .HealthAnalyzer__Scope {
+  border-color: rgba(108, 214, 155, 0.7);
+  color: #80e69c;
+  box-shadow: inset 0 0 18px rgba(108, 214, 155, 0.16);
+}
+
+.HealthAnalyzer--wounds .HealthAnalyzer__Scope {
+  border-color: rgba(255, 150, 78, 0.75);
+  color: #ffb46b;
+  box-shadow: inset 0 0 18px rgba(255, 150, 78, 0.18);
+}
+
+.HealthAnalyzer__Scope--dead {
+  border-color: rgba(255, 107, 112, 0.75);
+  color: #ff6b70;
+  box-shadow: inset 0 0 18px rgba(255, 107, 112, 0.18);
+}
+
+.HealthAnalyzer__Eyebrow {
+  color: #89a4b4;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.HealthAnalyzer__Target {
+  color: #f1f7fb;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.HealthAnalyzer__Pulse {
+  min-width: 62px;
+  padding: 4px 6px;
+  border: 1px solid rgba(78, 210, 125, 0.5);
+  background: rgba(15, 52, 34, 0.75);
+  color: #80e69c;
+  text-align: center;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.HealthAnalyzer__Pulse .Dropdown {
+  min-width: 52px;
+  font-weight: 700;
+}
+
+.HealthAnalyzer--chemicals .HealthAnalyzer__Pulse {
+  border-color: rgba(99, 204, 224, 0.5);
+  background: rgba(14, 44, 54, 0.75);
+  color: #63cce0;
+}
+
+.HealthAnalyzer--wounds .HealthAnalyzer__Pulse {
+  border-color: rgba(255, 204, 102, 0.5);
+  background: rgba(62, 43, 19, 0.75);
+  color: #ffcc66;
+}
+
+.HealthAnalyzer__Sweep {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 90px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(99, 204, 224, 0.22),
+    transparent
+  );
+  animation: HealthAnalyzerSweep 3s linear infinite;
+}
+
+.HealthAnalyzer--chemicals .HealthAnalyzer__Sweep {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(108, 214, 155, 0.24),
+    transparent
+  );
+}
+
+.HealthAnalyzer--wounds .HealthAnalyzer__Sweep {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 150, 78, 0.24),
+    transparent
+  );
+}
+
+@keyframes HealthAnalyzerSweep {
+  from {
+    left: -100px;
+  }
+
+  to {
+    left: 100%;
+  }
+}
+
+.HealthAnalyzer__Value {
+  color: #63cce0;
+  font-weight: 700;
+}
+
+.HealthAnalyzer__Metric {
+  color: #f1f7fb;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.HealthAnalyzer__Metric--warn {
+  color: #ffcc66;
+}
+
+.HealthAnalyzer__Metric--bad {
+  color: #ff6b70;
+  font-size: 20px;
+}
+
+.HealthAnalyzer__DamageRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.HealthAnalyzer__DamageValue {
+  font-weight: 700;
+}
+
+.HealthAnalyzer__DamageValue--bad {
+  color: #ff6b70;
+}
+
+.HealthAnalyzer__DamageValue--average {
+  color: #ffcc66;
+}
+
+.HealthAnalyzer__DamageValue--good {
+  color: #80e69c;
+}
+
+.HealthAnalyzer__DamageValue--cyan {
+  color: #63cce0;
+}
+
+.HealthAnalyzer__RadBad {
+  color: #ffcc66;
+  font-weight: 700;
+}
+
+.HealthAnalyzer__RadGood {
+  color: #80e69c;
+  font-weight: 700;
+}
+
+.HealthAnalyzer__ReportSection {
+  border-left: 3px solid rgba(99, 204, 224, 0.55);
+}
+
+.HealthAnalyzer__SectionTitle {
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+.HealthAnalyzer__ToneGood {
+  color: #80e69c;
+}
+
+.HealthAnalyzer__ToneWarn {
+  color: #ffcc66;
+}
+
+.HealthAnalyzer__ToneBad {
+  color: #ff6b70;
+}
+
+.HealthAnalyzer__ToneInfo {
+  color: #63cce0;
+}
+
+.HealthAnalyzer__Report {
+  padding: 2px 0;
+  color: #dbe8ee;
+  line-height: 1.5;
+  overflow-x: auto;
+}
+
+.HealthAnalyzer__ReportSection--chemicals {
+  border-left-color: rgba(108, 214, 155, 0.72);
+}
+
+.HealthAnalyzer__ReportSection--wounds {
+  border-left-color: rgba(255, 150, 78, 0.72);
+}
+
+.HealthAnalyzer__ReportSection--insurance {
+  border-left-color: rgba(255, 204, 102, 0.72);
+}
+
+.HealthAnalyzer__ReportSection--cybernetics {
+  border-left-color: rgba(99, 204, 224, 0.72);
+}
+
+.HealthAnalyzer__CyberGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 8px;
+}
+
+.HealthAnalyzer__CyberItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  border: 1px solid rgba(99, 204, 224, 0.18);
+  background: rgba(99, 204, 224, 0.055);
+}
+
+.HealthAnalyzer__CyberIcon {
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  image-rendering: pixelated;
+}
+
+.HealthAnalyzer__CyberIcon img {
+  max-width: 32px;
+  max-height: 32px;
+}
+
+.HealthAnalyzer__CyberText {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.HealthAnalyzer__CyberName {
+  color: #dbe8ee;
+  font-weight: 800;
+}
+
+.HealthAnalyzer__InsuranceHero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid rgba(255, 204, 102, 0.24);
+  background: rgba(255, 204, 102, 0.08);
+}
+
+.HealthAnalyzer__InsuranceValue {
+  color: #ffdf7e;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.HealthAnalyzer__InsuranceBreakdown {
+  display: grid;
+  gap: 6px;
+}
+
+.HealthAnalyzer__InsuranceBreakdownRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 8px;
+  border: 1px solid rgba(255, 204, 102, 0.14);
+  background: rgba(255, 204, 102, 0.055);
+}
+
+.HealthAnalyzer__InsuranceBreakdownLabel {
+  color: #dbe8ee;
+  font-weight: 800;
+}
+
+.HealthAnalyzer__InsuranceBreakdownValue {
+  color: #ffdf7e;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.HealthAnalyzer__ReportSection--body {
+  border-left-color: rgba(255, 107, 112, 0.72);
+}
+
+.HealthAnalyzer__BodyRow {
+  display: grid;
+  grid-template-columns: minmax(90px, 1.3fr) repeat(4, minmax(62px, 0.8fr));
+  gap: 8px;
+  padding: 3px 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.HealthAnalyzer__BodyRow--header {
+  color: #dbe8ee;
+  font-weight: 800;
+  background: rgba(255, 107, 112, 0.08);
+}
+
+.HealthAnalyzer__BodyDamageValue {
+  font-weight: 800;
+}
+
+.HealthAnalyzer__BodyDamageValue--brute {
+  color: #ff6b70;
+}
+
+.HealthAnalyzer__BodyDamageValue--burn {
+  color: #ffcc66;
+}
+
+.HealthAnalyzer__BodyDamageValue--toxin {
+  color: #80e69c;
+}
+
+.HealthAnalyzer__BodyDamageValue--oxygen {
+  color: #63cce0;
+}
+
+.HealthAnalyzer__BodyTrauma {
+  margin: 2px 0 4px;
+  padding: 3px 8px;
+  border-left: 2px solid #ff9f43;
+  background: rgba(255, 150, 78, 0.1);
+  color: #ffcc66;
+  font-weight: 700;
+}
+
+.HealthAnalyzer__ChemAmount {
+  display: inline-block;
+  min-width: 48px;
+  margin-right: 4px;
+  color: #ffdf7e;
+  font-weight: 700;
+}
+
+.HealthAnalyzer__ChemName {
+  color: #80e69c;
+  font-weight: 700;
+}
+
+.HealthAnalyzer__ChemHeader {
+  margin: 2px 0 4px;
+  color: #dbe8ee;
+  font-weight: 700;
+}
+
+.HealthAnalyzer__ChemLine {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 2px 0;
+  padding: 2px 6px;
+  border-left: 2px solid rgba(99, 204, 224, 0.65);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.HealthAnalyzer__ChemLine--medicine {
+  border-left-color: #80e69c;
+  background: rgba(42, 122, 75, 0.18);
+}
+
+.HealthAnalyzer__ChemLine--medicine .HealthAnalyzer__ChemName {
+  color: #80e69c;
+}
+
+.HealthAnalyzer__ChemLine--toxin {
+  border-left-color: #ff6b70;
+  background: rgba(130, 34, 45, 0.18);
+}
+
+.HealthAnalyzer__ChemLine--toxin .HealthAnalyzer__ChemName {
+  color: #ff6b70;
+}
+
+.HealthAnalyzer__ChemLine--drug {
+  border-left-color: #d084ff;
+  background: rgba(91, 47, 130, 0.2);
+}
+
+.HealthAnalyzer__ChemLine--drug .HealthAnalyzer__ChemName {
+  color: #d084ff;
+}
+
+.HealthAnalyzer__ChemLine--consumable {
+  border-left-color: #ffcc66;
+  background: rgba(126, 91, 32, 0.16);
+}
+
+.HealthAnalyzer__ChemLine--consumable .HealthAnalyzer__ChemName {
+  color: #ffcc66;
+}
+
+.HealthAnalyzer__ChemLine--alcohol {
+  border-left-color: #ff9f7a;
+  background: rgba(133, 68, 34, 0.18);
+}
+
+.HealthAnalyzer__ChemLine--alcohol .HealthAnalyzer__ChemName {
+  color: #ff9f7a;
+}
+
+.HealthAnalyzer__ChemLine--standard .HealthAnalyzer__ChemName {
+  color: #63cce0;
+}
+
+.HealthAnalyzer__Report .health-analyzer-reagent {
+  display: inline-block;
+  margin: 1px 0;
+  padding: 1px 5px;
+  border-left: 2px solid rgba(99, 204, 224, 0.6);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.HealthAnalyzer__Report .health-analyzer-reagent-amount {
+  color: #ffdf7e;
+  font-weight: 800;
+}
+
+.HealthAnalyzer__Report .health-analyzer-reagent-name {
+  font-weight: 800;
+}
+
+.HealthAnalyzer__Report .health-analyzer-reagent-medicine {
+  border-left-color: #80e69c;
+  background: rgba(42, 122, 75, 0.18);
+}
+
+.HealthAnalyzer__Report .health-analyzer-reagent-medicine .health-analyzer-reagent-name {
+  color: #80e69c;
+}
+
+.HealthAnalyzer__Report .health-analyzer-reagent-toxin {
+  border-left-color: #ff6b70;
+  background: rgba(130, 34, 45, 0.18);
+}
+
+.HealthAnalyzer__Report .health-analyzer-reagent-toxin .health-analyzer-reagent-name {
+  color: #ff6b70;
+}
+
+.HealthAnalyzer__Report .health-analyzer-reagent-drug {
+  border-left-color: #d084ff;
+  background: rgba(91, 47, 130, 0.2);
+}
+
+.HealthAnalyzer__Report .health-analyzer-reagent-drug .health-analyzer-reagent-name {
+  color: #d084ff;
+}
+
+.HealthAnalyzer__Report .health-analyzer-reagent-consumable {
+  border-left-color: #ffcc66;
+  background: rgba(126, 91, 32, 0.16);
+}
+
+.HealthAnalyzer__Report .health-analyzer-reagent-consumable .health-analyzer-reagent-name {
+  color: #ffcc66;
+}
+
+.HealthAnalyzer__Report .health-analyzer-reagent-alcohol {
+  border-left-color: #ff9f7a;
+  background: rgba(133, 68, 34, 0.18);
+}
+
+.HealthAnalyzer__Report .health-analyzer-reagent-alcohol .health-analyzer-reagent-name {
+  color: #ff9f7a;
+}
+
+.HealthAnalyzer__Report .health-analyzer-reagent-standard .health-analyzer-reagent-name {
+  color: #63cce0;
+}
+
+.HealthAnalyzer__ChemRoute {
+  color: #63cce0;
+  font-weight: 700;
+}
+
+.HealthAnalyzer__ChemOverdose {
+  color: #ff6b70;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-left: 4px;
+}
+
+.HealthAnalyzer__Report .health-analyzer-reagent-overdose,
+.HealthAnalyzer__ChemOverdose {
+  display: inline-block;
+  padding: 0 5px;
+  border: 1px solid rgba(255, 107, 112, 0.7);
+  background: rgba(255, 107, 112, 0.16);
+  color: #ff6b70;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.HealthAnalyzer__WoundWarning {
+  color: #ff8f73;
+  font-weight: 800;
+}
+
+.HealthAnalyzer__WoundBlock {
+  margin-bottom: 14px;
+}
+
+.HealthAnalyzer__WoundLabel {
+  color: #ffcc66;
+  font-weight: 800;
+}
+
+.HealthAnalyzer__WoundValue {
+  font-weight: 900;
+}
+
+.HealthAnalyzer__WoundSeverity--critical {
+  color: #ff4c55;
+}
+
+.HealthAnalyzer__WoundSeverity--severe {
+  color: #ff9f43;
+}
+
+.HealthAnalyzer__WoundSeverity--moderate {
+  color: #ffdf7e;
+}
+
+.HealthAnalyzer__WoundSeverity--low {
+  color: #80e69c;
+  font-weight: 800;
+}
+
+.HealthAnalyzer__Report b {
+  color: #ffffff;
+}
+
+.HealthAnalyzer__Report i {
+  color: #a9d7e2;
+}
+
+.HealthAnalyzer__Report table {
+  width: 100%;
+  margin-top: 6px;
+  border-collapse: collapse;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.HealthAnalyzer__Report td,
+.HealthAnalyzer__Report th {
+  padding: 3px 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  vertical-align: top;
+}
+
+.HealthAnalyzer__Report tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.035);
+}

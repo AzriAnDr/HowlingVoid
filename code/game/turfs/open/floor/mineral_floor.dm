@@ -250,6 +250,10 @@
 	var/last_event = 0
 	var/active = null
 
+/turf/open/floor/mineral/uranium/Initialize(mapload)
+	. = ..()
+	ensure_radioactive_contamination(RAD_CONTAMINATION_NATURAL_SOURCE_ACTIVITY, src, RAD_CONTAMINATION_MAX_SPREAD_GENERATION + 1)
+
 /turf/open/floor/mineral/uranium/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(.)
@@ -276,12 +280,14 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = TRUE
+			ensure_radioactive_contamination(RAD_CONTAMINATION_NATURAL_SOURCE_ACTIVITY, src, RAD_CONTAMINATION_MAX_SPREAD_GENERATION + 1)
 			radiation_pulse(
 				src,
 				max_range = 1,
 				threshold = RAD_VERY_LIGHT_INSULATION,
 				chance = (URANIUM_IRRADIATION_CHANCE / 3),
 				minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
+				surface_contamination_multiplier = RAD_CONTAMINATION_WEAK_SOURCE_MULTIPLIER,
 			)
 			for(var/turf/open/floor/mineral/uranium/T in orange(1,src))
 				T.radiate()

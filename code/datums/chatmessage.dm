@@ -192,24 +192,24 @@
 	var/complete_text = "<span style='color: [tgt_color]'><span class='center [extra_classes.Join(" ")]'>[owner.apply_message_emphasis(text)]</span></span>"
 	var/rendered_text = MAPTEXT(complete_text)
 
-	var/mheight
-	WXH_TO_HEIGHT(owned_by.MeasureText(rendered_text, null, CHAT_MESSAGE_WIDTH), mheight)
-	var/rendered_height = CEILING(mheight * CHAT_MESSAGE_HEIGHT_MULTIPLIER + CHAT_MESSAGE_HEIGHT_PADDING, 1)
+	var/visual_height
+	WXH_TO_HEIGHT(owned_by.MeasureText(rendered_text, null, CHAT_MESSAGE_WIDTH), visual_height)
+	var/rendered_height = CEILING(visual_height * CHAT_MESSAGE_HEIGHT_MULTIPLIER + CHAT_MESSAGE_HEIGHT_PADDING, 1)
 
 
 	if(!VERB_SHOULD_YIELD)
-		return finish_image_generation(rendered_height, target, owner, rendered_text, lifespan)
+		return finish_image_generation(visual_height, rendered_height, target, owner, rendered_text, lifespan)
 
-	finish_callback = CALLBACK(src, PROC_REF(finish_image_generation), rendered_height, target, owner, rendered_text, lifespan)
+	finish_callback = CALLBACK(src, PROC_REF(finish_image_generation), visual_height, rendered_height, target, owner, rendered_text, lifespan)
 	SSrunechat.message_queue += finish_callback
 	return
 
 ///finishes the image generation after the MeasureText() call in generate_image().
 ///necessary because after that call the proc can resume at the end of the tick and cause overtime.
-/datum/chatmessage/proc/finish_image_generation(rendered_height, atom/target, mob/owner, rendered_text, lifespan)
+/datum/chatmessage/proc/finish_image_generation(visual_height, rendered_height, atom/target, mob/owner, rendered_text, lifespan)
 	finish_callback = null
 	var/rough_time = REALTIMEOFDAY
-	approx_lines = max(1, rendered_height / CHAT_MESSAGE_APPROX_LHEIGHT)
+	approx_lines = max(1, visual_height / CHAT_MESSAGE_APPROX_LHEIGHT)
 	var/starting_height = target.maptext_height
 	// Translate any existing messages upwards, apply exponential decay factors to timers
 	message_loc = isturf(target) ? target : get_atom_on_turf(target)
@@ -231,8 +231,8 @@
 					if(max_height > 0)
 						animate(m.message, pixel_z = m.message.pixel_z + max_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
 						continuing |= ANIMATION_CONTINUE
-				else if(rendered_height + starting_height >= m.message.pixel_z)
-					animate(m.message, pixel_z = m.message.pixel_z + rendered_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
+				else if(visual_height + starting_height >= m.message.pixel_z)
+					animate(m.message, pixel_z = m.message.pixel_z + visual_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
 					continuing |= ANIMATION_CONTINUE
 				continue
 
@@ -262,8 +262,8 @@
 				if(max_height > 0)
 					animate(m.message, pixel_z = m.message.pixel_z + max_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
 					continuing |= ANIMATION_CONTINUE
-			else if(rendered_height + starting_height >= m.message.pixel_z)
-				animate(m.message, pixel_z = m.message.pixel_z + rendered_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
+			else if(visual_height + starting_height >= m.message.pixel_z)
+				animate(m.message, pixel_z = m.message.pixel_z + visual_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
 				continuing |= ANIMATION_CONTINUE
 
 	// Reset z index if relevant

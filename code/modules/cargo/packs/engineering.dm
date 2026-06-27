@@ -255,12 +255,48 @@
 	contains = list(/obj/machinery/field/generator = 2)
 	crate_name = "field generator crate"
 
+/datum/supply_pack/engine/singularity_generator
+	name = "Gravitational Singularity Generator Crate"
+	desc = "The key component for constructing a gravitational singularity engine."
+	cost = CARGO_CRATE_VALUE * 8
+	access = ACCESS_CE
+	contains = list(/obj/machinery/the_singularitygen)
+	crate_name = "gravitational singularity generator crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
+	order_flags = ORDER_DANGEROUS
+
 /datum/supply_pack/engine/grounding_rods
 	name = "Grounding Rod Crate"
 	desc = "Four grounding rods guaranteed to keep any uppity tesla coil's lightning under control."
 	cost = CARGO_CRATE_VALUE * 8
 	contains = list(/obj/machinery/power/energy_accumulator/grounding_rod = 4)
 	crate_name = "grounding rod crate"
+	crate_type = /obj/structure/closet/crate/engineering/electrical
+
+/datum/supply_pack/engine/particle_accelerator
+	name = "Particle Accelerator Crate"
+	desc = "A complete flatpacked particle accelerator kit for charging singularity generators."
+	cost = CARGO_CRATE_VALUE * 12
+	access = ACCESS_CE
+	contains = list(
+		/obj/item/flatpacked_machine/particle_accelerator/control_box,
+		/obj/item/flatpacked_machine/particle_accelerator/end_cap,
+		/obj/item/flatpacked_machine/particle_accelerator/fuel_chamber,
+		/obj/item/flatpacked_machine/particle_accelerator/emitter_center,
+		/obj/item/flatpacked_machine/particle_accelerator/emitter_left,
+		/obj/item/flatpacked_machine/particle_accelerator/emitter_right,
+		/obj/item/flatpacked_machine/particle_accelerator/power_box,
+	)
+	crate_name = "particle accelerator crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
+	order_flags = ORDER_DANGEROUS
+
+/datum/supply_pack/engine/radiation_collector
+	name = "Radiation Collector Crate"
+	desc = "Contains four radiation collector arrays for converting singularity radiation into power."
+	cost = CARGO_CRATE_VALUE * 8
+	contains = list(/obj/machinery/power/energy_accumulator/rad_collector = 4)
+	crate_name = "radiation collector crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
 /datum/supply_pack/engine/solar
@@ -296,6 +332,16 @@
 	contains = list(/obj/machinery/power/energy_accumulator/tesla_coil = 4)
 	crate_name = "tesla coil crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
+
+/datum/supply_pack/engine/tesla_generator
+	name = "Tesla Energy Ball Generator Crate"
+	desc = "The key component for constructing a Tesla engine."
+	cost = CARGO_CRATE_VALUE * 8
+	access = ACCESS_CE
+	contains = list(/obj/machinery/the_singularitygen/tesla)
+	crate_name = "tesla energy ball generator crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
+	order_flags = ORDER_DANGEROUS
 
 /datum/supply_pack/engine/hypertorus_fusion_reactor
 	name = "HFR Crate"

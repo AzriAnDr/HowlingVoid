@@ -165,10 +165,24 @@
 		return
 	time_since_act = 0
 	if(current_size >= STAGE_TWO)
+		emit_radiation()
 		if(prob(event_chance))
 			event()
 	dissipate(seconds_per_tick)
 	check_energy()
+
+/obj/singularity/proc/emit_radiation()
+	var/radiation_range = min(
+		SINGULARITY_RADIATION_MAX_RANGE,
+		round(SINGULARITY_RADIATION_BASE_RANGE + (current_size * SINGULARITY_RADIATION_RANGE_PER_STAGE) + (energy / SINGULARITY_RADIATION_ENERGY_DIVISOR)),
+	)
+	radiation_pulse(
+		src,
+		max_range = radiation_range,
+		threshold = SINGULARITY_RADIATION_THRESHOLD,
+		chance = SINGULARITY_RADIATION_CHANCE,
+		surface_contamination_multiplier = SINGULARITY_RADIATION_CONTAMINATION_MULTIPLIER,
+	)
 
 /obj/singularity/proc/dissipate(seconds_per_tick)
 	if (!dissipate)

@@ -34,6 +34,7 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 	VAR_PROTECTED/laser = 0
 	VAR_PROTECTED/fire = 0
 	VAR_PROTECTED/melee = 0
+	VAR_PROTECTED/rad = 0
 	VAR_PROTECTED/wound = 0
 
 /// A version of armor with no protections
@@ -229,6 +230,8 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 			return "LASER"
 		if(MELEE)
 			return "MELEE"
+		if(RAD)
+			return "RADIATION"
 		if(WOUND)
 			return "WOUNDING"
 	CRASH("Unknown armor type '[armor_type]'")

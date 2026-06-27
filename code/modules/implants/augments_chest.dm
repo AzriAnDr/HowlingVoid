@@ -12,22 +12,44 @@
 	/// Whether or not we have the chemical scan feature
 	var/has_chem_scan = TRUE
 	var/advanced_scan_allowed = TRUE
+	/// TGUI health analyzer interface used by the implant.
+	var/obj/item/healthanalyzer/internal/ui_scanner
+
+/obj/item/organ/cyberimp/chest/scanner/Initialize(mapload)
+	. = ..()
+	ui_scanner = new(src)
+	ui_scanner.internal_analyzer = WEAKREF(src)
+
+/obj/item/organ/cyberimp/chest/scanner/Destroy()
+	QDEL_NULL(ui_scanner)
+	return ..()
+
+/obj/item/organ/cyberimp/chest/scanner/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	ui_scanner?.clear_current_scan()
+	return ..()
 
 /datum/action/item_action/organ_action/use/internal_analyzer
 	desc = "LMB: Health scan. RMB: Chemical scan. Requires implanted analyzer to not be failing due to EMPs or other causes. Does not provide treatment assistance."
 
-/datum/action/item_action/organ_action/use/internal_analyzer/Trigger(trigger_flags)
-	. = ..()
+/datum/action/item_action/organ_action/use/internal_analyzer/do_effect(trigger_flags)
 	var/obj/item/organ/cyberimp/chest/scanner/our_scanner = target
+	if(!our_scanner || !owner)
+		return FALSE
 	if(our_scanner.organ_flags & ORGAN_FAILING)
 		to_chat(owner, span_warning("Your health analyzer relays an error! It can't interface with your body in its current condition!"))
-		return
+		return FALSE
+	if(!our_scanner.ui_scanner)
+		our_scanner.ui_scanner = new(our_scanner)
+		our_scanner.ui_scanner.internal_analyzer = WEAKREF(our_scanner)
+
+	our_scanner.ui_scanner.mode = our_scanner.advanced_scan_allowed ? SCANNER_VERBOSE : SCANNER_CONDENSED
+	our_scanner.ui_scanner.advanced = our_scanner.advanced_scan_allowed
 	if(our_scanner.has_chem_scan && (trigger_flags & TRIGGER_SECONDARY_ACTION))
-		chemscan(owner, owner)
-	if(our_scanner.advanced_scan_allowed)
-		healthscan(owner, owner, SCANNER_VERBOSE, TRUE)
-	else
-		healthscan(owner, owner, SCANNER_CONDENSED, TRUE)
+		our_scanner.ui_scanner.begin_current_scan(owner, owner, "chemicals")
+		return TRUE
+
+	our_scanner.ui_scanner.begin_current_scan(owner, owner, "health")
+	return TRUE
 
 
 /obj/item/organ/cyberimp/chest/scanner/lite
@@ -146,4 +168,3 @@
 	owner.adjust_confusion(rand(8 SECONDS, 11 SECONDS))
 	to_chat(owner, span_warning("Your skin tingles, and the room feels like it's spinning!"))
 	unstealth()
-

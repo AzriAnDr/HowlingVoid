@@ -335,6 +335,10 @@
 	/// The last time a radiation pulse was performed
 	var/last_event = 0
 
+/obj/structure/tram/alt/uranium/Initialize(mapload)
+	. = ..()
+	ensure_radioactive_contamination(RAD_CONTAMINATION_NATURAL_SOURCE_ACTIVITY, src, RAD_CONTAMINATION_MAX_SPREAD_GENERATION + 1)
+
 /obj/structure/tram/alt/uranium/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	radiate()
 	return ..()
@@ -350,12 +354,14 @@
 	if(world.time <= last_event + 1.5 SECONDS)
 		return
 	active = TRUE
+	ensure_radioactive_contamination(RAD_CONTAMINATION_NATURAL_SOURCE_ACTIVITY, src, RAD_CONTAMINATION_MAX_SPREAD_GENERATION + 1)
 	radiation_pulse(
 		src,
 		max_range = 3,
 		threshold = RAD_LIGHT_INSULATION,
 		chance = URANIUM_IRRADIATION_CHANCE,
 		minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
+		surface_contamination_multiplier = RAD_CONTAMINATION_WEAK_SOURCE_MULTIPLIER,
 	)
 	propagate_radiation_pulse()
 	last_event = world.time

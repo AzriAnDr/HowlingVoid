@@ -104,6 +104,93 @@
 	pickup_sound = SFX_GOGGLES_PICKUP
 	drop_sound = SFX_GOGGLES_DROP
 	equip_sound = SFX_GOGGLES_EQUIP
+	/// How far mesons can show radioactive surface contamination.
+	var/radioactive_contamination_scan_range = 7
+	/// Atoms currently outlined by these mesons.
+	var/list/radioactive_contamination_outline_targets = list()
+
+/obj/item/clothing/glasses/meson/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/glasses/meson/Destroy()
+	clear_radioactive_contamination_images()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/clothing/glasses/meson/dropped(mob/living/user)
+	clear_radioactive_contamination_images()
+	return ..()
+
+/obj/item/clothing/glasses/meson/process()
+	if(!ishuman(loc))
+		clear_radioactive_contamination_images()
+		return
+
+	var/mob/living/carbon/human/user = loc
+	if(user.glasses != src || !user.client || !(vision_flags & SEE_TURFS))
+		clear_radioactive_contamination_images()
+		return
+
+	show_radioactive_contamination(user)
+
+/obj/item/clothing/glasses/meson/proc/show_radioactive_contamination(mob/living/carbon/human/user)
+	clear_radioactive_contamination_images()
+	for(var/turf/viewed_turf as anything in RANGE_TURFS(radioactive_contamination_scan_range, user))
+		show_radioactive_contamination_on_atom(viewed_turf, user)
+		for(var/atom/movable/nearby as anything in viewed_turf)
+			show_radioactive_contamination_on_atom(nearby, user)
+
+/obj/item/clothing/glasses/meson/proc/clear_radioactive_contamination_images()
+	var/filter_key = radioactive_contamination_filter_key()
+	for(var/atom/target as anything in radioactive_contamination_outline_targets)
+		if(!QDELETED(target))
+			target.remove_filter(filter_key)
+	radioactive_contamination_outline_targets.Cut()
+
+/obj/item/clothing/glasses/meson/proc/radioactive_contamination_filter_key()
+	return "radioactive_contamination_[REF(src)]"
+
+/obj/item/clothing/glasses/meson/proc/get_radioactive_contamination_activity(atom/target)
+	var/datum/component/radioactive_contamination/contamination = target.GetComponent(/datum/component/radioactive_contamination)
+	if(!contamination)
+		return 0
+
+	return contamination.activity
+
+/obj/item/clothing/glasses/meson/proc/show_radioactive_contamination_on_atom(atom/target, mob/living/carbon/human/user)
+	var/activity = get_radioactive_contamination_activity(target)
+	if(activity < RAD_CONTAMINATION_MESON_VISIBILITY)
+		return
+
+	if(!can_show_radioactive_contamination_outline(target, user))
+		return
+
+	var/strength = clamp(activity / RAD_CONTAMINATION_MAX_ACTIVITY, 0.05, 1)
+	var/outline_alpha = clamp(45 + round(strength * 135), 45, 180)
+	var/outline_size = clamp(round(1 + strength * 2), 1, 3)
+	target.add_filter(radioactive_contamination_filter_key(), 2, list(
+		"type" = "outline",
+		"color" = rgb(184, 255, 154, outline_alpha),
+		"size" = outline_size,
+	))
+	radioactive_contamination_outline_targets += target
+
+/obj/item/clothing/glasses/meson/proc/can_show_radioactive_contamination_outline(atom/target, mob/living/carbon/human/user)
+	if(isopenturf(target))
+		return FALSE
+
+	if(istype(target, /obj/effect))
+		return FALSE
+
+	if(user && target.invisibility > user.see_invisible)
+		return FALSE
+
+	var/turf/target_turf = get_turf(target)
+	if(istype(target, /atom/movable) && target_turf?.underfloor_accessibility < UNDERFLOOR_VISIBLE && HAS_TRAIT(target, TRAIT_UNDERFLOOR))
+		return FALSE
+
+	return TRUE
 
 /obj/item/clothing/glasses/meson/prescription
 	name = "prescription optical meson scanner"
