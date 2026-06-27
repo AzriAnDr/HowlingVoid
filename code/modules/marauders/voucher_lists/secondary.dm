@@ -169,7 +169,7 @@
 /datum/voucher_set/traitor/secondary_weapon/esword_covenant
 	name = /obj/item/melee/energy/sword/saber/covenant::name
 	description = /obj/item/melee/energy/sword/saber/covenant::desc
-	icon = 'icons/modular_weapons/obj/melee.dmi'
+	icon = 'icons/obj/weapons/melee/modular_weapons.dmi'
 	icon_state = "covenant_on_blue"
 	set_items = list(
 		/obj/item/melee/energy/sword/saber/covenant/blue,

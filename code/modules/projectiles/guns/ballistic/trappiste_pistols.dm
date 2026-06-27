@@ -7,7 +7,7 @@
 	icon = 'icons/obj/weapons/guns/trappiste_fabriek/guns32x.dmi'
 	icon_state = "wespe"
 
-	fire_sound = 'sound/modular_weapons/pistol_light.ogg'
+	fire_sound = 'sound/weapons/modular_weapons/pistol_light.ogg'
 
 	w_class = WEIGHT_CLASS_NORMAL
 
@@ -62,8 +62,8 @@
 	icon = 'icons/obj/weapons/guns/trappiste_fabriek/guns32x.dmi'
 	icon_state = "skild"
 
-	fire_sound = 'sound/modular_weapons/pistol_heavy.ogg'
-	suppressed_sound = 'sound/modular_weapons/suppressed_heavy.ogg'
+	fire_sound = 'sound/weapons/modular_weapons/pistol_heavy.ogg'
+	suppressed_sound = 'sound/weapons/modular_weapons/suppressed_heavy.ogg'
 
 	w_class = WEIGHT_CLASS_NORMAL
 

@@ -103,6 +103,6 @@
 	booster_action.build_all_button_icons()
 
 /datum/action/item_action/booster
-	button_icon = 'icons/modular_weapons/obj/company_and_or_faction_based/carwo_defense_systems/guns32x.dmi'
+	button_icon = 'icons/obj/weapons/guns/carwo_defense_systems/guns32x.dmi'
 	button_icon_state = "hbarrel"
 	name = "Toggle Barrel Charger"

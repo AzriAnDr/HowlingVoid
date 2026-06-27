@@ -174,9 +174,9 @@
 	name = "authentic shamshir sabre"
 	desc = "An expertly crafted historical human sword once used by the Persians which has recently gained traction due to Venusian historal recreation sports. One small flaw, the Taj-based company who produces these has mistaken them for British cavalry sabres akin to those used by high ranking Nanotrasen officials. Atleast it cuts the same way!"
 	icon_state = "sabre"
-	icon = 'icons/modular_weapons/obj/melee.dmi'
-	lefthand_file = 'icons/modular_weapons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/modular_weapons/mob/inhands/weapons/swords_righthand.dmi'
+	icon = 'icons/obj/weapons/melee/modular_weapons.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/melee/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee/swords_righthand.dmi'
 	block_chance = 20
 	armour_penetration = 25
 

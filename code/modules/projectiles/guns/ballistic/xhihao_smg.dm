@@ -22,7 +22,7 @@
 
 	accepted_magazine_type = /obj/item/ammo_box/magazine/c585trappiste_pistol
 
-	fire_sound = 'sound/modular_weapons/smg_heavy.ogg'
+	fire_sound = 'sound/weapons/modular_weapons/smg_heavy.ogg'
 	can_suppress = TRUE
 
 	suppressor_x_offset = 9

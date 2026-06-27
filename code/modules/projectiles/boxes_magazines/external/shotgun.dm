@@ -88,7 +88,7 @@
 /obj/item/ammo_box/magazine/katyusha
 	name = "\improper Katyusha Drum Magazine"
 	desc = "A drum magazine of shotgun shells, suitable for the Katyusha combat shotgun."
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/nanotrasen_armories/magazines.dmi'
+	icon = 'icons/obj/weapons/ammo/nanotrasen_armories/magazines.dmi'
 	icon_state = "spikewall_mag"
 	base_icon_state = "spikewall_mag"
 	ammo_type = /obj/item/ammo_casing/shotgun
@@ -99,7 +99,7 @@
 	reload_delay = CLICK_CD_MELEE
 
 /obj/item/ammo_box/magazine/katyusha/buckshot
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/nanotrasen_armories/magazines.dmi'
+	icon = 'icons/obj/weapons/ammo/nanotrasen_armories/magazines.dmi'
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 
 /obj/item/ammo_box/magazine/jager/update_icon_state()
@@ -112,7 +112,7 @@
 /obj/item/ammo_box/magazine/jager
 	name = "\improper Jäger Magazine"
 	desc = "A magazine of shotgun shells, suitable for the 'Jäger' combat shotgun."
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/nanotrasen_armories/magazines.dmi'
+	icon = 'icons/obj/weapons/ammo/nanotrasen_armories/magazines.dmi'
 	icon_state = "jager_mag"
 	base_icon_state = "jager_mag"
 	ammo_type = /obj/item/ammo_casing/shotgun
@@ -139,7 +139,7 @@
 /obj/item/ammo_box/magazine/shitzu
 	name = "\improper Shitzu Shotgun Magazine"
 	desc = "A magazine of shotgun shells, suitable for the 'Shitzu' combat shotgun."
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/syndicate_armaments/magazines.dmi'
+	icon = 'icons/obj/weapons/ammo/syndicate_armaments/magazines.dmi'
 	icon_state = "shitzu_mag"
 	base_icon_state = "shitzu_mag"
 	ammo_type = /obj/item/ammo_casing/shotgun

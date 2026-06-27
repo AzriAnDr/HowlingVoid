@@ -2,7 +2,7 @@
 	name = "Summon Light Source"
 	desc = "This spell creates a green flare."
 
-	button_icon = 'icons/modular_weapons/obj/company_and_or_faction_based/saibasan/projectiles.dmi'
+	button_icon = 'icons/obj/weapons/guns/saibasan/projectiles.dmi'
 	button_icon_state = "flare_burn-on"
 
 	cooldown_time = 10 SECONDS

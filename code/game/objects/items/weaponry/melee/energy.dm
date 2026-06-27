@@ -632,12 +632,12 @@
 /obj/item/melee/energy/sword/saber/covenant
 	name = "elite energy sword"
 	desc = "A blade like this requires great skill and bravery to use, and inspires fear in those who face its elegant energy blade."
-	icon = 'icons/modular_weapons/obj/melee.dmi'
+	icon = 'icons/obj/weapons/melee/modular_weapons.dmi'
 	icon_state = "covenant"
 	inhand_icon_state = "covenant"
 	base_icon_state = "covenant"
-	lefthand_file = 'icons/modular_weapons/mob/inhands/64x_melee_left.dmi'
-	righthand_file = 'icons/modular_weapons/mob/inhands/64x_melee_right.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/melee/64x_melee_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee/64x_melee_right.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	alt_force_mod = 0
@@ -661,10 +661,10 @@
 
 /obj/item/melee/energy/sword/saber/covenant/multitool_act(mob/living/user, obj/item/tool)
 	var/list/color_menu = list(
-		"Blue" = image(icon = 'icons/modular_weapons/obj/melee.dmi', icon_state = "covenant_on_blue"),
-		"Green" = image(icon = 'icons/modular_weapons/obj/melee.dmi', icon_state = "covenant_on_green"),
-		"Red" = image(icon = 'icons/modular_weapons/obj/melee.dmi', icon_state = "covenant_on_red"),
-		"Purple" = image(icon = 'icons/modular_weapons/obj/melee.dmi', icon_state = "covenant_on_purple"),
+		"Blue" = image(icon = 'icons/obj/weapons/melee/modular_weapons.dmi', icon_state = "covenant_on_blue"),
+		"Green" = image(icon = 'icons/obj/weapons/melee/modular_weapons.dmi', icon_state = "covenant_on_green"),
+		"Red" = image(icon = 'icons/obj/weapons/melee/modular_weapons.dmi', icon_state = "covenant_on_red"),
+		"Purple" = image(icon = 'icons/obj/weapons/melee/modular_weapons.dmi', icon_state = "covenant_on_purple"),
 	)
 	var/pick_result = show_radial_menu(user, src, color_menu, require_near = TRUE, tooltips = TRUE)
 	if(!pick_result || !user.can_perform_action(src))

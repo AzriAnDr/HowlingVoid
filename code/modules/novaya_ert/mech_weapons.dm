@@ -150,7 +150,7 @@
 	projectile_delay = 2
 	energy_drain = 250
 	projectile = /obj/projectile/beam/laser/plasma_glob/pulse
-	fire_sound = 'sound/modular_weapons/pulse_shoot.ogg'
+	fire_sound = 'sound/weapons/modular_weapons/pulse_shoot.ogg'
 	harmful = TRUE
 
 //35mm gunpod with an auto-ejection system when it runs dry, so you don't have to navigate UIs.
@@ -228,7 +228,7 @@
 	var/obj/item/grenade/shrapnel_maker = new casing_to_spawn(get_turf(target))
 	shrapnel_maker.detonate()
 	explosion(target, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flame_range = 2, flash_range = 1, adminlog = FALSE)
-	playsound(src, 'sound/modular_weapons/grenade_burst.ogg', 100, FALSE, 3)
+	playsound(src, 'sound/weapons/modular_weapons/grenade_burst.ogg', 100, FALSE, 3)
 	qdel(shrapnel_maker)
 
 /obj/item/grenade/forge_fakeshell/heap
