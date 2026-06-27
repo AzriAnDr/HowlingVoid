@@ -1663,7 +1663,7 @@
 "gA" = (
 /obj/structure/fake_stairs/directional/south{
 	icon_state = "stairs-old";
-	icon = 'modular_zubbers/icons/turf/floors/floors.dmi';
+	icon = 'icons/turf/floors.dmi';
 	color = "#3d3e44";
 	dir = 1
 	},
@@ -5540,7 +5540,7 @@
 "uD" = (
 /obj/structure/fake_stairs/directional/south{
 	icon_state = "stairs-old";
-	icon = 'modular_zubbers/icons/turf/floors/floors.dmi';
+	icon = 'icons/turf/floors.dmi';
 	color = "#3d3e44";
 	dir = 1
 	},

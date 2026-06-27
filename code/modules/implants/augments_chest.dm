@@ -5,7 +5,7 @@
 	name = "internal health analyzer"
 	desc = "An advanced health analyzer implant, designed to directly interface with a host's body and relay scan information to the brain on command."
 	slot = ORGAN_SLOT_SCANNER
-	icon = 'icons/implants/chest_modular.dmi'
+	icon = 'icons/implants/chest.dmi'
 	icon_state = "internal_HA"
 	actions_types = list(/datum/action/item_action/organ_action/use/internal_analyzer)
 	w_class = WEIGHT_CLASS_SMALL
@@ -71,7 +71,7 @@
 /obj/item/organ/cyberimp/chest/opticalcamo
 	name = "optical camo implant"
 	desc = "An implant that bends light around the host's body, rendering them nearly invisible when activated."
-	icon = 'icons/implants/chest_modular.dmi'
+	icon = 'icons/implants/chest.dmi'
 	icon_state = "opticalcamo"
 	slot = ORGAN_SLOT_SPINE
 	w_class = WEIGHT_CLASS_NORMAL
