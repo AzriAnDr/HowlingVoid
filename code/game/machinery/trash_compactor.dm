@@ -13,7 +13,7 @@
 	desc = "A vending machine-like terminal for the processing and reclamation of post-consumer station materials. \
 		Approved waste inputs are converted into ration slips via the integrated incentive program. There's a slot for GAP cards, to stamp them for janitorial service. \
 		A clean station is a symptom of a healthy crew. Consult your hygiene officer for a list of approved inputs."
-	icon = 'icons/trash_compactor/trash_compactor.dmi'
+	icon = 'icons/obj/machines/trash_compactor.dmi'
 	icon_state = "trash_compactor"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/trash_compactor

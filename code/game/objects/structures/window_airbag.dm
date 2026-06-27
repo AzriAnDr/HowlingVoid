@@ -91,9 +91,9 @@
 	/// Are we currently armed?
 	var/armed = FALSE
 	/// The sound we play when armed
-	var/armed_sound = 'sound/window_airbags/airbag_arm.ogg'
+	var/armed_sound = 'sound/items/airbag_arm.ogg'
 	/// The sound we play when we go bang
-	var/bang_sound = 'sound/window_airbags/airbag_bang.ogg'
+	var/bang_sound = 'sound/items/airbag_bang.ogg'
 
 /obj/item/airbag/Initialize(mapload)
 	. = ..()

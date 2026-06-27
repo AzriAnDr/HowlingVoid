@@ -3,11 +3,11 @@
 /obj/item/hairbrush
 	name = "hairbrush"
 	desc = "A small, circular brush with an ergonomic grip for efficient brush application."
-	icon = 'icons/hairbrush/hairbrush.dmi'
+	icon = 'icons/obj/service/hairbrush.dmi'
 	icon_state = "brush"
 	inhand_icon_state = "inhand"
-	lefthand_file = 'icons/hairbrush/inhand_left.dmi'
-	righthand_file = 'icons/hairbrush/inhand_right.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/hairbrush_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hairbrush_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	var/brush_speed = 3 SECONDS
 
@@ -69,7 +69,7 @@
 				var/obj/item/bodypart/chest = human_target.get_bodypart(BODY_ZONE_CHEST)
 				chest.receive_damage(1)
 			human_target.add_mood_event("brushed", /datum/mood_event/brushed, user, brush_target)
-			playsound(human_target, 'sound/hairbrush/rough_brush.ogg', 30, extrarange = -6, ignore_walls = FALSE)
+			playsound(human_target, 'sound/items/hairbrush_rough_brush.ogg', 30, extrarange = -6, ignore_walls = FALSE)
 			return
 
 		// Self brushing
@@ -89,13 +89,62 @@
 				user.visible_message(span_notice("[user] brushes [human_target]'s [brush_target]!"), span_notice("You brush [human_target]'s [brush_target]."), ignored_mobs=list(human_target))
 				human_target.show_message(span_notice("[user] brushes your [brush_target]!"), MSG_VISUAL)
 				human_target.add_mood_event("brushed", /datum/mood_event/brushed, user, brush_target)
-		playsound(human_target, 'sound/hairbrush/brush.ogg', 30, extrarange = -6, ignore_walls = FALSE)
+		playsound(human_target, 'sound/items/hairbrush_brush.ogg', 30, extrarange = -6, ignore_walls = FALSE)
 
 	else if(istype(target, /mob/living/basic/pet))
 		if(!do_after(user, brush_speed, target))
 			return
 		to_chat(user, span_notice("[target] closes [target.p_their()] eyes as you brush [target.p_them()]!"))
-		playsound(target, 'sound/hairbrush/brush.ogg', 30, extrarange = -6, ignore_walls = FALSE)
+		playsound(target, 'sound/items/hairbrush_brush.ogg', 30, extrarange = -6, ignore_walls = FALSE)
 		var/mob/living/living_user = user
 		if(istype(living_user))
 			living_user.add_mood_event("brushed", /datum/mood_event/brushed/pet, target)
+
+/datum/mood_event/brushed
+	description = "Someone brushed me recently, that felt great!"
+	mood_change = 3
+	timeout = 4 MINUTES
+
+/datum/mood_event/brushed/add_effects(mob/brusher, brush_target)
+	description = "[brusher == owner ? "I" : brusher.name] brushed my [brush_target] recently, that felt great!"
+
+/datum/mood_event/brushed/expert
+	description = "Someone masterfully brushed me recently, I feel fantastic!"
+	mood_change = 4
+
+/datum/mood_event/brushed/expert/add_effects(mob/brusher, brush_target)
+	description = "[brusher == owner ? "I" : brusher.name] gave my [brush_target] a flawless brushing, I feel fantastic!"
+
+/datum/mood_event/brushed/self
+	description = "I brushed myself recently!"
+	mood_change = 2
+
+/datum/mood_event/brushed/self/add_effects(brush_target)
+	description = "I brushed my [brush_target] recently!"
+
+/datum/mood_event/brushed/self/expert
+	description = "I brushed myself flawlessly, I feel fantastic!"
+	mood_change = 3
+
+/datum/mood_event/brushed/self/expert/add_effects(brush_target)
+	description = "Brushing my [brush_target] flawlessly was all I needed, I feel fantastic!"
+
+/datum/mood_event/brushed/pet/add_effects(mob/brushed_pet)
+	description = "I brushed [brushed_pet] recently, [brushed_pet.p_theyre()] so cute!"
+
+/datum/mood_event/harshly_brushed
+	description = "Oww! That brushing was too rough!"
+	mood_change = -3
+
+/datum/mood_event/harsh_brushed/add_effects(brush_target)
+	description = "Oww! That brushing on my [brush_target] was too rough!"
+
+/obj/item/skillchip/hair_expert
+	name = "H41R 3XP3R7 skillchip"
+	desc = "\"A skillchip that's all about turning you into the expert barber you are meant to be, guaranteed to boost satisfaction!\""
+	auto_traits = list(TRAIT_HAIR_EXPERT)
+	skill_name = "Hair expert"
+	skill_description = "Cut hair faster! Become the expert barber you are meant to be."
+	skill_icon = "scissors"
+	activate_message = span_notice("You feel as if you've mastered the art of haircutting and know exactly where each snip should go!")
+	deactivate_message = span_notice("Your mastery over haircutting and the intuition for every perfect snip fades away.")

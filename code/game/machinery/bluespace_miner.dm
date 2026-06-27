@@ -6,7 +6,7 @@
 /obj/machinery/bluespace_miner
 	name = "bluespace miner"
 	desc = "Through the power of bluespace, it is capable of producing materials."
-	icon = 'icons/bluespace_miner/bluespace_miner.dmi'
+	icon = 'icons/obj/machines/bluespace_miner.dmi'
 	icon_state = "miner"
 
 	density = TRUE
