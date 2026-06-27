@@ -26,6 +26,11 @@
 	desired_atom = /obj/structure/closet/secure_closet/blueshield
 	mode = AREA_SPAWN_MODE_HUG_WALL
 
+/datum/area_spawn/security_medic_locker
+	target_areas = list(/area/station/security/medical, /area/station/security/lockers, /area/station/security/office, /area/station/security/breakroom)
+	desired_atom = /obj/structure/closet/secure_closet/security_medic
+	mode = AREA_SPAWN_MODE_HUG_WALL
+
 /datum/area_spawn/ammo_workbench
 	target_areas = list(/area/station/security/lockers, /area/station/security/office)
 	desired_atom = /obj/machinery/ammo_workbench

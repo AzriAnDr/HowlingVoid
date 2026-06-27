@@ -54,7 +54,7 @@
 	belt = /obj/item/modular_computer/pda/security
 	ears = /obj/item/radio/headset/headset_medsec
 	gloves = /obj/item/clothing/gloves/latex/nitrile
-	glasses = /obj/item/clothing/glasses/hud/medsechud
+	glasses = /obj/item/clothing/glasses/hud/medsechud/sunglasses
 	head = /obj/item/clothing/head/beret/sec/security_medic
 	shoes = /obj/item/clothing/shoes/jackboots/sec
 	l_hand = /obj/item/storage/backpack/duffelbag/deforest_surgical/stocked

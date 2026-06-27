@@ -1190,10 +1190,10 @@
 
 /datum/id_trim/job/security_medic
 	assignment = JOB_SECURITY_MEDIC
-	trim_state = "trim_securityofficer"
+	trim_state = "trim_medicaldoctor"
 	department_color = COLOR_SECURITY_RED
 	subdepartment_color = COLOR_MEDICAL_BLUE
-	sechud_icon_state = SECHUD_SECURITY_OFFICER
+	sechud_icon_state = SECHUD_SYNDICATE_INTERDYNE
 	extra_access = list(
 		ACCESS_DETECTIVE,
 		ACCESS_MORGUE_SECURE,
