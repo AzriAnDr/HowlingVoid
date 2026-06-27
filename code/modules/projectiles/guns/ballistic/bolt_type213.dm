@@ -1,10 +1,10 @@
 /obj/item/gun/ballistic/automatic/type213
 	name = "\improper Type 213 Kinetic Submachine Gun"
 	desc = "A completely nonlethal longarm used by SolFed Peacekeeping forces, using kinetic rounds to temporarily disable adversaries. Made as a companion to the Type 207 Kinetic Pistol."
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/bolt_fabrications/type213.dmi'
+	icon = 'icons/obj/weapons/guns/bolt_fabrications/type213.dmi'
 	icon_state = "type213"
-	lefthand_file = 'icons/modular_weapons/mob/company_and_or_faction_based/bolt_fabrications/guns_lefthand.dmi'
-	righthand_file = 'icons/modular_weapons/mob/company_and_or_faction_based/bolt_fabrications/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns/bolt_fabrications/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns/bolt_fabrications/guns_righthand.dmi'
 	inhand_icon_state = "type213"
 	w_class = WEIGHT_CLASS_NORMAL
 	accepted_magazine_type = /obj/item/ammo_box/magazine/kineticballsbig
@@ -20,5 +20,5 @@
 	fire_sound_volume = 80
 	custom_premium_price = PAYCHECK_COMMAND * 6
 
-/obj/item/gun/ballistic/automatic/pistol/type207/give_manufacturer_examine()
+/obj/item/gun/ballistic/automatic/type213/give_manufacturer_examine()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_BOLT)

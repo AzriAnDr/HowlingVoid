@@ -1,10 +1,10 @@
 /obj/item/gun/ballistic/automatic/pistol/type207
 	name = "\improper Type 207 Kinetic Pistol"
 	desc = "A completly non lethal sidearm used by Sol Fed Peacekeeping forces. It uses kinetic rounds to temporarily disable adversaries."
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/bolt_fabrications/type207.dmi'
+	icon = 'icons/obj/weapons/guns/bolt_fabrications/type207.dmi'
 	icon_state = "type207"
-	lefthand_file = 'icons/modular_weapons/mob/company_and_or_faction_based/bolt_fabrications/guns_lefthand.dmi'
-	righthand_file = 'icons/modular_weapons/mob/company_and_or_faction_based/bolt_fabrications/guns_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns/bolt_fabrications/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns/bolt_fabrications/guns_righthand.dmi'
 	inhand_icon_state = "type207"
 	w_class = WEIGHT_CLASS_SMALL
 	accepted_magazine_type = /obj/item/ammo_box/magazine/kineticballs

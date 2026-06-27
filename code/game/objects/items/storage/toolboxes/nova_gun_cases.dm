@@ -3,12 +3,12 @@
 */
 /obj/item/storage/toolbox/guncase/nova
 	desc = "A thick gun case with foam inserts laid out to fit a weapon, magazines, and gear securely."
-	icon = 'icons/modular_weapons/obj/gunsets.dmi'
+	icon = 'icons/obj/storage/gunsets.dmi'
 	icon_state = "guncase"
-	worn_icon = 'icons/modular_weapons/mob/worn/cases.dmi'
+	worn_icon = 'icons/mob/clothing/back/guncases.dmi'
 	worn_icon_state = "darkcase"
-	lefthand_file = 'icons/modular_weapons/mob/inhands/cases_lefthand.dmi'
-	righthand_file = 'icons/modular_weapons/mob/inhands/cases_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/guncase_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/guncase_righthand.dmi'
 	inhand_icon_state = "darkcase"
 	slot_flags = ITEM_SLOT_BACK
 	material_flags = NONE

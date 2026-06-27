@@ -1,6 +1,6 @@
 /obj/projectile/bullet/kineticball
 	name = "kinetic orb"
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/bolt_fabrications/riotrubberbullet.dmi'
+	icon = 'icons/obj/weapons/ammo/bolt_fabrications/riotrubberbullet.dmi'
 	icon_state = "riotrubberbullet"
 	damage = 0
 	stamina = 30
@@ -14,7 +14,7 @@
 /obj/item/ammo_casing/kineticball
 	name = "kinetic ball casing"
 	desc = "A kinetic ball casing."
-	icon = 'icons/modular_weapons/obj/company_and_or_faction_based/bolt_fabrications/stingtop.dmi'
+	icon = 'icons/obj/weapons/ammo/bolt_fabrications/stingtop.dmi'
 	icon_state = "stingstop"
 	ammo_stack_type = /obj/item/ammo_box/magazine/ammo_stack/kineticball
 	caliber = CALIBER_KINETICBALL
