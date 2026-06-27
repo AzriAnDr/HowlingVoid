@@ -309,7 +309,7 @@ SOLFED ARMOR VALUES!
 	name = "\improper Solfed Outfitting Station"
 	desc = "A vending machine for specialised clothing for members of the Federation."
 	product_ads = "File paperwork in style!;Glory To the Federation!;You have the right to be fashionable!;Now you can be the fashion police you always wanted to be!;Remember Its not a crime to be fashionable!"
-	icon = 'icons/command_vendor/vending.dmi'
+	icon = 'icons/obj/machines/command_vendor.dmi'
 	icon_state = "solfeddrobe"
 	icon_deny = "solfeddrobe-deny"
 	light_mask = "wardrobe-light-mask"

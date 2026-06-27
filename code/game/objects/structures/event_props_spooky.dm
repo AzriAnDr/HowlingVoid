@@ -1,7 +1,7 @@
 /obj/structure/prop/spooky
 	name = "spooky prop"
 	desc = "A base spooky prop."
-	icon = 'icons/event_props/spooky2025.dmi'
+	icon = 'icons/obj/structures/event_props/spooky2025.dmi'
 	icon_state = "cornwall"
 	max_integrity = 1000
 	density = TRUE
@@ -9,14 +9,14 @@
 
 /turf/closed/indestructible/spooky/cornwall
 	name = "cornwall"
-	icon = 'icons/event_props/spooky2025.dmi'
+	icon = 'icons/obj/structures/event_props/spooky2025.dmi'
 	icon_state = "cornwall"
 	desc = "Tall rustling stalks form an impenetrable wall of corn."
 	opacity = TRUE
 
 /obj/structure/prop/spooky/cornwall_pass_through
 	name = "cornwall"
-	icon = 'icons/event_props/spooky2025.dmi'
+	icon = 'icons/obj/structures/event_props/spooky2025.dmi'
 	icon_state = "cornwall_passthrough"
 	desc = "Tall rustling stalks form a wall of corn. It seems to part slightly."
 	opacity = TRUE
@@ -26,7 +26,7 @@
 /obj/structure/sign/spooky/fairy_lights_pumpkin
 	name = "Pumpkin Fairy Lights"
 	desc = "A string of tiny pumpkin lights."
-	icon = 'icons/event_props/spooky2025.dmi'
+	icon = 'icons/obj/structures/event_props/spooky2025.dmi'
 	icon_state = "spiceblinkers"
 	anchored = TRUE
 	opacity = FALSE
@@ -39,7 +39,7 @@
 /obj/structure/sign/spooky/fairy_lights_pumpkin_small
 	name = "Pumpkin Fairy Lights"
 	desc = "A string of tiny pumpkin lights."
-	icon = 'icons/event_props/spooky2025.dmi'
+	icon = 'icons/obj/structures/event_props/spooky2025.dmi'
 	icon_state = "spiceblinkers_top"
 	anchored = TRUE
 	opacity = FALSE
@@ -52,7 +52,7 @@
 /obj/structure/sign/spooky/skull_strings
 	name = "Tiny Skull Decorations"
 	desc = "A string of tiny skulls."
-	icon = 'icons/event_props/spooky2025.dmi'
+	icon = 'icons/obj/structures/event_props/spooky2025.dmi'
 	icon_state = "skullstringers"
 	anchored = TRUE
 	opacity = FALSE
@@ -65,7 +65,7 @@
 /obj/structure/sign/spooky/spider_stickers
 	name = "Spooky Spiders"
 	desc = "A small gathering of spiders."
-	icon = 'icons/event_props/spooky2025.dmi'
+	icon = 'icons/obj/structures/event_props/spooky2025.dmi'
 	icon_state = "spoodstickers"
 	anchored = TRUE
 	opacity = FALSE

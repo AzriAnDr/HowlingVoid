@@ -1,7 +1,7 @@
 /obj/structure/prop/vehicle
 	name = "vehicle prop"
 	desc = "A base vehicle prop."
-	icon = 'icons/event_props/vehiclesexpanded.dmi'
+	icon = 'icons/obj/structures/event_props/vehiclesexpanded.dmi'
 	icon_state = "SUV"
 	max_integrity = 1000
 	density = TRUE
@@ -74,7 +74,7 @@
 	icon_state = "SUV2_damaged"
 
 /obj/structure/prop/vehicle/crashed_car
-	icon = 'icons/event_props/crashedcars.dmi'
+	icon = 'icons/obj/structures/event_props/crashedcars.dmi'
 	bound_width = 64
 	bound_height = 96
 	icon_state = "crashedcarsleft"
@@ -110,7 +110,7 @@
 	icon_state = "ambulance"
 
 /obj/structure/prop/vehicle/suv/ambulance_2
-	icon = 'icons/event_props/128x32_vehiclesexpanded.dmi'
+	icon = 'icons/obj/structures/event_props/128x32_vehiclesexpanded.dmi'
 	icon_state = "ambulance"
 	bound_width = 64
 	bound_height = 32
@@ -271,37 +271,37 @@
 /obj/structure/prop/vehicle/small_truck/crawler_fuel_2
 	name = "\improper Fuel Crawler"
 	desc = "A Fuel Crawler."
-	icon = 'icons/event_props/64x64.dmi'
+	icon = 'icons/obj/structures/event_props/64x64.dmi'
 	icon_state = "crawler_fuel"
 
 /obj/structure/prop/vehicle/small_truck/crawler_plain
 	name = "\improper Crawler"
 	desc = "A Crawler."
-	icon = 'icons/event_props/64x64.dmi'
+	icon = 'icons/obj/structures/event_props/64x64.dmi'
 	icon_state = "crawler"
 
 /obj/structure/prop/vehicle/small_truck/crawler_blue
 	name = "\improper Crawler"
 	desc = "A Crawler."
-	icon = 'icons/event_props/64x64.dmi'
+	icon = 'icons/obj/structures/event_props/64x64.dmi'
 	icon_state = "crawler_crate_b"
 
 /obj/structure/prop/vehicle/small_truck/crawler_red
 	name = "\improper Crawler"
 	desc = "A Crawler."
-	icon = 'icons/event_props/64x64.dmi'
+	icon = 'icons/obj/structures/event_props/64x64.dmi'
 	icon_state = "crawler_crate_r"
 
 /obj/structure/prop/vehicle/small_truck/crawler_green
 	name = "\improper Crawler"
 	desc = "A Crawler."
-	icon = 'icons/event_props/64x64.dmi'
+	icon = 'icons/obj/structures/event_props/64x64.dmi'
 	icon_state = "crawler_crate_g"
 
 /obj/structure/prop/vehicle/small_truck/crawler_cargo
 	name = "\improper Crawler"
 	desc = "A Crawler."
-	icon = 'icons/event_props/64x64.dmi'
+	icon = 'icons/obj/structures/event_props/64x64.dmi'
 	icon_state = "crawler_cargo"
 
 /obj/structure/prop/vehicle/small_truck/crawler_mining_1
@@ -325,7 +325,7 @@
 	icon_state = "miningcrawler4"
 
 /obj/structure/prop/vehicle/long_truck
-	icon = 'icons/event_props/128x32_vehiclesexpanded.dmi'
+	icon = 'icons/obj/structures/event_props/128x32_vehiclesexpanded.dmi'
 	bound_width = 128
 	bound_height = 32
 	icon_state = "longtruck_kellandmining"
@@ -370,7 +370,7 @@
 	icon_state = "longtruck_nt_blue"
 
 /obj/structure/prop/vehicle/armoredtruck
-	icon = 'icons/event_props/128x32_vehiclesexpanded.dmi'
+	icon = 'icons/obj/structures/event_props/128x32_vehiclesexpanded.dmi'
 	bound_width = 96
 	bound_height = 32
 	icon_state = "armoredtruck_nt_security_1"
@@ -405,7 +405,7 @@
 	icon_state = "armoredtruck_blue_white"
 
 /obj/structure/prop/vehicle/long_truck_half
-	icon = 'icons/event_props/vehiclesexpanded.dmi'
+	icon = 'icons/obj/structures/event_props/vehiclesexpanded.dmi'
 	bound_width = 64
 	bound_height = 32
 
@@ -449,7 +449,7 @@
 	icon_state = "zenithlongtruck5"
 
 /obj/structure/prop/vehicle/truck
-	icon = 'icons/event_props/64x64.dmi'
+	icon = 'icons/obj/structures/event_props/64x64.dmi'
 	bound_width = 64
 	bound_height = 64
 	icon_state = "truck"
@@ -485,7 +485,7 @@
 	icon_state = "van_wrecked"
 
 /obj/structure/prop/vehicle/crane
-	icon = 'icons/event_props/64x64.dmi'
+	icon = 'icons/obj/structures/event_props/64x64.dmi'
 	bound_width = 64
 	bound_height = 64
 	icon_state = "crane"
@@ -516,7 +516,7 @@
 	icon_state = "crane_wrecked"
 
 /obj/structure/prop/vehicle/large_truck
-	icon = 'icons/event_props/large_truck.dmi'
+	icon = 'icons/obj/structures/event_props/large_truck.dmi'
 	bound_width = 96
 	bound_height = 96
 	icon_state = "truck_flat"

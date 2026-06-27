@@ -5,7 +5,7 @@
 /obj/machinery/mounted_machine_gun
 	name = "\improper T90 Mounted Machine Gun"
 	desc = "A high calibre mounted machine gun capable of laying down copious amounts of suppressive fire."
-	icon = 'icons/mounted_machine_gun/turret.dmi'
+	icon = 'icons/obj/machines/mounted_machine_gun.dmi'
 	icon_state = "mmg"
 	base_icon_state = "mmg"
 	can_buckle = TRUE
@@ -20,7 +20,7 @@
 	/// Sound to play when overheated
 	var/overheatsound = 'sound/effects/wounds/sizzle2.ogg'
 	/// Sound to play when firing
-	var/firesound = 'sound/mounted_machine_gun/50cal_box_01.ogg'
+	var/firesound = 'sound/items/weapons/mounted_machine_gun/50cal_box_01.ogg'
 	/// How long it takes for a wrench user to undeploy the object
 	var/undeploy_time = 3 SECONDS
 	/// Our currently loaded ammo box.
@@ -191,21 +191,21 @@
 		return
 	ammo_box = attacking_item
 	attacking_item.forceMove(src)
-	playsound(src, 'sound/mounted_machine_gun/insert_ammobox.ogg', 100)
+	playsound(src, 'sound/items/weapons/mounted_machine_gun/insert_ammobox.ogg', 100)
 	balloon_alert(user, "ammo box inserted!")
 
 /obj/machinery/mounted_machine_gun/proc/remove_ammo_box(mob/living/user)
 	ammo_box.forceMove(drop_location())
 	user.put_in_hands(ammo_box)
 	ammo_box = null
-	playsound(src, 'sound/mounted_machine_gun/remove_ammobox.ogg', 100)
+	playsound(src, 'sound/items/weapons/mounted_machine_gun/remove_ammobox.ogg', 100)
 	balloon_alert(user, "ammo box removed!")
 	update_appearance()
 
 /obj/machinery/mounted_machine_gun/proc/toggle_cover(mob/user)
 	cover_open = !cover_open
 	balloon_alert(user, "cover [cover_open ? "opened" : "closed"]!")
-	playsound(src, cover_open ? 'sound/mounted_machine_gun/open_lid.ogg' : 'sound/mounted_machine_gun/close_lid.ogg', 100)
+	playsound(src, cover_open ? 'sound/items/weapons/mounted_machine_gun/open_lid.ogg' : 'sound/items/weapons/mounted_machine_gun/close_lid.ogg', 100)
 
 /// Registers all the required signals and sets up the client to work with the turret.
 /obj/machinery/mounted_machine_gun/proc/register_user(mob/living/user_to_buckle)
@@ -372,7 +372,7 @@
 	if(bolt)
 		return
 	bolt = TRUE
-	playsound(src, 'sound/mounted_machine_gun/cock_bolt.ogg', 100)
+	playsound(src, 'sound/items/weapons/mounted_machine_gun/cock_bolt.ogg', 100)
 
 /obj/machinery/mounted_machine_gun/proc/check_click_modifiers(modifiers)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
@@ -446,7 +446,7 @@
 /obj/item/mounted_machine_gun_folded
 	name = "\improper folded T-90 mounted machine gun"
 	desc = "A folded and unloaded mounted machine gun, ready to be deployed and used."
-	icon = 'icons/mounted_machine_gun/turret_objects.dmi'
+	icon = 'icons/obj/weapons/mounted_machine_gun.dmi'
 	icon_state = "folded_hmg"
 	max_integrity = 250
 	w_class = WEIGHT_CLASS_BULKY

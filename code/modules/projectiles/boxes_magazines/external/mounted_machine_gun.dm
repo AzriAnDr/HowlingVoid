@@ -1,7 +1,7 @@
 /obj/item/ammo_box/magazine/mmg_box
 	name = "\improper .50 BMG ammo box"
 	desc = "A box full of beltfed ammo."
-	icon = 'icons/mounted_machine_gun/turret_objects.dmi'
+	icon = 'icons/obj/weapons/mounted_machine_gun.dmi'
 	icon_state = "ammobox"
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
 	max_ammo = 50
