@@ -130,6 +130,24 @@
 	group = "Bunny Suit"
 	restricted_roles = list(ALL_JOBS_SEC)
 
+/datum/loadout_item/under/jumpsuit/security_medic
+	name = "Security Medic Turtleneck"
+	item_path = /obj/item/clothing/under/rank/security/security_medic
+	restricted_roles = list(JOB_SECURITY_MEDIC)
+	group = "Job-Locked"
+
+/datum/loadout_item/under/jumpsuit/security_medic/skirt
+	name = "Security Medic Skirtleneck"
+	item_path = /obj/item/clothing/under/rank/security/security_medic/skirt
+	restricted_roles = list(JOB_SECURITY_MEDIC)
+	group = "Job-Locked"
+
+/datum/loadout_item/under/jumpsuit/security_medic/alternate
+	name = "Security Medic Uniform"
+	item_path = /obj/item/clothing/under/rank/security/security_medic/alternate
+	restricted_roles = list(JOB_SECURITY_MEDIC)
+	group = "Job-Locked"
+
 /datum/loadout_item/under/jumpsuit/cargo
 	name = "Cargo Technician's Jumpsuit"
 	item_path = /obj/item/clothing/under/rank/cargo/tech

@@ -500,6 +500,7 @@
 		return
 
 	if(reac_volume >= 1)
+		exposed_turf.wash(CLEAN_RAD, TRUE)
 		var/obj/effect/particle_effect/fluid/foam/firefighting/foam = (locate(/obj/effect/particle_effect/fluid/foam) in exposed_turf)
 		if(!foam)
 			foam = new(exposed_turf)
@@ -517,8 +518,10 @@
 /datum/reagent/firefighting_foam/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	exposed_obj.extinguish()
+	exposed_obj.wash(CLEAN_RAD)
 
 /datum/reagent/firefighting_foam/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	if(methods & (TOUCH|VAPOR))
 		exposed_mob.extinguish_mob() //All stacks are removed
+		exposed_mob.wash(CLEAN_RAD)

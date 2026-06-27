@@ -91,6 +91,13 @@
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/rad_collector
+	name = "Radiation Collector Array"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/energy_accumulator/rad_collector
+	req_components = list(/datum/stock_part/capacitor = 1)
+	needs_anchored = FALSE
+
 /obj/item/circuitboard/machine/telecomms/broadcaster
 	name = "Subspace Broadcaster"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

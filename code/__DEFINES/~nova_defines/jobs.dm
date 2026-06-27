@@ -48,6 +48,7 @@
 	/obj/item/clothing/shoes/magboots/advance, \
 	/obj/item/shield/riot/tele, \
 	/obj/item/storage/belt/security/full, \
+	/obj/item/storage/belt/security/medic/full, \
 	/obj/item/gun/energy/e_gun/hos, \
 	/obj/item/pinpointer/nuke, \
 	/obj/item/storage/belt/sheath/sabre, \

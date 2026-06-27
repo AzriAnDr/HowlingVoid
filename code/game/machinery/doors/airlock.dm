@@ -2359,6 +2359,11 @@
 	//Is this airlock actually radioactive?
 	var/actually_radioactive = TRUE
 
+/obj/machinery/door/airlock/uranium/Initialize(mapload)
+	. = ..()
+	if(actually_radioactive)
+		ensure_radioactive_contamination(RAD_CONTAMINATION_NATURAL_SOURCE_ACTIVITY, src, RAD_CONTAMINATION_MAX_SPREAD_GENERATION + 1)
+
 /obj/machinery/door/airlock/uranium/process()
 	if(actually_radioactive && world.time > last_event+20)
 		if(prob(50))
@@ -2366,12 +2371,14 @@
 		last_event = world.time
 
 /obj/machinery/door/airlock/uranium/proc/radiate()
+	ensure_radioactive_contamination(RAD_CONTAMINATION_NATURAL_SOURCE_ACTIVITY, src, RAD_CONTAMINATION_MAX_SPREAD_GENERATION + 1)
 	radiation_pulse(
 		src,
 		max_range = 2,
 		threshold = RAD_LIGHT_INSULATION,
 		chance = URANIUM_IRRADIATION_CHANCE,
 		minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
+		surface_contamination_multiplier = RAD_CONTAMINATION_WEAK_SOURCE_MULTIPLIER,
 	)
 
 /obj/machinery/door/airlock/uranium/glass

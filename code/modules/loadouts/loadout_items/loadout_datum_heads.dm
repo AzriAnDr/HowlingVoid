@@ -170,6 +170,18 @@
 	restricted_roles = list(ALL_JOBS_SEC)
 	group = "Job-Locked"
 
+/datum/loadout_item/head/security_medic_beret
+	name = "Security Medic Beret"
+	item_path = /obj/item/clothing/head/beret/sec/security_medic
+	restricted_roles = list(JOB_SECURITY_MEDIC)
+	group = "Job-Locked"
+
+/datum/loadout_item/head/security_medic_helmet
+	name = "Security Medic Helmet"
+	item_path = /obj/item/clothing/head/helmet/sec/security_medic
+	restricted_roles = list(JOB_SECURITY_MEDIC)
+	group = "Job-Locked"
+
 /datum/loadout_item/head/cybergoggles //Cyberpunk-P.I. Outfit
 	name = "Detective's Type-34P Forensics Headwear"
 	item_path = /obj/item/clothing/head/fedora/det_hat/cybergoggles

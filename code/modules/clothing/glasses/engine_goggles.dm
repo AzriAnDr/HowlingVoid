@@ -111,21 +111,34 @@
 
 /obj/item/clothing/glasses/meson/engine/process()
 	if(!ishuman(loc))
+		clear_radioactive_contamination_images()
 		return
+
 	var/mob/living/carbon/human/user = loc
 	if(user.glasses != src || !user.client)
+		clear_radioactive_contamination_images()
 		return
+
 	switch(mode)
+		if(MODE_MESON)
+			show_radioactive_contamination(user)
 		if(MODE_TRAY)
+			clear_radioactive_contamination_images()
 			t_ray_scan(user, 8, range)
 		if(MODE_SHUTTLE)
+			clear_radioactive_contamination_images()
 			show_shuttle()
 		if(MODE_PIPE_CONNECTABLE)
+			clear_radioactive_contamination_images()
 			show_connections()
 		if(MODE_ATMOS_THERMAL)
+			clear_radioactive_contamination_images()
 			atmos_thermal(user)
 		if(MODE_AREA_BLUEPRINTS)
+			clear_radioactive_contamination_images()
 			show_blueprints(user)
+		else
+			clear_radioactive_contamination_images()
 
 /obj/item/clothing/glasses/meson/engine/proc/show_shuttle()
 	var/mob/living/carbon/human/user = loc

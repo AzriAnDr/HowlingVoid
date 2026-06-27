@@ -73,6 +73,7 @@ Science Guard=2,2
 
 Warden=1,1
 Detective=2,2
+Security Medic=1,1
 Security Officer=6,6
 Corrections Officer=2,1
 
