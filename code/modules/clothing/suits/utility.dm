@@ -195,6 +195,7 @@
 	bio = 60
 	fire = 30
 	acid = 30
+	rad = 100
 
 /obj/item/clothing/suit/utility/radiation
 	name = "radiation suit"

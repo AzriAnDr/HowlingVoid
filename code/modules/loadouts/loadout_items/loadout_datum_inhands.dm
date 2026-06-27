@@ -38,7 +38,7 @@ SPECIES RESTRICTED
 	name = "Alternate Envirosuit Kit: Security Officer"
 	item_path = /obj/item/storage/box/envirosuit/security
 	species_whitelist = list(SPECIES_PLASMAMAN)
-	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_CORRECTIONS_OFFICER)
+	restricted_roles = list(JOB_WARDEN, JOB_DETECTIVE, JOB_SECURITY_MEDIC, JOB_SECURITY_OFFICER, JOB_HEAD_OF_SECURITY, JOB_CORRECTIONS_OFFICER)
 	group = "Species-Unique"
 
 /datum/loadout_item/inhand/guncase_large

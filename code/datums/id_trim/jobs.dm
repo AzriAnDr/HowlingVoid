@@ -1188,6 +1188,49 @@
 
 	return patrol_type
 
+/datum/id_trim/job/security_medic
+	assignment = JOB_SECURITY_MEDIC
+	trim_state = "trim_securityofficer"
+	department_color = COLOR_SECURITY_RED
+	subdepartment_color = COLOR_MEDICAL_BLUE
+	sechud_icon_state = SECHUD_SECURITY_OFFICER
+	extra_access = list(
+		ACCESS_DETECTIVE,
+		ACCESS_MORGUE_SECURE,
+		ACCESS_PLUMBING,
+	)
+	minimal_access = list(
+		ACCESS_BRIG,
+		ACCESS_BRIG_ENTRANCE,
+		ACCESS_COURT,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_MECH_MEDICAL,
+		ACCESS_MECH_SECURITY,
+		ACCESS_MEDICAL,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_MORGUE,
+		ACCESS_PHARMACY,
+		ACCESS_SECURITY,
+		ACCESS_SURGERY,
+		ACCESS_VIROLOGY,
+		ACCESS_WEAPONS,
+	)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+		ACCESS_HOS,
+	)
+	job = /datum/job/security_medic
+
+/datum/id_trim/job/security_medic/refresh_trim_access()
+	. = ..()
+
+	if(!.)
+		return
+
+	if(CONFIG_GET(flag/security_has_maint_access))
+		access |= list(ACCESS_MAINT_TUNNELS)
+
 /datum/id_trim/job/security_officer/supply
 	assignment = JOB_SECURITY_OFFICER_SUPPLY
 	subdepartment_color = COLOR_CARGO_BROWN

@@ -12,6 +12,8 @@
 	var/chance
 	///Minimum time needed in order to be irradiated
 	var/minimum_exposure_time
+	///Multiplier for surface contamination applied by these weak passive pulses.
+	var/surface_contamination_multiplier
 
 	var/list/radioactive_objects = list()
 
@@ -24,6 +26,7 @@
 	threshold = RAD_LIGHT_INSULATION,
 	chance = URANIUM_IRRADIATION_CHANCE,
 	minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
+	surface_contamination_multiplier = RAD_CONTAMINATION_WEAK_SOURCE_MULTIPLIER,
 	)
 
 	. = ..()
@@ -34,6 +37,7 @@
 	src.threshold = threshold
 	src.chance = chance
 	src.minimum_exposure_time = minimum_exposure_time
+	src.surface_contamination_multiplier = surface_contamination_multiplier
 
 /datum/element/radioactive/Detach(datum/source, ...)
 	radioactive_objects -= source
@@ -45,12 +49,21 @@
 		if (world.time - radioactive_objects[radioactive_object] < DELAY_BETWEEN_RADIATION_PULSES)
 			continue
 
+		var/atom/radioactive_atom = radioactive_object
+		if(istype(radioactive_atom))
+			radioactive_atom.ensure_radioactive_contamination(
+				RAD_CONTAMINATION_NATURAL_SOURCE_ACTIVITY,
+				radioactive_atom,
+				RAD_CONTAMINATION_MAX_SPREAD_GENERATION + 1,
+			)
+
 		radiation_pulse(
 			radioactive_object,
 			max_range = range,
 			threshold = threshold,
 			chance = chance,
 			minimum_exposure_time = minimum_exposure_time,
+			surface_contamination_multiplier = surface_contamination_multiplier,
 		)
 
 		radioactive_objects[radioactive_object] = world.time

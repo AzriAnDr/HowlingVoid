@@ -153,6 +153,9 @@
 	if (!istype(parent_movable))
 		return
 
+	if(!isliving(parent_movable))
+		return
+
 	parent_movable.add_filter("rad_glow", 2, list("type" = "outline", "color" = "#39ff1430", "size" = 2))
 	addtimer(CALLBACK(src, PROC_REF(start_glow_loop), parent_movable), rand(0.1 SECONDS, 1.9 SECONDS)) // Things should look uneven
 
@@ -184,7 +187,9 @@
 		to_chat(user, span_bolddanger("[icon2html(geiger_counter, user)] Subject is irradiated. Contamination traces back to roughly [DisplayTimeText(world.time - beginning_of_irradiation, 5)] ago. Current toxin levels: [living_source.get_tox_loss()]."))
 	else
 		// In case the green wasn't obvious enough...
-		to_chat(user, span_bolddanger("[icon2html(geiger_counter, user)] Target is irradiated."))
+		var/datum/component/radioactive_contamination/contamination = source.GetComponent(/datum/component/radioactive_contamination)
+		var/activity = contamination ? contamination.activity : 0
+		to_chat(user, span_bolddanger("[icon2html(geiger_counter, user)] Target is irradiated. Surface contamination: [round(activity, 0.1)]/[RAD_CONTAMINATION_MAX_ACTIVITY] activity."))
 
 	return COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL
 

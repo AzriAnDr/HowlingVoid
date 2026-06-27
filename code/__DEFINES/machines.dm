@@ -171,3 +171,7 @@
 #define DISPLAY_PRIORITY_SHUTTLE 40
 /// Emergency alerts that temporarily interrupt even shuttle displays (30 seconds then revert)
 #define DISPLAY_PRIORITY_EMERGENCY_TEMP 50
+#define PA_CONSTRUCTION_UNSECURED 0
+#define PA_CONSTRUCTION_UNWIRED 1
+#define PA_CONSTRUCTION_PANEL_OPEN 2
+#define PA_CONSTRUCTION_COMPLETE 3

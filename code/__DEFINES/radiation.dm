@@ -33,9 +33,22 @@ Ask Mothblocks if they're around
 #define RAD_HEAVY_INSULATION 0.6 // What reinforced walls have
 #define RAD_EXTREME_INSULATION 0.5 // What rad collectors have
 #define RAD_FULL_INSULATION 0 // Completely stops radiation from coming through
+/// The strongest effective shielding allowed for windows and airlocks, even if their material is better.
+#define RAD_TRANSPARENT_STRUCTURE_MIN_PASS_THROUGH RAD_HEAVY_INSULATION
+/// Directional windows only provide a fraction of a fulltile window's shielding when facing the radiation source.
+#define RAD_DIRECTIONAL_WINDOW_SHIELDING_DIVISOR 4
 
 /// The default chance something can be irradiated
 #define DEFAULT_RADIATION_CHANCE 10
+
+/// Singularity radiation pulse tuning. Keep the range bounded: radiation_pulse() expands this into turfs.
+#define SINGULARITY_RADIATION_BASE_RANGE 4
+#define SINGULARITY_RADIATION_RANGE_PER_STAGE 2
+#define SINGULARITY_RADIATION_ENERGY_DIVISOR 250
+#define SINGULARITY_RADIATION_MAX_RANGE 18
+#define SINGULARITY_RADIATION_CHANCE 100
+#define SINGULARITY_RADIATION_THRESHOLD RAD_EXTREME_INSULATION
+#define SINGULARITY_RADIATION_CONTAMINATION_MULTIPLIER 1.2
 
 /// The default chance for uranium structures to irradiate
 #define URANIUM_IRRADIATION_CHANCE DEFAULT_RADIATION_CHANCE
@@ -44,6 +57,47 @@ Ask Mothblocks if they're around
 #define URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME (3 SECONDS)
 /// The minimum exposure time before the radioactive nebula can irradiate
 #define NEBULA_RADIATION_MINIMUM_EXPOSURE_TIME (6 SECONDS)
+
+// Surface contamination params
+
+/// Surface contamination below this amount is treated as background and removed.
+#define RAD_CONTAMINATION_MIN_ACTIVITY 1
+/// Maximum surface contamination activity a single component can hold.
+#define RAD_CONTAMINATION_MAX_ACTIVITY 100
+/// Default surface contamination applied by direct irradiation calls.
+#define RAD_CONTAMINATION_DIRECT_EXPOSURE 10
+/// Multiplier converting a successful radiation pulse chance into surface contamination.
+#define RAD_CONTAMINATION_PULSE_MULTIPLIER 0.8
+/// Additional multiplier for contamination applied to the radiation source itself.
+#define RAD_CONTAMINATION_SOURCE_SELF_MULTIPLIER 0.2
+/// Multiplier for contamination deposited on worn or held items when their wearer is hit by radiation.
+#define RAD_CONTAMINATION_WORN_ITEM_MULTIPLIER 1
+/// Surface contamination multiplier for weak passive radioactive material sources.
+#define RAD_CONTAMINATION_WEAK_SOURCE_MULTIPLIER 0.1
+/// Maximum surface contamination that weak passive radioactive material sources can apply to other atoms.
+#define RAD_CONTAMINATION_WEAK_SOURCE_CAP 12
+/// Stable low surface activity shown on naturally radioactive material sources.
+#define RAD_CONTAMINATION_NATURAL_SOURCE_ACTIVITY 8
+/// Amount of contamination required before meson scanners can outline the atom.
+#define RAD_CONTAMINATION_MESON_VISIBILITY 5
+/// Amount of primary contamination required before it can rub off onto nearby atoms.
+#define RAD_CONTAMINATION_SPREAD_THRESHOLD 45
+/// Maximum number of nearby atoms dirtied by one spread tick.
+#define RAD_CONTAMINATION_SPREAD_TARGETS 4
+/// Fraction of current activity transferred to each secondary contamination target.
+#define RAD_CONTAMINATION_TRANSFER_FRACTION 0.12
+/// Highest generation allowed to spread contamination further.
+#define RAD_CONTAMINATION_MAX_SPREAD_GENERATION 0
+/// Delay between contamination spread attempts.
+#define RAD_CONTAMINATION_SPREAD_COOLDOWN (4 SECONDS)
+/// Amount of contamination required before it emits weak radiation pulses.
+#define RAD_CONTAMINATION_EMIT_THRESHOLD 70
+/// Delay between weak radiation pulses from highly contaminated primary atoms.
+#define RAD_CONTAMINATION_EMIT_COOLDOWN (8 SECONDS)
+/// Maximum range of weak radiation pulses from contaminated atoms.
+#define RAD_CONTAMINATION_EMIT_RANGE 1
+/// Contamination activity lost per second.
+#define RAD_CONTAMINATION_DECAY_PER_SECOND 0.12
 
 /// Return values of [proc/get_perceived_radiation_danger]
 // If you change these, update /datum/looping_sound/geiger as well.

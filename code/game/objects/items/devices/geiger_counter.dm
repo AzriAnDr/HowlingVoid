@@ -13,6 +13,7 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
 
 	var/last_perceived_radiation_danger = null
+	var/turf/last_perceived_radiation_turf = null
 
 	var/scanning = FALSE
 
@@ -73,7 +74,7 @@
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/geiger_counter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!CAN_IRRADIATE(interacting_with))
+	if(!CAN_IRRADIATE(interacting_with) && !interacting_with.can_receive_radioactive_contamination() && !interacting_with.GetComponent(/datum/component/radioactive_contamination))
 		return NONE
 
 	user.visible_message(span_notice("[user] scans [interacting_with] with [src]."), span_notice("You scan [interacting_with]'s radiation levels with [src]..."))
@@ -94,6 +95,7 @@
 	SIGNAL_HANDLER
 
 	last_perceived_radiation_danger = get_perceived_radiation_danger(pulse_information, insulation_to_target)
+	last_perceived_radiation_turf = get_turf(source)
 	addtimer(CALLBACK(src, PROC_REF(reset_perceived_danger)), TIME_WITHOUT_RADIATION_BEFORE_RESET, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 	if (scanning)
@@ -101,14 +103,40 @@
 
 /obj/item/geiger_counter/proc/reset_perceived_danger()
 	last_perceived_radiation_danger = null
+	last_perceived_radiation_turf = null
 	if (scanning)
 		update_appearance(UPDATE_ICON)
 
 /obj/item/geiger_counter/proc/scan(atom/target, mob/user)
-	if (SEND_SIGNAL(target, COMSIG_GEIGER_COUNTER_SCAN, user, src) & COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL)
+	var/datum/component/radioactive_contamination/contamination = target.GetComponent(/datum/component/radioactive_contamination)
+	if(contamination)
+		contamination.send_geiger_reading(user, src)
+		send_ambient_radiation_reading(target, user)
 		return
 
-	to_chat(user, span_notice("[icon2html(src, user)] [isliving(target) ? "Subject" : "Target"] is free of radioactive contamination."))
+	if (SEND_SIGNAL(target, COMSIG_GEIGER_COUNTER_SCAN, user, src) & COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL)
+		send_ambient_radiation_reading(target, user)
+		return
+
+	to_chat(user, span_notice("[icon2html(src, user)] [isliving(target) ? "Subject" : "Target"] is free of radioactive surface contamination."))
+	send_ambient_radiation_reading(target, user)
+
+/obj/item/geiger_counter/proc/send_ambient_radiation_reading(atom/target, mob/user)
+	if(isnull(last_perceived_radiation_danger))
+		return
+
+	if(get_turf(target) != last_perceived_radiation_turf)
+		return
+
+	switch(last_perceived_radiation_danger)
+		if(PERCEIVED_RADIATION_DANGER_LOW)
+			to_chat(user, span_alert("[icon2html(src, user)] Ambient radiation at this location is slightly above average."))
+		if(PERCEIVED_RADIATION_DANGER_MEDIUM)
+			to_chat(user, span_warning("[icon2html(src, user)] Ambient radiation at this location is above average."))
+		if(PERCEIVED_RADIATION_DANGER_HIGH)
+			to_chat(user, span_danger("[icon2html(src, user)] Ambient radiation at this location is highly above average."))
+		if(PERCEIVED_RADIATION_DANGER_EXTREME)
+			to_chat(user, span_suicide("[icon2html(src, user)] Ambient radiation at this location is reaching critical level!"))
 
 /obj/item/geiger_counter/click_alt(mob/living/user)
 	if(!scanning)
@@ -116,5 +144,6 @@
 		return CLICK_ACTION_BLOCKING
 	to_chat(user, span_notice("You flush [src]'s radiation counts, resetting it to normal."))
 	last_perceived_radiation_danger = null
+	last_perceived_radiation_turf = null
 	update_appearance(UPDATE_ICON)
 	return CLICK_ACTION_SUCCESS

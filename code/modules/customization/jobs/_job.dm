@@ -77,6 +77,12 @@
 	species_blacklist = list(SEC_RESTRICTED_SPECIES)
 	required_languages = list(/datum/language/common = LANGUAGE_SPOKEN)
 
+/datum/job/security_medic
+	banned_quirks = list(SEC_RESTRICTED_QUIRKS)
+	banned_augments = list(SEC_RESTRICTED_AUGMENTS)
+	species_blacklist = list(SEC_RESTRICTED_SPECIES)
+	required_languages = list(/datum/language/common = LANGUAGE_SPOKEN)
+
 /datum/job/detective
 	banned_quirks = list(SEC_RESTRICTED_QUIRKS)
 	banned_augments = list(SEC_RESTRICTED_AUGMENTS)

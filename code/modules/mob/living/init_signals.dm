@@ -349,11 +349,18 @@
 /// Called when [TRAIT_ANALGESIA] is removed from the mob.
 /mob/living/proc/on_analgesia_trait_loss(datum/source)
 	SIGNAL_HANDLER
-	clear_alert("numbed")
+	update_numbed_alert()
 
 
 /// Called when [TRAIT_ANALGESIA] is added to the mob.
 /mob/living/proc/on_analgesia_trait_gain(datum/source)
 	SIGNAL_HANDLER
+	update_numbed_alert()
+
+/mob/living/proc/update_numbed_alert()
+	if(!HAS_TRAIT(src, TRAIT_ANALGESIA) || HAS_TRAIT_FROM_ONLY(src, TRAIT_ANALGESIA, QUIRK_TRAIT))
+		clear_alert("numbed")
+		return
+
 	throw_alert("numbed", /atom/movable/screen/alert/numbed)
 // END NOVA CORE MIGRATION: code/modules/mob/living/init_signals.dm

@@ -334,6 +334,13 @@
 "Spawn Positions" = 5
 "Total Positions" = 5
 
+[SECURITY_MEDIC]
+"Playtime Requirements" = 120
+"Required Account Age" = 7
+"# Required Character Age" = 0
+"Spawn Positions" = 1
+"Total Positions" = 1
+
 [SHAFT_MINER]
 "Playtime Requirements" = 0
 "Required Account Age" = 0

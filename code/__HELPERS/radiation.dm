@@ -28,6 +28,8 @@
 	threshold,
 	chance = DEFAULT_RADIATION_CHANCE,
 	minimum_exposure_time = 0,
+	apply_surface_contamination = TRUE,
+	surface_contamination_multiplier = 1,
 )
 	if(!SSradiation.can_fire)
 		return
@@ -38,6 +40,8 @@
 	pulse_information.threshold = threshold
 	pulse_information.chance = chance
 	pulse_information.minimum_exposure_time = minimum_exposure_time
+	pulse_information.apply_surface_contamination = apply_surface_contamination
+	pulse_information.surface_contamination_multiplier = surface_contamination_multiplier
 	pulse_information.turfs_to_process = RANGE_TURFS(max_range, source)
 
 	SSradiation.processing += pulse_information
@@ -50,6 +54,8 @@
 	var/threshold
 	var/chance
 	var/minimum_exposure_time
+	var/apply_surface_contamination
+	var/surface_contamination_multiplier
 	var/list/turfs_to_process
 
 #define MEDIUM_RADIATION_THRESHOLD_RANGE 0.5
@@ -76,6 +82,29 @@
 /atom/proc/propagate_radiation_pulse()
 	for(var/atom/atom in orange(1,src))
 		SEND_SIGNAL(atom, COMSIG_ATOM_PROPAGATE_RAD_PULSE, src)
+
+/// Returns the effective pass-through multiplier this atom applies to a radiation pulse crossing [checked_turf].
+/atom/proc/get_effective_rad_insulation(atom/radiation_source, atom/radiation_target, turf/checked_turf)
+	return rad_insulation
+
+/obj/machinery/door/airlock/get_effective_rad_insulation(atom/radiation_source, atom/radiation_target, turf/checked_turf)
+	return max(rad_insulation, RAD_TRANSPARENT_STRUCTURE_MIN_PASS_THROUGH)
+
+/obj/structure/window/get_effective_rad_insulation(atom/radiation_source, atom/radiation_target, turf/checked_turf)
+	var/effective_insulation = max(rad_insulation, RAD_TRANSPARENT_STRUCTURE_MIN_PASS_THROUGH)
+	if(fulltile)
+		return effective_insulation
+
+	var/turf/source_turf = get_turf(radiation_source)
+	if(isnull(source_turf) || isnull(checked_turf) || source_turf == checked_turf)
+		return RAD_NO_INSULATION
+
+	var/source_dir = get_dir(checked_turf, source_turf)
+	if(!(dir & source_dir) && !(turn(dir, 180) & source_dir))
+		return RAD_NO_INSULATION
+
+	var/shielding = RAD_NO_INSULATION - effective_insulation
+	return RAD_NO_INSULATION - (shielding / RAD_DIRECTIONAL_WINDOW_SHIELDING_DIVISOR)
 
 #undef MEDIUM_RADIATION_THRESHOLD_RANGE
 #undef EXTREME_RADIATION_CHANCE
