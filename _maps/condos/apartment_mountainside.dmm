@@ -450,7 +450,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_large_pink_overlay";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -660,7 +660,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_large_pink";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -1256,7 +1256,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_small_pink";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -1751,7 +1751,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_large_pink";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -2196,7 +2196,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_large_pink";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -2205,7 +2205,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_large_pink_overlay";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -2560,7 +2560,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_large_pink_overlay";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -3382,7 +3382,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_large_pink";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -3412,7 +3412,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_small_pink";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -3436,7 +3436,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_large_pink";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -3447,7 +3447,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_small_pink";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -3992,7 +3992,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_large_pink";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -4001,7 +4001,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_large_pink";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -4012,7 +4012,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_small_pink";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -4275,7 +4275,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_large_pink_overlay";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -5163,7 +5163,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_large_pink_overlay";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -5702,7 +5702,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_large_pink_overlay";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -6475,7 +6475,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_small_pink";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -6486,7 +6486,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_large_pink";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -6726,7 +6726,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_large_pink_overlay";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -7834,7 +7834,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_small_pink";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";
@@ -7944,7 +7944,7 @@
 /obj/structure/decorative{
 	anchored = 1;
 	name = "comfy pillow pile";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	icon_state = "pillowpile_small_pink";
 	uses_integrity = 0;
 	desc = "A large pile of pillows. Jump on it!";

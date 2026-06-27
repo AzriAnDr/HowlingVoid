@@ -5,7 +5,7 @@ PDA GALORE!
 /obj/item/modular_computer/pda/ancient
 	name = "ancient PDA"
 	desc = "A piece of plastic, it looks freshly made, but designed off an older model of device."
-	icon = 'icons/obj/devices/modular_pda_additions.dmi'
+	icon = 'icons/obj/devices/pda_additions.dmi'
 	icon_state = "/obj/item/modular_computer/pda/ancient"
 	post_init_icon_state = "pda"
 
@@ -16,7 +16,7 @@ PDA GALORE!
 /obj/item/modular_computer/pda/ultraslim
 	name = "ultraslim PDA"
 	desc = "A newer model of PDA, looking to be half the size... sadly it looks flimsier than others. Try to not drop it."
-	icon = 'icons/obj/devices/modular_pda_additions.dmi'
+	icon = 'icons/obj/devices/pda_additions.dmi'
 	icon_state = "/obj/item/modular_computer/pda/ultraslim"
 	post_init_icon_state = "pda"
 	max_integrity = 50
@@ -28,7 +28,7 @@ PDA GALORE!
 /obj/item/modular_computer/pda/ceti
 	name = "ceti PDA"
 	desc = "A PDA made in the deeper side of frontier space, presiding commonly in the HC, this PDA was built to last."
-	icon = 'icons/obj/devices/modular_pda_additions.dmi'
+	icon = 'icons/obj/devices/pda_additions.dmi'
 	icon_state = "/obj/item/modular_computer/pda/ceti"
 	post_init_icon_state = "pda"
 	max_integrity = 200
@@ -40,7 +40,7 @@ PDA GALORE!
 /obj/item/modular_computer/pda/virtual
 	name = "virtual PDA"
 	desc = "A somewhat useful PDA, with not so great crash padding on it, not sure how this is virtual however."
-	icon = 'icons/obj/devices/modular_pda_additions.dmi'
+	icon = 'icons/obj/devices/pda_additions.dmi'
 	icon_state = "/obj/item/modular_computer/pda/virtual"
 	post_init_icon_state = "pda"
 	max_integrity = 125
@@ -52,7 +52,7 @@ PDA GALORE!
 /obj/item/modular_computer/pda/robust
 	name = "\improper Shell-Shock PDA"
 	desc = "A PDA built similar to that of human's ancient nokia phones, this PDA is built tough, and will take most beatings"
-	icon = 'icons/obj/devices/modular_pda_additions.dmi'
+	icon = 'icons/obj/devices/pda_additions.dmi'
 	icon_state = "/obj/item/modular_computer/pda/robust"
 	post_init_icon_state = "pda"
 	max_integrity = 250 // DAMN THAT IS PRETTY GOOD
@@ -64,7 +64,7 @@ PDA GALORE!
 /obj/item/modular_computer/pda/neko
 	name = "Neko PDA"
 	desc = "This thing is an affront to something."
-	icon = 'icons/obj/devices/modular_pda_additions.dmi'
+	icon = 'icons/obj/devices/pda_additions.dmi'
 	icon_state = "/obj/item/modular_computer/pda/neko"
 	post_init_icon_state = "pda"
 
@@ -75,7 +75,7 @@ PDA GALORE!
 /obj/item/modular_computer/pda/old
 	name = "outdated PDA"
 	desc = "This PDA is from a time since passed, still useful, built tough... may not be as fast due to its older parts.."
-	icon = 'icons/obj/devices/modular_pda_additions.dmi'
+	icon = 'icons/obj/devices/pda_additions.dmi'
 	icon_state = "/obj/item/modular_computer/pda/old"
 	post_init_icon_state = "pda"
 
@@ -86,7 +86,7 @@ PDA GALORE!
 /obj/item/modular_computer/pda/holodeck
 	name = "holodeck PDA"
 	desc = "A somewhat nice PDA, using holo technology for its display."
-	icon = 'icons/obj/devices/modular_pda_additions.dmi'
+	icon = 'icons/obj/devices/pda_additions.dmi'
 	icon_state = "/obj/item/modular_computer/pda/holodeck"
 	post_init_icon_state = "pda"
 
@@ -97,7 +97,7 @@ PDA GALORE!
 /obj/item/modular_computer/pda/hologram
 	name = "holographic PDA"
 	desc = "A rather flimsy PDA device, built with holo technology for displaying data and information."
-	icon = 'icons/obj/devices/modular_pda_additions.dmi'
+	icon = 'icons/obj/devices/pda_additions.dmi'
 	icon_state = "/obj/item/modular_computer/pda/hologram"
 	post_init_icon_state = "pda"
 	max_integrity = 50
@@ -109,7 +109,7 @@ PDA GALORE!
 /obj/item/modular_computer/pda/tablet
 	name = "tablet PDA"
 	desc = "A niche type of PDA, it is rumored you can hear someone asking if you have games on it."
-	icon = 'icons/obj/devices/modular_pda_additions.dmi'
+	icon = 'icons/obj/devices/pda_additions.dmi'
 	icon_state = "/obj/item/modular_computer/pda/tablet"
 	post_init_icon_state = "pda"
 
@@ -120,7 +120,7 @@ PDA GALORE!
 /obj/item/modular_computer/pda/slimline
 	name = "slim PDA"
 	desc = "A much slimmer, portable micro computer"
-	icon = 'icons/obj/devices/modular_pda_additions.dmi'
+	icon = 'icons/obj/devices/pda_additions.dmi'
 	icon_state = "/obj/item/modular_computer/pda/slimline"
 	post_init_icon_state = "pda"
 
@@ -131,7 +131,7 @@ PDA GALORE!
 /obj/item/modular_computer/pda/rugged
 	name = "rugged PDA"
 	desc = "A much more rugged and well-built portable micro computer."
-	icon = 'icons/obj/devices/modular_pda_additions.dmi'
+	icon = 'icons/obj/devices/pda_additions.dmi'
 	icon_state = "/obj/item/modular_computer/pda/rugged"
 	post_init_icon_state = "pda"
 	max_integrity = 150
@@ -143,7 +143,7 @@ PDA GALORE!
 /obj/item/modular_computer/pda/g3
 	name = "\improper G3 PDA"
 	desc = "A unique portable micro computer design."
-	icon = 'icons/obj/devices/modular_pda_additions.dmi'
+	icon = 'icons/obj/devices/pda_additions.dmi'
 	icon_state = "/obj/item/modular_computer/pda/g3"
 	post_init_icon_state = "pda"
 	max_integrity = 50
@@ -155,7 +155,7 @@ PDA GALORE!
 /obj/item/modular_computer/pda/holosystem
 	name = "holosystem PDA"
 	desc = "A holographic portable micro computer."
-	icon = 'icons/obj/devices/modular_pda_additions.dmi'
+	icon = 'icons/obj/devices/pda_additions.dmi'
 	icon_state = "/obj/item/modular_computer/pda/holosystem"
 	post_init_icon_state = "pda"
 	max_integrity = 50

@@ -29,7 +29,7 @@
 "aE" = (
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_small_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_y = 16
@@ -304,7 +304,7 @@
 "eq" = (
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_large_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_x = 16;
@@ -314,7 +314,7 @@
 /obj/structure/bed/pillow_large,
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_small_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_y = 23;
@@ -338,7 +338,7 @@
 "eD" = (
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_large_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_x = 16;
@@ -348,7 +348,7 @@
 /obj/structure/bed/pillow_large,
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_small_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_y = 23;
@@ -482,7 +482,7 @@
 "gk" = (
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_large_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_x = 16;
@@ -492,7 +492,7 @@
 /obj/structure/bed/pillow_large,
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_small_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_y = 23;
@@ -898,7 +898,7 @@
 "ml" = (
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_large_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_x = 16;
@@ -966,7 +966,7 @@
 "mI" = (
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_large_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_x = 16;
@@ -976,7 +976,7 @@
 /obj/structure/bed/pillow_large,
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_small_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_y = 23;
@@ -1047,7 +1047,7 @@
 "nw" = (
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_small_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_y = 16
@@ -1125,7 +1125,7 @@
 "oh" = (
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_large_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_x = 16;
@@ -1134,7 +1134,7 @@
 	},
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_small_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_y = 16
@@ -1412,7 +1412,7 @@
 "us" = (
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_large_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_x = 16;
@@ -1422,7 +1422,7 @@
 /obj/structure/bed/pillow_large,
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_small_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_y = 23;
@@ -3200,7 +3200,7 @@
 /obj/structure/bed/pillow_large,
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_small_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_y = 23;
@@ -3721,7 +3721,7 @@
 "UF" = (
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_large_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_x = 16;
@@ -3730,7 +3730,7 @@
 	},
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_small_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_y = 16
@@ -3778,7 +3778,7 @@
 /obj/structure/bed/pillow_large,
 /obj/structure/decorative/fluff{
 	icon_state = "pillowpile_small_pink";
-	icon = 'icons/modular_items/lewd_items/icons/obj/lewd_structures/pillows.dmi';
+	icon = 'icons/lewd/icons/obj/lewd_structures/pillows.dmi';
 	name = "large pillow pile";
 	desc = "A large pile of pillows. Jump on it!";
 	pixel_y = 16

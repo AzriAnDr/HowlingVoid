@@ -2647,7 +2647,7 @@ This is all our modular PDAs, ITS LARGE!
 /// Ported from VOREstation
 /datum/greyscale_config/tablet/nova
 	name = "Ancient PDA"
-	icon_file = 'icons/obj/devices/modular_pda_additions.dmi'
+	icon_file = 'icons/obj/devices/pda_additions.dmi'
 	json_config = 'code/datums/greyscale/json_configs/gags/modular_pda/ancient/pda_ancient.json'
 
 /// Ported from DopplerStation 13

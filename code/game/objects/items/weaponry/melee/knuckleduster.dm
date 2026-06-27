@@ -4,7 +4,7 @@
 	name = "knuckle dusters"
 	desc = "Weighted rings for the knuckles. While worn, you fistfight like a dishonorable \"street\" boxer, proving formidable in a brawl. \
 		Putting these on does briefly encumber your hands, though."
-	icon = 'icons/obj/weapons/melee/modular_weapons.dmi'
+	icon = 'icons/obj/weapons/melee/nova_melee.dmi'
 	icon_state = "knuckleduster"
 	inhand_icon_state = null
 	worn_icon = 'icons/mob/clothing/hands_additions.dmi'
