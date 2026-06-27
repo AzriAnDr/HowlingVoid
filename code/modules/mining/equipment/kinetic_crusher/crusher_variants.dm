@@ -12,12 +12,12 @@
 	block_sound = 'sound/items/weapons/parry.ogg' //Added this for cases for the machete or adding the Marked One's trophy to the crusher variants.
 
 /obj/item/kinetic_crusher/machete
-	icon = 'icons/mining_crushers/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/mining_crushers.dmi'
 	icon_state = "PKMachete"
 	inhand_icon_state = "PKMachete0"
-	lefthand_file = 'icons/mining_crushers/melee_lefthand.dmi'
-	righthand_file = 'icons/mining_crushers/melee_righthand.dmi'
-	worn_icon = 'icons/mining_crushers/belt.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/mining_crushers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/mining_crushers_righthand.dmi'
+	worn_icon = 'icons/mob/clothing/belt/mining_crushers.dmi'
 	worn_icon_state = "PKMachete0"
 	name = "proto-kinetic machete"
 	desc = "A further-developed iteration of the proto-kinetic crusher, compacting the essentials of the kinetic crusher's destabilizer unit \
@@ -64,12 +64,12 @@
 		inhand_icon_state = "PKMachete0" // this is not icon_state and not supported by 2hcomponent
 
 /obj/item/kinetic_crusher/spear
-	icon = 'icons/mining_crushers/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/mining_crushers.dmi'
 	icon_state = "PKSpear"
 	inhand_icon_state = "PKSpear0"
-	lefthand_file = 'icons/mining_crushers/melee_lefthand.dmi'
-	righthand_file = 'icons/mining_crushers/melee_righthand.dmi'
-	worn_icon = 'icons/mining_crushers/back.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/mining_crushers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/mining_crushers_righthand.dmi'
+	worn_icon = 'icons/mob/clothing/back/mining_crushers.dmi'
 	worn_icon_state = "PKSpear0"
 	name = "proto-kinetic spear"
 	desc = "A further-developed iteration of the proto-kinetic crusher, with safety as less of an afterthought. A streamlined destabilizer unit along with \
@@ -112,12 +112,12 @@
 		inhand_icon_state = "PKSpear[HAS_TRAIT(src, TRAIT_WIELDED)]" // this is not icon_state and not supported by 2hcomponent
 
 /obj/item/kinetic_crusher/hammer
-	icon = 'icons/mining_crushers/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/mining_crushers.dmi'
 	icon_state = "PKHammer"
 	inhand_icon_state = "PKHammer0"
-	lefthand_file = 'icons/mining_crushers/melee_lefthand.dmi'
-	righthand_file = 'icons/mining_crushers/melee_righthand.dmi'
-	worn_icon = 'icons/mining_crushers/back.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/mining_crushers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/mining_crushers_righthand.dmi'
+	worn_icon = 'icons/mob/clothing/back/mining_crushers.dmi'
 	worn_icon_state = "PKHammer0"
 	name = "proto-kinetic hammer"
 	desc = "A further-developed iteration of the proto-kinetic crusher, designed with raw force in mind. \
@@ -168,11 +168,11 @@
 		inhand_icon_state = "PKHammer[HAS_TRAIT(src, TRAIT_WIELDED)]" // this is not icon_state and not supported by 2hcomponent
 
 /obj/item/kinetic_crusher/claw
-	icon = 'icons/mining_crushers/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/mining_crushers.dmi'
 	icon_state = "PKClaw"
 	inhand_icon_state = "PKClaw0"
-	lefthand_file = 'icons/mining_crushers/melee_lefthand.dmi'
-	righthand_file = 'icons/mining_crushers/melee_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/mining_crushers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/mining_crushers_righthand.dmi'
 	worn_icon_state = "PKHammer0"
 	slot_flags = NONE
 	name = "proto-kinetic claw"

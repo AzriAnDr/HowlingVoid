@@ -9,10 +9,10 @@
 /obj/item/crusher_conversion_kit
 	name = "crusher conversion kit"
 	desc = "A tool designed to adapt to a shaft miner's needs. Upon activation, this kit allows the user to select and transform the base kit into one of several kinetic crusher variants. Use in hand to activate."
-	icon = 'icons/mining_crushers/crusher_conversion_kit.dmi'
+	icon = 'icons/obj/weapons/crusher_conversion_kit.dmi'
 	icon_state = "crusher_kit"
-	lefthand_file = 'icons/mining_crushers/kit_lefthand.dmi'
-	righthand_file = 'icons/mining_crushers/kit_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/crusher_kit_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/crusher_kit_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	/// Tooltips for the crusher variants shown in the selection UI
 	var/static/list/subtype2descriptions = list(

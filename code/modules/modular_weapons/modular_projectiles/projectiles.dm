@@ -167,21 +167,6 @@
 			to_chat(living_guy, span_warning("As [src] hits you, you feel exhaustion set in."))
 			return
 
-// 4.6x30mm
-
-/obj/projectile/bullet/c46x30mm/rubber
-	name = "4.6x30mm rubber bullet"
-	damage = 3
-	stamina = 17
-	ricochets_max = 6
-	ricochet_incidence_leeway = 0
-	ricochet_chance = 130
-	ricochet_decay_damage = 0.7
-	shrapnel_type = null
-	sharpness = NONE
-	embed_data = null
-	wound_bonus = -50
-
 // .223
 
 /obj/projectile/bullet/a223/rubber

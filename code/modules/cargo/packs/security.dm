@@ -277,6 +277,34 @@
 	)
 	crate_name = "battle rifle crate"
 
+/datum/supply_pack/security/armory/wt550/sec
+	name = "Surplus WT-550 Crate"
+	desc = "An entire crate of outdated service rifles, offered by your wonderful benefactors, Nanotrasen. \
+		Employees are reminded that rumors of face-melting are just that, and these weapons are entirely safe, if not \
+		entirely up to modern standards; all the same, Nanotrasen is not responsible for issues arising from their deployment. \
+		Ammo sold separately."
+	cost = CARGO_CRATE_VALUE * 8
+	access = ACCESS_ARMORY
+	access_view = ACCESS_ARMORY
+	contains = list(
+		/obj/item/gun/ballistic/automatic/wt550 = 3,
+	)
+	crate_name = "Surplus Autorifles Crate"
+	crate_type = /obj/structure/closet/crate/secure/weapon
+
+/datum/supply_pack/security/armory/wt550ammo_sec
+	name = "Surplus WT-550 Ammo Crate"
+	desc = "A crate of WT-550 ammunition, intended to supply surplus rifles, or be taken as a novelty."
+	cost = CARGO_CRATE_VALUE * 6
+	access = ACCESS_ARMORY
+	access_view = ACCESS_ARMORY
+	contains = list(
+		/obj/item/ammo_box/magazine/wt550m9 = 3,
+		/obj/item/ammo_box/magazine/wt550m9/rub = 3,
+	)
+	crate_name = "Surplus Ammunition Crate"
+	crate_type = /obj/structure/closet/crate/secure/weapon
+
 /datum/supply_pack/security/armory/br_mag
 	name = "NT BR-38 Magazine Crate"
 	desc = "Six .38 magazines, able to fit into the NT BR-38. Contains \

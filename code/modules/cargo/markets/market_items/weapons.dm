@@ -259,4 +259,23 @@
 	price_max = CARGO_CRATE_VALUE * 6
 	availability_prob = 40
 	stock_max = 3
+
+/datum/market_item/weapon/wt550
+	name = "WT-550 Autorifle"
+	desc = "*!&@#FANCY SEEING YOU HERE, AGENT! YOU KNOW THE OFFER - AN AUTORIFLE, FOR YOUR USE AND ENJOYMENT!#@*$"
+	item = /obj/item/gun/ballistic/automatic/wt550
+	price_min = CARGO_CRATE_VALUE * 0.75
+	price_max = CARGO_CRATE_VALUE * 3
+	stock_max = 3
+	availability_prob = 60
+
+/datum/market_item/weapon/wt550/ammo
+	name = "WT-550 Autorifle Ammunition"
+	desc = "'Enumerate with your WT-550: Projectile Thrown Weapon. Container has 6 REAL WT-550 Magazine Ammunitions and hours of fun!'"
+	item = /obj/item/storage/toolbox/ammobox/wt550
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 5
+	stock_max = 4
+	stock_min = 2
+	availability_prob = 90
 // END NOVA CORE MIGRATION: code/modules/cargo/markets/market_items/weapons.dm

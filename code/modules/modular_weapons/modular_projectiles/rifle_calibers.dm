@@ -16,15 +16,6 @@
 	ammo_categories = AMMO_CLASS_NICHE
 	custom_materials = AMMO_MATS_TEMP
 
-/obj/item/ammo_casing/c46x30mm/rubber
-	name = "4.6x30mm rubber bullet casing"
-	desc = "A 4.6x30mm rubber bullet casing.\
-		<br><br>\
-		<i>RUBBER: Less than lethal ammo. Deals both stamina damage and regular damage.</i>"
-	ammo_categories = AMMO_CLASS_NONE
-	projectile_type = /obj/projectile/bullet/c46x30mm/rubber
-	harmful = FALSE
-
 /*
 *	.223
 */

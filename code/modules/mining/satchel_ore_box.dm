@@ -120,10 +120,10 @@
 	name = "ore box reinforcement kit"
 	desc = "A case containing reinforced thermally-resistant plastic parts for standard wooden ore boxes used across the universe. \
 		Contains all the parts and proprietary tools required to make an ore box significantly less prone to combustion-based disassembly."
-	icon = 'icons/mining_crushers/crusher_conversion_kit.dmi'
+	icon = 'icons/obj/weapons/crusher_conversion_kit.dmi'
 	icon_state = "crusher_kit"
-	lefthand_file = 'icons/mining_crushers/kit_lefthand.dmi'
-	righthand_file = 'icons/mining_crushers/kit_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/crusher_kit_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/crusher_kit_righthand.dmi'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4)
 	w_class = WEIGHT_CLASS_BULKY
 

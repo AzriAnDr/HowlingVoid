@@ -52,6 +52,15 @@
 	name = "4.6x30mm AP ammo box"
 	ammo_to_spawn = /obj/item/ammo_box/magazine/wt550m9/wtap
 
+/obj/item/storage/toolbox/ammobox/wt550
+	name = "ammo box (wt-550)"
+	desc = "If the label's accurate, this contains 'Standerd Capacity Ammo Full Size Ammo Capacity Magazine Shoot Gun For Wt-550 Gun Rifle Security BEST PRICE'."
+
+/obj/item/storage/toolbox/ammobox/wt550/PopulateContents()
+	for(var/i in 1 to 6)
+		var/magazine_type = pick(/obj/item/ammo_box/magazine/wt550m9, /obj/item/ammo_box/magazine/wt550m9/rub, /obj/item/ammo_box/magazine/wt550m9/wtic, /obj/item/ammo_box/magazine/wt550m9/wtap)
+		new magazine_type(src)
+
 
 /obj/item/storage/toolbox/guncase
 	name = "gun case"

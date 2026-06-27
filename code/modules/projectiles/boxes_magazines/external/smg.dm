@@ -23,6 +23,12 @@
 	MAGAZINE_TYPE_INCENDIARY
 	ammo_type = /obj/item/ammo_casing/c46x30mm/inc
 
+/obj/item/ammo_box/magazine/wt550m9/rub
+	name = "\improper WT-550 magazine (4.6x30mm rubber)"
+	desc = "A top-loading 4.6x30mm magazine, specifically to carry less than lethal ammo."
+	ammo_band_color = "#2596be"
+	ammo_type = /obj/item/ammo_casing/c46x30mm/rubber
+
 
 /obj/item/ammo_box/magazine/smartgun
 	name = "Abielle magazine (.160 Smart)"

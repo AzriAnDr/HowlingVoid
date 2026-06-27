@@ -39,3 +39,14 @@
 	name = "4.6x30mm incendiary bullet"
 	damage = 10
 	fire_stacks = 1
+
+/obj/projectile/bullet/c46x30mm/rubber
+	name = "4.6x30mm rubber bullet"
+	damage = 5
+	stamina = 20
+	wound_bonus = -10
+	ricochets_max = 2
+	ricochet_incidence_leeway = 0
+	ricochet_chance = 70
+	ricochet_decay_damage = 0.7
+	sharpness = NONE
