@@ -27,6 +27,8 @@ DEFINE_BITFIELD(check_flags, list(
 #define TRIGGER_SECONDARY_ACTION (1<<0)
 ///Action triggered to ignore any availability checks
 #define TRIGGER_FORCE_AVAILABLE (1<<1)
+///Action button triggered with ctrl held
+#define TRIGGER_CTRL_ACTION (1<<2)
 
 #define ACTION_BUTTON_DEFAULT_BACKGROUND "_use_ui_default_background"
 

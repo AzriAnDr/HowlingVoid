@@ -68,6 +68,8 @@
 	var/trigger_flags
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		trigger_flags |= TRIGGER_SECONDARY_ACTION
+	if(LAZYACCESS(modifiers, CTRL_CLICK))
+		trigger_flags |= TRIGGER_CTRL_ACTION
 	linked_action.Trigger(usr, trigger_flags = trigger_flags)
 	return TRUE
 
