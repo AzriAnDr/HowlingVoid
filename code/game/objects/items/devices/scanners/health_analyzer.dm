@@ -59,6 +59,8 @@
 	var/next_scan_update = 0
 	/// Whether the insurance tab should show detailed calculation rows.
 	var/current_insurance_details = FALSE
+	/// Whether scan results should open the TGUI window instead of being printed to chat.
+	var/use_scan_window = FALSE
 
 /obj/item/healthanalyzer/Initialize(mapload)
 	. = ..()
@@ -71,7 +73,7 @@
 /obj/item/healthanalyzer/examine(mob/user)
 	. = ..()
 	if(src.mode != SCANNER_NO_MODE)
-		. += span_notice("Alt-click [src] to toggle the limb damage readout. Ctrl-shift-click to print readout report.")
+		. += span_notice("Alt-click [src] to toggle the limb damage readout. Ctrl-click to toggle scan window output. Ctrl-shift-click to print readout report.")
 
 /obj/item/healthanalyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!"))
@@ -135,14 +137,14 @@
 	switch (scanmode)
 		if (SCANMODE_HEALTH)
 			if(readability_check)
-				begin_current_scan(user, M, HEALTH_ANALYZER_SCAN_HEALTH)
+				show_scan_results(user, M, HEALTH_ANALYZER_SCAN_HEALTH)
 			if((M.health / M.maxHealth) > CLEAN_BILL_OF_HEALTH_RATIO)
 				last_healthy_scanned = WEAKREF(M)
 			else
 				last_healthy_scanned = null
 		if (SCANMODE_WOUND)
 			if(readability_check)
-				begin_current_scan(user, M, HEALTH_ANALYZER_SCAN_WOUNDS)
+				show_scan_results(user, M, HEALTH_ANALYZER_SCAN_WOUNDS)
 
 	add_fingerprint(user)
 
@@ -150,7 +152,7 @@
 	if(!isliving(interacting_with))
 		return NONE
 	if(user.can_read(src)) // NOVA EDIT CHANGE - Blind people can analyze again - ORIGINAL: if(user.can_read(src) || !user.is_blind())
-		begin_current_scan(user, interacting_with, HEALTH_ANALYZER_SCAN_CHEMICALS)
+		show_scan_results(user, interacting_with, HEALTH_ANALYZER_SCAN_CHEMICALS)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/healthanalyzer/ui_status(mob/user, datum/ui_state/state)
@@ -288,6 +290,20 @@
 	START_PROCESSING(SSobj, src)
 	ui_interact(user)
 
+/obj/item/healthanalyzer/proc/show_scan_results(mob/living/user, mob/living/target, scan_type)
+	if(use_scan_window)
+		begin_current_scan(user, target, scan_type)
+		return
+
+	clear_current_scan()
+	switch(scan_type)
+		if(HEALTH_ANALYZER_SCAN_HEALTH)
+			last_scan_text = healthscan(user, target, mode, advanced, tochat = TRUE)
+		if(HEALTH_ANALYZER_SCAN_WOUNDS)
+			last_scan_text = woundscan(user, target, src, tochat = TRUE)
+		if(HEALTH_ANALYZER_SCAN_CHEMICALS)
+			last_scan_text = chemscan(user, target, tochat = TRUE)
+
 /obj/item/healthanalyzer/proc/update_current_scan(mob/living/user, mob/living/target)
 	if(!user || !target)
 		return
@@ -322,6 +338,7 @@
 /obj/item/healthanalyzer/internal
 	name = "internal health analyzer interface"
 	advanced = TRUE
+	use_scan_window = TRUE
 	/// The implanted organ that owns this scanner interface.
 	var/datum/weakref/internal_analyzer
 
@@ -551,6 +568,7 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Scan wounds"
 
 	context[SCREENTIP_CONTEXT_RMB] = "Scan chemicals"
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle chat/window output"
 
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -1062,7 +1080,9 @@
 	var/rounded_volume = round(volume, 0.001)
 	var/volume_text = compact_unit ? "[rounded_volume][unit_name]" : "[rounded_volume] [unit_name] of"
 	var/reagent_line = "<span class='notice ml-2'><font color='#ffdf7e'><b>[volume_text]</b></font> <font color='[reagent_color]'><b>[reagent.name]</b></font>"
-	if(reagent.overdosed)
+	var/overdose_threshold = reagent.overdose_threshold
+	var/has_finite_overdose = overdose_threshold && overdose_threshold < INFINITY
+	if(reagent.overdosed || (has_finite_overdose && volume >= overdose_threshold))
 		return "[reagent_line]</span> - [span_bolddanger("<font color='#ff4c55'><b>[overdose_text]</b></font>")]<br>"
 	return "[reagent_line].</span><br>"
 
@@ -1099,6 +1119,16 @@
 
 	mode = !mode
 	to_chat(user, mode == SCANNER_VERBOSE ? "The scanner now shows specific limb damage." : "The scanner no longer shows limb damage.")
+	return CLICK_ACTION_SUCCESS
+
+/obj/item/healthanalyzer/item_ctrl_click(mob/user)
+	if(!user.can_read(src))
+		return CLICK_ACTION_BLOCKING
+
+	use_scan_window = !use_scan_window
+	if(!use_scan_window)
+		clear_current_scan()
+	to_chat(user, span_notice("The scanner now sends readouts to [use_scan_window ? "a scan window" : "chat"]."))
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/healthanalyzer/advanced
