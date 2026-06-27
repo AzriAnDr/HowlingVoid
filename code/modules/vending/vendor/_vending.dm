@@ -208,10 +208,86 @@
 	//the path of the fish_source datum to use for the fishing_spot component
 	var/fish_source_path = /datum/fish_source/vending
 
+	/// Additions to the products list. Cleared after Initialize to free memory.
+	var/list/products_nova
+	/// Additions to the product_categories list. Cleared after Initialize to free memory.
+	var/list/product_categories_nova
+	/// Additions to the premium list. Cleared after Initialize to free memory.
+	var/list/premium_nova
+	/// Additions to the contraband list. Cleared after Initialize to free memory.
+	var/list/contraband_nova
+
 /datum/armor/machinery_vending
 	melee = 20
 	fire = 50
 	acid = 70
+
+#define MINIMUM_CLOTHING_STOCK 5
+
+/obj/machinery/vending/proc/apply_nova_products()
+	if(products_nova)
+		for(var/item_to_add in products_nova)
+			products[item_to_add] = products_nova[item_to_add]
+
+	if(product_categories_nova)
+		for(var/list/category in product_categories_nova)
+			var/already_exists = FALSE
+			for(var/list/existing_category in product_categories)
+				if(existing_category["name"] == category["name"])
+					existing_category["products"] |= category["products"]
+					already_exists = TRUE
+					break
+
+			if(!already_exists)
+				product_categories |= category
+
+	if(premium_nova)
+		for(var/item_to_add in premium_nova)
+			premium[item_to_add] = premium_nova[item_to_add]
+
+	if(contraband_nova)
+		for(var/item_to_add in contraband_nova)
+			contraband[item_to_add] = contraband_nova[item_to_add]
+
+	for(var/obj/item/clothing/item_path as anything in products)
+		if(!ispath(item_path, /obj/item/clothing))
+			continue
+		if(products[item_path] < MINIMUM_CLOTHING_STOCK && allow_product_stock_increase(item_path))
+			products[item_path] = MINIMUM_CLOTHING_STOCK
+
+	for(var/list/category in product_categories)
+		for(var/obj/item/clothing/item_path as anything in category["products"])
+			if(!ispath(item_path, /obj/item/clothing))
+				continue
+			if(category["products"][item_path] < MINIMUM_CLOTHING_STOCK && allow_product_stock_increase(item_path))
+				category["products"][item_path] = MINIMUM_CLOTHING_STOCK
+
+	for(var/obj/item/clothing/item_path as anything in premium)
+		if(!ispath(item_path, /obj/item/clothing))
+			continue
+		if(premium[item_path] < MINIMUM_CLOTHING_STOCK && allow_product_stock_increase(item_path))
+			premium[item_path] = MINIMUM_CLOTHING_STOCK
+
+	products_nova?.Cut()
+	product_categories_nova?.Cut()
+	premium_nova?.Cut()
+	contraband_nova?.Cut()
+
+/obj/machinery/vending/proc/allow_product_stock_increase(obj/item/clothing/clothing_path)
+	if(ispath(clothing_path, /obj/item/clothing/suit/armor))
+		return FALSE
+	if(ispath(clothing_path, /obj/item/clothing/head/helmet))
+		return FALSE
+	if(ispath(clothing_path, /obj/item/clothing/gloves))
+		return FALSE
+	if(clothing_path::flash_protect == FLASH_PROTECTION_WELDER)
+		return FALSE
+	var/obj/item/clothing/clothing = new clothing_path()
+	if(TRAIT_DEAF in clothing.clothing_traits)
+		qdel(clothing)
+		return FALSE
+	qdel(clothing)
+	return TRUE
 
 /**
  * Initialize the vending machine
@@ -223,6 +299,8 @@
  * * TRUE - all other cases
  */
 /obj/machinery/vending/Initialize(mapload)
+	apply_nova_products()
+
 	//means we produce products with fixed amounts
 	if(!refill_canister)
 		circuit = null
@@ -264,6 +342,13 @@
 
 	if(fish_source_path)
 		AddComponent(/datum/component/fishing_spot, fish_source_path)
+
+#undef MINIMUM_CLOTHING_STOCK
+
+/obj/machinery/vending/spawn_frame(disassembled)
+	if(ai_controller)
+		set_anchored(FALSE)
+	return ..()
 
 /obj/machinery/vending/atom_break(damage_flag)
 	. = ..()
