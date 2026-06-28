@@ -3,7 +3,8 @@
 /obj/machinery/power/thermoelectric_generator
 	name = "thermoelectric generator"
 	desc = "It's a high efficiency thermoelectric generator."
-	icon_state = "teg"
+	icon = 'icons/obj/machines/thermoelectric.dmi'
+	icon_state = "teg-unassembled"
 	base_icon_state = "teg"
 	density = TRUE
 	use_power = NO_POWER_USE
@@ -45,16 +46,28 @@
 /obj/machinery/power/thermoelectric_generator/on_deconstruction(disassembled)
 	null_circulators()
 
+/obj/machinery/power/thermoelectric_generator/update_icon_state()
+	. = ..()
+	if(machine_stat & BROKEN)
+		icon_state = "[base_icon_state]-broken"
+		return
+
+	icon_state = "[base_icon_state]-[hot_circ && cold_circ ? "assembled" : "unassembled"]"
+
 /obj/machinery/power/thermoelectric_generator/update_overlays()
 	. = ..()
-	if(machine_stat & (NOPOWER|BROKEN))
+	if(machine_stat & BROKEN)
+		return
+
+	if(panel_open)
+		. += "[base_icon_state]-panel"
+
+	if(machine_stat & NOPOWER)
 		return
 
 	var/level = min(round(lastgenlev / 100000), 11)
 	if(level)
-		. += mutable_appearance('icons/obj/machines/engine/other.dmi', "[base_icon_state]-op[level]")
-	if(hot_circ && cold_circ)
-		. += "[base_icon_state]-oc[last_pressure_overlay]"
+		. += "[base_icon_state]-op[level]"
 
 /obj/machinery/power/thermoelectric_generator/wrench_act(mob/living/user, obj/item/tool)
 	if(!panel_open)

@@ -1,18 +1,18 @@
 # Карта перенесённого контента Howling Void
 
-Этот документ показывает, что было вынесено из `former_howling_void_module_tree/` и где это теперь искать и править.
+Этот документ показывает, что было вынесено из старого `former_howling_void_module_tree/` и где это теперь искать и править в активном дереве проекта.
 
 ## Общее правило
 
-Не добавляйте новый код обратно в `former_howling_void_module_tree/`. Новые изменения Howling Void должны жить в подходящем core- или Nova-файле:
+Бывшие `former_howling_void_module_tree/` и `former_nova_module_tree/` больше не являются активными рабочими деревьями. Не добавляйте туда новый код и не используйте эти пути как место для правок. Новые изменения Howling Void должны жить в подходящем файле активного дерева:
 
 - TG-style системы кладём в `code/`.
-- Nova-кастомизацию и Nova-owned системы оставляем в `former_nova_module_tree/`.
-- Иконки кладём в `icons/` или в уже существующую Nova-папку иконок для этой системы.
+- Nova-кастомизацию и Nova-owned системы ищем и правим там, куда они уже вмёржены: обычно в `code/modules/`, `code/datums/`, `code/__DEFINES/~nova_defines/`, `icons/` или `sound/`.
+- Иконки кладём в `icons/` или уже существующую активную папку иконок для этой системы.
 - Звуки кладём в `sound/`.
 - Каждый новый `.dm` файл должен быть добавлен в `tgstation.dme`.
 
-Перед изменением перенесённой системы сначала ищите существующий тип в `code/` и `former_nova_module_tree/`. Большая часть старых модульных файлов была влита в уже существующие файлы типов.
+Перед изменением перенесённой системы сначала ищите существующий тип в активном дереве `code/` и связанных ассетах/конфигах. Большая часть старых модульных файлов была влита в уже существующие файлы типов.
 
 ## Экономика
 
@@ -43,11 +43,11 @@
 - clothing-иконки Nabber: `icons/mob/clothing/species/nabber/`
 - item-иконки Nabber: `icons/obj/species/nabber/`
 - звуки Nabber: `sound/mobs/humanoids/nabber/`
-- GAGS fallback-конфиги Nabber: `former_nova_module_tree/modules/GAGS/json_configs/nabber_fallbacks/`
+- GAGS fallback-конфиги Nabber: `code/datums/greyscale/json_configs/gags/nabber_fallbacks/`
 - иконка aquatic organs: `icons/organs/aquatic_organs.dmi`
-- Shadekin-иконки и органы: `former_nova_module_tree/modules/shadekin/`, `former_nova_module_tree/modules/bodyparts/` и существующие customization-файлы.
+- Shadekin-иконки и органы: `code/modules/customization/mob/living/carbon/human/species/shadekin.dm`, `code/modules/bodyparts/shadekin_bodyparts.dm`, `code/modules/shadekin/organs.dm`, `icons/bodyparts/` и `icons/shadekin/`.
 
-Plural-файлы видов вроде `aquatics.dm`, `dullahans.dm` и `vulpkanins.dm` не оставлялись отдельными файлами. Их содержимое влито в соответствующие существующие species-файлы в `code/` или `former_nova_module_tree/`.
+Plural-файлы видов вроде `aquatics.dm`, `dullahans.dm` и `vulpkanins.dm` не оставлялись отдельными файлами. Их содержимое влито в соответствующие существующие species-файлы в `code/`.
 
 ## Карго рядом с экономикой
 
@@ -58,8 +58,8 @@ Plural-файлы видов вроде `aquatics.dm`, `dullahans.dm` и `vulpka
 
 Новые места:
 
-- company cargo packs: `former_nova_module_tree/master_files/code/modules/cargo/packs/companies/`
-- surplus weapon crate entries: `code/modules/modular_weapons/cargo_crates/armory_guns.dm`
+- company cargo packs: `code/modules/cargo/packs/companies/`
+- surplus/company weapon crate entries: `code/modules/cargo/packs/companies/` and related cargo pack files
 
 Используйте существующие company pack-файлы вместо создания нового cargo-модуля.
 
@@ -158,9 +158,9 @@ Plural-файлы видов вроде `aquatics.dm`, `dullahans.dm` и `vulpka
 
 Новое место:
 
-- storage item definitions: `code/modules/modular_items/bags.dm`
+- storage item definitions: `code/modules/items/bags.dm` and nearby storage files under `code/modules/items/`
 
-Для небольших семейств предметов используйте существующие Nova modular item-файлы вместо восстановления отдельного storage-модуля.
+Для небольших семейств предметов используйте существующие active item/storage-файлы вместо восстановления отдельного storage-модуля.
 
 ## Interaction menu
 
@@ -209,7 +209,7 @@ Plural-файлы видов вроде `aquatics.dm`, `dullahans.dm` и `vulpka
 
 Перед тем как считать порт завершённым:
 
-1. Найдите старые `former_howling_void_module_tree` пути в `tgstation.dme`, `code/`, `former_nova_module_tree/`, `_maps/` и config-файлах.
+1. Найдите старые `former_howling_void_module_tree` / `former_nova_module_tree` пути в `tgstation.dme`, `code/`, `_maps/` и config-файлах; в активных include/reference путях их быть не должно.
 2. Убедитесь, что каждый новый `.dm` файл добавлен в `tgstation.dme`.
 3. Проверьте, что все referenced `.dmi`, `.ogg` и `.wav` файлы существуют.
 4. Data-only rebalance держите читаемыми таблицами, если разброс значений по файлам усложнит поддержку.
