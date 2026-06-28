@@ -586,7 +586,6 @@
 	addtimer(CALLBACK(src, PROC_REF(announce_space_dragon)), rand(5, 10) SECONDS)
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/proc/announce_space_dragon()
-	return
 	priority_announce(
 		"A large organic energy flux has been recorded near of [station_name()], please stand-by.",
 		"Lifesign Alert",
