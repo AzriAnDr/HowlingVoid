@@ -1,5 +1,5 @@
 /datum/wires/particle_accelerator/control_box
-	holder_type = /obj/machinery/particle_accelerator/control_box
+	holder_type = /obj/machinery/power/particle_accelerator/control_box
 	proper_name = "Particle Accelerator"
 
 /datum/wires/particle_accelerator/control_box/New(atom/holder)
@@ -15,11 +15,11 @@
 /datum/wires/particle_accelerator/control_box/interactable(mob/user)
 	if(!..())
 		return FALSE
-	var/obj/machinery/particle_accelerator/control_box/control_box = holder
+	var/obj/machinery/power/particle_accelerator/control_box/control_box = holder
 	return control_box.construction_state == PA_CONSTRUCTION_PANEL_OPEN
 
 /datum/wires/particle_accelerator/control_box/on_pulse(wire, mob/living/user)
-	var/obj/machinery/particle_accelerator/control_box/control_box = holder
+	var/obj/machinery/power/particle_accelerator/control_box/control_box = holder
 	switch(wire)
 		if(WIRE_POWER)
 			control_box.toggle_power()
@@ -31,7 +31,7 @@
 			control_box.visible_message("[icon2html(control_box, viewers(holder))]<b>[control_box]</b> makes a large whirring noise.")
 
 /datum/wires/particle_accelerator/control_box/on_cut(wire, mend, mob/living/source)
-	var/obj/machinery/particle_accelerator/control_box/control_box = holder
+	var/obj/machinery/power/particle_accelerator/control_box/control_box = holder
 	switch(wire)
 		if(WIRE_POWER)
 			if(control_box.active == !mend)

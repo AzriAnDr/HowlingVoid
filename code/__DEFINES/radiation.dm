@@ -98,6 +98,8 @@ Ask Mothblocks if they're around
 #define RAD_CONTAMINATION_EMIT_RANGE 1
 /// Contamination activity lost per second.
 #define RAD_CONTAMINATION_DECAY_PER_SECOND 0.12
+/// Surface contamination activity removed by a partial radiation clean.
+#define RAD_CONTAMINATION_PARTIAL_CLEAN_ACTIVITY 10
 
 /// Return values of [proc/get_perceived_radiation_danger]
 // If you change these, update /datum/looping_sound/geiger as well.

@@ -171,10 +171,17 @@
 /datum/component/radioactive_contamination/proc/on_clean(datum/source, clean_types)
 	SIGNAL_HANDLER
 
-	if(!(clean_types & CLEAN_TYPE_RADIATION))
+	if(!(clean_types & (CLEAN_TYPE_RADIATION | CLEAN_TYPE_RADIATION_PARTIAL)))
 		return NONE
 
-	qdel(src)
+	if(clean_types & CLEAN_TYPE_RADIATION)
+		qdel(src)
+		return COMPONENT_CLEANED | COMPONENT_CLEANED_GAIN_XP
+
+	activity = max(activity - RAD_CONTAMINATION_PARTIAL_CLEAN_ACTIVITY, 0)
+	if(activity < RAD_CONTAMINATION_MIN_ACTIVITY)
+		qdel(src)
+
 	return COMPONENT_CLEANED | COMPONENT_CLEANED_GAIN_XP
 
 /datum/component/radioactive_contamination/proc/on_geiger_counter_scan(datum/source, mob/user, obj/item/geiger_counter/geiger_counter)
