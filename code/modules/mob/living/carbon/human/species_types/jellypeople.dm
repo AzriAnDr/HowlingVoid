@@ -22,6 +22,8 @@
 	mutantheart = null
 	/// If TRUE, xenoslime's spec_life skips the HV-exclusive passive healing/water damage logic.
 	var/skip_hv_spec_life = FALSE
+	/// Passive jelly restoration per second.
+	var/jelly_regen_rate = JELLY_REGEN_RATE
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_bloodtype = BLOOD_TYPE_TOX
 	blood_deficiency_drain_rate = JELLY_REGEN_RATE + BLOOD_DEFICIENCY_MODIFIER
@@ -77,7 +79,7 @@
 	// Same logic applies here.
 	if(slime.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		if(slime.nutrition >= NUTRITION_LEVEL_STARVING)
-			slime.adjust_blood_volume(JELLY_REGEN_RATE * slime.physiology.blood_regen_mod * seconds_per_tick)
+			slime.adjust_blood_volume(jelly_regen_rate * slime.physiology.blood_regen_mod * seconds_per_tick)
 			if(slime.get_blood_volume() <= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
 				slime.adjust_nutrition(-1.25 * seconds_per_tick)
 

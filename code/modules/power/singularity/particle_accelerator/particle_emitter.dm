@@ -23,8 +23,11 @@
 	fire_delay = delay
 	return TRUE
 
+/obj/structure/particle_accelerator/particle_emitter/proc/can_emit_particle()
+	return (last_shot + fire_delay) <= world.time
+
 /obj/structure/particle_accelerator/particle_emitter/proc/emit_particle(strength = 0)
-	if((last_shot + fire_delay) > world.time)
+	if(!can_emit_particle())
 		return FALSE
 	last_shot = world.time
 	var/turf/our_turf = get_turf(src)

@@ -1659,9 +1659,8 @@
 		cached_bleed_rate += iter_wound.blood_flow
 		if (!(iter_wound.surgery_states & SURGERY_VESSELS_UNCLAMPED) || !surgery_bloodloss)
 			continue
-		// Consider it contirubuted by the wound itself
-		// Not -surgery_bloodloss as this way clamping the vessels reduces the overall bleeding
-		cached_bleed_rate -= UNCLAMPED_VESSELS_BLEEDING
+		// Consider this already contributed by the wound itself.
+		cached_bleed_rate -= surgery_bloodloss
 		surgery_bloodloss = 0
 
 	if(owner.body_position == LYING_DOWN)
@@ -1672,6 +1671,8 @@
 
 	if(LAZYACCESS(applied_items, LIMB_ITEM_TOURNIQUET))
 		cached_bleed_rate *= 0.1
+
+	cached_bleed_rate = max(cached_bleed_rate, 0)
 
 	// Our bleed overlay is based directly off bleed_rate, so go aheead and update that would you?
 	if(cached_bleed_rate != old_bleed_rate)

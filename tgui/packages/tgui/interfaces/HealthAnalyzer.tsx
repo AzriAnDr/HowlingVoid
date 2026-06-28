@@ -859,11 +859,14 @@ function getSectionTitle(section: string, index: number, scanTypeName: string) {
 }
 
 function getSectionKind(section: string, scanTypeName: string) {
-  if (/Chemical/i.test(scanTypeName) || /reagent|stomach|bloodstream|neuroware/i.test(section)) {
-    return 'chemicals';
-  }
   if (/Body status/i.test(section)) {
     return 'body';
+  }
+  if (/Organ status/i.test(section)) {
+    return 'vitals';
+  }
+  if (/Chemical/i.test(scanTypeName) || /reagent|stomach|bloodstream|neuroware/i.test(section)) {
+    return 'chemicals';
   }
   if (/Wounds/i.test(scanTypeName) || /trauma|wound|Recommended Treatment/i.test(section)) {
     return 'wounds';
@@ -871,7 +874,7 @@ function getSectionKind(section: string, scanTypeName: string) {
   if (/Insurance balance|insurance claim|Claim unavailable/i.test(section)) {
     return 'insurance';
   }
-  if (/Organ status|Species|temperature|blood level|alcohol/i.test(section)) {
+  if (/Species|temperature|blood level|alcohol/i.test(section)) {
     return 'vitals';
   }
 

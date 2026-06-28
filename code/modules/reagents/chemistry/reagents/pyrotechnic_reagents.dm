@@ -499,8 +499,9 @@
 	if (!istype(exposed_turf))
 		return
 
+	var/radiation_clean_type = istype(holder?.my_atom, /obj/effect/particle_effect/water/extinguisher) ? CLEAN_RAD_PARTIAL : CLEAN_RAD
 	if(reac_volume >= 1)
-		exposed_turf.wash(CLEAN_RAD, TRUE)
+		exposed_turf.wash(radiation_clean_type, TRUE)
 		var/obj/effect/particle_effect/fluid/foam/firefighting/foam = (locate(/obj/effect/particle_effect/fluid/foam) in exposed_turf)
 		if(!foam)
 			foam = new(exposed_turf)
@@ -518,10 +519,12 @@
 /datum/reagent/firefighting_foam/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	exposed_obj.extinguish()
-	exposed_obj.wash(CLEAN_RAD)
+	var/radiation_clean_type = istype(holder?.my_atom, /obj/effect/particle_effect/water/extinguisher) ? CLEAN_RAD_PARTIAL : CLEAN_RAD
+	exposed_obj.wash(radiation_clean_type)
 
 /datum/reagent/firefighting_foam/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	if(methods & (TOUCH|VAPOR))
 		exposed_mob.extinguish_mob() //All stacks are removed
-		exposed_mob.wash(CLEAN_RAD)
+		var/radiation_clean_type = istype(holder?.my_atom, /obj/effect/particle_effect/water/extinguisher) ? CLEAN_RAD_PARTIAL : CLEAN_RAD
+		exposed_mob.wash(radiation_clean_type)

@@ -14,7 +14,7 @@
 	density = TRUE
 	max_integrity = 500
 	armor_type = /datum/armor/particle_accelerator
-	var/obj/machinery/particle_accelerator/control_box/master
+	var/obj/machinery/power/particle_accelerator/control_box/master
 	var/construction_state = PA_CONSTRUCTION_UNSECURED
 	var/reference
 	var/powered = FALSE
@@ -111,7 +111,7 @@
 	if(master)
 		master.update_state()
 
-/obj/structure/particle_accelerator/proc/connect_master(obj/machinery/particle_accelerator/control_box/control_box)
+/obj/structure/particle_accelerator/proc/connect_master(obj/machinery/power/particle_accelerator/control_box/control_box)
 	if(control_box.dir != dir)
 		return FALSE
 	master = control_box

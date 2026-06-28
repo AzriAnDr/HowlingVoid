@@ -4,7 +4,8 @@
 /obj/machinery/atmospherics/components/binary/circulator
 	name = "circulator/heat exchanger"
 	desc = "A gas circulator pump and heat exchanger."
-	icon_state = "circ_base"
+	icon = 'icons/obj/machines/thermoelectric.dmi'
+	icon_state = "circ-unassembled-0"
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	vent_movement = VENTCRAWL_CAN_SEE
 	density = TRUE
@@ -59,25 +60,42 @@
 /obj/machinery/atmospherics/components/binary/circulator/process_atmos()
 	update_appearance(UPDATE_ICON)
 
-/obj/machinery/atmospherics/components/binary/circulator/update_overlays()
-	. = ..()
-	cut_overlays()
-	if(anchored)
-		add_overlay("circ_anchor")
-	add_overlay("panel_[panel_open]")
-
-	if(!is_operational)
-		add_overlay("fan_[mode]")
-		add_overlay("flow")
-		add_overlay("display")
+/obj/machinery/atmospherics/components/binary/circulator/update_icon_nopipes()
+	if(machine_stat & BROKEN)
+		icon_state = "circ-broken"
 		return
 
-	add_overlay("flow_on")
-	add_overlay("display_[mode]")
+	if(!generator || !generator.anchored)
+		icon_state = "circ-unassembled-[flipped]"
+		return
+
+	icon_state = "circ-assembled-[flipped]"
+
+/obj/machinery/atmospherics/components/binary/circulator/update_overlays()
+	. = ..()
+	if(machine_stat & BROKEN)
+		return
+
+	if(panel_open)
+		. += "circ-panel"
+
+	if(!generator || !generator.anchored)
+		return
+
+	if(!is_operational)
+		. += "circ-off"
+		return
+
 	if(last_pressure_delta > 0)
-		add_overlay("fan_[mode]_[last_pressure_delta > ONE_ATMOSPHERE]")
-	else
-		add_overlay("fan_[mode]")
+		if(last_pressure_delta > ONE_ATMOSPHERE)
+			. += "circ-ex[mode ? "cold" : "hot"]"
+			. += "circ-run"
+		else
+			. += "circ-[mode ? "cold" : "hot"]"
+			. += "circ-slow"
+		return
+
+	. += "circ-off"
 
 /obj/machinery/atmospherics/components/binary/circulator/wrench_act(mob/living/user, obj/item/I)
 	if(!panel_open)

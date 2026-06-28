@@ -135,8 +135,9 @@
 	if(!istype(exposed_turf))
 		return
 
+	var/radiation_clean_type = istype(holder?.my_atom, /obj/effect/particle_effect/water/extinguisher) ? CLEAN_RAD_PARTIAL : CLEAN_RAD
 	if(reac_volume >= 1)
-		exposed_turf.wash(CLEAN_RAD, TRUE)
+		exposed_turf.wash(radiation_clean_type, TRUE)
 
 	for(var/mob/living/basic/slime/exposed_slime in exposed_turf)
 		exposed_slime.apply_water()
@@ -165,7 +166,8 @@
 /datum/reagent/water/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	exposed_obj.extinguish()
-	exposed_obj.wash(CLEAN_TYPE_ACID | CLEAN_RAD)
+	var/radiation_clean_type = istype(holder?.my_atom, /obj/effect/particle_effect/water/extinguisher) ? CLEAN_RAD_PARTIAL : CLEAN_RAD
+	exposed_obj.wash(CLEAN_TYPE_ACID | radiation_clean_type)
 	// Monkey cube
 	if(istype(exposed_obj, /obj/item/food/monkeycube))
 		var/obj/item/food/monkeycube/cube = exposed_obj
@@ -194,7 +196,8 @@
 /datum/reagent/water/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume)//Splashing people with water can help put them out!
 	. = ..()
 	if(methods & (TOUCH|VAPOR))
-		exposed_mob.wash(CLEAN_RAD)
+		var/radiation_clean_type = istype(holder?.my_atom, /obj/effect/particle_effect/water/extinguisher) ? CLEAN_RAD_PARTIAL : CLEAN_RAD
+		exposed_mob.wash(radiation_clean_type)
 
 	if(methods & TOUCH)
 		exposed_mob.extinguish_mob() // extinguish removes all fire stacks
