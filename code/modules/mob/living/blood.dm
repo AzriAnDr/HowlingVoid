@@ -177,7 +177,7 @@
 	var/bleed_rate = get_bleed_rate()
 
 	if(bleed_rate)
-		bleed(bleed_rate * seconds_per_tick)
+		bleed(bleed_rate * seconds_per_tick, bleed_mod_applied = TRUE)
 		bleed_warn(bleed_rate)
 
 	for (var/obj/item/bodypart/bodypart as anything in get_bodyparts())
@@ -271,18 +271,21 @@
 		iter_part.update_part_wound_overlay()
 
 /// Bleeds amount units of blood from the mob, sometimes creating a blood splatter on the floor.
-/mob/living/proc/bleed(amount)
+/mob/living/proc/bleed(amount, suppress_splatter = FALSE, bleed_mod_applied = FALSE)
 	if(HAS_TRAIT(src, TRAIT_GODMODE) || !can_bleed())
 		return
 
 	var/amount_bled = -adjust_blood_volume(-amount)
+	if(amount_bled <= 0)
+		return
 
 	// Blood loss still happens in locker, floor stays clean
-	if(isturf(loc) && prob(sqrt(amount_bled) * BLOOD_DRIP_RATE_MOD))
+	if(!suppress_splatter && isturf(loc) && prob(sqrt(amount_bled) * BLOOD_DRIP_RATE_MOD))
 		add_splatter_floor(loc, (amount_bled <= 10))
 
-/mob/living/carbon/human/bleed(amount)
-	amount *= physiology.bleed_mod
+/mob/living/carbon/human/bleed(amount, suppress_splatter = FALSE, bleed_mod_applied = FALSE)
+	if(!bleed_mod_applied)
+		amount *= physiology.bleed_mod
 	return ..()
 
 /// A helper to see how much blood we're losing per tick

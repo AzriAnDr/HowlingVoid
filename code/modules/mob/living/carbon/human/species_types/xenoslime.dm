@@ -13,6 +13,7 @@
 
 #define BODYPART_ICON_XENOSLIME 'icons/mob/human/species/slime_parts_greyscale.dmi'
 #define XENOSLIME_BLEED_MOD 1.5
+#define XENOSLIME_JELLY_REGEN_RATE 0.5
 
 // ============================================================
 // BODYPART TYPES — 6 regular + 2 digitigrade
@@ -86,6 +87,8 @@
 	var/datum/action/innate/slime_toggle_transparency/toggle_transparency
 	/// Skip HV jelly's passive healing and wetness water damage — not present in ES13.
 	skip_hv_spec_life = TRUE
+	jelly_regen_rate = XENOSLIME_JELLY_REGEN_RATE
+	blood_deficiency_drain_rate = XENOSLIME_JELLY_REGEN_RATE + BLOOD_DEFICIENCY_MODIFIER
 
 /datum/species/jelly/xenoslime/on_species_gain(mob/living/carbon/new_jellyperson, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
@@ -393,3 +396,4 @@
 
 #undef BODYPART_ICON_XENOSLIME
 #undef XENOSLIME_BLEED_MOD
+#undef XENOSLIME_JELLY_REGEN_RATE
