@@ -91,7 +91,7 @@
 )
 	. = ..()
 
-/atom/movable/screen/escape_menu/text/clickable/clickable/home_button/opfor/enabled()
+/atom/movable/screen/escape_menu/text/clickable/home_button/opfor/enabled()
 	if (!..())
 		return FALSE
 
