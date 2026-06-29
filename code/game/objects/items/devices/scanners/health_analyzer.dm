@@ -530,12 +530,16 @@
 
 	var/mob/living/carbon/human/human_target = target
 	for(var/obj/item/organ/target_organ as anything in human_target.organs)
-		if(!IS_ROBOTIC_ORGAN(target_organ) || (target_organ.organ_flags & ORGAN_HIDDEN))
+		var/is_cyberimp = istype(target_organ, /obj/item/organ/cyberimp)
+		if(!is_cyberimp && (!IS_ROBOTIC_ORGAN(target_organ) || (target_organ.organ_flags & ORGAN_HIDDEN)))
 			continue
+		var/cybernetic_status = (target_organ.organ_flags & ORGAN_FAILING) ? "Failing" : "Online"
+		if(is_cyberimp && (target_organ.organ_flags & ORGAN_HIDDEN))
+			cybernetic_status = "Concealed / [cybernetic_status]"
 		cybernetics += list(list(
 			"name" = target_organ.name,
 			"slot" = target_organ.slot,
-			"status" = (target_organ.organ_flags & ORGAN_FAILING) ? "Failing" : "Online",
+			"status" = cybernetic_status,
 			"icon" = icon2html(target_organ, user),
 		))
 
@@ -790,7 +794,8 @@
 		var/mutant = HAS_TRAIT(humantarget, TRAIT_HULK)
 		var/list/cyberimps
 		for(var/obj/item/organ/target_organ as anything in humantarget.organs)
-			if(include_cybernetics && IS_ROBOTIC_ORGAN(target_organ) && !(target_organ.organ_flags & ORGAN_HIDDEN))
+			var/is_cyberimp = istype(target_organ, /obj/item/organ/cyberimp)
+			if(include_cybernetics && (is_cyberimp || (IS_ROBOTIC_ORGAN(target_organ) && !(target_organ.organ_flags & ORGAN_HIDDEN))))
 				LAZYADD(cyberimps, target_organ.examine_title(user))
 			if(target_organ.organ_flags & ORGAN_MUTANT)
 				mutant = TRUE

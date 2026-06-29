@@ -848,6 +848,35 @@
 		"unit_value" = final_unit_value,
 	)
 
+/datum/storyteller/action/proc/make_storyteller_researched_contract_requirement(item_type, amount = 1)
+	if(!ispath(item_type, /obj/item))
+		return null
+	var/datum/techweb/science_web = get_storyteller_science_techweb()
+	if(!istype(science_web))
+		return null
+	var/list/tier_cache = list()
+	for(var/design_id in science_web.researched_designs)
+		var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+		if(!istype(design) || design == SSresearch.error_design)
+			continue
+		if(design.build_path != item_type)
+			continue
+		var/research_tier = get_storyteller_design_research_tier(design, science_web, tier_cache)
+		return make_storyteller_contract_requirement(
+			item_type,
+			amount,
+			research_tier,
+			get_storyteller_design_contract_value(design, research_tier),
+			design.name
+		)
+	return null
+
+/datum/storyteller/action/proc/make_storyteller_event_contract_requirement(item_type, amount = 1)
+	var/list/researched_requirement = make_storyteller_researched_contract_requirement(item_type, amount)
+	if(islist(researched_requirement))
+		return researched_requirement
+	return make_storyteller_contract_requirement(item_type, amount, 1)
+
 /datum/storyteller/action/proc/get_storyteller_contract_pool(department_id)
 	switch(department_id)
 		if(ACCOUNT_ENG)
@@ -914,38 +943,107 @@
 			)
 	return get_storyteller_contract_pool(ACCOUNT_CAR)
 
-/datum/storyteller/action/proc/build_storyteller_contract_requirements(datum/controller/subsystem/storyteller/owner, datum/storyteller/state_snapshot/snapshot, department_id, list/items_by_count)
-	var/list/requirements = list()
-	var/scale = get_storyteller_crew_scale(snapshot)
+/datum/storyteller/action/proc/add_storyteller_contract_requirement(list/requirements, list/seen_types, list/requirement)
+	if(!islist(requirements) || !islist(seen_types) || !islist(requirement))
+		return FALSE
+	var/item_type = requirement["type"]
+	if(!item_type || seen_types[item_type])
+		return FALSE
+	seen_types[item_type] = TRUE
+	requirements += list(requirement)
+	return TRUE
 
-	var/target_department = department_id || owner.select_relief_department(snapshot) || ACCOUNT_CAR
-	var/list/pool = get_storyteller_researched_contract_pool(target_department)
-	if(!length(pool))
-		pool = get_storyteller_contract_pool(target_department)
-		if(length(items_by_count))
-			for(var/item_type in items_by_count)
-				var/base_amount = max(1, round(text2num("[items_by_count[item_type] || 1]")))
-				var/list/requirement = make_storyteller_contract_requirement(item_type, base_amount, 1)
-				if(islist(requirement))
-					pool += list(requirement)
-	if(!length(pool))
+/datum/storyteller/action/proc/get_storyteller_researched_event_contract_pool(list/items_by_count)
+	var/list/requirements = list()
+	var/list/seen_types = list()
+	if(!length(items_by_count))
 		return requirements
+	for(var/item_type in items_by_count)
+		var/base_amount = max(1, round(text2num("[items_by_count[item_type] || 1]")))
+		add_storyteller_contract_requirement(
+			requirements,
+			seen_types,
+			make_storyteller_researched_contract_requirement(item_type, base_amount)
+		)
+	return requirements
+
+/datum/storyteller/action/proc/build_storyteller_contract_requirements(datum/controller/subsystem/storyteller/owner, datum/storyteller/state_snapshot/snapshot, department_id, list/items_by_count, list/research_items_by_count)
+	var/scale = get_storyteller_crew_scale(snapshot)
+	var/target_department = department_id || owner.select_relief_department(snapshot) || ACCOUNT_CAR
+
+	var/list/event_requirements = list()
+	var/list/event_seen_types = list()
+	if(length(items_by_count))
+		for(var/item_type in items_by_count)
+			var/base_amount = max(1, round(text2num("[items_by_count[item_type] || 1]")))
+			add_storyteller_contract_requirement(
+				event_requirements,
+				event_seen_types,
+				make_storyteller_event_contract_requirement(item_type, base_amount)
+			)
+
+	var/list/pool = list()
+	var/list/pool_seen_types = list()
+	for(var/list/requirement as anything in event_requirements)
+		add_storyteller_contract_requirement(pool, pool_seen_types, requirement)
+	if(length(event_requirements))
+		for(var/list/requirement as anything in get_storyteller_researched_event_contract_pool(research_items_by_count))
+			add_storyteller_contract_requirement(pool, pool_seen_types, requirement)
+	else
+		for(var/list/requirement as anything in get_storyteller_researched_contract_pool(target_department))
+			add_storyteller_contract_requirement(pool, pool_seen_types, requirement)
+		for(var/list/requirement as anything in get_storyteller_contract_pool(target_department))
+			add_storyteller_contract_requirement(pool, pool_seen_types, requirement)
+	if(!length(pool))
+		return list()
+
 	var/staff_count = 0
 	if(islist(snapshot?.department_staffing))
 		staff_count = snapshot.department_staffing[target_department] || 0
-	var/requested_types = clamp(2 + round(staff_count / 2) + (scale - 1), 2, min(5, length(pool)))
+	var/event_type_count = length(event_requirements)
+	var/requested_types = clamp(event_type_count + round(staff_count / 2) + (scale - 1), event_type_count, min(6, length(pool)))
+	if(!event_type_count)
+		requested_types = clamp(2 + round(staff_count / 2) + (scale - 1), 2, min(6, length(pool)))
 	var/quantity_multiplier = max(1, scale + round(staff_count / 3))
-	var/list/randomized_pool = shuffle(pool.Copy())
-	for(var/i in 1 to requested_types)
-		var/list/requirement = randomized_pool[i]
+
+	var/list/requirements = list()
+	var/list/selected_seen_types = list()
+	for(var/list/requirement as anything in event_requirements)
 		if(!islist(requirement))
 			continue
 		requirement = requirement.Copy()
+		add_storyteller_contract_requirement(requirements, selected_seen_types, requirement)
+
+	var/list/randomized_pool = shuffle(pool.Copy())
+	for(var/list/requirement as anything in randomized_pool)
+		if(length(requirements) >= requested_types)
+			break
+		if(!islist(requirement))
+			continue
+		requirement = requirement.Copy()
+		if(!add_storyteller_contract_requirement(requirements, selected_seen_types, requirement))
+			continue
+
+	for(var/list/requirement as anything in requirements)
 		var/research_tier = max(1, requirement["tier"] || 1)
 		var/tier_quantity_scale = max(1, round(quantity_multiplier / max(research_tier, 1)))
 		requirement["amount"] = max(1, round((requirement["amount"] || 1) * tier_quantity_scale))
-		requirements += list(requirement)
 	return requirements
+
+/datum/storyteller/action/proc/get_storyteller_contract_manifest_text(list/requirements)
+	var/list/manifest_entries = list()
+	for(var/list/requirement as anything in requirements)
+		if(!islist(requirement))
+			continue
+		var/amount = max(1, round(text2num("[requirement["amount"] || 1]")))
+		manifest_entries += "[amount]x [requirement["name"] || "unknown item"]"
+	return jointext(manifest_entries, ", ")
+
+/datum/storyteller/action/proc/get_storyteller_contract_summary(base_message, list/requirements)
+	var/manifest_text = get_storyteller_contract_manifest_text(requirements)
+	if(!manifest_text)
+		return base_message
+	return "Requested manifest: [manifest_text]. Deliver the listed items to the Cargo lobby pickup pod for Cargo payment."
 
 /datum/storyteller/action/proc/get_storyteller_contract_reward(list/requirements)
 	var/total = 0
@@ -2832,6 +2930,7 @@
 	weight = 4
 	allow_in_extended = TRUE
 	var/list/items_by_count = list()
+	var/list/research_items_by_count = list()
 	var/dispatch_title = "Station Operations Notice"
 	var/dispatch_message = "A station objective is available."
 	var/dispatch_sound = 'sound/announcer/notice/notice2.ogg'
@@ -2851,7 +2950,7 @@
 
 /datum/storyteller/action/positive/event_contract_pod/execute(datum/controller/subsystem/storyteller/owner, datum/storyteller/state_snapshot/snapshot, list/context_data)
 	var/contract_department = department_id || owner.select_relief_department(snapshot) || ACCOUNT_CAR
-	var/list/requirements = build_storyteller_contract_requirements(owner, snapshot, contract_department, items_by_count)
+	var/list/requirements = build_storyteller_contract_requirements(owner, snapshot, contract_department, items_by_count, research_items_by_count)
 	if(!length(requirements))
 		return FALSE
 	var/turf/target = get_storyteller_cargo_lobby_target(owner)
@@ -2865,7 +2964,8 @@
 	pod_delays[POD_TRANSIT] = owner.get_storyteller_contract_pod_transit_delay()
 	pod.delays = pod_delays
 	var/reward_amount = get_storyteller_contract_reward(requirements)
-	pod.setup_contract(name, dispatch_message, contract_department, requirements, reward_amount, rand(contract_duration_min, contract_duration_max))
+	var/contract_summary = get_storyteller_contract_summary(dispatch_message, requirements)
+	pod.setup_contract(name, contract_summary, contract_department, requirements, reward_amount, rand(contract_duration_min, contract_duration_max))
 	var/obj/effect/pod_landingzone/landingzone = new(target, pod)
 	if(!istype(landingzone))
 		qdel(pod)
@@ -2880,7 +2980,7 @@
 		eta,
 	)
 	owner.announce_storyteller_notice(
-		owner.append_storyteller_landing_zone("[dispatch_message] The pickup window will close automatically if the pod is not dispatched in time.", target),
+		owner.append_storyteller_landing_zone("[contract_summary] The pickup window will close automatically if the pod is not dispatched in time.", target),
 		dispatch_title,
 		dispatch_sound,
 		dispatch_color,
@@ -3024,6 +3124,7 @@
 	minimum_crew = 3
 	department_id = ACCOUNT_ENG
 	items_by_count = list(/obj/item/stack/cable_coil/thirty = 1, /obj/item/stack/sheet/iron/ten = 1, /obj/item/stack/sheet/glass = 1, /obj/item/lightreplacer = 1, /obj/item/multitool = 1)
+	research_items_by_count = list(/obj/item/weldingtool/experimental = 1, /obj/item/analyzer/ranged = 1, /obj/item/storage/part_replacer = 1, /obj/item/storage/part_replacer/bluespace = 1, /obj/item/lightreplacer/blue = 1)
 	dispatch_title = "Maintenance Contract"
 	dispatch_message = "Central Command has opened a maintenance pickup contract. Deliver repair tools and materials to the Cargo lobby pickup pod for Cargo payment."
 	crate_name = "maintenance contract crate"
@@ -3050,6 +3151,7 @@
 	family = "station_atmos_drill"
 	department_id = ACCOUNT_ENG
 	items_by_count = list(/obj/item/analyzer = 1, /obj/item/tank/internals/emergency_oxygen/engi = 1, /obj/item/extinguisher = 1)
+	research_items_by_count = list(/obj/item/analyzer/ranged = 1, /obj/item/gas_filter = 1, /obj/item/gas_filter/plasmaman = 1, /obj/item/construction/plumbing/engineering = 1)
 	dispatch_title = "Atmospheric Recall Drill"
 	dispatch_message = "An atmosphere verification contract is open. Deliver inspection and emergency response gear to the Cargo lobby pickup pod for Cargo payment."
 	crate_name = "atmospheric recall crate"
@@ -3171,6 +3273,7 @@
 	minimum_crew = 2
 	department_id = ACCOUNT_CMD
 	items_by_count = list(/obj/item/camera = 1, /obj/item/camera_film = 2, /obj/item/clipboard = 1, /obj/item/stamp/granted = 1)
+	research_items_by_count = list(/obj/item/hand_labeler = 1, /obj/item/hand_labeler_refill = 1)
 	dispatch_title = "Insurance Inspection"
 	dispatch_message = "Station insurance is buying inspection documentation. Deliver cameras, film, and stamped paperwork to the Cargo lobby pickup pod."
 	crate_name = "insurance inspection crate"
@@ -3184,6 +3287,7 @@
 	family = "station_comms_fault"
 	department_id = ACCOUNT_ENG
 	items_by_count = list(/obj/item/radio = 1, /obj/item/multitool = 1)
+	research_items_by_count = list(/obj/item/multitool/circuit = 1, /obj/item/stock_parts/subspace/analyzer = 1, /obj/item/stock_parts/subspace/transmitter = 1)
 	dispatch_color = "orange"
 	dispatch_sound = 'sound/announcer/notice/notice1.ogg'
 	dispatch_title = "Comms Misroute"
@@ -3236,6 +3340,7 @@
 	family = "station_medical_rescue"
 	department_id = ACCOUNT_MED
 	items_by_count = list(/obj/item/storage/medkit/emergency = 1, /obj/item/healthanalyzer = 1, /obj/item/bodybag = 1)
+	research_items_by_count = list(/obj/item/healthanalyzer/advanced = 1, /obj/item/reagent_containers/hypospray/medipen/empty = 1, /obj/item/reagent_containers/spray/medical = 1)
 	dispatch_title = "Paramedic Beacon"
 	dispatch_message = "A rescue response pickup contract is open. Deliver medical rescue supplies to the Cargo lobby pickup pod for Cargo payment."
 	crate_name = "paramedic response crate"
@@ -3340,6 +3445,7 @@
 	family = "station_security_fault"
 	department_id = ACCOUNT_SEC
 	items_by_count = list(/obj/item/multitool = 1, /obj/item/stack/cable_coil = 1)
+	research_items_by_count = list(/obj/item/flashlight/seclite = 1, /obj/item/evidencebag = 1, /obj/item/inspector = 1, /obj/item/restraints/handcuffs/cable/zipties = 1, /obj/item/dragnet_beacon = 1)
 	dispatch_color = "orange"
 	dispatch_sound = 'sound/announcer/notice/notice1.ogg'
 	dispatch_title = "Armory Lockdown Fault"
@@ -3355,6 +3461,7 @@
 	family = "station_engineering_fault"
 	department_id = ACCOUNT_ENG
 	items_by_count = list(/obj/item/extinguisher = 1, /obj/item/analyzer = 1, /obj/item/stack/cable_coil = 1)
+	research_items_by_count = list(/obj/item/analyzer/ranged = 1, /obj/item/gas_filter = 1, /obj/item/gas_filter/plasmaman = 1, /obj/item/construction/plumbing/engineering = 1)
 	dispatch_color = "orange"
 	dispatch_sound = 'sound/announcer/notice/notice1.ogg'
 	dispatch_title = "Coolant Leak"
@@ -3398,6 +3505,7 @@
 	family = "station_medical_security"
 	department_id = ACCOUNT_MED
 	items_by_count = list(/obj/item/storage/box/bodybags = 1, /obj/item/clipboard = 1, /obj/item/stamp/denied = 1)
+	research_items_by_count = list(/obj/item/reagent_containers/cup/beaker/organ_jar = 1, /obj/item/healthanalyzer/advanced = 1)
 	dispatch_color = "orange"
 	dispatch_sound = 'sound/announcer/notice/notice1.ogg'
 	dispatch_title = "Morgue Misfile"
@@ -3437,6 +3545,7 @@
 	family = "station_botany_science"
 	department_id = ACCOUNT_SRV
 	items_by_count = list(/obj/item/seeds/random = 3, /obj/item/plant_analyzer = 1, /obj/item/reagent_containers/cup/bottle/nutrient/ez = 1)
+	research_items_by_count = list(/obj/item/storage/bag/plants/portaseeder = 1, /obj/item/reagent_containers/cup/watering_can/advanced = 1)
 	dispatch_title = "Spore Courier"
 	dispatch_message = "A botanical sample pickup contract is open. Deliver seeds, plant analysis gear, and nutrients to the Cargo lobby pickup pod."
 	crate_name = "spore courier crate"
@@ -3474,6 +3583,7 @@
 	minimum_crew = 2
 	department_id = ACCOUNT_CMD
 	items_by_count = list(/obj/item/clipboard = 1, /obj/item/stamp/granted = 1, /obj/item/paper = 2)
+	research_items_by_count = list(/obj/item/hand_labeler = 1)
 	dispatch_title = "Cross-Training Voucher"
 	dispatch_message = "A cross-training documentation contract is open. Deliver voucher paperwork to the Cargo lobby pickup pod."
 	crate_name = "cross-training packet"
@@ -3486,6 +3596,7 @@
 	minimum_crew = 2
 	department_id = ACCOUNT_SCI
 	items_by_count = list(/obj/item/clipboard = 1, /obj/item/plant_analyzer = 1, /obj/item/healthanalyzer = 1)
+	research_items_by_count = list(/obj/item/healthanalyzer/advanced = 1, /obj/item/fish_analyzer = 1, /obj/item/anomaly_neutralizer = 1)
 	dispatch_title = "Peer Review"
 	dispatch_message = "A peer review sample contract is open. Deliver review tools and paperwork to the Cargo lobby pickup pod."
 	crate_name = "peer review kit"
@@ -3498,6 +3609,7 @@
 	minimum_crew = 2
 	department_id = ACCOUNT_CMD
 	items_by_count = list(/obj/item/radio = 2, /obj/item/flashlight = 2, /obj/item/clipboard = 1)
+	research_items_by_count = list(/obj/item/gps = 1, /obj/item/beacon = 1)
 	dispatch_title = "Safety Buddy System"
 	dispatch_message = "A safety buddy documentation contract is open. Deliver pair-assignment supplies to the Cargo lobby pickup pod."
 	crate_name = "safety buddy kit"
@@ -3521,6 +3633,7 @@
 	family = "station_social_medical"
 	department_id = ACCOUNT_MED
 	items_by_count = list(/obj/item/reagent_containers/blood/random = 2, /obj/item/reagent_containers/syringe = 2, /obj/item/healthanalyzer = 1)
+	research_items_by_count = list(/obj/item/reagent_containers/blood = 1, /obj/item/reagent_containers/syringe/bluespace = 1, /obj/item/healthanalyzer/advanced = 1)
 	dispatch_title = "Blood Drive"
 	dispatch_message = "An emergency blood reserve contract is open. Deliver blood collection supplies to the Cargo lobby pickup pod."
 	crate_name = "blood drive crate"
@@ -3531,11 +3644,12 @@
 	name = "Cargo Priority Manifest"
 	family = "station_social_cargo"
 	department_id = ACCOUNT_CAR
-	items_by_count = list(/obj/item/paper/requisition = 3, /obj/item/clipboard = 1, /obj/item/stamp/granted = 1)
+	items_by_count = list(/obj/item/paper/requisition = 3, /obj/item/clipboard = 1, /obj/item/stamp/granted = 1, /obj/item/hand_labeler = 1)
+	research_items_by_count = list(/obj/item/hand_labeler_refill = 1)
 	dispatch_title = "Priority Manifest"
-	dispatch_message = "A priority manifest pickup contract is open. Deliver stamped requisitions to the Cargo lobby pickup pod."
+	dispatch_message = "A priority manifest pickup contract is open. Deliver stamped requisitions and labeling supplies to the Cargo lobby pickup pod."
 	crate_name = "priority manifest packet"
-	paper_text = "Cargo Priority Manifest: collect stamped requests, deliver a small priority order, and file the manifest."
+	paper_text = "Cargo Priority Manifest: collect stamped requests, label the priority order, deliver it, and file the manifest."
 
 /datum/storyteller/action/positive/department_budget_notice/command_confidence_check
 	id = "station_command_confidence_check"
@@ -3566,6 +3680,7 @@
 	minimum_crew = 1
 	department_id = ACCOUNT_CIV
 	items_by_count = list(/obj/item/radio = 1, /obj/item/clipboard = 1, /obj/item/food/ready_donk = 1)
+	research_items_by_count = list(/obj/item/gps = 1, /obj/item/beacon = 1)
 	dispatch_title = "Lost Intern"
 	dispatch_message = "An intern assistance pickup contract is open. Deliver escort supplies and paperwork to the Cargo lobby pickup pod."
 	crate_name = "intern assistance packet"
@@ -3577,6 +3692,7 @@
 	family = "station_salvage_cache"
 	department_id = ACCOUNT_CAR
 	items_by_count = list(/obj/item/stack/sheet/iron/twenty = 1, /obj/item/stack/cable_coil/thirty = 1, /obj/item/stock_parts/capacitor = 1, /obj/item/multitool = 1)
+	research_items_by_count = list(/obj/item/storage/part_replacer = 1, /obj/item/stock_parts/capacitor/adv = 1, /obj/item/stock_parts/matter_bin/adv = 1, /obj/item/gps = 1)
 	dispatch_title = "Salvage Cache"
 	dispatch_message = "A salvage recovery contract is open. Deliver recovered materials and tools to the Cargo lobby pickup pod."
 	crate_name = "salvage cache"
@@ -3589,6 +3705,7 @@
 	family = "station_service_food"
 	department_id = ACCOUNT_SRV
 	items_by_count = list(/obj/item/storage/box/donkpockets = 1, /obj/item/food/ready_donk = 4, /obj/item/pizzabox/margherita = 1, /obj/item/food/cake/plain = 1)
+	research_items_by_count = list(/obj/item/reagent_containers/cup/coffeepot = 1, /obj/item/reagent_containers/cup/coffeepot/bluespace = 1, /obj/item/reagent_containers/cup/bottle/syrup_bottle = 1)
 	dispatch_title = "Snack Drop"
 	dispatch_message = "A snack distribution pickup contract is open. Deliver prepared food to the Cargo lobby pickup pod for Cargo payment."
 	crate_name = "snack distribution crate"
@@ -3601,6 +3718,7 @@
 	family = "station_medical_trial"
 	department_id = ACCOUNT_MED
 	items_by_count = list(/obj/item/storage/box/medigels = 1, /obj/item/healthanalyzer = 1, /obj/item/clipboard = 1)
+	research_items_by_count = list(/obj/item/reagent_containers/medigel = 2, /obj/item/reagent_containers/chem_pack = 1, /obj/item/healthanalyzer/advanced = 1)
 	dispatch_title = "Medigel Trial"
 	dispatch_message = "An experimental medigel return contract is open. Deliver trial supplies and medical records to the Cargo lobby pickup pod."
 	crate_name = "medigel trial crate"
@@ -3612,6 +3730,7 @@
 	family = "station_science_engineering"
 	department_id = ACCOUNT_SCI
 	items_by_count = list(/obj/item/stock_parts/capacitor/adv = 1, /obj/item/stock_parts/scanning_module/adv = 1, /obj/item/stock_parts/servo/nano = 1, /obj/item/stock_parts/micro_laser/high = 1)
+	research_items_by_count = list(/obj/item/stock_parts/capacitor/super = 1, /obj/item/stock_parts/scanning_module/phasic = 1, /obj/item/stock_parts/servo/pico = 1, /obj/item/stock_parts/micro_laser/ultra = 1, /obj/item/stock_parts/matter_bin/bluespace = 1)
 	dispatch_title = "Prototype Shipment"
 	dispatch_message = "A prototype component pickup contract is open. Deliver scanned advanced parts to the Cargo lobby pickup pod."
 	crate_name = "prototype part crate"
@@ -3639,6 +3758,7 @@
 	minimum_crew = 2
 	department_id = ACCOUNT_ENG
 	items_by_count = list(/obj/item/lightreplacer = 1, /obj/item/stack/cable_coil/thirty = 1, /obj/item/soap/nanotrasen = 1, /obj/item/seeds/random = 1)
+	research_items_by_count = list(/obj/item/lightreplacer/blue = 1, /obj/item/mop/advanced = 1, /obj/item/storage/bag/trash/bluespace = 1, /obj/item/holosign_creator/janibarrier = 1, /obj/item/door_seal = 1)
 	dispatch_title = "Public Works Grant"
 	dispatch_message = "A public works pickup contract is open. Deliver maintenance and beautification supplies to the Cargo lobby pickup pod."
 	crate_name = "public works crate"

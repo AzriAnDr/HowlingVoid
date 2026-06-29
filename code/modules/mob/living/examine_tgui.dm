@@ -3,6 +3,8 @@
 	var/mob/living/holder
 	/// The screen containing the appearance of the mob
 	var/atom/movable/screen/map_view/examine_panel_screen/examine_panel_screen
+	/// Direction used by the preview appearance.
+	var/preview_dir = SOUTH
 
 /datum/examine_panel/New(mob/holder_mob)
 	holder = holder_mob
@@ -29,22 +31,46 @@
 		examine_panel_screen.del_on_map_removal = FALSE
 		examine_panel_screen.screen_loc = "[examine_panel_screen.assigned_map]:1,1"
 
-	var/mutable_appearance/current_mob_appearance = new(holder)
-	current_mob_appearance.setDir(SOUTH)
-	current_mob_appearance.transform = matrix() // We reset their rotation, in case they're lying down.
-
-	// In case they're pixel-shifted, we bring 'em back!
-	current_mob_appearance.pixel_x = 0
-	current_mob_appearance.pixel_y = 0
-
-	examine_panel_screen.cut_overlays()
-	examine_panel_screen.add_overlay(current_mob_appearance)
+	update_preview_appearance()
 
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ExaminePanel")
 		ui.open()
 		examine_panel_screen.display_to(user, ui.window)
+
+/datum/examine_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("rotate")
+			switch(params["dir"])
+				if("left")
+					preview_dir = turn(preview_dir, -90)
+				if("right")
+					preview_dir = turn(preview_dir, 90)
+				else
+					return FALSE
+			update_preview_appearance()
+			return TRUE
+
+/datum/examine_panel/proc/update_preview_appearance()
+	if(!examine_panel_screen || QDELETED(holder))
+		return
+
+	var/mutable_appearance/current_mob_appearance = new(holder)
+	current_mob_appearance.setDir(preview_dir)
+	current_mob_appearance.transform = matrix() // We reset their rotation, in case they're lying down.
+
+	// In case they're pixel-shifted, we bring 'em back!
+	current_mob_appearance.pixel_x = 0
+	current_mob_appearance.pixel_y = 0
+
+	examine_panel_screen.setDir(preview_dir)
+	examine_panel_screen.cut_overlays()
+	examine_panel_screen.add_overlay(current_mob_appearance)
 
 /datum/examine_panel/ui_data(mob/user)
 
@@ -136,4 +162,3 @@
 		"opt_in_colors" = GLOB.antag_opt_in_colors,
 	)
 	return data
-

@@ -1,4 +1,5 @@
 This file contains a list of maps for use in map rotation.
+NOTE: HowlingVoid uses code-driven map rotation. Edit code/controllers/configuration/map_definitions.dm instead.
 #Lines starting with # are ignored.
 Lines not inside map blocks are also ignored
 Duplicated entries use the latter one.
