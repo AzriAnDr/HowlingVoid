@@ -245,10 +245,60 @@ const buildInternalImplantData = (
   });
 
 // Markings
-const markingLayerOptions = Array.from(
-  { length: 40 },
-  (_, index) => `L${index + 1}`,
+const markingLayerLabels = [
+  'Bodyparts',
+  'Body adjacent',
+  'Body',
+  'Eyes',
+  'Front mutations',
+  'Damage',
+  'Under clothes',
+  'Uniform',
+  'Anus',
+  'Vagina',
+  'Penis',
+  'Nipples',
+  'Bandage',
+  'ID',
+  'ID card',
+  'High bodyparts',
+  'Gloves',
+  'Shoes',
+  'Low facemask',
+  'Ears',
+  'Low neck',
+  'Suit',
+  'Glasses',
+  'Belt',
+  'Suit storage',
+  'Neck',
+  'Back',
+  'Beneath hair',
+  'Hair',
+  'Facemask',
+  'Head',
+  'Outer hair',
+  'Handcuffs',
+  'Legcuffs',
+  'Hands',
+  'Body front',
+  'Above glasses',
+  'Above head',
+  'Wounds',
+  'Halo',
+];
+
+const markingLayerOptions = markingLayerLabels.map(
+  (label, index) => `L${index + 1} ${label}`,
 );
+
+const getMarkingLayerOption = (layer?: number) => {
+  const sanitizedLayer = Math.max(1, Math.min(layer || 1, 40));
+  return markingLayerOptions[sanitizedLayer - 1];
+};
+
+const getMarkingLayerDisplay = (layer?: number) =>
+  `L${Math.max(1, Math.min(layer || 1, 40))}`;
 
 const Markings = (props: {
   body_zone: string;
@@ -292,14 +342,13 @@ const Markings = (props: {
                   <Dropdown
                     width="60px"
                     options={markingLayerOptions}
-                    selected={`L${marking.layer || 1}`}
-                    displayText={`L${marking.layer || 1}`}
+                    selected={getMarkingLayerOption(marking.layer)}
+                    displayText={getMarkingLayerDisplay(marking.layer)}
                     onSelected={(value) => {
-                      const layerValue =
-                        typeof value === 'number'
-                          ? value
-                          : parseInt(String(value).replace(/^L/i, ''), 10) ||
-                            1;
+                      const layerMatch = String(value).match(/^L(\d+)/i);
+                      const layerValue = layerMatch
+                        ? parseInt(layerMatch[1], 10)
+                        : 1;
                       act('change_marking_layer', {
                         bodypart_slot: body_zone,
                         marking_id: marking.marking_id,

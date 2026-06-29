@@ -282,8 +282,8 @@ export function QuickICSpawn() {
                 <Stack.Item>
                   <Button.Checkbox
                     checked={!!giveNutritionSupply}
-                    content="Nutrition+Thirst Supply"
-                    tooltip="Grants buttons to restore hunger and thirst (like Ghost Cafe visitors)"
+                    content="Nutrition Supply"
+                    tooltip="Grants a button to restore hunger (like Ghost Cafe visitors)"
                     onClick={() =>
                       act('setNutritionSupply', {
                         giveNutritionSupply: !giveNutritionSupply,

@@ -46,6 +46,7 @@
 
 #define MARKING_LAYER_MIN 1
 #define MARKING_LAYER_MAX 40
+/// Visual offset between marking layers. Each marking layer maps to the next mob overlay layer.
 #define MARKING_LAYER_STEP 1.0
 #define MARKING_KEY_LAYER_DELIM "||"
 #define MARKING_KEY_SEQUENCE_DELIM "::"

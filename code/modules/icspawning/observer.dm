@@ -258,8 +258,9 @@
 		return_spell.Grant(spawned_player)
 
 	if(give_nutrition_supply)
-		var/datum/action/innate/ghostcafe_supply/hydration/hydration_toggle = new(spawned_player)
-		hydration_toggle.Grant(spawned_player)
+		// HowlingVoid has no thirst system. Kept commented in case hydration supply is restored later.
+		// var/datum/action/innate/ghostcafe_supply/hydration/hydration_toggle = new(spawned_player)
+		// hydration_toggle.Grant(spawned_player)
 		var/datum/action/innate/ghostcafe_supply/nutrition/nutrition_toggle = new(spawned_player)
 		nutrition_toggle.Grant(spawned_player)
 

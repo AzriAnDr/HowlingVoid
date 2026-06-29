@@ -18,7 +18,7 @@
 	var/always_color_customizable
 	///Whether the body marking sprite is the same for both sexes or not. Only relevant for chest right now.
 	var/gendered = TRUE
-	/// Whether this marking should render from the hair layer baseline instead of the bodypart layer baseline.
+	/// Legacy flag. Marking render order is controlled by the saved marking layer.
 	var/above_hair = FALSE
 
 /datum/body_marking/New()
