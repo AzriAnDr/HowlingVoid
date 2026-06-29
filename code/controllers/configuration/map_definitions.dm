@@ -24,12 +24,12 @@
 		),
 		list(
 			"id" = "icebox",
-			"min_players" = 30,
+			"min_players" = 0,
 			"votable" = TRUE,
 		),
 		list(
 			"id" = "catwalkstation",
-			"min_players" = 30,
+			"min_players" = 0,
 			"votable" = TRUE,
 		),
 		list(
@@ -40,17 +40,17 @@
 		),
 		list(
 			"id" = "tramstation",
-			"min_players" = 30,
+			"min_players" = 0,
 			"votable" = TRUE,
 		),
 		list(
 			"id" = "nebulastation",
-			"min_players" = 40,
+			"min_players" = 0,
 			"votable" = TRUE,
 		),
 		list(
 			"id" = "wawastation",
-			"min_players" = 30,
+			"min_players" = 0,
 			"votable" = TRUE,
 		),
 		list(
@@ -60,7 +60,7 @@
 		),
 		list(
 			"id" = "blueshift",
-			"min_players" = 65,
+			"min_players" = 0,
 			"votable" = TRUE,
 		),
 		list(
@@ -70,12 +70,12 @@
 		),
 		list(
 			"id" = "serenitystation",
-			"min_players" = 30,
+			"min_players" = 0,
 			"votable" = TRUE,
 		),
 		list(
 			"id" = "snowglobe",
-			"min_players" = 30,
+			"min_players" = 0,
 			"votable" = TRUE,
 		),
 		list(
