@@ -199,7 +199,7 @@ function Item(props: Props) {
   const { cost, id, is_reagent, name } = item;
 
   const { act, data } = useBackend<Data>();
-  const { biomass, beaker, efficiency, max_output, processing } = data;
+  const { biomass, beaker, max_output, processing } = data;
 
   const minAmount = is_reagent ? Math.min(Math.max(space, 1), 10) : 1;
 
@@ -209,9 +209,9 @@ function Item(props: Props) {
     processing ||
     (is_reagent && !beaker) ||
     (is_reagent && space < amount) ||
-    biomass < Math.ceil((cost * amount) / efficiency);
+    biomass < cost * amount;
 
-  const maxPossible = Math.floor((efficiency * biomass) / cost);
+  const maxPossible = Math.floor(biomass / cost);
 
   const maxCapacity = is_reagent ? space : max_output;
   const maxAmount = Math.max(1, Math.min(maxCapacity, maxPossible));

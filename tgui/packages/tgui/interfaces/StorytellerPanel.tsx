@@ -133,6 +133,10 @@ type QueuedAntagEntry = {
   context: string;
   prefFlag?: string;
   reservedCost?: number;
+  remaining?: number;
+  scheduledFor?: string;
+  sourceName?: string;
+  storytellerGenerated?: boolean;
 };
 
 type QueuedActionEntry = {
@@ -663,43 +667,59 @@ const QueuedAntagCard = (props: {
   entry: QueuedAntagEntry;
   language: PanelLanguage;
   onCancel?: (id: string) => void;
-}) => (
-  <Box
-    key={`${props.entry.id}_${props.entry.name}`}
-    backgroundColor="#1f2731"
-    p={1}
-    mb={1}
-    style={{
-      ...cardChromeStyle,
-      borderLeft: '4px solid var(--color-average)',
-      background:
-        'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))',
-    }}
-  >
-    <Stack align="center">
-      <Stack.Item grow>
-        <Box bold>{props.entry.name}</Box>
-        <Box color="label">
-          {formatMode(props.entry.context, props.language)}
-          {!!props.entry.prefFlag &&
-            ` | ${t(props.language, 'pref')} ${props.entry.prefFlag}`}
-          {!!props.entry.reservedCost &&
-            ` | ${t(props.language, 'refund_threat')} ${props.entry.reservedCost}`}
-        </Box>
-      </Stack.Item>
-      <Stack.Item>
-        <Button.Confirm
-          color="bad"
-          icon="times"
-          confirmContent={t(props.language, 'cancel_queue_confirm')}
-          onClick={() => props.onCancel?.(props.entry.id)}
-        >
-          {t(props.language, 'cancel')}
-        </Button.Confirm>
-      </Stack.Item>
-    </Stack>
-  </Box>
-);
+}) => {
+  const { entry, language, onCancel } = props;
+  const sourceLabel = entry.storytellerGenerated
+    ? t(language, 'source_storyteller')
+    : entry.sourceName
+      ? `${t(language, 'source_admin')}: ${entry.sourceName}`
+      : '';
+  const hasTimer = typeof entry.remaining === 'number' && entry.remaining > 0;
+
+  return (
+    <Box
+      key={`${entry.id}_${entry.name}`}
+      backgroundColor="#1f2731"
+      p={1}
+      mb={1}
+      style={{
+        ...cardChromeStyle,
+        borderLeft: '4px solid var(--color-average)',
+        background:
+          'linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))',
+      }}
+    >
+      <Stack align="center">
+        <Stack.Item grow>
+          <Box bold>{entry.name}</Box>
+          <Box color="label">
+            {formatMode(entry.context, language)}
+            {!!entry.prefFlag && ` | ${t(language, 'pref')} ${entry.prefFlag}`}
+            {!!entry.reservedCost &&
+              ` | ${t(language, 'refund_threat')} ${entry.reservedCost}`}
+            {!!sourceLabel && ` | ${sourceLabel}`}
+          </Box>
+          {hasTimer && (
+            <Box color="label">
+              {t(language, 'scheduled_for')}: {entry.scheduledFor} |{' '}
+              {formatTime(entry.remaining || 0, language)} {t(language, 'left')}
+            </Box>
+          )}
+        </Stack.Item>
+        <Stack.Item>
+          <Button.Confirm
+            color="bad"
+            icon="times"
+            confirmContent={t(language, 'cancel_queue_confirm')}
+            onClick={() => onCancel?.(entry.id)}
+          >
+            {t(language, 'cancel')}
+          </Button.Confirm>
+        </Stack.Item>
+      </Stack>
+    </Box>
+  );
+};
 
 const QueuedActionCard = (props: { entry: QueuedActionEntry }) => (
   <Box

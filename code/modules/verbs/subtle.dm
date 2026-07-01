@@ -33,7 +33,13 @@
 		to_chat(user, "You cannot send IC messages (muted).")
 		return FALSE
 	else if(!params)
+		var/mob/living/living_user_for_input = user
+		var/original_icon = living_user_for_input.bubble_icon
+		living_user_for_input.bubble_icon = "emote"
+		living_user_for_input.client?.start_thinking()
 		subtle_emote = tgui_input_text(user, "Choose an emote to display.", "Subtle", null, max_length = MAX_MESSAGE_LEN, multiline = TRUE)
+		living_user_for_input.client?.stop_thinking()
+		living_user_for_input.bubble_icon = original_icon
 		if(!subtle_emote)
 			return FALSE
 		subtle_message = subtle_emote
@@ -79,6 +85,10 @@
 			if(prefs && prefs.read_preference(/datum/preference/toggle/subtler_sound))
 				receiver.playsound_local(get_turf(receiver), 'sound/effects/achievement/beeps_jingle.ogg', 50)
 
+	viewers |= user
+	var/mob/living/living_user_for_bubble = user
+	living_user_for_bubble.show_emote_speech_bubble(viewers)
+
 	return TRUE
 
 /*
@@ -107,8 +117,14 @@
 		to_chat(user, span_warning("You cannot send IC messages (muted)."))
 		return FALSE
 	else if(!subtler_emote)
+		var/mob/living/living_user_for_input = user
+		var/original_icon = living_user_for_input.bubble_icon
+		living_user_for_input.bubble_icon = "emote"
+		living_user_for_input.client?.start_thinking()
 		subtler_emote = tgui_input_text(user, "Choose an emote to display.", "Subtler" , max_length = MAX_MESSAGE_LEN, multiline = TRUE)
 		if(!subtler_emote)
+			living_user_for_input.client?.stop_thinking()
+			living_user_for_input.bubble_icon = original_icon
 			return FALSE
 
 		var/list/in_view = get_hearers_in_view(subtler_range, user)
@@ -133,6 +149,8 @@
 
 		var/list/targets = list(SUBTLE_ONE_TILE_TEXT, SUBTLE_SAME_TILE_TEXT) + in_view
 		target = tgui_input_list(user, "Pick a target", "Target Selection", targets)
+		living_user_for_input.client?.stop_thinking()
+		living_user_for_input.bubble_icon = original_icon
 		if(!target)
 			return FALSE
 
@@ -201,6 +219,11 @@
 			var/datum/preferences/prefs = receiver.client?.prefs
 			if(prefs && prefs.read_preference(/datum/preference/toggle/subtler_sound))
 				receiver.playsound_local(get_turf(receiver), 'sound/effects/achievement/glockenspiel_ping.ogg', 50)
+
+	var/list/bubble_viewers = get_hearers_in_view(subtler_range, user)
+	bubble_viewers |= user
+	var/mob/living/living_user_for_bubble = user
+	living_user_for_bubble.show_emote_speech_bubble(bubble_viewers)
 
 	return TRUE
 

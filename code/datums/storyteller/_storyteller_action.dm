@@ -544,15 +544,45 @@
 	tier_cache[node.id] = tier
 	return tier
 
+/datum/storyteller/action/proc/get_storyteller_research_cost_tier(research_cost)
+	var/cost = round(text2num("[research_cost || 0]"))
+	if(cost >= TECHWEB_TIER_5_POINTS)
+		return 5
+	if(cost >= TECHWEB_TIER_4_POINTS)
+		return 4
+	if(cost >= TECHWEB_TIER_3_POINTS)
+		return 3
+	if(cost >= TECHWEB_TIER_2_POINTS)
+		return 2
+	if(cost >= TECHWEB_TIER_1_POINTS)
+		return 1
+	return 0
+
+/datum/storyteller/action/proc/get_storyteller_item_contract_tier(item_type)
+	var/datum/stock_part/stock_part = GLOB.stock_part_datums_per_object[item_type]
+	if(istype(stock_part))
+		return max(1, round(stock_part.tier))
+	return 1
+
 /datum/storyteller/action/proc/get_storyteller_design_research_tier(datum/design/design, datum/techweb/techweb, list/tier_cache)
 	if(!istype(design) || !istype(techweb))
 		return 1
-	var/tier = 1
+	var/tier = get_storyteller_item_contract_tier(design.build_path)
+	for(var/node_id in techweb.researched_nodes)
+		var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)
+		if(!istype(node) || node == SSresearch.error_node)
+			continue
+		if(!(design.id in node.design_ids))
+			continue
+		var/cost_tier = get_storyteller_research_cost_tier(node.research_costs[TECHWEB_POINT_TYPE_GENERIC])
+		if(cost_tier)
+			tier = max(tier, cost_tier)
 	for(var/datum/techweb_node/node as anything in design.unlocked_by)
 		if(!istype(node) || !techweb.researched_nodes[node.id])
 			continue
-		tier = max(tier, get_storyteller_tech_node_tier(node, tier_cache))
-	return tier
+		var/cost_tier = get_storyteller_research_cost_tier(node.research_costs[TECHWEB_POINT_TYPE_GENERIC])
+		tier = max(tier, cost_tier || get_storyteller_tech_node_tier(node, tier_cache))
+	return max(1, tier)
 
 /datum/storyteller/action/proc/get_storyteller_design_contract_value(datum/design/design, research_tier)
 	if(!istype(design))
@@ -837,7 +867,7 @@
 	if(ispath(item_type, /obj/item/stack))
 		var/obj/item/stack/stack_path = item_type
 		final_amount *= max(1, round(initial(stack_path.amount)))
-	var/final_tier = max(1, round(text2num("[tier || 1]")))
+	var/final_tier = max(max(1, round(text2num("[tier || 1]"))), get_storyteller_item_contract_tier(requirement_type))
 	var/final_unit_value = isnull(unit_value) ? get_storyteller_contract_unit_value(requirement_type, final_tier) : max(1, round(text2num("[unit_value]")))
 	var/obj/item/requirement_path = requirement_type
 	return list(

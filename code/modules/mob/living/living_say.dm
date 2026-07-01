@@ -496,6 +496,31 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 /mob/living/proc/clear_saypopup(image/say_popup)
 	LAZYREMOVE(update_on_z, say_popup)
 
+///Shows the emote speech bubble to listeners who do not see runechat.
+/mob/living/proc/show_emote_speech_bubble(list/listeners)
+	if(!length(listeners))
+		return
+
+	var/list/speech_bubble_recipients = list()
+	for(var/listener_entry as anything in listeners)
+		if(!ismob(listener_entry))
+			continue
+		var/mob/listener = listener_entry
+		if(!listener.client)
+			continue
+		if(!listener.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES)))
+			speech_bubble_recipients += listener.client
+
+	if(!length(speech_bubble_recipients))
+		return
+
+	var/image/say_popup = image('icons/mob/effects/talk.dmi', src, "emote", FLY_LAYER)
+	SET_PLANE_EXPLICIT(say_popup, ABOVE_GAME_PLANE, src)
+	say_popup.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), say_popup, speech_bubble_recipients, 3 SECONDS)
+	LAZYADD(update_on_z, say_popup)
+	addtimer(CALLBACK(src, PROC_REF(clear_saypopup), say_popup), 3.5 SECONDS)
+
 /mob/proc/binarycheck()
 	return FALSE
 

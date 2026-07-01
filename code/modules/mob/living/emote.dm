@@ -1609,6 +1609,9 @@
 		type_override = user_emote_type
 
 	. = ..(user = user, params = our_message, type_override = type_override, intentional = intentional)
+	if(isliving(user))
+		var/mob/living/living_user = user
+		living_user.show_emote_speech_bubble(viewers(living_user))
 
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message

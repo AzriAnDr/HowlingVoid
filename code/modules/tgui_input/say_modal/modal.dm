@@ -37,6 +37,8 @@
 	var/saved_channel
 	/// Speech suffuxes used for force_say after "-". Defaults to hurt_phrases
 	var/list/alter_phrases
+	/// Previous speech bubble icon, used while typing in the emote channel.
+	var/prev_bubble_icon
 
 /** Creates the new input window to exist in the background. */
 /datum/tgui_say/New(client/client, id)
@@ -93,6 +95,11 @@
 		CRASH("No channel provided to an open TGUI-Say")
 	window_open = TRUE
 	if(payload["channel"] != OOC_CHANNEL && payload["channel"] != ADMIN_CHANNEL && payload["channel"] != LOOC_CHANNEL) // NOVA EDIT CHANGE (Add LOOC_CHANNEL)
+		if(payload["channel"] == ME_CHANNEL)
+			var/mob/living/user = client?.mob
+			if(istype(user))
+				prev_bubble_icon = user.bubble_icon
+				user.bubble_icon = "emote"
 		start_thinking()
 	if(!client.typing_indicators)
 		log_speech_indicators("[key_name(client)] started typing at [loc_name(client.mob)], indicators DISABLED.")
@@ -105,6 +112,10 @@
 /datum/tgui_say/proc/close()
 	window_open = FALSE
 	stop_thinking()
+	var/mob/living/user = client?.mob
+	if(prev_bubble_icon && istype(user))
+		user.bubble_icon = prev_bubble_icon
+		prev_bubble_icon = null
 	if(!client.typing_indicators)
 		log_speech_indicators("[key_name(client)] stopped typing at [loc_name(client.mob)], indicators DISABLED.")
 

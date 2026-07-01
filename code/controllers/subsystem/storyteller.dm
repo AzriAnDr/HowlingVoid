@@ -224,6 +224,14 @@ SUBSYSTEM_DEF(storyteller)
 	for(var/queue_id in queued_antag_metadata.Copy())
 		cleared_anything = cancel_queued_antag(queue_id, user) || cleared_anything
 
+	for(var/list/entry as anything in scheduled_action_queue.Copy())
+		if(!islist(entry))
+			continue
+		var/datum/storyteller/action/scheduled_action = catalog.get_action(entry["actionId"])
+		if(!istype(scheduled_action) || !scheduled_action.is_antag_action())
+			continue
+		cleared_anything = cancel_queued_antag(entry["queueId"], user) || cleared_anything
+
 	return cleared_anything
 
 /datum/controller/subsystem/storyteller/proc/set_manual_round_mode(new_mode, mob/user)
@@ -2779,6 +2787,8 @@ SUBSYSTEM_DEF(storyteller)
 		"context" = action.context,
 		"prefFlag" = ruleset.pref_flag || "",
 		"reservedCost" = reserved_cost,
+		"sourceName" = user ? key_name(user) : null,
+		"storytellerGenerated" = !user,
 	)
 	return TRUE
 
@@ -2818,6 +2828,16 @@ SUBSYSTEM_DEF(storyteller)
 		queued_negative_action_id = null
 		var/refund = refund_reserved_action_budget(queued_action.id)
 		record_decision("[key_name(user)] canceled queued storyteller antagonist [queued_action.name][refund > 0 ? " and refunded [refund] threat" : ""].")
+		return TRUE
+
+	var/scheduled_index = get_scheduled_action_queue_index(queue_id)
+	if(scheduled_index > 0)
+		var/list/entry = scheduled_action_queue[scheduled_index]
+		var/datum/storyteller/action/scheduled_action = catalog.get_action(entry["actionId"])
+		if(!istype(scheduled_action) || !scheduled_action.is_antag_action())
+			return FALSE
+		scheduled_action_queue.Cut(scheduled_index, scheduled_index + 1)
+		record_decision("[key_name(user)] canceled queued storyteller antagonist [scheduled_action.name].")
 		return TRUE
 
 	for(var/datum/dynamic_ruleset/ruleset as anything in SSdynamic.queued_rulesets)
@@ -3896,6 +3916,31 @@ SUBSYSTEM_DEF(storyteller)
 	RETURN_TYPE(/list)
 	var/list/entries = list()
 	prune_queued_antag_metadata()
+	prune_scheduled_action_queue()
+	for(var/list/entry as anything in scheduled_action_queue)
+		if(!islist(entry))
+			continue
+		var/datum/storyteller/action/scheduled_action = catalog.get_action(entry["actionId"])
+		if(!istype(scheduled_action) || !scheduled_action.is_antag_action())
+			continue
+		var/scheduled_pref_flag = ""
+		var/datum/storyteller/action/dynamic_base/dynamic_action = scheduled_action
+		if(istype(dynamic_action))
+			var/datum/dynamic_ruleset/scheduled_ruleset = dynamic_action.build_ruleset()
+			if(istype(scheduled_ruleset))
+				scheduled_pref_flag = scheduled_ruleset.pref_flag || ""
+				qdel(scheduled_ruleset)
+		entries += list(list(
+			"id" = entry["queueId"],
+			"name" = entry["name"],
+			"context" = entry["context"],
+			"prefFlag" = scheduled_pref_flag,
+			"reservedCost" = 0,
+			"remaining" = max((entry["executeAt"] || 0) - world.time, 0),
+			"scheduledFor" = station_time_timestamp("hh:mm:ss", entry["executeAt"]),
+			"sourceName" = entry["sourceName"],
+			"storytellerGenerated" = !!entry["storytellerGenerated"],
+		))
 	for(var/datum/dynamic_ruleset/ruleset as anything in SSdynamic.queued_rulesets)
 		var/context = "unknown"
 		if(istype(ruleset, /datum/dynamic_ruleset/roundstart))
@@ -3907,15 +3952,20 @@ SUBSYSTEM_DEF(storyteller)
 		var/list/metadata = queued_antag_metadata[REF(ruleset)]
 		var/ruleset_name = islist(metadata) ? metadata["name"] : null
 		ruleset_name ||= ruleset.config_tag || ruleset.name || "[ruleset.type]"
-		var/pref_flag = islist(metadata) ? metadata["prefFlag"] : null
-		pref_flag ||= ruleset.pref_flag || ""
+		var/queued_pref_flag = islist(metadata) ? metadata["prefFlag"] : null
+		queued_pref_flag ||= ruleset.pref_flag || ""
 		var/reserved_cost = max(0, islist(metadata) ? metadata["reservedCost"] : 0)
+		var/source_name = islist(metadata) ? metadata["sourceName"] : null
 		entries += list(list(
 			"id" = REF(ruleset),
 			"name" = ruleset_name,
 			"context" = context,
-			"prefFlag" = pref_flag,
+			"prefFlag" = queued_pref_flag,
 			"reservedCost" = reserved_cost,
+			"remaining" = 0,
+			"scheduledFor" = null,
+			"sourceName" = source_name,
+			"storytellerGenerated" = islist(metadata) ? !!metadata["storytellerGenerated"] : FALSE,
 		))
 	if(queued_negative_action_id)
 		var/datum/storyteller/action/action = catalog.get_action(queued_negative_action_id)
@@ -3926,6 +3976,10 @@ SUBSYSTEM_DEF(storyteller)
 				"context" = action.context,
 				"prefFlag" = "",
 				"reservedCost" = get_reserved_action_budget(action.id),
+				"remaining" = 0,
+				"scheduledFor" = null,
+				"sourceName" = null,
+				"storytellerGenerated" = TRUE,
 			))
 	return entries
 
