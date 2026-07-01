@@ -91,6 +91,11 @@
 		emotes_send_list()
 		return TRUE
 
+	if(type == "chat/fix")
+		log_tgui(client, "Started fixing.", context = "message/chat/fix")
+		client.nuke_chat()
+		return TRUE
+
 	if(!client?.prefs)
 		return
 

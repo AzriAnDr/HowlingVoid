@@ -38,7 +38,7 @@ function formatURLs(text: string) {
 }
 
 export function ExaminePanel(props) {
-  const { data } = useBackend<ExaminePanelData>();
+  const { act, data } = useBackend<ExaminePanelData>();
   const { t } = usePreferencesLocalization(data);
   const {
     character_name,
@@ -57,47 +57,79 @@ export function ExaminePanel(props) {
   } = data;
   const [oocNotesIndex, setOocNotesIndex] = useState('SFW');
   const [flavorTextIndex, setFlavorTextIndex] = useState('SFW');
+  const previewControls = (
+    <Stack justify="center">
+      <Stack.Item>
+        <Button
+          icon="chevron-left"
+          tooltip="Rotate left"
+          tooltipPosition="bottom"
+          onClick={() => act('rotate', { dir: 'left' })}
+        />
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          icon="chevron-right"
+          tooltip="Rotate right"
+          tooltipPosition="bottom"
+          onClick={() => act('rotate', { dir: 'right' })}
+        />
+      </Stack.Item>
+    </Stack>
+  );
   return (
-    <Window title={character_name} width={900} height={670} theme="ntos">
+    <Window title={character_name} width={900} height={740} theme="ntos">
       <Window.Content>
         <Stack fill>
           <Stack.Item width="30%">
             {!headshot ? (
-              <Section fill title={t('ui.examine_panel.character_preview')}>
-                <ByondUi
-                  height="100%"
-                  width="100%"
-                  className="ExaminePanel__map"
-                  params={{
-                    id: assigned_map,
-                    type: 'map',
-                  }}
-                />
-              </Section>
+              <Stack fill vertical>
+                <Stack.Item grow>
+                  <Section fill title={t('ui.examine_panel.character_preview')}>
+                    <ByondUi
+                      height="100%"
+                      width="100%"
+                      className="ExaminePanel__map"
+                      params={{
+                        id: assigned_map,
+                        type: 'map',
+                      }}
+                    />
+                  </Section>
+                </Stack.Item>
+                <Stack.Item align="center" mt={1}>
+                  {previewControls}
+                </Stack.Item>
+              </Stack>
             ) : (
-              <>
-                <Section
-                  height="310px"
-                  title={t('ui.examine_panel.character_preview')}
-                >
-                  <ByondUi
-                    height="260px"
-                    width="100%"
-                    className="ExaminePanel__map"
-                    params={{
-                      id: assigned_map,
-                      type: 'map',
-                    }}
-                  />
-                </Section>
-                <Section height="310px" title={t('ui.examine_panel.headshot')}>
-                  <img
-                    src={resolveAsset(headshot)}
-                    height="250px"
-                    width="250px"
-                  />
-                </Section>
-              </>
+              <Stack fill vertical>
+                <Stack.Item>
+                  <Section
+                    height="310px"
+                    title={t('ui.examine_panel.character_preview')}
+                  >
+                    <ByondUi
+                      height="260px"
+                      width="100%"
+                      className="ExaminePanel__map"
+                      params={{
+                        id: assigned_map,
+                        type: 'map',
+                      }}
+                    />
+                  </Section>
+                </Stack.Item>
+                <Stack.Item align="center">{previewControls}</Stack.Item>
+                <Stack.Item>
+                  <Section height="310px" title={t('ui.examine_panel.headshot')}>
+                    <img
+                      src={resolveAsset(headshot)}
+                      height="250px"
+                      width="250px"
+                    />
+                  </Section>
+                </Stack.Item>
+              </Stack>
             )}
           </Stack.Item>
           <Stack.Item grow>

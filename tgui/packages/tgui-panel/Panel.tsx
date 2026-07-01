@@ -66,6 +66,15 @@ export function Panel(props) {
               </Stack.Item>
               <Stack.Item>
                 <Button
+                  color="grey"
+                  icon="wrench"
+                  tooltip="Fix chat"
+                  tooltipPosition="bottom-start"
+                  onClick={() => Byond.sendMessage('chat/fix')}
+                />
+              </Stack.Item>
+              <Stack.Item>
+                <Button
                   icon={settingsVisible ? 'times' : 'cog'}
                   selected={settingsVisible}
                   tooltip={settingsVisible ? 'Close settings' : 'Open settings'}

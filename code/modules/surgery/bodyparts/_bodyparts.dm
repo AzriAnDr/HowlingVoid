@@ -1447,8 +1447,6 @@
 			var/mutable_appearance/accessory_overlay
 			var/mutable_appearance/emissive
 			var/layer_offset = -BODYPARTS_LAYER
-			if(body_marking.above_hair)
-				layer_offset = -HAIR_LAYER + 0.1
 			layer_offset += (entry[MARKING_INDEX_LAYER] - MARKING_LAYER_MIN) * MARKING_LAYER_STEP
 			accessory_overlay = mutable_appearance(body_marking.icon, "[body_marking.icon_state]_[render_limb_string][gender_modifier]", layer_offset)
 			accessory_overlay.alpha = markings_alpha

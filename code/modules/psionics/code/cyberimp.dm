@@ -1,9 +1,12 @@
 #define ORGAN_SLOT_BRAIN_PSIONIC "brain_psionic"
 
-// Не позволяет мане регенерироваться
+/obj/item/organ/internal/cyberimp
+	organ_flags = ORGAN_ROBOTIC
+
+// Prevents mana from regenerating.
 /obj/item/organ/internal/cyberimp/brain/anti_psionic
 	name = "Psionic Amplifier Model N"
-	desc = "This implant will prohibit psionics from regenereting their energy."
+	desc = "This implant will prohibit psionics from regenerating their energy."
 	icon_state = "brain_implant_rebooter"
 	slot = ORGAN_SLOT_BRAIN_PSIONIC
 
@@ -15,7 +18,7 @@
 	. = ..()
 	REMOVE_TRAIT(organ_owner, TRAIT_PSIONIC_SUPPRESSED, IMPLANT_TRAIT)
 
-// Увеличивает реген маны в 2 раза
+// Doubles mana regeneration.
 /obj/item/organ/internal/cyberimp/brain/pro_psionic
 	name = "Psionic Amplifier Model A"
 	desc = "This implant will boost psionics energy regeneration by two times."

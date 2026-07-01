@@ -68,8 +68,9 @@
 		to_chat(spawned_human,span_warning("<b>Ghosting is free!</b>"))
 		var/datum/action/toggle_dead_chat_mob/dchat_toggle_ability = new(spawned_human)
 		dchat_toggle_ability.Grant(spawned_human)
-		var/datum/action/innate/ghostcafe_supply/hydration/hydration_toggle = new(spawned_human)
-		hydration_toggle.Grant(spawned_human)
+		// HowlingVoid has no thirst system. Kept commented in case hydration supply is restored later.
+		// var/datum/action/innate/ghostcafe_supply/hydration/hydration_toggle = new(spawned_human)
+		// hydration_toggle.Grant(spawned_human)
 		var/datum/action/innate/ghostcafe_supply/nutrition/nutrition_toggle = new(spawned_human)
 		nutrition_toggle.Grant(spawned_human)
 		var/datum/action/innate/ghostcafe_supply/blood/blood_toggle = new(spawned_human)
@@ -153,12 +154,13 @@
 		to_chat(L, span_notice("Supply enabled."))
 	return TRUE
 
-/datum/action/innate/ghostcafe_supply/hydration
-	name = "Toggle Hydration Supply"
-	desc = "Slowly refill your thirst while in the cafe."
-	button_icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	button_icon_state = "singulo"
-	supply_effect_type = /datum/status_effect/ghostcafe_supply/hydration
+// HowlingVoid has no thirst system. Kept commented in case hydration supply is restored later.
+// /datum/action/innate/ghostcafe_supply/hydration
+// 	name = "Toggle Hydration Supply"
+// 	desc = "Slowly refill your thirst while in the cafe."
+// 	button_icon = 'icons/obj/drinks/mixed_drinks.dmi'
+// 	button_icon_state = "singulo"
+// 	supply_effect_type = /datum/status_effect/ghostcafe_supply/hydration
 
 /datum/action/innate/ghostcafe_supply/nutrition
 	name = "Toggle Nutrition Supply"
@@ -188,21 +190,22 @@
 		return FALSE
 	return TRUE
 
-/datum/status_effect/ghostcafe_supply/hydration
-	id = "ghostcafe_supply_hydration"
-	/// Amount of hydration restored per second when active.
-	var/hydration_per_second = 6
-	alert_type = /atom/movable/screen/alert/status_effect/ghostcafe_supply/hydration
+// HowlingVoid has no thirst system. Kept commented in case hydration supply is restored later.
+// /datum/status_effect/ghostcafe_supply/hydration
+// 	id = "ghostcafe_supply_hydration"
+// 	/// Amount of hydration restored per second when active.
+// 	var/hydration_per_second = 6
+// 	alert_type = /atom/movable/screen/alert/status_effect/ghostcafe_supply/hydration
 
-/datum/status_effect/ghostcafe_supply/hydration/tick(seconds_between_ticks)
-	if(QDELETED(owner) || owner.stat == DEAD)
-		qdel(src)
-		return
-	if(!owner.can_replenish_thirst())
-		return
-	if(owner.water_level >= 600)
-		return
-	owner.adjust_thirst(hydration_per_second * seconds_between_ticks, 600)
+// /datum/status_effect/ghostcafe_supply/hydration/tick(seconds_between_ticks)
+// 	if(QDELETED(owner) || owner.stat == DEAD)
+// 		qdel(src)
+// 		return
+// 	if(!owner.can_replenish_thirst())
+// 		return
+// 	if(owner.water_level >= 600)
+// 		return
+// 	owner.adjust_thirst(hydration_per_second * seconds_between_ticks, 600)
 
 /datum/status_effect/ghostcafe_supply/nutrition
 	id = "ghostcafe_supply_nutrition"
@@ -253,11 +256,12 @@
 	blood_alert.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:10px; left:0px'><font face='Small Fonts' color='#ce0202'>[blood_value]</font></div>")
 
 // Alerts for supply status effects
-/atom/movable/screen/alert/status_effect/ghostcafe_supply/hydration
-	name = "Hydration Supply"
-	desc = "You feel your thirst saturated."
-	icon = 'icons/obj/drinks/mixed_drinks.dmi'
-	icon_state = "singulo"
+// HowlingVoid has no thirst system. Kept commented in case hydration supply is restored later.
+// /atom/movable/screen/alert/status_effect/ghostcafe_supply/hydration
+// 	name = "Hydration Supply"
+// 	desc = "You feel your thirst saturated."
+// 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+// 	icon_state = "singulo"
 
 /atom/movable/screen/alert/status_effect/ghostcafe_supply/nutrition
 	name = "Nutrition Supply"
